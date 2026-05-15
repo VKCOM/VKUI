@@ -1,0 +1,101 @@
+1:"$Sreact.fragment"
+2:I[23450,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-3c03d819f20b8c00.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Main"]
+4:I[74517,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-3c03d819f20b8c00.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Overview",1]
+5:I[18443,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-3c03d819f20b8c00.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Anchor"]
+6:I[80204,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-3c03d819f20b8c00.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"PlaygroundLazy"]
+13:I[19180,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-3c03d819f20b8c00.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Pre"]
+16:I[91042,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-3c03d819f20b8c00.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"TOC"]
+17:I[90484,[],"OutletBoundary"]
+18:"$Sreact.suspense"
+3:Ta15,---
+description: Компонент для отображения статичной информации в виде пар "заголовок-значение".
+---
+
+<Overview group="data-display">
+
+# InfoRow [tag:component]
+
+Компонент для отображения статичной информации в виде пар "заголовок-значение".
+Рекомендуется использовать внутри [`SimpleCell`](/components/simple-cell) и других ячеечных компонентов.
+
+Связанные компоненты:
+
+- [`SimpleCell`](/components/simple-cell)
+
+</Overview>
+
+{/* @example-description: Базовая строка `InfoRow` с заголовком и значением. */}
+<Playground>
+  ```jsx
+  <InfoRow header="Общий бюджет">3000 р.</InfoRow>
+  ```
+</Playground>
+
+## Группы элементов
+
+Рекомендуется оборачивать связанные InfoRow в [`Group`](/components/group) с заголовком:
+
+{/* @example-description: Группа `InfoRow` внутри `Group` для отображения профиля пользователя. */}
+<Playground>
+  ```jsx
+  <Group header={<Header mode="secondary">Профиль</Header>}>
+    <SimpleCell>
+      <InfoRow header="Должность">Frontend-разработчик</InfoRow>
+    </SimpleCell>
+    <SimpleCell>
+      <InfoRow header="Стаж">5 лет</InfoRow>
+    </SimpleCell>
+  </Group>
+  ```
+</Playground>
+
+## Многострочный контент
+
+{/* @example-description: Многострочное описание в `InfoRow` внутри `SimpleCell multiline`. */}
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <SimpleCell multiline>
+    <InfoRow header="Описание">
+      Разработка интерфейсов для экосистемы VK с использованием React и TypeScript
+    </InfoRow>
+  </SimpleCell>
+  ```
+</Playground>
+
+## Когда использовать
+
+- Отображение статических данных.
+- Карточки профилей.
+- Детализация записей.
+- Списки характеристик.
+
+```jsx
+// ❌ Неправильно (интерактивный элемент)
+<InfoRow header="Настройки">
+  <Switch checked={value} />
+</InfoRow>
+
+// ✅ Правильно (только статичный контент)
+<InfoRow header="Статус">
+  <Text>Активен</Text>
+</InfoRow>
+```
+
+## Свойства и методы [#api]
+
+<PropsTable name="InfoRow" />0:{"rsc":["$","$1","c",{"children":[[["$","$L2",null,{"metadata":{"description":"Компонент для отображения статичной информации в виде пар \"заголовок-значение\".","title":"InfoRow","filePath":"content/components/info-row.mdx","timestamp":1778845990000},"sourceCode":"$3","children":[["$","$L4",null,{"group":"data-display","children":[["$","h1",null,{"className":"mdx_h1__1mgpN","data-pagefind-filter":"tag:component","children":"InfoRow"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Компонент для отображения статичной информации в виде пар “заголовок-значение”.\nРекомендуется использовать внутри ",["$","$L5",null,{"href":"/components/simple-cell","children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"SimpleCell"}]}]," и других ячеечных компонентов."]}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Связанные компоненты:"}],["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["$","$L5",null,{"href":"/components/simple-cell","children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"SimpleCell"}]}]}],"\n"]}]]}],"\n","\n",["$","$L6",null,{"code":"<InfoRow header=\"Общий бюджет\">3000 р.</InfoRow>"}],"\n",["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"gruppy-elementov","children":["$","a",null,{"href":"#gruppy-elementov","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Группы элементов","children":["Группы элементов",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined","$L7"]]}]]}]}],"\n","$L8","\n","\n","$L9","\n","$La","\n","\n","$Lb","\n","$Lc","\n","$Ld","\n","$Le","\n","$Lf","\n","$L10"]}],"$L11"],null,"$L12"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"0Ol_0BANXusFa48he9eFA"}
+7:["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]
+8:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Рекомендуется оборачивать связанные InfoRow в ",["$","$L5",null,{"href":"/components/group","children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"Group"}]}]," с заголовком:"]}]
+9:["$","$L6",null,{"code":"<Group header={<Header mode=\"secondary\">Профиль</Header>}>\n  <SimpleCell>\n    <InfoRow header=\"Должность\">Frontend-разработчик</InfoRow>\n  </SimpleCell>\n  <SimpleCell>\n    <InfoRow header=\"Стаж\">5 лет</InfoRow>\n  </SimpleCell>\n</Group>"}]
+a:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"mnogostrochnyj-kontent","children":["$","a",null,{"href":"#mnogostrochnyj-kontent","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Многострочный контент","children":["Многострочный контент",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+b:["$","$L6",null,{"style":{"maxWidth":270},"code":"<SimpleCell multiline>\n  <InfoRow header=\"Описание\">\n    Разработка интерфейсов для экосистемы VK с использованием React и TypeScript\n  </InfoRow>\n</SimpleCell>"}]
+c:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"kogda-ispolzovat","children":["$","a",null,{"href":"#kogda-ispolzovat","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Когда использовать","children":["Когда использовать",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+d:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":"Отображение статических данных."}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":"Карточки профилей."}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":"Детализация записей."}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":"Списки характеристик."}],"\n"]}]
+e:["$","$L13",null,{"tabIndex":"0","data-language":"jsx","data-word-wrap":"","data-copy":"","data-pagefind-ignore":"all","children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":[["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#6A737D","--shiki-dark":"#6A737D"},"children":"// ❌ Неправильно (интерактивный элемент)"}]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"<"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"InfoRow"}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" header"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"Настройки\""}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  <"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Switch"}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" checked"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"{value} />"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"</"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"InfoRow"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}],"\n",["$","span",null,{"children":" "}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#6A737D","--shiki-dark":"#6A737D"},"children":"// ✅ Правильно (только статичный контент)"}]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"<"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"InfoRow"}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" header"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"Статус\""}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  <"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Text"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">Активен</"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Text"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"</"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"InfoRow"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}]]}]}]
+f:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"api","children":["$","a",null,{"href":"#api","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Свойства и методы","children":["Свойства и методы",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+10:["$","div",null,{"className":"Table_root__0rGvK","children":["$","table",null,{"className":"Table_table__NzLHi PropsTable_root__O959b","children":[["$","thead",null,{"children":["$","tr",null,{"children":[["$","th",null,{"children":"Свойство","className":"Table_th__EHorR"}],["$","th",null,{"children":"Описание","className":"Table_th__EHorR"}]],"className":"Table_tr__SD2Ot"}]}],["$","tbody",null,{"children":["$@14","$@15"]}]]}]}]
+11:["$","$L16",null,{"toc":[{"value":"Группы элементов","id":"gruppy-elementov","depth":2},{"value":"Многострочный контент","id":"mnogostrochnyj-kontent","depth":2},{"value":"Когда использовать","id":"kogda-ispolzovat","depth":2},{"value":"Свойства и методы","id":"api","depth":2}]}]
+12:["$","$L17",null,{"children":["$","$18",null,{"name":"Next.MetadataOutlet","children":"$@19"}]}]
+14:["$","tr","getRootRef",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"getRootRef"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"Ref<HTMLDivElement>"}],"$undefined",["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+15:["$","tr","header",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ PropsTable_propRequired__6g8iy","children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"header"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"ReactNode"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Элемент, отображаемый над содержимым."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+19:null

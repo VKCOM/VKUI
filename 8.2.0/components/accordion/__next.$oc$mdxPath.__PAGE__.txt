@@ -1,0 +1,426 @@
+1:"$Sreact.fragment"
+2:I[23450,["275","static/chunks/275-304ab15e14f41df0.js","433","static/chunks/433-0382baae8dd7435c.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Main"]
+7:I[74517,["275","static/chunks/275-304ab15e14f41df0.js","433","static/chunks/433-0382baae8dd7435c.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Overview",1]
+8:I[80204,["275","static/chunks/275-304ab15e14f41df0.js","433","static/chunks/433-0382baae8dd7435c.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"PlaygroundLazy"]
+9:I[73143,["275","static/chunks/275-304ab15e14f41df0.js","433","static/chunks/433-0382baae8dd7435c.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"BlockWrapper"]
+a:I[18443,["275","static/chunks/275-304ab15e14f41df0.js","433","static/chunks/433-0382baae8dd7435c.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Anchor"]
+22:I[91042,["275","static/chunks/275-304ab15e14f41df0.js","433","static/chunks/433-0382baae8dd7435c.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"TOC"]
+23:I[90484,[],"OutletBoundary"]
+24:"$Sreact.suspense"
+26:I[19180,["275","static/chunks/275-304ab15e14f41df0.js","433","static/chunks/433-0382baae8dd7435c.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Pre"]
+3:T259b,---
+description: Компонент для создания раскрывающихся/сворачивающихся блоков контента.
+---
+
+<Overview group="data-display">
+
+# Accordion [tag:component]
+
+Компонент для создания раскрывающихся/сворачивающихся блоков контента.
+
+</Overview>
+
+import { BlockWrapper } from '@/components/wrappers';
+
+{/* @example-description: Accordion с заголовком и текстом. */}
+<Playground Wrapper={BlockWrapper} style={{ height: 180 }}>
+  ```jsx
+  <Accordion>
+    <Accordion.Summary>Новый дизайн профиля</Accordion.Summary>
+    <Accordion.Content>
+      <Div>
+        Внешний вид профиля ВКонтакте действительно обновился. К прежнему варианту вернуться уже не
+        получится. В центре внимания нового дизайна — личность человека и его увлечения. Новый
+        формат профиля особенно удобен для авторов контента и станет для них цифровой визиткой.
+      </Div>
+    </Accordion.Content>
+  </Accordion>
+  ```
+</Playground>
+
+## Структура
+
+Обязательная обёртка для всего сворачивающегося контента - компонент `Accordion`.
+
+Заголовок для триггера разворачивающегося блока необходимо вкладывать в подкомпонент `Accordion.Summary`, который
+наследует все свойства компонента [`SimpleCell`](/components/simple-cell).
+
+Сворачивающийся контент необходимо вкладывать в подкомпонент `Accordion.Content`.
+
+## Режим работы
+
+Компонент поддерживает работу как в неконтролируемом режиме, так и контролируемом. Это стандартное поведение
+React-компонентов, прочитать про это можно в [документации React](https://react.dev/reference/react-dom/components/input#controlling-an-input-with-a-state-variable).
+
+Для использования неконтролируемого режима достаточно просто _не_ передавать `expanded` или передавать `defaultExpanded`, если
+требуется задать значение по умолчанию.
+
+Используйте свойства `expanded` и `onChange` для контролируемого управления состоянием компонента.
+
+```jsx
+// Неконтролируемое состояние, раскрыт по умолчанию
+<Accordion defaultExpanded>
+  <Accordion.Summary>Заголовок</Accordion.Summary>
+  <Accordion.Content>
+    <Div>Контент</Div>
+  </Accordion.Content>
+</Accordion>;
+
+// Контролируемое состояние, раскрыт по умолчанию
+const [expanded, setExpanded] = React.useState(true);
+return (
+  <Accordion expanded={expanded} onChange={setExpanded}>
+    <Accordion.Summary>Заголовок</Accordion.Summary>
+    <Accordion.Content>
+      <Div>Контент</Div>
+    </Accordion.Content>
+  </Accordion>
+);
+```
+
+## Группа аккордеонов
+
+Компонент `Group` позволяет отображать несколько `Accordion`.
+
+{/* @example-description: Группа аккордеонов: только один раскрыт. */}
+<Playground Wrapper={BlockWrapper}>
+
+```jsx
+const data = [
+  {
+    id: 1,
+    title: 'Как сменить номер телефона?',
+    detail: 'Зайдите в раздел Безопасность и вход. Укажите новый номер телефона и подтвердите его.',
+  },
+  {
+    id: 2,
+    title: 'Как изменить пароль?',
+    detail:
+      'Для входа во многие сервисы экосистемы VK используется один пароль. Если вы беспокоитесь по поводу безопасности, этот пароль можно изменить.',
+  },
+  {
+    id: 3,
+    title: 'Как усилить защиту аккаунта?',
+    detail:
+      'Используйте сложный пароль и регулярно меняйте его. Обновить пароль можно в разделе Пароль.',
+  },
+];
+
+const [openId, setOpenId] = React.useState(2);
+
+return (
+  <Group mode="card" separator="hide">
+    {data.map(({ id, title, detail }) => (
+      <Accordion
+        key={id}
+        expanded={openId === id}
+        onChange={(e) => (e ? setOpenId(id) : setOpenId(null))}
+      >
+        <Accordion.Summary>{title}</Accordion.Summary>
+        <Accordion.Content>
+          <Div>
+            <Text>{detail}</Text>
+          </Div>
+        </Accordion.Content>
+      </Accordion>
+    ))}
+  </Group>
+);
+```
+
+</Playground>
+
+## Визуальное оформление
+
+### Иконки
+
+Используйте свойства `ExpandIcon` и `CollapseIcon` для кастомизации иконок раскрытия/сворачивания.
+
+{/* @example-description: Иконки раскрытия/сворачивания перед текстом. */}
+<Playground Wrapper={BlockWrapper} style={{ height: 180 }}>
+  ```jsx
+  <Accordion>
+    <Accordion.Summary
+      iconPosition="before"
+      ExpandIcon={Icon28AddCircleOutline}
+      CollapseIcon={Icon28RemoveCircleOutline}
+    >
+      Новый дизайн профиля
+    </Accordion.Summary>
+    <Accordion.Content>
+      <Div>
+        Внешний вид профиля ВКонтакте действительно обновился. К прежнему варианту вернуться уже не
+        получится. В центре внимания нового дизайна — личность человека и его увлечения. Новый
+        формат профиля особенно удобен для авторов контента и станет для них цифровой визиткой.
+      </Div>
+    </Accordion.Content>
+  </Accordion>
+  ```
+</Playground>
+
+Чтобы расположить иконку в любом месте, используйте компонент `<Accordion.Icon />`
+
+<Playground Wrapper={BlockWrapper} style={{ height: 200 }}>
+  ```jsx
+const users = [
+  {
+    id: 1771114,
+    first_name: 'Ином',
+    last_name: 'Мирджамолов',
+    screen_name: 'inomdzhon',
+    photo_50: 'https://avatars.githubusercontent.com/u/5850354?s=50',
+  },
+  {
+    id: 58690866,
+    first_name: 'Эльдар',
+    last_name: 'Мухаметханов',
+    screen_name: 'e.muhamethanov',
+    photo_50: 'https://avatars.githubusercontent.com/u/61377022?s=50',
+  },
+  {
+    id: 117253521,
+    first_name: 'Даниил',
+    last_name: 'Суворов',
+    screen_name: 'SevereCloud',
+    photo_50: 'https://avatars.githubusercontent.com/u/14944123?s=50',
+  },
+];
+
+return(
+  <Accordion>
+    <Accordion.Summary
+      iconPosition="none"
+      after={
+        <UsersStack
+          photos={users.map(user=>user.photo_50)}
+        />
+      }
+      badgeAfterTitle={<Accordion.Icon />}
+    >
+      Разработчики
+    </Accordion.Summary>
+    <Accordion.Content>
+      {users.map(user => (
+        <SimpleCell
+          key={user.id}
+          href={`https://vk.ru/id${user.id}`}
+          target="_blank"
+          before={<Avatar size={28} src={user.photo_50} alt="Фотография" />}
+        >
+          {user.first_name} {user.last_name}
+        </SimpleCell>
+      ))}
+    </Accordion.Content>
+  </Accordion>
+);
+  ```
+</Playground>
+
+## Анимация
+
+Компонент поддерживает следующие анимационные эффекты:
+
+- плавное раскрытие/сворачивание контента;
+- автоматический расчет высоты содержимого;
+- поддержка прерывания анимации при быстром клике.
+
+## Производительность
+
+По умолчанию контент монтируется, даже если он не развернут. Такое поведение предусмотрено с учётом серверного рендеринга и SEO.
+
+Если внутри контента находится большая иерархия компонентов или если у вас много аккордеонов,
+то для улучшения производительности передавайте свойство `unmountOnCollapsed`, которое позволяет не монтировать
+контент, пока он не развернут и размонтирует компонент при сворачивании.
+
+```jsx
+<Accordion unmountOnCollapsed />
+```
+
+## Доступность (a11y) [#a11y]
+
+Доступность реализована на основе рекомендаций из [Accordion WAI-ARIA design pattern](https://www.w3.org/WAI/ARIA/apg/patterns/accordion/).
+
+## Свойства и методы [#api]
+
+<PropsTable name="Accordion">
+### Accordion [#accordion-api]
+
+### Accordion.Summary [#accordion-summary-api]
+
+### Accordion.Icon [#accordion-icon-api]
+
+### Accordion.Content [#accordion-content-api]
+
+</PropsTable>0:{"rsc":["$","$1","c",{"children":[[["$","$L2",null,{"metadata":{"description":"Компонент для создания раскрывающихся/сворачивающихся блоков контента.","title":"Accordion","filePath":"content/components/accordion.mdx","timestamp":1778845990000},"sourceCode":"$3","children":"$L4"}],"$L5"],null,"$L6"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"wj4SKuycOZIo3rvTKi4No"}
+4:[["$","$L7",null,{"group":"data-display","children":[["$","h1",null,{"className":"mdx_h1__1mgpN","data-pagefind-filter":"tag:component","children":"Accordion"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Компонент для создания раскрывающихся/сворачивающихся блоков контента."}]]}],"\n","\n","\n",["$","$L8",null,{"Wrapper":"$9","style":{"height":180},"code":"<Accordion>\n  <Accordion.Summary>Новый дизайн профиля</Accordion.Summary>\n  <Accordion.Content>\n    <Div>\n      Внешний вид профиля ВКонтакте действительно обновился. К прежнему варианту вернуться уже не\n      получится. В центре внимания нового дизайна — личность человека и его увлечения. Новый\n      формат профиля особенно удобен для авторов контента и станет для них цифровой визиткой.\n    </Div>\n  </Accordion.Content>\n</Accordion>"}],"\n",["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"struktura","children":["$","a",null,{"href":"#struktura","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Структура","children":["Структура",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}],"\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Обязательная обёртка для всего сворачивающегося контента - компонент ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"Accordion"}],"."]}],"\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Заголовок для триггера разворачивающегося блока необходимо вкладывать в подкомпонент ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"Accordion.Summary"}],", который\nнаследует все свойства компонента ",["$","$La",null,{"href":"/components/simple-cell","children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"SimpleCell"}]}],"."]}],"\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Сворачивающийся контент необходимо вкладывать в подкомпонент ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"Accordion.Content"}],"."]}],"\n",["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"rezhim-raboty","children":["$","a",null,{"href":"#rezhim-raboty","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Режим работы","children":["Режим работы",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}],"\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Компонент поддерживает работу как в неконтролируемом режиме, так и контролируемом. Это стандартное поведение\nReact-компонентов, прочитать про это можно в ",["$","$La",null,{"href":"https://react.dev/reference/react-dom/components/input#controlling-an-input-with-a-state-variable","children":"документации React"}],"."]}],"\n","$Lb","\n","$Lc","\n","$Ld","\n","$Le","\n","$Lf","\n","\n","$L10","\n","$L11","\n","$L12","\n","$L13","\n","\n","$L14","\n","$L15","\n","$L16","\n","$L17","\n","$L18","\n","$L19","\n","$L1a","\n","$L1b","\n","$L1c","\n","$L1d","\n","$L1e","\n","$L1f","\n","$L20","\n","$L21"]
+5:["$","$L22",null,{"toc":[{"value":"Структура","id":"struktura","depth":2},{"value":"Режим работы","id":"rezhim-raboty","depth":2},{"value":"Группа аккордеонов","id":"gruppa-akkordeonov","depth":2},{"value":"Визуальное оформление","id":"vizualnoe-oformlenie","depth":2},{"value":"Иконки","id":"ikonki","depth":3},{"value":"Анимация","id":"animaciya","depth":2},{"value":"Производительность","id":"proizvoditelnost","depth":2},{"value":"Доступность (a11y)","id":"a11y","depth":2},{"value":"Свойства и методы","id":"api","depth":2},{"value":"Accordion","id":"accordion-api","depth":3},{"value":"Accordion.Summary","id":"accordion-summary-api","depth":3},{"value":"Accordion.Icon","id":"accordion-icon-api","depth":3},{"value":"Accordion.Content","id":"accordion-content-api","depth":3}]}]
+6:["$","$L23",null,{"children":["$","$24",null,{"name":"Next.MetadataOutlet","children":"$@25"}]}]
+b:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Для использования неконтролируемого режима достаточно просто ",["$","em",null,{"children":"не"}]," передавать ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"expanded"}]," или передавать ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"defaultExpanded"}],", если\nтребуется задать значение по умолчанию."]}]
+c:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Используйте свойства ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"expanded"}]," и ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"onChange"}]," для контролируемого управления состоянием компонента."]}]
+d:["$","$L26",null,{"tabIndex":"0","data-language":"jsx","data-word-wrap":"","data-copy":"","data-pagefind-ignore":"all","children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":[["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#6A737D","--shiki-dark":"#6A737D"},"children":"// Неконтролируемое состояние, раскрыт по умолчанию"}]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"<"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Accordion"}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" defaultExpanded"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  <"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Accordion.Summary"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">Заголовок</"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Accordion.Summary"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  <"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Accordion.Content"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"    <"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Div"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">Контент</"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Div"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  </"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Accordion.Content"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"</"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Accordion"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">;"}]]}],"\n",["$","span",null,{"children":" "}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#6A737D","--shiki-dark":"#6A737D"},"children":"// Контролируемое состояние, раскрыт по умолчанию"}]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"const"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" ["}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"expanded"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":", "}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"setExpanded"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"] "}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" React."}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":"useState"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"("}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"true"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":");"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"return"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" ("}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  <"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Accordion"}],"$L27","$L28","$L29","$L2a","$L2b","$L2c"]}],"\n","$L2d","\n","$L2e","\n","$L2f","\n","$L30","\n","$L31","\n","$L32"]}]}]
+e:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"gruppa-akkordeonov","children":["$","a",null,{"href":"#gruppa-akkordeonov","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Группа аккордеонов","children":["Группа аккордеонов",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+f:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Компонент ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"Group"}]," позволяет отображать несколько ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"Accordion"}],"."]}]
+33:T578,const data = [
+  {
+    id: 1,
+    title: 'Как сменить номер телефона?',
+    detail: 'Зайдите в раздел Безопасность и вход. Укажите новый номер телефона и подтвердите его.',
+  },
+  {
+    id: 2,
+    title: 'Как изменить пароль?',
+    detail:
+      'Для входа во многие сервисы экосистемы VK используется один пароль. Если вы беспокоитесь по поводу безопасности, этот пароль можно изменить.',
+  },
+  {
+    id: 3,
+    title: 'Как усилить защиту аккаунта?',
+    detail:
+      'Используйте сложный пароль и регулярно меняйте его. Обновить пароль можно в разделе Пароль.',
+  },
+];
+
+const [openId, setOpenId] = React.useState(2);
+
+return (
+  <Group mode="card" separator="hide">
+    {data.map(({ id, title, detail }) => (
+      <Accordion
+        key={id}
+        expanded={openId === id}
+        onChange={(e) => (e ? setOpenId(id) : setOpenId(null))}
+      >
+        <Accordion.Summary>{title}</Accordion.Summary>
+        <Accordion.Content>
+          <Div>
+            <Text>{detail}</Text>
+          </Div>
+        </Accordion.Content>
+      </Accordion>
+    ))}
+  </Group>
+);10:["$","$L8",null,{"Wrapper":"$9","code":"$33"}]
+11:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"vizualnoe-oformlenie","children":["$","a",null,{"href":"#vizualnoe-oformlenie","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Визуальное оформление","children":["Визуальное оформление",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+12:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"ikonki","children":["$","a",null,{"href":"#ikonki","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Иконки","children":["Иконки",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+13:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Используйте свойства ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"ExpandIcon"}]," и ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"CollapseIcon"}]," для кастомизации иконок раскрытия/сворачивания."]}]
+14:["$","$L8",null,{"Wrapper":"$9","style":{"height":180},"code":"<Accordion>\n  <Accordion.Summary\n    iconPosition=\"before\"\n    ExpandIcon={Icon28AddCircleOutline}\n    CollapseIcon={Icon28RemoveCircleOutline}\n  >\n    Новый дизайн профиля\n  </Accordion.Summary>\n  <Accordion.Content>\n    <Div>\n      Внешний вид профиля ВКонтакте действительно обновился. К прежнему варианту вернуться уже не\n      получится. В центре внимания нового дизайна — личность человека и его увлечения. Новый\n      формат профиля особенно удобен для авторов контента и станет для них цифровой визиткой.\n    </Div>\n  </Accordion.Content>\n</Accordion>"}]
+15:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Чтобы расположить иконку в любом месте, используйте компонент ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"<Accordion.Icon />"}]]}]
+34:T4a5,const users = [
+{
+  id: 1771114,
+  first_name: 'Ином',
+  last_name: 'Мирджамолов',
+  screen_name: 'inomdzhon',
+  photo_50: 'https://avatars.githubusercontent.com/u/5850354?s=50',
+},
+{
+  id: 58690866,
+  first_name: 'Эльдар',
+  last_name: 'Мухаметханов',
+  screen_name: 'e.muhamethanov',
+  photo_50: 'https://avatars.githubusercontent.com/u/61377022?s=50',
+},
+{
+  id: 117253521,
+  first_name: 'Даниил',
+  last_name: 'Суворов',
+  screen_name: 'SevereCloud',
+  photo_50: 'https://avatars.githubusercontent.com/u/14944123?s=50',
+},
+];
+
+return(
+<Accordion>
+  <Accordion.Summary
+    iconPosition="none"
+    after={
+      <UsersStack
+        photos={users.map(user=>user.photo_50)}
+      />
+    }
+    badgeAfterTitle={<Accordion.Icon />}
+  >
+    Разработчики
+  </Accordion.Summary>
+  <Accordion.Content>
+    {users.map(user => (
+      <SimpleCell
+        key={user.id}
+        href={`https://vk.ru/id${user.id}`}
+        target="_blank"
+        before={<Avatar size={28} src={user.photo_50} alt="Фотография" />}
+      >
+        {user.first_name} {user.last_name}
+      </SimpleCell>
+    ))}
+  </Accordion.Content>
+</Accordion>
+);16:["$","$L8",null,{"Wrapper":"$9","style":{"height":200},"code":"$34"}]
+17:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"animaciya","children":["$","a",null,{"href":"#animaciya","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Анимация","children":["Анимация",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+18:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Компонент поддерживает следующие анимационные эффекты:"}]
+19:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":"плавное раскрытие/сворачивание контента;"}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":"автоматический расчет высоты содержимого;"}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":"поддержка прерывания анимации при быстром клике."}],"\n"]}]
+1a:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"proizvoditelnost","children":["$","a",null,{"href":"#proizvoditelnost","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Производительность","children":["Производительность",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+1b:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"По умолчанию контент монтируется, даже если он не развернут. Такое поведение предусмотрено с учётом серверного рендеринга и SEO."}]
+1c:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Если внутри контента находится большая иерархия компонентов или если у вас много аккордеонов,\nто для улучшения производительности передавайте свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"unmountOnCollapsed"}],", которое позволяет не монтировать\nконтент, пока он не развернут и размонтирует компонент при сворачивании."]}]
+1d:["$","$L26",null,{"tabIndex":"0","data-language":"jsx","data-word-wrap":"","data-copy":"","data-pagefind-ignore":"all","children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"<"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Accordion"}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" unmountOnCollapsed"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" />"}]]}]}]}]
+1e:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"a11y","children":["$","a",null,{"href":"#a11y","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Доступность (a11y)","children":["Доступность (a11y)",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+1f:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Доступность реализована на основе рекомендаций из ",["$","$La",null,{"href":"https://www.w3.org/WAI/ARIA/apg/patterns/accordion/","children":"Accordion WAI-ARIA design pattern"}],"."]}]
+20:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"api","children":["$","a",null,{"href":"#api","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Свойства и методы","children":["Свойства и методы",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+21:[["$","div","Accordion/.0",{"children":[["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"accordion-api","children":["$","a",null,{"href":"#accordion-api","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Accordion","children":["Accordion",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}],["$","div",null,{"className":"Table_root__0rGvK","children":["$","table",null,{"className":"Table_table__NzLHi PropsTable_root__O959b","children":[["$","thead",null,{"children":["$","tr",null,{"children":[["$","th",null,{"children":"Свойство","className":"Table_th__EHorR"}],["$","th",null,{"children":"Описание","className":"Table_th__EHorR"}]],"className":"Table_tr__SD2Ot"}]}],["$","tbody",null,{"children":["$@35","$@36","$@37","$@38","$@39","$@3a"]}]]}]}]]}],["$","div","Accordion.Summary/.1",{"children":[["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"accordion-summary-api","children":["$","a",null,{"href":"#accordion-summary-api","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Accordion.Summary","children":["Accordion.Summary",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}],["$","div",null,{"className":"Table_root__0rGvK","children":["$","table",null,{"className":"Table_table__NzLHi PropsTable_root__O959b","children":[["$","thead",null,{"children":["$","tr",null,{"children":[["$","th",null,{"children":"Свойство","className":"Table_th__EHorR"}],["$","th",null,{"children":"Описание","className":"Table_th__EHorR"}]],"className":"Table_tr__SD2Ot"}]}],["$","tbody",null,{"children":["$@3b","$@3c","$@3d","$@3e","$@3f","$@40","$@41","$@42","$@43","$@44","$@45","$@46","$@47","$@48","$@49","$@4a","$@4b","$@4c","$@4d","$@4e","$@4f","$@50","$@51","$@52","$@53","$@54","$@55","$@56","$@57","$@58","$@59"]}]]}]}]]}],["$","div","Accordion.Icon/.2",{"children":[["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"accordion-icon-api","children":["$","a",null,{"href":"#accordion-icon-api","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Accordion.Icon","children":["Accordion.Icon",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}],["$","div",null,{"className":"Table_root__0rGvK","children":["$","table",null,{"className":"Table_table__NzLHi PropsTable_root__O959b","children":[["$","thead",null,{"children":["$","tr",null,{"children":[["$","th",null,{"children":"Свойство","className":"Table_th__EHorR"}],"$L5a"],"className":"Table_tr__SD2Ot"}]}],"$L5b"]}]}]]}],"$L5c"]
+25:null
+27:["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" expanded"}]
+28:["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}]
+29:["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"{expanded} "}]
+2a:["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":"onChange"}]
+2b:["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}]
+2c:["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"{setExpanded}>"}]
+2d:["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"    <"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Accordion.Summary"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">Заголовок</"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Accordion.Summary"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}]
+2e:["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"    <"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Accordion.Content"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}]
+2f:["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"      <"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Div"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">Контент</"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Div"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}]
+30:["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"    </"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Accordion.Content"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}]
+31:["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  </"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Accordion"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}]
+32:["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":");"}]}]
+35:["$","tr","defaultExpanded",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"defaultExpanded"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"boolean"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Значение по умолчанию."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"false"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+36:["$","tr","disabled",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"disabled"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"boolean"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Блокировка взаимодействия с компонентом."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+37:["$","tr","expanded",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"expanded"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"boolean"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Управляет раскрытием и скрытием контента."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+38:["$","tr","id",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"id"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"string"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Используется для генерации id для заголовка и контента(a11y)."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+39:["$","tr","onChange",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"onChange"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"((newValue: boolean) => void)"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Возвращает новое значение при изменении раскрытия/сворачивания контента."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+3a:["$","tr","unmountOnCollapsed",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"unmountOnCollapsed"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"boolean"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Нужно ли удалять из DOM контент при сворачивании."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"false"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+3b:["$","tr","activated",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"activated"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"boolean"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Позволяет управлять ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"activated"}],"-состоянием извне."]}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+3c:["$","tr","activeClassName",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ PropsTable_propDeprecated__upMw_","children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"activeClassName"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"string"}],[["$","p",null,{"className":"mdx_paragraph__nVfmE","children":[["$","strong",null,{"className":"mdx_strong__N7OUG","children":"Deprecated"}],": Since 7.3.0. Будет удалено в ",["$","strong",null,{"className":"mdx_strong__N7OUG","children":"VKUI v9"}],"."]}],"\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Используйте свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"activeMode"}],"."]}]],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+3d:["$","tr","activeEffectDelay",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"activeEffectDelay"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"number"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Длительность показа ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"active"}],"-состояния."]}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+3e:["$","tr","activeMode",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"activeMode"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"StateModeLiteral"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Стиль подсветки active-состояния. Если передать произвольную строку, она добавится как css-класс во время active."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+3f:["$","tr","after",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"after"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"ReactNode"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Иконка 24|28 или ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"<Switch />"}],". Располагается справа от ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"indicator"}],"."]}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+40:["$","tr","badgeAfterSubtitle",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"badgeAfterSubtitle"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"ReactNode"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Иконка 12. Добавится справа от текста ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"subtitle"}],"."]}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+41:["$","tr","badgeAfterTitle",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"badgeAfterTitle"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"ReactNode"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Иконка 12 или ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"<Badge />"}],". Добавится справа от текста ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"children"}],"."]}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+42:["$","tr","badgeBeforeSubtitle",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"badgeBeforeSubtitle"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"ReactNode"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Иконка 12. Добавится слева от текста ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"subtitle"}],"."]}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+43:["$","tr","badgeBeforeTitle",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"badgeBeforeTitle"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"ReactNode"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Иконка 12 или ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"<Badge />"}],". Добавится слева от текста ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"children"}],"."]}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+44:["$","tr","before",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"before"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"ReactNode"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Иконка 28 или ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"<Avatar size={28|32|40|48|72} />"}],"."]}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+45:["$","tr","borderRadiusMode",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"borderRadiusMode"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"\"auto\" | \"inherit\""}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Задает border-radius элементу\nВ режиме ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"auto"}]," на маленьких экранах ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"border-radius: 0"}],", иначе определяется токеном ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"--vkui--size_border_radius--regular"}],"."]}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+46:["$","tr","chevronSize",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"chevronSize"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"\"s\" | \"m\""}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Размер chevron."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+47:["$","tr","CollapseIcon",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"CollapseIcon"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"ElementType<any, keyof IntrinsicElements>"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Иконка для сворачивания контента."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+48:["$","tr","Component",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"Component"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"ElementType<any, keyof IntrinsicElements>"}],"$undefined",["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+49:["$","tr","disabled",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"disabled"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"boolean"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Блокировка взаимодействия с компонентом."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+4a:["$","tr","ExpandIcon",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"ExpandIcon"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"ElementType<any, keyof IntrinsicElements>"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Иконка для раскрытия контента."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+4b:["$","tr","extraSubtitle",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"extraSubtitle"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"ReactNode"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Дополнительная строка текста под ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"children"}]," и ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"subtitle"}],"."]}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+4c:["$","tr","focusVisibleMode",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"focusVisibleMode"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"FocusVisibleMode"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Стиль аутлайна focus visible. Если передать произвольную строку, она добавится как css-класс при :focus-visible"}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+4d:["$","tr","getRootRef",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"getRootRef"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"Ref<HTMLElement>"}],"$undefined",["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+4e:["$","tr","hasActive",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"hasActive"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"boolean"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Указывает, должен ли компонент реагировать на ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"active"}],"-состояние."]}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+4f:["$","tr","hasHover",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"hasHover"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"boolean"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Указывает, должен ли компонент реагировать на ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"hover"}],"-состояние."]}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+50:["$","tr","hasHoverWithChildren",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"hasHoverWithChildren"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"boolean"}],[["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Позволяет родительскому компоненту\nиметь ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"hovered"}],"-cостояние при наведении\nна любой дочерний элемент.\nПо умолчанию состояние hovered у родителя сбрасывается."]}],"\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Присваивается родителькому компоненту."}]],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+51:["$","tr","hoverClassName",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ PropsTable_propDeprecated__upMw_","children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"hoverClassName"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"string"}],[["$","p",null,{"className":"mdx_paragraph__nVfmE","children":[["$","strong",null,{"className":"mdx_strong__N7OUG","children":"Deprecated"}],": Since 7.3.0. Будет удалено в ",["$","strong",null,{"className":"mdx_strong__N7OUG","children":"VKUI v9"}],"."]}],"\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Используйте свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"hoverMode"}],"."]}]],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+52:["$","tr","hovered",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"hovered"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"boolean"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Позволяет управлять ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"hovered"}],"-состоянием извне."]}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+53:["$","tr","hoverMode",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"hoverMode"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"StateModeLiteral"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Стиль подсветки hover-состояния. Если передать произвольную строку, она добавится как css-класс во время hover."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+54:["$","tr","iconPosition",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"iconPosition"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"\"after\" | \"before\" | \"none\""}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Позиция иконки."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"after"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+55:["$","tr","indicator",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"indicator"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"ReactNode"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Контейнер для текста справа от ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"children"}],"."]}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+56:["$","tr","multiline",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"multiline"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"boolean"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Включает многострочный режим для отображения текста."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+57:["$","tr","overTitle",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"overTitle"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"ReactNode"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Дополнительная строка текста над ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"children"}],"."]}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+58:["$","tr","subtitle",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"subtitle"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"ReactNode"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Дополнительная строка текста под ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"children"}],"."]}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+59:["$","tr","unlockParentHover",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"unlockParentHover"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"boolean"}],[["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Позволяет родительскому компоненту показывать hovered-состояние при наведении\nна текущий дочерний компонент."}],"\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Присваивается дочернему компоненту."}]],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+5a:["$","th",null,{"children":"Описание","className":"Table_th__EHorR"}]
+5b:["$","tbody",null,{"children":["$@5d","$@5e"]}]
+5c:["$","div","Accordion.Content/.3",{"children":[["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"accordion-content-api","children":["$","a",null,{"href":"#accordion-content-api","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Accordion.Content","children":["Accordion.Content",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}],["$","div",null,{"className":"Table_root__0rGvK","children":["$","table",null,{"className":"Table_table__NzLHi PropsTable_root__O959b","children":[["$","thead",null,{"children":["$","tr",null,{"children":[["$","th",null,{"children":"Свойство","className":"Table_th__EHorR"}],["$","th",null,{"children":"Описание","className":"Table_th__EHorR"}]],"className":"Table_tr__SD2Ot"}]}],["$","tbody",null,{"children":["$@5f","$@60"]}]]}]}]]}]
+5d:["$","tr","CollapseIcon",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"CollapseIcon"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"ElementType<any, keyof IntrinsicElements>"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Иконка для сворачивания контента."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+5e:["$","tr","ExpandIcon",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"ExpandIcon"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"ElementType<any, keyof IntrinsicElements>"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Иконка для раскрытия контента."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+5f:["$","tr","getRef",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"getRef"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"Ref<HTMLDivElement>"}],"$undefined",["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+60:["$","tr","getRootRef",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"getRootRef"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"Ref<HTMLDivElement>"}],"$undefined",["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]

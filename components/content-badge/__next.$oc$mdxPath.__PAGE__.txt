@@ -1,0 +1,305 @@
+1:"$Sreact.fragment"
+2:I[23450,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-3c03d819f20b8c00.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Main"]
+7:I[74517,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-3c03d819f20b8c00.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Overview",1]
+8:I[80204,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-3c03d819f20b8c00.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"PlaygroundLazy"]
+2e:I[91042,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-3c03d819f20b8c00.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"TOC"]
+2f:I[90484,[],"OutletBoundary"]
+30:"$Sreact.suspense"
+32:I[75605,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-3c03d819f20b8c00.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"OverlayButtonWrapper"]
+3:T22c5,---
+description: Компонент для выделения статусов, категорий и счётчиков рядом с элементами интерфейса.
+---
+
+<Overview group="data-display">
+
+# ContentBadge [tag:component]
+
+Компонент для выделения статусов, категорий и счётчиков рядом с элементами интерфейса.
+Используется в ячейках, кнопках и навигации.
+
+</Overview>
+
+{/* @example-description: Базовый `ContentBadge` для короткой статусной метки. */}
+<Playground>
+  ```jsx
+  <ContentBadge>Новинка</ContentBadge>
+  ```
+</Playground>
+
+## Режим отображения
+
+Определяется свойством `mode`:
+
+- `primary` — акцентный вариант с заливкой, используется для выделения ключевого статуса,
+  важных меток или основного действия;
+- `secondary` — контурный стиль с прозрачным фоном, подходит для второстепенных меток,
+  дополнительных статусов или менее приоритетных элементов;
+- `outline` — минималистичный контур без фона, применяется для нейтральных подсказок,
+  неактивных или малозначимых состояний.
+
+## Визуальное оформление
+
+### Цвет
+
+Определяется свойством `appearance`.
+
+#### `"accent"`
+
+Задаёт компоненту акцентный цвет, который может меняться в зависимости от светлой или тёмной схемы.
+
+{/* @example-description: Цветовая схема `accent` во всех режимах `ContentBadge`. */}
+<Playground>
+  ```jsx
+  <ContentBadge mode="primary" appearance="accent">
+    Новинка
+  </ContentBadge>
+  <ContentBadge mode="secondary" appearance="accent">
+    Новинка
+  </ContentBadge>
+  <ContentBadge mode="outline" appearance="accent">
+    Новинка
+  </ContentBadge>
+  ```
+</Playground>
+
+#### `"neutral"`
+
+Задаёт компоненту нейтральный цвет, который также может являться альтернативным акцентным цветом компонента.
+
+{/* @example-description: Нейтральная цветовая схема `ContentBadge` для разных режимов отображения. */}
+<Playground>
+  ```jsx
+  <ContentBadge mode="primary" appearance="neutral">
+    Нет в наличии
+  </ContentBadge>
+  <ContentBadge mode="secondary" appearance="neutral">
+    Нет в наличии
+  </ContentBadge>
+  <ContentBadge mode="outline" appearance="neutral">
+    Нет в наличии
+  </ContentBadge>
+  ```
+</Playground>
+
+#### `"accent-green"`
+
+Значение задаёт компоненту цвет для позитивных статусов (чаще всего зеленый).
+
+{/* @example-description: Позитивная цветовая схема `accent-green` для статусных бейджей. */}
+<Playground>
+  ```jsx
+  <ContentBadge mode="primary" appearance="accent-green">
+    Активно
+  </ContentBadge>
+  <ContentBadge mode="secondary" appearance="accent-green">
+    Активно
+  </ContentBadge>
+  <ContentBadge mode="outline" appearance="accent-green">
+    Активно
+  </ContentBadge>
+  ```
+</Playground>
+
+#### `"accent-red"`
+
+Значение задаёт компоненту цвет для "горящих" статусов (чаще всего красных).
+
+{/* @example-description: Акцентная красная схема `accent-red` для приоритетных меток. */}
+<Playground>
+  ```jsx
+  <ContentBadge mode="primary" appearance="accent-red">
+    70%
+  </ContentBadge>
+  <ContentBadge mode="secondary" appearance="accent-red">
+    70%
+  </ContentBadge>
+  <ContentBadge mode="outline" appearance="accent-red">
+    70%
+  </ContentBadge>
+  ```
+</Playground>
+
+#### `"overlay"`
+
+Значение цвета используется для статусов, располагающихся поверх цветных элементов или фото.
+
+import { OverlayButtonWrapper } from '@/components/wrappers';
+
+{/* @example-description: Варианты `ContentBadge` поверх медиа-контента с `appearance="overlay"`. */}
+<Playground Wrapper={OverlayButtonWrapper}>
+  ```jsx
+  <ContentBadge mode="primary" appearance="overlay">
+    Нет в наличии
+  </ContentBadge>
+  <ContentBadge mode="secondary" appearance="overlay">
+    Нет в наличии
+  </ContentBadge>
+  <ContentBadge mode="outline" appearance="overlay">
+    Нет в наличии
+  </ContentBadge>
+  ```
+</Playground>
+
+## Пользовательские цвета
+
+Используйте свойство `appearance` для задания произвольного цвета `ContentBadge`. Поддерживаются:
+
+### HEX-коды
+
+{/* @example-description: Пользовательский цвет `ContentBadge` через HEX-значение в `appearance`. */}
+<Playground>
+  ```jsx
+  <ContentBadge mode="primary" appearance="#FF6699">
+    Новинка
+  </ContentBadge>
+  <ContentBadge mode="secondary" appearance="#FF6699">
+    Новинка
+  </ContentBadge>
+  <ContentBadge mode="outline" appearance="#FF6699">
+    Новинка
+  </ContentBadge>
+  ```
+</Playground>
+
+### CSS-переменные
+
+{/* @example-description: Пользовательский цвет `ContentBadge` через CSS-переменную в `appearance`. */}
+<Playground>
+  ```jsx
+  <div style={{ '--custom-badge-color': '#7B61FF' }}>
+    <ContentBadge mode="primary" appearance="var(--custom-badge-color)">
+      Новинка
+    </ContentBadge>
+    <ContentBadge mode="secondary" appearance="var(--custom-badge-color)">
+      Новинка
+    </ContentBadge>
+    <ContentBadge mode="outline" appearance="var(--custom-badge-color)">
+      Новинка
+    </ContentBadge>
+  </div>
+  ```
+</Playground>
+
+### Скругление
+
+Свойство `capsule` включает приближение значения закругления к форме круга:
+
+- для `size="m"` и `size="l"` — приближает к овальной форме;
+- для `size="s"` - свойство не поддерживается.
+
+{/* @example-description: Скругленные бейджи с `capsule` для размеров `m` и `l`. */}
+<Playground>
+  ```jsx
+  <ContentBadge capsule size="m">
+    Новинка
+  </ContentBadge>
+  <ContentBadge capsule size="l">
+    Новинка
+  </ContentBadge>
+  ```
+</Playground>
+
+## Размер
+
+Определяется свойством `size`:
+
+- `s` — компактный (только текст, без иконок);
+- `m` — стандартный с поддержкой иконок `16px`;
+- `l` — крупный с иконками `20px`.
+
+{/* @example-description: Сравнение размеров `s`, `m` и `l` для `ContentBadge`. */}
+<Playground>
+  ```jsx
+  <ContentBadge size="s">Новинка</ContentBadge>
+  <ContentBadge size="m">Новинка</ContentBadge>
+  <ContentBadge size="l">Новинка</ContentBadge>
+  ```
+</Playground>
+
+## Работа с иконками
+
+Используйте `ContentBadge.SlotIcon` для вставки одиночной иконки:
+
+- для `size="s"` - иконки не поддерживаются;
+- для `size="m"` — рекомендуемый размер `12px` при наличии текста, для одиночной иконки `16px`;
+- для `size="l"` — рекомендуемый размер `16px` при наличии текста, для одиночной иконки `20px`.
+
+{/* @example-description: Использование `ContentBadge.SlotIcon` с текстом и в формате иконки без текста. */}
+<Playground>
+  ```jsx
+  <ContentBadge size="m" appearance="accent-green">
+    <ContentBadge.SlotIcon>
+      <Icon12Tag />
+    </ContentBadge.SlotIcon>
+    Доступно по скидке
+  </ContentBadge>
+  <ContentBadge size="l" appearance="neutral">
+    Заблокировано
+    <ContentBadge.SlotIcon>
+      <Icon16LockOutline />
+    </ContentBadge.SlotIcon>
+  </ContentBadge>
+  <ContentBadge size="l" appearance="accent-red">
+    <ContentBadge.SlotIcon>
+      <Icon20CrownVerified />
+    </ContentBadge.SlotIcon>
+  </ContentBadge>
+  ```
+</Playground>
+
+## Свойства и методы [#api]
+
+<PropsTable name="ContentBadge">
+### ContentBadge [#content-badge-api]
+
+### ContentBadge.SlotIcon [#content-badge-slot-icon-api]
+
+</PropsTable>0:{"rsc":["$","$1","c",{"children":[[["$","$L2",null,{"metadata":{"description":"Компонент для выделения статусов, категорий и счётчиков рядом с элементами интерфейса.","title":"ContentBadge","filePath":"content/components/content-badge.mdx","timestamp":1778845990000},"sourceCode":"$3","children":"$L4"}],"$L5"],null,"$L6"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"0Ol_0BANXusFa48he9eFA"}
+4:[["$","$L7",null,{"group":"data-display","children":[["$","h1",null,{"className":"mdx_h1__1mgpN","data-pagefind-filter":"tag:component","children":"ContentBadge"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Компонент для выделения статусов, категорий и счётчиков рядом с элементами интерфейса.\nИспользуется в ячейках, кнопках и навигации."}]]}],"\n","\n",["$","$L8",null,{"code":"<ContentBadge>Новинка</ContentBadge>"}],"\n",["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"rezhim-otobrazheniya","children":["$","a",null,{"href":"#rezhim-otobrazheniya","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Режим отображения","children":["Режим отображения",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}],"\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Определяется свойством ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"mode"}],":"]}],"\n",["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"primary"}]," — акцентный вариант с заливкой, используется для выделения ключевого статуса,\nважных меток или основного действия;"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"secondary"}]," — контурный стиль с прозрачным фоном, подходит для второстепенных меток,\nдополнительных статусов или менее приоритетных элементов;"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"outline"}]," — минималистичный контур без фона, применяется для нейтральных подсказок,\nнеактивных или малозначимых состояний."]}],"\n"]}],"\n",["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"vizualnoe-oformlenie","children":["$","a",null,{"href":"#vizualnoe-oformlenie","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Визуальное оформление","children":["Визуальное оформление",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}],"\n",["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"cvet","children":["$","a",null,{"href":"#cvet","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Цвет","children":["Цвет",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined","$L9"]]}]]}]}],"\n","$La","\n","$Lb","\n","$Lc","\n","\n","$Ld","\n","$Le","\n","$Lf","\n","\n","$L10","\n","$L11","\n","$L12","\n","\n","$L13","\n","$L14","\n","$L15","\n","\n","$L16","\n","$L17","\n","$L18","\n","\n","\n","$L19","\n","$L1a","\n","$L1b","\n","$L1c","\n","\n","$L1d","\n","$L1e","\n","\n","$L1f","\n","$L20","\n","$L21","\n","$L22","\n","\n","$L23","\n","$L24","\n","$L25","\n","$L26","\n","\n","$L27","\n","$L28","\n","$L29","\n","$L2a","\n","\n","$L2b","\n","$L2c","\n","$L2d"]
+5:["$","$L2e",null,{"toc":[{"value":"Режим отображения","id":"rezhim-otobrazheniya","depth":2},{"value":"Визуальное оформление","id":"vizualnoe-oformlenie","depth":2},{"value":"Цвет","id":"cvet","depth":3},{"value":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"\"accent\""}],"id":"accent","depth":4},{"value":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"\"neutral\""}],"id":"neutral","depth":4},{"value":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"\"accent-green\""}],"id":"accent-green","depth":4},{"value":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"\"accent-red\""}],"id":"accent-red","depth":4},{"value":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"\"overlay\""}],"id":"overlay","depth":4},{"value":"Пользовательские цвета","id":"polzovatelskie-cveta","depth":2},{"value":"HEX-коды","id":"hex-kody","depth":3},{"value":"CSS-переменные","id":"css-peremennye","depth":3},{"value":"Скругление","id":"skruglenie","depth":3},{"value":"Размер","id":"razmer","depth":2},{"value":"Работа с иконками","id":"rabota-s-ikonkami","depth":2},{"value":"Свойства и методы","id":"api","depth":2},{"value":"ContentBadge","id":"content-badge-api","depth":3},{"value":"ContentBadge.SlotIcon","id":"content-badge-slot-icon-api","depth":3}]}]
+6:["$","$L2f",null,{"children":["$","$30",null,{"name":"Next.MetadataOutlet","children":"$@31"}]}]
+9:["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]
+a:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Определяется свойством ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"appearance"}],"."]}]
+b:["$","h4",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading4__c9VtX","id":"accent","children":["$","a",null,{"href":"#accent","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию [object Object]","children":["$5:props:toc:3:value",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+c:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Задаёт компоненту акцентный цвет, который может меняться в зависимости от светлой или тёмной схемы."}]
+d:["$","$L8",null,{"code":"<ContentBadge mode=\"primary\" appearance=\"accent\">\n  Новинка\n</ContentBadge>\n<ContentBadge mode=\"secondary\" appearance=\"accent\">\n  Новинка\n</ContentBadge>\n<ContentBadge mode=\"outline\" appearance=\"accent\">\n  Новинка\n</ContentBadge>"}]
+e:["$","h4",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading4__c9VtX","id":"neutral","children":["$","a",null,{"href":"#neutral","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию [object Object]","children":["$5:props:toc:4:value",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+f:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Задаёт компоненту нейтральный цвет, который также может являться альтернативным акцентным цветом компонента."}]
+10:["$","$L8",null,{"code":"<ContentBadge mode=\"primary\" appearance=\"neutral\">\n  Нет в наличии\n</ContentBadge>\n<ContentBadge mode=\"secondary\" appearance=\"neutral\">\n  Нет в наличии\n</ContentBadge>\n<ContentBadge mode=\"outline\" appearance=\"neutral\">\n  Нет в наличии\n</ContentBadge>"}]
+11:["$","h4",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading4__c9VtX","id":"accent-green","children":["$","a",null,{"href":"#accent-green","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию [object Object]","children":["$5:props:toc:5:value",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+12:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Значение задаёт компоненту цвет для позитивных статусов (чаще всего зеленый)."}]
+13:["$","$L8",null,{"code":"<ContentBadge mode=\"primary\" appearance=\"accent-green\">\n  Активно\n</ContentBadge>\n<ContentBadge mode=\"secondary\" appearance=\"accent-green\">\n  Активно\n</ContentBadge>\n<ContentBadge mode=\"outline\" appearance=\"accent-green\">\n  Активно\n</ContentBadge>"}]
+14:["$","h4",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading4__c9VtX","id":"accent-red","children":["$","a",null,{"href":"#accent-red","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию [object Object]","children":["$5:props:toc:6:value",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+15:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Значение задаёт компоненту цвет для “горящих” статусов (чаще всего красных)."}]
+16:["$","$L8",null,{"code":"<ContentBadge mode=\"primary\" appearance=\"accent-red\">\n  70%\n</ContentBadge>\n<ContentBadge mode=\"secondary\" appearance=\"accent-red\">\n  70%\n</ContentBadge>\n<ContentBadge mode=\"outline\" appearance=\"accent-red\">\n  70%\n</ContentBadge>"}]
+17:["$","h4",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading4__c9VtX","id":"overlay","children":["$","a",null,{"href":"#overlay","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию [object Object]","children":["$5:props:toc:7:value",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+18:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Значение цвета используется для статусов, располагающихся поверх цветных элементов или фото."}]
+19:["$","$L8",null,{"Wrapper":"$32","code":"<ContentBadge mode=\"primary\" appearance=\"overlay\">\n  Нет в наличии\n</ContentBadge>\n<ContentBadge mode=\"secondary\" appearance=\"overlay\">\n  Нет в наличии\n</ContentBadge>\n<ContentBadge mode=\"outline\" appearance=\"overlay\">\n  Нет в наличии\n</ContentBadge>"}]
+1a:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"polzovatelskie-cveta","children":["$","a",null,{"href":"#polzovatelskie-cveta","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Пользовательские цвета","children":["Пользовательские цвета",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+1b:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Используйте свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"appearance"}]," для задания произвольного цвета ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"ContentBadge"}],". Поддерживаются:"]}]
+1c:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"hex-kody","children":["$","a",null,{"href":"#hex-kody","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию HEX-коды","children":["HEX-коды",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+1d:["$","$L8",null,{"code":"<ContentBadge mode=\"primary\" appearance=\"#FF6699\">\n  Новинка\n</ContentBadge>\n<ContentBadge mode=\"secondary\" appearance=\"#FF6699\">\n  Новинка\n</ContentBadge>\n<ContentBadge mode=\"outline\" appearance=\"#FF6699\">\n  Новинка\n</ContentBadge>"}]
+1e:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"css-peremennye","children":["$","a",null,{"href":"#css-peremennye","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию CSS-переменные","children":["CSS-переменные",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+1f:["$","$L8",null,{"code":"<div style={{ '--custom-badge-color': '#7B61FF' }}>\n  <ContentBadge mode=\"primary\" appearance=\"var(--custom-badge-color)\">\n    Новинка\n  </ContentBadge>\n  <ContentBadge mode=\"secondary\" appearance=\"var(--custom-badge-color)\">\n    Новинка\n  </ContentBadge>\n  <ContentBadge mode=\"outline\" appearance=\"var(--custom-badge-color)\">\n    Новинка\n  </ContentBadge>\n</div>"}]
+20:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"skruglenie","children":["$","a",null,{"href":"#skruglenie","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Скругление","children":["Скругление",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+21:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"capsule"}]," включает приближение значения закругления к форме круга:"]}]
+22:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["для ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"size=\"m\""}]," и ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"size=\"l\""}]," — приближает к овальной форме;"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["для ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"size=\"s\""}]," - свойство не поддерживается."]}],"\n"]}]
+23:["$","$L8",null,{"code":"<ContentBadge capsule size=\"m\">\n  Новинка\n</ContentBadge>\n<ContentBadge capsule size=\"l\">\n  Новинка\n</ContentBadge>"}]
+24:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"razmer","children":["$","a",null,{"href":"#razmer","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Размер","children":["Размер",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+25:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Определяется свойством ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"size"}],":"]}]
+26:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"s"}]," — компактный (только текст, без иконок);"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"m"}]," — стандартный с поддержкой иконок ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"16px"}],";"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"l"}]," — крупный с иконками ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"20px"}],"."]}],"\n"]}]
+27:["$","$L8",null,{"code":"<ContentBadge size=\"s\">Новинка</ContentBadge>\n<ContentBadge size=\"m\">Новинка</ContentBadge>\n<ContentBadge size=\"l\">Новинка</ContentBadge>"}]
+28:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"rabota-s-ikonkami","children":["$","a",null,{"href":"#rabota-s-ikonkami","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Работа с иконками","children":["Работа с иконками",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+29:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Используйте ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"ContentBadge.SlotIcon"}]," для вставки одиночной иконки:"]}]
+2a:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["для ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"size=\"s\""}]," - иконки не поддерживаются;"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["для ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"size=\"m\""}]," — рекомендуемый размер ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"12px"}]," при наличии текста, для одиночной иконки ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"16px"}],";"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["для ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"size=\"l\""}]," — рекомендуемый размер ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"16px"}]," при наличии текста, для одиночной иконки ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"20px"}],"."]}],"\n"]}]
+2b:["$","$L8",null,{"code":"<ContentBadge size=\"m\" appearance=\"accent-green\">\n  <ContentBadge.SlotIcon>\n    <Icon12Tag />\n  </ContentBadge.SlotIcon>\n  Доступно по скидке\n</ContentBadge>\n<ContentBadge size=\"l\" appearance=\"neutral\">\n  Заблокировано\n  <ContentBadge.SlotIcon>\n    <Icon16LockOutline />\n  </ContentBadge.SlotIcon>\n</ContentBadge>\n<ContentBadge size=\"l\" appearance=\"accent-red\">\n  <ContentBadge.SlotIcon>\n    <Icon20CrownVerified />\n  </ContentBadge.SlotIcon>\n</ContentBadge>"}]
+2c:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"api","children":["$","a",null,{"href":"#api","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Свойства и методы","children":["Свойства и методы",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+2d:[["$","div","ContentBadge/.0",{"children":[["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"content-badge-api","children":["$","a",null,{"href":"#content-badge-api","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию ContentBadge","children":["ContentBadge",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}],["$","div",null,{"className":"Table_root__0rGvK","children":["$","table",null,{"className":"Table_table__NzLHi PropsTable_root__O959b","children":[["$","thead",null,{"children":["$","tr",null,{"children":[["$","th",null,{"children":"Свойство","className":"Table_th__EHorR"}],["$","th",null,{"children":"Описание","className":"Table_th__EHorR"}]],"className":"Table_tr__SD2Ot"}]}],["$","tbody",null,{"children":["$@33","$@34","$@35","$@36","$@37","$@38"]}]]}]}]]}],["$","div","ContentBadge.SlotIcon/.1",{"children":[["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"content-badge-slot-icon-api","children":["$","a",null,{"href":"#content-badge-slot-icon-api","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию ContentBadge.SlotIcon","children":["ContentBadge.SlotIcon",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}],["$","div",null,{"className":"Table_root__0rGvK","children":["$","table",null,{"className":"Table_table__NzLHi PropsTable_root__O959b","children":[["$","thead",null,{"children":["$","tr",null,{"children":[["$","th",null,{"children":"Свойство","className":"Table_th__EHorR"}],["$","th",null,{"children":"Описание","className":"Table_th__EHorR"}]],"className":"Table_tr__SD2Ot"}]}],["$","tbody",null,{"children":["$@39"]}]]}]}]]}]]
+31:null
+33:["$","tr","appearance",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"appearance"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"ContentBadgeAppearance"}],[["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Цвет оформления."}],"\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Помимо предустановленных значений принимает кастомный цвет в формате\nCSS-переменной (",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"var(--my-token)"}],") или HEX (",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"#RRGGBB"}],")."]}],"\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Применение кастомного цвета по режимам:"}],"\n",["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"mode=\"primary\""}]," — фон = кастомный цвет, текст/иконка = ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"--vkui--color_text_contrast"}]," / ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"--vkui--color_icon_contrast"}],";"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"mode=\"secondary\""}]," — фон = кастомный цвет с прозрачностью 16% (отдельным слоем), текст и иконка = кастомный цвет;"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"mode=\"outline\""}]," — бордер, текст и иконка = кастомный цвет."]}],"\n"]}]],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"accent"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+34:["$","tr","capsule",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"capsule"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"boolean"}],[["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Включает приближение значения закругления к форме круга."}],"\n",["$","aside",null,{"className":"Callout_root__6UBFP","children":["$","div",null,{"className":"Callout_content__MYf_T","children":["\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Note: игнорируется при size=“s”."}],"\n"]}]}]],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+35:["$","tr","getRootRef",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"getRootRef"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"Ref<HTMLDivElement>"}],"$undefined",["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+36:["$","tr","mode",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"mode"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"ContentBadgeModeType"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Вид отображения."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"primary"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+37:["$","tr","size",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"size"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"ContentBadgeSizeType"}],[["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Определяет отступы и размер текста."}],"\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Соответствие размеров иконок в слоте ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"<ContentBadge.SlotIcon />"}],":"]}],"\n",["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":"size=“s” – ⚠️ не поддерживает иконки;"}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["size=“m” – при ",["$","strong",null,{"className":"mdx_strong__N7OUG","children":"одиночной"}]," иконке ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"16x16"}],", в остальных случаях ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"12x12"}],";"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["size=“l” – при ",["$","strong",null,{"className":"mdx_strong__N7OUG","children":"одиночной"}]," иконке ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"20x20"}],", в остальных случаях ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"16x16"}],"."]}],"\n"]}]],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"m"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+38:["$","tr","weight",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"weight"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"\"1\" | \"2\" | \"3\""}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Задаёт начертание шрифта, отличное от стандартного."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"2"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+39:["$","tr","getRootRef",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"getRootRef"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"Ref<HTMLDivElement>"}],"$undefined",["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]

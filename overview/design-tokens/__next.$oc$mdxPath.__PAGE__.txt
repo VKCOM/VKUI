@@ -1,0 +1,84 @@
+1:"$Sreact.fragment"
+2:I[23450,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-3c03d819f20b8c00.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Main"]
+4:I[74517,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-3c03d819f20b8c00.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Overview",1]
+5:I[18443,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-3c03d819f20b8c00.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Anchor"]
+16:I[19180,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-3c03d819f20b8c00.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Pre"]
+17:I[91042,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-3c03d819f20b8c00.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"TOC"]
+18:I[90484,[],"OutletBoundary"]
+19:"$Sreact.suspense"
+3:Tfda,---
+description:
+  Дизайн-токены — это набор базовых переменных, задающих отступы, цвета, типографику и анимации.
+  VKUI использует токены вместо конкретных значений, чтобы компоненты было легко подстраивать
+  под конкретные платформы и цветовые режимы.
+---
+
+<Overview type="doc">
+# Дизайн-токены
+
+[Дизайн-токены](https://foundation.mozilla.org/en/docs/design/websites/design-tokens/) — это набор базовых переменных,
+задающих отступы, цвета, типографику и анимации. VKUI использует токены вместо конкретных значений,
+чтобы компоненты было легко подстраивать под конкретные платформы и цветовые режимы.
+
+</Overview>
+
+VKUI использует пакет [@vkontakte/vkui-tokens](https://github.com/VKCOM/vkui-tokens),
+который предоставляет готовые наборы дизайн-токенов.
+
+Дизайн-токены поставляются в различных форматах: `css`, `scss`, `less`, `pcss`, `styl`, `js`, `json`.
+Библиотека VKUI использует токены, поставляемые в формате `css`.
+
+Таким образом, каждый набор токенов объявлен в CSS-классе формата `vkui--<themeName>--<colorScheme>`.
+По умолчанию поддерживаются токены следующих тем: `vkBase`/`vkBaseDark`, `vkIOS`/`vkIOSDark` и `vkCom`/`vkComDark`.
+
+На примере тёмного режима с названием темы `vkBase` класс будет выглядеть так – `vkui--vkBase--dark` ([ссылка на сам CSS-файл](https://esm.cdn-vk.ru/@vkontakte/vkui-tokens@4/themes/vkBase/cssVars/declarations/onlyVariablesLocal.css)).
+
+Все токены начинаются с префикса `--vkui--`.
+
+В своём приложении вы можете ссылаться в CSS-файлах или передавать в свойство `style` любые токены,
+перечисленные в соответствующей теме (при условии её подключения).
+
+Например:
+
+```jsx
+<div style={{ color: `var(--vkui--color_accent_lime)` }}>
+  Я использую цветовой токен цвета лайма.
+</div>
+```
+
+## Переопределение токенов
+
+Иногда у вас может возникнуть необходмость переопределить значения некоторых токенов.
+Сделать это можно следующим образом:
+
+```css filename="app-styles.css"
+.forceColorRed {
+  --vkui--color_text_primary: red;
+}
+```
+
+Теперь все компоненты, которые являются потомками компонента с классом `forceColorRed`, будут иметь значение `red`
+для токена `--vkui--color_text_primary`.
+
+Мы не рекомендуем использовать данный способ переопределения токенов, потому что он подвержен проблемам специфичности
+(вам нужно будет убедиться, что чанк с переопределенными токенами подключается после CSS-стилей VKUI).
+
+Рекомендуемым способом переопределения токенов является создание собственной темы (можно на основе уже существующей).
+Подробнее можно узнать на отдельной странице токенов в разделе [Документация](https://vkcom.github.io/vkui-tokens).0:{"rsc":["$","$1","c",{"children":[[["$","$L2",null,{"metadata":{"description":"Дизайн-токены — это набор базовых переменных, задающих отступы, цвета, типографику и анимации. VKUI использует токены вместо конкретных значений, чтобы компоненты было легко подстраивать под конкретные платформы и цветовые режимы.","title":"Дизайн-токены","filePath":"content/overview/design-tokens.mdx","timestamp":1778845990000},"sourceCode":"$3","children":[["$","$L4",null,{"type":"doc","children":[["$","h1",null,{"className":"mdx_h1__1mgpN","children":"Дизайн-токены"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":[["$","$L5",null,{"href":"https://foundation.mozilla.org/en/docs/design/websites/design-tokens/","children":"Дизайн-токены"}]," — это набор базовых переменных,\nзадающих отступы, цвета, типографику и анимации. VKUI использует токены вместо конкретных значений,\nчтобы компоненты было легко подстраивать под конкретные платформы и цветовые режимы."]}]]}],"\n","$L6","\n","$L7","\n","$L8","\n","$L9","\n","$La","\n","$Lb","\n","$Lc","\n","$Ld","\n","$Le","\n","$Lf","\n","$L10","\n","$L11","\n","$L12","\n","$L13"]}],"$L14"],null,"$L15"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"0Ol_0BANXusFa48he9eFA"}
+6:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["VKUI использует пакет ",["$","$L5",null,{"href":"https://github.com/VKCOM/vkui-tokens","children":"@vkontakte/vkui-tokens"}],",\nкоторый предоставляет готовые наборы дизайн-токенов."]}]
+7:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Дизайн-токены поставляются в различных форматах: ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"css"}],", ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"scss"}],", ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"less"}],", ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"pcss"}],", ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"styl"}],", ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"js"}],", ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"json"}],".\nБиблиотека VKUI использует токены, поставляемые в формате ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"css"}],"."]}]
+8:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Таким образом, каждый набор токенов объявлен в CSS-классе формата ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"vkui--<themeName>--<colorScheme>"}],".\nПо умолчанию поддерживаются токены следующих тем: ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"vkBase"}],"/",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"vkBaseDark"}],", ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"vkIOS"}],"/",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"vkIOSDark"}]," и ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"vkCom"}],"/",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"vkComDark"}],"."]}]
+9:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["На примере тёмного режима с названием темы ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"vkBase"}]," класс будет выглядеть так – ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"vkui--vkBase--dark"}]," (",["$","$L5",null,{"href":"https://esm.cdn-vk.ru/@vkontakte/vkui-tokens@4/themes/vkBase/cssVars/declarations/onlyVariablesLocal.css","children":"ссылка на сам CSS-файл"}],")."]}]
+a:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Все токены начинаются с префикса ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"--vkui--"}],"."]}]
+b:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["В своём приложении вы можете ссылаться в CSS-файлах или передавать в свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"style"}]," любые токены,\nперечисленные в соответствующей теме (при условии её подключения)."]}]
+c:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Например:"}]
+d:["$","$L16",null,{"tabIndex":"0","data-language":"jsx","data-word-wrap":"","data-copy":"","data-pagefind-ignore":"all","children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":[["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"<"}],["$","span",null,{"style":{"--shiki-light":"#22863A","--shiki-dark":"#85E89D"},"children":"div"}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" style"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"{{ color: "}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"`var(--vkui--color_accent_lime)`"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" }}>"}]]}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  Я использую цветовой токен цвета лайма."}]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"</"}],["$","span",null,{"style":{"--shiki-light":"#22863A","--shiki-dark":"#85E89D"},"children":"div"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}]]}]}]
+e:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"pereopredelenie-tokenov","children":["$","a",null,{"href":"#pereopredelenie-tokenov","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Переопределение токенов","children":["Переопределение токенов",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+f:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Иногда у вас может возникнуть необходмость переопределить значения некоторых токенов.\nСделать это можно следующим образом:"}]
+10:["$","$L16",null,{"tabIndex":"0","data-language":"css","data-word-wrap":"","data-filename":"app-styles.css","data-copy":"","data-pagefind-ignore":"all","children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":[["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":".forceColorRed"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" {"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#E36209","--shiki-dark":"#FFAB70"},"children":"  --vkui--color_text_primary"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":": "}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"red"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":";"}]]}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"}"}]}]]}]}]
+11:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Теперь все компоненты, которые являются потомками компонента с классом ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"forceColorRed"}],", будут иметь значение ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"red"}],"\nдля токена ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"--vkui--color_text_primary"}],"."]}]
+12:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Мы не рекомендуем использовать данный способ переопределения токенов, потому что он подвержен проблемам специфичности\n(вам нужно будет убедиться, что чанк с переопределенными токенами подключается после CSS-стилей VKUI)."}]
+13:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Рекомендуемым способом переопределения токенов является создание собственной темы (можно на основе уже существующей).\nПодробнее можно узнать на отдельной странице токенов в разделе ",["$","$L5",null,{"href":"https://vkcom.github.io/vkui-tokens","children":"Документация"}],"."]}]
+14:["$","$L17",null,{"toc":[{"value":"Переопределение токенов","id":"pereopredelenie-tokenov","depth":2}]}]
+15:["$","$L18",null,{"children":["$","$19",null,{"name":"Next.MetadataOutlet","children":"$@1a"}]}]
+1a:null

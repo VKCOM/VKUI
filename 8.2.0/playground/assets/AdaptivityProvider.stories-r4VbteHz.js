@@ -1,0 +1,5 @@
+import{n as e}from"./chunk-BneVvdWh.js";import{t}from"./jsx-runtime-B7sYxePN.js";import{n,t as r}from"./AdaptivityProvider-CKkOgWFs.js";import{r as i,t as a}from"./useAdaptivityConditionalRender-Dxvb1X3C.js";import{i as o,n as s,t as c}from"./constants-Cl1OGm0b.js";import{n as l,t as u}from"./createStoryParameters-DRBt1LSH.js";var d,f,p,m,h;e((()=>{a(),o(),l(),n(),d=t(),f={title:`Configuration/AdaptivityProvider`,component:r,parameters:u(`AdaptivityProvider`,c,s),tags:[`Конфигурация`]},p=()=>{let{density:e}=i();return(0,d.jsxs)(d.Fragment,{children:[e.compact&&(0,d.jsx)(`div`,{style:{padding:5},children:`Density: Compact`}),e.regular&&(0,d.jsx)(`div`,{style:{padding:5},children:`Density: Regular`})]})},m={render:e=>(0,d.jsx)(r,{...e,children:(0,d.jsx)(p,{})})},m.parameters={...m.parameters,docs:{...m.parameters?.docs,source:{originalSource:`{
+  render: args => <AdaptivityProvider {...args}>
+      <DisplayAdaptivityProvider />
+    </AdaptivityProvider>
+}`,...m.parameters?.docs?.source}}},h=[`Playground`]}))();export{m as Playground,h as __namedExportsOrder,f as default};

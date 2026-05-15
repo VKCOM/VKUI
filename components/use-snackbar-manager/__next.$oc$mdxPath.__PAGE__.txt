@@ -1,0 +1,588 @@
+1:"$Sreact.fragment"
+2:I[23450,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-3c03d819f20b8c00.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Main"]
+7:I[74517,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-3c03d819f20b8c00.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Overview",1]
+8:I[18443,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-3c03d819f20b8c00.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Anchor"]
+9:I[19180,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-3c03d819f20b8c00.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Pre"]
+59:I[91042,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-3c03d819f20b8c00.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"TOC"]
+5a:I[90484,[],"OutletBoundary"]
+5b:"$Sreact.suspense"
+5d:I[80204,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-3c03d819f20b8c00.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"PlaygroundLazy"]
+5e:I[73143,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-3c03d819f20b8c00.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"BlockWrapper"]
+3:T4659,---
+description: Хук для управления уведомлениями (снекбарами) в приложении.
+---
+
+<Overview group="utils" type="hook" forcedPath="hooks/useSnackbarManager/useSnackbarManager.tsx">
+
+# useSnackbarManager
+
+Хук для управления уведомлениями (снекбарами) в приложении. Позволяет показывать, обновлять и закрывать уведомления программно из любого места в коде.
+
+Связанные компоненты:
+
+- [Snackbar](/components/snackbar)
+
+</Overview>
+
+import { BlockWrapper } from "@/components/wrappers";
+
+## Быстрый старт
+
+Хук возвращает два значения: API для управления снекбарами и компонент, который нужно добавить в разметку.
+
+```jsx
+const [snackbarApi, snackbarHolder] = useSnackbarManager();
+
+// Показать уведомление
+snackbarApi.open({
+  children: "Привет, мир!",
+});
+
+// Не забудьте добавить holder в JSX
+return (
+  <>
+    {/* Ваш контент */}
+    {snackbarHolder}
+  </>
+);
+```
+
+## API
+
+### Параметры
+
+Все параметры опциональны. Хук можно вызвать без аргументов: `useSnackbarManager()`.
+
+| Параметр        | Тип                  | Описание                                                                                                                                                                     |
+| --------------- | -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `limit`         | `number`             | Максимальное количество одновременно открытых снекбаров на одном `placement`. По умолчанию: `4`.                                                                             |
+| `queueStrategy` | `"queue" \| "shift"` | Стратегия поведения при переполнении очереди:<br/>• `"queue"` — новые снекбары ждут, пока освободится место<br/>• `"shift"` — новые снекбары закрывают старые (по умолчанию) |
+| `offsetYStart`  | `string \| number`   | Отступ контейнера со снекбарами от верха страницы. Полезно при использовании `FixedLayout`.                                                                                  |
+| `offsetYEnd`    | `string \| number`   | Отступ контейнера со снекбарами от низа страницы. Полезно при использовании `FixedLayout`.                                                                                   |
+| `zIndex`        | `string \| number`   | Значение `z-index` для контейнера снекбаров.                                                                                                                                 |
+
+### Возвращаемое значение
+
+Хук возвращает массив из двух элементов:
+
+1. **`snackbarApi`** — объект с методами для управления снекбарами
+2. **`snackbarHolder`** — React-элемент, который нужно добавить в JSX вашего компонента
+
+### Методы
+
+#### `open(config)` — открыть снекбар
+
+Показывает новое уведомление. Принимает те же свойства, что и компонент `Snackbar` (кроме `open` и `offsetY`).
+
+**Возвращает:** объект с методами для управления этим снекбаром (см. [OpenReturn](#open-return)).
+
+```jsx
+const result = snackbarApi.open({
+  children: "Операция выполнена успешно",
+  action: "Закрыть",
+  onActionClick: () => console.log("Кнопка нажата"),
+});
+
+// Можно сразу закрыть
+result.close();
+```
+
+#### `openCustom(payload)` — открыть кастомный снекбар
+
+Позволяет создать снекбар с собственной разметкой. Подробнее в разделе [Пользовательские снекбары](#custom-snackbar).
+
+#### `close(id)` — закрыть снекбар
+
+Закрывает снекбар по его идентификатору.
+
+```jsx
+const result = snackbarApi.open({ children: "Уведомление" });
+snackbarApi.close(result.id);
+```
+
+#### `closeAll()` — закрыть все снекбары
+
+Закрывает все открытые снекбары одновременно.
+
+```jsx
+snackbarApi.closeAll();
+```
+
+#### `update(id, config)` — обновить свойства снекбара
+
+Изменяет свойства уже открытого снекбара. Можно изменить любое свойство, кроме `id` и `placement`.
+
+```jsx
+const result = snackbarApi.open({ children: "Старый текст" });
+
+// Позже обновляем содержимое
+snackbarApi.update(result.id, {
+  children: "Новый текст",
+  action: "ОК",
+});
+```
+
+#### `setLimit(count)` — изменить лимит снекбаров
+
+Меняет максимальное количество одновременно открытых снекбаров.
+
+```jsx
+snackbarApi.setLimit(6); // Теперь можно показать до 6 снекбаров
+```
+
+#### `setQueueStrategy(behavior)` — изменить стратегию очереди
+
+Меняет поведение при переполнении очереди: `"queue"` или `"shift"`.
+
+```jsx
+snackbarApi.setQueueStrategy("queue"); // Новые снекбары будут ждать
+```
+
+#### `setOffsetYStart(offset)` и `setOffsetYEnd(offset)` — изменить отступы
+
+Изменяют отступы контейнера со снекбарами от краёв страницы.
+
+```jsx
+snackbarApi.setOffsetYStart(60); // Отступ сверху 60px
+snackbarApi.setOffsetYEnd(20); // Отступ снизу 20px
+```
+
+#### `setZIndex(zIndex)` — изменить z-index
+
+Меняет значение `z-index` контейнера снекбаров.
+
+```jsx
+snackbarApi.setZIndex(9999);
+```
+
+### OpenReturn [#open-return]
+
+Объект, который возвращают методы `open` и `openCustom`. Содержит методы для управления конкретным снекбаром.
+
+| Свойство            | Тип                     | Описание                                                                                    |
+| ------------------- | ----------------------- | ------------------------------------------------------------------------------------------- |
+| `id`                | `string`                | Уникальный идентификатор снекбара. Генерируется автоматически, если не указан при открытии. |
+| `close()`           | `() => void`            | Закрывает этот снекбар.                                                                     |
+| `update(props)`     | `(props) => void`       | Обновляет свойства снекбара.                                                                |
+| `onClose(resolve?)` | `(resolve?) => Promise` | Возвращает Promise, который выполнится, когда снекбар закроется.                            |
+
+**Пример использования `onClose`:**
+
+```jsx
+const result = snackbarApi.open({ children: "Сообщение" });
+
+// Выполнить действие после закрытия
+result.onClose().then(() => {
+  console.log("Снекбар закрыт!");
+});
+```
+
+## Примеры использования
+
+### Базовый пример
+
+{/* @example-description: Базовый пример `useSnackbarManager` для показа простого уведомления. */}
+<Playground Wrapper={BlockWrapper}>
+
+```jsx
+const [snackbarApi, snackbarHolder] = useSnackbarManager();
+
+const showSuccess = () => {
+  snackbarApi.open({
+    children: "Операция выполнена успешно!",
+    action: "ОК",
+  });
+};
+
+return (
+  <>
+    <Button onClick={showSuccess}>Показать уведомление</Button>
+    {snackbarHolder}
+  </>
+);
+```
+
+</Playground>
+
+### Управление конкретным снекбаром
+
+{/* @example-description: Управление конкретным снекбаром: открытие и программное закрытие. */}
+<Playground Wrapper={BlockWrapper}>
+
+```jsx
+const [snackbarApi, snackbarHolder] = useSnackbarManager();
+const snackbarRef = useRef(null);
+
+const showSnackbar = () => {
+  if (snackbarRef.current) {
+    snackbarApi.close(snackbarRef.current.id);
+  }
+
+  const result = snackbarApi.open({
+    children: "Это уведомление можно закрыть программно",
+    action: "Закрыть",
+  });
+  snackbarRef.current = result;
+};
+
+const closeProgrammatically = () => {
+  if (snackbarRef.current) {
+    snackbarRef.current.close();
+  }
+};
+
+return (
+  <>
+    <Flex gap="m">
+      <Button onClick={showSnackbar}>Показать</Button>
+      <Button onClick={closeProgrammatically}>Закрыть программно</Button>
+    </Flex>
+    {snackbarHolder}
+  </>
+);
+```
+
+</Playground>
+
+### Обновление снекбара
+
+{/* @example-description: Обновление содержимого уже открытого снекбара через `update`. */}
+<Playground Wrapper={BlockWrapper}>
+
+```jsx
+const [snackbarApi, snackbarHolder] = useSnackbarManager();
+const snackbarRef = useRef(null);
+
+const showSnackbar = () => {
+  if (snackbarRef.current) {
+    snackbarApi.close(snackbarRef.current.id);
+  }
+
+  snackbarRef.current = snackbarApi.open({
+    children: "Загрузка...",
+  });
+};
+
+const updateSnackbar = () => {
+  if (snackbarRef.current) {
+    snackbarApi.update(snackbarRef.current.id, {
+      children: "Готово!",
+      action: "ОК",
+    });
+  }
+};
+
+return (
+  <>
+    <Flex gap="m">
+      <Button onClick={showSnackbar}>Показать</Button>
+      <Button onClick={updateSnackbar}>Обновить</Button>
+    </Flex>
+    {snackbarHolder}
+  </>
+);
+```
+
+</Playground>
+
+### Настройка лимита и стратегии очереди
+
+{/* @example-description: Настройка лимита и стратегии очереди снекбаров (`limit` и `queueStrategy`). */}
+<Playground Wrapper={BlockWrapper}>
+
+```jsx
+const [snackbarApi, snackbarHolder] = useSnackbarManager({
+  limit: 2, // Максимум 2 снекбара одновременно
+  queueStrategy: "queue", // Новые будут ждать
+});
+const [snackbarsShowed, setSnackbarsShowed] = React.useState(false);
+
+const showMultiple = () => {
+  if (snackbarsShowed) {
+    snackbarApi.closeAll();
+    setSnackbarsShowed(false);
+    return;
+  }
+
+  setSnackbarsShowed(true);
+  Promise.all([
+    snackbarApi.open({ children: "Первое уведомление" }).onClose(),
+    snackbarApi.open({ children: "Второе уведомление" }).onClose(),
+    snackbarApi.open({ children: "Третье (будет ждать)" }).onClose(),
+  ]).then(() => setSnackbarsShowed(false));
+};
+
+return (
+  <>
+    <Button onClick={showMultiple}>{snackbarsShowed ? 'Закрыть все' : 'Показать несколько'}</Button>
+    {snackbarHolder}
+  </>
+);
+```
+
+</Playground>
+
+## Пользовательские снекбары [#custom-snackbar]
+
+Метод `openCustom` позволяет создать снекбар с собственной разметкой и логикой. Это полезно, когда нужно:
+
+- Передать дополнительные данные в снекбар
+- Использовать сложную разметку, которую нельзя описать через `open`
+- Разделить логику вызова снекбара и его отображения
+
+### Как это работает
+
+Вместо простого объекта конфигурации вы передаёте React-компонент, который будет рендерить содержимое снекбара. В этот компонент автоматически передаются:
+
+- `snackbarProps` — все свойства для компонента `Snackbar`
+- `id` — идентификатор снекбара
+- `close()` — функция для закрытия снекбара
+- `update(props)` — функция для обновления свойств снекбара
+- ваши дополнительные свойства (если указаны)
+
+### Два способа использования
+
+**Способ 1:** Передать объект с настройками (когда нужны дополнительные свойства)
+
+```jsx
+snackbarApi.openCustom({
+  component: MySnackbarComponent,
+  additionalProps: {
+    userName: "Иван",
+  },
+  baseProps: {
+    // Свойства для Snackbar
+    action: "ОК",
+  },
+});
+```
+
+**Способ 2:** Передать компонент напрямую (когда дополнительные свойства не нужны)
+
+```jsx
+snackbarApi.openCustom(MySnackbarComponent);
+```
+
+### Типы
+
+**`CustomSnackbar.Payload<AdditionalProps>`** — объект с настройками:
+
+- `component` — React-компонент для рендеринга
+- `additionalProps?` — дополнительные свойства для компонента
+- `baseProps?` — базовые свойства для `Snackbar`
+- `id?` — идентификатор (генерируется автоматически, если не указан)
+
+**`CustomSnackbar.Props<AdditionalProps>`** — свойства, которые получает ваш компонент:
+
+- Все ваши `AdditionalProps`
+- `snackbarProps` — свойства для `Snackbar`
+- `id` — идентификатор снекбара
+- `close()` — закрыть снекбар
+- `update(props)` — обновить свойства
+
+> ⚠️ **Важно:**
+>
+> - Не используйте в `AdditionalProps` ключи `update`, `close`, `id`, `snackbarProps` — они зарезервированы
+> - Все типы экспортируются из хука, используйте их для типизации
+
+### Пример с дополнительными свойствами
+
+Когда нужно передать данные в снекбар (например, имя пользователя):
+
+{/* @example-description: Кастомный снекбар через `openCustom` с дополнительными свойствами. */}
+<Playground Wrapper={BlockWrapper}>
+
+```jsx
+const SnackbarComponent = ({
+  userName,
+  update,
+  close,
+  snackbarProps,
+}: CustomSnackbar.Props<{ userName: string }>) => {
+  return (
+    <Snackbar action="Хорошо" {...snackbarProps}>
+      Отправлено пользователю: {userName}
+    </Snackbar>
+  );
+};
+
+const [snackbarApi, snackbarHolder] = useSnackbarManager();
+
+const showSnackbar = () => {
+  snackbarApi.openCustom({
+    component: SnackbarComponent,
+    additionalProps: {
+      userName: "Иван Барышев",
+    },
+  });
+};
+
+return (
+  <>
+    <Button onClick={showSnackbar}>Показать уведомление</Button>
+    {snackbarHolder}
+  </>
+);
+```
+
+</Playground>
+
+### Пример без дополнительных свойств
+
+Если дополнительные свойства не нужны, можно передать компонент напрямую:
+
+{/* @example-description: Кастомный снекбар через `openCustom` без дополнительных свойств. */}
+<Playground Wrapper={BlockWrapper}>
+
+```jsx
+const SnackbarComponent = ({
+  update,
+  close,
+  snackbarProps,
+}: CustomSnackbar.Props) => {
+  return (
+    <Snackbar action="Хорошо" {...snackbarProps}>
+      Сообщение отправлено
+    </Snackbar>
+  );
+};
+
+const [snackbarApi, snackbarHolder] = useSnackbarManager();
+
+const showSnackbar = () => {
+  snackbarApi.openCustom(SnackbarComponent);
+};
+
+return (
+  <>
+    <Button onClick={showSnackbar}>Показать уведомление</Button>
+    {snackbarHolder}
+  </>
+);
+```
+
+</Playground>
+
+### Пример с использованием методов внутри компонента
+
+Внутри кастомного компонента можно использовать методы `close()` и `update()`:
+
+{/* @example-description: Использование `close` внутри кастомного компонента снекбара. */}
+<Playground Wrapper={BlockWrapper}>
+
+```jsx
+const SnackbarComponent = ({
+  userName,
+  close,
+  snackbarProps,
+}: CustomSnackbar.Props<{ userName: string }>) => {
+  return (
+    <Snackbar action="Закрыть" onActionClick={close} {...snackbarProps}>
+      Привет, {userName}!
+    </Snackbar>
+  );
+};
+
+const [snackbarApi, snackbarHolder] = useSnackbarManager();
+
+const showSnackbar = () => {
+  snackbarApi.openCustom({
+    component: SnackbarComponent,
+    additionalProps: {
+      userName: "Иван",
+    },
+  });
+};
+
+return (
+  <>
+    <Button onClick={showSnackbar}>Показать уведомление</Button>
+    {snackbarHolder}
+  </>
+);
+```
+
+</Playground>0:{"rsc":["$","$1","c",{"children":[[["$","$L2",null,{"metadata":{"description":"Хук для управления уведомлениями (снекбарами) в приложении.","title":"useSnackbarManager","filePath":"content/components/use-snackbar-manager.mdx","timestamp":1778845990000},"sourceCode":"$3","children":"$L4"}],"$L5"],null,"$L6"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"0Ol_0BANXusFa48he9eFA"}
+4:[["$","$L7",null,{"group":"utils","type":"hook","forcedPath":"hooks/useSnackbarManager/useSnackbarManager.tsx","children":[["$","h1",null,{"className":"mdx_h1__1mgpN","children":"useSnackbarManager"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Хук для управления уведомлениями (снекбарами) в приложении. Позволяет показывать, обновлять и закрывать уведомления программно из любого места в коде."}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Связанные компоненты:"}],["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["$","$L8",null,{"href":"/components/snackbar","children":"Snackbar"}]}],"\n"]}]]}],"\n","\n",["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"bystryj-start","children":["$","a",null,{"href":"#bystryj-start","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Быстрый старт","children":["Быстрый старт",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}],"\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Хук возвращает два значения: API для управления снекбарами и компонент, который нужно добавить в разметку."}],"\n",["$","$L9",null,{"tabIndex":"0","data-language":"jsx","data-word-wrap":"","data-copy":"","data-pagefind-ignore":"all","children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":[["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"const"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" ["}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"snackbarApi"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":", "}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"snackbarHolder"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"] "}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" useSnackbarManager"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"();"}]]}],"\n",["$","span",null,{"children":" "}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#6A737D","--shiki-dark":"#6A737D"},"children":"// Показать уведомление"}]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"snackbarApi."}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":"open"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"({"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  children: "}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"Привет, мир!\""}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":","}]]}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"});"}]}],"\n",["$","span",null,{"children":" "}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#6A737D","--shiki-dark":"#6A737D"},"children":"// Не забудьте добавить holder в JSX"}]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"return"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" ("}]]}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  <>"}]}],"\n","$La","\n","$Lb","\n","$Lc","\n","$Ld"]}]}],"\n","$Le","\n","$Lf","\n","$L10","\n","$L11","\n","$L12","\n","$L13","\n","$L14","\n","$L15","\n","$L16","\n","$L17","\n","$L18","\n","$L19","\n","$L1a","\n","$L1b","\n","$L1c","\n","$L1d","\n","$L1e","\n","$L1f","\n","$L20","\n","$L21","\n","$L22","\n","$L23","\n","$L24","\n","$L25","\n","$L26","\n","$L27","\n","$L28","\n","$L29","\n","$L2a","\n","$L2b","\n","$L2c","\n","$L2d","\n","$L2e","\n","$L2f","\n","$L30","\n","$L31","\n","$L32","\n","$L33","\n","$L34","\n","$L35","\n","$L36","\n","$L37","\n","\n","$L38","\n","$L39","\n","\n","$L3a","\n","$L3b","\n","\n","$L3c","\n","$L3d","\n","\n","$L3e","\n","$L3f","\n","$L40","\n","$L41","\n","$L42","\n","$L43","\n","$L44","\n","$L45","\n","$L46","\n","$L47","\n","$L48","\n","$L49","\n","$L4a","\n","$L4b","\n","$L4c","\n","$L4d","\n","$L4e","\n","$L4f","\n","$L50","\n","$L51","\n","\n","$L52","\n","$L53","\n","$L54","\n","\n","$L55","\n","$L56","\n","$L57","\n","\n","$L58"]
+5:["$","$L59",null,{"toc":[{"value":"Быстрый старт","id":"bystryj-start","depth":2},{"value":"API","id":"api","depth":2},{"value":"Параметры","id":"parametry","depth":3},{"value":"Возвращаемое значение","id":"vozvrashaemoe-znachenie","depth":3},{"value":"Методы","id":"metody","depth":3},{"value":[["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"open(config)"}]," — открыть снекбар"],"id":"otkryt-snekbar","depth":4},{"value":[["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"openCustom(payload)"}]," — открыть кастомный снекбар"],"id":"otkryt-kastomnyj-snekbar","depth":4},{"value":[["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"close(id)"}]," — закрыть снекбар"],"id":"zakryt-snekbar","depth":4},{"value":[["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"closeAll()"}]," — закрыть все снекбары"],"id":"zakryt-vse-snekbary","depth":4},{"value":[["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"update(id, config)"}]," — обновить свойства снекбара"],"id":"obnovit-svojstva-snekbara","depth":4},{"value":[["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"setLimit(count)"}]," — изменить лимит снекбаров"],"id":"izmenit-limit-snekbarov","depth":4},{"value":[["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"setQueueStrategy(behavior)"}]," — изменить стратегию очереди"],"id":"izmenit-strategiyu-ocheredi","depth":4},{"value":[["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"setOffsetYStart(offset)"}]," и ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"setOffsetYEnd(offset)"}]," — изменить отступы"],"id":"izmenit-otstupy","depth":4},{"value":[["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"setZIndex(zIndex)"}]," — изменить z-index"],"id":"izmenit-z-index","depth":4},{"value":"OpenReturn","id":"open-return","depth":3},{"value":"Примеры использования","id":"primery-ispolzovaniya","depth":2},{"value":"Базовый пример","id":"bazovyj-primer","depth":3},{"value":"Управление конкретным снекбаром","id":"upravlenie-konkretnym-snekbarom","depth":3},{"value":"Обновление снекбара","id":"obnovlenie-snekbara","depth":3},{"value":"Настройка лимита и стратегии очереди","id":"nastrojka-limita-i-strategii-ocheredi","depth":3},{"value":"Пользовательские снекбары","id":"custom-snackbar","depth":2},{"value":"Как это работает","id":"kak-eto-rabotaet","depth":3},{"value":"Два способа использования","id":"dva-sposoba-ispolzovaniya","depth":3},{"value":"Типы","id":"tipy","depth":3},{"value":"Пример с дополнительными свойствами","id":"primer-s-dopolnitelnymi-svojstvami","depth":3},{"value":"Пример без дополнительных свойств","id":"primer-bez-dopolnitelnyh-svojstv","depth":3},{"value":"Пример с использованием методов внутри компонента","id":"primer-s-ispolzovaniem-metodov-vnutri-komponenta","depth":3}]}]
+6:["$","$L5a",null,{"children":["$","$5b",null,{"name":"Next.MetadataOutlet","children":"$@5c"}]}]
+a:["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"    {"}],["$","span",null,{"style":{"--shiki-light":"#6A737D","--shiki-dark":"#6A737D"},"children":"/* Ваш контент */"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"}"}]]}]
+b:["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"    {snackbarHolder}"}]}]
+c:["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  </>"}]}]
+d:["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":");"}]}]
+e:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"api","children":["$","a",null,{"href":"#api","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию API","children":["API",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+f:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"parametry","children":["$","a",null,{"href":"#parametry","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Параметры","children":["Параметры",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+10:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Все параметры опциональны. Хук можно вызвать без аргументов: ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"useSnackbarManager()"}],"."]}]
+11:["$","div",null,{"className":"Table_root__0rGvK","children":["$","table",null,{"children":[["$","thead",null,{"children":["$","tr",null,{"children":[["$","th",null,{"children":"Параметр","className":"Table_th__EHorR"}],["$","th",null,{"children":"Тип","className":"Table_th__EHorR"}],["$","th",null,{"children":"Описание","className":"Table_th__EHorR"}]],"className":"Table_tr__SD2Ot"}]}],["$","tbody",null,{"children":[["$","tr",null,{"children":[["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"limit"}],"className":"Table_td__L3qz5"}],["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"number"}],"className":"Table_td__L3qz5"}],["$","td",null,{"children":["Максимальное количество одновременно открытых снекбаров на одном ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"placement"}],". По умолчанию: ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"4"}],"."],"className":"Table_td__L3qz5"}]],"className":"Table_tr__SD2Ot"}],["$","tr",null,{"children":[["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"queueStrategy"}],"className":"Table_td__L3qz5"}],["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"\"queue\" | \"shift\""}],"className":"Table_td__L3qz5"}],["$","td",null,{"children":["Стратегия поведения при переполнении очереди:",["$","br",null,{}],"• ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"\"queue\""}]," — новые снекбары ждут, пока освободится место",["$","br",null,{}],"• ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"\"shift\""}]," — новые снекбары закрывают старые (по умолчанию)"],"className":"Table_td__L3qz5"}]],"className":"Table_tr__SD2Ot"}],["$","tr",null,{"children":[["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"offsetYStart"}],"className":"Table_td__L3qz5"}],["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"string | number"}],"className":"Table_td__L3qz5"}],["$","td",null,{"children":["Отступ контейнера со снекбарами от верха страницы. Полезно при использовании ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"FixedLayout"}],"."],"className":"Table_td__L3qz5"}]],"className":"Table_tr__SD2Ot"}],["$","tr",null,{"children":[["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"offsetYEnd"}],"className":"Table_td__L3qz5"}],["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"string | number"}],"className":"Table_td__L3qz5"}],["$","td",null,{"children":["Отступ контейнера со снекбарами от низа страницы. Полезно при использовании ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"FixedLayout"}],"."],"className":"Table_td__L3qz5"}]],"className":"Table_tr__SD2Ot"}],["$","tr",null,{"children":[["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"zIndex"}],"className":"Table_td__L3qz5"}],["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"string | number"}],"className":"Table_td__L3qz5"}],["$","td",null,{"children":["Значение ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"z-index"}]," для контейнера снекбаров."],"className":"Table_td__L3qz5"}]],"className":"Table_tr__SD2Ot"}]]}]],"className":"Table_table__NzLHi"}]}]
+12:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"vozvrashaemoe-znachenie","children":["$","a",null,{"href":"#vozvrashaemoe-znachenie","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Возвращаемое значение","children":["Возвращаемое значение",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+13:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Хук возвращает массив из двух элементов:"}]
+14:["$","ol",null,{"className":"mdx_ol__jzvNl","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","strong",null,{"className":"mdx_strong__N7OUG","children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"snackbarApi"}]}]," — объект с методами для управления снекбарами"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","strong",null,{"className":"mdx_strong__N7OUG","children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"snackbarHolder"}]}]," — React-элемент, который нужно добавить в JSX вашего компонента"]}],"\n"]}]
+15:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"metody","children":["$","a",null,{"href":"#metody","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Методы","children":["Методы",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+16:["$","h4",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading4__c9VtX","id":"otkryt-snekbar","children":["$","a",null,{"href":"#otkryt-snekbar","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию [object Object]","children":["$5:props:toc:5:value",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+17:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Показывает новое уведомление. Принимает те же свойства, что и компонент ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"Snackbar"}]," (кроме ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"open"}]," и ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"offsetY"}],")."]}]
+18:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":[["$","strong",null,{"className":"mdx_strong__N7OUG","children":"Возвращает:"}]," объект с методами для управления этим снекбаром (см. ",["$","$L8",null,{"href":"#open-return","children":"OpenReturn"}],")."]}]
+19:["$","$L9",null,{"tabIndex":"0","data-language":"jsx","data-word-wrap":"","data-copy":"","data-pagefind-ignore":"all","children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":[["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"const"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":" result"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":" ="}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" snackbarApi."}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":"open"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"({"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  children: "}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"Операция выполнена успешно\""}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":","}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  action: "}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"Закрыть\""}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":","}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":"  onActionClick"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":": () "}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"=>"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" console."}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":"log"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"("}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"Кнопка нажата\""}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"),"}]]}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"});"}]}],"\n",["$","span",null,{"children":" "}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#6A737D","--shiki-dark":"#6A737D"},"children":"// Можно сразу закрыть"}]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"result."}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":"close"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"();"}]]}]]}]}]
+1a:["$","h4",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading4__c9VtX","id":"otkryt-kastomnyj-snekbar","children":["$","a",null,{"href":"#otkryt-kastomnyj-snekbar","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию [object Object]","children":["$5:props:toc:6:value",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+1b:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Позволяет создать снекбар с собственной разметкой. Подробнее в разделе ",["$","$L8",null,{"href":"#custom-snackbar","children":"Пользовательские снекбары"}],"."]}]
+1c:["$","h4",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading4__c9VtX","id":"zakryt-snekbar","children":["$","a",null,{"href":"#zakryt-snekbar","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию [object Object]","children":["$5:props:toc:7:value",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+1d:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Закрывает снекбар по его идентификатору."}]
+1e:["$","$L9",null,{"tabIndex":"0","data-language":"jsx","data-word-wrap":"","data-copy":"","data-pagefind-ignore":"all","children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":[["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"const"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":" result"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":" ="}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" snackbarApi."}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":"open"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"({ children: "}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"Уведомление\""}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" });"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"snackbarApi."}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":"close"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"(result.id);"}]]}]]}]}]
+1f:["$","h4",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading4__c9VtX","id":"zakryt-vse-snekbary","children":["$","a",null,{"href":"#zakryt-vse-snekbary","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию [object Object]","children":["$5:props:toc:8:value",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+20:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Закрывает все открытые снекбары одновременно."}]
+21:["$","$L9",null,{"tabIndex":"0","data-language":"jsx","data-word-wrap":"","data-copy":"","data-pagefind-ignore":"all","children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"snackbarApi."}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":"closeAll"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"();"}]]}]}]}]
+22:["$","h4",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading4__c9VtX","id":"obnovit-svojstva-snekbara","children":["$","a",null,{"href":"#obnovit-svojstva-snekbara","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию [object Object]","children":["$5:props:toc:9:value",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+23:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Изменяет свойства уже открытого снекбара. Можно изменить любое свойство, кроме ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"id"}]," и ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"placement"}],"."]}]
+24:["$","$L9",null,{"tabIndex":"0","data-language":"jsx","data-word-wrap":"","data-copy":"","data-pagefind-ignore":"all","children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":[["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"const"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":" result"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":" ="}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" snackbarApi."}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":"open"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"({ children: "}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"Старый текст\""}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" });"}]]}],"\n",["$","span",null,{"children":" "}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#6A737D","--shiki-dark":"#6A737D"},"children":"// Позже обновляем содержимое"}]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"snackbarApi."}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":"update"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"(result.id, {"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  children: "}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"Новый текст\""}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":","}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  action: "}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"ОК\""}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":","}]]}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"});"}]}]]}]}]
+25:["$","h4",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading4__c9VtX","id":"izmenit-limit-snekbarov","children":["$","a",null,{"href":"#izmenit-limit-snekbarov","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию [object Object]","children":["$5:props:toc:10:value",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+26:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Меняет максимальное количество одновременно открытых снекбаров."}]
+27:["$","$L9",null,{"tabIndex":"0","data-language":"jsx","data-word-wrap":"","data-copy":"","data-pagefind-ignore":"all","children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"snackbarApi."}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":"setLimit"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"("}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"6"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"); "}],["$","span",null,{"style":{"--shiki-light":"#6A737D","--shiki-dark":"#6A737D"},"children":"// Теперь можно показать до 6 снекбаров"}]]}]}]}]
+28:["$","h4",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading4__c9VtX","id":"izmenit-strategiyu-ocheredi","children":["$","a",null,{"href":"#izmenit-strategiyu-ocheredi","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию [object Object]","children":["$5:props:toc:11:value",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+29:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Меняет поведение при переполнении очереди: ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"\"queue\""}]," или ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"\"shift\""}],"."]}]
+2a:["$","$L9",null,{"tabIndex":"0","data-language":"jsx","data-word-wrap":"","data-copy":"","data-pagefind-ignore":"all","children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"snackbarApi."}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":"setQueueStrategy"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"("}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"queue\""}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"); "}],["$","span",null,{"style":{"--shiki-light":"#6A737D","--shiki-dark":"#6A737D"},"children":"// Новые снекбары будут ждать"}]]}]}]}]
+2b:["$","h4",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading4__c9VtX","id":"izmenit-otstupy","children":["$","a",null,{"href":"#izmenit-otstupy","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию [object Object]","children":["$5:props:toc:12:value",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+2c:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Изменяют отступы контейнера со снекбарами от краёв страницы."}]
+2d:["$","$L9",null,{"tabIndex":"0","data-language":"jsx","data-word-wrap":"","data-copy":"","data-pagefind-ignore":"all","children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":[["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"snackbarApi."}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":"setOffsetYStart"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"("}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"60"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"); "}],["$","span",null,{"style":{"--shiki-light":"#6A737D","--shiki-dark":"#6A737D"},"children":"// Отступ сверху 60px"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"snackbarApi."}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":"setOffsetYEnd"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"("}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"20"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"); "}],["$","span",null,{"style":{"--shiki-light":"#6A737D","--shiki-dark":"#6A737D"},"children":"// Отступ снизу 20px"}]]}]]}]}]
+2e:["$","h4",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading4__c9VtX","id":"izmenit-z-index","children":["$","a",null,{"href":"#izmenit-z-index","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию [object Object]","children":["$5:props:toc:13:value",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+2f:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Меняет значение ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"z-index"}]," контейнера снекбаров."]}]
+30:["$","$L9",null,{"tabIndex":"0","data-language":"jsx","data-word-wrap":"","data-copy":"","data-pagefind-ignore":"all","children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"snackbarApi."}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":"setZIndex"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"("}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"9999"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":");"}]]}]}]}]
+31:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"open-return","children":["$","a",null,{"href":"#open-return","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию OpenReturn","children":["OpenReturn",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+32:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Объект, который возвращают методы ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"open"}]," и ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"openCustom"}],". Содержит методы для управления конкретным снекбаром."]}]
+33:["$","div",null,{"className":"Table_root__0rGvK","children":["$","table",null,{"children":[["$","thead",null,{"children":["$","tr",null,{"children":[["$","th",null,{"children":"Свойство","className":"Table_th__EHorR"}],["$","th",null,{"children":"Тип","className":"Table_th__EHorR"}],["$","th",null,{"children":"Описание","className":"Table_th__EHorR"}]],"className":"Table_tr__SD2Ot"}]}],["$","tbody",null,{"children":[["$","tr",null,{"children":[["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"id"}],"className":"Table_td__L3qz5"}],["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"string"}],"className":"Table_td__L3qz5"}],["$","td",null,{"children":"Уникальный идентификатор снекбара. Генерируется автоматически, если не указан при открытии.","className":"Table_td__L3qz5"}]],"className":"Table_tr__SD2Ot"}],["$","tr",null,{"children":[["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"close()"}],"className":"Table_td__L3qz5"}],["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"() => void"}],"className":"Table_td__L3qz5"}],["$","td",null,{"children":"Закрывает этот снекбар.","className":"Table_td__L3qz5"}]],"className":"Table_tr__SD2Ot"}],["$","tr",null,{"children":[["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"update(props)"}],"className":"Table_td__L3qz5"}],["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"(props) => void"}],"className":"Table_td__L3qz5"}],["$","td",null,{"children":"Обновляет свойства снекбара.","className":"Table_td__L3qz5"}]],"className":"Table_tr__SD2Ot"}],["$","tr",null,{"children":[["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"onClose(resolve?)"}],"className":"Table_td__L3qz5"}],["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"(resolve?) => Promise"}],"className":"Table_td__L3qz5"}],["$","td",null,{"children":"Возвращает Promise, который выполнится, когда снекбар закроется.","className":"Table_td__L3qz5"}]],"className":"Table_tr__SD2Ot"}]]}]],"className":"Table_table__NzLHi"}]}]
+34:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["$","strong",null,{"className":"mdx_strong__N7OUG","children":["Пример использования ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"onClose"}],":"]}]}]
+35:["$","$L9",null,{"tabIndex":"0","data-language":"jsx","data-word-wrap":"","data-copy":"","data-pagefind-ignore":"all","children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":[["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"const"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":" result"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":" ="}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" snackbarApi."}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":"open"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"({ children: "}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"Сообщение\""}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" });"}]]}],"\n",["$","span",null,{"children":" "}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#6A737D","--shiki-dark":"#6A737D"},"children":"// Выполнить действие после закрытия"}]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"result."}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":"onClose"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"()."}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":"then"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"(() "}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"=>"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" {"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  console."}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":"log"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"("}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"Снекбар закрыт!\""}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":");"}]]}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"});"}]}]]}]}]
+36:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"primery-ispolzovaniya","children":["$","a",null,{"href":"#primery-ispolzovaniya","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Примеры использования","children":["Примеры использования",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+37:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"bazovyj-primer","children":["$","a",null,{"href":"#bazovyj-primer","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Базовый пример","children":["Базовый пример",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+38:["$","$L5d",null,{"Wrapper":"$5e","code":"const [snackbarApi, snackbarHolder] = useSnackbarManager();\n\nconst showSuccess = () => {\n  snackbarApi.open({\n    children: \"Операция выполнена успешно!\",\n    action: \"ОК\",\n  });\n};\n\nreturn (\n  <>\n    <Button onClick={showSuccess}>Показать уведомление</Button>\n    {snackbarHolder}\n  </>\n);"}]
+39:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"upravlenie-konkretnym-snekbarom","children":["$","a",null,{"href":"#upravlenie-konkretnym-snekbarom","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Управление конкретным снекбаром","children":["Управление конкретным снекбаром",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+3a:["$","$L5d",null,{"Wrapper":"$5e","code":"const [snackbarApi, snackbarHolder] = useSnackbarManager();\nconst snackbarRef = useRef(null);\n\nconst showSnackbar = () => {\n  if (snackbarRef.current) {\n    snackbarApi.close(snackbarRef.current.id);\n  }\n\n  const result = snackbarApi.open({\n    children: \"Это уведомление можно закрыть программно\",\n    action: \"Закрыть\",\n  });\n  snackbarRef.current = result;\n};\n\nconst closeProgrammatically = () => {\n  if (snackbarRef.current) {\n    snackbarRef.current.close();\n  }\n};\n\nreturn (\n  <>\n    <Flex gap=\"m\">\n      <Button onClick={showSnackbar}>Показать</Button>\n      <Button onClick={closeProgrammatically}>Закрыть программно</Button>\n    </Flex>\n    {snackbarHolder}\n  </>\n);"}]
+3b:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"obnovlenie-snekbara","children":["$","a",null,{"href":"#obnovlenie-snekbara","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Обновление снекбара","children":["Обновление снекбара",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+3c:["$","$L5d",null,{"Wrapper":"$5e","code":"const [snackbarApi, snackbarHolder] = useSnackbarManager();\nconst snackbarRef = useRef(null);\n\nconst showSnackbar = () => {\n  if (snackbarRef.current) {\n    snackbarApi.close(snackbarRef.current.id);\n  }\n\n  snackbarRef.current = snackbarApi.open({\n    children: \"Загрузка...\",\n  });\n};\n\nconst updateSnackbar = () => {\n  if (snackbarRef.current) {\n    snackbarApi.update(snackbarRef.current.id, {\n      children: \"Готово!\",\n      action: \"ОК\",\n    });\n  }\n};\n\nreturn (\n  <>\n    <Flex gap=\"m\">\n      <Button onClick={showSnackbar}>Показать</Button>\n      <Button onClick={updateSnackbar}>Обновить</Button>\n    </Flex>\n    {snackbarHolder}\n  </>\n);"}]
+3d:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"nastrojka-limita-i-strategii-ocheredi","children":["$","a",null,{"href":"#nastrojka-limita-i-strategii-ocheredi","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Настройка лимита и стратегии очереди","children":["Настройка лимита и стратегии очереди",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+3e:["$","$L5d",null,{"Wrapper":"$5e","code":"const [snackbarApi, snackbarHolder] = useSnackbarManager({\n  limit: 2, // Максимум 2 снекбара одновременно\n  queueStrategy: \"queue\", // Новые будут ждать\n});\nconst [snackbarsShowed, setSnackbarsShowed] = React.useState(false);\n\nconst showMultiple = () => {\n  if (snackbarsShowed) {\n    snackbarApi.closeAll();\n    setSnackbarsShowed(false);\n    return;\n  }\n\n  setSnackbarsShowed(true);\n  Promise.all([\n    snackbarApi.open({ children: \"Первое уведомление\" }).onClose(),\n    snackbarApi.open({ children: \"Второе уведомление\" }).onClose(),\n    snackbarApi.open({ children: \"Третье (будет ждать)\" }).onClose(),\n  ]).then(() => setSnackbarsShowed(false));\n};\n\nreturn (\n  <>\n    <Button onClick={showMultiple}>{snackbarsShowed ? 'Закрыть все' : 'Показать несколько'}</Button>\n    {snackbarHolder}\n  </>\n);"}]
+3f:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"custom-snackbar","children":["$","a",null,{"href":"#custom-snackbar","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Пользовательские снекбары","children":["Пользовательские снекбары",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+40:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Метод ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"openCustom"}]," позволяет создать снекбар с собственной разметкой и логикой. Это полезно, когда нужно:"]}]
+41:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":"Передать дополнительные данные в снекбар"}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["Использовать сложную разметку, которую нельзя описать через ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"open"}]]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":"Разделить логику вызова снекбара и его отображения"}],"\n"]}]
+42:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"kak-eto-rabotaet","children":["$","a",null,{"href":"#kak-eto-rabotaet","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Как это работает","children":["Как это работает",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+43:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Вместо простого объекта конфигурации вы передаёте React-компонент, который будет рендерить содержимое снекбара. В этот компонент автоматически передаются:"}]
+44:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"snackbarProps"}]," — все свойства для компонента ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"Snackbar"}]]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"id"}]," — идентификатор снекбара"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"close()"}]," — функция для закрытия снекбара"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"update(props)"}]," — функция для обновления свойств снекбара"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":"ваши дополнительные свойства (если указаны)"}],"\n"]}]
+45:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"dva-sposoba-ispolzovaniya","children":["$","a",null,{"href":"#dva-sposoba-ispolzovaniya","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Два способа использования","children":["Два способа использования",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+46:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":[["$","strong",null,{"className":"mdx_strong__N7OUG","children":"Способ 1:"}]," Передать объект с настройками (когда нужны дополнительные свойства)"]}]
+47:["$","$L9",null,{"tabIndex":"0","data-language":"jsx","data-word-wrap":"","data-copy":"","data-pagefind-ignore":"all","children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":[["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"snackbarApi."}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":"openCustom"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"({"}]]}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  component: MySnackbarComponent,"}]}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  additionalProps: {"}]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"    userName: "}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"Иван\""}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":","}]]}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  },"}]}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  baseProps: {"}]}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#6A737D","--shiki-dark":"#6A737D"},"children":"    // Свойства для Snackbar"}]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"    action: "}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"ОК\""}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":","}]]}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  },"}]}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"});"}]}]]}]}]
+48:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":[["$","strong",null,{"className":"mdx_strong__N7OUG","children":"Способ 2:"}]," Передать компонент напрямую (когда дополнительные свойства не нужны)"]}]
+49:["$","$L9",null,{"tabIndex":"0","data-language":"jsx","data-word-wrap":"","data-copy":"","data-pagefind-ignore":"all","children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"snackbarApi."}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":"openCustom"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"(MySnackbarComponent);"}]]}]}]}]
+4a:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"tipy","children":["$","a",null,{"href":"#tipy","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Типы","children":["Типы",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+4b:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":[["$","strong",null,{"className":"mdx_strong__N7OUG","children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"CustomSnackbar.Payload<AdditionalProps>"}]}]," — объект с настройками:"]}]
+4c:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"component"}]," — React-компонент для рендеринга"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"additionalProps?"}]," — дополнительные свойства для компонента"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"baseProps?"}]," — базовые свойства для ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"Snackbar"}]]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"id?"}]," — идентификатор (генерируется автоматически, если не указан)"]}],"\n"]}]
+4d:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":[["$","strong",null,{"className":"mdx_strong__N7OUG","children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"CustomSnackbar.Props<AdditionalProps>"}]}]," — свойства, которые получает ваш компонент:"]}]
+4e:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["Все ваши ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"AdditionalProps"}]]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"snackbarProps"}]," — свойства для ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"Snackbar"}]]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"id"}]," — идентификатор снекбара"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"close()"}]," — закрыть снекбар"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"update(props)"}]," — обновить свойства"]}],"\n"]}]
+4f:["$","aside",null,{"className":"Callout_root__6UBFP","children":["$","div",null,{"className":"Callout_content__MYf_T","children":["\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["⚠️ ",["$","strong",null,{"className":"mdx_strong__N7OUG","children":"Важно:"}]]}],"\n",["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["Не используйте в ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"AdditionalProps"}]," ключи ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"update"}],", ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"close"}],", ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"id"}],", ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"snackbarProps"}]," — они зарезервированы"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":"Все типы экспортируются из хука, используйте их для типизации"}],"\n"]}],"\n"]}]}]
+50:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"primer-s-dopolnitelnymi-svojstvami","children":["$","a",null,{"href":"#primer-s-dopolnitelnymi-svojstvami","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Пример с дополнительными свойствами","children":["Пример с дополнительными свойствами",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+51:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Когда нужно передать данные в снекбар (например, имя пользователя):"}]
+52:["$","$L5d",null,{"Wrapper":"$5e","code":"const SnackbarComponent = ({\n  userName,\n  update,\n  close,\n  snackbarProps,\n}: CustomSnackbar.Props<{ userName: string }>) => {\n  return (\n    <Snackbar action=\"Хорошо\" {...snackbarProps}>\n      Отправлено пользователю: {userName}\n    </Snackbar>\n  );\n};\n\nconst [snackbarApi, snackbarHolder] = useSnackbarManager();\n\nconst showSnackbar = () => {\n  snackbarApi.openCustom({\n    component: SnackbarComponent,\n    additionalProps: {\n      userName: \"Иван Барышев\",\n    },\n  });\n};\n\nreturn (\n  <>\n    <Button onClick={showSnackbar}>Показать уведомление</Button>\n    {snackbarHolder}\n  </>\n);"}]
+53:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"primer-bez-dopolnitelnyh-svojstv","children":["$","a",null,{"href":"#primer-bez-dopolnitelnyh-svojstv","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Пример без дополнительных свойств","children":["Пример без дополнительных свойств",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+54:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Если дополнительные свойства не нужны, можно передать компонент напрямую:"}]
+55:["$","$L5d",null,{"Wrapper":"$5e","code":"const SnackbarComponent = ({\n  update,\n  close,\n  snackbarProps,\n}: CustomSnackbar.Props) => {\n  return (\n    <Snackbar action=\"Хорошо\" {...snackbarProps}>\n      Сообщение отправлено\n    </Snackbar>\n  );\n};\n\nconst [snackbarApi, snackbarHolder] = useSnackbarManager();\n\nconst showSnackbar = () => {\n  snackbarApi.openCustom(SnackbarComponent);\n};\n\nreturn (\n  <>\n    <Button onClick={showSnackbar}>Показать уведомление</Button>\n    {snackbarHolder}\n  </>\n);"}]
+56:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"primer-s-ispolzovaniem-metodov-vnutri-komponenta","children":["$","a",null,{"href":"#primer-s-ispolzovaniem-metodov-vnutri-komponenta","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Пример с использованием методов внутри компонента","children":["Пример с использованием методов внутри компонента",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+57:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Внутри кастомного компонента можно использовать методы ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"close()"}]," и ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"update()"}],":"]}]
+58:["$","$L5d",null,{"Wrapper":"$5e","code":"const SnackbarComponent = ({\n  userName,\n  close,\n  snackbarProps,\n}: CustomSnackbar.Props<{ userName: string }>) => {\n  return (\n    <Snackbar action=\"Закрыть\" onActionClick={close} {...snackbarProps}>\n      Привет, {userName}!\n    </Snackbar>\n  );\n};\n\nconst [snackbarApi, snackbarHolder] = useSnackbarManager();\n\nconst showSnackbar = () => {\n  snackbarApi.openCustom({\n    component: SnackbarComponent,\n    additionalProps: {\n      userName: \"Иван\",\n    },\n  });\n};\n\nreturn (\n  <>\n    <Button onClick={showSnackbar}>Показать уведомление</Button>\n    {snackbarHolder}\n  </>\n);"}]
+5c:null

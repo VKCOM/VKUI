@@ -1,0 +1,171 @@
+1:"$Sreact.fragment"
+2:I[23450,["275","static/chunks/275-304ab15e14f41df0.js","433","static/chunks/433-0382baae8dd7435c.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Main"]
+7:I[74517,["275","static/chunks/275-304ab15e14f41df0.js","433","static/chunks/433-0382baae8dd7435c.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Overview",1]
+8:I[80204,["275","static/chunks/275-304ab15e14f41df0.js","433","static/chunks/433-0382baae8dd7435c.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"PlaygroundLazy"]
+18:I[91042,["275","static/chunks/275-304ab15e14f41df0.js","433","static/chunks/433-0382baae8dd7435c.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"TOC"]
+19:I[90484,[],"OutletBoundary"]
+1a:"$Sreact.suspense"
+1c:I[18443,["275","static/chunks/275-304ab15e14f41df0.js","433","static/chunks/433-0382baae8dd7435c.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Anchor"]
+3:T1cd8,---
+description: Компонент, помогающий сгруппировать несколько полей формы FormItem, расположив их по вертикали или по горизонтали.
+---
+
+<Overview group="layout">
+# FormLayoutGroup [tag:component]
+
+Компонент, помогающий сгруппировать несколько полей формы (`FormItem`), расположив их по вертикали или по горизонтали.
+
+</Overview>
+
+{/* @example-description: Горизонтальная группировка двух полей формы в `FormLayoutGroup`. */}
+<Playground>
+  ```jsx
+  <FormLayoutGroup mode="horizontal">
+    <FormItem htmlFor="name" top="Имя">
+      <Input id="name" />
+    </FormItem>
+    <FormItem htmlFor="lastName" top="Фамилия">
+      <Input id="lastName" />
+    </FormItem>
+  </FormLayoutGroup>
+  ```
+</Playground>
+
+## Вариант группировки
+
+Задаётся свойством `mode`.
+
+- `"vertical"` — поля располагаются вертикально друг под другом (по умолчанию);
+- `"horizontal"` — поля располагаются горизонтально по линии.
+
+Обратите внимание, что при недостатке места (например, на мобильных устройствах) поля формы сжимаются пропорционально,
+поэтому не рекомендуется в `mode="horizontal"` располагать более трёх `FormItem`.
+
+{/* @example-description: Вертикальная сегментированная группа связанных полей документа. */}
+<Playground>
+  ```jsx
+  <FormLayoutGroup mode="vertical" segmented>
+    <FormItem htmlFor="doctype" top="Документ, удостоверяющий личность">
+      <Select
+        id="doctype"
+        options={['Паспорт гражданина РФ', 'Загранпаспорт'].map((i) => ({
+          label: i,
+          value: i,
+        }))}
+        defaultValue={'Загранпаспорт'}
+      />
+    </FormItem>
+    <FormItem htmlFor="docnumber">
+      <Input id="docnumber" placeholder="Номер документа" />
+    </FormItem>
+  </FormLayoutGroup>
+  ```
+</Playground>
+
+## Удаление группы
+
+> Поддерживается только для `mode="horizontal"`.
+
+Добавить возможность удалять сгруппированные поля можно с помощью свойства `removable`,
+которое добавит кнопку удаления, стилизованную под используемую платформу.
+Помимо значений `true`/`false`, также принимает значение `"indent"`, которое бывает полезно, когда
+не все группы полей можно удалить, но есть необходимость поддерживать выравнивание, добавляя визуальный отступ.
+
+При `removable={true}` можно использовать следующие свойства:
+
+- `removePlaceholder` — текст, который будет зачитан скринридером или показан на платформе iOS
+  при взаимодействии с кнопкой удаления (по умолчанию "Удалить");
+- `onRemove` — функция-обработчик, которая будет вызвана при нажатии на кнопку удаления.
+
+{/* @example-description: Удаляемая горизонтальная группа дат с кнопкой удаления группы. */}
+<Playground>
+  ```jsx
+  <FormLayoutGroup mode="horizontal" removable onRemove={() => alert('Обработчик удаления')}>
+    <FormItem top="Дата начала поездки" htmlFor="start" topMultiline>
+      <DateInput id="start" disableCalendar />
+    </FormItem>
+    <FormItem top="Дата конца поездки" htmlFor="end" topMultiline>
+      <DateInput id="end" disableCalendar />
+    </FormItem>
+  </FormLayoutGroup>
+  ```
+</Playground>
+
+## Сегментированный вид
+
+Свойство `segmented` позволяет визуально склеить несколько `FormItem`, объединенные в одну `FormLayoutGroup`.
+Работает для `mode="vertical"` и `mode="horizontal"`.
+Используйте данное свойство, когда хотите показать, что элементы формы логически связаны между собой.
+Особое внимание уделите [`a11y`](#a11y) для `FormItem`, которые не определяют свойства `htmlFor` или `top`.
+
+{/* @example-description: Сегментированная горизонтальная группа из `Input` и `Select` для единого e-mail поля. */}
+<Playground>
+  ```jsx
+  <FormLayoutGroup mode="horizontal" segmented>
+    <FormItem htmlFor="email" top="E-mail">
+      <Input id="email" slotProps={{ input: { 'aria-label': 'Имя пользователя' } }} />
+    </FormItem>
+    <FormItem>
+      <Select
+        slotProps={{ input: { 'aria-label': 'Имя домена' } }}
+        options={['@mail.ru', '@internet.ru', '@bk.ru', '@inbox.ru', '@list.ru'].map((i) => ({
+          label: i,
+          value: i,
+        }))}
+        defaultValue="@mail.ru"
+      />
+    </FormItem>
+  </FormLayoutGroup>
+  ```
+</Playground>
+
+## Тестирование
+
+Для возможности тестирования доступны свойства с постфиксом `*TestId`, которые вы можете использовать,
+чтобы находить необходимые части компонента:
+
+- `removeButtonTestId` — `id` кнопки удаления при `removable={true}`;
+- `toggleButtonTestId` — `id` кнопки подтверждения удаления (**только для iOS**).
+
+## Доступность (a11y) [#a11y]
+
+- в компоненте используется тэг `fieldset`, что позволяет скринридеру автоматически определить роль [`group`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Roles/group_role);
+- рекомендуется предавать в компонент атрибуты `aria-labelledby`, `aria-label` и `aria-describedby` для предоставления
+  дополнительной информации об элементе;
+- если по дизайну требуется использовать сегментированный режим `segmented={true}`,
+  без возможности задать свойства `htmlFor` и `top` у [FormItem](/components/form-item), то стоит добавить скрытый текст,
+  используя сервисный компонент [VisuallyHidden](/components/visually-hidden), и связать его с полем формы через `id` и `htmlFor`,
+  дублируя текст, заданный в `placeholder`.
+
+## Свойства и методы [#api]
+
+<PropsTable name="FormLayoutGroup" />0:{"rsc":["$","$1","c",{"children":[[["$","$L2",null,{"metadata":{"description":"Компонент, помогающий сгруппировать несколько полей формы FormItem, расположив их по вертикали или по горизонтали.","title":"FormLayoutGroup","filePath":"content/components/form-layout-group.mdx","timestamp":1778845990000},"sourceCode":"$3","children":"$L4"}],"$L5"],null,"$L6"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"wj4SKuycOZIo3rvTKi4No"}
+4:[["$","$L7",null,{"group":"layout","children":[["$","h1",null,{"className":"mdx_h1__1mgpN","data-pagefind-filter":"tag:component","children":"FormLayoutGroup"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Компонент, помогающий сгруппировать несколько полей формы (",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"FormItem"}],"), расположив их по вертикали или по горизонтали."]}]]}],"\n","\n",["$","$L8",null,{"code":"<FormLayoutGroup mode=\"horizontal\">\n  <FormItem htmlFor=\"name\" top=\"Имя\">\n    <Input id=\"name\" />\n  </FormItem>\n  <FormItem htmlFor=\"lastName\" top=\"Фамилия\">\n    <Input id=\"lastName\" />\n  </FormItem>\n</FormLayoutGroup>"}],"\n",["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"variant-gruppirovki","children":["$","a",null,{"href":"#variant-gruppirovki","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Вариант группировки","children":["Вариант группировки",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}],"\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Задаётся свойством ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"mode"}],"."]}],"\n",["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"\"vertical\""}]," — поля располагаются вертикально друг под другом (по умолчанию);"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"\"horizontal\""}]," — поля располагаются горизонтально по линии."]}],"\n"]}],"\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Обратите внимание, что при недостатке места (например, на мобильных устройствах) поля формы сжимаются пропорционально,\nпоэтому не рекомендуется в ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"mode=\"horizontal\""}]," располагать более трёх ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"FormItem"}],"."]}],"\n","\n",["$","$L8",null,{"code":"<FormLayoutGroup mode=\"vertical\" segmented>\n  <FormItem htmlFor=\"doctype\" top=\"Документ, удостоверяющий личность\">\n    <Select\n      id=\"doctype\"\n      options={['Паспорт гражданина РФ', 'Загранпаспорт'].map((i) => ({\n        label: i,\n        value: i,\n      }))}\n      defaultValue={'Загранпаспорт'}\n    />\n  </FormItem>\n  <FormItem htmlFor=\"docnumber\">\n    <Input id=\"docnumber\" placeholder=\"Номер документа\" />\n  </FormItem>\n</FormLayoutGroup>"}],"\n",["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"udalenie-gruppy","children":["$","a",null,{"href":"#udalenie-gruppy","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Удаление группы","children":["Удаление группы",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}],"\n","$L9","\n","$La","\n","$Lb","\n","$Lc","\n","\n","$Ld","\n","$Le","\n","$Lf","\n","\n","$L10","\n","$L11","\n","$L12","\n","$L13","\n","$L14","\n","$L15","\n","$L16","\n","$L17"]
+5:["$","$L18",null,{"toc":[{"value":"Вариант группировки","id":"variant-gruppirovki","depth":2},{"value":"Удаление группы","id":"udalenie-gruppy","depth":2},{"value":"Сегментированный вид","id":"segmentirovannyj-vid","depth":2},{"value":"Тестирование","id":"testirovanie","depth":2},{"value":"Доступность (a11y)","id":"a11y","depth":2},{"value":"Свойства и методы","id":"api","depth":2}]}]
+6:["$","$L19",null,{"children":["$","$1a",null,{"name":"Next.MetadataOutlet","children":"$@1b"}]}]
+9:["$","aside",null,{"className":"Callout_root__6UBFP","children":["$","div",null,{"className":"Callout_content__MYf_T","children":["\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Поддерживается только для ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"mode=\"horizontal\""}],"."]}],"\n"]}]}]
+a:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Добавить возможность удалять сгруппированные поля можно с помощью свойства ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"removable"}],",\nкоторое добавит кнопку удаления, стилизованную под используемую платформу.\nПомимо значений ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"true"}],"/",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"false"}],", также принимает значение ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"\"indent\""}],", которое бывает полезно, когда\nне все группы полей можно удалить, но есть необходимость поддерживать выравнивание, добавляя визуальный отступ."]}]
+b:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["При ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"removable={true}"}]," можно использовать следующие свойства:"]}]
+c:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"removePlaceholder"}]," — текст, который будет зачитан скринридером или показан на платформе iOS\nпри взаимодействии с кнопкой удаления (по умолчанию “Удалить”);"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"onRemove"}]," — функция-обработчик, которая будет вызвана при нажатии на кнопку удаления."]}],"\n"]}]
+d:["$","$L8",null,{"code":"<FormLayoutGroup mode=\"horizontal\" removable onRemove={() => alert('Обработчик удаления')}>\n  <FormItem top=\"Дата начала поездки\" htmlFor=\"start\" topMultiline>\n    <DateInput id=\"start\" disableCalendar />\n  </FormItem>\n  <FormItem top=\"Дата конца поездки\" htmlFor=\"end\" topMultiline>\n    <DateInput id=\"end\" disableCalendar />\n  </FormItem>\n</FormLayoutGroup>"}]
+e:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"segmentirovannyj-vid","children":["$","a",null,{"href":"#segmentirovannyj-vid","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Сегментированный вид","children":["Сегментированный вид",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+f:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"segmented"}]," позволяет визуально склеить несколько ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"FormItem"}],", объединенные в одну ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"FormLayoutGroup"}],".\nРаботает для ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"mode=\"vertical\""}]," и ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"mode=\"horizontal\""}],".\nИспользуйте данное свойство, когда хотите показать, что элементы формы логически связаны между собой.\nОсобое внимание уделите ",["$","$L1c",null,{"href":"#a11y","children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"a11y"}]}]," для ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"FormItem"}],", которые не определяют свойства ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"htmlFor"}]," или ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"top"}],"."]}]
+10:["$","$L8",null,{"code":"<FormLayoutGroup mode=\"horizontal\" segmented>\n  <FormItem htmlFor=\"email\" top=\"E-mail\">\n    <Input id=\"email\" slotProps={{ input: { 'aria-label': 'Имя пользователя' } }} />\n  </FormItem>\n  <FormItem>\n    <Select\n      slotProps={{ input: { 'aria-label': 'Имя домена' } }}\n      options={['@mail.ru', '@internet.ru', '@bk.ru', '@inbox.ru', '@list.ru'].map((i) => ({\n        label: i,\n        value: i,\n      }))}\n      defaultValue=\"@mail.ru\"\n    />\n  </FormItem>\n</FormLayoutGroup>"}]
+11:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"testirovanie","children":["$","a",null,{"href":"#testirovanie","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Тестирование","children":["Тестирование",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+12:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Для возможности тестирования доступны свойства с постфиксом ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"*TestId"}],", которые вы можете использовать,\nчтобы находить необходимые части компонента:"]}]
+13:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"removeButtonTestId"}]," — ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"id"}]," кнопки удаления при ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"removable={true}"}],";"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"toggleButtonTestId"}]," — ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"id"}]," кнопки подтверждения удаления (",["$","strong",null,{"className":"mdx_strong__N7OUG","children":"только для iOS"}],")."]}],"\n"]}]
+14:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"a11y","children":["$","a",null,{"href":"#a11y","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Доступность (a11y)","children":["Доступность (a11y)",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+15:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["в компоненте используется тэг ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"fieldset"}],", что позволяет скринридеру автоматически определить роль ",["$","$L1c",null,{"href":"https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Roles/group_role","children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"group"}]}],";"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["рекомендуется предавать в компонент атрибуты ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"aria-labelledby"}],", ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"aria-label"}]," и ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"aria-describedby"}]," для предоставления\nдополнительной информации об элементе;"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["если по дизайну требуется использовать сегментированный режим ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"segmented={true}"}],",\nбез возможности задать свойства ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"htmlFor"}]," и ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"top"}]," у ",["$","$L1c",null,{"href":"/components/form-item","children":"FormItem"}],", то стоит добавить скрытый текст,\nиспользуя сервисный компонент ",["$","$L1c",null,{"href":"/components/visually-hidden","children":"VisuallyHidden"}],", и связать его с полем формы через ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"id"}]," и ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"htmlFor"}],",\nдублируя текст, заданный в ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"placeholder"}],"."]}],"\n"]}]
+16:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"api","children":["$","a",null,{"href":"#api","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Свойства и методы","children":["Свойства и методы",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+17:["$","div",null,{"className":"Table_root__0rGvK","children":["$","table",null,{"className":"Table_table__NzLHi PropsTable_root__O959b","children":[["$","thead",null,{"children":["$","tr",null,{"children":[["$","th",null,{"children":"Свойство","className":"Table_th__EHorR"}],["$","th",null,{"children":"Описание","className":"Table_th__EHorR"}]],"className":"Table_tr__SD2Ot"}]}],["$","tbody",null,{"children":["$@1d","$@1e","$@1f","$@20","$@21","$@22","$@23","$@24","$@25","$@26"]}]]}]}]
+1b:null
+1d:["$","tr","disabled",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"disabled"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"boolean"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Блокировка взаимодействия с компонентом."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+1e:["$","tr","getRootRef",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"getRootRef"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"Ref<HTMLDivElement>"}],"$undefined",["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+1f:["$","tr","mode",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"mode"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"\"horizontal\" | \"vertical\""}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Направление отображения элементов формы."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"vertical"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+20:["$","tr","noPadding",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"noPadding"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"boolean"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Удаляет внешние отступы вокруг компонента."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+21:["$","tr","onRemove",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"onRemove"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"((e: MouseEvent<Element, MouseEvent>, rootEl?: HTMLElement | null) => void) | undefined"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Обработчик, срабатывающий при нажатии на контрол удаления."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+22:["$","tr","removable",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"removable"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"boolean | \"indent\""}],[["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Только для режима horizontal. Дает возможность удалить всю группу ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"FormItem"}],"."]}],"\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Режим ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"indent"}]," предназначен для визуального отступа."]}]],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+23:["$","tr","removeButtonTestId",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"removeButtonTestId"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"string"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Передает атрибут ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"data-testid"}]," для кнопки удаления."]}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+24:["$","tr","removePlaceholder",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"removePlaceholder"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"ReactNode"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Текст кнопки удаления ячейки. Визуально скрыт везде, кроме iOS. На iOS появляется в выезжающей кнопке для удаления ячейки."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"Удалить"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+25:["$","tr","segmented",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"segmented"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"boolean"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Дает возможность склеить несколько ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"FormItem"}],"."]}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+26:["$","tr","toggleButtonTestId",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"toggleButtonTestId"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"string"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Передает атрибут ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"data-testid"}]," для кнопки, которая активирует кнопку удаления (iOS only)."]}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]

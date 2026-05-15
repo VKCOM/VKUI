@@ -1,0 +1,6 @@
+import{n as e}from"./chunk-BneVvdWh.js";import{t}from"./jsx-runtime-B7sYxePN.js";import{n,r}from"./NativeSelect-KxdARnpx.js";import{i,n as a,t as o}from"./constants-Cl1OGm0b.js";import{n as s,t as c}from"./createStoryParameters-DRBt1LSH.js";import{n as l,t as u}from"./getFormFieldIconsPresets-D4uitYuF.js";var d,f,p,m;e((()=>{i(),l(),s(),r(),d=t(),f={title:`Forms/NativeSelect`,component:n,parameters:c(`NativeSelect`,o,a),argTypes:{before:u()},tags:[`Формы и поля ввода`]},p={render:e=>(0,d.jsxs)(n,{...e,children:[(0,d.jsx)(`option`,{value:`m`,children:`Мужской`}),(0,d.jsx)(`option`,{value:`f`,children:`Женский`})]})},p.parameters={...p.parameters,docs:{...p.parameters?.docs,source:{originalSource:`{
+  render: args => <NativeSelect {...args}>
+      <option value="m">Мужской</option>
+      <option value="f">Женский</option>
+    </NativeSelect>
+}`,...p.parameters?.docs?.source}}},m=[`Playground`]}))();export{p as Playground,m as __namedExportsOrder,f as default};

@@ -1,0 +1,6 @@
+1:"$Sreact.fragment"
+2:I[90484,[],"ViewportBoundary"]
+3:I[90484,[],"MetadataBoundary"]
+4:"$Sreact.suspense"
+5:I[86869,[],"IconMark"]
+0:{"rsc":["$","$1","h",{"children":[null,["$","$L2",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]}],["$","div",null,{"hidden":true,"children":["$","$L3",null,{"children":["$","$4",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"useScroll | VKUI"}],["$","meta","1",{"name":"description","content":"Хук предоставляет единый API для чтения и управления прокруткой из контекста `AppRoot`. Корректно работает с режимами `scroll=\"contain\"` и `scroll=\"global\"`, а также с блокировкой через `useScrollLock`."}],["$","link","2",{"rel":"canonical","href":"https://vkui.io/components/use-scroll/"}],["$","link","3",{"rel":"icon","href":"/8.2.0/favicon.ico?60dfc7274b0e657e","type":"image/x-icon","sizes":"48x48"}],["$","link","4",{"rel":"icon","href":"/8.2.0/icon.svg?01ea673639a821e1","type":"image/svg+xml","sizes":"any"}],["$","link","5",{"rel":"apple-touch-icon","href":"/8.2.0/apple-icon.png?131c1f3e67ede032","type":"image/png","sizes":"180x180"}],["$","$L5","6",{}]]}]}]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"wj4SKuycOZIo3rvTKi4No"}

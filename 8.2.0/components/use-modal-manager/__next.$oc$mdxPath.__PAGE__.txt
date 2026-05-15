@@ -1,0 +1,1144 @@
+1:"$Sreact.fragment"
+2:I[23450,["275","static/chunks/275-304ab15e14f41df0.js","433","static/chunks/433-0382baae8dd7435c.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Main"]
+7:I[74517,["275","static/chunks/275-304ab15e14f41df0.js","433","static/chunks/433-0382baae8dd7435c.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Overview",1]
+8:I[18443,["275","static/chunks/275-304ab15e14f41df0.js","433","static/chunks/433-0382baae8dd7435c.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Anchor"]
+9:I[19180,["275","static/chunks/275-304ab15e14f41df0.js","433","static/chunks/433-0382baae8dd7435c.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Pre"]
+55:I[91042,["275","static/chunks/275-304ab15e14f41df0.js","433","static/chunks/433-0382baae8dd7435c.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"TOC"]
+56:I[90484,[],"OutletBoundary"]
+57:"$Sreact.suspense"
+5e:I[80204,["275","static/chunks/275-304ab15e14f41df0.js","433","static/chunks/433-0382baae8dd7435c.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"PlaygroundLazy"]
+3:T62e9,---
+description: Хук для управления модальными окнами (ModalPage, ModalCard) в приложении.
+---
+
+<Overview group="utils" type="hook" forcedPath="hooks/useModalManager/useModalManager.tsx">
+
+# useModalManager
+
+Хук для управления модальными окнами ([`ModalPage`](/components/modal-page), [`ModalCard`](/components/modal-card)) в приложении. Позволяет открывать, обновлять и закрывать модальные окна программно из любого места в коде.
+
+Связанные компоненты:
+
+- [ModalPage](/components/modal-page)
+- [ModalCard](/components/modal-card)
+
+</Overview>
+
+## Быстрый старт
+
+Хук возвращает два значения: API для управления модалками и компонент, который нужно добавить в разметку.
+
+```jsx
+const [api, contextHolder] = useModalManager();
+
+// Открыть модальное окно
+api.openModalCard({
+  title: "Привет, мир!",
+  children: "Содержимое модалки",
+});
+
+// Не забудьте добавить holder в JSX
+return (
+  <>
+    {/* Ваш контент */}
+    {contextHolder}
+  </>
+);
+```
+
+## API
+
+### Параметры
+
+Все параметры опциональны. Хук можно вызвать без аргументов: `useModalManager()`.
+
+| Параметр                | Тип                    | Описание                                                                                                                                                                                          |
+| ----------------------- | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `saveHistory`           | `boolean`              | Сохранять ли историю открытия модальных окон. При `true` (по умолчанию) можно вернуться к предыдущей модалке через кнопку "Назад". При `false` предыдущая модалка закрывается при открытии новой. |
+| `modalOverlayTestId`    | `string`               | `data-testid` для маски модального окна.                                                                                                                                                          |
+| `noFocusToDialog`       | `boolean`              | Отключает фокус на контейнер диалогового окна при открытии.                                                                                                                                       |
+| `disableModalOverlay`   | `boolean`              | Отключает отображение и взаимодействие с фоном модалки.                                                                                                                                           |
+| `disableOpenAnimation`  | `boolean`              | Отключает анимацию появления.                                                                                                                                                                     |
+| `disableCloseAnimation` | `boolean`              | Отключает анимацию закрытия.                                                                                                                                                                      |
+| `usePortal`             | `boolean`              | Использовать ли портал для рендеринга.                                                                                                                                                            |
+| `onOpen`                | `(id: string) => void` | Колбэк, вызываемый при начале открытия модалки.                                                                                                                                                   |
+| `onOpened`              | `(id: string) => void` | Колбэк, вызываемый при окончательном открытии модалки.                                                                                                                                            |
+| `onClose`               | `(id: string) => void` | Колбэк, вызываемый при начале закрытия модалки.                                                                                                                                                   |
+| `onClosed`              | `(id: string) => void` | Колбэк, вызываемый при окончательном закрытии модалки.                                                                                                                                            |
+
+### Возвращаемое значение
+
+Хук возвращает массив из двух элементов:
+
+1. **`api`** — объект с методами для управления модальными окнами
+2. **`contextHolder`** — React-элемент, который нужно добавить в JSX вашего компонента
+
+### Методы
+
+#### `openModalCard(props)` — открыть ModalCard
+
+Показывает модальную карточку. Принимает те же свойства, что и компонент `ModalCard` (кроме `open` и `keepMounted`).
+
+**Возвращает:** объект с методами для управления этой модалкой (см. [OpenModalReturn](#open-modal-return)).
+
+```jsx
+const result = api.openModalCard({
+  title: "Заголовок",
+  children: "Содержимое",
+  actions: <Button onClick={() => result.close()}>Закрыть</Button>,
+});
+```
+
+#### `openModalPage(props)` — открыть ModalPage
+
+Показывает модальную страницу. Принимает те же свойства, что и компонент `ModalPage` (кроме `open` и `keepMounted`).
+
+**Возвращает:** объект с методами для управления этой модалкой (см. [OpenModalReturn](#open-modal-return)).
+
+```jsx
+const result = api.openModalPage({
+  header: <ModalPageHeader>Заголовок</ModalPageHeader>,
+  children: <Group>Содержимое</Group>,
+});
+```
+
+#### `openCustomModalCard(payload)` и `openCustomModalPage(payload)` — открыть кастомную модалку
+
+Позволяют создать модальное окно с собственной разметкой. Подробнее в разделе [Пользовательские модальные окна](#custom-modals).
+
+#### `close(id)` — закрыть модалку
+
+Закрывает модальное окно по его идентификатору.
+
+```jsx
+const result = api.openModalCard({ title: "Модалка" });
+api.close(result.id);
+```
+
+#### `closeAll()` — закрыть все модалки
+
+Закрывает все открытые модальные окна одновременно.
+
+```jsx
+api.closeAll();
+```
+
+#### `update(id, type, props)` — обновить свойства модалки
+
+Изменяет свойства уже открытой модалки. Можно изменить любое свойство, кроме `id`.
+
+```jsx
+const result = api.openModalCard({ title: "Старый заголовок" });
+
+// Позже обновляем
+api.update(result.id, "card", {
+  title: "Новый заголовок",
+});
+```
+
+#### `setSaveHistory(value)` — изменить сохранение истории
+
+Меняет поведение сохранения истории модалок.
+
+```jsx
+api.setSaveHistory(false); // Предыдущие модалки будут закрываться
+```
+
+### OpenModalReturn [#open-modal-return]
+
+Объект, который возвращают методы `openModalCard`, `openModalPage`, `openCustomModalCard` и `openCustomModalPage`. Содержит методы для управления конкретной модалкой.
+
+| Свойство            | Тип                     | Описание                                                                                       |
+| ------------------- | ----------------------- | ---------------------------------------------------------------------------------------------- |
+| `id`                | `string`                | Уникальный идентификатор модалки. Генерируется автоматически, если не указан при открытии.     |
+| `close()`           | `() => void`            | Закрывает эту модалку.                                                                         |
+| `update(props)`     | `(props) => void`       | Обновляет свойства модалки. Тип `props` зависит от типа модалки (`ModalCard` или `ModalPage`). |
+| `onClose(resolve?)` | `(resolve?) => Promise` | Возвращает Promise, который выполнится, когда модалка закроется.                               |
+
+**Пример использования `onClose`:**
+
+```jsx
+const result = api.openModalCard({ title: "Модалка" });
+
+// Выполнить действие после закрытия
+result.onClose().then(() => {
+  console.log("Модалка закрыта!");
+});
+```
+
+## Примеры использования
+
+### Базовый пример
+
+{/* @example-description: Базовое использование `useModalManager` для открытия `ModalPage` и `ModalCard` через API. */}
+<Playground>
+
+```jsx
+const [api, contextHolder] = useModalManager();
+
+const openModalCard = () => {
+  const { close } = api.openModalCard({
+    icon: <Icon56NotificationOutline />,
+    title: "Приложение запрашивает разрешение на отправку Вам уведомлений",
+    actions: (
+      <React.Fragment>
+        <Spacing size={16} />
+        <ButtonGroup gap="m" stretched>
+          <Button
+            key="deny"
+            size="l"
+            mode="secondary"
+            stretched
+            onClick={() => close()}
+          >
+            Запретить
+          </Button>
+          <Button
+            key="allow"
+            size="l"
+            mode="primary"
+            stretched
+            onClick={() => close()}
+          >
+            Разрешить
+          </Button>
+        </ButtonGroup>
+      </React.Fragment>
+    ),
+  });
+};
+
+const openModalPage = () => {
+  const { close } = api.openModalPage({
+    dynamicContentHeight: true,
+    header: (
+      <ModalPageHeader
+        before={<PanelHeaderBack label="Назад" onClick={() => close()} />}
+      >
+        Информация о пользователе
+      </ModalPageHeader>
+    ),
+    children: (
+      <Group>
+        <Cell>
+          <InfoRow header="Дата рождения">5 ноября 1994</InfoRow>
+        </Cell>
+        <Cell>
+          <InfoRow header="Родной город">Санкт-Петербург</InfoRow>
+        </Cell>
+        <Cell>
+          <InfoRow header="Место работы">Команда ВКонтакте</InfoRow>
+        </Cell>
+      </Group>
+    ),
+  });
+};
+
+return (
+  <>
+    <Flex gap="2xl">
+      <Button mode="primary" appearance="overlay" onClick={openModalPage}>
+        Открыть ModalPage
+      </Button>
+      <Button mode="secondary" onClick={openModalCard}>
+        Открыть ModalCard
+      </Button>
+    </Flex>
+    {contextHolder}
+  </>
+);
+```
+
+</Playground>
+
+## История открытия модальных окон
+
+По умолчанию история открытых модальных окон сохраняется. Это означает, что при открытии новой модалки предыдущая остаётся в истории, и можно вернуться к ней через кнопку "Назад".
+
+Чтобы отключить это поведение, передайте `saveHistory: false` в хук или используйте метод `setSaveHistory(false)`. При отключённой истории предыдущая модалка будет закрываться при открытии новой.
+
+{/* @example-description: Пример управления историей модалок с переключением `saveHistory`. */}
+<Playground>
+
+```jsx
+import { useRef } from "react";
+
+const [api, contextHolder] = useModalManager();
+const modalCount = useRef(0);
+
+const openModal = (type: "card" | "page") => {
+  modalCount.current += 1;
+  const count = modalCount.current;
+
+  if (type === "card") {
+    const { close } = api.openModalCard({
+      icon: <Icon56NotificationOutline />,
+      title: `#${count} Modal Card Title`,
+      actions: (
+        <ButtonGroup stretched mode="vertical">
+          <Button
+            size="l"
+            mode="primary"
+            stretched
+            onClick={() => openModal("page")}
+          >
+            Открыть ModalPage
+          </Button>
+          <Button
+            size="l"
+            mode="primary"
+            stretched
+            onClick={() => openModal("card")}
+          >
+            Открыть ModalCard
+          </Button>
+          <Button size="l" mode="secondary" stretched onClick={() => close()}>
+            Закрыть
+          </Button>
+        </ButtonGroup>
+      ),
+    });
+  } else {
+    const { close } = api.openModalPage({
+      header: (
+        <ModalPageHeader
+          before={<PanelHeaderBack label="Назад" onClick={() => close()} />}
+        >
+          {`#${count} Вложенная модальная страница`}
+        </ModalPageHeader>
+      ),
+      children: (
+        <Group>
+          <CellButton onClick={() => openModal("page")}>
+            Open ModalPage
+          </CellButton>
+          <CellButton onClick={() => openModal("card")}>
+            Open ModalCard
+          </CellButton>
+        </Group>
+      ),
+    });
+  }
+};
+
+return (
+  <>
+    <Flex direction="column" gap="m">
+      <Checkbox
+        defaultChecked
+        onChange={(e) => api.setSaveHistory(e.target.checked)}
+      >
+        Сохранять историю открытия
+      </Checkbox>
+      <Button appearance="overlay" onClick={() => openModal("page")}>
+        Открыть ModalPage
+      </Button>
+      <Button appearance="overlay" onClick={() => openModal("card")}>
+        Открыть ModalCard
+      </Button>
+    </Flex>
+    {contextHolder}
+  </>
+);
+```
+
+</Playground>
+
+## Пользовательские модальные окна [#custom-modals]
+
+Методы `openCustomModalCard` и `openCustomModalPage` позволяют создать модальное окно с собственной разметкой и логикой. Это полезно, когда нужно:
+
+- Передать дополнительные данные в модалку
+- Использовать сложную разметку, которую нельзя описать через `openModalCard`/`openModalPage`
+- Разделить логику вызова модалки и её отображения
+
+### Как это работает
+
+Вместо простого объекта конфигурации вы передаёте React-компонент, который будет рендерить содержимое модалки. В этот компонент автоматически передаются:
+
+- `modalProps` — все свойства для компонента `ModalCard` или `ModalPage`
+- `id` — идентификатор модалки
+- `close()` — функция для закрытия модалки
+- `update(props)` — функция для обновления свойств модалки
+- ваши дополнительные свойства (если указаны)
+
+### Два способа использования
+
+**Способ 1:** Передать объект с настройками (когда нужны дополнительные свойства)
+
+```jsx
+api.openCustomModalCard({
+  component: MyModalComponent,
+  additionalProps: {
+    userName: "Иван",
+  },
+  baseProps: {
+    // Свойства для ModalCard
+    title: "Заголовок",
+  },
+});
+```
+
+**Способ 2:** Передать компонент напрямую (когда дополнительные свойства не нужны)
+
+```jsx
+api.openCustomModalCard(MyModalComponent);
+```
+
+### Типы
+
+**`CustomModalPayload<BaseProps, AdditionalProps>`** — объект с настройками:
+
+- `component` — React-компонент для рендеринга
+- `additionalProps?` — дополнительные свойства для компонента
+- `baseProps?` — базовые свойства для `ModalCard` или `ModalPage`
+- `id?` — идентификатор (генерируется автоматически, если не указан)
+
+**`CustomModalProps<BaseProps, AdditionalProps>`** — свойства, которые получает ваш компонент:
+
+- Все ваши `AdditionalProps`
+- `modalProps` — свойства для `ModalCard` или `ModalPage`
+- `id` — идентификатор модалки
+- `close()` — закрыть модалку
+- `update(props)` — обновить свойства
+
+> ⚠️ **Важно:**
+>
+> - Не используйте в `AdditionalProps` ключи `update`, `close`, `id`, `modalProps` — они зарезервированы
+> - Все типы экспортируются из хука, используйте их для типизации
+
+### Пример с дополнительными свойствами
+
+Когда нужно передать данные в модалку (например, функцию для открытия следующей модалки):
+
+{/* @example-description: Пользовательские модалки через `openCustomModalCard/openCustomModalPage` с дополнительными свойствами. */}
+<Playground>
+
+```jsx
+import { useRef } from "react";
+
+const ModalCardComponent = ({
+  close,
+  update,
+  openNextModal,
+  modalProps,
+  modalNumber,
+}: CustomModalProps<
+  OpenModalCardProps,
+  { openNextModal: (type: "card" | "page") => void, modalNumber: number }
+>) => {
+  return (
+    <ModalCard
+      icon={<Icon56NotificationOutline />}
+      title={`#${modalNumber} Modal Card Title`}
+      actions={
+        <ButtonGroup stretched mode="vertical">
+          <Button
+            size="l"
+            mode="primary"
+            stretched
+            onClick={() => openNextModal("page")}
+          >
+            Открыть ModalPage
+          </Button>
+          <Button
+            size="l"
+            mode="primary"
+            stretched
+            onClick={() => openNextModal("card")}
+          >
+            Открыть ModalCard
+          </Button>
+          <Button size="l" mode="secondary" stretched onClick={() => close()}>
+            Закрыть
+          </Button>
+        </ButtonGroup>
+      }
+      {...modalProps}
+    >
+      <FormItem top="Заголовок модалки">
+        <Input
+          defaultValue={`#${modalNumber} Modal Card Title`}
+          onChange={(e) => update({ title: e.target.value })}
+        />
+      </FormItem>
+    </ModalCard>
+  );
+};
+
+const ModalPageComponent = ({
+  openNextModal,
+  close,
+  modalProps,
+  modalNumber,
+}: CustomModalProps<
+  OpenModalPageProps,
+  { openNextModal: (type: "card" | "page") => void, modalNumber: number }
+>) => {
+  const platform = usePlatform();
+  const { viewWidth } = useAdaptivityConditionalRender();
+
+  return (
+    <ModalPage
+      header={
+        <ModalPageHeader
+          before={
+            viewWidth.smallTabletMinus &&
+            platform === "android" && (
+              <PanelHeaderClose
+                className={viewWidth.smallTabletMinus.className}
+                onClick={() => close()}
+              />
+            )
+          }
+          after={
+            viewWidth.smallTabletMinus &&
+            platform === "ios" && (
+              <PanelHeaderButton
+                onClick={() => close()}
+                className={viewWidth.smallTabletMinus.className}
+              >
+                <Icon24Dismiss />
+              </PanelHeaderButton>
+            )
+          }
+        >
+          {`#${modalNumber} Dynamic modal`}
+        </ModalPageHeader>
+      }
+      {...modalProps}
+    >
+      <Group>
+        <CellButton onClick={() => openNextModal("page")}>
+          Open ModalPage
+        </CellButton>
+        <CellButton onClick={() => openNextModal("card")}>
+          Open ModalCard
+        </CellButton>
+      </Group>
+    </ModalPage>
+  );
+};
+
+const [api, contextHolder] = useModalManager();
+const modalCount = useRef(0);
+
+const openCustomModal = (type: "card" | "page") => {
+  modalCount.current += 1;
+  const count = modalCount.current;
+
+  if (type === "card") {
+    api.openCustomModalCard({
+      component: ModalCardComponent,
+      additionalProps: {
+        openNextModal: openCustomModal,
+        modalNumber: count,
+      },
+    });
+  } else {
+    api.openCustomModalPage({
+      component: ModalPageComponent,
+      additionalProps: {
+        openNextModal: openCustomModal,
+        modalNumber: count,
+      },
+    });
+  }
+};
+
+return (
+  <>
+    <Flex direction="column" gap="m">
+      <Checkbox
+        defaultChecked
+        onChange={(e) => api.setSaveHistory(e.target.checked)}
+      >
+        Сохранять историю открытия
+      </Checkbox>
+      <Button appearance="overlay" onClick={() => openCustomModal("page")}>
+        Открыть ModalPage
+      </Button>
+      <Button appearance="overlay" onClick={() => openCustomModal("card")}>
+        Открыть ModalCard
+      </Button>
+    </Flex>
+    {contextHolder}
+  </>
+);
+```
+
+</Playground>
+
+### Пример без дополнительных свойств
+
+Если дополнительные свойства не нужны, можно передать компонент напрямую:
+
+{/* @example-description: Кастомные модалки без дополнительных свойств с передачей компонента напрямую. */}
+<Playground>
+
+```jsx
+const ModalCardComponent = ({
+  close,
+  modalProps,
+}: CustomModalProps<OpenModalCardProps>) => {
+  return (
+    <ModalCard
+      icon={<Icon56NotificationOutline />}
+      title="Приложение запрашивает разрешение на отправку Вам уведомлений"
+      actions={
+        <React.Fragment>
+          <Spacing size={16} />
+          <ButtonGroup gap="m" stretched>
+            <Button
+              key="deny"
+              size="l"
+              mode="secondary"
+              stretched
+              onClick={() => close()}
+            >
+              Запретить
+            </Button>
+            <Button
+              key="allow"
+              size="l"
+              mode="primary"
+              stretched
+              onClick={() => close()}
+            >
+              Разрешить
+            </Button>
+          </ButtonGroup>
+        </React.Fragment>
+      }
+      {...modalProps}
+    />
+  );
+};
+
+const ModalPageComponent = ({
+  close,
+  modalProps,
+}: CustomModalProps<OpenModalPageProps>) => {
+  return (
+    <ModalPage
+      dynamicContentHeight
+      header={
+        <ModalPageHeader
+          before={<PanelHeaderBack label="Назад" onClick={() => close()} />}
+        >
+          Информация о пользователе
+        </ModalPageHeader>
+      }
+      {...modalProps}
+    >
+      <Group>
+        <Cell>
+          <InfoRow header="Дата рождения">5 ноября 1994</InfoRow>
+        </Cell>
+        <Cell>
+          <InfoRow header="Родной город">Санкт-Петербург</InfoRow>
+        </Cell>
+        <Cell>
+          <InfoRow header="Место работы">Команда ВКонтакте</InfoRow>
+        </Cell>
+      </Group>
+    </ModalPage>
+  );
+};
+
+const [api, contextHolder] = useModalManager();
+
+const openModalCard = () => {
+  api.openCustomModalCard(ModalCardComponent);
+};
+
+const openModalPage = () => {
+  api.openCustomModalPage(ModalPageComponent);
+};
+
+return (
+  <Flex gap="2xl">
+    <Button mode="primary" appearance="overlay" onClick={openModalPage}>
+      Открыть ModalPage
+    </Button>
+    <Button mode="secondary" onClick={openModalCard}>
+      Открыть ModalCard
+    </Button>
+    {contextHolder}
+  </Flex>
+);
+```
+
+</Playground>0:{"rsc":["$","$1","c",{"children":[[["$","$L2",null,{"metadata":{"description":"Хук для управления модальными окнами (ModalPage, ModalCard) в приложении.","title":"useModalManager","filePath":"content/components/use-modal-manager.mdx","timestamp":1778845990000},"sourceCode":"$3","children":"$L4"}],"$L5"],null,"$L6"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"wj4SKuycOZIo3rvTKi4No"}
+4:[["$","$L7",null,{"group":"utils","type":"hook","forcedPath":"hooks/useModalManager/useModalManager.tsx","children":[["$","h1",null,{"className":"mdx_h1__1mgpN","children":"useModalManager"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Хук для управления модальными окнами (",["$","$L8",null,{"href":"/components/modal-page","children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"ModalPage"}]}],", ",["$","$L8",null,{"href":"/components/modal-card","children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"ModalCard"}]}],") в приложении. Позволяет открывать, обновлять и закрывать модальные окна программно из любого места в коде."]}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Связанные компоненты:"}],["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["$","$L8",null,{"href":"/components/modal-page","children":"ModalPage"}]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["$","$L8",null,{"href":"/components/modal-card","children":"ModalCard"}]}],"\n"]}]]}],"\n",["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"bystryj-start","children":["$","a",null,{"href":"#bystryj-start","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Быстрый старт","children":["Быстрый старт",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}],"\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Хук возвращает два значения: API для управления модалками и компонент, который нужно добавить в разметку."}],"\n",["$","$L9",null,{"tabIndex":"0","data-language":"jsx","data-word-wrap":"","data-copy":"","data-pagefind-ignore":"all","children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":[["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"const"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" ["}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"api"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":", "}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"contextHolder"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"] "}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" useModalManager"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"();"}]]}],"\n",["$","span",null,{"children":" "}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#6A737D","--shiki-dark":"#6A737D"},"children":"// Открыть модальное окно"}]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"api."}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":"openModalCard"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"({"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  title: "}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"Привет, мир!\""}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":","}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  children: "}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"Содержимое модалки\""}],"$La"]}],"\n","$Lb","\n","$Lc","\n","$Ld","\n","$Le","\n","$Lf","\n","$L10","\n","$L11","\n","$L12","\n","$L13"]}]}],"\n","$L14","\n","$L15","\n","$L16","\n","$L17","\n","$L18","\n","$L19","\n","$L1a","\n","$L1b","\n","$L1c","\n","$L1d","\n","$L1e","\n","$L1f","\n","$L20","\n","$L21","\n","$L22","\n","$L23","\n","$L24","\n","$L25","\n","$L26","\n","$L27","\n","$L28","\n","$L29","\n","$L2a","\n","$L2b","\n","$L2c","\n","$L2d","\n","$L2e","\n","$L2f","\n","$L30","\n","$L31","\n","$L32","\n","$L33","\n","$L34","\n","$L35","\n","$L36","\n","$L37","\n","$L38","\n","\n","$L39","\n","$L3a","\n","$L3b","\n","$L3c","\n","\n","$L3d","\n","$L3e","\n","$L3f","\n","$L40","\n","$L41","\n","$L42","\n","$L43","\n","$L44","\n","$L45","\n","$L46","\n","$L47","\n","$L48","\n","$L49","\n","$L4a","\n","$L4b","\n","$L4c","\n","$L4d","\n","$L4e","\n","$L4f","\n","$L50","\n","\n","$L51","\n","$L52","\n","$L53","\n","\n","$L54"]
+5:["$","$L55",null,{"toc":[{"value":"Быстрый старт","id":"bystryj-start","depth":2},{"value":"API","id":"api","depth":2},{"value":"Параметры","id":"parametry","depth":3},{"value":"Возвращаемое значение","id":"vozvrashaemoe-znachenie","depth":3},{"value":"Методы","id":"metody","depth":3},{"value":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"openModalCard(props)"}]," — открыть ModalCard"],"id":"otkryt-modalcard","depth":4},{"value":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"openModalPage(props)"}]," — открыть ModalPage"],"id":"otkryt-modalpage","depth":4},{"value":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"openCustomModalCard(payload)"}]," и ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"openCustomModalPage(payload)"}]," — открыть кастомную модалку"],"id":"otkryt-kastomnuyu-modalku","depth":4},{"value":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"close(id)"}]," — закрыть модалку"],"id":"zakryt-modalku","depth":4},{"value":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"closeAll()"}]," — закрыть все модалки"],"id":"zakryt-vse-modalki","depth":4},{"value":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"update(id, type, props)"}]," — обновить свойства модалки"],"id":"obnovit-svojstva-modalki","depth":4},{"value":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"setSaveHistory(value)"}]," — изменить сохранение истории"],"id":"izmenit-sohranenie-istorii","depth":4},{"value":"OpenModalReturn","id":"open-modal-return","depth":3},{"value":"Примеры использования","id":"primery-ispolzovaniya","depth":2},{"value":"Базовый пример","id":"bazovyj-primer","depth":3},{"value":"История открытия модальных окон","id":"istoriya-otkrytiya-modalnyh-okon","depth":2},{"value":"Пользовательские модальные окна","id":"custom-modals","depth":2},{"value":"Как это работает","id":"kak-eto-rabotaet","depth":3},{"value":"Два способа использования","id":"dva-sposoba-ispolzovaniya","depth":3},{"value":"Типы","id":"tipy","depth":3},{"value":"Пример с дополнительными свойствами","id":"primer-s-dopolnitelnymi-svojstvami","depth":3},{"value":"Пример без дополнительных свойств","id":"primer-bez-dopolnitelnyh-svojstv","depth":3}]}]
+6:["$","$L56",null,{"children":["$","$57",null,{"name":"Next.MetadataOutlet","children":"$@58"}]}]
+a:["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":","}]
+b:["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"});"}]}]
+c:["$","span",null,{"children":" "}]
+d:["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#6A737D","--shiki-dark":"#6A737D"},"children":"// Не забудьте добавить holder в JSX"}]}]
+e:["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"return"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" ("}]]}]
+f:["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  <>"}]}]
+10:["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"    {"}],["$","span",null,{"style":{"--shiki-light":"#6A737D","--shiki-dark":"#6A737D"},"children":"/* Ваш контент */"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"}"}]]}]
+11:["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"    {contextHolder}"}]}]
+12:["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  </>"}]}]
+13:["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":");"}]}]
+14:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"api","children":["$","a",null,{"href":"#api","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию API","children":["API",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+15:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"parametry","children":["$","a",null,{"href":"#parametry","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Параметры","children":["Параметры",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+16:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Все параметры опциональны. Хук можно вызвать без аргументов: ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"useModalManager()"}],"."]}]
+17:["$","div",null,{"className":"Table_root__0rGvK","children":["$","table",null,{"children":[["$","thead",null,{"children":["$","tr",null,{"children":[["$","th",null,{"children":"Параметр","className":"Table_th__EHorR"}],["$","th",null,{"children":"Тип","className":"Table_th__EHorR"}],["$","th",null,{"children":"Описание","className":"Table_th__EHorR"}]],"className":"Table_tr__SD2Ot"}]}],["$","tbody",null,{"children":[["$","tr",null,{"children":[["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"saveHistory"}],"className":"Table_td__L3qz5"}],["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"boolean"}],"className":"Table_td__L3qz5"}],["$","td",null,{"children":["Сохранять ли историю открытия модальных окон. При ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"true"}]," (по умолчанию) можно вернуться к предыдущей модалке через кнопку “Назад”. При ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"false"}]," предыдущая модалка закрывается при открытии новой."],"className":"Table_td__L3qz5"}]],"className":"Table_tr__SD2Ot"}],["$","tr",null,{"children":[["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"modalOverlayTestId"}],"className":"Table_td__L3qz5"}],["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"string"}],"className":"Table_td__L3qz5"}],["$","td",null,{"children":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"data-testid"}]," для маски модального окна."],"className":"Table_td__L3qz5"}]],"className":"Table_tr__SD2Ot"}],["$","tr",null,{"children":[["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"noFocusToDialog"}],"className":"Table_td__L3qz5"}],["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"boolean"}],"className":"Table_td__L3qz5"}],["$","td",null,{"children":"Отключает фокус на контейнер диалогового окна при открытии.","className":"Table_td__L3qz5"}]],"className":"Table_tr__SD2Ot"}],["$","tr",null,{"children":[["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"disableModalOverlay"}],"className":"Table_td__L3qz5"}],["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"boolean"}],"className":"Table_td__L3qz5"}],["$","td",null,{"children":"Отключает отображение и взаимодействие с фоном модалки.","className":"Table_td__L3qz5"}]],"className":"Table_tr__SD2Ot"}],["$","tr",null,{"children":[["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"disableOpenAnimation"}],"className":"Table_td__L3qz5"}],["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"boolean"}],"className":"Table_td__L3qz5"}],["$","td",null,{"children":"Отключает анимацию появления.","className":"Table_td__L3qz5"}]],"className":"Table_tr__SD2Ot"}],["$","tr",null,{"children":[["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"disableCloseAnimation"}],"className":"Table_td__L3qz5"}],["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"boolean"}],"className":"Table_td__L3qz5"}],["$","td",null,{"children":"Отключает анимацию закрытия.","className":"Table_td__L3qz5"}]],"className":"Table_tr__SD2Ot"}],["$","tr",null,{"children":[["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"usePortal"}],"className":"Table_td__L3qz5"}],["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"boolean"}],"className":"Table_td__L3qz5"}],["$","td",null,{"children":"Использовать ли портал для рендеринга.","className":"Table_td__L3qz5"}]],"className":"Table_tr__SD2Ot"}],["$","tr",null,{"children":[["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"onOpen"}],"className":"Table_td__L3qz5"}],"$L59","$L5a"],"className":"Table_tr__SD2Ot"}],"$L5b","$L5c","$L5d"]}]],"className":"Table_table__NzLHi"}]}]
+18:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"vozvrashaemoe-znachenie","children":["$","a",null,{"href":"#vozvrashaemoe-znachenie","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Возвращаемое значение","children":["Возвращаемое значение",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+19:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Хук возвращает массив из двух элементов:"}]
+1a:["$","ol",null,{"className":"mdx_ol__jzvNl","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","strong",null,{"className":"mdx_strong__N7OUG","children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"api"}]}]," — объект с методами для управления модальными окнами"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","strong",null,{"className":"mdx_strong__N7OUG","children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"contextHolder"}]}]," — React-элемент, который нужно добавить в JSX вашего компонента"]}],"\n"]}]
+1b:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"metody","children":["$","a",null,{"href":"#metody","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Методы","children":["Методы",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+1c:["$","h4",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading4__c9VtX","id":"otkryt-modalcard","children":["$","a",null,{"href":"#otkryt-modalcard","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию [object Object]","children":["$5:props:toc:5:value",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+1d:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Показывает модальную карточку. Принимает те же свойства, что и компонент ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"ModalCard"}]," (кроме ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"open"}]," и ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"keepMounted"}],")."]}]
+1e:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":[["$","strong",null,{"className":"mdx_strong__N7OUG","children":"Возвращает:"}]," объект с методами для управления этой модалкой (см. ",["$","$L8",null,{"href":"#open-modal-return","children":"OpenModalReturn"}],")."]}]
+1f:["$","$L9",null,{"tabIndex":"0","data-language":"jsx","data-word-wrap":"","data-copy":"","data-pagefind-ignore":"all","children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":[["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"const"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":" result"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":" ="}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" api."}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":"openModalCard"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"({"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  title: "}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"Заголовок\""}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":","}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  children: "}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"Содержимое\""}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":","}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  actions: <"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Button"}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" onClick"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"{() "}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"=>"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" result."}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":"close"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"()}>Закрыть</"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Button"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">,"}]]}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"});"}]}]]}]}]
+20:["$","h4",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading4__c9VtX","id":"otkryt-modalpage","children":["$","a",null,{"href":"#otkryt-modalpage","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию [object Object]","children":["$5:props:toc:6:value",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+21:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Показывает модальную страницу. Принимает те же свойства, что и компонент ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"ModalPage"}]," (кроме ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"open"}]," и ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"keepMounted"}],")."]}]
+22:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":[["$","strong",null,{"className":"mdx_strong__N7OUG","children":"Возвращает:"}]," объект с методами для управления этой модалкой (см. ",["$","$L8",null,{"href":"#open-modal-return","children":"OpenModalReturn"}],")."]}]
+23:["$","$L9",null,{"tabIndex":"0","data-language":"jsx","data-word-wrap":"","data-copy":"","data-pagefind-ignore":"all","children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":[["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"const"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":" result"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":" ="}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" api."}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":"openModalPage"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"({"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  header: <"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"ModalPageHeader"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">Заголовок</"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"ModalPageHeader"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">,"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  children: <"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Group"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">Содержимое</"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Group"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">,"}]]}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"});"}]}]]}]}]
+24:["$","h4",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading4__c9VtX","id":"otkryt-kastomnuyu-modalku","children":["$","a",null,{"href":"#otkryt-kastomnuyu-modalku","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию [object Object]","children":["$5:props:toc:7:value",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+25:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Позволяют создать модальное окно с собственной разметкой. Подробнее в разделе ",["$","$L8",null,{"href":"#custom-modals","children":"Пользовательские модальные окна"}],"."]}]
+26:["$","h4",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading4__c9VtX","id":"zakryt-modalku","children":["$","a",null,{"href":"#zakryt-modalku","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию [object Object]","children":["$5:props:toc:8:value",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+27:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Закрывает модальное окно по его идентификатору."}]
+28:["$","$L9",null,{"tabIndex":"0","data-language":"jsx","data-word-wrap":"","data-copy":"","data-pagefind-ignore":"all","children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":[["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"const"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":" result"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":" ="}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" api."}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":"openModalCard"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"({ title: "}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"Модалка\""}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" });"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"api."}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":"close"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"(result.id);"}]]}]]}]}]
+29:["$","h4",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading4__c9VtX","id":"zakryt-vse-modalki","children":["$","a",null,{"href":"#zakryt-vse-modalki","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию [object Object]","children":["$5:props:toc:9:value",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+2a:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Закрывает все открытые модальные окна одновременно."}]
+2b:["$","$L9",null,{"tabIndex":"0","data-language":"jsx","data-word-wrap":"","data-copy":"","data-pagefind-ignore":"all","children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"api."}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":"closeAll"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"();"}]]}]}]}]
+2c:["$","h4",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading4__c9VtX","id":"obnovit-svojstva-modalki","children":["$","a",null,{"href":"#obnovit-svojstva-modalki","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию [object Object]","children":["$5:props:toc:10:value",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+2d:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Изменяет свойства уже открытой модалки. Можно изменить любое свойство, кроме ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"id"}],"."]}]
+2e:["$","$L9",null,{"tabIndex":"0","data-language":"jsx","data-word-wrap":"","data-copy":"","data-pagefind-ignore":"all","children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":[["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"const"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":" result"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":" ="}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" api."}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":"openModalCard"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"({ title: "}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"Старый заголовок\""}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" });"}]]}],"\n",["$","span",null,{"children":" "}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#6A737D","--shiki-dark":"#6A737D"},"children":"// Позже обновляем"}]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"api."}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":"update"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"(result.id, "}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"card\""}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":", {"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  title: "}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"Новый заголовок\""}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":","}]]}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"});"}]}]]}]}]
+2f:["$","h4",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading4__c9VtX","id":"izmenit-sohranenie-istorii","children":["$","a",null,{"href":"#izmenit-sohranenie-istorii","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию [object Object]","children":["$5:props:toc:11:value",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+30:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Меняет поведение сохранения истории модалок."}]
+31:["$","$L9",null,{"tabIndex":"0","data-language":"jsx","data-word-wrap":"","data-copy":"","data-pagefind-ignore":"all","children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"api."}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":"setSaveHistory"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"("}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"false"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"); "}],["$","span",null,{"style":{"--shiki-light":"#6A737D","--shiki-dark":"#6A737D"},"children":"// Предыдущие модалки будут закрываться"}]]}]}]}]
+32:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"open-modal-return","children":["$","a",null,{"href":"#open-modal-return","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию OpenModalReturn","children":["OpenModalReturn",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+33:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Объект, который возвращают методы ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"openModalCard"}],", ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"openModalPage"}],", ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"openCustomModalCard"}]," и ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"openCustomModalPage"}],". Содержит методы для управления конкретной модалкой."]}]
+34:["$","div",null,{"className":"Table_root__0rGvK","children":["$","table",null,{"children":[["$","thead",null,{"children":["$","tr",null,{"children":[["$","th",null,{"children":"Свойство","className":"Table_th__EHorR"}],["$","th",null,{"children":"Тип","className":"Table_th__EHorR"}],["$","th",null,{"children":"Описание","className":"Table_th__EHorR"}]],"className":"Table_tr__SD2Ot"}]}],["$","tbody",null,{"children":[["$","tr",null,{"children":[["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"id"}],"className":"Table_td__L3qz5"}],["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"string"}],"className":"Table_td__L3qz5"}],["$","td",null,{"children":"Уникальный идентификатор модалки. Генерируется автоматически, если не указан при открытии.","className":"Table_td__L3qz5"}]],"className":"Table_tr__SD2Ot"}],["$","tr",null,{"children":[["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"close()"}],"className":"Table_td__L3qz5"}],["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"() => void"}],"className":"Table_td__L3qz5"}],["$","td",null,{"children":"Закрывает эту модалку.","className":"Table_td__L3qz5"}]],"className":"Table_tr__SD2Ot"}],["$","tr",null,{"children":[["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"update(props)"}],"className":"Table_td__L3qz5"}],["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"(props) => void"}],"className":"Table_td__L3qz5"}],["$","td",null,{"children":["Обновляет свойства модалки. Тип ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"props"}]," зависит от типа модалки (",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"ModalCard"}]," или ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"ModalPage"}],")."],"className":"Table_td__L3qz5"}]],"className":"Table_tr__SD2Ot"}],["$","tr",null,{"children":[["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"onClose(resolve?)"}],"className":"Table_td__L3qz5"}],["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"(resolve?) => Promise"}],"className":"Table_td__L3qz5"}],["$","td",null,{"children":"Возвращает Promise, который выполнится, когда модалка закроется.","className":"Table_td__L3qz5"}]],"className":"Table_tr__SD2Ot"}]]}]],"className":"Table_table__NzLHi"}]}]
+35:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["$","strong",null,{"className":"mdx_strong__N7OUG","children":["Пример использования ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"onClose"}],":"]}]}]
+36:["$","$L9",null,{"tabIndex":"0","data-language":"jsx","data-word-wrap":"","data-copy":"","data-pagefind-ignore":"all","children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":[["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"const"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":" result"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":" ="}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" api."}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":"openModalCard"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"({ title: "}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"Модалка\""}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" });"}]]}],"\n",["$","span",null,{"children":" "}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#6A737D","--shiki-dark":"#6A737D"},"children":"// Выполнить действие после закрытия"}]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"result."}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":"onClose"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"()."}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":"then"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"(() "}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"=>"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" {"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  console."}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":"log"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"("}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"Модалка закрыта!\""}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":");"}]]}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"});"}]}]]}]}]
+37:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"primery-ispolzovaniya","children":["$","a",null,{"href":"#primery-ispolzovaniya","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Примеры использования","children":["Примеры использования",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+38:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"bazovyj-primer","children":["$","a",null,{"href":"#bazovyj-primer","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Базовый пример","children":["Базовый пример",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+5f:T78d,const [api, contextHolder] = useModalManager();
+
+const openModalCard = () => {
+  const { close } = api.openModalCard({
+    icon: <Icon56NotificationOutline />,
+    title: "Приложение запрашивает разрешение на отправку Вам уведомлений",
+    actions: (
+      <React.Fragment>
+        <Spacing size={16} />
+        <ButtonGroup gap="m" stretched>
+          <Button
+            key="deny"
+            size="l"
+            mode="secondary"
+            stretched
+            onClick={() => close()}
+          >
+            Запретить
+          </Button>
+          <Button
+            key="allow"
+            size="l"
+            mode="primary"
+            stretched
+            onClick={() => close()}
+          >
+            Разрешить
+          </Button>
+        </ButtonGroup>
+      </React.Fragment>
+    ),
+  });
+};
+
+const openModalPage = () => {
+  const { close } = api.openModalPage({
+    dynamicContentHeight: true,
+    header: (
+      <ModalPageHeader
+        before={<PanelHeaderBack label="Назад" onClick={() => close()} />}
+      >
+        Информация о пользователе
+      </ModalPageHeader>
+    ),
+    children: (
+      <Group>
+        <Cell>
+          <InfoRow header="Дата рождения">5 ноября 1994</InfoRow>
+        </Cell>
+        <Cell>
+          <InfoRow header="Родной город">Санкт-Петербург</InfoRow>
+        </Cell>
+        <Cell>
+          <InfoRow header="Место работы">Команда ВКонтакте</InfoRow>
+        </Cell>
+      </Group>
+    ),
+  });
+};
+
+return (
+  <>
+    <Flex gap="2xl">
+      <Button mode="primary" appearance="overlay" onClick={openModalPage}>
+        Открыть ModalPage
+      </Button>
+      <Button mode="secondary" onClick={openModalCard}>
+        Открыть ModalCard
+      </Button>
+    </Flex>
+    {contextHolder}
+  </>
+);39:["$","$L5e",null,{"code":"$5f"}]
+3a:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"istoriya-otkrytiya-modalnyh-okon","children":["$","a",null,{"href":"#istoriya-otkrytiya-modalnyh-okon","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию История открытия модальных окон","children":["История открытия модальных окон",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+3b:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"По умолчанию история открытых модальных окон сохраняется. Это означает, что при открытии новой модалки предыдущая остаётся в истории, и можно вернуться к ней через кнопку “Назад”."}]
+3c:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Чтобы отключить это поведение, передайте ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"saveHistory: false"}]," в хук или используйте метод ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"setSaveHistory(false)"}],". При отключённой истории предыдущая модалка будет закрываться при открытии новой."]}]
+60:T84b,import { useRef } from "react";
+
+const [api, contextHolder] = useModalManager();
+const modalCount = useRef(0);
+
+const openModal = (type: "card" | "page") => {
+  modalCount.current += 1;
+  const count = modalCount.current;
+
+  if (type === "card") {
+    const { close } = api.openModalCard({
+      icon: <Icon56NotificationOutline />,
+      title: `#${count} Modal Card Title`,
+      actions: (
+        <ButtonGroup stretched mode="vertical">
+          <Button
+            size="l"
+            mode="primary"
+            stretched
+            onClick={() => openModal("page")}
+          >
+            Открыть ModalPage
+          </Button>
+          <Button
+            size="l"
+            mode="primary"
+            stretched
+            onClick={() => openModal("card")}
+          >
+            Открыть ModalCard
+          </Button>
+          <Button size="l" mode="secondary" stretched onClick={() => close()}>
+            Закрыть
+          </Button>
+        </ButtonGroup>
+      ),
+    });
+  } else {
+    const { close } = api.openModalPage({
+      header: (
+        <ModalPageHeader
+          before={<PanelHeaderBack label="Назад" onClick={() => close()} />}
+        >
+          {`#${count} Вложенная модальная страница`}
+        </ModalPageHeader>
+      ),
+      children: (
+        <Group>
+          <CellButton onClick={() => openModal("page")}>
+            Open ModalPage
+          </CellButton>
+          <CellButton onClick={() => openModal("card")}>
+            Open ModalCard
+          </CellButton>
+        </Group>
+      ),
+    });
+  }
+};
+
+return (
+  <>
+    <Flex direction="column" gap="m">
+      <Checkbox
+        defaultChecked
+        onChange={(e) => api.setSaveHistory(e.target.checked)}
+      >
+        Сохранять историю открытия
+      </Checkbox>
+      <Button appearance="overlay" onClick={() => openModal("page")}>
+        Открыть ModalPage
+      </Button>
+      <Button appearance="overlay" onClick={() => openModal("card")}>
+        Открыть ModalCard
+      </Button>
+    </Flex>
+    {contextHolder}
+  </>
+);3d:["$","$L5e",null,{"code":"$60"}]
+3e:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"custom-modals","children":["$","a",null,{"href":"#custom-modals","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Пользовательские модальные окна","children":["Пользовательские модальные окна",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+3f:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Методы ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"openCustomModalCard"}]," и ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"openCustomModalPage"}]," позволяют создать модальное окно с собственной разметкой и логикой. Это полезно, когда нужно:"]}]
+40:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":"Передать дополнительные данные в модалку"}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["Использовать сложную разметку, которую нельзя описать через ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"openModalCard"}],"/",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"openModalPage"}]]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":"Разделить логику вызова модалки и её отображения"}],"\n"]}]
+41:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"kak-eto-rabotaet","children":["$","a",null,{"href":"#kak-eto-rabotaet","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Как это работает","children":["Как это работает",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+42:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Вместо простого объекта конфигурации вы передаёте React-компонент, который будет рендерить содержимое модалки. В этот компонент автоматически передаются:"}]
+43:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"modalProps"}]," — все свойства для компонента ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"ModalCard"}]," или ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"ModalPage"}]]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"id"}]," — идентификатор модалки"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"close()"}]," — функция для закрытия модалки"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"update(props)"}]," — функция для обновления свойств модалки"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":"ваши дополнительные свойства (если указаны)"}],"\n"]}]
+44:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"dva-sposoba-ispolzovaniya","children":["$","a",null,{"href":"#dva-sposoba-ispolzovaniya","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Два способа использования","children":["Два способа использования",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+45:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":[["$","strong",null,{"className":"mdx_strong__N7OUG","children":"Способ 1:"}]," Передать объект с настройками (когда нужны дополнительные свойства)"]}]
+46:["$","$L9",null,{"tabIndex":"0","data-language":"jsx","data-word-wrap":"","data-copy":"","data-pagefind-ignore":"all","children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":[["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"api."}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":"openCustomModalCard"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"({"}]]}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  component: MyModalComponent,"}]}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  additionalProps: {"}]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"    userName: "}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"Иван\""}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":","}]]}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  },"}]}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  baseProps: {"}]}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#6A737D","--shiki-dark":"#6A737D"},"children":"    // Свойства для ModalCard"}]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"    title: "}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"Заголовок\""}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":","}]]}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  },"}]}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"});"}]}]]}]}]
+47:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":[["$","strong",null,{"className":"mdx_strong__N7OUG","children":"Способ 2:"}]," Передать компонент напрямую (когда дополнительные свойства не нужны)"]}]
+48:["$","$L9",null,{"tabIndex":"0","data-language":"jsx","data-word-wrap":"","data-copy":"","data-pagefind-ignore":"all","children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"api."}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":"openCustomModalCard"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"(MyModalComponent);"}]]}]}]}]
+49:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"tipy","children":["$","a",null,{"href":"#tipy","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Типы","children":["Типы",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+4a:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":[["$","strong",null,{"className":"mdx_strong__N7OUG","children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"CustomModalPayload<BaseProps, AdditionalProps>"}]}]," — объект с настройками:"]}]
+4b:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"component"}]," — React-компонент для рендеринга"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"additionalProps?"}]," — дополнительные свойства для компонента"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"baseProps?"}]," — базовые свойства для ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"ModalCard"}]," или ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"ModalPage"}]]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"id?"}]," — идентификатор (генерируется автоматически, если не указан)"]}],"\n"]}]
+4c:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":[["$","strong",null,{"className":"mdx_strong__N7OUG","children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"CustomModalProps<BaseProps, AdditionalProps>"}]}]," — свойства, которые получает ваш компонент:"]}]
+4d:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["Все ваши ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"AdditionalProps"}]]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"modalProps"}]," — свойства для ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"ModalCard"}]," или ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"ModalPage"}]]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"id"}]," — идентификатор модалки"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"close()"}]," — закрыть модалку"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"update(props)"}]," — обновить свойства"]}],"\n"]}]
+4e:["$","aside",null,{"className":"Callout_root__6UBFP","children":["$","div",null,{"className":"Callout_content__MYf_T","children":["\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["⚠️ ",["$","strong",null,{"className":"mdx_strong__N7OUG","children":"Важно:"}]]}],"\n",["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["Не используйте в ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"AdditionalProps"}]," ключи ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"update"}],", ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"close"}],", ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"id"}],", ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"modalProps"}]," — они зарезервированы"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":"Все типы экспортируются из хука, используйте их для типизации"}],"\n"]}],"\n"]}]}]
+4f:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"primer-s-dopolnitelnymi-svojstvami","children":["$","a",null,{"href":"#primer-s-dopolnitelnymi-svojstvami","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Пример с дополнительными свойствами","children":["Пример с дополнительными свойствами",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+50:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Когда нужно передать данные в модалку (например, функцию для открытия следующей модалки):"}]
+61:Tec9,import { useRef } from "react";
+
+const ModalCardComponent = ({
+  close,
+  update,
+  openNextModal,
+  modalProps,
+  modalNumber,
+}: CustomModalProps<
+  OpenModalCardProps,
+  { openNextModal: (type: "card" | "page") => void, modalNumber: number }
+>) => {
+  return (
+    <ModalCard
+      icon={<Icon56NotificationOutline />}
+      title={`#${modalNumber} Modal Card Title`}
+      actions={
+        <ButtonGroup stretched mode="vertical">
+          <Button
+            size="l"
+            mode="primary"
+            stretched
+            onClick={() => openNextModal("page")}
+          >
+            Открыть ModalPage
+          </Button>
+          <Button
+            size="l"
+            mode="primary"
+            stretched
+            onClick={() => openNextModal("card")}
+          >
+            Открыть ModalCard
+          </Button>
+          <Button size="l" mode="secondary" stretched onClick={() => close()}>
+            Закрыть
+          </Button>
+        </ButtonGroup>
+      }
+      {...modalProps}
+    >
+      <FormItem top="Заголовок модалки">
+        <Input
+          defaultValue={`#${modalNumber} Modal Card Title`}
+          onChange={(e) => update({ title: e.target.value })}
+        />
+      </FormItem>
+    </ModalCard>
+  );
+};
+
+const ModalPageComponent = ({
+  openNextModal,
+  close,
+  modalProps,
+  modalNumber,
+}: CustomModalProps<
+  OpenModalPageProps,
+  { openNextModal: (type: "card" | "page") => void, modalNumber: number }
+>) => {
+  const platform = usePlatform();
+  const { viewWidth } = useAdaptivityConditionalRender();
+
+  return (
+    <ModalPage
+      header={
+        <ModalPageHeader
+          before={
+            viewWidth.smallTabletMinus &&
+            platform === "android" && (
+              <PanelHeaderClose
+                className={viewWidth.smallTabletMinus.className}
+                onClick={() => close()}
+              />
+            )
+          }
+          after={
+            viewWidth.smallTabletMinus &&
+            platform === "ios" && (
+              <PanelHeaderButton
+                onClick={() => close()}
+                className={viewWidth.smallTabletMinus.className}
+              >
+                <Icon24Dismiss />
+              </PanelHeaderButton>
+            )
+          }
+        >
+          {`#${modalNumber} Dynamic modal`}
+        </ModalPageHeader>
+      }
+      {...modalProps}
+    >
+      <Group>
+        <CellButton onClick={() => openNextModal("page")}>
+          Open ModalPage
+        </CellButton>
+        <CellButton onClick={() => openNextModal("card")}>
+          Open ModalCard
+        </CellButton>
+      </Group>
+    </ModalPage>
+  );
+};
+
+const [api, contextHolder] = useModalManager();
+const modalCount = useRef(0);
+
+const openCustomModal = (type: "card" | "page") => {
+  modalCount.current += 1;
+  const count = modalCount.current;
+
+  if (type === "card") {
+    api.openCustomModalCard({
+      component: ModalCardComponent,
+      additionalProps: {
+        openNextModal: openCustomModal,
+        modalNumber: count,
+      },
+    });
+  } else {
+    api.openCustomModalPage({
+      component: ModalPageComponent,
+      additionalProps: {
+        openNextModal: openCustomModal,
+        modalNumber: count,
+      },
+    });
+  }
+};
+
+return (
+  <>
+    <Flex direction="column" gap="m">
+      <Checkbox
+        defaultChecked
+        onChange={(e) => api.setSaveHistory(e.target.checked)}
+      >
+        Сохранять историю открытия
+      </Checkbox>
+      <Button appearance="overlay" onClick={() => openCustomModal("page")}>
+        Открыть ModalPage
+      </Button>
+      <Button appearance="overlay" onClick={() => openCustomModal("card")}>
+        Открыть ModalCard
+      </Button>
+    </Flex>
+    {contextHolder}
+  </>
+);51:["$","$L5e",null,{"code":"$61"}]
+52:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"primer-bez-dopolnitelnyh-svojstv","children":["$","a",null,{"href":"#primer-bez-dopolnitelnyh-svojstv","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Пример без дополнительных свойств","children":["Пример без дополнительных свойств",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+53:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Если дополнительные свойства не нужны, можно передать компонент напрямую:"}]
+62:T8ec,const ModalCardComponent = ({
+  close,
+  modalProps,
+}: CustomModalProps<OpenModalCardProps>) => {
+  return (
+    <ModalCard
+      icon={<Icon56NotificationOutline />}
+      title="Приложение запрашивает разрешение на отправку Вам уведомлений"
+      actions={
+        <React.Fragment>
+          <Spacing size={16} />
+          <ButtonGroup gap="m" stretched>
+            <Button
+              key="deny"
+              size="l"
+              mode="secondary"
+              stretched
+              onClick={() => close()}
+            >
+              Запретить
+            </Button>
+            <Button
+              key="allow"
+              size="l"
+              mode="primary"
+              stretched
+              onClick={() => close()}
+            >
+              Разрешить
+            </Button>
+          </ButtonGroup>
+        </React.Fragment>
+      }
+      {...modalProps}
+    />
+  );
+};
+
+const ModalPageComponent = ({
+  close,
+  modalProps,
+}: CustomModalProps<OpenModalPageProps>) => {
+  return (
+    <ModalPage
+      dynamicContentHeight
+      header={
+        <ModalPageHeader
+          before={<PanelHeaderBack label="Назад" onClick={() => close()} />}
+        >
+          Информация о пользователе
+        </ModalPageHeader>
+      }
+      {...modalProps}
+    >
+      <Group>
+        <Cell>
+          <InfoRow header="Дата рождения">5 ноября 1994</InfoRow>
+        </Cell>
+        <Cell>
+          <InfoRow header="Родной город">Санкт-Петербург</InfoRow>
+        </Cell>
+        <Cell>
+          <InfoRow header="Место работы">Команда ВКонтакте</InfoRow>
+        </Cell>
+      </Group>
+    </ModalPage>
+  );
+};
+
+const [api, contextHolder] = useModalManager();
+
+const openModalCard = () => {
+  api.openCustomModalCard(ModalCardComponent);
+};
+
+const openModalPage = () => {
+  api.openCustomModalPage(ModalPageComponent);
+};
+
+return (
+  <Flex gap="2xl">
+    <Button mode="primary" appearance="overlay" onClick={openModalPage}>
+      Открыть ModalPage
+    </Button>
+    <Button mode="secondary" onClick={openModalCard}>
+      Открыть ModalCard
+    </Button>
+    {contextHolder}
+  </Flex>
+);54:["$","$L5e",null,{"code":"$62"}]
+58:null
+59:["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"(id: string) => void"}],"className":"Table_td__L3qz5"}]
+5a:["$","td",null,{"children":"Колбэк, вызываемый при начале открытия модалки.","className":"Table_td__L3qz5"}]
+5b:["$","tr",null,{"children":[["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"onOpened"}],"className":"Table_td__L3qz5"}],["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"(id: string) => void"}],"className":"Table_td__L3qz5"}],["$","td",null,{"children":"Колбэк, вызываемый при окончательном открытии модалки.","className":"Table_td__L3qz5"}]],"className":"Table_tr__SD2Ot"}]
+5c:["$","tr",null,{"children":[["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"onClose"}],"className":"Table_td__L3qz5"}],["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"(id: string) => void"}],"className":"Table_td__L3qz5"}],["$","td",null,{"children":"Колбэк, вызываемый при начале закрытия модалки.","className":"Table_td__L3qz5"}]],"className":"Table_tr__SD2Ot"}]
+5d:["$","tr",null,{"children":[["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"onClosed"}],"className":"Table_td__L3qz5"}],["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"(id: string) => void"}],"className":"Table_td__L3qz5"}],["$","td",null,{"children":"Колбэк, вызываемый при окончательном закрытии модалки.","className":"Table_td__L3qz5"}]],"className":"Table_tr__SD2Ot"}]

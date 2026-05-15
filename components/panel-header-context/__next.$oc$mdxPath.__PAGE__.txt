@@ -1,0 +1,98 @@
+1:"$Sreact.fragment"
+2:I[23450,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-3c03d819f20b8c00.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Main"]
+4:I[74517,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-3c03d819f20b8c00.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Overview",1]
+5:I[18443,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-3c03d819f20b8c00.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Anchor"]
+14:I[80204,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-3c03d819f20b8c00.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"PlaygroundLazy"]
+15:I[57621,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-3c03d819f20b8c00.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"FixedLayoutWrapper"]
+19:I[91042,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-3c03d819f20b8c00.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"TOC"]
+1a:I[90484,[],"OutletBoundary"]
+1b:"$Sreact.suspense"
+3:Tc30,---
+description: Компонент, позволяющий реализовать всплывающее меню при нажатии на шапку.
+---
+
+<Overview group="navigation">
+# PanelHeaderContext [tag:component]
+
+Компонент, позволяющий реализовать всплывающее меню при нажатии на шапку. Может быть полезен для реализации дополнительной навигации
+по разделам приложения. Размещайте данный компонент _рядом_ с компонентом [`PanelHeader`](/components/panel-header).
+
+Связанные компоненты:
+
+- [`PanelHeader`](/components/panel-header)
+
+</Overview>
+
+import { FixedLayoutWrapper } from '@/components/wrappers';
+
+{/* @example-description: Базовый `PanelHeaderContext` с открытием/закрытием контекстного меню из шапки. */}
+<Playground Wrapper={FixedLayoutWrapper}>
+
+```jsx
+const [contextOpened, setContextOpened] = React.useState(false);
+
+const toggleContext = () => {
+  setContextOpened((prev) => !prev);
+};
+
+return (
+  <Panel>
+    <PanelHeader>
+      <PanelHeaderContent onClick={toggleContext}>Нажми</PanelHeaderContent>
+    </PanelHeader>
+    <PanelHeaderContext opened={contextOpened} onClose={toggleContext}>
+      <SimpleCell onClick={() => setContextOpened(false)}>Пункт один</SimpleCell>
+      <SimpleCell onClick={() => setContextOpened(false)}>Пункт два</SimpleCell>
+    </PanelHeaderContext>
+    <Group>
+      <div style={{ height: 150 }} />
+    </Group>
+  </Panel>
+);
+```
+
+</Playground>
+
+## Контент
+
+Содержимое меню передавайте в свойство `children`. Несмотря на то, что вы можете передать любые компоненты,
+для реализации пунктов меню рекомендуется использовать компонент `SimpleCell`.
+
+## Состояния
+
+### Раскрытие
+
+Свойство `opened` позволяет показывать и скрывать компонент.
+
+- `false` — компонент скрыт (по умолчанию);
+- `true` — компонент раскрыт.
+
+## Обработчики событий
+
+Свойство `onClose` принимает обработчик скрытия компонента, который будет вызван при завершении анимации.
+
+Обратите внимание, что компонент обрабатывает любые нажатия внутри своей области, если вы не хотите, чтобы
+нажатие на элементы внутри всплывающего меню приводили к его скрытию, останавливайте всплытие события нажатия
+через [`event.stopPropagation()`](https://developer.mozilla.org/ru/docs/Web/API/Event/stopPropagation).
+
+## Свойства и методы [#api]
+
+<PropsTable name="PanelHeaderContext" />0:{"rsc":["$","$1","c",{"children":[[["$","$L2",null,{"metadata":{"description":"Компонент, позволяющий реализовать всплывающее меню при нажатии на шапку.","title":"PanelHeaderContext","filePath":"content/components/panel-header-context.mdx","timestamp":1778845990000},"sourceCode":"$3","children":[["$","$L4",null,{"group":"navigation","children":[["$","h1",null,{"className":"mdx_h1__1mgpN","data-pagefind-filter":"tag:component","children":"PanelHeaderContext"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Компонент, позволяющий реализовать всплывающее меню при нажатии на шапку. Может быть полезен для реализации дополнительной навигации\nпо разделам приложения. Размещайте данный компонент ",["$","em",null,{"children":"рядом"}]," с компонентом ",["$","$L5",null,{"href":"/components/panel-header","children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"PanelHeader"}]}],"."]}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Связанные компоненты:"}],["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["$","$L5",null,{"href":"/components/panel-header","children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"PanelHeader"}]}]}],"\n"]}]]}],"\n","\n","\n","$L6","\n","$L7","\n","$L8","\n","$L9","\n","$La","\n","$Lb","\n","$Lc","\n","$Ld","\n","$Le","\n","$Lf","\n","$L10","\n","$L11"]}],"$L12"],null,"$L13"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"0Ol_0BANXusFa48he9eFA"}
+6:["$","$L14",null,{"Wrapper":"$15","code":"const [contextOpened, setContextOpened] = React.useState(false);\n\nconst toggleContext = () => {\n  setContextOpened((prev) => !prev);\n};\n\nreturn (\n  <Panel>\n    <PanelHeader>\n      <PanelHeaderContent onClick={toggleContext}>Нажми</PanelHeaderContent>\n    </PanelHeader>\n    <PanelHeaderContext opened={contextOpened} onClose={toggleContext}>\n      <SimpleCell onClick={() => setContextOpened(false)}>Пункт один</SimpleCell>\n      <SimpleCell onClick={() => setContextOpened(false)}>Пункт два</SimpleCell>\n    </PanelHeaderContext>\n    <Group>\n      <div style={{ height: 150 }} />\n    </Group>\n  </Panel>\n);"}]
+7:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"kontent","children":["$","a",null,{"href":"#kontent","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Контент","children":["Контент",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+8:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Содержимое меню передавайте в свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"children"}],". Несмотря на то, что вы можете передать любые компоненты,\nдля реализации пунктов меню рекомендуется использовать компонент ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"SimpleCell"}],"."]}]
+9:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"sostoyaniya","children":["$","a",null,{"href":"#sostoyaniya","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Состояния","children":["Состояния",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+a:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"raskrytie","children":["$","a",null,{"href":"#raskrytie","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Раскрытие","children":["Раскрытие",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+b:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"opened"}]," позволяет показывать и скрывать компонент."]}]
+c:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"false"}]," — компонент скрыт (по умолчанию);"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"true"}]," — компонент раскрыт."]}],"\n"]}]
+d:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"obrabotchiki-sobytij","children":["$","a",null,{"href":"#obrabotchiki-sobytij","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Обработчики событий","children":["Обработчики событий",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+e:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"onClose"}]," принимает обработчик скрытия компонента, который будет вызван при завершении анимации."]}]
+f:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Обратите внимание, что компонент обрабатывает любые нажатия внутри своей области, если вы не хотите, чтобы\nнажатие на элементы внутри всплывающего меню приводили к его скрытию, останавливайте всплытие события нажатия\nчерез ",["$","$L5",null,{"href":"https://developer.mozilla.org/ru/docs/Web/API/Event/stopPropagation","children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"event.stopPropagation()"}]}],"."]}]
+10:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"api","children":["$","a",null,{"href":"#api","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Свойства и методы","children":["Свойства и методы",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+11:["$","div",null,{"className":"Table_root__0rGvK","children":["$","table",null,{"className":"Table_table__NzLHi PropsTable_root__O959b","children":[["$","thead",null,{"children":["$","tr",null,{"children":[["$","th",null,{"children":"Свойство","className":"Table_th__EHorR"}],["$","th",null,{"children":"Описание","className":"Table_th__EHorR"}]],"className":"Table_tr__SD2Ot"}]}],["$","tbody",null,{"children":["$@16","$@17","$@18"]}]]}]}]
+12:["$","$L19",null,{"toc":[{"value":"Контент","id":"kontent","depth":2},{"value":"Состояния","id":"sostoyaniya","depth":2},{"value":"Раскрытие","id":"raskrytie","depth":3},{"value":"Обработчики событий","id":"obrabotchiki-sobytij","depth":2},{"value":"Свойства и методы","id":"api","depth":2}]}]
+13:["$","$L1a",null,{"children":["$","$1b",null,{"name":"Next.MetadataOutlet","children":"$@1c"}]}]
+16:["$","tr","getRootRef",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"getRootRef"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"Ref<HTMLDivElement>"}],"$undefined",["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+17:["$","tr","onClose",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ PropsTable_propRequired__6g8iy","children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"onClose"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"VoidFunction"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Обработчик закрытия всплывающего элемента."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+18:["$","tr","opened",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"opened"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"boolean"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Управление состоянием всплывающего элемента\ntrue - элемент открыт, false - элемент закрыт."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"false"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+1c:null

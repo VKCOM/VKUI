@@ -1,0 +1,345 @@
+1:"$Sreact.fragment"
+2:I[23450,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-3c03d819f20b8c00.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Main"]
+7:I[74517,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-3c03d819f20b8c00.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Overview",1]
+8:I[18443,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-3c03d819f20b8c00.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Anchor"]
+9:I[80204,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-3c03d819f20b8c00.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"PlaygroundLazy"]
+a:I[57621,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-3c03d819f20b8c00.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"FixedLayoutWrapper"]
+25:I[91042,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-3c03d819f20b8c00.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"TOC"]
+26:I[90484,[],"OutletBoundary"]
+27:"$Sreact.suspense"
+29:I[19180,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-3c03d819f20b8c00.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Pre"]
+3:T22e9,---
+description: Контейнер для реализации интерфейса многоколоночной структурой.
+---
+
+<Overview group="layout">
+
+# SplitLayout [tag:component]
+
+Контейнер для реализации интерфейса многоколоночной структурой – за реализацию колонки отвечает [`SplitCol`](#split-col).
+
+Помимо многоколоночной структуры, за счёт [`SplitCol`](#split-col) со свойством `autoSpaced`, обеспечивает боковые отступы для
+экранов на базе [`Panel`](/components/panel).
+
+Связанные страницы и компоненты:
+
+- [Навигация](/overview/navigation)
+- [`Panel`](/components/panel)
+- [`PanelHeader`](/components/panel-header)
+
+</Overview>
+
+import { FixedLayoutWrapper } from '@/components/wrappers';
+
+{/* @example-description: Базовый пример `SplitLayout` с двумя колонками и адаптивным скрытием боковой колонки на узких экранах. */}
+<Playground Wrapper={FixedLayoutWrapper}>
+
+```jsx
+const { viewWidth } = useAdaptivityConditionalRender();
+
+return (
+  <SplitLayout>
+    {viewWidth.tabletPlus && (
+      <SplitCol fixed width={280} maxWidth={280} className={viewWidth.tabletPlus.className}>
+        <div
+          style={{
+            padding: 12,
+            color: 'white',
+            backgroundColor: 'tomato',
+          }}
+        >
+          Фиксированная колонка слева
+        </div>
+      </SplitCol>
+    )}
+    <SplitCol>
+      <div
+        style={{
+          padding: 12,
+          color: 'white',
+          backgroundColor: 'steelblue',
+        }}
+      >
+        Колонка справа
+        {viewWidth.tabletMinus && (
+          <p className={viewWidth.tabletMinus.className}>
+            ⚠️ колонка слева спрятана по условию адаптивности
+          </p>
+        )}
+      </div>
+    </SplitCol>
+  </SplitLayout>
+);
+```
+
+</Playground>
+
+## Применение компонента
+
+<Callout>Компонент должен быть один на всё приложение.</Callout>
+
+Достаточно будет объявить `SplitLayout` один раз ближе к корню приложения (см. [Навигация | Предварительная настройка](/overview/navigation#initial-setup)).
+
+## Выравнивание
+
+За выравнивание контента по горизонтали отвечает свойство `center`.
+
+- `true` — весь контент выравнивается по центру;
+- `false` — выравнивание не применяется.
+
+## Сквозная шапка
+
+Для реализации сквозной шапки между колонками используется свойство `header` с передачей в него компонента [`PanelHeader`](/components/panel-header).
+
+{/* @example-description: Использование сквозной шапки `SplitLayout` через свойство `header` для синхронизации `PanelHeader` между колонками. */}
+<Playground Wrapper={FixedLayoutWrapper}>
+
+```jsx
+const platform = usePlatform();
+const hasHeader = platform !== 'vkcom';
+const { viewWidth } = useAdaptivityConditionalRender();
+
+return (
+  <SplitLayout header={hasHeader && <PanelHeader delimiter="none" />}>
+    {viewWidth.tabletPlus && (
+      <SplitCol className={viewWidth.tabletPlus.className} fixed width={280} maxWidth={280}>
+        <Panel mode="card">
+          {hasHeader && <PanelHeader />}
+          <Group>
+            <Div>Колонка слева</Div>
+          </Group>
+        </Panel>
+      </SplitCol>
+    )}
+    <SplitCol maxWidth="560px" stretchedOnMobile autoSpaced>
+      <Panel mode="card">
+        <PanelHeader>Шапка</PanelHeader>
+        <Group mode="card">
+          <Div>Колонка справа</Div>
+        </Group>
+      </Panel>
+    </SplitCol>
+  </SplitLayout>
+);
+```
+
+</Playground>
+
+<Callout>
+Для платформы vkcom шапку передавать не нужно. Для определения платформы используйте хук [`usePlatform`](/components/platform-provider#use-platform).
+
+```jsx showLineNumbers filename="src/App.tsx"
+import { SplitLayout, SplitCol, usePlatform } from '@vkontakte/vkui';
+
+export default function App() {
+  const platform = usePlatform();
+  const hasHeader = platform !== 'vkcom';
+
+  return (
+    <SplitLayout header={hasHeader && <PanelHeader delimiter="none" />}>
+      {/* остальной контент */}
+    </SplitLayout>
+  );
+}
+```
+
+</Callout>
+
+## Кастомизация
+
+Компонент поддерживает свойство `slotProps`, которое даёт возможность прокинуть свойство в некоторые внутренние элементы.
+Это удобно для добавления кастомных классов, data-атрибутов, aria-атрибутов, обработчиков событий, доступов к элементам через `getRootRef` и других расширений, не влияя на внешний API компонента.
+
+{/* @example-description: Кастомизация `SplitLayout` через `slotProps` с добавлением классов, `data-testid` и ссылки на внутренний контейнер. */}
+<Playground Wrapper={FixedLayoutWrapper}>
+
+```jsx
+const { viewWidth } = useAdaptivityConditionalRender();
+const contentRef = React.useRef();
+
+return (
+  <SplitLayout
+    className="my-root-class"
+    data-testid="split-layout-root"
+    slotProps={{
+      content: {
+         className: 'my-content-class',
+        'data-testid': 'split-layout-content',
+        getRootRef: contentRef,
+      },
+    }}
+  >
+    {viewWidth.tabletPlus && (
+      <SplitCol fixed width={280} maxWidth={280} className={viewWidth.tabletPlus.className}>
+        <div
+          style={{
+            padding: 12,
+            color: 'white',
+            backgroundColor: 'tomato',
+          }}
+        >
+          Фиксированная колонка слева
+        </div>
+      </SplitCol>
+    )}
+    <SplitCol>
+      <div
+        style={{
+          padding: 12,
+          color: 'white',
+          backgroundColor: 'steelblue',
+        }}
+      >
+        Колонка справа
+        {viewWidth.tabletMinus && (
+          <p className={viewWidth.tabletMinus.className}>
+            ⚠️ колонка слева спрятана по условию адаптивности
+          </p>
+        )}
+      </div>
+    </SplitCol>
+  </SplitLayout>
+);
+```
+
+</Playground>
+
+
+## SplitCol [#split-col] [tag:component]
+
+Подкомпонент для отрисовки колонки в многоколоночном интерфейсе.
+
+### Позиционирование
+
+Свойство `fixed` даёт возможность задать стиль `position: fixed` для колонки.
+Обычно используется для боковых колонок, не позволяя им прокручиваться с основным контентом и всегда оставаться в области видимости.
+
+- `true` — стиль применяется;
+- `false` — стиль не применяется.
+
+### Размеры
+
+С помощью свойств `width`, `minWidth` и `maxWidth` можно управлять шириной колонки. Принимаются либо числовое (в пикселях), либо
+строковое (токены или другие единицы измерения) значения.
+
+```jsx
+<SplitCol width="100%" maxWidth={560}>
+  {/* контент */}
+</SplitCol>
+```
+
+Свойство `stretchedOnMobile` позволит колонке растягиваться на всю доступную ширину на устройствах шириной меньше `tablet`.
+
+### Отступы
+
+Свойство `autoSpaced` добавляет фиксированные боковые отступы колонке на устройствах с шириной больше `smallTablet`.
+
+### Анимации [#animation]
+
+Через свойство `animate` можно управлять включением/отключением анимаций при переходах во [`View`](/components/view). По умолчанию
+анимации при переходах включены только для мобильных устройств.
+
+## Свойства и методы [#api]
+
+<PropsTable name={["SplitLayout", "SplitCol"]}>
+### SplitLayout [#split-layout-api]
+
+### SplitCol [#split-col-api]
+
+</PropsTable>0:{"rsc":["$","$1","c",{"children":[[["$","$L2",null,{"metadata":{"description":"Контейнер для реализации интерфейса многоколоночной структурой.","title":"SplitLayout","filePath":"content/components/split-layout.mdx","timestamp":1778845990000},"sourceCode":"$3","children":"$L4"}],"$L5"],null,"$L6"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"0Ol_0BANXusFa48he9eFA"}
+4:[["$","$L7",null,{"group":"layout","children":[["$","h1",null,{"className":"mdx_h1__1mgpN","data-pagefind-filter":"tag:component","children":"SplitLayout"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Контейнер для реализации интерфейса многоколоночной структурой – за реализацию колонки отвечает ",["$","$L8",null,{"href":"#split-col","children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"SplitCol"}]}],"."]}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Помимо многоколоночной структуры, за счёт ",["$","$L8",null,{"href":"#split-col","children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"SplitCol"}]}]," со свойством ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"autoSpaced"}],", обеспечивает боковые отступы для\nэкранов на базе ",["$","$L8",null,{"href":"/components/panel","children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"Panel"}]}],"."]}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Связанные страницы и компоненты:"}],["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["$","$L8",null,{"href":"/overview/navigation","children":"Навигация"}]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["$","$L8",null,{"href":"/components/panel","children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"Panel"}]}]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["$","$L8",null,{"href":"/components/panel-header","children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"PanelHeader"}]}]}],"\n"]}]]}],"\n","\n","\n",["$","$L9",null,{"Wrapper":"$a","code":"const { viewWidth } = useAdaptivityConditionalRender();\n\nreturn (\n  <SplitLayout>\n    {viewWidth.tabletPlus && (\n      <SplitCol fixed width={280} maxWidth={280} className={viewWidth.tabletPlus.className}>\n        <div\n          style={{\n            padding: 12,\n            color: 'white',\n            backgroundColor: 'tomato',\n          }}\n        >\n          Фиксированная колонка слева\n        </div>\n      </SplitCol>\n    )}\n    <SplitCol>\n      <div\n        style={{\n          padding: 12,\n          color: 'white',\n          backgroundColor: 'steelblue',\n        }}\n      >\n        Колонка справа\n        {viewWidth.tabletMinus && (\n          <p className={viewWidth.tabletMinus.className}>\n            ⚠️ колонка слева спрятана по условию адаптивности\n          </p>\n        )}\n      </div>\n    </SplitCol>\n  </SplitLayout>\n);"}],"\n",["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"primenenie-komponenta","children":["$","a",null,{"href":"#primenenie-komponenta","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Применение компонента","children":["Применение компонента",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}],"\n",["$","aside",null,{"className":"Callout_root__6UBFP","children":["$","div",null,{"className":"Callout_content__MYf_T","children":"Компонент должен быть один на всё приложение."}]}],"\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Достаточно будет объявить ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"SplitLayout"}]," один раз ближе к корню приложения (см. ","$Lb",")."]}],"\n","$Lc","\n","$Ld","\n","$Le","\n","$Lf","\n","$L10","\n","\n","$L11","\n","$L12","\n","$L13","\n","$L14","\n","\n","$L15","\n","$L16","\n","$L17","\n","$L18","\n","$L19","\n","$L1a","\n","$L1b","\n","$L1c","\n","$L1d","\n","$L1e","\n","$L1f","\n","$L20","\n","$L21","\n","$L22","\n","$L23","\n","$L24"]
+5:["$","$L25",null,{"toc":[{"value":"Применение компонента","id":"primenenie-komponenta","depth":2},{"value":"Выравнивание","id":"vyravnivanie","depth":2},{"value":"Сквозная шапка","id":"skvoznaya-shapka","depth":2},{"value":"Кастомизация","id":"kastomizaciya","depth":2},{"value":"SplitCol","id":"split-col","depth":2},{"value":"Позиционирование","id":"pozicionirovanie","depth":3},{"value":"Размеры","id":"razmery","depth":3},{"value":"Отступы","id":"otstupy","depth":3},{"value":"Анимации","id":"animation","depth":3},{"value":"Свойства и методы","id":"api","depth":2},{"value":"SplitLayout","id":"split-layout-api","depth":3},{"value":"SplitCol","id":"split-col-api","depth":3}]}]
+6:["$","$L26",null,{"children":["$","$27",null,{"name":"Next.MetadataOutlet","children":"$@28"}]}]
+b:["$","$L8",null,{"href":"/overview/navigation#initial-setup","children":"Навигация | Предварительная настройка"}]
+c:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"vyravnivanie","children":["$","a",null,{"href":"#vyravnivanie","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Выравнивание","children":["Выравнивание",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+d:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["За выравнивание контента по горизонтали отвечает свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"center"}],"."]}]
+e:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"true"}]," — весь контент выравнивается по центру;"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"false"}]," — выравнивание не применяется."]}],"\n"]}]
+f:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"skvoznaya-shapka","children":["$","a",null,{"href":"#skvoznaya-shapka","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Сквозная шапка","children":["Сквозная шапка",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+10:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Для реализации сквозной шапки между колонками используется свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"header"}]," с передачей в него компонента ",["$","$L8",null,{"href":"/components/panel-header","children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"PanelHeader"}]}],"."]}]
+11:["$","$L9",null,{"Wrapper":"$a","code":"const platform = usePlatform();\nconst hasHeader = platform !== 'vkcom';\nconst { viewWidth } = useAdaptivityConditionalRender();\n\nreturn (\n  <SplitLayout header={hasHeader && <PanelHeader delimiter=\"none\" />}>\n    {viewWidth.tabletPlus && (\n      <SplitCol className={viewWidth.tabletPlus.className} fixed width={280} maxWidth={280}>\n        <Panel mode=\"card\">\n          {hasHeader && <PanelHeader />}\n          <Group>\n            <Div>Колонка слева</Div>\n          </Group>\n        </Panel>\n      </SplitCol>\n    )}\n    <SplitCol maxWidth=\"560px\" stretchedOnMobile autoSpaced>\n      <Panel mode=\"card\">\n        <PanelHeader>Шапка</PanelHeader>\n        <Group mode=\"card\">\n          <Div>Колонка справа</Div>\n        </Group>\n      </Panel>\n    </SplitCol>\n  </SplitLayout>\n);"}]
+12:["$","aside",null,{"className":"Callout_root__6UBFP","children":["$","div",null,{"className":"Callout_content__MYf_T","children":[["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Для платформы vkcom шапку передавать не нужно. Для определения платформы используйте хук ",["$","$L8",null,{"href":"/components/platform-provider#use-platform","children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"usePlatform"}]}],"."]}],["$","$L29",null,{"tabIndex":"0","data-language":"jsx","data-word-wrap":"","data-filename":"src/App.tsx","data-copy":"","data-pagefind-ignore":"all","children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","data-line-numbers":"","data-line-numbers-max-digits":"2","children":[["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"import"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" { SplitLayout, SplitCol, usePlatform } "}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"from"}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":" '@vkontakte/vkui'"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":";"}]]}],"\n",["$","span",null,{"children":" "}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"export"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":" default"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":" function"}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" App"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"() {"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"  const"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":" platform"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":" ="}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" usePlatform"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"();"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"  const"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":" hasHeader"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":" ="}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" platform "}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"!=="}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":" 'vkcom'"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":";"}]]}],"\n",["$","span",null,{"children":" "}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"  return"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" ("}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"    <"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"SplitLayout"}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" header"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"{hasHeader "}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"&&"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" <"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"PanelHeader"}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" delimiter"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"none\""}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" />}>"}]]}],"\n",["$","span",null,{"children":["$L2a","$L2b","$L2c"]}],"\n","$L2d","\n","$L2e","\n","$L2f"]}]}]]}]}]
+13:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"kastomizaciya","children":["$","a",null,{"href":"#kastomizaciya","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Кастомизация","children":["Кастомизация",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+14:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Компонент поддерживает свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"slotProps"}],", которое даёт возможность прокинуть свойство в некоторые внутренние элементы.\nЭто удобно для добавления кастомных классов, data-атрибутов, aria-атрибутов, обработчиков событий, доступов к элементам через ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"getRootRef"}]," и других расширений, не влияя на внешний API компонента."]}]
+30:T4a7,const { viewWidth } = useAdaptivityConditionalRender();
+const contentRef = React.useRef();
+
+return (
+  <SplitLayout
+    className="my-root-class"
+    data-testid="split-layout-root"
+    slotProps={{
+      content: {
+         className: 'my-content-class',
+        'data-testid': 'split-layout-content',
+        getRootRef: contentRef,
+      },
+    }}
+  >
+    {viewWidth.tabletPlus && (
+      <SplitCol fixed width={280} maxWidth={280} className={viewWidth.tabletPlus.className}>
+        <div
+          style={{
+            padding: 12,
+            color: 'white',
+            backgroundColor: 'tomato',
+          }}
+        >
+          Фиксированная колонка слева
+        </div>
+      </SplitCol>
+    )}
+    <SplitCol>
+      <div
+        style={{
+          padding: 12,
+          color: 'white',
+          backgroundColor: 'steelblue',
+        }}
+      >
+        Колонка справа
+        {viewWidth.tabletMinus && (
+          <p className={viewWidth.tabletMinus.className}>
+            ⚠️ колонка слева спрятана по условию адаптивности
+          </p>
+        )}
+      </div>
+    </SplitCol>
+  </SplitLayout>
+);15:["$","$L9",null,{"Wrapper":"$a","code":"$30"}]
+16:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"split-col","children":["$","a",null,{"href":"#split-col","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию SplitCol","children":["SplitCol",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+17:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Подкомпонент для отрисовки колонки в многоколоночном интерфейсе."}]
+18:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"pozicionirovanie","children":["$","a",null,{"href":"#pozicionirovanie","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Позиционирование","children":["Позиционирование",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+19:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"fixed"}]," даёт возможность задать стиль ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"position: fixed"}]," для колонки.\nОбычно используется для боковых колонок, не позволяя им прокручиваться с основным контентом и всегда оставаться в области видимости."]}]
+1a:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"true"}]," — стиль применяется;"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"false"}]," — стиль не применяется."]}],"\n"]}]
+1b:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"razmery","children":["$","a",null,{"href":"#razmery","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Размеры","children":["Размеры",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+1c:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["С помощью свойств ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"width"}],", ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"minWidth"}]," и ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"maxWidth"}]," можно управлять шириной колонки. Принимаются либо числовое (в пикселях), либо\nстроковое (токены или другие единицы измерения) значения."]}]
+1d:["$","$L29",null,{"tabIndex":"0","data-language":"jsx","data-word-wrap":"","data-copy":"","data-pagefind-ignore":"all","children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":[["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"<"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"SplitCol"}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" width"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"100%\""}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" maxWidth"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"{"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"560"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"}>"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  {"}],["$","span",null,{"style":{"--shiki-light":"#6A737D","--shiki-dark":"#6A737D"},"children":"/* контент */"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"}"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"</"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"SplitCol"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}]]}]}]
+1e:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"stretchedOnMobile"}]," позволит колонке растягиваться на всю доступную ширину на устройствах шириной меньше ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"tablet"}],"."]}]
+1f:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"otstupy","children":["$","a",null,{"href":"#otstupy","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Отступы","children":["Отступы",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+20:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"autoSpaced"}]," добавляет фиксированные боковые отступы колонке на устройствах с шириной больше ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"smallTablet"}],"."]}]
+21:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"animation","children":["$","a",null,{"href":"#animation","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Анимации","children":["Анимации",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+22:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Через свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"animate"}]," можно управлять включением/отключением анимаций при переходах во ",["$","$L8",null,{"href":"/components/view","children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"View"}]}],". По умолчанию\nанимации при переходах включены только для мобильных устройств."]}]
+23:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"api","children":["$","a",null,{"href":"#api","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Свойства и методы","children":["Свойства и методы",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+24:[["$","div","SplitLayout/.0",{"children":[["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"split-layout-api","children":["$","a",null,{"href":"#split-layout-api","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию SplitLayout","children":["SplitLayout",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}],["$","div",null,{"className":"Table_root__0rGvK","children":["$","table",null,{"className":"Table_table__NzLHi PropsTable_root__O959b","children":[["$","thead",null,{"children":["$","tr",null,{"children":[["$","th",null,{"children":"Свойство","className":"Table_th__EHorR"}],["$","th",null,{"children":"Описание","className":"Table_th__EHorR"}]],"className":"Table_tr__SD2Ot"}]}],["$","tbody",null,{"children":["$@31","$@32","$@33","$@34","$@35","$@36","$@37"]}]]}]}]]}],["$","div","SplitCol/.1",{"children":[["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"split-col-api","children":["$","a",null,{"href":"#split-col-api","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию SplitCol","children":["SplitCol",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}],["$","div",null,{"className":"Table_root__0rGvK","children":["$","table",null,{"className":"Table_table__NzLHi PropsTable_root__O959b","children":[["$","thead",null,{"children":["$","tr",null,{"children":[["$","th",null,{"children":"Свойство","className":"Table_th__EHorR"}],["$","th",null,{"children":"Описание","className":"Table_th__EHorR"}]],"className":"Table_tr__SD2Ot"}]}],["$","tbody",null,{"children":["$@38","$@39","$@3a","$@3b","$@3c","$@3d","$@3e","$@3f"]}]]}]}]]}]]
+28:null
+2a:["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"      {"}]
+2b:["$","span",null,{"style":{"--shiki-light":"#6A737D","--shiki-dark":"#6A737D"},"children":"/* остальной контент */"}]
+2c:["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"}"}]
+2d:["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"    </"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"SplitLayout"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}]
+2e:["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  );"}]}]
+2f:["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"}"}]}]
+31:["$","tr","center",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"center"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"boolean"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Центрирует контент."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+32:["$","tr","getRef",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ PropsTable_propDeprecated__upMw_","children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"getRef"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"Ref<HTMLDivElement>"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":[["$","strong",null,{"className":"mdx_strong__N7OUG","children":"Deprecated"}],": Since 7.9.0. Будет удалено в ",["$","strong",null,{"className":"mdx_strong__N7OUG","children":"VKUI v9"}],".\nВместо этого используйте ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"slotProps={ content: { getRootRef: ... } }"}],"."]}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+33:["$","tr","getRootRef",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"getRootRef"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"Ref<HTMLDivElement>"}],"$undefined",["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+34:["$","tr","header",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"header"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"ReactNode"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Компонент для отрисовки заголовка."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+35:["$","tr","modal",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ PropsTable_propDeprecated__upMw_","children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"modal"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"ReactNode"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":[["$","strong",null,{"className":"mdx_strong__N7OUG","children":"Deprecated"}],": Since 7.0.0. Будет удалено в ",["$","strong",null,{"className":"mdx_strong__N7OUG","children":"VKUI v9"}],".\nНачиная с ",["$","strong",null,{"className":"mdx_strong__N7OUG","children":"VKUI v7"}],"  ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"ModalRoot"}]," можно располагать в любом\nместе приложения в пределах ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"AppRoot"}],"."]}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+36:["$","tr","popout",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ PropsTable_propDeprecated__upMw_","children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"popout"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"ReactNode"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":[["$","strong",null,{"className":"mdx_strong__N7OUG","children":"Deprecated"}],": Since 7.0.0. Будет удалено в ",["$","strong",null,{"className":"mdx_strong__N7OUG","children":"VKUI v9"}],".\nНачиная с ",["$","strong",null,{"className":"mdx_strong__N7OUG","children":"VKUI v7"}]," компоненты можно располагать в любом\nместе приложения в пределах ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"AppRoot"}],"."]}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+37:["$","tr","slotProps",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"slotProps"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"{ root?: (HTMLAttributes<HTMLDivElement> & HasRootRef<HTMLDivElement> & HasDataAttribute); content?: (HTMLAttributes<...> & ... 1 more ... & HasDataAttribute) | undefined; } | undefined"}],[["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Свойства, которые можно прокинуть внутрь компонента:"}],"\n",["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"root"}],": свойства для прокидывания в корень компонента;"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"content"}],": свойства для прокидывания в контент;."]}],"\n"]}]],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+38:["$","tr","animate",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"animate"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"boolean"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Если false, то переходы между Panel происходят без анимации."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+39:["$","tr","autoSpaced",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"autoSpaced"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"boolean"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Если true, то добавляются боковые отступы фиксированной величины при ширине больше чем ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"smallTablet"}],"."]}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+3a:["$","tr","fixed",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"fixed"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"boolean"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Фиксированное положение колонки."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+3b:["$","tr","getRootRef",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"getRootRef"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"Ref<HTMLDivElement>"}],"$undefined",["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+3c:["$","tr","maxWidth",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"maxWidth"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"string | number"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Максимальная ширина колонки."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+3d:["$","tr","minWidth",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"minWidth"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"string | number"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Минимальная ширина колонки."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+3e:["$","tr","stretchedOnMobile",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"stretchedOnMobile"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"boolean"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Если true, то ширина контейнера становится 100% при ширине меньше чем ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"tablet"}],"."]}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+3f:["$","tr","width",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"width"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"string | number"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Ширина колонки."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]

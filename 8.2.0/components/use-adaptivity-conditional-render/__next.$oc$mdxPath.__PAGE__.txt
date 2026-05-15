@@ -1,0 +1,104 @@
+1:"$Sreact.fragment"
+2:I[23450,["275","static/chunks/275-304ab15e14f41df0.js","433","static/chunks/433-0382baae8dd7435c.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Main"]
+7:I[74517,["275","static/chunks/275-304ab15e14f41df0.js","433","static/chunks/433-0382baae8dd7435c.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Overview",1]
+8:I[18443,["275","static/chunks/275-304ab15e14f41df0.js","433","static/chunks/433-0382baae8dd7435c.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Anchor"]
+11:I[91042,["275","static/chunks/275-304ab15e14f41df0.js","433","static/chunks/433-0382baae8dd7435c.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"TOC"]
+12:I[90484,[],"OutletBoundary"]
+13:"$Sreact.suspense"
+15:I[80204,["275","static/chunks/275-304ab15e14f41df0.js","433","static/chunks/433-0382baae8dd7435c.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"PlaygroundLazy"]
+3:T130a,---
+description: Хук, возвращающий расширенную версию параметров адаптивности.
+---
+
+<Overview type="hook" forcedPath="hooks/useAdaptivityConditionalRender/useAdaptivityConditionalRender.tsx">
+# useAdaptivityConditionalRender
+
+Хук возвращает расширенную версию [параметров адаптивности](/overview/adaptivity#adaptivity-props), каждый из которых имеет
+дополнительную мета-информацию. Условия реализованы через [CSS Media Query](https://developer.mozilla.org/en-US/docs/Web/CSS/@media).
+
+Связанные страницы:
+
+- [Адаптивность](/overview/adaptivity)
+- [Серверный рендер | Примечание к адаптивности](/overview/ssr#adaptivity-note)
+
+</Overview>
+
+## Когда использовать? [#when-to-use]
+
+Используйте когда нужно показать или скрыть элемент интерфейса по тому или иному брейкпоинту.
+
+## API
+
+### Возвращаемое значение
+
+Объект с адаптивными условиями:
+
+| Свойство     | Тип                                                | Описание                                                                 |
+| ------------ | -------------------------------------------------- | ------------------------------------------------------------------------ |
+| `density`    | `Record<'compact' \| 'regular', false \| { className: string }>` | Условия для плотности интерфейса.                                        |
+| `viewWidth`  | `Record<'smallTabletMinus' \| 'smallTabletPlus' \| 'tabletMinus' \| 'tabletPlus', false \| { className: string }>` | Условия для брейкпоинтов ширины экрана.                                  |
+| `deviceType` | `Record<'mobile' \| 'desktop', false \| { className: string }>` | Условия для типа устройства.                                             |
+| `sizeX`      | `Record<'compact' \| 'regular', false \| { className: string }>` | Устаревшее поле. Используйте `density`.                                  |
+| `sizeY`      | `Record<'compact' \| 'regular', false \| { className: string }>` | Устаревшее поле. Используйте `density`.                                  |
+
+## Особенности работы [#behavior-specifics]
+
+Если вы переопределили адаптивность через [`AdaptivityProvider`](/components/adaptivity-provider), то значение у каждого отдельного
+параметра адаптивности может быть двух типов:
+
+- `false` – мы строго задали какой-то из параметров адаптивности. Например, при `<AdaptivityProvider viewWidth={ViewWidth.MOBILE}>`
+  значение `viewWidth.tabletPlus` будет `false`, т.к. мы говорим, что у нас всегда мобильный вид.
+
+- `{ className: string }` – в CSS-класс, который на основе CSS Media Query будет переключать видимость вашего элемента через `display: none`.
+
+## Пример использования [#example]
+
+Показываем дополнительную колонку только для `tabletPlus` и применяем `className` из хука, чтобы условие работало через CSS Media Query.
+
+{/* @example-description: Колонка для tabletPlus. */}
+<Playground direction="column" align="stretch">
+  ```jsx
+  const { viewWidth, density } = useAdaptivityConditionalRender();
+
+  return (
+    <Flex direction="column" gap="m" inlineSize="100%">
+      <Caption level="1">
+        `tabletPlus`: {viewWidth.tabletPlus ? "активен" : "выключен (переопределено через AdaptivityProvider)"}
+      </Caption>
+      <Caption level="1">
+        `density.compact`: {density.compact ? "активен" : "выключен (переопределено через AdaptivityProvider)"}
+      </Caption>
+
+      <Group>
+        <Flex direction="column" gap="xl">
+          {viewWidth.tabletPlus && (
+            <Card className={viewWidth.tabletPlus.className}>
+              <Box padding="system">
+                Дополнительная колонка (видна только на tabletPlus)
+              </Box>
+            </Card>
+          )}
+
+          <Card>
+            <Box padding="system">
+              Основной контент
+            </Box>
+          </Card>
+        </Flex>
+      </Group>
+    </Flex>
+  );
+  ```
+</Playground>0:{"rsc":["$","$1","c",{"children":[[["$","$L2",null,{"metadata":{"description":"Хук, возвращающий расширенную версию параметров адаптивности.","title":"useAdaptivityConditionalRender","filePath":"content/components/use-adaptivity-conditional-render.mdx","timestamp":1778845990000},"sourceCode":"$3","children":"$L4"}],"$L5"],null,"$L6"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"wj4SKuycOZIo3rvTKi4No"}
+4:[["$","$L7",null,{"type":"hook","forcedPath":"hooks/useAdaptivityConditionalRender/useAdaptivityConditionalRender.tsx","children":[["$","h1",null,{"className":"mdx_h1__1mgpN","children":"useAdaptivityConditionalRender"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Хук возвращает расширенную версию ",["$","$L8",null,{"href":"/overview/adaptivity#adaptivity-props","children":"параметров адаптивности"}],", каждый из которых имеет\nдополнительную мета-информацию. Условия реализованы через ",["$","$L8",null,{"href":"https://developer.mozilla.org/en-US/docs/Web/CSS/@media","children":"CSS Media Query"}],"."]}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Связанные страницы:"}],["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["$","$L8",null,{"href":"/overview/adaptivity","children":"Адаптивность"}]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["$","$L8",null,{"href":"/overview/ssr#adaptivity-note","children":"Серверный рендер | Примечание к адаптивности"}]}],"\n"]}]]}],"\n",["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"when-to-use","children":["$","a",null,{"href":"#when-to-use","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Когда использовать?","children":["Когда использовать?",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}],"\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Используйте когда нужно показать или скрыть элемент интерфейса по тому или иному брейкпоинту."}],"\n",["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"api","children":["$","a",null,{"href":"#api","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию API","children":["API",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}],"\n",["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"vozvrashaemoe-znachenie","children":["$","a",null,{"href":"#vozvrashaemoe-znachenie","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Возвращаемое значение","children":["Возвращаемое значение",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}],"\n","$L9","\n","$La","\n","$Lb","\n","$Lc","\n","$Ld","\n","$Le","\n","$Lf","\n","\n","$L10"]
+5:["$","$L11",null,{"toc":[{"value":"Когда использовать?","id":"when-to-use","depth":2},{"value":"API","id":"api","depth":2},{"value":"Возвращаемое значение","id":"vozvrashaemoe-znachenie","depth":3},{"value":"Особенности работы","id":"behavior-specifics","depth":2},{"value":"Пример использования","id":"example","depth":2}]}]
+6:["$","$L12",null,{"children":["$","$13",null,{"name":"Next.MetadataOutlet","children":"$@14"}]}]
+9:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Объект с адаптивными условиями:"}]
+a:["$","div",null,{"className":"Table_root__0rGvK","children":["$","table",null,{"children":[["$","thead",null,{"children":["$","tr",null,{"children":[["$","th",null,{"children":"Свойство","className":"Table_th__EHorR"}],["$","th",null,{"children":"Тип","className":"Table_th__EHorR"}],["$","th",null,{"children":"Описание","className":"Table_th__EHorR"}]],"className":"Table_tr__SD2Ot"}]}],["$","tbody",null,{"children":[["$","tr",null,{"children":[["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"density"}],"className":"Table_td__L3qz5"}],["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"Record<'compact' | 'regular', false | { className: string }>"}],"className":"Table_td__L3qz5"}],["$","td",null,{"children":"Условия для плотности интерфейса.","className":"Table_td__L3qz5"}]],"className":"Table_tr__SD2Ot"}],["$","tr",null,{"children":[["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"viewWidth"}],"className":"Table_td__L3qz5"}],["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"Record<'smallTabletMinus' | 'smallTabletPlus' | 'tabletMinus' | 'tabletPlus', false | { className: string }>"}],"className":"Table_td__L3qz5"}],["$","td",null,{"children":"Условия для брейкпоинтов ширины экрана.","className":"Table_td__L3qz5"}]],"className":"Table_tr__SD2Ot"}],["$","tr",null,{"children":[["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"deviceType"}],"className":"Table_td__L3qz5"}],["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"Record<'mobile' | 'desktop', false | { className: string }>"}],"className":"Table_td__L3qz5"}],["$","td",null,{"children":"Условия для типа устройства.","className":"Table_td__L3qz5"}]],"className":"Table_tr__SD2Ot"}],["$","tr",null,{"children":[["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"sizeX"}],"className":"Table_td__L3qz5"}],["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"Record<'compact' | 'regular', false | { className: string }>"}],"className":"Table_td__L3qz5"}],["$","td",null,{"children":["Устаревшее поле. Используйте ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"density"}],"."],"className":"Table_td__L3qz5"}]],"className":"Table_tr__SD2Ot"}],["$","tr",null,{"children":[["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"sizeY"}],"className":"Table_td__L3qz5"}],["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"Record<'compact' | 'regular', false | { className: string }>"}],"className":"Table_td__L3qz5"}],["$","td",null,{"children":["Устаревшее поле. Используйте ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"density"}],"."],"className":"Table_td__L3qz5"}]],"className":"Table_tr__SD2Ot"}]]}]],"className":"Table_table__NzLHi"}]}]
+b:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"behavior-specifics","children":["$","a",null,{"href":"#behavior-specifics","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Особенности работы","children":["Особенности работы",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+c:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Если вы переопределили адаптивность через ",["$","$L8",null,{"href":"/components/adaptivity-provider","children":["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"AdaptivityProvider"}]}],", то значение у каждого отдельного\nпараметра адаптивности может быть двух типов:"]}]
+d:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"false"}]," – мы строго задали какой-то из параметров адаптивности. Например, при ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"<AdaptivityProvider viewWidth={ViewWidth.MOBILE}>"}],"\nзначение ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"viewWidth.tabletPlus"}]," будет ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"false"}],", т.к. мы говорим, что у нас всегда мобильный вид."]}],"\n"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"{ className: string }"}]," – в CSS-класс, который на основе CSS Media Query будет переключать видимость вашего элемента через ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"display: none"}],"."]}],"\n"]}],"\n"]}]
+e:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"example","children":["$","a",null,{"href":"#example","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Пример использования","children":["Пример использования",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+f:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Показываем дополнительную колонку только для ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"tabletPlus"}]," и применяем ",["$","code",null,{"className":"Code_root__TR_dq __className_16e653","dir":"ltr","children":"className"}]," из хука, чтобы условие работало через CSS Media Query."]}]
+10:["$","$L15",null,{"direction":"column","align":"stretch","code":"const { viewWidth, density } = useAdaptivityConditionalRender();\n\nreturn (\n  <Flex direction=\"column\" gap=\"m\" inlineSize=\"100%\">\n    <Caption level=\"1\">\n      `tabletPlus`: {viewWidth.tabletPlus ? \"активен\" : \"выключен (переопределено через AdaptivityProvider)\"}\n    </Caption>\n    <Caption level=\"1\">\n      `density.compact`: {density.compact ? \"активен\" : \"выключен (переопределено через AdaptivityProvider)\"}\n    </Caption>\n\n    <Group>\n      <Flex direction=\"column\" gap=\"xl\">\n        {viewWidth.tabletPlus && (\n          <Card className={viewWidth.tabletPlus.className}>\n            <Box padding=\"system\">\n              Дополнительная колонка (видна только на tabletPlus)\n            </Box>\n          </Card>\n        )}\n\n        <Card>\n          <Box padding=\"system\">\n            Основной контент\n          </Box>\n        </Card>\n      </Flex>\n    </Group>\n  </Flex>\n);"}]
+14:null
