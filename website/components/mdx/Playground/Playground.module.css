@@ -10,9 +10,32 @@
 }
 
 .code {
+  position: relative;
   font-size: 14px;
   white-space: nowrap;
 }
+
+/* stylelint-disable selector-max-type, declaration-no-important */
+.code > pre {
+  --docs-code-outline: 0;
+
+  outline: var(--docs-code-outline) solid var(--vkui--color_stroke_accent) !important;
+  outline-offset: -2px;
+  border-end-start-radius: 8px;
+  border-end-end-radius: 8px;
+  transition: outline 0.1s ease-in-out;
+}
+
+.code > pre:focus {
+  --docs-code-outline: 2px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .code > pre:hover {
+    --docs-code-outline: 2px;
+  }
+}
+/* stylelint-enable selector-max-type, declaration-no-important */
 
 .skeleton {
   align-items: center;
