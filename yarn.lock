@@ -1959,26 +1959,26 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@morev/stylelint-testing-library@npm:^1.0.2":
-  version: 1.0.2
-  resolution: "@morev/stylelint-testing-library@npm:1.0.2"
+"@morev/stylelint-testing-library@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "@morev/stylelint-testing-library@npm:1.1.0"
   dependencies:
-    "@morev/utils": "npm:^3.12.1"
+    "@morev/utils": "npm:^3.15.0"
   peerDependencies:
-    stylelint: ^16
-  checksum: 10/91e48cd539b3b1bd3d500a88db61e555d4d0299a63d228ab64063262139998de863c04fce71325b13327d6f3e3528711f15ab3bd50b02bf676d437333de5e798
+    stylelint: ">=16"
+  checksum: 10/c6dd505708821559a57226127b8e7574268424c93f1027891b0d9591442b669709640be839789e3f9949163e2c72720aa8fb84d0e1eb3ab0a849e3e52d590d14
   languageName: node
   linkType: hard
 
-"@morev/utils@npm:^3.12.1":
-  version: 3.13.1
-  resolution: "@morev/utils@npm:3.13.1"
+"@morev/utils@npm:^3.15.0":
+  version: 3.15.0
+  resolution: "@morev/utils@npm:3.15.0"
   dependencies:
     fast-copy: "npm:^3.0.2"
     fast-equals: "npm:^5.0.1"
     ohash: "npm:^1.1.4"
     type-fest: "npm:^4.26.1"
-  checksum: 10/d3f672e3caaf1183e5a6f5bfcf336457a2c2166068a1c365a05446014d2ba38151a8837f53873b80e099f20a1254eb70067e7c7a717b0077e6f811df11e12627
+  checksum: 10/03e13273ff3bc123549048e8aa900d8401d6e692a754c9eac749bdc58a438509bf06daa56f9dfe50aa8a2f3852869036681edd511519f50d5c2b70ce7205e13d
   languageName: node
   linkType: hard
 
@@ -5156,7 +5156,7 @@ __metadata:
   dependencies:
     "@biomejs/biome": "npm:2.4.15"
     "@csstools/postcss-global-data": "npm:4.0.0"
-    "@morev/stylelint-testing-library": "npm:^1.0.2"
+    "@morev/stylelint-testing-library": "npm:^1.1.0"
     "@playwright/experimental-ct-react": "npm:1.59.1"
     "@playwright/test": "npm:1.59.1"
     "@project-docs/website": "workspace:1.0.0"
