@@ -5211,7 +5211,7 @@ __metadata:
     happy-css-modules: "npm:^4.0.0"
     husky: "npm:^9.1.6"
     jsdom: "npm:^29.1.1"
-    lint-staged: "npm:^17.0.4"
+    lint-staged: "npm:^17.0.5"
     mini-css-extract-plugin: "npm:^2.10.2"
     postcss: "npm:^8.5.14"
     postcss-cli: "npm:^11.0.1"
@@ -11565,9 +11565,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lint-staged@npm:^17.0.4":
-  version: 17.0.4
-  resolution: "lint-staged@npm:17.0.4"
+"lint-staged@npm:^17.0.5":
+  version: 17.0.5
+  resolution: "lint-staged@npm:17.0.5"
   dependencies:
     listr2: "npm:^10.2.1"
     picomatch: "npm:^4.0.4"
@@ -11579,7 +11579,7 @@ __metadata:
       optional: true
   bin:
     lint-staged: bin/lint-staged.js
-  checksum: 10/a9b1bf30450523ea301e6d95782963f3b94fc7dd012647a523fa494f072aa046f2e60d854885bb9f909bf69b6bf2e02d70ddc42553a8ead9307532688005f64c
+  checksum: 10/a0bea43689d68ec0bf6a56943884dbdb96b6b49e2677bf80654d802678b2edf9fc65338ca8ef3fc310f245933ea2a809db1ac94431dc445c57a4d49620d9d4da
   languageName: node
   linkType: hard
 
