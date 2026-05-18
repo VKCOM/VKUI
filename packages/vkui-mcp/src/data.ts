@@ -75,6 +75,9 @@ export function createDataProvider(): DataProvider {
     async getExamples(slug) {
       return await readText(`examples/${slug}.txt`);
     },
+    async getDocs(slug) {
+      return readText(`docs/${slug}.txt`);
+    },
     async listMigrationTargets() {
       return Object.keys(migrationV8)
         .sort((a, b) => a.localeCompare(b))

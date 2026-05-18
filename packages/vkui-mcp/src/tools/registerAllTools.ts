@@ -1,6 +1,7 @@
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import type { DataProvider } from '../types.js';
 import { registerGetComponentMetadata } from './getComponentMetadata.js';
+import { registerGetDocs } from './getDocs.js';
 import { registerGetExamples } from './getExamples.js';
 import { registerGetHookMetadata } from './getHookMetadata.js';
 import { registerGetMigrationTarget } from './getMigrationTarget.js';
@@ -14,6 +15,7 @@ const TOOLS_REGISTRATIONS: Array<(server: McpServer, dataProvider: DataProvider)
   registerListHooks,
   registerGetHookMetadata,
   registerGetExamples,
+  registerGetDocs,
   registerListMigrationTargets,
   registerGetMigrationTarget,
 ];
