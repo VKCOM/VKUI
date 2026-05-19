@@ -55,8 +55,8 @@ function detectImports(code: string) {
 }
 
 export function buildAppFile(playgroundCode: string): string {
-  const codeBody = playgroundCode.trim();
-  const { vkui, icons, reactHooks } = detectImports(playgroundCode);
+  const codeBody = playgroundCode.replace(/import[\s\S]*?;/g, '').trim();
+  const { vkui, icons, reactHooks } = detectImports(codeBody);
 
   const importLines: string[] = [];
 
