@@ -42,10 +42,6 @@
   }
 }
 
-.modeDark {
-  background: var(--vkui--color_background_contrast_inverse);
-}
-
 .before {
   margin-inline-end: 12px;
 }
@@ -74,10 +70,6 @@
 .contentSubtitle {
   margin-block-start: 2px;
   color: var(--vkui--color_text_subhead);
-}
-
-.modeDark .contentText {
-  color: var(--vkui--color_text_contrast);
 }
 
 /* layout */
