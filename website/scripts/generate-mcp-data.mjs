@@ -141,6 +141,11 @@ function extractPlaygroundExamples(body) {
   return examples;
 }
 
+function extractCategory(body) {
+  const match = body.match(/<Overview\s+[^>]*group=["']([^"']+)["']/);
+  return match ? match[1] : null;
+}
+
 const ENUM_VALUES_THRESHOLD = 10;
 
 function hasStringLiteralValues(values) {
@@ -200,13 +205,17 @@ export function generateMcpData() {
     const description = data.description || '';
     const props = docgen[itemName] || [];
     const playgroundExamples = extractPlaygroundExamples(body);
+    const category = hook ? null : extractCategory(body);
 
     const tags = hook
       ? []
-      : (data.tags || '')
-          .split(',')
-          .map((t) => t.trim())
-          .filter(Boolean);
+      : [
+          category,
+          ...(data.tags || '')
+            .split(',')
+            .map((t) => t.trim())
+            .filter(Boolean),
+        ].filter(Boolean);
 
     const listItem = {
       name: itemName,
@@ -219,6 +228,7 @@ export function generateMcpData() {
       name: itemName,
       slug,
       description,
+      ...(hook ? {} : { tags }),
       props: sanitizeProps(props),
     };
 
