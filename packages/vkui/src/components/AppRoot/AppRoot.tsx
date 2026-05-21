@@ -2,7 +2,6 @@
 
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { useKeyboardInputTracker } from '../../hooks/useKeyboardInputTracker';
 import { useSyncHTMLWithBaseVKUIClasses } from '../../hooks/useSyncHTMLWithBaseVKUIClasses';
 import { useSyncHTMLWithTokens } from '../../hooks/useSyncHTMLWithTokens';
 import { AppRootContext } from './AppRootContext';
@@ -102,7 +101,6 @@ export const AppRoot = ({
 }: AppRootProps): React.ReactNode => {
   const appRootRef = React.useRef<HTMLDivElement | null>(null);
 
-  const isKeyboardInputActiveRef = useKeyboardInputTracker();
   const safeAreaInsets = useSafeAreaInsetsMemo(safeAreaInsetsProp);
 
   const contextValue = React.useMemo(
@@ -114,20 +112,9 @@ export const AppRoot = ({
       mode,
       disablePortal,
       layout,
-      get keyboardInput() {
-        return isKeyboardInputActiveRef.current;
-      },
       userSelectMode,
     }),
-    [
-      portalRoot,
-      disablePortal,
-      isKeyboardInputActiveRef,
-      layout,
-      mode,
-      safeAreaInsets,
-      userSelectMode,
-    ],
+    [portalRoot, disablePortal, layout, mode, safeAreaInsets, userSelectMode],
   );
 
   /*

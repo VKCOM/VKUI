@@ -39,6 +39,6 @@ export const useAutoFocus = (
 
       return () => clearTimeout(timeoutId);
     },
-    [autoFocus, autoFocusDelay, disabled, mount, focusFirst],
+    [ref, autoFocus, autoFocusDelay, disabled, mount, focusFirst],
   );
 };

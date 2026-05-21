@@ -29,11 +29,11 @@ jobs:
     steps:
       - name: Checkout (for forked PR)
         if: github.event.pull_request.base.repo.id != github.event.pull_request.head.repo.id
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: Checkout (for maintainer's PR)
         if: github.event.pull_request.base.repo.id == github.event.pull_request.head.repo.id
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
 
@@ -42,7 +42,7 @@ jobs:
         shell: bash
 
       - name: Setup NodeJS
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
         with:
           node-version-file: '.nvmrc'
 
@@ -67,11 +67,11 @@ jobs:
     steps:
       - name: Checkout (for forked PR)
         if: github.event.pull_request.base.repo.id != github.event.pull_request.head.repo.id
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: Checkout (for maintainer's PR)
         if: github.event.pull_request.base.repo.id == github.event.pull_request.head.repo.id
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
 
@@ -80,7 +80,7 @@ jobs:
         shell: bash
 
       - name: Setup NodeJS
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
         with:
           node-version-file: '.nvmrc'
 
@@ -103,11 +103,11 @@ jobs:
     steps:
       - name: Checkout (for forked PR)
         if: github.event.pull_request.base.repo.id != github.event.pull_request.head.repo.id
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: Checkout (for maintainer's PR)
         if: github.event.pull_request.base.repo.id == github.event.pull_request.head.repo.id
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
 
@@ -126,7 +126,7 @@ jobs:
         shell: bash
 
       - name: Setup NodeJS
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
         with:
           node-version-file: '.nvmrc'
 
@@ -154,19 +154,19 @@ jobs:
       new_floating_ui_version: ${{ steps.check_floating_ui_updated.outputs.new_version }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: Node setup
         uses: ./.github/actions/node-setup
 
       - name: Dependabot metadata
         id: metadata
-        uses: dependabot/fetch-metadata@v2
+        uses: dependabot/fetch-metadata@25dd0e34f4fe68f24cc83900b1fe3fe149efef98 # v3.1.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Find changes
-        uses: dorny/paths-filter@v4
+        uses: dorny/paths-filter@fbd0ab8f3e69293af611ebaee6363fc25e6d187d # v4.0.1
         id: file_changes
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -199,7 +199,7 @@ jobs:
       actions: write
     steps:
       - name: Checkout code
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: Node setup
         uses: ./.github/actions/node-setup
@@ -230,7 +230,7 @@ jobs:
           git config --local user.name "GitHub Action"
 
       - name: Create branch for new version release
-        uses: ad-m/github-push-action@master
+        uses: ad-m/github-push-action@4cc74773234f74829a8c21bc4d69dd4be9cfa599 # v1.1.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ env.RELEASE_BRANCH_NAME }}
@@ -239,7 +239,7 @@ jobs:
       # В `publish.yml` поле `version_type` помечено как `required` и, чтобы избежать ошибок, стоит проставить.
       # Значение этого поля не важно, так как оно будет проигнорировано из-за поля `custom_version`
       - name: Publish new version
-        uses: actions/github-script@v8
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
         with:
           script: |
             github.rest.actions.createWorkflowDispatch({
@@ -267,7 +267,7 @@ jobs:
       cancel-in-progress: false
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: Get vkui version
         id: get_version

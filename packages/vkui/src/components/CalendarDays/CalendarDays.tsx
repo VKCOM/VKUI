@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import { classNames, isSameDate } from '@vkontakte/vkjs';
+import { useLocale } from '../../hooks/useLocale';
 import { useTodayDate } from '../../hooks/useTodayDate';
 import { getDaysNames, getWeeks } from '../../lib/calendar';
 import { isSameMonth } from '../../lib/date';
@@ -13,7 +14,6 @@ import {
   type CalendarDayProps,
   type CalendarDayTestsProps,
 } from '../CalendarDay/CalendarDay';
-import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
@@ -150,7 +150,7 @@ export const CalendarDays = ({
   dayTestId,
   ...props
 }: CalendarDaysProps): React.ReactNode => {
-  const { locale } = useConfigProvider();
+  const locale = useLocale();
   const now = useTodayDate(listenDayChangesForUpdate);
 
   const weeks = React.useMemo(() => getWeeks(viewDate, weekStartsOn), [weekStartsOn, viewDate]);

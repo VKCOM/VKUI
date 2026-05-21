@@ -1,0 +1,5 @@
+version: 3
+
+ignore_actions:
+- name: ^VKCOM/gh-actions/.*
+  ref: main

@@ -1,8 +1,9 @@
 'use client';
 
 import * as React from 'react';
-import { classNames } from '@vkontakte/vkjs';
+import { classNames, noop } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
+import { useStableCallback } from '../../hooks/useStableCallback';
 import { useDOM } from '../../lib/dom';
 import { getNavId, type NavIdProps } from '../../lib/getNavId';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
@@ -48,7 +49,7 @@ const warn = warnOnce('Root');
 export const Root = ({
   children,
   activeView: _activeView,
-  onTransition,
+  onTransition: onTransitionProp,
   nav,
   ...restProps
 }: RootProps): React.ReactNode => {
@@ -57,6 +58,8 @@ export const Root = ({
   const { document } = useDOM();
   const [scrolls] = React.useState(() => new Map<string, number>());
   const [viewNodes] = React.useState(() => new Map<string, HTMLElement | null>());
+
+  const onTransition = useStableCallback(onTransitionProp || noop);
 
   const { transitionMotionEnabled = true } = useConfigProvider();
   const { animate } = React.useContext(SplitColContext);
@@ -68,7 +71,7 @@ export const Root = ({
     activeView: _activeView,
     transition: false,
   });
-  const transitionTo = (panel: string) => {
+  const transitionTo = useStableCallback((panel: string) => {
     if (panel !== activeView) {
       const viewIds = views.map((view) => getNavId(view.props, warn));
       const isBack = viewIds.indexOf(panel) < viewIds.indexOf(activeView);
@@ -80,7 +83,7 @@ export const Root = ({
         isBack,
       });
     }
-  };
+  });
   const finishTransition = React.useCallback(
     () => _setState({ activeView, prevView, isBack, transition: false }),
     [activeView, isBack, prevView],
@@ -88,10 +91,10 @@ export const Root = ({
 
   useIsomorphicLayoutEffect(() => {
     (document!.activeElement as HTMLElement).blur();
-  }, [activeView]);
+  }, [document, activeView]);
 
   // Нужен переход
-  useIsomorphicLayoutEffect(() => transitionTo(_activeView), [_activeView]);
+  useIsomorphicLayoutEffect(() => transitionTo(_activeView), [transitionTo, _activeView]);
   useIsomorphicLayoutEffect(() => {
     if (!transition && prevView) {
       // Закончился переход
@@ -103,7 +106,7 @@ export const Root = ({
           to: activeView,
         });
     }
-  }, [transition, prevView]);
+  }, [transition, prevView, activeView, isBack, onTransition, scroll, scrolls]);
 
   React.useEffect(
     function onAnimationEndFallback() {

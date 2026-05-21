@@ -1,12 +1,6 @@
-import { useRef } from 'react';
 import { Keys, pressedKey } from '../lib/accessibility';
 import { useDOM } from '../lib/dom';
 import { useIsomorphicLayoutEffect } from '../lib/useIsomorphicLayoutEffect';
-
-const EVENT_OPTIONS = {
-  passive: true,
-  capture: true,
-};
 
 /**
  * Завязывается на document.
@@ -16,15 +10,11 @@ const EVENT_OPTIONS = {
 export const useGlobalEscKeyDown = (
   init: boolean,
   callback?: ((event: KeyboardEvent) => void) | undefined,
-  optionsProp?: AddEventListenerOptions | undefined,
+  optionsProp: AddEventListenerOptions | undefined = {},
 ): void => {
   const { document } = useDOM();
 
-  const options = useRef<AddEventListenerOptions>(optionsProp || EVENT_OPTIONS);
-
-  useIsomorphicLayoutEffect(() => {
-    options.current = optionsProp || EVENT_OPTIONS;
-  }, [options]);
+  const { capture = true, passive = true, once = false, signal } = optionsProp;
 
   useIsomorphicLayoutEffect(() => {
     if (!document || !init || !callback) {
@@ -35,9 +25,16 @@ export const useGlobalEscKeyDown = (
         callback(event);
       }
     };
-    document.addEventListener('keydown', handleKeyDown, options.current);
-    return () => {
-      document.removeEventListener('keydown', handleKeyDown, options.current);
+    const options: AddEventListenerOptions = {
+      capture,
+      passive,
+      once,
+      ...(signal !== undefined ? { signal } : {}),
     };
-  }, [init, document, callback]);
+
+    document.addEventListener('keydown', handleKeyDown, options);
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown, options);
+    };
+  }, [init, document, callback, capture, passive, once, signal]);
 };

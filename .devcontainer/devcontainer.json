@@ -1,0 +1,38 @@
+{
+  "name": "Node.js",
+  "image": "mcr.microsoft.com/devcontainers/typescript-node",
+  "features": {
+    "git-lfs": "latest",
+    "ghcr.io/anthropics/devcontainer-features/claude-code": {}
+  },
+
+  "forwardPorts": [3000, 6006],
+  "portsAttributes": {
+    "3000": { "label": "website", "onAutoForward": "openBrowser" },
+    "6006": { "label": "storybook" }
+  },
+
+  "postCreateCommand": "bash -ic \"nvm install && nvm use && npm install -g corepack && corepack install && yarn install\"",
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "GitHub.vscode-pull-request-github",
+        "github.vscode-github-actions",
+
+        "biomejs.biome",
+        "stylelint.vscode-stylelint",
+        "streetsidesoftware.code-spell-checker",
+        "streetsidesoftware.code-spell-checker-russian",
+
+        "vitest.explorer",
+        "ms-playwright.playwright",
+        "connor4312.nodejs-testing",
+
+        "unifiedjs.vscode-mdx",
+        "clinyong.vscode-css-modules",
+        "mariusschulz.yarn-lock-syntax"
+      ]
+    }
+  }
+}

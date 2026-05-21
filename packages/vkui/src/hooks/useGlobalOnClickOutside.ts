@@ -1,6 +1,7 @@
 import type * as React from 'react';
 import { isElement, useDOM } from '../lib/dom';
 import { useIsomorphicLayoutEffect } from '../lib/useIsomorphicLayoutEffect';
+import { useStableCallback } from './useStableCallback';
 
 export const useGlobalOnEventOutside = <
   T extends React.RefObject<ElementType | null> | undefined | null,
@@ -11,6 +12,7 @@ export const useGlobalOnEventOutside = <
   ...refs: T[]
 ): void => {
   const { document } = useDOM();
+  const stableCallback = useStableCallback(callback);
   useIsomorphicLayoutEffect(() => {
     const someRefNotNull = refs.some((ref) => ref && ref.current !== null);
     if (!document || !someRefNotNull) {
@@ -22,7 +24,7 @@ export const useGlobalOnEventOutside = <
         isElement(targetEl) &&
         refs.some((ref) => ref && ref.current && ref.current.contains(targetEl));
       if (!someRefHasTargetEl) {
-        callback(event);
+        stableCallback(event);
       }
     };
     document.addEventListener(event, handleClick, {
@@ -32,7 +34,8 @@ export const useGlobalOnEventOutside = <
     return () => {
       document.removeEventListener(event, handleClick, true);
     };
-  }, [document, callback, ...refs]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [document, stableCallback, event, ...refs]);
 };
 
 /**
