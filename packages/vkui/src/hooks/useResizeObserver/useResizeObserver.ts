@@ -10,9 +10,8 @@ export type ResizePayload<T extends HTMLElement> = {
 
 type ElementResizeOptions<T extends HTMLElement = HTMLElement> = {
   ref?: React.RefObject<T | null> | undefined;
-  enabled?: boolean;
-  box?: ResizeObserverBoxOptions;
-  rafBatch?: boolean;
+  enabled?: boolean | undefined;
+  box?: ResizeObserverBoxOptions | undefined;
   onResize: (payload: ResizePayload<T>) => void;
 };
 
@@ -92,13 +91,7 @@ function getEntrySize(entry: ResizeObserverEntry, box: ResizeObserverBoxOptions)
 export function useResizeObserver<T extends HTMLElement = HTMLElement>(
   options: ElementResizeOptions<T>,
 ) {
-  const {
-    ref: externalRef,
-    enabled = true,
-    box = 'content-box',
-    rafBatch = true,
-    onResize: onResizeProp,
-  } = options;
+  const { ref: externalRef, enabled = true, box = 'content-box', onResize: onResizeProp } = options;
 
   const onResize = useStableCallback<[ResizePayload<T>], void>(onResizeProp);
 
@@ -108,12 +101,9 @@ export function useResizeObserver<T extends HTMLElement = HTMLElement>(
     }
     const node = externalRef.current;
 
-    let latestEntry: ResizeObserverEntry | null = null;
-    let rafId: number | null = null;
-
     const pool = getResizePool(box);
 
-    const emit = (entry: ResizeObserverEntry) => {
+    const handler: ResizeHandler = (entry) => {
       const { width, height } = getEntrySize(entry, box);
       onResize({
         target: node,
@@ -123,52 +113,25 @@ export function useResizeObserver<T extends HTMLElement = HTMLElement>(
       });
     };
 
-    const scheduleEmit = (entry: ResizeObserverEntry) => {
-      if (!rafBatch) {
-        emit(entry);
-        return;
-      }
-
-      latestEntry = entry;
-
-      if (rafId !== null) {
-        return;
-      }
-
-      rafId = requestAnimationFrame(() => {
-        rafId = null;
-        if (latestEntry) {
-          emit(latestEntry);
-        }
-      });
-    };
-
     const nodeHandlers = pool.handlers.get(node);
     if (nodeHandlers) {
-      nodeHandlers.add(scheduleEmit);
+      nodeHandlers.add(handler);
     } else {
-      pool.handlers.set(node, new Set([scheduleEmit]));
+      pool.handlers.set(node, new Set([handler]));
       pool.observer.observe(node, { box });
     }
 
     return () => {
-      if (rafId !== null) {
-        cancelAnimationFrame(rafId);
-        rafId = null;
-      }
-
-      latestEntry = null;
-
       const currentNodeHandlers = pool.handlers.get(node);
       if (!currentNodeHandlers) {
         return;
       }
 
-      currentNodeHandlers.delete(scheduleEmit);
+      currentNodeHandlers.delete(handler);
       if (currentNodeHandlers.size === 0) {
         pool.handlers.delete(node);
         pool.observer.unobserve(node);
       }
     };
-  }, [externalRef, enabled, box, rafBatch, onResize]);
+  }, [externalRef, enabled, box, onResize]);
 }

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { act, render } from '@testing-library/react';
+import { render } from '@testing-library/react';
 
 type MockResizeObserverEntry = Partial<ResizeObserverEntry> & {
   target: Element;
@@ -35,9 +35,6 @@ function createEntry(
 }
 
 describe('useResizeObserver', () => {
-  const originalRequestAnimationFrame = globalThis.requestAnimationFrame;
-  const originalCancelAnimationFrame = globalThis.cancelAnimationFrame;
-
   beforeEach(() => {
     vi.resetModules();
     globalThis.__resizeObserverMock.reset();
@@ -45,17 +42,15 @@ describe('useResizeObserver', () => {
 
   afterEach(() => {
     vi.restoreAllMocks();
-    globalThis.requestAnimationFrame = originalRequestAnimationFrame;
-    globalThis.cancelAnimationFrame = originalCancelAnimationFrame;
   });
 
-  it('observes node and emits resize payload immediately when rafBatch=false', async () => {
+  it('observes node and emits resize payload', async () => {
     const onResize = vi.fn();
     const { useResizeObserver } = await import('./useResizeObserver');
 
     const Fixture = () => {
       const ref = React.useRef<HTMLDivElement | null>(null);
-      useResizeObserver<HTMLDivElement>({ rafBatch: false, onResize, ref });
+      useResizeObserver<HTMLDivElement>({ onResize, ref });
       return <div data-testid="target" ref={ref} />;
     };
 
@@ -76,55 +71,9 @@ describe('useResizeObserver', () => {
     });
   });
 
-  it('uses latest entry in one RAF tick when batching is enabled', async () => {
-    const onResize = vi.fn();
-    const rafCallbacks = new Map<number, FrameRequestCallback>();
-    let rafId = 0;
-    const { useResizeObserver } = await import('./useResizeObserver');
-
-    globalThis.requestAnimationFrame = vi.fn((cb: FrameRequestCallback) => {
-      rafId += 1;
-      rafCallbacks.set(rafId, cb);
-      return rafId;
-    });
-
-    globalThis.cancelAnimationFrame = vi.fn();
-
-    const Fixture = () => {
-      const ref = React.useRef<HTMLDivElement | null>(null);
-      useResizeObserver<HTMLDivElement>({ onResize, ref });
-      return <div data-testid="target" ref={ref} />;
-    };
-
-    const { getByTestId } = render(<Fixture />);
-    const target = getByTestId('target');
-    const observer = getObserverForTarget(target);
-
-    observer.emit([createEntry(target, { width: 100, height: 40 })]);
-    observer.emit([createEntry(target, { width: 200, height: 90 })]);
-
-    expect(onResize).not.toHaveBeenCalled();
-    expect(globalThis.requestAnimationFrame).toHaveBeenCalledTimes(1);
-
-    await act(async () => {
-      rafCallbacks.get(1)?.(0);
-    });
-
-    expect(onResize).toHaveBeenCalledTimes(1);
-    expect(onResize).toHaveBeenLastCalledWith({
-      target,
-      width: 200,
-      height: 90,
-      entry: expect.objectContaining({ target }),
-    });
-  });
-
-  it('cancels pending RAF and unobserves node on unmount', async () => {
+  it('unobserves node on unmount', async () => {
     const onResize = vi.fn();
     const { useResizeObserver } = await import('./useResizeObserver');
-
-    globalThis.requestAnimationFrame = vi.fn(() => 42);
-    globalThis.cancelAnimationFrame = vi.fn();
 
     const Fixture = () => {
       const ref = React.useRef<HTMLDivElement | null>(null);
@@ -139,7 +88,6 @@ describe('useResizeObserver', () => {
     observer.emit([createEntry(target)]);
     unmount();
 
-    expect(globalThis.cancelAnimationFrame).toHaveBeenCalledWith(42);
     expect(observer.unobserve).toHaveBeenCalledWith(target);
   });
 
@@ -181,7 +129,7 @@ describe('useResizeObserver', () => {
       testId: string;
     }) => {
       const ref = React.useRef<HTMLDivElement | null>(null);
-      useResizeObserver<HTMLDivElement>({ box, rafBatch: false, onResize, ref });
+      useResizeObserver<HTMLDivElement>({ box, onResize, ref });
       return <div data-testid={testId} ref={ref} />;
     };
 
@@ -279,7 +227,7 @@ describe('useResizeObserver', () => {
       onResize: () => void;
     }) => {
       const ref = React.useRef<HTMLDivElement | null>(null);
-      useResizeObserver<HTMLDivElement>({ box, rafBatch: false, onResize, ref });
+      useResizeObserver<HTMLDivElement>({ box, onResize, ref });
       return <div ref={ref} />;
     };
 
@@ -303,7 +251,7 @@ describe('useResizeObserver', () => {
 
     const Fixture = ({ testId, onResize }: { testId: string; onResize: () => void }) => {
       const ref = React.useRef<HTMLDivElement | null>(null);
-      useResizeObserver<HTMLDivElement>({ rafBatch: false, onResize, ref });
+      useResizeObserver<HTMLDivElement>({ onResize, ref });
       return <div data-testid={testId} ref={ref} />;
     };
 
@@ -330,8 +278,8 @@ describe('useResizeObserver', () => {
 
     const Fixture = () => {
       const ref = React.useRef<HTMLDivElement | null>(null);
-      useResizeObserver<HTMLDivElement>({ rafBatch: false, onResize: onResizeA, ref });
-      useResizeObserver<HTMLDivElement>({ rafBatch: false, onResize: onResizeB, ref });
+      useResizeObserver<HTMLDivElement>({ onResize: onResizeA, ref });
+      useResizeObserver<HTMLDivElement>({ onResize: onResizeB, ref });
       return <div data-testid="target" ref={ref} />;
     };
 

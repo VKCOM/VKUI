@@ -10,19 +10,11 @@ export type WindowResizePayload = {
 
 export type WindowResizeOptions = {
   enabled?: boolean;
-  rafBatch?: boolean;
   onResize: (payload: WindowResizePayload) => void;
 };
 
-type WindowSubscriber = {
-  onResize: WindowResizeOptions['onResize'];
-  rafBatch: boolean;
-  rafId: number | null;
-  pendingData: { width: number; height: number } | null;
-};
-
 type HandlersMapValue = {
-  subscribers: Set<WindowSubscriber>;
+  subscribers: Set<WindowResizeOptions['onResize']>;
   resizeHandler: VoidFunction;
 };
 
@@ -41,40 +33,12 @@ function notifySubscribers(window: Window) {
     return;
   }
 
-  for (const sub of windowHandler.subscribers) {
-    const size = getWindowSize(window);
-    const emit = () => {
-      sub.onResize({
-        target: window,
-        width: size.width,
-        height: size.height,
-      });
-    };
-
-    if (!sub.rafBatch) {
-      emit();
-      continue;
-    }
-
-    sub.pendingData = size;
-
-    if (sub.rafId !== null) {
-      continue;
-    }
-
-    sub.rafId = window.requestAnimationFrame(() => {
-      sub.rafId = null;
-      const pending = sub.pendingData;
-      if (!pending) {
-        return;
-      }
-
-      sub.pendingData = null;
-      sub.onResize({
-        target: window,
-        width: pending.width,
-        height: pending.height,
-      });
+  const size = getWindowSize(window);
+  for (const onResize of windowHandler.subscribers) {
+    onResize({
+      target: window,
+      width: size.width,
+      height: size.height,
     });
   }
 }
@@ -90,7 +54,7 @@ function ensureWindowListener(window: Window): HandlersMapValue {
   window.addEventListener('resize', windowResizeHandler, { passive: true });
 
   const handler: HandlersMapValue = {
-    subscribers: new Set<WindowSubscriber>(),
+    subscribers: new Set<WindowResizeOptions['onResize']>(),
     resizeHandler: windowResizeHandler,
   };
 
@@ -111,7 +75,7 @@ function maybeDetachWindowListener(window: Window, handlersValue: HandlersMapVal
  */
 export function useWindowResizeObserver(options: WindowResizeOptions) {
   const { window } = useDOM();
-  const { enabled = true, rafBatch = true, onResize: onResizeProp } = options;
+  const { enabled = true, onResize: onResizeProp } = options;
 
   const onResize = useStableCallback<[WindowResizePayload], void>(onResizeProp);
 
@@ -120,27 +84,12 @@ export function useWindowResizeObserver(options: WindowResizeOptions) {
       return;
     }
 
-    const resolvedWindow = window;
-
-    const sub: WindowSubscriber = {
-      onResize,
-      rafBatch,
-      rafId: null,
-      pendingData: null,
-    };
-
     const handler = ensureWindowListener(window);
-    handler.subscribers.add(sub);
+    handler.subscribers.add(onResize);
 
     return () => {
-      if (sub.rafId !== null) {
-        resolvedWindow.cancelAnimationFrame(sub.rafId);
-        sub.rafId = null;
-      }
-
-      sub.pendingData = null;
-      handler.subscribers.delete(sub);
-      maybeDetachWindowListener(resolvedWindow, handler);
+      handler.subscribers.delete(onResize);
+      maybeDetachWindowListener(window, handler);
     };
-  }, [enabled, rafBatch, onResize, window]);
+  }, [enabled, onResize, window]);
 }
