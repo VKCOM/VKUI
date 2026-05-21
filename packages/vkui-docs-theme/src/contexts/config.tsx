@@ -27,7 +27,7 @@ export const ConfigProvider = ({
 }): React.ReactElement => {
   const fsPath = useFSRoute();
   const isBlog = fsPath.includes('/blog');
-  const isShowCase = fsPath.includes('/showcase');
+  const isShowCase = fsPath.includes('/components-showcase');
 
   const normalizePagesResult = React.useMemo(
     () => normalizePages({ list: pageMap, route: fsPath }),
