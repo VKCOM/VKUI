@@ -1,12 +1,36 @@
 .root {
+  --Playground-border-radius: 8px;
+
   margin-block: var(--vkui--spacing_size_4xl);
   overflow: hidden;
   border: 1px solid var(--vkui_docs--color_stroke_separator_secondary);
-  border-radius: 8px;
+  border-radius: var(--Playground-border-radius);
 }
 
 .codeBlock {
+  --Playground-codeBlock-highlight-outline-width: 1px;
+
+  outline: 0 solid var(--vkui--color_stroke_accent);
+  outline-offset: calc(-1 * var(--Playground-codeBlock-highlight-outline-width));
   background-color: rgb(126, 142, 160, 0.08);
+  border-end-start-radius: calc(
+    var(--Playground-border-radius) -
+    var(--Playground-codeBlock-highlight-outline-width)
+  );
+  border-end-end-radius: calc(
+    var(--Playground-border-radius) -
+    var(--Playground-codeBlock-highlight-outline-width)
+  );
+}
+
+.codeBlock:focus-within {
+  outline-width: var(--Playground-codeBlock-highlight-outline-width);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .codeBlock:hover {
+    outline-width: var(--Playground-codeBlock-highlight-outline-width);
+  }
 }
 
 .code {

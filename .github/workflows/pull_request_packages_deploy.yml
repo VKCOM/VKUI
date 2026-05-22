@@ -30,7 +30,7 @@ jobs:
       id-token: write
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           repository: ${{ env.PR_HEAD_REPOSITORY_FULL_NAME }}
           ref: ${{ env.PR_HEAD_BRANCH }}
@@ -44,7 +44,7 @@ jobs:
 
       - name: Upload coverage to Codecov
         if: ${{ steps.artifact.outputs.found_artifact == 'true' }}
-        uses: codecov/codecov-action@v6
+        uses: codecov/codecov-action@e79a6962e0d4c0c17b229090214935d2e33f8354 # v6.0.1
         with:
           use_oidc: true
           flags: unittests
@@ -230,7 +230,7 @@ jobs:
     name: Diff comment
     steps:
       - name: Find diff URL comment
-        uses: peter-evans/find-comment@v4
+        uses: peter-evans/find-comment@b30e6a3c0ed37e7c023ccd3f1db5c6c0b0c23aad # v4.0.0
         id: find_url_comment
         with:
           issue-number: ${{ needs.pr_workflow_payload.outputs.pr_number }}
@@ -239,7 +239,7 @@ jobs:
 
       - name: Create or update comment with not empty diff
         if: ${{ needs.deploy_diff.outputs.has_diff == 'true' }}
-        uses: peter-evans/create-or-update-comment@v5
+        uses: peter-evans/create-or-update-comment@e8674b075228eee787fea43ef493e45ece1004c9 # v5.0.0
         with:
           comment-id: ${{ steps.find_url_comment.outputs.comment-id }}
           issue-number: ${{ needs.pr_workflow_payload.outputs.pr_number }}
@@ -252,7 +252,7 @@ jobs:
 
       - name: Create or update comment with empty diff
         if: ${{ needs.deploy_diff.outputs.has_diff == 'false' }}
-        uses: peter-evans/create-or-update-comment@v5
+        uses: peter-evans/create-or-update-comment@e8674b075228eee787fea43ef493e45ece1004c9 # v5.0.0
         with:
           comment-id: ${{ steps.find_url_comment.outputs.comment-id }}
           issue-number: ${{ needs.pr_workflow_payload.outputs.pr_number }}
@@ -274,7 +274,7 @@ jobs:
     name: Docs comment
     steps:
       - name: Find docs URLs comment
-        uses: peter-evans/find-comment@v4
+        uses: peter-evans/find-comment@b30e6a3c0ed37e7c023ccd3f1db5c6c0b0c23aad # v4.0.0
         id: find_url_comment
         with:
           issue-number: ${{ needs.pr_workflow_payload.outputs.pr_number }}
@@ -282,7 +282,7 @@ jobs:
           body-includes: <!-- docs_urls -->
 
       - name: Create or update comment
-        uses: peter-evans/create-or-update-comment@v5
+        uses: peter-evans/create-or-update-comment@e8674b075228eee787fea43ef493e45ece1004c9 # v5.0.0
         with:
           comment-id: ${{ steps.find_url_comment.outputs.comment-id }}
           issue-number: ${{ needs.pr_workflow_payload.outputs.pr_number }}

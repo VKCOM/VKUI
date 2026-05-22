@@ -23,5 +23,5 @@ export function useSyncHTMLWithTokens({
       /* eslint-disable-next-line no-restricted-properties */
       htmlElement?.classList.remove(tokenClassName);
     };
-  }, [tokenClassName]);
+  }, [enable, tokenClassName, appRootRef]);
 }

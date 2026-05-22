@@ -243,7 +243,7 @@ export const Calendar = ({
     if (timeZonedValue) {
       setViewDate(timeZonedValue);
     }
-  }, [timeZonedValue]);
+  }, [timeZonedValue, setViewDate]);
 
   if (process.env.NODE_ENV === 'development' && !disablePickers && size === 's') {
     warn("Нельзя включить селекты выбора месяца/года, если размер календаря 's'", 'error');

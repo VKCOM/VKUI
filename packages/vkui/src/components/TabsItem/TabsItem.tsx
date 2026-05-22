@@ -4,7 +4,6 @@ import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
-import { useDOM } from '../../lib/dom';
 import { warnOnce } from '../../lib/warnOnce';
 import type { AnchorHTMLAttributesOnly, HTMLAttributesWithRootRef } from '../../types';
 import { TabsControllerContext } from '../Tabs/TabsControllerContext';
@@ -147,7 +146,6 @@ export const TabsItem = ({
 
   const prevSelectedRef = React.useRef<boolean | undefined>(undefined);
 
-  const { document } = useDOM();
   React.useEffect(
     function scrollToSelectedItem() {
       const isInitialRender = prevSelectedRef.current === undefined;
@@ -159,13 +157,14 @@ export const TabsItem = ({
 
       prevSelectedRef.current = selected;
 
-      if (!shouldScrollToSelected || !rootRef.current || !document) {
+      if (!shouldScrollToSelected || !rootRef.current) {
         return;
       }
 
       const tabDOMRect = rootRef.current.getBoundingClientRect();
       const isTabVerticallyOutsideOfViewport =
-        tabDOMRect.top < 0 || tabDOMRect.bottom > document.documentElement.clientHeight;
+        tabDOMRect.top < 0 ||
+        tabDOMRect.bottom > rootRef.current.ownerDocument.documentElement.clientHeight;
 
       /* проверяем, возможен ли вертикальный скролл, а он возможен для scrollIntoView если
        * элемент вертикально вне зоны видимости */
@@ -186,7 +185,7 @@ export const TabsItem = ({
          **/
       }
     },
-    [rootRef, document, scrollBehaviorToSelectedTab, withScrollToSelectedTab, selected],
+    [rootRef, scrollBehaviorToSelectedTab, withScrollToSelectedTab, selected],
   );
 
   const _onClick: React.MouseEventHandler<HTMLElement> = React.useCallback(

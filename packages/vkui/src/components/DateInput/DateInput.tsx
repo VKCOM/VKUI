@@ -7,6 +7,7 @@ import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useDateInput } from '../../hooks/useDateInput';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useGlobalEscKeyDown } from '../../hooks/useGlobalEscKeyDown';
+import { useLocale } from '../../hooks/useLocale';
 import {
   convertDateToTimeZone,
   createDateInTimeZone,
@@ -22,7 +23,6 @@ import { cacheDateTimeFormat } from '../../lib/intlCache';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import type { HasRootRef } from '../../types';
 import { Calendar, type CalendarProps, type CalendarTestsProps } from '../Calendar/Calendar';
-import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
 import { FocusTrap } from '../FocusTrap/FocusTrap';
 import { FormField, type FormFieldProps } from '../FormField/FormField';
 import { IconButton } from '../IconButton/IconButton';
@@ -388,7 +388,7 @@ export const DateInput = ({
         setInternalValue(getLastUpdatedValue());
       }
     },
-    [open, getLastUpdatedValue],
+    [open, getLastUpdatedValue, setInternalValue],
   );
 
   const onCalendarChange = React.useCallback(
@@ -427,7 +427,7 @@ export const DateInput = ({
   const [calendarPlacement, setCalendarPlacement] =
     React.useState<PlacementWithAuto>(calendarPlacementProp);
 
-  const { locale } = useConfigProvider();
+  const locale = useLocale();
   const currentDateLabel = value
     ? labelDateTimeFormat(locale, labelDateTimeFormatOptions).format(value)
     : null;

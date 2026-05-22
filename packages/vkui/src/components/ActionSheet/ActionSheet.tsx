@@ -8,6 +8,7 @@ import { useStableCallback } from '../../hooks/useStableCallback';
 import { useCSSKeyframesAnimationController } from '../../lib/animation';
 import type { HasRootRef } from '../../types';
 import type { ActionSheetItemProps } from '../ActionSheetItem/ActionSheetItem';
+import type { AppRootPortalProps } from '../AppRoot/AppRootPortal';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
 import { useScrollLock } from '../AppRoot/ScrollContext';
 import { PopoutWrapper } from '../PopoutWrapper/PopoutWrapper';
@@ -57,6 +58,7 @@ export interface ActionSheetProps
       | 'restoreFocus'
       | 'autoFocus'
     >,
+    Pick<AppRootPortalProps, 'usePortal'>,
     Omit<React.HTMLAttributes<HTMLDivElement>, 'autoFocus' | 'title'> {
   /**
    * Заголовок всплывающего окна.
@@ -125,6 +127,7 @@ export const ActionSheet = ({
   mode: modeProp,
   onClose: onCloseProp,
   onClosed,
+  usePortal,
   ...restProps
 }: ActionSheetProps): React.ReactNode => {
   const platform = usePlatform();
@@ -225,7 +228,7 @@ export const ActionSheet = ({
   );
 
   return (
-    <AppRootPortal>
+    <AppRootPortal usePortal={usePortal}>
       <PopoutWrapper
         noBackground={mode === 'menu'}
         closing={Boolean(closedReason)}

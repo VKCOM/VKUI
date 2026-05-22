@@ -8,13 +8,14 @@ import {
   Icon20ChevronRightOutline,
 } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
+import { useConfigDirection } from '../../hooks/useConfigDirection';
+import { useLocale } from '../../hooks/useLocale';
 import { ViewWidth } from '../../lib/adaptivity';
 import { DEFAULT_MAX_YEAR, DEFAULT_MIN_YEAR, getMonths, getYears } from '../../lib/calendar';
 import { addMonths, setMonth, setYear, subMonths } from '../../lib/date';
 import { cacheDateTimeFormat } from '../../lib/intlCache';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
-import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
 import { CustomSelect, type SelectProps } from '../CustomSelect/CustomSelect';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Tappable } from '../Tappable/Tappable';
@@ -163,7 +164,8 @@ export const CalendarHeader = ({
   nextMonthButtonTestId,
   ...restProps
 }: CalendarHeaderProps): React.ReactNode => {
-  const { locale, direction } = useConfigProvider();
+  const locale = useLocale();
+  const direction = useConfigDirection();
 
   const onMonthsChange = React.useCallback(
     (_: ChangeEvent<HTMLSelectElement>, newValue: SelectProps['value']) =>

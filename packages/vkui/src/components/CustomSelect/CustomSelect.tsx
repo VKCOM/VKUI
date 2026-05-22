@@ -7,7 +7,6 @@ import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useMergeProps } from '../../hooks/useMergeProps';
 import { callMultiple } from '../../lib/callMultiple';
-import { useDOM } from '../../lib/dom';
 import type { Placement } from '../../lib/floating';
 import { defaultFilterFn, type FilterFn } from '../../lib/select';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
@@ -100,11 +99,19 @@ const FetchingStatus = ({
     function updateStatus() {
       if (fetching) {
         setStatus('fetching');
+        return;
       } else {
-        if (status === 'fetching') {
-          setStatus('loaded');
-          setTimeout(() => setStatus('none'), FETCH_STATUS_RESET_DELAY);
-        }
+        let timeoutId: ReturnType<typeof setTimeout>;
+        setStatus((prevStatus) => {
+          if (prevStatus === 'fetching') {
+            timeoutId = setTimeout(() => setStatus('none'), FETCH_STATUS_RESET_DELAY);
+            return 'loaded';
+          }
+          return prevStatus;
+        });
+        return () => {
+          clearTimeout(timeoutId);
+        };
       }
     },
     [fetching],
@@ -507,6 +514,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
 
       selectElRef.current?.dispatchEvent(event);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [nativeSelectValue]);
 
   const openedClassNames = React.useMemo(
@@ -671,7 +679,6 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     icon: iconProp,
   });
 
-  const { document } = useDOM();
   const passClickAndFocusToInputOnClick = React.useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
       // Раньше внешней оберткой CustomSelect был <label>, что позволяло по клику в любую область CustomSelect,
@@ -683,7 +690,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
       // Воспроизводится в некоторых версиях Chrome, при навигации по странице с помощью стрелок.
       // Договорились со специалистом по доступности убрать <label>-обёртки из Select и CustomSelect
 
-      if (!selectInputRef.current || !document) {
+      if (!selectInputRef.current) {
         return;
       }
 
@@ -691,13 +698,14 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
       if (clickTargetIsNotAnInput) {
         selectInputRef.current.click();
 
-        const inputIsNotFocused = document.activeElement !== selectInputRef.current;
+        const inputIsNotFocused =
+          selectInputRef.current.ownerDocument.activeElement !== selectInputRef.current;
         if (inputIsNotFocused) {
           selectInputRef.current.focus();
         }
       }
     },
-    [document, selectInputRef],
+    [selectInputRef],
   );
 
   const preventInputBlurWhenClickInsideFocusedSelectArea = (
@@ -706,7 +714,8 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     // Так как инпут больше не оборачивается пустым лэйблом, то клик внутри обертки,
     // но вне инпута (например по иконке дропдауна), будет убирать фокус с инпута.
     // Чтобы в такой ситуации отключить blur инпута мы превентим mousedown событие обёртки
-    const isInputFocused = document && document.activeElement === selectInputRef.current;
+    const isInputFocused =
+      selectInputRef.current?.ownerDocument.activeElement === selectInputRef.current;
     if (isInputFocused) {
       e.preventDefault();
     }

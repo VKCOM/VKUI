@@ -1,5 +1,9 @@
 import * as React from 'react';
 import { ConfigProviderContext } from '../../components/ConfigProvider/ConfigProviderContext';
+import {
+  ColorSchemeContext,
+  PlatformContext,
+} from '../../components/ConfigProvider/ConfigProviderSubContexts';
 import { type ColorSchemeType, DEFAULT_COLOR_SCHEME } from '../colorScheme';
 import { Platform, type PlatformType } from '../platform';
 import { DEFAULT_TOKENS_CLASS_NAMES } from './constants';
@@ -30,11 +34,9 @@ const getAppearanceTokenClassNameByPlatform = (
  * @private
  */
 export const useTokensClassName = (): string => {
-  const {
-    platform,
-    colorScheme = DEFAULT_COLOR_SCHEME,
-    tokensClassNames,
-  } = React.useContext(ConfigProviderContext);
+  const platform = React.useContext(PlatformContext);
+  const colorScheme = React.useContext(ColorSchemeContext) ?? DEFAULT_COLOR_SCHEME;
+  const { tokensClassNames } = React.useContext(ConfigProviderContext);
 
   const colorSchemeClassName = isTokensClassNamesForPlatforms(tokensClassNames)
     ? getAppearanceTokenClassNameByPlatform(platform, tokensClassNames)

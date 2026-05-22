@@ -28,6 +28,9 @@ module.exports = {
         map: TS_CONFIG_ALIASES,
       },
     },
+    'react-hooks': {
+      additionalEffectHooks: '(useIsomorphicLayoutEffect)',
+    },
   },
   globals: {
     Element: true,

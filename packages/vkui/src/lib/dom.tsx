@@ -52,10 +52,12 @@ export const useDOM = (): DOMContextInterface => {
  * В случае, если используется DOMContext, при проверке 'node instanceOf Window' – Window может быть
  * другим объектом.
  */
-export const isWindow = (
-  node: Element | Window | VisualViewport | undefined | null,
-): node is Window => {
-  return node !== null && node !== undefined && 'navigator' in node;
+export const isWindow = (value: unknown): value is Window => {
+  return (
+    typeof value === 'object' &&
+    value !== null &&
+    (value as Record<string, unknown>).window === value
+  );
 };
 
 export const isBody = (
@@ -212,6 +214,10 @@ export const getDocumentBody = (node?: any): HTMLElement => getWindow(node).docu
 
 export const getActiveElementByAnotherElement = (el: Element | null): Element | null =>
   el ? el.ownerDocument.activeElement : null;
+
+export function isActiveElement(el: Element): boolean {
+  return el === el.ownerDocument.activeElement;
+}
 
 export const contains = (parent?: Element | null, child?: Element | null): boolean => {
   return parent && child ? parent.contains(child) : false;
