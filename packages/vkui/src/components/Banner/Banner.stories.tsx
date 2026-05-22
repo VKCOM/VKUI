@@ -38,6 +38,7 @@ const story: Meta<BannerProps> = {
       additionalPresets: {
         dismiss: 'dismiss',
         chevron: 'chevron',
+        TextAfter: 'After',
       },
     }),
     actions: createFieldWithPresets({
