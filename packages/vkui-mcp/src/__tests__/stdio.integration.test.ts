@@ -22,8 +22,11 @@ const MOCK_COMPONENTS = [
     slug: 'alert',
     description: 'Модальное окно с кнопками',
     examplesCount: 2,
+    tags: ['modal', 'notification'],
   },
 ];
+
+const MOCK_TAGS = ['modal', 'notification'];
 
 const MOCK_ALERT_EXAMPLES_TEXT =
   'Базовый пример\n\n<Alert title="Пример" />\n\n---------------------------------\n\n<Alert title="Второй" />';
@@ -57,6 +60,7 @@ function startMockDocsServer(): Promise<{ baseUrl: string; close: () => void }> 
   const baseRoutes: Record<string, string> = {
     '/components.json': JSON.stringify(MOCK_COMPONENTS),
     '/hooks.json': JSON.stringify(MOCK_HOOKS),
+    '/tags.json': JSON.stringify(MOCK_TAGS),
     '/examples/alert.txt': MOCK_ALERT_EXAMPLES_TEXT,
     '/components/alert.json': JSON.stringify(MOCK_ALERT_METADATA),
     '/hooks/use-modal-manager.json': JSON.stringify(MOCK_USE_MODAL_MANAGER_METADATA),
@@ -267,11 +271,12 @@ describe.skipIf(!hasBuiltCli())('MCP server over stdio (integration)', () => {
     assertNoMcpError(callResponse);
     const parsed = JSON.parse(
       getResultTextContent(callResponse.result as Record<string, unknown>),
-    ) as Array<{ name: string; slug: string; description: string }>;
+    ) as Array<{ name: string; slug: string; description: string; tags: string[] }>;
     expect(parsed).toHaveLength(1);
     expect(parsed[0].name).toBe('Alert');
     expect(parsed[0].slug).toBe('alert');
     expect(parsed[0].description).toContain('Модальное окно');
+    expect(parsed[0].tags).toEqual(['modal', 'notification']);
 
     child.kill('SIGTERM');
   });
@@ -377,6 +382,79 @@ describe.skipIf(!hasBuiltCli())('MCP server over stdio (integration)', () => {
     expect(parsed.slug).toBe('use-modal-manager');
     expect(parsed.description).toContain('модальными окнами');
     expect(Array.isArray(parsed.props)).toBe(true);
+
+    child.kill('SIGTERM');
+  });
+
+  it('list_tags через stdio возвращает список тегов из мока', async () => {
+    const child = spawnMcpProcess(mockBaseUrl);
+    await initMcpSession(child);
+
+    const callResponse = await sendRequest(child, {
+      jsonrpc: '2.0',
+      id: 2,
+      method: 'tools/call',
+      params: {
+        name: 'list_tags',
+        arguments: {},
+      },
+    });
+
+    assertNoMcpError(callResponse);
+    const parsed = JSON.parse(
+      getResultTextContent(callResponse.result as Record<string, unknown>),
+    ) as string[];
+    expect(Array.isArray(parsed)).toBe(true);
+    expect(parsed).toContain('modal');
+    expect(parsed).toContain('notification');
+
+    child.kill('SIGTERM');
+  });
+
+  it('list_components_by_tag через stdio возвращает компоненты по тегу', async () => {
+    const child = spawnMcpProcess(mockBaseUrl);
+    await initMcpSession(child);
+
+    const callResponse = await sendRequest(child, {
+      jsonrpc: '2.0',
+      id: 2,
+      method: 'tools/call',
+      params: {
+        name: 'list_components_by_tag',
+        arguments: { tag: 'modal' },
+      },
+    });
+
+    assertNoMcpError(callResponse);
+    const parsed = JSON.parse(
+      getResultTextContent(callResponse.result as Record<string, unknown>),
+    ) as Array<{ name: string; tags: string[] }>;
+    expect(parsed.length).toBeGreaterThan(0);
+    expect(parsed.every((c) => c.tags.includes('modal'))).toBe(true);
+    expect(parsed.map((c) => c.name)).toContain('Alert');
+
+    child.kill('SIGTERM');
+  });
+
+  it('list_components_by_tag через stdio возвращает пустой массив для несуществующего тега', async () => {
+    const child = spawnMcpProcess(mockBaseUrl);
+    await initMcpSession(child);
+
+    const callResponse = await sendRequest(child, {
+      jsonrpc: '2.0',
+      id: 2,
+      method: 'tools/call',
+      params: {
+        name: 'list_components_by_tag',
+        arguments: { tag: 'nonexistent-tag' },
+      },
+    });
+
+    assertNoMcpError(callResponse);
+    const parsed = JSON.parse(
+      getResultTextContent(callResponse.result as Record<string, unknown>),
+    ) as unknown[];
+    expect(parsed).toEqual([]);
 
     child.kill('SIGTERM');
   });
