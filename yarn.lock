@@ -5506,7 +5506,7 @@ __metadata:
     eslint-import-resolver-alias: "npm:^1.1.2"
     eslint-plugin-compat: "npm:^7.0.2"
     eslint-plugin-import: "npm:^2.32.0"
-    eslint-plugin-jsdoc: "npm:^62.9.0"
+    eslint-plugin-jsdoc: "npm:^63.0.0"
     eslint-plugin-react: "npm:^7.33.2"
     eslint-plugin-react-hooks: "npm:^7.1.1"
     eslint-plugin-react-server-components: "npm:^1.2.0"
@@ -8875,9 +8875,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-jsdoc@npm:^62.9.0":
-  version: 62.9.0
-  resolution: "eslint-plugin-jsdoc@npm:62.9.0"
+"eslint-plugin-jsdoc@npm:^63.0.0":
+  version: 63.0.0
+  resolution: "eslint-plugin-jsdoc@npm:63.0.0"
   dependencies:
     "@es-joy/jsdoccomment": "npm:~0.86.0"
     "@es-joy/resolve.exports": "npm:1.2.0"
@@ -8890,12 +8890,12 @@ __metadata:
     html-entities: "npm:^2.6.0"
     object-deep-merge: "npm:^2.0.0"
     parse-imports-exports: "npm:^0.2.4"
-    semver: "npm:^7.7.4"
+    semver: "npm:^7.8.0"
     spdx-expression-parse: "npm:^4.0.0"
     to-valid-identifier: "npm:^1.0.0"
   peerDependencies:
     eslint: ^7.0.0 || ^8.0.0 || ^9.0.0 || ^10.0.0
-  checksum: 10/bdb0042fee874fdde4f68902f5199bbfdb671eb9a3cbd5f12c732e56fdaacf3c1fee0579c334d9e35d6be59c47d445a80f8a473e0709a66d06e09554bd362a39
+  checksum: 10/dc32e4b92386ef4f98c2cc460597bb9404a5bfc65dfa5b62ad4e408749c11e64e88a417e29708ff320859161f51d5c6b03fc593c2c5a429962cd25cfb10b7a29
   languageName: node
   linkType: hard
 
@@ -16493,7 +16493,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"semver@npm:^7.3.5, semver@npm:^7.3.8, semver@npm:^7.5.3, semver@npm:^7.6.0, semver@npm:^7.6.1, semver@npm:^7.6.2, semver@npm:^7.6.3, semver@npm:^7.7.3, semver@npm:^7.7.4":
+"semver@npm:^7.3.5, semver@npm:^7.3.8, semver@npm:^7.5.3, semver@npm:^7.6.0, semver@npm:^7.6.1, semver@npm:^7.6.2, semver@npm:^7.6.3, semver@npm:^7.7.3":
   version: 7.7.4
   resolution: "semver@npm:7.7.4"
   bin:
