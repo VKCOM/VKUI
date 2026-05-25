@@ -6,12 +6,12 @@ import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useGlobalOnClickOutside } from '../../hooks/useGlobalOnClickOutside';
 import { usePlatform } from '../../hooks/usePlatform';
 import { type SizeTypeValues, ViewWidth, type ViewWidthType } from '../../lib/adaptivity';
+import { useCSSKeyframesAnimationController } from '../../lib/animation';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { useScrollLock } from '../AppRoot/ScrollContext';
 import { Box } from '../Box/Box';
 import { SplitColWidthWrapper } from '../FixedLayout/SplitColWidthWrapper';
 import { OnboardingTooltipFixedContainer } from '../OnboardingTooltip/OnboardingTooltipFixedContainer';
-import { Popover } from '../Popover/Popover';
 import styles from './PanelHeaderContext.module.css';
 
 function getViewWidthClassName(
@@ -59,17 +59,15 @@ export const PanelHeaderContext = ({
 }: PanelHeaderContextProps): React.ReactNode => {
   const platform = usePlatform();
   const { sizeX: legacySizeX, viewWidth = 'none' } = useAdaptivity();
-  const [visible, setVisible] = React.useState<boolean>(opened);
-  const [prevOpened, setPrevOpened] = React.useState<boolean>(opened);
-  const anchorRef = React.useRef<HTMLElement | null>(null);
-  const popoverRef = React.useRef<HTMLDivElement | null>(null);
+  const elementRef = React.useRef<HTMLDivElement>(null);
+  const [animationState, animationHandlers] = useCSSKeyframesAnimationController(
+    opened ? 'enter' : 'exit',
+    undefined,
+    true,
+  );
+  const visible = animationState !== 'exited';
 
-  if (prevOpened !== opened) {
-    if (opened) {
-      setVisible(true);
-    }
-    setPrevOpened(opened);
-  }
+  useScrollLock(platform !== 'vkcom' && visible);
 
   const handleGlobalOnClickOutside = React.useCallback(
     (event: MouseEvent) => {
@@ -81,13 +79,7 @@ export const PanelHeaderContext = ({
     [opened, onClose],
   );
 
-  useScrollLock(platform !== 'vkcom' && visible);
-
-  useGlobalOnClickOutside(
-    handleGlobalOnClickOutside,
-    visible ? anchorRef : null,
-    visible ? popoverRef : null,
-  );
+  useGlobalOnClickOutside(handleGlobalOnClickOutside, visible ? elementRef : null);
 
   if (!visible) {
     return null;
@@ -115,31 +107,14 @@ export const PanelHeaderContext = ({
         }}
         className={styles.fade}
       />
-      <Popover
-        shown={opened}
-        disableFlipMiddleware
-        disableShiftMiddleware
-        disableCloseOnClickOutside
-        disableCloseOnEscKey
-        strategy="absolute"
-        trigger="manual"
-        role="presentation"
-        content={<div className={styles.content}>{children}</div>}
-        sameWidth
-        usePortal={false}
-        zIndex={1}
-        noStyling
+      <div
+        data-testid={process.env.NODE_ENV === 'test' ? 'content' : undefined}
         className={styles.in}
-        offsetByMainAxis={0}
-        onShownChanged={(shown) => {
-          if (!shown) {
-            setVisible(false);
-          }
-        }}
-        getRootRef={popoverRef}
+        ref={elementRef}
+        {...animationHandlers}
       >
-        <Box getRootRef={anchorRef} inlineSize="100%" />
-      </Popover>
+        <div className={styles.content}>{children}</div>
+      </div>
     </Box>
   );
 };

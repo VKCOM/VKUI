@@ -19,6 +19,9 @@
 }
 
 .in {
+  position: absolute;
+  inset-inline-start: 0;
+  z-index: 1;
   box-sizing: border-box;
   inline-size: 100%;
   padding: 8px;

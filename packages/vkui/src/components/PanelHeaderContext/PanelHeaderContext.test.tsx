@@ -1,7 +1,12 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
 import { ViewWidth } from '../../lib/adaptivity';
-import { baselineComponent, waitForFloatingPosition, withFakeTimers } from '../../testing/utils';
+import {
+  baselineComponent,
+  userEvent,
+  waitCSSKeyframesAnimation,
+  withFakeTimers,
+} from '../../testing/utils';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { PanelHeaderContext } from './PanelHeaderContext';
 import panelHeaderContextStyles from './PanelHeaderContext.module.css';
@@ -27,7 +32,7 @@ describe('PanelHeaderContext', () => {
             <PanelHeaderContext opened onClose={onClose} />
           </AdaptivityProvider>,
         );
-        fireEvent.click(document.body);
+        await userEvent.click(document.body);
         expect(onClose).toHaveBeenCalledTimes(1);
       }),
     );
@@ -37,7 +42,9 @@ describe('PanelHeaderContext', () => {
       withFakeTimers(async () => {
         const onClose = vi.fn();
         render(<PanelHeaderContext opened onClose={onClose} />);
-        fireEvent.click(document.querySelector(`.${panelHeaderContextStyles.fade}`) as Element);
+        await userEvent.click(
+          document.querySelector(`.${panelHeaderContextStyles.fade}`) as Element,
+        );
         expect(onClose).toHaveBeenCalledTimes(1);
       }),
     );
@@ -51,7 +58,7 @@ describe('PanelHeaderContext', () => {
             <div data-testid="xxx" />
           </PanelHeaderContext>,
         );
-        fireEvent.click(screen.getByTestId('xxx'));
+        await userEvent.click(screen.getByTestId('xxx'));
         expect(onClose).not.toHaveBeenCalled();
       }),
     );
@@ -62,14 +69,12 @@ describe('PanelHeaderContext', () => {
           <div data-testid="xxx" />
         </PanelHeaderContext>,
       );
-      expect(screen.queryByTestId('xxx')).not.toBeNull();
       result.rerender(
         <PanelHeaderContext opened={false} onClose={noop}>
           <div data-testid="xxx" />
         </PanelHeaderContext>,
       );
-
-      await waitForFloatingPosition();
+      await waitCSSKeyframesAnimation(result.getByTestId('content'));
       expect(screen.queryByTestId('xxx')).toBeNull();
     });
   });
