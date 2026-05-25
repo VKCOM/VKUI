@@ -40,7 +40,18 @@ function composeComponents(
 
 export interface BoxProps extends Omit<RootComponentProps<HTMLElement>, 'Component'>, LayoutProps {
   /**
+   * Компонент для рендера или массив компонентов для композиции.
    *
+   * Можно передать один компонент или массив компонентов. При передаче массива
+   * компоненты будут вложены друг в друга справа налево, начиная с `div`.
+   *
+   * @example
+   * // Один компонент
+   * <Box Component="section" />
+   *
+   * @example
+   * // Массив компонентов — рендер: Wrapper → Link → div
+   * <Box Component={[Wrapper, Link]} />
    */
   Component?: BoxComponent | undefined;
   /**
