@@ -22,7 +22,7 @@ export const HasPointer = () => {
       pressed={hasPointer}
       size="small"
       variant="ghost"
-      ariaLabel={`hasPointer property is turned ${hasPointer ? 'off' : 'on'}`}
+      ariaLabel={`hasPointer property is turned ${hasPointer ? 'on' : 'off'}`}
       onClick={toggleHasPointer}
     >
       <ButtonIcon />
