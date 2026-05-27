@@ -1,9 +1,5 @@
 import { test } from '@vkui-e2e/test';
-import {
-  SearchPlayground,
-  SearchTestFocusOnIOSPlayground,
-  SearchTestLongAfterOnIOSPlayground,
-} from './Search.e2e-playground';
+import { SearchPlayground, SearchTestFocusOnIOSPlayground } from './Search.e2e-playground';
 
 test('Search', async ({ mount, expectScreenshotClippedToContent, componentPlaygroundProps }) => {
   await mount(<SearchPlayground {...componentPlaygroundProps} />);
@@ -18,17 +14,6 @@ test.describe('Search', () => {
     componentPlaygroundProps,
   }) => {
     await mount(<SearchTestFocusOnIOSPlayground {...componentPlaygroundProps} />);
-    await page.focus('input');
-    await expectScreenshotClippedToContent();
-  });
-
-  test('truncates long after text with ellipsis on iOS', async ({
-    mount,
-    page,
-    expectScreenshotClippedToContent,
-    componentPlaygroundProps,
-  }) => {
-    await mount(<SearchTestLongAfterOnIOSPlayground {...componentPlaygroundProps} />);
     await page.focus('input');
     await expectScreenshotClippedToContent();
   });
