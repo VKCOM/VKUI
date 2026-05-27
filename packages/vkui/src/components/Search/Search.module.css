@@ -178,6 +178,7 @@
   flex-basis: 0%;
   min-inline-size: 0;
   max-inline-size: min-content;
+  overflow: hidden;
   pointer-events: none;
   transition: flex-grow 0.3s var(--vkui--animation_easing_platform);
 }
@@ -204,7 +205,7 @@
 .afterTextClip {
   display: block;
   overflow: hidden;
-  text-overflow: clip;
+  text-overflow: ellipsis;
   white-space: nowrap;
 }
 

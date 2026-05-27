@@ -69,3 +69,21 @@ export const SearchTestFocusOnIOSPlayground = ({ colorScheme }: ComponentPlaygro
     </ConfigProvider>
   );
 };
+
+export const SearchTestLongAfterOnIOSPlayground = ({ colorScheme }: ComponentPlaygroundProps) => {
+  return (
+    <ConfigProvider platform="ios" colorScheme={colorScheme}>
+      <AdaptivityProvider density="regular">
+        <AppDefaultWrapper
+          disableDecorations
+          style={{
+            height: 'auto',
+            width: BREAKPOINTS.MOBILE,
+          }}
+        >
+          <Search after="длинная отмена" />
+        </AppDefaultWrapper>
+      </AdaptivityProvider>
+    </ConfigProvider>
+  );
+};
