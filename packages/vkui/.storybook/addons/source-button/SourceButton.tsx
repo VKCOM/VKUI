@@ -1,4 +1,4 @@
-import { IconButton } from 'storybook/internal/components';
+import { Button } from 'storybook/internal/components';
 import { useGlobals, useStorybookState } from 'storybook/manager-api';
 import { GithubIcon } from '@storybook/icons';
 import * as React from 'react';
@@ -28,10 +28,10 @@ export const SourceButton = () => {
   const sourceUrl = getComponentUrl(globals.componentsSourceBaseUrl, importPath);
 
   return (
-    <a href={sourceUrl} target="_blank" rel="noreferrer">
-      <IconButton>
+    <Button asChild size="small" variant="ghost" ariaLabel="Open source on GitHub">
+      <a href={sourceUrl} target="_blank" rel="noreferrer">
         <GithubIcon />
-      </IconButton>
-    </a>
+      </a>
+    </Button>
   );
 };
