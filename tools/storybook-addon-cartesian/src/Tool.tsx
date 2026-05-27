@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { GridIcon } from '@storybook/icons';
-import { IconButton, WithTooltipPure } from 'storybook/internal/components';
+import { ToggleButton, WithTooltip } from 'storybook/internal/components';
 import type { ArgTypes } from 'storybook/internal/types';
 import { useArgs, useArgTypes, useParameter } from 'storybook/manager-api';
 import { OptionsContainer } from './OptionsContainer';
@@ -58,7 +58,7 @@ export const Tool = () => {
   }
 
   return (
-    <WithTooltipPure
+    <WithTooltip
       trigger="click"
       placement="bottom"
       visible={isVisible}
@@ -72,10 +72,15 @@ export const Tool = () => {
         />
       )}
     >
-      <IconButton>
+      <ToggleButton
+        pressed={checkedOptions.length > 0}
+        size="small"
+        variant="ghost"
+        ariaLabel="Choose component properties"
+      >
         <GridIcon />
-        &nbsp; cartesian
-      </IconButton>
-    </WithTooltipPure>
+        &nbsp;cartesian
+      </ToggleButton>
+    </WithTooltip>
   );
 };

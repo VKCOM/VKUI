@@ -62,6 +62,7 @@ const preview: Preview = {
       source: {
         type: 'dynamic',
       },
+      codePanel: true,
     },
     controls: {
       expanded: true,
