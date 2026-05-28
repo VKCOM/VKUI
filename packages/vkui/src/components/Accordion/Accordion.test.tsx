@@ -1,5 +1,5 @@
-import { fireEvent, render, renderHook } from '@testing-library/react';
-import { a11yTest, baselineComponent, waitCSSKeyframesAnimation } from '../../testing/utils';
+import { renderHook } from '@testing-library/react';
+import { a11yTest } from '../../testing/utils';
 import { Accordion } from './Accordion';
 import { useAccordionContext } from './AccordionContext';
 
