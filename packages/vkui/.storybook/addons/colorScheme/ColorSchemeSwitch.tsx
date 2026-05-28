@@ -1,24 +1,44 @@
 import * as React from 'react';
-import { Icon16Moon, Icon16Sun } from '@vkontakte/icons';
+import { SunIcon, MoonIcon } from '@storybook/icons';
 import { useGlobals } from 'storybook/manager-api';
-import { IconButton } from 'storybook/internal/components';
+import { Select } from 'storybook/internal/components';
 import { PARAM_KEY } from './constants';
 
 export const ColorSchemeSwitch = () => {
   const [globals, updateGlobals] = useGlobals();
-  const isDarkTheme = globals[PARAM_KEY] === 'dark';
+  const selectedOption = globals[PARAM_KEY];
 
-  const toggleTheme = React.useCallback(() => {
-    updateGlobals({ [PARAM_KEY]: isDarkTheme ? 'light' : 'dark' });
-  }, [isDarkTheme, updateGlobals]);
+  const handleChange: React.ComponentProps<typeof Select>['onChange'] = React.useCallback(
+    (selected) => {
+      updateGlobals({ [PARAM_KEY]: selected[0] });
+    },
+    [updateGlobals],
+  );
 
-  const title = isDarkTheme ? 'Turn the light theme' : 'Turn the dark theme';
+  if (selectedOption === undefined) {
+    return null;
+  }
 
   return (
-    <IconButton active key="theme" onClick={toggleTheme} title={title}>
-      {isDarkTheme ? <Icon16Sun /> : <Icon16Moon />}
-      &nbsp;
-      {globals[PARAM_KEY]}
-    </IconButton>
+    <Select
+      key="theme"
+      size="small"
+      ariaLabel="Choose theme"
+      icon={selectedOption === 'dark' ? <MoonIcon /> : <SunIcon />}
+      defaultOptions={selectedOption}
+      options={[
+        {
+          icon: <SunIcon />,
+          title: 'light',
+          value: 'light',
+        },
+        {
+          icon: <MoonIcon />,
+          title: 'dark',
+          value: 'dark',
+        },
+      ]}
+      onChange={handleChange}
+    />
   );
 };
