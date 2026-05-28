@@ -41,3 +41,4 @@ jobs:
           path: |
             test-results.json
             .nyc_output/coverage-final.json
+            .nyc_output/cobertura-coverage.xml
