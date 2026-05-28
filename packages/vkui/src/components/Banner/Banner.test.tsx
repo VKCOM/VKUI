@@ -21,4 +21,9 @@ describe('Banner', () => {
     );
     expect(screen.getByTestId('banner')).toHaveClass(styles.inverted);
   });
+
+  it('string after', () => {
+    render(<Banner title="Баста в Ледовом" data-testid="banner" after="After" />);
+    expect(screen.getByText('After')).toBeInTheDocument();
+  });
 });
