@@ -19,6 +19,7 @@ const story: Meta<ScreenSpinnerProps> = {
 
 export default story;
 
-type Story = StoryObj<ScreenSpinnerProps>;
-
-export const Playground: Story = {};
+export const Playground: StoryObj<ScreenSpinnerProps> = (props: ScreenSpinnerProps) => (
+  <ScreenSpinner {...props} />
+);
+Playground.args = {};

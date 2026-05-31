@@ -19,10 +19,8 @@ const story: Meta<InputProps> = {
 
 export default story;
 
-type Story = StoryObj<InputProps>;
+export const Playground: StoryObj<InputProps> = (props: InputProps) => <Input {...props} />;
 
-export const Playground: Story = {
-  args: {
-    'aria-label': 'Напишите сообщение...',
-  },
+Playground.args = {
+  'aria-label': 'Напишите сообщение...',
 };

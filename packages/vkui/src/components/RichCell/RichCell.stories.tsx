@@ -11,7 +11,9 @@ import { Group } from '../Group/Group';
 import { UsersStack } from '../UsersStack/UsersStack';
 import { RichCell, type RichCellProps } from './RichCell';
 
-const story: Meta<RichCellProps & { maxAfterWidth: number }> = {
+type RichCellStoryProps = RichCellProps & { maxAfterWidth: number; maxMetaWidth: number };
+
+const story: Meta<RichCellStoryProps> = {
   title: 'Data Display/RichCell',
   component: RichCell,
   parameters: createStoryParameters('RichCell', CanvasFullLayout, DisableCartesianParam),
@@ -81,49 +83,51 @@ const story: Meta<RichCellProps & { maxAfterWidth: number }> = {
 
 export default story;
 
-type Story = StoryObj<RichCellProps & { maxAfterWidth: number; maxMetaWidth: number }>;
+type Story = StoryObj<RichCellStoryProps>;
 
-export const Playground: Story = {
-  args: {
-    before: 'Avatar72',
-    overTitle: 'Over Title',
-    subtitle: 'Subtitle',
-    extraSubtitle: 'Extra Subtitle',
-    meta: 'Meta',
-    submeta: 'Submeta',
-    maxAfterWidth: 100,
-    maxMetaWidth: 100,
-    children: 'Example',
-  },
-  decorators: [
-    (Component, context) => (
-      <Group>
-        <Component {...context.args} />
-      </Group>
-    ),
-    withSinglePanel,
-    withVKUILayout,
-  ],
-  render: ({
-    maxAfterWidth,
-    maxMetaWidth,
-    afterCaption: afterCaptionProp,
-    after: afterProp,
-    meta: metaProp,
-    submeta: submetaProp,
-    ...args
-  }) => {
-    const withMaxWidth = (maxWidth: number, prop: React.ReactNode) => {
-      return maxWidth !== undefined && prop ? <div style={{ maxWidth }}>{prop}</div> : prop;
-    };
-
-    const after = withMaxWidth(maxAfterWidth, afterProp);
-    const afterCaption = withMaxWidth(maxAfterWidth, afterCaptionProp);
-    const meta = withMaxWidth(maxMetaWidth, metaProp);
-    const submeta = withMaxWidth(maxMetaWidth, submetaProp);
-
-    return (
-      <RichCell after={after} afterCaption={afterCaption} meta={meta} submeta={submeta} {...args} />
+export const Playground: Story = ({
+  maxAfterWidth,
+  maxMetaWidth,
+  afterCaption: afterCaptionProp,
+  after: afterProp,
+  meta: metaProp,
+  submeta: submetaProp,
+  ...args
+}: RichCellStoryProps) => {
+  const withMaxWidth = (maxWidth: number, prop: React.ReactNode) => {
+    return maxWidth !== undefined && prop ? (
+      <div
+        style={{
+          maxWidth,
+        }}
+      >
+        {prop}
+      </div>
+    ) : (
+      prop
     );
-  },
+  };
+  const after = withMaxWidth(maxAfterWidth, afterProp);
+  const afterCaption = withMaxWidth(maxAfterWidth, afterCaptionProp);
+  const meta = withMaxWidth(maxMetaWidth, metaProp);
+  const submeta = withMaxWidth(maxMetaWidth, submetaProp);
+  return (
+    <Group>
+      <RichCell after={after} afterCaption={afterCaption} meta={meta} submeta={submeta} {...args} />
+    </Group>
+  );
 };
+
+Playground.args = {
+  before: 'Avatar72',
+  overTitle: 'Over Title',
+  subtitle: 'Subtitle',
+  extraSubtitle: 'Extra Subtitle',
+  meta: 'Meta',
+  submeta: 'Submeta',
+  maxAfterWidth: 100,
+  maxMetaWidth: 100,
+  children: 'Example',
+};
+
+Playground.decorators = [withSinglePanel, withVKUILayout];

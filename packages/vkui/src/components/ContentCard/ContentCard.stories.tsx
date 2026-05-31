@@ -17,15 +17,15 @@ const story: Meta<ContentCardProps> = {
 
 export default story;
 
-type Story = StoryObj<ContentCardProps>;
+export const Playground: StoryObj<ContentCardProps> = (props: ContentCardProps) => (
+  <ContentCard {...props} />
+);
 
-export const Playground: Story = {
-  args: {
-    src: 'https://images.unsplash.com/photo-1603988492906-4fb0fb251cf8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1600&q=80',
-    overTitle: 'unsplash',
-    title: 'brown and gray mountains under blue sky during daytime photo',
-    description: 'Mountain changji',
-    caption: 'Photo by Siyuan on Unsplash',
-    maxHeight: 150,
-  },
+Playground.args = {
+  src: 'https://images.unsplash.com/photo-1603988492906-4fb0fb251cf8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1600&q=80',
+  overTitle: 'unsplash',
+  title: 'brown and gray mountains under blue sky during daytime photo',
+  description: 'Mountain changji',
+  caption: 'Photo by Siyuan on Unsplash',
+  maxHeight: 150,
 };

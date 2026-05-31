@@ -34,27 +34,30 @@ const story: Meta<HorizontalScrollProps> = {
 
 export default story;
 
-type Story = StoryObj<HorizontalScrollProps>;
+export const Playground: StoryObj<HorizontalScrollProps> = (args: HorizontalScrollProps) => {
+  const [commonFriends, setCommonFriends] = React.useState<UserExtendedInterface[]>([]);
+  const timer = React.useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
-export const Playground: Story = {
-  render: function Render(args) {
-    const [commonFriends, setCommonFriends] = React.useState<UserExtendedInterface[]>([]);
-    const timer = React.useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
-
-    React.useEffect(() => {
-      // Эмуляция загрузки
-      timer.current = setTimeout(() => {
-        setCommonFriends(getRandomUsers(30));
-      }, 2000);
-
-      return () => {
-        clearTimeout(timer.current);
-      };
-    }, []);
-
-    return (
+  React.useEffect(() => {
+    // Эмуляция загрузки
+    timer.current = setTimeout(() => {
+      setCommonFriends(getRandomUsers(30));
+    }, 2000);
+    return () => {
+      clearTimeout(timer.current);
+    };
+  }, []);
+  return (
+    <Group header={<Header size="s">Недавние</Header>}>
       <HorizontalScroll {...args}>
-        {commonFriends.length === 0 && <Spinner size="m" style={{ height: 88 }} />}
+        {commonFriends.length === 0 && (
+          <Spinner
+            size="m"
+            style={{
+              height: 88,
+            }}
+          />
+        )}
         {commonFriends.length > 0 && (
           <React.Fragment>
             {commonFriends.map((item) => {
@@ -67,13 +70,8 @@ export const Playground: Story = {
           </React.Fragment>
         )}
       </HorizontalScroll>
-    );
-  },
-  decorators: [
-    (Component, context) => (
-      <Group header={<Header size="s">Недавние</Header>}>
-        <Component args={context.args} />
-      </Group>
-    ),
-  ],
+    </Group>
+  );
 };
+
+Playground.args = {};

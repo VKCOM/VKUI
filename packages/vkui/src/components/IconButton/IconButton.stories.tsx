@@ -15,11 +15,10 @@ const story: Meta<IconButtonProps> = {
 export default story;
 
 type Story = StoryObj<IconButtonProps>;
+export const Playground: Story = (props: IconButtonProps) => <IconButton {...props} />;
 
-export const Playground: Story = {
-  args: {
-    label: 'Удалить',
-    children: <Icon16Delete />,
-    onClick: noop,
-  },
+Playground.args = {
+  label: 'Удалить',
+  children: <Icon16Delete />,
+  onClick: noop,
 };

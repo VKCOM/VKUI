@@ -32,26 +32,26 @@ const story: Meta<SubnavigationButtonProps> = {
 export default story;
 
 type Story = StoryObj<SubnavigationButtonProps>;
-
-export const Playground: Story = {
-  args: {
-    children: 'Размер',
-  },
+export const Playground: Story = (props: SubnavigationButtonProps) => (
+  <SubnavigationButton {...props} />
+);
+Playground.args = {
+  children: 'Размер',
 };
 
-export const WithIcon: Story = {
-  ...Playground,
-  args: {
-    before: 'Icon24FavoriteOutline',
-    children: 'Избранное',
-    chevron: true,
-  },
+export const WithIcon: Story = (props: SubnavigationButtonProps) => (
+  <SubnavigationButton {...props} />
+);
+WithIcon.args = {
+  before: 'Icon24FavoriteOutline',
+  children: 'Избранное',
+  chevron: true,
 };
 
-export const WithCounter: Story = {
-  ...Playground,
-  args: {
-    children: 'Фильтры',
-    after: 'Counter',
-  },
+export const WithCounter: Story = (props: SubnavigationButtonProps) => (
+  <SubnavigationButton {...props} />
+);
+WithCounter.args = {
+  children: 'Фильтры',
+  after: 'Counter',
 };

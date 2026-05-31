@@ -39,10 +39,10 @@ export default story;
 
 type Story = StoryObj<MiniInfoCellProps>;
 
-export const Playground: Story = {
-  args: {
-    before: 'Icon20ArticleOutline',
-    children:
-      'ВКонтакте начинался как сайт для выпускников вузов, а сейчас это огромная экосистема с безграничными возможностями и миллионами пользователей.',
-  },
+export const Playground: Story = (props: MiniInfoCellProps) => <MiniInfoCell {...props} />;
+
+Playground.args = {
+  before: 'Icon20ArticleOutline',
+  children:
+    'ВКонтакте начинался как сайт для выпускников вузов, а сейчас это огромная экосистема с безграничными возможностями и миллионами пользователей.',
 };

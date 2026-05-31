@@ -26,11 +26,9 @@ const story: Meta<ImageProps> = {
 
 export default story;
 
-type Story = StoryObj<ImageProps>;
+export const Playground: StoryObj<ImageProps> = (props: ImageProps) => <Image {...props} />;
 
-export const Playground: Story = {
-  args: {
-    src: getAvatarUrl('app_shorm_online'),
-    alt: 'Приложение шторм онлайн',
-  },
+Playground.args = {
+  src: getAvatarUrl('app_shorm_online'),
+  alt: 'Приложение шторм онлайн',
 };

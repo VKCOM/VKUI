@@ -18,11 +18,10 @@ export default story;
 
 type Story = StoryObj<NativeSelectProps>;
 
-export const Playground: Story = {
-  render: (args) => (
-    <NativeSelect {...args}>
-      <option value="m">Мужской</option>
-      <option value="f">Женский</option>
-    </NativeSelect>
-  ),
-};
+export const Playground: Story = (args: NativeSelectProps) => (
+  <NativeSelect {...args}>
+    <option value="m">Мужской</option>
+    <option value="f">Женский</option>
+  </NativeSelect>
+);
+Playground.args = {};

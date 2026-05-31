@@ -12,6 +12,7 @@ const story: Meta<ScrollArrowProps> = {
 
 export default story;
 
-type Story = StoryObj<ScrollArrowProps>;
-
-export const Playground: Story = {};
+export const Playground: StoryObj<ScrollArrowProps> = (props: ScrollArrowProps) => (
+  <ScrollArrow {...props} />
+);
+Playground.args = {};

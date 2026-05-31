@@ -19,9 +19,10 @@ const story: Meta<VisuallyHiddenProps> = {
 
 export default story;
 
-export const Playground: StoryObj<VisuallyHiddenProps> = {
-  render: (props) => <VisuallyHidden {...props} />,
-  args: {
-    children: 'Этот текст скрыт визуально, но доступен для ассистивных технологий!',
-  },
+export const Playground: StoryObj<VisuallyHiddenProps> = (props: VisuallyHiddenProps) => (
+  <VisuallyHidden {...props} />
+);
+
+Playground.args = {
+  children: 'Этот текст скрыт визуально, но доступен для ассистивных технологий!',
 };

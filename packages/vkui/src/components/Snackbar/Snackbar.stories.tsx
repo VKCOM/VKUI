@@ -40,48 +40,28 @@ const story: Meta<SnackbarProps> = {
 
 export default story;
 
-type Story = StoryObj<Omit<SnackbarProps, 'after'> & { after?: boolean | undefined }>;
-
-export const Playground: Story = {
-  render: function Render({ onClosed, ...args }) {
-    const [open, setOpen] = React.useState(true);
-
-    const handleClosed = () => {
-      setOpen(false);
-      onClosed?.();
-    };
-
-    return (
-      <>
-        <button onClick={() => setOpen(true)}>Открыть</button>
-        {open ? <Snackbar onClosed={handleClosed} {...args} /> : null}
-      </>
-    );
-  },
-  args: {
-    before: 'Icon24ThumbsUpOutline',
-    action: 'Поделиться',
-    children: 'Этот сервис рекомендует один друг',
-  },
-  argTypes: {
-    action: { control: 'text' },
-  },
+export const Playground: StoryObj<SnackbarProps> = (args: SnackbarProps) => {
+  const [open, setOpen] = React.useState(true);
+  const handleClosed = () => {
+    setOpen(false);
+    args.onClosed?.();
+  };
+  return (
+    <>
+      <button onClick={() => setOpen(true)}>Открыть</button>
+      {open ? <Snackbar {...args} onClosed={handleClosed} /> : null}
+    </>
+  );
 };
 
-export const WithSubtitle: Story = {
-  ...Playground,
-  args: {
-    ...Playground.args,
-    action: undefined,
-    subtitle: 'Вы можете порекомендовать сервис в дополнительном меню',
-  },
+Playground.args = {
+  before: 'Icon24ThumbsUpOutline',
+  action: 'Поделиться',
+  children: 'Этот сервис рекомендует один друг',
 };
 
-export const WithBottomOffset: Story = {
-  ...Playground,
-  args: {
-    ...Playground.args,
-    action: undefined,
-    offsetY: '48px',
+Playground.argTypes = {
+  action: {
+    control: 'text',
   },
 };

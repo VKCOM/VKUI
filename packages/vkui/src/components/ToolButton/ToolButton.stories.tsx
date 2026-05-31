@@ -15,19 +15,12 @@ const story: Meta<ToolButtonProps> = {
 
 export default story;
 
-type Story = StoryObj<ToolButtonProps>;
+export const Playground: StoryObj<ToolButtonProps> = (props: ToolButtonProps) => (
+  <div>
+    <ToolButton {...props} IconCompact={Icon20Add} IconRegular={Icon24Add} />
+  </div>
+);
 
-export const Playground: Story = {
-  args: {
-    children: 'ToolButton',
-    IconCompact: Icon20Add,
-    IconRegular: Icon24Add,
-  },
-  decorators: [
-    (Component, context) => (
-      <div>
-        <Component {...context.args} />
-      </div>
-    ),
-  ],
+Playground.args = {
+  children: 'ToolButton',
 };

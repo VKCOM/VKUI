@@ -40,20 +40,28 @@ const groups = [
   { value: '5', label: 'Linkin Park' },
 ];
 
-export const Playground: Story = {
-  render: (args) => (
-    <FormItem top="Выберите музыкальные группы" htmlFor="chips-select" style={{ width: 320 }}>
-      <ChipsSelect aria-label="Выберите музыкальные группы" {...args} id="chips-select" />
-    </FormItem>
-  ),
-  args: {
-    options: groups,
-    defaultValue: [
-      {
-        value: '1',
-        label: 'Arctic Monkeys',
-      },
-      { value: '4', label: 'FACE' },
-    ],
-  },
+export const Playground: Story = (args: ChipsSelectProps<ChipOption>) => (
+  <FormItem
+    top="Выберите музыкальные группы"
+    htmlFor="chips-select"
+    style={{
+      width: 320,
+    }}
+  >
+    <ChipsSelect aria-label="Выберите музыкальные группы" {...args} id="chips-select" />
+  </FormItem>
+);
+
+Playground.args = {
+  options: groups,
+  defaultValue: [
+    {
+      value: '1',
+      label: 'Arctic Monkeys',
+    },
+    {
+      value: '4',
+      label: 'FACE',
+    },
+  ],
 };

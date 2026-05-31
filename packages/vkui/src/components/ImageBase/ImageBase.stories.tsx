@@ -32,10 +32,10 @@ export default story;
 
 type Story = StoryObj<ImageBaseProps>;
 
-export const Playground: Story = {
-  args: {
-    src: getAvatarUrl('app_shorm_online'),
-    alt: 'Приложение шторм онлайн',
-    size: 64,
-  },
+export const Playground: Story = (props: ImageBaseProps) => <ImageBase {...props} />;
+
+Playground.args = {
+  src: getAvatarUrl('app_shorm_online'),
+  alt: 'Приложение шторм онлайн',
+  size: 64,
 };

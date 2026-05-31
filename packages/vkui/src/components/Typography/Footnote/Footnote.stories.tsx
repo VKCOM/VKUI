@@ -15,15 +15,11 @@ const story: Meta<FootnoteProps> = {
 export default story;
 
 type Story = StoryObj<FootnoteProps>;
+export const Playground: Story = (args: FootnoteProps) => <Footnote {...args}>Footnote</Footnote>;
+Playground.args = {};
 
-export const Playground: Story = {
-  render: (args) => <Footnote {...args}>Footnote</Footnote>,
-};
-
-export const WithCaps: Story = {
-  ...Playground,
-  args: {
-    ...Playground.args,
-    caps: true,
-  },
+export const WithCaps: Story = (args: FootnoteProps) => <Footnote {...args} />;
+WithCaps.args = {
+  ...Playground.args,
+  caps: true,
 };

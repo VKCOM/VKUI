@@ -32,13 +32,20 @@ const story: Meta<DateInputProps> = {
 
 export default story;
 
-type Story = StoryObj<Omit<DateInputProps, 'renderCustomValue'> & { renderCustomValue: string }>;
-
-export const Playground: Story = {
-  render: ({ value, renderCustomValue: renderCustomValueProp, ...args }) => {
-    const parsedValue = value ? new Date(value) : value;
-    const renderCustomValue = () => renderCustomValueProp;
-
-    return <DateInput value={parsedValue} renderCustomValue={renderCustomValue} {...args} />;
-  },
+type DateInputStoryProps = Omit<DateInputProps, 'renderCustomValue'> & {
+  renderCustomValue: string;
 };
+
+type Story = StoryObj<DateInputStoryProps>;
+
+export const Playground: Story = ({
+  value,
+  renderCustomValue: renderCustomValueProp,
+  ...args
+}: DateInputStoryProps) => {
+  const parsedValue = value ? new Date(value) : value;
+  const renderCustomValue = () => renderCustomValueProp;
+  return <DateInput value={parsedValue} renderCustomValue={renderCustomValue} {...args} />;
+};
+
+Playground.args = {};

@@ -15,27 +15,31 @@ const story: Meta<AlertProps> = {
 
 export default story;
 
-export const Playground: StoryObj<AlertProps> = {
-  render: function Render(args) {
-    const [visible, setVisible] = React.useState(true);
+export const Playground: StoryObj<AlertProps> = (args: AlertProps) => {
+  const [visible, setVisible] = React.useState(true);
+  return (
+    <React.Fragment>
+      <Placeholder stretched>
+        <Button onClick={() => setVisible(true)}>Открыть</Button>
+      </Placeholder>
+      {visible ? <Alert {...args} onClosed={() => setVisible(false)} /> : null}
+    </React.Fragment>
+  );
+};
 
-    return (
-      <React.Fragment>
-        <Placeholder stretched>
-          <Button onClick={() => setVisible(true)}>Открыть</Button>
-        </Placeholder>
-        {visible ? <Alert {...args} onClosed={() => setVisible(false)} /> : null}
-      </React.Fragment>
-    );
-  },
-  args: {
-    actions: [
-      { title: 'Отмена', mode: 'cancel' },
-      { title: 'Удалить', mode: 'destructive' },
-    ],
-    actionsLayout: 'horizontal',
-    dismissLabel: 'Отмена',
-    title: 'Удаление документа',
-    description: 'Вы уверены, что хотите удалить этот документ?',
-  },
+Playground.args = {
+  actions: [
+    {
+      title: 'Отмена',
+      mode: 'cancel',
+    },
+    {
+      title: 'Удалить',
+      mode: 'destructive',
+    },
+  ],
+  actionsLayout: 'horizontal',
+  dismissLabel: 'Отмена',
+  title: 'Удаление документа',
+  description: 'Вы уверены, что хотите удалить этот документ?',
 };

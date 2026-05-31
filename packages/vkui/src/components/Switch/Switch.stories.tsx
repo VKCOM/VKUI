@@ -23,18 +23,17 @@ export default story;
 
 type Story = StoryObj<SwitchProps>;
 
-export const Playground: Story = {
-  args: {
-    'aria-label': 'Комментарии к записям',
-  },
+export const Playground: Story = (props: SwitchProps) => <Switch {...props} />;
+
+Playground.args = {
+  'aria-label': 'Комментарии к записям',
 };
 
-export const WithSimpleCellLabel: Story = {
-  render: function Render(args) {
-    return (
-      <SimpleCell Component="label" after={<Switch {...args} />}>
-        Комментарии к записям
-      </SimpleCell>
-    );
-  },
+export const WithSimpleCellLabel: Story = (args: SwitchProps) => {
+  return (
+    <SimpleCell Component="label" after={<Switch {...args} />}>
+      Комментарии к записям
+    </SimpleCell>
+  );
 };
+WithSimpleCellLabel.args = Playground.args;

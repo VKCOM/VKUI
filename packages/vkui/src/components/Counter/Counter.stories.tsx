@@ -15,14 +15,12 @@ const story: Meta<CounterProps> = {
 
 export default story;
 
-type Story = StoryObj<CounterProps>;
+export const Playground: StoryObj<CounterProps> = (props: CounterProps) => <Counter {...props} />;
 
-export const Playground: Story = {
-  args: {
-    children: (
-      <>
-        <VisuallyHidden>Обновлений:</VisuallyHidden> 5
-      </>
-    ),
-  },
+Playground.args = {
+  children: (
+    <>
+      <VisuallyHidden>Обновлений:</VisuallyHidden> 5
+    </>
+  ),
 };

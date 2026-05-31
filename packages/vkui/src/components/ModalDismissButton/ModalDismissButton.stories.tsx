@@ -13,14 +13,18 @@ const story: Meta<ModalDismissButtonProps> = {
 
 export default story;
 
-type Story = StoryObj<ModalDismissButtonProps>;
+export const Playground: StoryObj<ModalDismissButtonProps> = (props: ModalDismissButtonProps) => (
+  <ModalDismissButton {...props} />
+);
 
-export const Playground: Story = {
-  decorators: [
-    (Component) => (
-      <div style={{ position: 'relative' }}>
-        <Component onClick={noop} />
-      </div>
-    ),
-  ],
-};
+Playground.decorators = [
+  (Component) => (
+    <div
+      style={{
+        position: 'relative',
+      }}
+    >
+      <Component onClick={noop} />
+    </div>
+  ),
+];

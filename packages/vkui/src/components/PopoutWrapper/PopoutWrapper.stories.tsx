@@ -12,15 +12,18 @@ const story: Meta<PopoutWrapperProps> = {
 
 export default story;
 
-type Story = StoryObj<PopoutWrapperProps>;
+export const Playground: StoryObj<PopoutWrapperProps> = (args: PopoutWrapperProps) => (
+  <div
+    style={{
+      width: 500,
+      height: 500,
+      position: 'relative',
+    }}
+  >
+    <PopoutWrapper {...args} />
+  </div>
+);
 
-export const Playground: Story = {
-  render: (args) => (
-    <div style={{ width: 500, height: 500, position: 'relative' }}>
-      <PopoutWrapper {...args} />
-    </div>
-  ),
-  args: {
-    children: 'Some content',
-  },
+Playground.args = {
+  children: 'Some content',
 };

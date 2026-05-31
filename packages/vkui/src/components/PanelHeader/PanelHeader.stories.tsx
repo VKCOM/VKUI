@@ -40,132 +40,130 @@ export default story;
 
 type Story = StoryObj<PanelHeaderProps>;
 
-export const Playground: Story = {
-  render: () => (
-    <View id="main" activePanel="panel1">
-      <Panel id="panel1">
-        <PanelHeader before={<PanelHeaderClose onClick={noop} />} after={<Avatar size={36} />}>
-          Стартовый экран
-        </PanelHeader>
-        <Div>PanelHeader c before PanelHeaderClose и after Avatar</Div>
-      </Panel>
-    </View>
-  ),
-};
+export const Playground: Story = () => (
+  <View id="main" activePanel="panel1">
+    <Panel id="panel1">
+      <PanelHeader before={<PanelHeaderClose onClick={noop} />} after={<Avatar size={36} />}>
+        Стартовый экран
+      </PanelHeader>
+      <Div>PanelHeader c before PanelHeaderClose и after Avatar</Div>
+    </Panel>
+  </View>
+);
+Playground.args = {};
 
-export const PanelHeaderWithCounter: Story = {
-  render: function Render() {
-    const platform = usePlatform();
-    return (
-      <View id="main" activePanel="panel1">
-        <Panel id="panel1">
-          <PanelHeader
-            before={
-              <PanelHeaderBack onClick={noop} label={platform === 'vkcom' ? 'Назад' : undefined} />
-            }
-            after={
-              <PanelHeaderButton
-                label={
-                  <Counter size="s" mode="primary" appearance="accent-red">
-                    <VisuallyHidden>Новых: </VisuallyHidden>
-                    21
-                  </Counter>
-                }
-                onClick={noop}
-              >
-                <VisuallyHidden>Изображения</VisuallyHidden>
-                <AdaptiveIconRenderer
-                  IconCompact={Icon24PictureOutline}
-                  IconRegular={Icon28PictureOutline}
-                />
-              </PanelHeaderButton>
-            }
-          >
-            Вторая панель
-          </PanelHeader>
-          <Div>PanelHeader c before PanelHeaderBack и after PanelHeaderButton</Div>
-        </Panel>
-      </View>
-    );
-  },
-};
-
-export const PanelHeaderWithMultipleIcons: Story = {
-  render: () => (
+export const PanelHeaderWithCounter: Story = () => {
+  const platform = usePlatform();
+  return (
     <View id="main" activePanel="panel1">
       <Panel id="panel1">
         <PanelHeader
-          before={<PanelHeaderBack onClick={noop} />}
+          before={
+            <PanelHeaderBack onClick={noop} label={platform === 'vkcom' ? 'Назад' : undefined} />
+          }
           after={
-            <React.Fragment>
-              <PanelHeaderButton
-                label={
-                  <Counter size="s" mode="primary" appearance="accent-red">
-                    <VisuallyHidden>Новых: </VisuallyHidden>3
-                  </Counter>
-                }
-                onClick={noop}
-              >
-                <VisuallyHidden>Настройки</VisuallyHidden>
-                <AdaptiveIconRenderer
-                  IconCompact={Icon24GearOutline}
-                  IconRegular={Icon28SettingsOutline}
-                />
-              </PanelHeaderButton>
-              <PanelHeaderButton
-                label={
-                  <Counter size="s" mode="primary" appearance="accent-red">
-                    2
-                  </Counter>
-                }
-                onClick={noop}
-              >
-                <VisuallyHidden>Уведомления</VisuallyHidden>
-                <AdaptiveIconRenderer
-                  IconCompact={Icon24NotificationOutline}
-                  IconRegular={Icon28Notifications}
-                />
-              </PanelHeaderButton>
-            </React.Fragment>
+            <PanelHeaderButton
+              label={
+                <Counter size="s" mode="primary" appearance="accent-red">
+                  <VisuallyHidden>Новых: </VisuallyHidden>
+                  21
+                </Counter>
+              }
+              onClick={noop}
+            >
+              <VisuallyHidden>Изображения</VisuallyHidden>
+              <AdaptiveIconRenderer
+                IconCompact={Icon24PictureOutline}
+                IconRegular={Icon28PictureOutline}
+              />
+            </PanelHeaderButton>
           }
         >
-          Две иконки
+          Вторая панель
         </PanelHeader>
-        <Div>Несколько иконок</Div>
+        <Div>PanelHeader c before PanelHeaderBack и after PanelHeaderButton</Div>
       </Panel>
     </View>
-  ),
+  );
 };
 
-export const PanelHeaderWithSearch: Story = {
-  render: function Render() {
-    const platform = usePlatform();
+PanelHeaderWithCounter.args = {};
 
-    return (
-      <View id="main" activePanel="panel1">
-        <Panel id="panel1">
-          <PanelHeader before={platform !== 'vkcom' && <PanelHeaderBack onClick={noop} />}>
-            <Search />
-          </PanelHeader>
-          <Div>Search</Div>
-        </Panel>
-      </View>
-    );
-  },
-};
+export const PanelHeaderWithMultipleIcons: Story = () => (
+  <View id="main" activePanel="panel1">
+    <Panel id="panel1">
+      <PanelHeader
+        before={<PanelHeaderBack onClick={noop} />}
+        after={
+          <React.Fragment>
+            <PanelHeaderButton
+              label={
+                <Counter size="s" mode="primary" appearance="accent-red">
+                  <VisuallyHidden>Новых: </VisuallyHidden>3
+                </Counter>
+              }
+              onClick={noop}
+            >
+              <VisuallyHidden>Настройки</VisuallyHidden>
+              <AdaptiveIconRenderer
+                IconCompact={Icon24GearOutline}
+                IconRegular={Icon28SettingsOutline}
+              />
+            </PanelHeaderButton>
+            <PanelHeaderButton
+              label={
+                <Counter size="s" mode="primary" appearance="accent-red">
+                  2
+                </Counter>
+              }
+              onClick={noop}
+            >
+              <VisuallyHidden>Уведомления</VisuallyHidden>
+              <AdaptiveIconRenderer
+                IconCompact={Icon24NotificationOutline}
+                IconRegular={Icon28Notifications}
+              />
+            </PanelHeaderButton>
+          </React.Fragment>
+        }
+      >
+        Две иконки
+      </PanelHeader>
+      <Div>Несколько иконок</Div>
+    </Panel>
+  </View>
+);
 
-export const PanelHeaderWithTabs: Story = {
-  render: () => (
+PanelHeaderWithMultipleIcons.args = {};
+
+export const PanelHeaderWithSearch: Story = () => {
+  const platform = usePlatform();
+  return (
     <View id="main" activePanel="panel1">
       <Panel id="panel1">
-        <PanelHeader before={<PanelHeaderBack onClick={noop} />}>
-          <Tabs>
-            <TabsItem selected>Новости</TabsItem>
-            <TabsItem>Интересное</TabsItem>
-          </Tabs>
+        <PanelHeader before={platform !== 'vkcom' && <PanelHeaderBack onClick={noop} />}>
+          <Search />
         </PanelHeader>
-        <Div>Tabs</Div>
+        <Div>Search</Div>
       </Panel>
     </View>
-  ),
+  );
 };
+
+PanelHeaderWithSearch.args = {};
+
+export const PanelHeaderWithTabs: Story = () => (
+  <View id="main" activePanel="panel1">
+    <Panel id="panel1">
+      <PanelHeader before={<PanelHeaderBack onClick={noop} />}>
+        <Tabs>
+          <TabsItem selected>Новости</TabsItem>
+          <TabsItem>Интересное</TabsItem>
+        </Tabs>
+      </PanelHeader>
+      <Div>Tabs</Div>
+    </Panel>
+  </View>
+);
+
+PanelHeaderWithTabs.args = {};

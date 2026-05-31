@@ -63,14 +63,17 @@ export default story;
 
 type Story = StoryObj<ModalCardBaseProps>;
 
-export const Playground: Story = {
-  args: {
-    style: { width: 450, marginBottom: 20 },
-    title: 'Отправляйте деньги друзьям, используя банковскую карту',
-    titleComponent: 'h2',
-    description: 'Номер карты получателя не нужен — он сам решит, куда зачислить средства.',
-    descriptionComponent: 'span',
-    actions: 'PrimaryButton',
-    icon: 'Icon56MoneyTransferOutline',
+export const Playground: Story = (props: ModalCardBaseProps) => <ModalCardBase {...props} />;
+
+Playground.args = {
+  style: {
+    width: 450,
+    marginBottom: 20,
   },
+  title: 'Отправляйте деньги друзьям, используя банковскую карту',
+  titleComponent: 'h2',
+  description: 'Номер карты получателя не нужен — он сам решит, куда зачислить средства.',
+  descriptionComponent: 'span',
+  actions: 'PrimaryButton',
+  icon: 'Icon56MoneyTransferOutline',
 };

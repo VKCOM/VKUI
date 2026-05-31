@@ -20,41 +20,36 @@ const story: Meta<PullToRefreshProps> = {
 
 export default story;
 
-type Story = StoryObj<PullToRefreshProps>;
-
 const initUsers = getRandomUsers(20);
 
-export const Example: Story = {
-  render: function Render() {
-    const [users, setUsers] = React.useState(initUsers);
-    const [fetching, setFetching] = React.useState(false);
-
-    const onRefresh = React.useCallback(() => {
-      setFetching(true);
-
-      setTimeout(
-        () => {
-          setFetching(false);
-          setUsers((prevUsers) => [getRandomUser(), ...prevUsers]);
-        },
-        getRandomInt(600, 2000),
-      );
-    }, []);
-
-    return (
-      <PullToRefresh onRefresh={onRefresh} isFetching={fetching}>
-        <Group>
-          <List>
-            {users.map(({ name, photo_100 }, i) => {
-              return (
-                <Cell key={i} before={<Avatar src={photo_100} />}>
-                  {name}
-                </Cell>
-              );
-            })}
-          </List>
-        </Group>
-      </PullToRefresh>
+export const Example: StoryObj<PullToRefreshProps> = () => {
+  const [users, setUsers] = React.useState(initUsers);
+  const [fetching, setFetching] = React.useState(false);
+  const onRefresh = React.useCallback(() => {
+    setFetching(true);
+    setTimeout(
+      () => {
+        setFetching(false);
+        setUsers((prevUsers) => [getRandomUser(), ...prevUsers]);
+      },
+      getRandomInt(600, 2000),
     );
-  },
+  }, []);
+  return (
+    <PullToRefresh onRefresh={onRefresh} isFetching={fetching}>
+      <Group>
+        <List>
+          {users.map(({ name, photo_100 }, i) => {
+            return (
+              <Cell key={i} before={<Avatar src={photo_100} />}>
+                {name}
+              </Cell>
+            );
+          })}
+        </List>
+      </Group>
+    </PullToRefresh>
+  );
 };
+
+Example.args = {};

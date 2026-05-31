@@ -14,12 +14,12 @@ const story: Meta<FormStatusProps> = {
 
 export default story;
 
-type Story = StoryObj<FormStatusProps>;
+export const Playground: StoryObj<FormStatusProps> = (props: FormStatusProps) => (
+  <FormStatus {...props} />
+);
 
-export const Playground: Story = {
-  args: {
-    mode: 'error',
-    title: 'Некорректный мобильный номер',
-    children: 'Необходимо корректно ввести номер в международном формате',
-  },
+Playground.args = {
+  mode: 'error',
+  title: 'Некорректный мобильный номер',
+  children: 'Необходимо корректно ввести номер в международном формате',
 };

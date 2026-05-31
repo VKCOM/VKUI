@@ -3,7 +3,6 @@ import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constan
 import { createCalendarDayRenderField } from '../../testing/presets/createCalendarDayRenderField';
 import { createCalendarTimezoneField } from '../../testing/presets/createCalendarTimezoneField';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
-import { useCustomArgs } from '../../testing/useCustomArgs';
 import { Calendar, type CalendarProps } from './Calendar';
 
 const story: Meta<CalendarProps> = {
@@ -33,24 +32,26 @@ export default story;
 
 type Story = StoryObj<CalendarProps>;
 
-export const Playground: Story = {
-  render: function Render({ value, minDateTime, maxDateTime, ...args }) {
-    const [, updateArgs] = useCustomArgs();
-    const parsedValue = value ? new Date(value) : value;
-    const parsedMinDateTime = minDateTime ? new Date(minDateTime) : minDateTime;
-    const parsedMaxDateTime = maxDateTime ? new Date(maxDateTime) : maxDateTime;
-
-    const updateValue = (newDate: Date | undefined) => {
-      updateArgs({ value: newDate?.getTime() });
-    };
-    return (
-      <Calendar
-        value={parsedValue}
-        minDateTime={parsedMinDateTime}
-        maxDateTime={parsedMaxDateTime}
-        {...args}
-        onChange={updateValue}
-      />
-    );
-  },
+export const Playground: Story = ({
+  value,
+  defaultValue,
+  minDateTime,
+  maxDateTime,
+  ...args
+}: CalendarProps) => {
+  const parsedValue = value ? new Date(value) : value;
+  const parsedDefaultValue = defaultValue ? new Date(defaultValue) : defaultValue;
+  const parsedMinDateTime = minDateTime ? new Date(minDateTime) : minDateTime;
+  const parsedMaxDateTime = maxDateTime ? new Date(maxDateTime) : maxDateTime;
+  return (
+    <Calendar
+      value={parsedValue}
+      defaultValue={parsedDefaultValue}
+      minDateTime={parsedMinDateTime}
+      maxDateTime={parsedMaxDateTime}
+      {...args}
+    />
+  );
 };
+
+Playground.args = {};

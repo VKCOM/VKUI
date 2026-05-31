@@ -19,15 +19,15 @@ export default story;
 
 type Story = StoryObj<WriteBarProps>;
 
-export const Playground: Story = {
-  args: {
-    before: <WriteBarIcon count={10} mode="attach" onClick={noop} />,
-    placeholder: 'Сообщение',
-    inlineAfter: (
-      <WriteBarIcon label="Смайлы и стикеры" onClick={noop}>
-        <Icon28SmileOutline />
-      </WriteBarIcon>
-    ),
-    after: <WriteBarIcon mode="send" onClick={noop} />,
-  },
+export const Playground: Story = (props: WriteBarProps) => <WriteBar {...props} />;
+
+Playground.args = {
+  before: <WriteBarIcon count={10} mode="attach" onClick={noop} />,
+  placeholder: 'Сообщение',
+  inlineAfter: (
+    <WriteBarIcon label="Смайлы и стикеры" onClick={noop}>
+      <Icon28SmileOutline />
+    </WriteBarIcon>
+  ),
+  after: <WriteBarIcon mode="send" onClick={noop} />,
 };

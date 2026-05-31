@@ -16,23 +16,18 @@ const story: Meta<CellCheckboxProps> = {
 
 export default story;
 
-type Story = StoryObj<CellCheckboxProps>;
+export const Playground: StoryObj<CellCheckboxProps> = (props: CellCheckboxProps) => (
+  <Group>
+    <Cell
+      Component="label"
+      before={<Avatar src={getAvatarUrl('user_xyz')} />}
+      after={<CellCheckbox {...props} />}
+    >
+      Игорь Федоров
+    </Cell>
+  </Group>
+);
 
-export const Playground: Story = {
-  args: {
-    defaultChecked: true,
-  },
-  decorators: [
-    (Component, context) => (
-      <Group>
-        <Cell
-          Component="label"
-          before={<Avatar src={getAvatarUrl('user_xyz')} />}
-          after={<Component {...context.args} />}
-        >
-          Игорь Федоров
-        </Cell>
-      </Group>
-    ),
-  ],
+Playground.args = {
+  defaultChecked: true,
 };

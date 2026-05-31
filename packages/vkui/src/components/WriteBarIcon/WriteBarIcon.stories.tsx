@@ -12,11 +12,11 @@ const story: Meta<WriteBarIconProps> = {
 
 export default story;
 
-type Story = StoryObj<WriteBarIconProps>;
+export const Playground: StoryObj<WriteBarIconProps> = (props: WriteBarIconProps) => (
+  <WriteBarIcon {...props} />
+);
 
-export const Playground: Story = {
-  args: {
-    mode: 'attach',
-    onClick: noop,
-  },
+Playground.args = {
+  mode: 'attach',
+  onClick: noop,
 };

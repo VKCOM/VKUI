@@ -53,12 +53,12 @@ const story: Meta<CellButtonProps> = {
 
 export default story;
 
-type Story = StoryObj<CellButtonProps>;
+export const Playground: StoryObj<CellButtonProps> = (props: CellButtonProps) => (
+  <CellButton {...props} />
+);
 
-export const Playground: Story = {
-  args: {
-    children: 'Создать беседу',
-    before: 'Icon28AddOutline',
-    onClick: noop,
-  },
+Playground.args = {
+  children: 'Создать беседу',
+  before: 'Icon28AddOutline',
+  onClick: noop,
 };

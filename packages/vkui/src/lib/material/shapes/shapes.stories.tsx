@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta } from '@storybook/react';
 import { type SelectProps } from '../../../components/CustomSelect/CustomSelect';
 import { CustomSelectOption } from '../../../components/CustomSelectOption/CustomSelectOption';
 import { Flex } from '../../../components/Flex/Flex';
@@ -48,7 +48,7 @@ function SelectShape(props: { onChange: SelectProps['onChange']; value: string }
   );
 }
 
-function MorphPlayground() {
+export const MorphPlayground = () => {
   const [size, setSize] = React.useState(38 * 4);
   const [progress, setProgress] = React.useState(0);
   const [shape1, setShape1] = React.useState(5);
@@ -138,8 +138,6 @@ function MorphPlayground() {
       </Flex>
     </Group>
   );
-}
-
-export const Morph: StoryObj<object> = {
-  render: MorphPlayground,
 };
+
+MorphPlayground.args = {};

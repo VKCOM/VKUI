@@ -16,26 +16,37 @@ export default story;
 
 type Story = StoryObj<CaptionProps>;
 
-export const Playground: Story = {
-  render: (args) => (
-    <div>
-      <Caption level="1" {...args}>
-        Caption 1
-      </Caption>
-      <Caption level="2" {...args}>
-        Caption 2
-      </Caption>
-      <Caption level="3" {...args}>
-        Caption 3
-      </Caption>
-    </div>
-  ),
-};
+export const Playground: Story = (args: CaptionProps) => (
+  <div>
+    <Caption level="1" {...args}>
+      Caption 1
+    </Caption>
+    <Caption level="2" {...args}>
+      Caption 2
+    </Caption>
+    <Caption level="3" {...args}>
+      Caption 3
+    </Caption>
+  </div>
+);
 
-export const WithCaps = {
-  ...Playground,
-  args: {
-    ...Playground.args,
-    caps: true,
-  },
+Playground.args = {};
+
+export const WithCaps: Story = (args: CaptionProps) => (
+  <div>
+    <Caption level="1" {...args}>
+      Caption 1
+    </Caption>
+    <Caption level="2" {...args}>
+      Caption 2
+    </Caption>
+    <Caption level="3" {...args}>
+      Caption 3
+    </Caption>
+  </div>
+);
+
+WithCaps.args = {
+  ...Playground.args,
+  caps: true,
 };

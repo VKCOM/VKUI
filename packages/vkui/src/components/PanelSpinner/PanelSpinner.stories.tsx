@@ -13,6 +13,8 @@ const story: Meta<PanelSpinnerProps> = {
 
 export default story;
 
-type Story = StoryObj<PanelSpinnerProps>;
+export const Playground: StoryObj<PanelSpinnerProps> = (props: PanelSpinnerProps) => (
+  <PanelSpinner {...props} />
+);
 
-export const Playground: Story = {};
+Playground.args = {};

@@ -34,13 +34,16 @@ const story: Meta<CustomSelectOptionProps> = {
 
 export default story;
 
-type Story = StoryObj<CustomSelectOptionProps>;
+export const Playground: StoryObj<CustomSelectOptionProps> = (props: CustomSelectOptionProps) => (
+  <CustomSelectOption {...props} />
+);
 
-export const Playground: Story = {
-  args: {
-    style: { width: 300 },
-    children: 'Игорь Федоров',
-    description: 'Россия, Санкт-Петербург',
+Playground.args = {
+  style: {
+    width: 300,
   },
-  decorators: [withListBox],
+  children: 'Игорь Федоров',
+  description: 'Россия, Санкт-Петербург',
 };
+
+Playground.decorators = [withListBox];

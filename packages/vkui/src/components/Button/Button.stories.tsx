@@ -6,8 +6,6 @@ import { createStoryParameters } from '../../testing/storybook/createStoryParame
 import { Counter } from '../Counter/Counter';
 import { Button, type ButtonProps } from './Button';
 
-type StoryButtonProps = ButtonProps & { addBefore: boolean; addAfter: boolean };
-
 const iconsPresets = createFieldWithPresets({
   requiredIcons: ['Icon12Add', 'Icon16Add', 'Icon24Add', 'Icon12Tag', 'Icon24ChevronCompactRight'],
   additionalPresets: {
@@ -15,7 +13,7 @@ const iconsPresets = createFieldWithPresets({
   },
 });
 
-const story: Meta<StoryButtonProps> = {
+const story: Meta<ButtonProps> = {
   title: 'Buttons/Button',
   component: Button,
   parameters: createStoryParameters('Button', CanvasFullLayout),
@@ -29,11 +27,9 @@ const story: Meta<StoryButtonProps> = {
 
 export default story;
 
-type Story = StoryObj<StoryButtonProps>;
+export const Playground: StoryObj<ButtonProps> = (props: ButtonProps) => <Button {...props} />;
 
-export const Playground: Story = {
-  args: {
-    children: 'Button',
-    size: 's',
-  },
+Playground.args = {
+  children: 'Button',
+  size: 's',
 };

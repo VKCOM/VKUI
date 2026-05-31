@@ -1,5 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { useConfigDirection } from '../../hooks/useConfigDirection';
+import * as React from 'react';
+import { type Meta, type StoryObj } from '@storybook/react';
+import { useConfigDirection as useDirection } from '../../hooks/useConfigDirection';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { Div } from '../Div/Div';
 import { Flex } from '../Flex/Flex';
@@ -14,22 +15,23 @@ const story: Meta<DirectionProviderProps> = {
 
 export default story;
 
-const Fixture = () => {
-  const dir = useConfigDirection();
-
+export const Playground: StoryObj<DirectionProviderProps> = (args: DirectionProviderProps) => {
+  const Fixture = React.useCallback(function Render() {
+    const dir = useDirection();
+    return (
+      <Flex dir={dir}>
+        <Div>1</Div>
+        <Div>2</Div>
+        <Div>3</Div>
+      </Flex>
+    );
+  }, []);
   return (
-    <Flex dir={dir}>
-      <Div>1</Div>
-      <Div>2</Div>
-      <Div>3</Div>
-    </Flex>
+    <DirectionProvider {...args}>
+      {/* eslint-disable-next-line react-hooks/static-components */}
+      <Fixture />
+    </DirectionProvider>
   );
 };
 
-export const Playground: StoryObj<DirectionProviderProps> = {
-  render: (args) => (
-    <DirectionProvider {...args}>
-      <Fixture />
-    </DirectionProvider>
-  ),
-};
+Playground.args = {};

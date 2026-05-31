@@ -21,10 +21,10 @@ const story: Meta<TextareaProps> = {
 
 export default story;
 
-type Story = StoryObj<TextareaProps>;
+export const Playground: StoryObj<TextareaProps> = (props: TextareaProps) => (
+  <Textarea {...props} />
+);
 
-export const Playground: Story = {
-  args: {
-    'aria-label': 'Любимая музыка',
-  },
+Playground.args = {
+  'aria-label': 'Любимая музыка',
 };

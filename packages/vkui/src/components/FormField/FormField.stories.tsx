@@ -22,9 +22,8 @@ const story: Meta<FormFieldProps> = {
 export default story;
 
 type Story = StoryObj<FormFieldProps>;
-
-export const Playground: Story = {
-  render: (args) => (
+export const Playground: Story = (args: FormFieldProps) => (
+  <Group>
     <FormField {...args}>
       <input
         aria-label="Напишите сообщение..."
@@ -44,18 +43,12 @@ export const Playground: Story = {
         }}
       />
     </FormField>
-  ),
-  args: {
-    before: 'MessageButton',
-    after: 'DeleteIconButton',
-  },
-  decorators: [
-    (Component, context) => (
-      <Group>
-        <Component {...context.args} />
-      </Group>
-    ),
-    withSinglePanel,
-    withVKUILayout,
-  ],
+  </Group>
+);
+
+Playground.args = {
+  before: 'MessageButton',
+  after: 'DeleteIconButton',
 };
+
+Playground.decorators = [withSinglePanel, withVKUILayout];

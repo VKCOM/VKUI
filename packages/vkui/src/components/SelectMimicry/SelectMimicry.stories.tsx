@@ -32,8 +32,8 @@ const story: Meta<StorySelectMimicryProps> = {
 
 export default story;
 
-type Story = StoryObj<StorySelectMimicryProps>;
-
-export const Playground: Story = {
-  render: ({ selectValue, ...args }) => <SelectMimicry {...args}>{selectValue}</SelectMimicry>,
-};
+export const Playground: StoryObj<StorySelectMimicryProps> = ({
+  selectValue,
+  ...args
+}: StorySelectMimicryProps) => <SelectMimicry {...args}>{selectValue}</SelectMimicry>;
+Playground.args = {};

@@ -13,15 +13,9 @@ const story: Meta<DivProps> = {
 
 export default story;
 
-type Story = StoryObj<DivProps>;
-
-export const Playground: Story = {
-  render: (args) => <Div {...args}>Content with paddings</Div>,
-  decorators: [
-    (Component) => (
-      <Group>
-        <Component />
-      </Group>
-    ),
-  ],
-};
+export const Playground: StoryObj<DivProps> = (args: DivProps) => (
+  <Group>
+    <Div {...args}>Content with paddings</Div>
+  </Group>
+);
+Playground.args = {};

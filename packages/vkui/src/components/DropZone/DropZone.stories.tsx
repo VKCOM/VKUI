@@ -15,27 +15,24 @@ const story: Meta<DropZoneProps> = {
 
 export default story;
 
-type Story = StoryObj<DropZoneProps>;
+export const Playground: StoryObj<DropZoneProps> = (args: DropZoneProps) => (
+  <DropZone {...args}>
+    <Placeholder.Container>
+      <Placeholder.Icon>
+        <Icon56CameraOutline />
+      </Placeholder.Icon>
+      <Placeholder.Title>Быстрая отправка</Placeholder.Title>
+      <Placeholder.Description>
+        Перенесите файл сюда для быстрой отправки. В таком случае изображения будут сжаты.
+      </Placeholder.Description>
+    </Placeholder.Container>
+  </DropZone>
+);
 
-export const Playground: Story = {
-  render: (args) => (
-    <DropZone {...args}>
-      <Placeholder.Container>
-        <Placeholder.Icon>
-          <Icon56CameraOutline />
-        </Placeholder.Icon>
-        <Placeholder.Title>Быстрая отправка</Placeholder.Title>
-        <Placeholder.Description>
-          Перенесите файл сюда для быстрой отправки. В таком случае изображения будут сжаты.
-        </Placeholder.Description>
-      </Placeholder.Container>
-    </DropZone>
+Playground.decorators = [
+  (Component) => (
+    <Group>
+      <Component />
+    </Group>
   ),
-  decorators: [
-    (Component) => (
-      <Group>
-        <Component />
-      </Group>
-    ),
-  ],
-};
+];

@@ -13,17 +13,16 @@ const story: Meta<HeadlineProps> = {
 };
 
 export default story;
-type Story = StoryObj<HeadlineProps>;
 
-export const Playground: Story = {
-  render: (args) => (
-    <div>
-      <Headline level="1" {...args}>
-        Headline 1
-      </Headline>
-      <Headline level="2" {...args}>
-        Headline 2
-      </Headline>
-    </div>
-  ),
-};
+export const Playground: StoryObj<HeadlineProps> = (args: HeadlineProps) => (
+  <div>
+    <Headline level="1" {...args}>
+      Headline 1
+    </Headline>
+    <Headline level="2" {...args}>
+      Headline 2
+    </Headline>
+  </div>
+);
+
+Playground.args = {};

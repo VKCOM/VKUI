@@ -16,18 +16,20 @@ export default story;
 
 type Story = StoryObj<BadgeProps>;
 
-export const Playground: Story = {};
+export const Playground: Story = (props: BadgeProps) => <Badge {...props} />;
 
-export const NewMode: Story = {
-  args: {
-    mode: 'new',
-    children: 'Есть обновления',
-  },
+Playground.args = {};
+
+export const NewMode: Story = (props: BadgeProps) => <Badge {...props} />;
+
+NewMode.args = {
+  mode: 'new',
+  children: 'Есть обновления',
 };
 
-export const ProminentMode: Story = {
-  args: {
-    mode: 'prominent',
-    children: 'Новый раздел',
-  },
+export const ProminentMode: Story = (props: BadgeProps) => <Badge {...props} />;
+
+ProminentMode.args = {
+  mode: 'prominent',
+  children: 'Новый раздел',
 };

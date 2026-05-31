@@ -14,8 +14,7 @@ const story: Meta<SubheadProps> = {
 
 export default story;
 
-type Story = StoryObj<SubheadProps>;
-
-export const Playground: Story = {
-  render: (args) => <Subhead {...args}>Subhead</Subhead>,
-};
+export const Playground: StoryObj<SubheadProps> = (args: SubheadProps) => (
+  <Subhead {...args}>Subhead</Subhead>
+);
+Playground.args = {};

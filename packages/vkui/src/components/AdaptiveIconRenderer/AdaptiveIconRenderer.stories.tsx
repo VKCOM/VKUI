@@ -19,8 +19,7 @@ export default story;
 
 type Story = StoryObj<AdaptiveIconRendererProps>;
 
-export const Playground: Story = {
-  render: () => (
-    <AdaptiveIconRenderer IconCompact={Icon24SmileOutline} IconRegular={Icon28SmileOutline} />
-  ),
-};
+export const Playground: Story = () => (
+  <AdaptiveIconRenderer IconCompact={Icon24SmileOutline} IconRegular={Icon28SmileOutline} />
+);
+Playground.args = {};

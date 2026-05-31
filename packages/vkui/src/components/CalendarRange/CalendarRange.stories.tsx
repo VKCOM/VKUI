@@ -2,7 +2,6 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createCalendarDayRenderField } from '../../testing/presets/createCalendarDayRenderField';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
-import { useCustomArgs } from '../../testing/useCustomArgs';
 import { CalendarRange, type CalendarRangeProps } from './CalendarRange';
 
 type StoryCalendarRangeProps = CalendarRangeProps & { startDate: number; endDate: number };
@@ -41,29 +40,15 @@ const story: Meta<StoryCalendarRangeProps> = {
 
 export default story;
 
-type Story = StoryObj<StoryCalendarRangeProps>;
-
-export const Playground: Story = {
-  render: function Render({ startDate, endDate, value, ...args }) {
-    const [, updateArgs] = useCustomArgs();
-
-    const handleDateRangeUpdate: CalendarRangeProps['onChange'] = (updatedValue) => {
-      const [changedStartDate, changedEndDate] = updatedValue || [null, null];
-      updateArgs({
-        startDate: changedStartDate ? new Date(changedStartDate) : null,
-        endDate: changedEndDate ? new Date(changedEndDate) : null,
-      });
-    };
-
-    const parsedStartDate = startDate ? new Date(startDate) : null;
-    const parsedEndDate = endDate ? new Date(endDate) : null;
-
-    return (
-      <CalendarRange
-        {...args}
-        value={[parsedStartDate, parsedEndDate]}
-        onChange={handleDateRangeUpdate}
-      />
-    );
-  },
+export const Playground: StoryObj<StoryCalendarRangeProps> = ({
+  startDate,
+  endDate,
+  value,
+  ...args
+}: StoryCalendarRangeProps) => {
+  const parsedStartDate = startDate ? new Date(startDate) : null;
+  const parsedEndDate = endDate ? new Date(endDate) : null;
+  return <CalendarRange {...args} defaultValue={[parsedStartDate, parsedEndDate]} />;
 };
+
+Playground.args = {};

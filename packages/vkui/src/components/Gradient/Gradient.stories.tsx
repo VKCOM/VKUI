@@ -12,17 +12,30 @@ const story: Meta<GradientProps> = {
 
 export default story;
 
-type Story = StoryObj<GradientProps>;
+export const Playground: StoryObj<GradientProps> = (props: GradientProps) => (
+  <Gradient {...props} />
+);
 
-export const Playground: Story = {
-  args: {
-    children: <div style={{ width: '100%', height: '200px' }} />,
-  },
-  decorators: [
-    (Component, context) => (
-      <div style={{ width: '50%', height: '50%' }}>
-        <Component args={context.args} />
-      </div>
-    ),
-  ],
+Playground.args = {
+  children: (
+    <div
+      style={{
+        width: '100%',
+        height: '200px',
+      }}
+    />
+  ),
 };
+
+Playground.decorators = [
+  (Component, context) => (
+    <div
+      style={{
+        width: '50%',
+        height: '50%',
+      }}
+    >
+      <Component args={context.args} />
+    </div>
+  ),
+];

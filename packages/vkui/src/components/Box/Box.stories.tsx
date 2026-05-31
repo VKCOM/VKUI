@@ -16,54 +16,68 @@ export default story;
 
 type Story = StoryObj<BoxProps>;
 
-export const Playground: Story = {
-  args: {},
-  render: (args) => (
-    <Box padding="system" {...args} style={{ background: 'grey' }}>
-      {Array.from({ length: 5 }, (_, index) => {
-        return <Avatar key={index} />;
-      })}
+export const Playground: Story = (args: BoxProps) => (
+  <div
+    style={{
+      background: 'pink',
+      width: '80%',
+      height: 500,
+      border: '1px dotted red',
+    }}
+  >
+    <Box
+      padding="system"
+      {...args}
+      style={{
+        background: 'grey',
+      }}
+    >
+      {Array.from(
+        {
+          length: 5,
+        },
+        (_, index) => {
+          return <Avatar key={index} />;
+        },
+      )}
     </Box>
-  ),
-  decorators: [
-    (Component) => (
-      <div style={{ background: 'pink', width: '80%', height: 500, border: '1px dotted red' }}>
-        <Component />
-      </div>
-    ),
-  ],
-};
+  </div>
+);
 
-export const MultipleBoxes: Story = {
-  render: () => (
+Playground.args = {};
+
+export const MultipleBoxes: Story = () => (
+  <div
+    style={{
+      width: '80%',
+      height: 500,
+      border: '1px dotted red',
+    }}
+  >
     <Flex>
       <Box flexGrow={1}>1</Box>
       <Box>2</Box>
       <Box>3</Box>
     </Flex>
-  ),
-  decorators: [
-    (Component) => (
-      <div style={{ width: '80%', height: 500, border: '1px dotted red' }}>
-        <Component />
-      </div>
-    ),
-  ],
-};
+  </div>
+);
 
-export const AbsoluteBox: Story = {
-  render: () => (
+MultipleBoxes.args = {};
+
+export const AbsoluteBox: Story = () => (
+  <div
+    style={{
+      width: '80%',
+      height: 500,
+      border: '1px dotted red',
+    }}
+  >
     <Box position="relative" blockSize={400}>
       <Box position="absolute" insetInlineEnd={0} inlineSize={50} padding="4xl">
         TEXT TEXT TEXT
       </Box>
     </Box>
-  ),
-  decorators: [
-    (Component) => (
-      <div style={{ width: '80%', height: 500, border: '1px dotted red' }}>
-        <Component />
-      </div>
-    ),
-  ],
-};
+  </div>
+);
+
+AbsoluteBox.args = {};

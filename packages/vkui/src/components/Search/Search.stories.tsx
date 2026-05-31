@@ -14,17 +14,10 @@ const story: Meta<SearchProps> = {
 
 export default story;
 
-type Story = StoryObj<SearchProps>;
+export const Playground: StoryObj<SearchProps> = (args: SearchProps) => (
+  <Group>
+    <Search {...args} after={null} />
+  </Group>
+);
 
-export const Playground: Story = {
-  render: (args) => <Search {...args} after={null} />,
-  decorators: [
-    (Component, context) => (
-      <Group>
-        <Component {...context.args} />
-      </Group>
-    ),
-    withSinglePanel,
-    withVKUILayout,
-  ],
-};
+Playground.decorators = [withSinglePanel, withVKUILayout];

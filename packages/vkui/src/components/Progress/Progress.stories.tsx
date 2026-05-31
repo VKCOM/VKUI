@@ -17,14 +17,16 @@ const story: Meta<ProgressProps> = {
 
 export default story;
 
-type Story = StoryObj<ProgressProps>;
+export const Playground: StoryObj<ProgressProps> = (props: ProgressProps) => (
+  <div
+    style={{
+      width: '100%',
+      padding: '16px',
+      boxSizing: 'border-box',
+    }}
+  >
+    <Progress {...props} />
+  </div>
+);
 
-export const Playground: Story = {
-  decorators: [
-    (Component) => (
-      <div style={{ width: '100%', padding: '16px', boxSizing: 'border-box' }}>
-        <Component />
-      </div>
-    ),
-  ],
-};
+Playground.args = {};

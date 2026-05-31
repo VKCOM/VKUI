@@ -24,107 +24,104 @@ const story: Meta<FixedLayoutProps> = {
 
 export default story;
 
-const hideFixedLayoutPropsControls = {
-  parameters: {
-    controls: {
-      exclude: ['filled', 'vertical', 'useParentWidth', 'getRootRef', 'Component', 'getRef'],
-    },
-  },
-};
-
 type Story = StoryObj<FixedLayoutProps>;
 
-export const Playground: Story = {
-  name: 'Playground (deprecated)',
-  render: (args) => (
-    <View activePanel="fixedLayout">
-      <Panel id="fixedLayout">
-        <PanelHeader>Fixed layout</PanelHeader>
-        <FixedLayout {...args}>
-          <Separator />
-          <Tabs>
-            <TabsItem selected>176 сообществ</TabsItem>
-            <TabsItem>9 событий</TabsItem>
-          </Tabs>
-        </FixedLayout>
-        <StubContent />
-      </Panel>
-    </View>
-  ),
-  args: {
-    vertical: 'bottom',
-    filled: true,
+const hideFixedLayoutPropsControls = {
+  controls: {
+    exclude: ['filled', 'vertical', 'useParentWidth', 'getRootRef', 'Component', 'getRef'],
   },
 };
 
-export const MigrationGuide: StoryObj<BoxProps> = {
-  name: 'Playground (миграция на Box)',
-  render: (args) => (
-    <View activePanel="fixedLayout">
-      <Panel id="fixedLayout">
-        <PanelHeader>Box</PanelHeader>
-        <Guide />
-        <StubContent />
-        <Box {...args}>
-          <Separator />
-          <Tabs>
-            <TabsItem selected>176 сообществ</TabsItem>
-            <TabsItem>9 событий</TabsItem>
-          </Tabs>
-        </Box>
-      </Panel>
-    </View>
-  ),
-  args: {
-    position: 'sticky',
-    insetBlockEnd: 0,
-    style: { backgroundColor: 'var(--vkui--color_background_content)' },
-  },
-  ...hideFixedLayoutPropsControls,
+export const Playground: Story = (props: FixedLayoutProps) => (
+  <View activePanel="fixedLayout">
+    <Panel id="fixedLayout">
+      <PanelHeader>Fixed layout</PanelHeader>
+      <FixedLayout {...props}>
+        <Separator />
+        <Tabs>
+          <TabsItem selected>176 сообществ</TabsItem>
+          <TabsItem>9 событий</TabsItem>
+        </Tabs>
+      </FixedLayout>
+      <StubContent />
+    </Panel>
+  </View>
+);
+
+Playground.name = 'Playground (deprecated)';
+
+Playground.args = {
+  vertical: 'bottom',
+  filled: true,
 };
 
-export const WithSearchAndContent: Story = {
-  name: 'WithSearchAndContent (deprecated)',
-  render: (args) => (
-    <View activePanel="fixedLayout">
-      <Panel id="fixedLayout">
-        <PanelHeader>Fixed layout</PanelHeader>
-        <StubContent />
-        <FixedLayout {...args}>
-          <Search />
-          <Separator />
-        </FixedLayout>
-      </Panel>
-    </View>
-  ),
-  args: {
-    vertical: 'bottom',
-    filled: true,
+export const MigrationGuide: StoryObj<BoxProps> = (props: BoxProps) => (
+  <View activePanel="fixedLayout">
+    <Panel id="fixedLayout">
+      <PanelHeader>Box</PanelHeader>
+      <Guide />
+      <StubContent />
+      <Box {...props}>
+        <Separator />
+        <Tabs>
+          <TabsItem selected>176 сообществ</TabsItem>
+          <TabsItem>9 событий</TabsItem>
+        </Tabs>
+      </Box>
+    </Panel>
+  </View>
+);
+MigrationGuide.name = 'Playground (миграция на Box)';
+MigrationGuide.args = {
+  position: 'sticky',
+  insetBlockEnd: 0,
+  style: {
+    backgroundColor: 'var(--vkui--color_background_content)',
   },
 };
+MigrationGuide.parameters = hideFixedLayoutPropsControls;
 
-export const WithSearchAndContentMigrationGuide: StoryObj<BoxProps> = {
-  name: 'WithSearchAndContent (миграция на Box)',
-  render: (args) => (
-    <View activePanel="fixedLayout">
-      <Panel id="fixedLayout">
-        <PanelHeader>Box</PanelHeader>
-        <Guide />
-        <StubContent />
-        <Box {...args}>
-          <Search />
-          <Separator />
-        </Box>
-      </Panel>
-    </View>
-  ),
-  args: {
-    position: 'sticky',
-    insetBlockEnd: 0,
-    style: { backgroundColor: 'var(--vkui--color_background_content)' },
-  },
-  ...hideFixedLayoutPropsControls,
+export const WithSearchAndContent: Story = (args: FixedLayoutProps) => (
+  <View activePanel="fixedLayout">
+    <Panel id="fixedLayout">
+      <PanelHeader>Fixed layout</PanelHeader>
+      <StubContent />
+      <FixedLayout {...args}>
+        <Search />
+        <Separator />
+      </FixedLayout>
+    </Panel>
+  </View>
+);
+WithSearchAndContent.args = {
+  vertical: 'bottom',
+  filled: true,
 };
+WithSearchAndContent.name = 'WithSearchAndContent (deprecated)';
+
+export const WithSearchAndContentMigrationGuide: StoryObj<BoxProps> = (args: BoxProps) => (
+  <View activePanel="fixedLayout">
+    <Panel id="fixedLayout">
+      <PanelHeader>Box</PanelHeader>
+      <Guide />
+      <StubContent />
+      <Box {...args}>
+        <Search />
+        <Separator />
+      </Box>
+    </Panel>
+  </View>
+);
+
+WithSearchAndContentMigrationGuide.args = {
+  position: 'sticky',
+  insetBlockEnd: 0,
+  style: {
+    backgroundColor: 'var(--vkui--color_background_content)',
+  },
+};
+WithSearchAndContentMigrationGuide.name = 'WithSearchAndContent (миграция на Box)';
+WithSearchAndContentMigrationGuide.parameters = hideFixedLayoutPropsControls;
 
 function Guide() {
   return (

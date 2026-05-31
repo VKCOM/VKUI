@@ -35,42 +35,28 @@ const story: Meta<TabbarItemProps> = {
 export default story;
 
 type Story = StoryObj<TabbarItemProps>;
-
-export const Playground: Story = {
-  render: ({ ...args }) => {
-    return <TabbarItem {...args} />;
-  },
-  args: {
-    children: 'Icon28MessageOutline',
-    label: 'Messages',
-  },
+export const Playground: Story = (args: TabbarItemProps) => <TabbarItem {...args} />;
+Playground.args = {
+  children: 'Icon28MessageOutline',
+  label: 'Messages',
 };
 
-export const InVerticalTabbar: Story = {
-  ...Playground,
-  args: {
-    children: 'Icon28MessageOutline',
-    label: 'Messages',
-  },
-  decorators: [
-    (Component, context) => (
-      <Tabbar mode="vertical">
-        <Component args={context.args} />
-      </Tabbar>
-    ),
-  ],
+export const InVerticalTabbar: Story = (args: TabbarItemProps) => (
+  <Tabbar mode="vertical">
+    <TabbarItem {...args} />
+  </Tabbar>
+);
+InVerticalTabbar.args = {
+  children: 'Icon28MessageOutline',
+  label: 'Messages',
 };
 
-export const InHorizontalTabbar: Story = {
-  ...Playground,
-  args: {
-    ...InVerticalTabbar.args,
-  },
-  decorators: [
-    (Component, context) => (
-      <Tabbar mode="horizontal">
-        <Component args={context.args} />
-      </Tabbar>
-    ),
-  ],
+export const InHorizontalTabbar: Story = (args: TabbarItemProps) => (
+  <Tabbar mode="horizontal">
+    <TabbarItem {...args} />
+  </Tabbar>
+);
+InHorizontalTabbar.args = {
+  children: 'Icon28MessageOutline',
+  label: 'Messages',
 };

@@ -22,12 +22,12 @@ const story: Meta<ModalOutsideButtonProps> = {
 
 export default story;
 
-type Story = StoryObj<ModalOutsideButtonProps>;
+export const Playground: StoryObj<ModalOutsideButtonProps> = (props: ModalOutsideButtonProps) => (
+  <ModalOutsideButton {...props} />
+);
 
-export const Playground: Story = {
-  args: {
-    'children': 'Icon20More',
-    'onClick': noop,
-    'aria-label': 'More',
-  },
+Playground.args = {
+  'children': 'Icon20More',
+  'onClick': noop,
+  'aria-label': 'More',
 };

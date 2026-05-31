@@ -14,8 +14,7 @@ const story: Meta<ParagraphProps> = {
 
 export default story;
 
-type Story = StoryObj<ParagraphProps>;
-
-export const Playground: Story = {
-  render: (args) => <Paragraph {...args}>Paragraph</Paragraph>,
-};
+export const Playground: StoryObj<ParagraphProps> = (args: ParagraphProps) => (
+  <Paragraph {...args}>Paragraph</Paragraph>
+);
+Playground.args = {};

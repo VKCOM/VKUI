@@ -14,8 +14,5 @@ const story: Meta<TextProps> = {
 
 export default story;
 
-type Story = StoryObj<TextProps>;
-
-export const Playground: Story = {
-  render: (args) => <Text {...args}>Text</Text>,
-};
+export const Playground: StoryObj<TextProps> = (args: TextProps) => <Text {...args}>Text</Text>;
+Playground.args = {};

@@ -22,11 +22,11 @@ const story: Meta<SelectProps> = {
 
 export default story;
 
-type Story = StoryObj<SelectProps>;
+export const Playground: StoryObj<SelectProps> = (props: SelectProps) => <Select {...props} />;
 
-export const Playground: Story = {
-  args: {
-    style: { width: 300 },
-    options: [],
+Playground.args = {
+  style: {
+    width: 300,
   },
+  options: [],
 };

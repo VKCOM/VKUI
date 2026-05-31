@@ -20,31 +20,30 @@ const story: Meta<SegmentedControlProps> = {
 
 export default story;
 
-type Story = StoryObj<SegmentedControlProps>;
+export const Playground: StoryObj<SegmentedControlProps> = (props: SegmentedControlProps) => (
+  <div
+    style={{
+      width: '100%',
+    }}
+  >
+    <SegmentedControl {...props} />
+  </div>
+);
 
-export const Playground: Story = {
-  args: {
-    options: [
-      {
-        label: 'Баг',
-        value: 'bug',
-      },
-      {
-        label: 'Идея',
-        value: 'idea',
-      },
-      {
-        label: 'Другое',
-        value: 'other',
-      },
-    ],
-    role: 'radiogroup',
-  },
-  decorators: [
-    (Component) => (
-      <div style={{ width: '100%' }}>
-        <Component />
-      </div>
-    ),
+Playground.args = {
+  options: [
+    {
+      label: 'Баг',
+      value: 'bug',
+    },
+    {
+      label: 'Идея',
+      value: 'idea',
+    },
+    {
+      label: 'Другое',
+      value: 'other',
+    },
   ],
+  role: 'radiogroup',
 };

@@ -13,12 +13,12 @@ const story: Meta<PlaceholderProps> = {
 
 export default story;
 
-type Story = StoryObj<PlaceholderProps>;
+export const Playground: StoryObj<PlaceholderProps> = (props: PlaceholderProps) => (
+  <Placeholder {...props} />
+);
 
-export const Playground: Story = {
-  args: {
-    children: 'Подключите сообщества, от которых Вы хотите получать уведомления',
-    title: 'Уведомления от сообществ',
-    icon: <Icon56UsersOutline />,
-  },
+Playground.args = {
+  children: 'Подключите сообщества, от которых Вы хотите получать уведомления',
+  title: 'Уведомления от сообществ',
+  icon: <Icon56UsersOutline />,
 };

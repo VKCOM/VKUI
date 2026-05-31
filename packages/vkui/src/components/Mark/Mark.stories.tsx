@@ -13,19 +13,12 @@ const story: Meta<MarkProps> = {
 
 export default story;
 
-type Story = StoryObj<MarkProps>;
-
-export const Playground: Story = {
-  render: (args) => (
+export const Playground: StoryObj<MarkProps> = (args: MarkProps) => (
+  <Group>
     <p>
       Это <Mark {...args}>выделенный</Mark> текст
     </p>
-  ),
-  decorators: [
-    (Component) => (
-      <Group>
-        <Component />
-      </Group>
-    ),
-  ],
-};
+  </Group>
+);
+
+Playground.args = {};

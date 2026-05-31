@@ -17,18 +17,17 @@ const story: Meta<RadioProps> = {
 export default story;
 
 type Story = StoryObj<RadioProps>;
+export const Playground: Story = (props: RadioProps) => <Radio {...props} />;
 
-export const Playground: Story = {
-  args: {
-    name: 'payment',
-    children: 'VK Pay',
-  },
+Playground.args = {
+  name: 'payment',
+  children: 'VK Pay',
 };
 
-export const WithDescription: Story = {
-  ...Playground,
-  args: {
-    ...Playground.args,
-    description: 'Баланс 7 320 ₽',
-  },
+export const WithDescription: Story = (props: RadioProps) => <Radio {...props} />;
+
+WithDescription.args = {
+  name: 'payment',
+  children: 'VK Pay',
+  description: 'Баланс 7 320 ₽',
 };

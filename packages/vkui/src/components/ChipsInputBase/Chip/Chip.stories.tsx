@@ -27,13 +27,11 @@ const story: Meta<ChipProps> = {
 export default story;
 
 type Story = StoryObj<ChipProps>;
+export const Playground: Story = ({ ...args }) => {
+  return <Chip {...args} />;
+};
 
-export const Playground: Story = {
-  render: ({ ...args }) => {
-    return <Chip {...args} />;
-  },
-  args: {
-    value: 'chip',
-    children: 'Chip Value',
-  },
+Playground.args = {
+  value: 'chip',
+  children: 'Chip Value',
 };

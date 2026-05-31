@@ -33,6 +33,6 @@ const story: Meta<FileProps> = {
 
 export default story;
 
-type Story = StoryObj<FileProps>;
+export const Playground: StoryObj<FileProps> = (props: FileProps) => <File {...props} />;
 
-export const Playground: Story = {};
+Playground.args = {};

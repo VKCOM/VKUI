@@ -26,8 +26,6 @@ const story: Meta<TouchProps> = {
 
 export default story;
 
-type Story = StoryObj<TouchProps>;
-
 const circleStyle = {
   width: 40,
   height: 40,
@@ -47,67 +45,64 @@ const containerStyle = {
   position: 'relative',
 } as React.CSSProperties;
 
-export const Playground: Story = {
-  render: function Render(args) {
-    const [shiftX, setShiftX] = React.useState(0);
-    const [shiftY, setShiftY] = React.useState(0);
-    const [limitX, setLimitX] = React.useState(0);
-    const [limitY, setLimitY] = React.useState(0);
+export const Playground: StoryObj<TouchProps> = (args: TouchProps) => {
+  const [shiftX, setShiftX] = React.useState(0);
+  const [shiftY, setShiftY] = React.useState(0);
+  const [limitX, setLimitX] = React.useState(0);
+  const [limitY, setLimitY] = React.useState(0);
+  const circleRef = React.useRef<HTMLDivElement | null>(null);
+  const startX = React.useRef(0);
+  const startY = React.useRef(0);
 
-    const circleRef = React.useRef<HTMLDivElement | null>(null);
-    const startX = React.useRef(0);
-    const startY = React.useRef(0);
+  // eslint-disable-next-line no-restricted-properties,react-hooks/exhaustive-deps,no-restricted-properties
+  React.useLayoutEffect(() => {
+    if (circleRef.current) {
+      setLimitX(circleRef.current.offsetLeft);
+      setLimitY(circleRef.current.offsetTop);
+    }
+  });
 
-    // eslint-disable-next-line no-restricted-properties,react-hooks/exhaustive-deps,no-restricted-properties
-    React.useLayoutEffect(() => {
-      if (circleRef.current) {
-        setLimitX(circleRef.current.offsetLeft);
-        setLimitY(circleRef.current.offsetTop);
-      }
-    });
+  const getValueWithLimit = (value: number, limit: number) => {
+    return value > limit ? limit : value < -limit ? -limit : value;
+  };
 
-    const getValueWithLimit = (value: number, limit: number) => {
-      return value > limit ? limit : value < -limit ? -limit : value;
-    };
+  const onMove = (e: CustomTouchEvent) => {
+    const shiftX = startX.current + e.shiftX;
+    const shiftY = startY.current + e.shiftY;
 
-    const onMove = (e: CustomTouchEvent) => {
-      const shiftX = startX.current + e.shiftX;
-      const shiftY = startY.current + e.shiftY;
+    setShiftX(getValueWithLimit(shiftX, limitX));
+    setShiftY(getValueWithLimit(shiftY, limitY));
+  };
 
-      setShiftX(getValueWithLimit(shiftX, limitX));
-      setShiftY(getValueWithLimit(shiftY, limitY));
-    };
+  const onEnd = (e: CustomTouchEvent) => {
+    const shiftX = startX.current + e.shiftX;
+    const shiftY = startY.current + e.shiftY;
 
-    const onEnd = (e: CustomTouchEvent) => {
-      const shiftX = startX.current + e.shiftX;
-      const shiftY = startY.current + e.shiftY;
-
-      startX.current = getValueWithLimit(shiftX, limitX);
-      startY.current = getValueWithLimit(shiftY, limitY);
-    };
-
-    const limitExceeded = Math.abs(shiftX) >= limitX || Math.abs(shiftY) >= limitY;
-
-    return (
-      <div
+    startX.current = getValueWithLimit(shiftX, limitX);
+    startY.current = getValueWithLimit(shiftY, limitY);
+  };
+  const limitExceeded = Math.abs(shiftX) >= limitX || Math.abs(shiftY) >= limitY;
+  return (
+    <div
+      style={{
+        ...containerStyle,
+        borderColor: limitExceeded
+          ? 'var(--vkui--color_icon_negative)'
+          : 'var(--vkui--color_icon_secondary)',
+      }}
+    >
+      <Touch
+        {...args}
+        getRootRef={circleRef}
+        onMove={onMove}
+        onEnd={onEnd}
         style={{
-          ...containerStyle,
-          borderColor: limitExceeded
-            ? 'var(--vkui--color_icon_negative)'
-            : 'var(--vkui--color_icon_secondary)',
+          ...circleStyle,
+          transform: `translate(${shiftX}px, ${shiftY}px)`,
         }}
-      >
-        <Touch
-          {...args}
-          getRootRef={circleRef}
-          onMove={onMove}
-          onEnd={onEnd}
-          style={{
-            ...circleStyle,
-            transform: `translate(${shiftX}px, ${shiftY}px)`,
-          }}
-        />
-      </div>
-    );
-  },
+      />
+    </div>
+  );
 };
+
+Playground.args = {};

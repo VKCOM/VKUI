@@ -23,41 +23,44 @@ export default story;
 
 type Story = StoryObj<UsersStackProps>;
 
-export const Playground: Story = {
-  args: {
-    children: 'Алексей, Илья, Михаил и ещё 1 человек',
-    photos: [getAvatarUrl(), getAvatarUrl(), getAvatarUrl(), getAvatarUrl()],
-    avatarsPosition: 'inline-start',
-  },
+export const Playground: Story = (props: UsersStackProps) => <UsersStack {...props} />;
+
+Playground.args = {
+  children: 'Алексей, Илья, Михаил и ещё 1 человек',
+  photos: [getAvatarUrl(), getAvatarUrl(), getAvatarUrl(), getAvatarUrl()],
+  avatarsPosition: 'inline-start',
 };
 
-const AvatarWrapper = (props: UsersStackRenderWrapperProps) => {
-  const user = getRandomUser();
-
+export const WithCustomWrapper: Story = (props: UsersStackProps) => {
+  const AvatarWrapper = (props: UsersStackRenderWrapperProps) => {
+    const user = getRandomUser();
+    return (
+      <Tooltip description={`${user.first_name} ${user.last_name}`}>
+        <div
+          style={{
+            cursor: 'pointer',
+          }}
+          // eslint-disable-next-line no-console
+          onClick={() => console.log('click to avatar with url ' + props['data-src'])}
+        >
+          {props.children}
+        </div>
+      </Tooltip>
+    );
+  };
   return (
-    <Tooltip description={`${user.first_name} ${user.last_name}`}>
-      <div
-        style={{
-          cursor: 'pointer',
-        }}
-        // eslint-disable-next-line no-console
-        onClick={() => console.log('click to avatar with url ' + props['data-src'])}
-      >
-        {props.children}
-      </div>
-    </Tooltip>
+    <UsersStack
+      photos={[getAvatarUrl(), getAvatarUrl(), getAvatarUrl(), getAvatarUrl()].map(
+        (photoUrl): UsersStackPhoto => ({
+          src: photoUrl,
+          renderWrapper: AvatarWrapper,
+        }),
+      )}
+      {...props}
+    />
   );
 };
-
-export const WithCustomWrapper: Story = {
-  ...Playground,
-  args: {
-    ...Playground.args,
-    photos: [getAvatarUrl(), getAvatarUrl(), getAvatarUrl(), getAvatarUrl()].map(
-      (photoUrl): UsersStackPhoto => ({
-        src: photoUrl,
-        renderWrapper: AvatarWrapper,
-      }),
-    ),
-  },
+WithCustomWrapper.args = {
+  children: 'Алексей, Илья, Михаил и ещё 1 человек',
+  avatarsPosition: 'inline-start',
 };

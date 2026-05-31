@@ -11,18 +11,18 @@ const story: Meta<ColorSchemeProviderProps> = {
 
 export default story;
 
-export const Playground: StoryObj<ColorSchemeProviderProps> = {
-  render: (args) => (
-    <ColorSchemeProvider {...args}>
-      <div
-        style={{
-          padding: 5,
-          background: 'var(--vkui--color_background)',
-          color: 'var(--vkui--color_text_primary)',
-        }}
-      >
-        ColorSchemeProvider
-      </div>
-    </ColorSchemeProvider>
-  ),
-};
+export const Playground: StoryObj<ColorSchemeProviderProps> = (args: ColorSchemeProviderProps) => (
+  <ColorSchemeProvider {...args}>
+    <div
+      style={{
+        padding: 5,
+        background: 'var(--vkui--color_background)',
+        color: 'var(--vkui--color_text_primary)',
+      }}
+    >
+      ColorSchemeProvider
+    </div>
+  </ColorSchemeProvider>
+);
+
+Playground.args = {};

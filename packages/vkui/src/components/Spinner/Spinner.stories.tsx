@@ -14,6 +14,5 @@ const story: Meta<SpinnerProps> = {
 
 export default story;
 
-type Story = StoryObj<SpinnerProps>;
-
-export const Playground: Story = {};
+export const Playground: StoryObj<SpinnerProps> = (props: SpinnerProps) => <Spinner {...props} />;
+Playground.args = {};

@@ -13,18 +13,15 @@ const story: Meta<CellButtonGroupProps> = {
 
 export default story;
 
-type Story = StoryObj<CellButtonGroupProps>;
-
-export const Playground: Story = {
-  render: (args) => (
-    <CellButtonGroup {...args}>
-      <CellButton onClick={noop} appearance="negative" centered>
-        Пожаловаться
-      </CellButton>
-      <CellButtonGroup.Separator />
-      <CellButton onClick={noop} centered>
-        Отмена
-      </CellButton>
-    </CellButtonGroup>
-  ),
-};
+export const Playground: StoryObj<CellButtonGroupProps> = (args: CellButtonGroupProps) => (
+  <CellButtonGroup {...args}>
+    <CellButton onClick={noop} appearance="negative" centered>
+      Пожаловаться
+    </CellButton>
+    <CellButtonGroup.Separator />
+    <CellButton onClick={noop} centered>
+      Отмена
+    </CellButton>
+  </CellButtonGroup>
+);
+Playground.args = {};

@@ -17,27 +17,20 @@ export default story;
 
 type Story = StoryObj<SpacingProps>;
 
-export const Playground: Story = {
-  decorators: [
-    (Component) => (
-      <div>
-        Before Space
-        <Component />
-        After Space
-      </div>
-    ),
-  ],
-};
+export const Playground: Story = (props: SpacingProps) => (
+  <div>
+    Before Space
+    <Spacing {...props} />
+    After Space
+  </div>
+);
+Playground.args = {};
 
-export const Example: Story = {
-  ...Playground,
-  decorators: [
-    (Component) => (
-      <Group>
-        <SimpleCell before={<Icon28BlockOutline />}>Не беспокоить</SimpleCell>
-        <Component />
-        <SimpleCell before={<Icon28UserOutline />}>Учётная запись</SimpleCell>
-      </Group>
-    ),
-  ],
-};
+export const Example: Story = (props: SpacingProps) => (
+  <Group>
+    <SimpleCell before={<Icon28BlockOutline />}>Не беспокоить</SimpleCell>
+    <Spacing {...props} />
+    <SimpleCell before={<Icon28UserOutline />}>Учётная запись</SimpleCell>
+  </Group>
+);
+Example.args = {};

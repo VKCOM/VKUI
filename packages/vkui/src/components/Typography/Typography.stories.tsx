@@ -2,7 +2,7 @@ import { withCartesian } from '@project-tools/storybook-addon-cartesian';
 import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
-import type { HasChildren } from '../../types';
+import { type HasChildren } from '../../types';
 import {
   Playground as CaptionStory,
   WithCaps as CaptionWithCapsStory,
@@ -39,58 +39,48 @@ const story: Meta<TypographyOverview> = {
 
 export default story;
 
-type Story = StoryObj<TypographyOverview>;
+function TypographyWrapper({ children }: HasChildren) {
+  return (
+    <div
+      style={{
+        margin: 5,
+      }}
+    >
+      {children}
+    </div>
+  );
+}
+function renderStory(
+  Story: any,
+  storyArgs: Record<string, any> | undefined,
+  overrideArgs: TypographyOverview,
+) {
+  return <Story {...storyArgs} {...overrideArgs} />;
+}
 
-const TypographyWrapper = ({ children }: HasChildren) => {
-  return <div style={{ margin: 5 }}>{children}</div>;
+export const Playground: StoryObj<TypographyOverview> = (args: TypographyOverview) => {
+  return (
+    <div>
+      <TypographyWrapper>{renderStory(TitleStory, TitleStory.args, args)}</TypographyWrapper>
+      <TypographyWrapper>{renderStory(HeadlineStory, HeadlineStory.args, args)}</TypographyWrapper>
+      <TypographyWrapper>{renderStory(TextStory, TextStory.args, args)}</TypographyWrapper>
+      <TypographyWrapper>
+        {renderStory(EllipsisTextStory, EllipsisTextStory.args, args)}
+      </TypographyWrapper>
+      <TypographyWrapper>
+        {renderStory(ParagraphStory, ParagraphStory.args, args)}
+      </TypographyWrapper>
+      <TypographyWrapper>{renderStory(SubheadStory, SubheadStory.args, args)}</TypographyWrapper>
+      <TypographyWrapper>{renderStory(FootnoteStory, FootnoteStory.args, args)}</TypographyWrapper>
+      <TypographyWrapper>
+        {renderStory(FootnoteWithCapsStory, FootnoteWithCapsStory.args, args)}
+      </TypographyWrapper>
+      <TypographyWrapper>{renderStory(CaptionStory, CaptionStory.args, args)}</TypographyWrapper>
+      <TypographyWrapper>
+        {renderStory(CaptionWithCapsStory, CaptionWithCapsStory.args, args)}
+      </TypographyWrapper>
+    </div>
+  );
 };
 
-export const Playground: Story = {
-  render: (args) => {
-    return (
-      <div>
-        <TypographyWrapper>
-          {/* <Пока нет способа адекватно переиспользовать стори */}
-          {/* @ts-expect-error: TS2554 https://github.com/storybookjs/storybook/issues/15954 */}
-          {TitleStory.render!({ ...TitleStory.args, ...args })}
-        </TypographyWrapper>
-        <TypographyWrapper>
-          {/* @ts-expect-error: TS2554 см. TitleStory  */}
-          {HeadlineStory.render!({ ...HeadlineStory.args, ...args })}
-        </TypographyWrapper>
-        <TypographyWrapper>
-          {/* @ts-expect-error: TS2554 см. TitleStory  */}
-          {TextStory.render!({ ...TextStory.args, ...args })}
-        </TypographyWrapper>
-        <TypographyWrapper>
-          {/* @ts-expect-error: TS2554 см. TitleStory  */}
-          {EllipsisTextStory.render!({ ...EllipsisTextStory.args, ...args })}
-        </TypographyWrapper>
-        <TypographyWrapper>
-          {/* @ts-expect-error: TS2554 см. TitleStory  */}
-          {ParagraphStory.render!({ ...ParagraphStory.args, ...args })}
-        </TypographyWrapper>
-        <TypographyWrapper>
-          {/* @ts-expect-error: TS2554 см. TitleStory  */}
-          {SubheadStory.render!({ ...SubheadStory.args, ...args })}
-        </TypographyWrapper>
-        <TypographyWrapper>
-          {/* @ts-expect-error: TS2554 см. TitleStory  */}
-          {FootnoteStory.render!({ ...FootnoteStory.args, ...args })}
-        </TypographyWrapper>
-        <TypographyWrapper>
-          {/* @ts-expect-error: TS2554 см. TitleStory  */}
-          {FootnoteWithCapsStory.render!({ ...FootnoteWithCapsStory.args, ...args })}
-        </TypographyWrapper>
-        <TypographyWrapper>
-          {/* @ts-expect-error: TS2554 см. TitleStory  */}
-          {CaptionStory.render!({ ...CaptionStory.args, ...args })}
-        </TypographyWrapper>
-        <TypographyWrapper>
-          {/* @ts-expect-error: TS2554 см. TitleStory  */}
-          {CaptionWithCapsStory.render!({ ...CaptionWithCapsStory.args, ...args })}
-        </TypographyWrapper>
-      </div>
-    );
-  },
-};
+Playground.args = {};

@@ -18,30 +18,31 @@ export default story;
 
 type Story = StoryObj<InfoRowProps>;
 
-export const Playground: Story = {
-  args: {
-    children: '3000 р.',
-    header: 'Общий бюджет',
-  },
+export const Playground: Story = (props: InfoRowProps) => <InfoRow {...props} />;
+
+Playground.args = {
+  children: '3000 р.',
+  header: 'Общий бюджет',
 };
 
-export const Example: Story = {
-  ...Playground,
-  decorators: [
-    (Component) => (
-      <Group header={<Header size="s">Информация о пользователе</Header>}>
-        <SimpleCell multiline>
-          <Component args={{ header: 'Дата рождения', children: '30 января 1993' }} />
-        </SimpleCell>
-        <SimpleCell>
-          <Component args={{ header: 'Родной город', children: 'Ереван' }} />
-        </SimpleCell>
-        <SimpleCell>
-          <Component args={{ header: 'Место работы', children: 'Команда ВКонтакте' }} />
-        </SimpleCell>
-      </Group>
-    ),
-    withSinglePanel,
-    withVKUILayout,
-  ],
-};
+export const Example: Story = (props: InfoRowProps) => (
+  <Group header={<Header size="s">Информация о пользователе</Header>}>
+    <SimpleCell multiline>
+      <InfoRow {...props} header="Дата рождения">
+        30 января 1993
+      </InfoRow>
+    </SimpleCell>
+    <SimpleCell>
+      <InfoRow {...props} header="Родной город">
+        Ереван
+      </InfoRow>
+    </SimpleCell>
+    <SimpleCell>
+      <InfoRow {...props} header="Место работы">
+        Команда ВКонтакте
+      </InfoRow>
+    </SimpleCell>
+  </Group>
+);
+
+Example.decorators = [withSinglePanel, withVKUILayout];

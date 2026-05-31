@@ -14,20 +14,18 @@ const story: Meta<TitleProps> = {
 
 export default story;
 
-type Story = StoryObj<TitleProps>;
+export const Playground: StoryObj<TitleProps> = (args: TitleProps) => (
+  <div>
+    <Title level="1" {...args}>
+      Title 1
+    </Title>
+    <Title level="2" {...args}>
+      Title 2
+    </Title>
+    <Title level="3" {...args}>
+      Title 3
+    </Title>
+  </div>
+);
 
-export const Playground: Story = {
-  render: (args) => (
-    <div>
-      <Title level="1" {...args}>
-        Title 1
-      </Title>
-      <Title level="2" {...args}>
-        Title 2
-      </Title>
-      <Title level="3" {...args}>
-        Title 3
-      </Title>
-    </div>
-  ),
-};
+Playground.args = {};

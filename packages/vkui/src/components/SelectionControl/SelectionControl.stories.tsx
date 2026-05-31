@@ -12,13 +12,11 @@ const story: Meta<SelectionControlProps> = {
 
 export default story;
 
-type Story = StoryObj<SelectionControlProps>;
+export const Playground: StoryObj<SelectionControlProps> = (props: SelectionControlProps) => (
+  <SelectionControl {...props}>
+    <Checkbox.Input />
+    <SelectionControl.Label>Согласен</SelectionControl.Label>
+  </SelectionControl>
+);
 
-export const Playground: Story = {
-  render: (props) => (
-    <SelectionControl {...props}>
-      <Checkbox.Input />
-      <SelectionControl.Label>Согласен</SelectionControl.Label>
-    </SelectionControl>
-  ),
-};
+Playground.args = {};

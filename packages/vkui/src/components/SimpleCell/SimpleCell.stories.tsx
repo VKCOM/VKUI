@@ -78,24 +78,19 @@ const story: Meta<SimpleCellProps> = {
 
 export default story;
 
-type Story = StoryObj<SimpleCellProps>;
+export const Playground: StoryObj<SimpleCellProps> = (props: SimpleCellProps) => (
+  <Group>
+    <SimpleCell {...props} />
+  </Group>
+);
 
-export const Playground: Story = {
-  args: {
-    children: 'Игорь Фёдоров',
-    before: 'Avatar48',
-    badgeAfterTitle: 'Icon12Verified',
-    after: 'MessageButton',
-    subtitle: 'Команда ВКонтакте',
-    onClick: noop,
-  },
-  decorators: [
-    (Component, context) => (
-      <Group>
-        <Component {...context.args} />
-      </Group>
-    ),
-    withSinglePanel,
-    withVKUILayout,
-  ],
+Playground.args = {
+  children: 'Игорь Фёдоров',
+  before: 'Avatar48',
+  badgeAfterTitle: 'Icon12Verified',
+  after: 'MessageButton',
+  subtitle: 'Команда ВКонтакте',
+  onClick: noop,
 };
+
+Playground.decorators = [withSinglePanel, withVKUILayout];

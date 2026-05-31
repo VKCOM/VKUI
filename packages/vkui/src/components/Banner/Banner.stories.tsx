@@ -101,24 +101,20 @@ export default story;
 
 type Story = StoryObj<BannerProps>;
 
-export const Playground: Story = {
-  args: {
-    before: 'Image',
-    title: 'Баста в Ледовом',
-    subtitle: 'Большой концерт',
-    after: 'dismiss',
-    actions: 'ButtonPrimary',
-  },
-  decorators: [
-    (Component, context) => (
-      <Group>
-        <Div>
-          <Component {...context.args} />
-        </Div>
-      </Group>
-    ),
-    withCartesian,
-    withSinglePanel,
-    withVKUILayout,
-  ],
+export const Playground: Story = (props: BannerProps) => (
+  <Group>
+    <Div>
+      <Banner {...props} />
+    </Div>
+  </Group>
+);
+
+Playground.args = {
+  before: 'Image',
+  title: 'Баста в Ледовом',
+  subtitle: 'Большой концерт',
+  after: 'dismiss',
+  actions: 'ButtonPrimary',
 };
+
+Playground.decorators = [withCartesian, withSinglePanel, withVKUILayout];

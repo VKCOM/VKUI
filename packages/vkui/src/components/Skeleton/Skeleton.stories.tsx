@@ -12,6 +12,7 @@ const story: Meta<SkeletonProps> = {
 
 export default story;
 
-type Story = StoryObj<SkeletonProps>;
-
-export const Playground: Story = {};
+export const Playground: StoryObj<SkeletonProps> = (props: SkeletonProps) => (
+  <Skeleton {...props} />
+);
+Playground.args = {};

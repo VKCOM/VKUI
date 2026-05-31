@@ -26,17 +26,28 @@ export default story;
 type Story = StoryObj<ChipsInputProps<ChipOption>>;
 
 const DEFAULT_TAGS = [
-  { label: 'Тег 1', value: 'tag-1' },
-  { label: 'Тег 2', value: 'tag-2' },
+  {
+    label: 'Тег 1',
+    value: 'tag-1',
+  },
+  {
+    label: 'Тег 2',
+    value: 'tag-2',
+  },
 ];
 
-export const Playground: Story = {
-  render: (args) => (
-    <FormItem top="Добавьте любимые теги" htmlFor="chips-input" style={{ width: 320 }}>
-      <ChipsInput {...args} aria-label="Добавьте любимые теги" id="chips-input" />
-    </FormItem>
-  ),
-  args: {
-    defaultValue: DEFAULT_TAGS,
-  },
+export const Playground: Story = (args: ChipsInputProps<ChipOption>) => (
+  <FormItem
+    top="Добавьте любимые теги"
+    htmlFor="chips-input"
+    style={{
+      width: 320,
+    }}
+  >
+    <ChipsInput {...args} aria-label="Добавьте любимые теги" id="chips-input" />
+  </FormItem>
+);
+
+Playground.args = {
+  defaultValue: DEFAULT_TAGS,
 };

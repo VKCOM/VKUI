@@ -46,60 +46,61 @@ export default story;
 
 type Story = StoryObj<TabsItemProps>;
 
-export const Playground: Story = {
-  args: {
-    children: 'Сообщества',
-    before: 'Icon20NewsfeedOutline',
-    after: 'Icon16Dropdown',
-  },
-  decorators: [
-    (Component) => (
-      <div style={{ height: 50 }}>
-        <Component />
-      </div>
-    ),
-  ],
-};
+const CommonDecorators: Story['decorators'] = [
+  (Component) => (
+    <div
+      style={{
+        height: 50,
+      }}
+    >
+      <Component />
+    </div>
+  ),
+];
 
-export const WithBeforeAfter: Story = {
-  ...Playground,
-  args: {
-    children: 'Лента',
-    before: 'Icon20NewsfeedOutline',
-    after: 'Icon16Dropdown',
-  },
+export const Playground: Story = (props: TabsItemProps) => <TabsItem {...props} />;
+Playground.args = {
+  children: 'Сообщества',
+  before: 'Icon20NewsfeedOutline',
+  after: 'Icon16Dropdown',
 };
+Playground.decorators = CommonDecorators;
 
-export const WithBadge: Story = {
-  ...Playground,
-  args: {
-    children: 'Рекомендации',
-    before: 'Icon20ThumbsUpOutline',
-    after: 'Icon16Dropdown',
-    status: <Badge mode="prominent">Есть обновления</Badge>,
-  },
+export const WithBeforeAfter: Story = (props: TabsItemProps) => <TabsItem {...props} />;
+WithBeforeAfter.args = {
+  children: 'Лента',
+  before: 'Icon20NewsfeedOutline',
+  after: 'Icon16Dropdown',
 };
+WithBeforeAfter.decorators = CommonDecorators;
 
-export const WithCounter: Story = {
-  ...Playground,
-  args: {
-    children: 'Друзья',
-    before: 'Icon20UsersOutline',
-    after: 'Icon16Dropdown',
-    status: (
-      <Counter mode="primary" appearance="accent-red" size="s">
-        3
-      </Counter>
-    ),
-  },
+export const WithBadge: Story = (props: TabsItemProps) => <TabsItem {...props} />;
+WithBadge.args = {
+  children: 'Рекомендации',
+  before: 'Icon20ThumbsUpOutline',
+  after: 'Icon16Dropdown',
+  status: <Badge mode="prominent">Есть обновления</Badge>,
 };
+WithBadge.decorators = CommonDecorators;
 
-export const WithNumberStatus: Story = {
-  ...Playground,
-  args: {
-    children: 'Фотографии',
-    before: 'Icon20PictureOutline',
-    after: 'Icon16Dropdown',
-    status: 23,
-  },
+export const WithCounter: Story = (props: TabsItemProps) => <TabsItem {...props} />;
+WithCounter.args = {
+  children: 'Друзья',
+  before: 'Icon20UsersOutline',
+  after: 'Icon16Dropdown',
+  status: (
+    <Counter mode="primary" appearance="accent-red" size="s">
+      3
+    </Counter>
+  ),
 };
+WithCounter.decorators = CommonDecorators;
+
+export const WithNumberStatus: Story = (props: TabsItemProps) => <TabsItem {...props} />;
+WithNumberStatus.args = {
+  children: 'Фотографии',
+  before: 'Icon20PictureOutline',
+  after: 'Icon16Dropdown',
+  status: 23,
+};
+WithNumberStatus.decorators = CommonDecorators;

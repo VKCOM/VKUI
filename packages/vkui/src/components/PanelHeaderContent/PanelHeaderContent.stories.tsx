@@ -21,29 +21,25 @@ const story: Meta<PanelHeaderContentProps> = {
 
 export default story;
 
-type Story = StoryObj<PanelHeaderContentProps>;
-
 const PANEL_ID = 'panel1';
 
-export const Playground: Story = {
-  render: function Render() {
-    const platform = usePlatform();
-
-    return (
-      <View id="main" activePanel={PANEL_ID}>
-        <Panel id={PANEL_ID}>
-          <PanelHeader
-            before={
-              <PanelHeaderBack onClick={noop} label={platform === 'vkcom' ? 'Назад' : undefined} />
-            }
-          >
-            <PanelHeaderContent before={<Avatar size={36} />} subtitle="Был в сети вчера">
-              Влад Анесов
-            </PanelHeaderContent>
-          </PanelHeader>
-          <Div>PanelHeaderContent</Div>
-        </Panel>
-      </View>
-    );
-  },
+export const Playground: StoryObj<PanelHeaderContentProps> = () => {
+  const platform = usePlatform();
+  return (
+    <View id="main" activePanel={PANEL_ID}>
+      <Panel id={PANEL_ID}>
+        <PanelHeader
+          before={
+            <PanelHeaderBack onClick={noop} label={platform === 'vkcom' ? 'Назад' : undefined} />
+          }
+        >
+          <PanelHeaderContent before={<Avatar size={36} />} subtitle="Был в сети вчера">
+            Влад Анесов
+          </PanelHeaderContent>
+        </PanelHeader>
+        <Div>PanelHeaderContent</Div>
+      </Panel>
+    </View>
+  );
 };
+Playground.args = {};

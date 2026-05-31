@@ -52,33 +52,26 @@ export default story;
 
 type Story = StoryObj<CellProps>;
 
-export const Playground: Story = {
-  args: {
-    children: 'Игорь Федоров',
-    before: 'AvatarWithUrl',
-  },
-  decorators: [
-    (Component, context) => (
-      <Group>
-        <Component {...context.args} />
-      </Group>
-    ),
-  ],
+export const Playground: Story = (props: CellProps) => (
+  <Group>
+    <Cell {...props} />
+  </Group>
+);
+
+Playground.args = {
+  children: 'Игорь Федоров',
+  before: 'AvatarWithUrl',
 };
 
-export const Multiple: Story = {
-  ...Playground,
-  args: {
-    before: 'Avatar',
-  },
-  decorators: [
-    (Component, context) => (
-      <Group>
-        <Component args={{ ...context.args, children: 'Игорь Федоров' }} />
-        <Component args={{ ...context.args, children: 'Вадим Дорохов' }} />
-        <Component args={{ ...context.args, children: 'Евгения Полозова' }} />
-        <Component args={{ ...context.args, children: 'Владимир Клепов' }} />
-      </Group>
-    ),
-  ],
+export const Multiple: Story = (props: CellProps) => (
+  <Group>
+    <Cell {...props}>Игорь Федоров</Cell>
+    <Cell {...props}>Вадим Дорохов</Cell>
+    <Cell {...props}>Евгения Полозова</Cell>
+    <Cell {...props}>Владимир Клепов</Cell>
+  </Group>
+);
+
+Multiple.args = {
+  before: 'Avatar',
 };
