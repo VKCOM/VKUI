@@ -802,10 +802,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@discoveryjs/json-ext@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "@discoveryjs/json-ext@npm:1.0.0"
-  checksum: 10/18e55d22132ea2b2088966a87ad6a80b5806e6d92c8ff7f3e2284fafa6b5d92060373145ddaf25593f9b2fcdbbe1587de18afe62ee4137d7ab02cb30a079d6a1
+"@discoveryjs/json-ext@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "@discoveryjs/json-ext@npm:1.1.0"
+  checksum: 10/c941e41fcfa0d40bfd0b12e5cd5995b609328adb5fa881b1e8bebcae57784d505ccb92ae5d470055336802197a664d3856decccfd09a59c8feef2bf214591ff5
   languageName: node
   linkType: hard
 
@@ -5518,8 +5518,8 @@ __metadata:
     vitest: "npm:^4.1.7"
     vitest-axe: "npm:^0.1.0"
     vitest-fail-on-console: "npm:^0.10.1"
-    webpack: "npm:^5.107.1"
-    webpack-cli: "npm:^7.0.2"
+    webpack: "npm:^5.107.2"
+    webpack-cli: "npm:^7.0.3"
     webpack-merge: "npm:^6.0.1"
     yargs: "npm:^18.0.0"
   languageName: unknown
@@ -8294,6 +8294,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"enhanced-resolve@npm:^5.22.0":
+  version: 5.22.1
+  resolution: "enhanced-resolve@npm:5.22.1"
+  dependencies:
+    graceful-fs: "npm:^4.2.4"
+    tapable: "npm:^2.3.3"
+  checksum: 10/2124366118c1e93836b23b4aad933352ba8d404c2c50129388b5d83520bfea1021169e975967e048bfca3a82cbf07756ba76a26e1eab305ef06b2ab1a384e6c0
+  languageName: node
+  linkType: hard
+
 "entities@npm:^4.2.0":
   version: 4.5.0
   resolution: "entities@npm:4.5.0"
@@ -9446,7 +9456,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fastest-levenshtein@npm:^1.0.12, fastest-levenshtein@npm:^1.0.16":
+"fastest-levenshtein@npm:^1.0.16":
   version: 1.0.16
   resolution: "fastest-levenshtein@npm:1.0.16"
   checksum: 10/ee85d33b5cef592033f70e1c13ae8624055950b4eb832435099cd56aa313d7f251b873bedbc06a517adfaff7b31756d139535991e2406967438e03a1bf1b008e
@@ -18841,15 +18851,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"webpack-cli@npm:^7.0.2":
-  version: 7.0.2
-  resolution: "webpack-cli@npm:7.0.2"
+"webpack-cli@npm:^7.0.3":
+  version: 7.0.3
+  resolution: "webpack-cli@npm:7.0.3"
   dependencies:
-    "@discoveryjs/json-ext": "npm:^1.0.0"
+    "@discoveryjs/json-ext": "npm:^1.1.0"
     commander: "npm:^14.0.3"
     cross-spawn: "npm:^7.0.6"
     envinfo: "npm:^7.14.0"
-    fastest-levenshtein: "npm:^1.0.12"
     import-local: "npm:^3.0.2"
     interpret: "npm:^3.1.1"
     rechoir: "npm:^0.8.0"
@@ -18865,7 +18874,7 @@ __metadata:
       optional: true
   bin:
     webpack-cli: bin/cli.js
-  checksum: 10/44ccbdccd1684d9e340e932680db62c237caa7b11f90799ae9a73aed5cf9033db32b8fae00a127ebe37ec5adafb4be5e5a3096b1ab52ae8ee51c2a445895695d
+  checksum: 10/e7e04acd95c0190f806aad14e5d967cf09239f20d6d31fba360090dd68b9ea82a3c67df135831222f5dfe1f7fd5df5506124147f30f86f2eba9c34f444e6e2e4
   languageName: node
   linkType: hard
 
@@ -18880,7 +18889,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"webpack-sources@npm:^3.4.1":
+"webpack-sources@npm:^3.4.1, webpack-sources@npm:^3.5.0":
   version: 3.5.0
   resolution: "webpack-sources@npm:3.5.0"
   checksum: 10/e5af4245dbe52bb1520c7c373d73042fe091e273ff94269b877725a7873481e544ba4e71722df13e278f88069de900052764d98b99f9910be634826ec2f6e67d
@@ -18894,7 +18903,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"webpack@npm:^5.106.1, webpack@npm:^5.107.1":
+"webpack@npm:^5.106.1":
   version: 5.107.1
   resolution: "webpack@npm:5.107.1"
   dependencies:
@@ -18927,6 +18936,42 @@ __metadata:
   bin:
     webpack: bin/webpack.js
   checksum: 10/195722f146380ca795207325dd729508d25fddf59dc9f6f7b31f880f652d7a2fb8126c2ac1666f1df1c01f8720527a07950885363d8774664735a35bc35a841e
+  languageName: node
+  linkType: hard
+
+"webpack@npm:^5.107.2":
+  version: 5.107.2
+  resolution: "webpack@npm:5.107.2"
+  dependencies:
+    "@types/estree": "npm:^1.0.8"
+    "@types/json-schema": "npm:^7.0.15"
+    "@webassemblyjs/ast": "npm:^1.14.1"
+    "@webassemblyjs/wasm-edit": "npm:^1.14.1"
+    "@webassemblyjs/wasm-parser": "npm:^1.14.1"
+    acorn: "npm:^8.16.0"
+    acorn-import-phases: "npm:^1.0.3"
+    browserslist: "npm:^4.28.1"
+    chrome-trace-event: "npm:^1.0.2"
+    enhanced-resolve: "npm:^5.22.0"
+    es-module-lexer: "npm:^2.1.0"
+    eslint-scope: "npm:5.1.1"
+    events: "npm:^3.2.0"
+    glob-to-regexp: "npm:^0.4.1"
+    graceful-fs: "npm:^4.2.11"
+    loader-runner: "npm:^4.3.2"
+    mime-db: "npm:^1.54.0"
+    neo-async: "npm:^2.6.2"
+    schema-utils: "npm:^4.3.3"
+    tapable: "npm:^2.3.0"
+    terser-webpack-plugin: "npm:^5.5.0"
+    watchpack: "npm:^2.5.1"
+    webpack-sources: "npm:^3.5.0"
+  peerDependenciesMeta:
+    webpack-cli:
+      optional: true
+  bin:
+    webpack: bin/webpack.js
+  checksum: 10/c02488e699902ca308c735ccc6a22e276e54f4c13d46cb8558a35deda1a347d6c0b263a9b75797c6d84cedcd672213e8442a10afc71cb951b432284c2460e7bd
   languageName: node
   linkType: hard
 

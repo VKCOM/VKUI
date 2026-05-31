@@ -94,8 +94,8 @@
     "vitest": "^4.1.7",
     "vitest-axe": "^0.1.0",
     "vitest-fail-on-console": "^0.10.1",
-    "webpack": "^5.107.1",
-    "webpack-cli": "^7.0.2",
+    "webpack": "^5.107.2",
+    "webpack-cli": "^7.0.3",
     "webpack-merge": "^6.0.1",
     "yargs": "^18.0.0"
   },
