@@ -1,0 +1,1 @@
+import{a as e,n as t}from"./chunk-BneVvdWh.js";import{h as n,s as r}from"./useIsomorphicLayoutEffect-DAPv5_AN.js";import{t as i}from"./react-dom-Cgzv--sO.js";var a,o,s=t((()=>{a=e(i(),1),n(),o=(e,t,n)=>{let i=t||r();return i&&a.createPortal(e,i,n)}}));export{s as n,o as t};

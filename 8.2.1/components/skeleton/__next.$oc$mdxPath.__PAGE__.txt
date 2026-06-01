@@ -1,0 +1,116 @@
+1:"$Sreact.fragment"
+2:I[23450,["275","static/chunks/275-4b587f05af731df9.js","433","static/chunks/433-071e76175aa96067.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Main"]
+4:I[74517,["275","static/chunks/275-4b587f05af731df9.js","433","static/chunks/433-071e76175aa96067.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Overview",1]
+5:I[80204,["275","static/chunks/275-4b587f05af731df9.js","433","static/chunks/433-071e76175aa96067.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"PlaygroundLazy"]
+16:I[19180,["275","static/chunks/275-4b587f05af731df9.js","433","static/chunks/433-071e76175aa96067.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Pre"]
+1d:I[91042,["275","static/chunks/275-4b587f05af731df9.js","433","static/chunks/433-071e76175aa96067.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"TOC"]
+1e:I[90484,[],"OutletBoundary"]
+1f:"$Sreact.suspense"
+3:Tad0,---
+description: Компонент для отображения анимированных заглушек во время загрузки контента.
+tags: loading
+---
+
+<Overview group="feedback">
+
+# Skeleton [tag:component]
+
+Компонент для отображения анимированных заглушек во время загрузки контента.
+Автоматически адаптируется под размеры и стили ожидаемого контента.
+
+</Overview>
+
+{/* @example-description: Базовая заглушка `Skeleton` для одиночной строки контента. */}
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <Skeleton width="100%" />
+  ```
+</Playground>
+
+## Пример использования
+
+{/* @example-description: Комплексный пример `Skeleton` в ячейке и текстовом блоке во время загрузки. */}
+<Playground>
+  ```jsx
+  <Group>
+    <SimpleCell
+      before={<Skeleton width={36} height={36} borderRadius="50%" />}
+      subtitle={<Skeleton width={90} />}
+    >
+      <Skeleton width={120} />
+    </SimpleCell>
+    <Div>
+      <Skeleton width="100%" />
+      <Skeleton width="100%" />
+      <Skeleton width="75%" />
+    </Div>
+  </Group>
+  ```
+</Playground>
+
+## Настройка анимации
+
+- Свойство `duration` отвечает за длительность анимации;
+- Свойство `colorFrom` отвечает за начальный цвет анимации;
+- Свойство `colorTo` отвечает за конечный цвет анимации.
+
+```jsx
+<Skeleton colorFrom="#f0f0f0" colorTo="#e0e0e0" duration={1.5} />
+```
+
+### Отключение анимации
+
+Отключить анимацию можно с помощью свойства `noAnimation`:
+
+{/* @example-description: `Skeleton` без анимации с включенным `noAnimation`. */}
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <Skeleton noAnimation />
+  ```
+</Playground>
+
+## Особенности
+
+- Поддерживается автоматическая высота для текстовых блоков:
+
+{/* @example-description: Автоматическая высота `Skeleton` внутри типографического компонента `Title`. */}
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <Title style={{ width: '100%' }}>
+    <Skeleton />
+  </Title>
+  ```
+</Playground>
+
+- Собственные размеры можно задавать через CSS-переменные:
+
+```jsx
+<Skeleton inlineSize="var(--custom-width)" blockSize="var(--custom-height)" />
+```
+
+## Свойства и методы [#api]
+
+<PropsTable name="Skeleton" />0:{"rsc":["$","$1","c",{"children":[[["$","$L2",null,{"metadata":{"description":"Компонент для отображения анимированных заглушек во время загрузки контента.","tags":"loading","title":"Skeleton","filePath":"content/components/skeleton.mdx","timestamp":1780314995000},"sourceCode":"$3","children":[["$","$L4",null,{"group":"feedback","children":[["$","h1",null,{"className":"mdx_h1__1mgpN","data-pagefind-filter":"tag:component","children":"Skeleton"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Компонент для отображения анимированных заглушек во время загрузки контента.\nАвтоматически адаптируется под размеры и стили ожидаемого контента."}]]}],"\n","\n",["$","$L5",null,{"style":{"maxWidth":270},"code":"<Skeleton width=\"100%\" />"}],"\n",["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"primer-ispolzovaniya","children":["$","a",null,{"href":"#primer-ispolzovaniya","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Пример использования","children":["Пример использования",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}],"\n","\n","$L6","\n","$L7","\n","$L8","\n","$L9","\n","$La","\n","$Lb","\n","\n","$Lc","\n","$Ld","\n","$Le","\n","\n","$Lf","\n","$L10","\n","$L11","\n","$L12","\n","$L13"]}],"$L14"],null,"$L15"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"02IBK9sLgKxTeOt8DUsGA"}
+6:["$","$L5",null,{"code":"<Group>\n  <SimpleCell\n    before={<Skeleton width={36} height={36} borderRadius=\"50%\" />}\n    subtitle={<Skeleton width={90} />}\n  >\n    <Skeleton width={120} />\n  </SimpleCell>\n  <Div>\n    <Skeleton width=\"100%\" />\n    <Skeleton width=\"100%\" />\n    <Skeleton width=\"75%\" />\n  </Div>\n</Group>"}]
+7:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"nastrojka-animacii","children":["$","a",null,{"href":"#nastrojka-animacii","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Настройка анимации","children":["Настройка анимации",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+8:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["Свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"duration"}]," отвечает за длительность анимации;"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["Свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"colorFrom"}]," отвечает за начальный цвет анимации;"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["Свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"colorTo"}]," отвечает за конечный цвет анимации."]}],"\n"]}]
+9:["$","$L16",null,{"tabIndex":"0","data-language":"jsx","data-word-wrap":"","data-copy":"","data-pagefind-ignore":"all","children":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"<"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Skeleton"}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" colorFrom"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"#f0f0f0\""}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" colorTo"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"#e0e0e0\""}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" duration"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"{"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"1.5"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"} />"}]]}]}]}]
+a:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"otklyuchenie-animacii","children":["$","a",null,{"href":"#otklyuchenie-animacii","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Отключение анимации","children":["Отключение анимации",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+b:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Отключить анимацию можно с помощью свойства ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"noAnimation"}],":"]}]
+c:["$","$L5",null,{"style":{"maxWidth":270},"code":"<Skeleton noAnimation />"}]
+d:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"osobennosti","children":["$","a",null,{"href":"#osobennosti","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Особенности","children":["Особенности",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+e:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":"Поддерживается автоматическая высота для текстовых блоков:"}],"\n"]}]
+f:["$","$L5",null,{"style":{"maxWidth":270},"code":"<Title style={{ width: '100%' }}>\n  <Skeleton />\n</Title>"}]
+10:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":"Собственные размеры можно задавать через CSS-переменные:"}],"\n"]}]
+11:["$","$L16",null,{"tabIndex":"0","data-language":"jsx","data-word-wrap":"","data-copy":"","data-pagefind-ignore":"all","children":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"<"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Skeleton"}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" inlineSize"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"var(--custom-width)\""}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" blockSize"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"var(--custom-height)\""}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" />"}]]}]}]}]
+12:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"api","children":["$","a",null,{"href":"#api","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Свойства и методы","children":["Свойства и методы",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+13:["$","div",null,{"className":"Table_root__0rGvK","children":["$","table",null,{"className":"Table_table__NzLHi PropsTable_root__O959b","children":[["$","thead",null,{"children":["$","tr",null,{"children":[["$","th",null,{"children":"Свойство","className":"Table_th__EHorR"}],["$","th",null,{"children":"Описание","className":"Table_th__EHorR"}]],"className":"Table_tr__SD2Ot"}]}],["$","tbody",null,{"children":["$@17","$@18","$@19","$@1a","$@1b","$@1c"]}]]}]}]
+14:["$","$L1d",null,{"toc":[{"value":"Пример использования","id":"primer-ispolzovaniya","depth":2},{"value":"Настройка анимации","id":"nastrojka-animacii","depth":2},{"value":"Отключение анимации","id":"otklyuchenie-animacii","depth":3},{"value":"Особенности","id":"osobennosti","depth":2},{"value":"Свойства и методы","id":"api","depth":2}]}]
+15:["$","$L1e",null,{"children":["$","$1f",null,{"name":"Next.MetadataOutlet","children":"$@20"}]}]
+17:["$","tr","colorFrom",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"colorFrom"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"string"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Начальный цвет анимации."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+18:["$","tr","colorTo",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"colorTo"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"string"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Финальный цвет анимации."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+19:["$","tr","duration",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"duration"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"number"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Длительность анимации в секундах."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+1a:["$","tr","getRootRef",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"getRootRef"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"Ref<HTMLSpanElement | HTMLDivElement>"}],"$undefined",["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+1b:["$","tr","noAnimation",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"noAnimation"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"boolean"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Выключает анимацию, в результате чего показывается только один цвет."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"false"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+1c:["$","tr","visibilityDelay",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"visibilityDelay"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"number"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Задерживает отрисовку элемента на заданное количество миллисекунд."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+20:null

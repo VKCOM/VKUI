@@ -1,0 +1,189 @@
+1:"$Sreact.fragment"
+2:I[23450,["275","static/chunks/275-4b587f05af731df9.js","433","static/chunks/433-071e76175aa96067.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Main"]
+7:I[74517,["275","static/chunks/275-4b587f05af731df9.js","433","static/chunks/433-071e76175aa96067.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Overview",1]
+8:I[80204,["275","static/chunks/275-4b587f05af731df9.js","433","static/chunks/433-071e76175aa96067.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"PlaygroundLazy"]
+9:I[73143,["275","static/chunks/275-4b587f05af731df9.js","433","static/chunks/433-071e76175aa96067.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"BlockWrapper"]
+a:I[18443,["275","static/chunks/275-4b587f05af731df9.js","433","static/chunks/433-071e76175aa96067.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Anchor"]
+16:I[91042,["275","static/chunks/275-4b587f05af731df9.js","433","static/chunks/433-071e76175aa96067.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"TOC"]
+17:I[90484,[],"OutletBoundary"]
+18:"$Sreact.suspense"
+1a:I[19180,["275","static/chunks/275-4b587f05af731df9.js","433","static/chunks/433-071e76175aa96067.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Pre"]
+3:T18ed,---
+description: Компонент, который позволяет пользователю выбрать одно значение из набора опций.
+tags: selection
+---
+
+<Overview group="forms">
+# SegmentedControl [tag:component]
+
+Компонент, который позволяет пользователю выбрать одно значение из набора опций.
+Визуально представляет собой группу сегментированных кнопок, где активная опция выделяется с помощью ползунка.
+
+</Overview>
+
+import { BlockWrapper } from '@/components/wrappers';
+
+{/* @example-description: Базовый `SegmentedControl` с набором текстовых опций и единичным выбором. */}
+<Playground Wrapper={BlockWrapper}>
+  ```jsx
+  <SegmentedControl
+    name="report-type"
+    options={[
+      {
+        label: 'Баг',
+        value: 'bug',
+      },
+      {
+        label: 'Идея',
+        value: 'idea',
+      },
+      {
+        label: 'Другое',
+        value: 'other',
+      },
+    ]}
+  />
+  ```
+</Playground>
+
+## Применение компонента
+
+Компонент может использоваться как навигационный элемент (аналог [`Tabs`](/components/tabs)) или
+как элемент формы (аналог [`RadioGroup`](/components/radio-group)).
+
+Избегайте использования слишком большого числа сегментированных кнопок, рекомендуется использовать от трёх до семи кнопок
+для планшетов и десктопов и до пяти кнопок в мобильном представлении.
+
+В качестве контента используйте либо только иконки, либо только текст, это позволит вашему дизайну оставаться
+консистентным и простым.
+
+## Режим работы
+
+Компонент поддерживает работу как в неконтролируемом режиме, так и контролируемом. Это стандартное поведение
+React-компонентов, прочитать про это можно в [документации React](https://react.dev/reference/react-dom/components/input#controlling-an-input-with-a-state-variable).
+
+Для использования неконтролируемого режима достаточно просто _не_ передавать `value` или передавать `defaultValue`, если
+требуется задать значение по умолчанию.
+Для контролируемого режима используйте связку свойств `value`/`onChange` для задания значения и его изменения.
+
+```jsx
+const colors = [
+  {
+    value: 'red',
+    label: 'Красный',
+  },
+  {
+    value: 'green',
+    label: 'Зелёный',
+  },
+  {
+    value: 'blue',
+    label: 'Синий',
+  },
+];
+
+// Неконтролируемое состояние
+<SegmentedControl options={colors} defaultValue="red" />;
+
+// Контролируемое состояние
+const [color, setColor] = React.useState('red');
+
+<SegmentedControl options={colors} value={color} onChange={setColor} />;
+```
+
+## Доступность (a11y) [#a11y]
+
+По умолчанию компонент использует `role="radiogroup"`, обеспечивая поддержку соответствующего данной роли поведения.
+
+### Использование как навигационного элемента [#tabs-usage]
+
+Компонент `SegmentedControl` может использоваться для создания навигации (аналог `Tabs`). В этом случае необходимо:
+
+1. Установить свойство `role="tablist"`;
+2. Для каждой опции указать:
+   - `id` - уникальный идентификатор;
+   - `aria-controls` - идентификатор области с контентом, который становится доступен при выборе данной опции.
+3. Для области с контентом указать:
+   - `role="tabpanel"` - роль панели с контентом;
+   - `aria-labelledby` - идентификатор опции, который управляет этой областью;
+   - `tabIndex={0}` - чтобы сделать область фокусируемой;
+   - `id`- идентификатор панели, который соответствует `aria-controls` в конкретной области.
+
+Это обеспечит правильную семантику и доступность компонента для пользователей ассистивных технологий.
+
+{/* @example-description: Использование `SegmentedControl` как `tablist` с управлением связанными `tabpanel`. */}
+<Playground Wrapper={BlockWrapper}>
+
+```jsx
+const [selected, setSelected] = React.useState('news');
+
+return (
+  <Group>
+    <SegmentedControl
+      role="tablist"
+      value={selected}
+      onChange={(value) => setSelected(value)}
+      options={[
+        {
+          'label': 'Новости',
+          'value': 'news',
+          'aria-controls': 'tab-content-news',
+          'id': 'tab-news',
+        },
+        {
+          'label': 'Интересное',
+          'value': 'recommendations',
+          'aria-controls': 'tab-content-recommendations',
+          'id': 'tab-recommendations',
+        },
+      ]}
+    />
+    {selected === 'news' && (
+      <Div id="tab-content-news" aria-labelledby="tab-news" role="tabpanel" tabIndex={0}>
+        Контент новостей
+      </Div>
+    )}
+    {selected === 'recommendations' && (
+      <Div
+        id="tab-content-recommendations"
+        aria-labelledby="tab-recommendations"
+        role="tabpanel"
+        tabIndex={0}
+      >
+        Контент рекомендаций
+      </Div>
+    )}
+  </Group>
+);
+```
+
+</Playground>
+
+## Свойства и методы [#api]
+
+<PropsTable name="SegmentedControl" />0:{"rsc":["$","$1","c",{"children":[[["$","$L2",null,{"metadata":{"description":"Компонент, который позволяет пользователю выбрать одно значение из набора опций.","tags":"selection","title":"SegmentedControl","filePath":"content/components/segmented-control.mdx","timestamp":1780314995000},"sourceCode":"$3","children":"$L4"}],"$L5"],null,"$L6"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"02IBK9sLgKxTeOt8DUsGA"}
+4:[["$","$L7",null,{"group":"forms","children":[["$","h1",null,{"className":"mdx_h1__1mgpN","data-pagefind-filter":"tag:component","children":"SegmentedControl"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Компонент, который позволяет пользователю выбрать одно значение из набора опций.\nВизуально представляет собой группу сегментированных кнопок, где активная опция выделяется с помощью ползунка."}]]}],"\n","\n","\n",["$","$L8",null,{"Wrapper":"$9","code":"<SegmentedControl\n  name=\"report-type\"\n  options={[\n    {\n      label: 'Баг',\n      value: 'bug',\n    },\n    {\n      label: 'Идея',\n      value: 'idea',\n    },\n    {\n      label: 'Другое',\n      value: 'other',\n    },\n  ]}\n/>"}],"\n",["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"primenenie-komponenta","children":["$","a",null,{"href":"#primenenie-komponenta","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Применение компонента","children":["Применение компонента",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}],"\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Компонент может использоваться как навигационный элемент (аналог ",["$","$La",null,{"href":"/components/tabs","children":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"Tabs"}]}],") или\nкак элемент формы (аналог ",["$","$La",null,{"href":"/components/radio-group","children":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"RadioGroup"}]}],")."]}],"\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Избегайте использования слишком большого числа сегментированных кнопок, рекомендуется использовать от трёх до семи кнопок\nдля планшетов и десктопов и до пяти кнопок в мобильном представлении."}],"\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"В качестве контента используйте либо только иконки, либо только текст, это позволит вашему дизайну оставаться\nконсистентным и простым."}],"\n",["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"rezhim-raboty","children":["$","a",null,{"href":"#rezhim-raboty","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Режим работы","children":["Режим работы",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}],"\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Компонент поддерживает работу как в неконтролируемом режиме, так и контролируемом. Это стандартное поведение\nReact-компонентов, прочитать про это можно в ",["$","$La",null,{"href":"https://react.dev/reference/react-dom/components/input#controlling-an-input-with-a-state-variable","children":"документации React"}],"."]}],"\n","$Lb","\n","$Lc","\n","$Ld","\n","$Le","\n","$Lf","\n","$L10","\n","$L11","\n","$L12","\n","\n","$L13","\n","$L14","\n","$L15"]
+5:["$","$L16",null,{"toc":[{"value":"Применение компонента","id":"primenenie-komponenta","depth":2},{"value":"Режим работы","id":"rezhim-raboty","depth":2},{"value":"Доступность (a11y)","id":"a11y","depth":2},{"value":"Использование как навигационного элемента","id":"tabs-usage","depth":3},{"value":"Свойства и методы","id":"api","depth":2}]}]
+6:["$","$L17",null,{"children":["$","$18",null,{"name":"Next.MetadataOutlet","children":"$@19"}]}]
+b:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Для использования неконтролируемого режима достаточно просто ",["$","em",null,{"children":"не"}]," передавать ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"value"}]," или передавать ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"defaultValue"}],", если\nтребуется задать значение по умолчанию.\nДля контролируемого режима используйте связку свойств ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"value"}],"/",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"onChange"}]," для задания значения и его изменения."]}]
+c:["$","$L1a",null,{"tabIndex":"0","data-language":"jsx","data-word-wrap":"","data-copy":"","data-pagefind-ignore":"all","children":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":[["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"const"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":" colors"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":" ="}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" ["}]]}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  {"}]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"    value: "}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"'red'"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":","}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"    label: "}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"'Красный'"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":","}]]}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  },"}]}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  {"}]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"    value: "}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"'green'"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":","}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"    label: "}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"'Зелёный'"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":","}]]}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  },"}]}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  {"}]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"    value: "}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"'blue'"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":","}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"    label: "}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"'Синий'"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":","}]]}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  },"}]}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"];"}]}],"\n",["$","span",null,{"children":" "}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#6A737D","--shiki-dark":"#6A737D"},"children":"// Неконтролируемое состояние"}]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"<"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"SegmentedControl"}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" options"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"{colors} "}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":"defaultValue"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"red\""}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" />;"}]]}],"\n",["$","span",null,{"children":" "}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#6A737D","--shiki-dark":"#6A737D"},"children":"// Контролируемое состояние"}]}],"\n","$L1b","\n","$L1c","\n","$L1d"]}]}]
+d:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"a11y","children":["$","a",null,{"href":"#a11y","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Доступность (a11y)","children":["Доступность (a11y)",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+e:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["По умолчанию компонент использует ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"role=\"radiogroup\""}],", обеспечивая поддержку соответствующего данной роли поведения."]}]
+f:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"tabs-usage","children":["$","a",null,{"href":"#tabs-usage","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Использование как навигационного элемента","children":["Использование как навигационного элемента",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+10:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Компонент ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"SegmentedControl"}]," может использоваться для создания навигации (аналог ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"Tabs"}],"). В этом случае необходимо:"]}]
+11:["$","ol",null,{"className":"mdx_ol__jzvNl","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["Установить свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"role=\"tablist\""}],";"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["Для каждой опции указать:","\n",["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"id"}]," - уникальный идентификатор;"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"aria-controls"}]," - идентификатор области с контентом, который становится доступен при выборе данной опции."]}],"\n"]}],"\n"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["Для области с контентом указать:","\n",["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"role=\"tabpanel\""}]," - роль панели с контентом;"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"aria-labelledby"}]," - идентификатор опции, который управляет этой областью;"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"tabIndex={0}"}]," - чтобы сделать область фокусируемой;"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"id"}],"- идентификатор панели, который соответствует ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"aria-controls"}]," в конкретной области."]}],"\n"]}],"\n"]}],"\n"]}]
+12:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Это обеспечит правильную семантику и доступность компонента для пользователей ассистивных технологий."}]
+13:["$","$L8",null,{"Wrapper":"$9","code":"const [selected, setSelected] = React.useState('news');\n\nreturn (\n  <Group>\n    <SegmentedControl\n      role=\"tablist\"\n      value={selected}\n      onChange={(value) => setSelected(value)}\n      options={[\n        {\n          'label': 'Новости',\n          'value': 'news',\n          'aria-controls': 'tab-content-news',\n          'id': 'tab-news',\n        },\n        {\n          'label': 'Интересное',\n          'value': 'recommendations',\n          'aria-controls': 'tab-content-recommendations',\n          'id': 'tab-recommendations',\n        },\n      ]}\n    />\n    {selected === 'news' && (\n      <Div id=\"tab-content-news\" aria-labelledby=\"tab-news\" role=\"tabpanel\" tabIndex={0}>\n        Контент новостей\n      </Div>\n    )}\n    {selected === 'recommendations' && (\n      <Div\n        id=\"tab-content-recommendations\"\n        aria-labelledby=\"tab-recommendations\"\n        role=\"tabpanel\"\n        tabIndex={0}\n      >\n        Контент рекомендаций\n      </Div>\n    )}\n  </Group>\n);"}]
+14:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"api","children":["$","a",null,{"href":"#api","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Свойства и методы","children":["Свойства и методы",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+15:["$","div",null,{"className":"Table_root__0rGvK","children":["$","table",null,{"className":"Table_table__NzLHi PropsTable_root__O959b","children":[["$","thead",null,{"children":["$","tr",null,{"children":[["$","th",null,{"children":"Свойство","className":"Table_th__EHorR"}],["$","th",null,{"children":"Описание","className":"Table_th__EHorR"}]],"className":"Table_tr__SD2Ot"}]}],["$","tbody",null,{"children":["$@1e","$@1f","$@20","$@21","$@22","$@23","$@24"]}]]}]}]
+19:null
+1b:["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"const"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" ["}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"color"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":", "}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"setColor"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"] "}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" React."}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":"useState"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"("}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"'red'"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":");"}]]}]
+1c:["$","span",null,{"children":" "}]
+1d:["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"<"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"SegmentedControl"}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" options"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"{colors} "}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":"value"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"{color} "}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":"onChange"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"{setColor} />;"}]]}]
+1e:["$","tr","defaultValue",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"defaultValue"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"SegmentedControlValue"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Значение по умолчанию (для неконтролируемого компонента)."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"options[0]?.value"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+1f:["$","tr","getRootRef",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"getRootRef"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"Ref<HTMLDivElement>"}],"$undefined",["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+20:["$","tr","name",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"name"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"string"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Имя для input-элементов внутри компонента."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+21:["$","tr","onChange",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"onChange"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"((value: T) => void)"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Обработчик изменения выбранного значения."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+22:["$","tr","options",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ PropsTable_propRequired__6g8iy","children":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"options"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"SegmentedControlOptionInterface<T>[]"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Массив опций для отображения в компоненте."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+23:["$","tr","size",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"size"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"\"m\" | \"l\""}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Размер компонента."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"l"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+24:["$","tr","value",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"value"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"SegmentedControlValue"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Текущее выбранное значение (для контролируемого компонента)."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]

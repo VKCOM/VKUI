@@ -1,0 +1,1 @@
+import{n as e}from"./chunk-BneVvdWh.js";import{t}from"./useModalManager-B4AIXE_t.js";var n=e((()=>{})),r=e((()=>{t(),n()}));export{r as t};

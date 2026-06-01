@@ -1,14 +1,15 @@
 1:"$Sreact.fragment"
-2:I[23450,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-3c03d819f20b8c00.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-b739105cb26c9d3d.js"],"Main"]
-4:I[74517,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-3c03d819f20b8c00.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-b739105cb26c9d3d.js"],"Overview",1]
-18:I[18443,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-3c03d819f20b8c00.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-b739105cb26c9d3d.js"],"Anchor"]
-19:I[80204,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-3c03d819f20b8c00.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-b739105cb26c9d3d.js"],"PlaygroundLazy"]
-1a:I[73143,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-3c03d819f20b8c00.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-b739105cb26c9d3d.js"],"BlockWrapper"]
-25:I[91042,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-3c03d819f20b8c00.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-b739105cb26c9d3d.js"],"TOC"]
+2:I[23450,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-8b15f4951e4a63c2.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Main"]
+4:I[74517,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-8b15f4951e4a63c2.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Overview",1]
+18:I[18443,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-8b15f4951e4a63c2.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Anchor"]
+19:I[80204,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-8b15f4951e4a63c2.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"PlaygroundLazy"]
+1a:I[73143,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-8b15f4951e4a63c2.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"BlockWrapper"]
+25:I[91042,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-8b15f4951e4a63c2.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"TOC"]
 26:I[90484,[],"OutletBoundary"]
 27:"$Sreact.suspense"
-3:Te26,---
+3:Te36,---
 description: Компонент, который представляет собой базовую обертку для переключателей (checkbox, radio, switch).
+tags: selection
 ---
 
 <Overview group="utils">
@@ -80,7 +81,7 @@ import { BlockWrapper } from '@/components/wrappers';
 
 ### SelectionControl.Label [#selection-control-label-api]
 
-</PropsTable>0:{"rsc":["$","$1","c",{"children":[[["$","$L2",null,{"metadata":{"description":"Компонент, который представляет собой базовую обертку для переключателей (checkbox, radio, switch).","title":"SelectionControl","filePath":"content/components/selection-control.mdx","timestamp":1766657796000},"sourceCode":"$3","children":[["$","$L4",null,{"group":"utils","children":[["$","h1",null,{"className":"mdx_h1__1mgpN","data-pagefind-filter":"tag:component","children":"SelectionControl"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Компонент, который представляет собой базовую обертку для переключателей (",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"checkbox"}],", ","$L5",", ","$L6",").\nЛежит в основе таких компонентов как ","$L7",", ","$L8"," и ","$L9","."]}]]}],"\n","\n","$La","\n","$Lb","\n","$Lc","\n","$Ld","\n","$Le","\n","$Lf","\n","$L10","\n","$L11","\n","$L12","\n","\n","\n","$L13","\n","$L14","\n","$L15"]}],"$L16"],null,"$L17"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"wX_uV_o5D_T3V3BNSy3_S"}
+</PropsTable>0:{"rsc":["$","$1","c",{"children":[[["$","$L2",null,{"metadata":{"description":"Компонент, который представляет собой базовую обертку для переключателей (checkbox, radio, switch).","tags":"selection","title":"SelectionControl","filePath":"content/components/selection-control.mdx","timestamp":1780314995000},"sourceCode":"$3","children":[["$","$L4",null,{"group":"utils","children":[["$","h1",null,{"className":"mdx_h1__1mgpN","data-pagefind-filter":"tag:component","children":"SelectionControl"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Компонент, который представляет собой базовую обертку для переключателей (",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"checkbox"}],", ","$L5",", ","$L6",").\nЛежит в основе таких компонентов как ","$L7",", ","$L8"," и ","$L9","."]}]]}],"\n","\n","$La","\n","$Lb","\n","$Lc","\n","$Ld","\n","$Le","\n","$Lf","\n","$L10","\n","$L11","\n","$L12","\n","\n","\n","$L13","\n","$L14","\n","$L15"]}],"$L16"],null,"$L17"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"akOMQeU_OnoCo5Z5szjmq"}
 5:["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"radio"}]
 6:["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"switch"}]
 7:["$","$L18",null,{"href":"/components/radio","children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"Radio"}]}]

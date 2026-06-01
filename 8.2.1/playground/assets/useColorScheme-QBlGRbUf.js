@@ -1,0 +1,1 @@
+import{a as e,n as t}from"./chunk-BneVvdWh.js";import{t as n}from"./react-XedgCGTy.js";import{o as r,t as i}from"./ConfigProviderSubContexts-BJ-JjhN5.js";import{r as a}from"./colorScheme-DeGNXREO.js";function o(){return s.useContext(i)??`light`}var s,c=t((()=>{s=e(n(),1),r(),a()}));export{o as n,c as t};

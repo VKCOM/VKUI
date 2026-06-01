@@ -1,14 +1,15 @@
 1:"$Sreact.fragment"
-2:I[23450,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-3c03d819f20b8c00.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-b739105cb26c9d3d.js"],"Main"]
-4:I[74517,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-3c03d819f20b8c00.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-b739105cb26c9d3d.js"],"Overview",1]
-17:I[18443,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-3c03d819f20b8c00.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-b739105cb26c9d3d.js"],"Anchor"]
-18:I[80204,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-3c03d819f20b8c00.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-b739105cb26c9d3d.js"],"PlaygroundLazy"]
-19:I[19180,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-3c03d819f20b8c00.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-b739105cb26c9d3d.js"],"Pre"]
-35:I[91042,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-3c03d819f20b8c00.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-b739105cb26c9d3d.js"],"TOC"]
+2:I[23450,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-8b15f4951e4a63c2.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Main"]
+4:I[74517,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-8b15f4951e4a63c2.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Overview",1]
+17:I[18443,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-8b15f4951e4a63c2.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Anchor"]
+18:I[80204,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-8b15f4951e4a63c2.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"PlaygroundLazy"]
+19:I[19180,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-8b15f4951e4a63c2.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Pre"]
+35:I[91042,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-8b15f4951e4a63c2.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"TOC"]
 36:I[90484,[],"OutletBoundary"]
 37:"$Sreact.suspense"
-3:Tde8,---
+3:Tdf3,---
 description: Компонент для создания интерактивных карточек с изображением и текстовым содержимым.
+tags: card
 ---
 
 <Overview group="data-display">
@@ -85,7 +86,7 @@ description: Компонент для создания интерактивны
 
 ## Свойства и методы [#api]
 
-<PropsTable name="ContentCard" />0:{"rsc":["$","$1","c",{"children":[[["$","$L2",null,{"metadata":{"description":"Компонент для создания интерактивных карточек с изображением и текстовым содержимым.","title":"ContentCard","filePath":"content/components/content-card.mdx","timestamp":1766657796000},"sourceCode":"$3","children":[["$","$L4",null,{"group":"data-display","children":[["$","h1",null,{"className":"mdx_h1__1mgpN","data-pagefind-filter":"tag:component","children":"ContentCard"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Компонент для создания интерактивных карточек с изображением и текстовым содержимым.\nСочетает возможности кликабельных элементов, карточек и медиа-контента.\nАвтоматически распределяет свойства между вложенными компонентами."}],"$L5","$L6"]}],"\n","\n","$L7","\n","$L8","\n","$L9","\n","$La","\n","$Lb","\n","$Lc","\n","$Ld","\n","$Le","\n","$Lf","\n","$L10","\n","$L11","\n","$L12","\n","$L13","\n","$L14"]}],"$L15"],null,"$L16"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"wX_uV_o5D_T3V3BNSy3_S"}
+<PropsTable name="ContentCard" />0:{"rsc":["$","$1","c",{"children":[[["$","$L2",null,{"metadata":{"description":"Компонент для создания интерактивных карточек с изображением и текстовым содержимым.","tags":"card","title":"ContentCard","filePath":"content/components/content-card.mdx","timestamp":1780314995000},"sourceCode":"$3","children":[["$","$L4",null,{"group":"data-display","children":[["$","h1",null,{"className":"mdx_h1__1mgpN","data-pagefind-filter":"tag:component","children":"ContentCard"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Компонент для создания интерактивных карточек с изображением и текстовым содержимым.\nСочетает возможности кликабельных элементов, карточек и медиа-контента.\nАвтоматически распределяет свойства между вложенными компонентами."}],"$L5","$L6"]}],"\n","\n","$L7","\n","$L8","\n","$L9","\n","$La","\n","$Lb","\n","$Lc","\n","$Ld","\n","$Le","\n","$Lf","\n","$L10","\n","$L11","\n","$L12","\n","$L13","\n","$L14"]}],"$L15"],null,"$L16"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"akOMQeU_OnoCo5Z5szjmq"}
 5:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Связанные компоненты:"}]
 6:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["$","$L17",null,{"href":"/components/card-grid","children":"CardGrid"}]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["$","$L17",null,{"href":"/components/card-scroll","children":"CardScroll"}]}],"\n"]}]
 7:["$","$L18",null,{"code":"<ContentCard\n  onClick={() => {}}\n  src=\"https://images.unsplash.com/photo-1603988492906-4fb0fb251cf8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1600&q=80\"\n  alt=\"Picture of brown and gray mountains under blue sky during daytime photo\"\n  overTitle=\"unsplash\"\n  title=\"brown and gray mountains under blue sky during daytime photo\"\n  description=\"Mountain changji\"\n  caption=\"Photo by Siyuan on Unsplash\"\n  maxHeight={100}\n/>"}]

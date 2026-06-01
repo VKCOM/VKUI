@@ -1,0 +1,450 @@
+1:"$Sreact.fragment"
+2:I[23450,["275","static/chunks/275-4b587f05af731df9.js","433","static/chunks/433-071e76175aa96067.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Main"]
+7:I[74517,["275","static/chunks/275-4b587f05af731df9.js","433","static/chunks/433-071e76175aa96067.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Overview",1]
+8:I[18443,["275","static/chunks/275-4b587f05af731df9.js","433","static/chunks/433-071e76175aa96067.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Anchor"]
+9:I[80204,["275","static/chunks/275-4b587f05af731df9.js","433","static/chunks/433-071e76175aa96067.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"PlaygroundLazy"]
+46:I[91042,["275","static/chunks/275-4b587f05af731df9.js","433","static/chunks/433-071e76175aa96067.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"TOC"]
+47:I[90484,[],"OutletBoundary"]
+48:"$Sreact.suspense"
+4a:I[75605,["275","static/chunks/275-4b587f05af731df9.js","433","static/chunks/433-071e76175aa96067.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"OverlayButtonWrapper"]
+4b:I[19180,["275","static/chunks/275-4b587f05af731df9.js","433","static/chunks/433-071e76175aa96067.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Pre"]
+3:T3aac,---
+description: Компонент, который даёт пользователю возможность выполнить какое‑то действие или перейти на другую страницу.
+---
+
+<Overview group="buttons">
+
+# Button [tag:component]
+
+Компонент, который даёт пользователю возможность выполнить какое‑то действие или перейти на другую страницу.
+Правильный `HTML`-тег определяется автоматически (по умолчанию `button` или `a` при передаче свойства `href`).
+
+Связанные компоненты:
+
+- [`ButtonGroup`](/components/button-group)
+
+</Overview>
+
+{/* @example-description: Кнопка с текстом. */}
+<Playground>
+  ```jsx
+  <Button>Кнопка</Button>
+  ```
+</Playground>
+
+## Режимы отображения
+
+Задаётся свойством `mode`.
+
+- `"primary"` — акцентная кнопка. Используется для выполнения основных действий
+  (например, "Сохранить", "Отправить", "Открыть");
+- `"secondary"` — второстепенная кнопка. Подходит для действий, которые не являются основными, но все же важны
+  (например, «Отмена», «Редактировать»). Может применяться в сочетании с `primary` кнопкой;
+- `"outline"` — второстепенная кнопка с обводкой со средним акцентом. Используется в ситуациях,
+  когда необходимо сохранить визуальную легкость интерфейса. Также может применяться,
+  когда фон `secondary` кнопки сливается с фоном интерфейса/баннера;
+- `"tertiary"` — кнопка без фона с низким акцентом. Часто используется для действий,
+  которые имеют минимальное влияние на интерфейс (например, «Помощь», «Подробнее», «Справка»).
+  Также применяется в контексте, где `primary` и `secondary` кнопки уже заданы;
+- `"link"` — визуально то же самое, что и `tertiary`, но без фона и боковых отступов.
+  Может найти применение в шапках или в одном ряду с элементами интерфейса,
+  где требуется небольшой отступ между объектами.
+
+## Визуальное оформление
+
+### Цвет
+
+Задаётся свойством `appearance`.
+
+#### `"accent"`
+
+Значение задаёт кнопке акцентный цвет, который может меняться в зависимости от светлой или тёмной схемы.
+
+{/* @example-description: Все mode с appearance="accent". */}
+<Playground>
+  ```jsx
+  <Button appearance="accent" mode="primary">
+    Primary
+  </Button>
+  <Button appearance="accent" mode="outline">
+    Outline
+  </Button>
+  <Button appearance="accent" mode="secondary">
+    Secondary
+  </Button>
+  <Button appearance="accent" mode="tertiary">
+    Tertiary
+  </Button>
+  <Button appearance="accent" mode="link">
+    Link
+  </Button>
+  ```
+</Playground>
+
+#### `"accent-invariable"`
+
+Значение задаёт кнопке акцентный цвет, который не меняется в зависимости от светлой или тёмной темы.
+
+{/* @example-description: mode с accent-invariable. */}
+<Playground>
+  ```jsx
+  <Button appearance="accent-invariable" mode="primary">
+    Primary
+  </Button>
+  <Button appearance="accent-invariable" mode="outline">
+    Outline
+  </Button>
+  <Button appearance="accent-invariable" mode="secondary">
+    Secondary
+  </Button>
+  <Button appearance="accent-invariable" mode="tertiary">
+    Tertiary
+  </Button>
+  <Button appearance="accent-invariable" mode="link">
+    Link
+  </Button>
+  ```
+</Playground>
+
+#### `"positive"`
+
+Значение задаёт кнопке цвет для действия подтверждения (чаще всего зеленый).
+
+{/* @example-description: appearance="positive" во всех mode. */}
+<Playground>
+  ```jsx
+  <Button appearance="positive" mode="primary">
+    Primary
+  </Button>
+  <Button appearance="positive" mode="outline">
+    Outline
+  </Button>
+  <Button appearance="positive" mode="secondary">
+    Secondary
+  </Button>
+  <Button appearance="positive" mode="tertiary">
+    Tertiary
+  </Button>
+  <Button appearance="positive" mode="link">
+    Link
+  </Button>
+  ```
+</Playground>
+
+#### `"negative"`
+
+Значение задаёт кнопке цвет критических действий (чаще всего красный).
+
+{/* @example-description: Примеры критического стиля `appearance="negative"` для разных `mode`. */}
+<Playground>
+  ```jsx
+  <Button appearance="negative" mode="primary">
+    Primary
+  </Button>
+  <Button appearance="negative" mode="outline">
+    Outline
+  </Button>
+  <Button appearance="negative" mode="secondary">
+    Secondary
+  </Button>
+  <Button appearance="negative" mode="tertiary">
+    Tertiary
+  </Button>
+  <Button appearance="negative" mode="link">
+    Link
+  </Button>
+  ```
+</Playground>
+
+#### `"neutral"`
+
+Значение задаёт кнопке нейтральный цвет, который также может являться альтернативным акцентным цветом кнопки.
+
+{/* @example-description: Нейтральная палитра кнопок `appearance="neutral"` во всех режимах отображения. */}
+<Playground>
+  ```jsx
+  <Button appearance="neutral" mode="primary">
+    Primary
+  </Button>
+  <Button appearance="neutral" mode="outline">
+    Outline
+  </Button>
+  <Button appearance="neutral" mode="secondary">
+    Secondary
+  </Button>
+  <Button appearance="neutral" mode="tertiary">
+    Tertiary
+  </Button>
+  <Button appearance="neutral" mode="link">
+    Link
+  </Button>
+  ```
+</Playground>
+
+#### `"overlay"`
+
+Значение цвета используется для кнопок, располагающихся поверх цветных элементов или фото.
+
+import { OverlayButtonWrapper } from '@/components/wrappers';
+
+{/* @example-description: Кнопки `appearance="overlay"` для размещения поверх изображений и цветных фонов. */}
+<Playground Wrapper={OverlayButtonWrapper}>
+  ```jsx
+  <Button appearance="overlay" mode="primary">
+    Primary
+  </Button>
+  <Button appearance="overlay" mode="outline">
+    Outline
+  </Button>
+  <Button appearance="overlay" mode="secondary">
+    Secondary
+  </Button>
+  <Button appearance="overlay" mode="tertiary">
+    Tertiary
+  </Button>
+  <Button appearance="overlay" mode="link">
+    Link
+  </Button>
+  ```
+</Playground>
+
+### Скругление
+
+Задаётся свойством `rounded`.
+
+Свойство позволяет переопределить радиус скругления для возможности получить полностью скругленную кнопку.
+
+{/* @example-description: Скруглённые кнопки: текстовая и иконка-кнопка с `rounded`. */}
+<Playground>
+  ```jsx
+  <Button rounded>Rounded</Button>
+  <Button before={<Icon12Add />} rounded aria-label="Добавить" />
+  ```
+</Playground>
+
+## Размеры
+
+Задаётся свойством `size`.
+
+Значения, соответствующие каждому размеру, зависят от параметра адаптивности `density`.
+В режиме `density="compact"` значения каждого из размеров будут меньше, чем в режиме `density="regular"`.
+
+{/* @example-description: Сравнение размеров `s/m/l` в режимах адаптивности `compact` и `regular`. */}
+<Playground direction="column">
+  ```jsx
+  <AdaptivityProvider density="compact">
+    <Flex gap="m" align="center">
+      <Button size="s">s</Button>
+      <Button size="m">m</Button>
+      <Button size="l">l</Button>
+    </Flex>
+  </AdaptivityProvider>
+  <AdaptivityProvider density="regular">
+    <Flex gap="m" align="center">
+      <Button size="s">s</Button>
+      <Button size="m">m</Button>
+      <Button size="l">l</Button>
+    </Flex>
+  </AdaptivityProvider>
+  ```
+</Playground>
+
+## Состояния
+
+### `disabled`
+
+Свойство позволяет отключить возможность взаимодействия с кнопкой и добавляет визуальную индикацию недоступности;
+
+{/* @example-description: Кнопка в состоянии `disabled` без возможности взаимодействия. */}
+<Playground>
+  ```jsx
+  <Button disabled>Button</Button>
+  ```
+</Playground>
+
+### `loading`
+
+Свойство позволяет добавить индикацию загрузки вместо содержимого кнопки. Используйте, когда после взаимодействия с кнопкой
+запускаются затратные по времени действия.
+
+⚠️ **Важно для доступности**: При использовании `loading={true}` компонент автоматически устанавливает `aria-label` в значение
+`loadingLabel` (по умолчанию "Загрузка..."), чтобы скринридер мог объявить контекст загрузки. Вы можете переопределить это
+значение, передав свойство `loadingLabel`.
+
+{/* @example-description: Состояние загрузки кнопки с дефолтным и кастомным `loadingLabel`. */}
+<Playground>
+  ```jsx
+<Button loading>Сохранить</Button>
+<Button loading loadingLabel="Сохранение данных...">Сохранить</Button>
+  ```
+</Playground>
+
+## Выравнивание
+
+Задаётся свойством `align`.
+
+{/* @example-description: Выравнивание содержимого кнопки по левому, центру и правому краю. */}
+<Playground>
+  ```jsx
+  <Button align="left">Left</Button>
+  <Button align="center">Center</Button>
+  <Button align="right">Right</Button>
+  ```
+</Playground>
+
+## Контент в начале/в конце
+
+В компоненте доступна возможность добавления дополнительного контента слева и/или справа от текста,
+задаётся свойством `before` и `after` соответственно. Наиболее частый вариант использования свойств `before`/`after` - иконки.
+
+Следует руководствоваться следующими правилами:
+
+- для кнопок `size="s"` рекомендуется использовать иконки размером `12px`;
+- для кнопок `size="m"` рекомендуется использовать иконки размером `16px`;
+- для кнопок `size="l"` рекомендуется использовать иконки размером `24px`.
+
+Также для кнопок `size="l"` можно использовать компонент `Counter` в `before`/`after`.
+
+Обратите внимание, что есть возможность использовать `before`/`after` без указания текста (свойство `children`).
+Таким образом можно создавать кнопки, которые содержат только иконку. Обратитесь к разделу [`a11y`](#a11y),
+потому что подобные кнопки требуют дополнительных действий для поддержания доступности.
+
+{/* @example-description: Добавление контента в `before/after`: иконки и счётчик в кнопках разных размеров. */}
+<Playground>
+  ```jsx
+  <Button after={<Icon12Like />} size="s" aria-label="Добавить в избранное" />
+  <Button before={<Icon16Add />} size="m">
+    Добавить
+  </Button>
+  <Button after={<Counter>16</Counter>} size="l">
+    Открыть
+  </Button>
+  ```
+</Playground>
+
+## Доступность (a11y) [#a11y]
+
+Как уже было указано выше, компонент автоматически выбирает правильный `HTML`-тег
+(по умолчанию `button` или `a` при передаче свойства `href`), обеспечивая базовые требования доступности.
+
+Также компонент поддерживает все стандартные `aria`-атрибуты, если вам необходимо переопределить
+стандартное поведение.
+
+Обратите внимание, что при передаче свойства `href` и `disabled` одновременно, VKUI перестаёт передавать для тэга `a`
+свойство `href`, отключая возможность взаимодействия.
+По возможности старайтесь не передавать `href` и `disabled` одновременно, потому что это не соответствует `a11y`.
+
+Если вы используете кнопку, которая содержит только иконку (`before`/`after` свойство без указания `children`),
+то обязательно добавьте `aria-label` для компонента. Лучшим решением вместо `aria-label` будет использование
+компонента `VisuallyHidden` с необходимым текстом, так как такое решение будет
+наиболее универсальным для всех ассистивных технологий.
+
+```jsx
+// хорошо
+<Button before={<Icon16Search />} size="m" aria-label="Найти" />
+
+// ещё лучше
+<Button before={<Icon16Search />} size="m">
+  <VisuallyHidden>Найти</VisuallyHidden>
+</Button>
+```
+
+### disableSpinnerAnimation
+
+Компонент поддерживает свойство `disableSpinnerAnimation`, которое позволяет отключить анимацию при указании
+`loading={true}`.
+
+## Свойства и методы [#api]
+
+<PropsTable name="Button" />0:{"rsc":["$","$1","c",{"children":[[["$","$L2",null,{"metadata":{"description":"Компонент, который даёт пользователю возможность выполнить какое‑то действие или перейти на другую страницу.","title":"Button","filePath":"content/components/button.mdx","timestamp":1780314995000},"sourceCode":"$3","children":"$L4"}],"$L5"],null,"$L6"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"02IBK9sLgKxTeOt8DUsGA"}
+4:[["$","$L7",null,{"group":"buttons","children":[["$","h1",null,{"className":"mdx_h1__1mgpN","data-pagefind-filter":"tag:component","children":"Button"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Компонент, который даёт пользователю возможность выполнить какое‑то действие или перейти на другую страницу.\nПравильный ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"HTML"}],"-тег определяется автоматически (по умолчанию ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"button"}]," или ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"a"}]," при передаче свойства ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"href"}],")."]}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Связанные компоненты:"}],["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["$","$L8",null,{"href":"/components/button-group","children":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"ButtonGroup"}]}]}],"\n"]}]]}],"\n","\n",["$","$L9",null,{"code":"<Button>Кнопка</Button>"}],"\n",["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"rezhimy-otobrazheniya","children":["$","a",null,{"href":"#rezhimy-otobrazheniya","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Режимы отображения","children":["Режимы отображения",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}],"\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Задаётся свойством ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"mode"}],"."]}],"\n",["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"\"primary\""}]," — акцентная кнопка. Используется для выполнения основных действий\n(например, “Сохранить”, “Отправить”, “Открыть”);"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"\"secondary\""}]," — второстепенная кнопка. Подходит для действий, которые не являются основными, но все же важны\n(например, «Отмена», «Редактировать»). Может применяться в сочетании с ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"primary"}]," кнопкой;"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"\"outline\""}]," — второстепенная кнопка с обводкой со средним акцентом. Используется в ситуациях,\nкогда необходимо сохранить визуальную легкость интерфейса. Также может применяться,\nкогда фон ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"secondary"}]," кнопки сливается с фоном интерфейса/баннера;"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"\"tertiary\""}]," — кнопка без фона с низким акцентом. Часто используется для действий,\nкоторые имеют минимальное влияние на интерфейс (например, «Помощь», «Подробнее», «Справка»).\nТакже применяется в контексте, где ","$La"," и ","$Lb"," кнопки уже заданы;"]}],"\n","$Lc","\n"]}],"\n","$Ld","\n","$Le","\n","$Lf","\n","$L10","\n","$L11","\n","\n","$L12","\n","$L13","\n","$L14","\n","\n","$L15","\n","$L16","\n","$L17","\n","\n","$L18","\n","$L19","\n","$L1a","\n","\n","$L1b","\n","$L1c","\n","$L1d","\n","\n","$L1e","\n","$L1f","\n","$L20","\n","\n","\n","$L21","\n","$L22","\n","$L23","\n","$L24","\n","\n","$L25","\n","$L26","\n","$L27","\n","$L28","\n","\n","$L29","\n","$L2a","\n","$L2b","\n","$L2c","\n","\n","$L2d","\n","$L2e","\n","$L2f","\n","$L30","\n","\n","$L31","\n","$L32","\n","$L33","\n","\n","$L34","\n","$L35","\n","$L36","\n","$L37","\n","$L38","\n","$L39","\n","$L3a","\n","\n","$L3b","\n","$L3c","\n","$L3d","\n","$L3e","\n","$L3f","\n","$L40","\n","$L41","\n","$L42","\n","$L43","\n","$L44","\n","$L45"]
+5:["$","$L46",null,{"toc":[{"value":"Режимы отображения","id":"rezhimy-otobrazheniya","depth":2},{"value":"Визуальное оформление","id":"vizualnoe-oformlenie","depth":2},{"value":"Цвет","id":"cvet","depth":3},{"value":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"\"accent\""}],"id":"accent","depth":4},{"value":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"\"accent-invariable\""}],"id":"accent-invariable","depth":4},{"value":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"\"positive\""}],"id":"positive","depth":4},{"value":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"\"negative\""}],"id":"negative","depth":4},{"value":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"\"neutral\""}],"id":"neutral","depth":4},{"value":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"\"overlay\""}],"id":"overlay","depth":4},{"value":"Скругление","id":"skruglenie","depth":3},{"value":"Размеры","id":"razmery","depth":2},{"value":"Состояния","id":"sostoyaniya","depth":2},{"value":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"disabled"}],"id":"disabled","depth":3},{"value":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"loading"}],"id":"loading","depth":3},{"value":"Выравнивание","id":"vyravnivanie","depth":2},{"value":"Контент в начале/в конце","id":"kontent-v-nachalev-konce","depth":2},{"value":"Доступность (a11y)","id":"a11y","depth":2},{"value":"disableSpinnerAnimation","id":"disablespinneranimation","depth":3},{"value":"Свойства и методы","id":"api","depth":2}]}]
+6:["$","$L47",null,{"children":["$","$48",null,{"name":"Next.MetadataOutlet","children":"$@49"}]}]
+a:["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"primary"}]
+b:["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"secondary"}]
+c:["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"\"link\""}]," — визуально то же самое, что и ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"tertiary"}],", но без фона и боковых отступов.\nМожет найти применение в шапках или в одном ряду с элементами интерфейса,\nгде требуется небольшой отступ между объектами."]}]
+d:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"vizualnoe-oformlenie","children":["$","a",null,{"href":"#vizualnoe-oformlenie","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Визуальное оформление","children":["Визуальное оформление",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+e:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"cvet","children":["$","a",null,{"href":"#cvet","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Цвет","children":["Цвет",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+f:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Задаётся свойством ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"appearance"}],"."]}]
+10:["$","h4",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading4__c9VtX","id":"accent","children":["$","a",null,{"href":"#accent","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию [object Object]","children":["$5:props:toc:3:value",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+11:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Значение задаёт кнопке акцентный цвет, который может меняться в зависимости от светлой или тёмной схемы."}]
+12:["$","$L9",null,{"code":"<Button appearance=\"accent\" mode=\"primary\">\n  Primary\n</Button>\n<Button appearance=\"accent\" mode=\"outline\">\n  Outline\n</Button>\n<Button appearance=\"accent\" mode=\"secondary\">\n  Secondary\n</Button>\n<Button appearance=\"accent\" mode=\"tertiary\">\n  Tertiary\n</Button>\n<Button appearance=\"accent\" mode=\"link\">\n  Link\n</Button>"}]
+13:["$","h4",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading4__c9VtX","id":"accent-invariable","children":["$","a",null,{"href":"#accent-invariable","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию [object Object]","children":["$5:props:toc:4:value",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+14:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Значение задаёт кнопке акцентный цвет, который не меняется в зависимости от светлой или тёмной темы."}]
+15:["$","$L9",null,{"code":"<Button appearance=\"accent-invariable\" mode=\"primary\">\n  Primary\n</Button>\n<Button appearance=\"accent-invariable\" mode=\"outline\">\n  Outline\n</Button>\n<Button appearance=\"accent-invariable\" mode=\"secondary\">\n  Secondary\n</Button>\n<Button appearance=\"accent-invariable\" mode=\"tertiary\">\n  Tertiary\n</Button>\n<Button appearance=\"accent-invariable\" mode=\"link\">\n  Link\n</Button>"}]
+16:["$","h4",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading4__c9VtX","id":"positive","children":["$","a",null,{"href":"#positive","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию [object Object]","children":["$5:props:toc:5:value",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+17:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Значение задаёт кнопке цвет для действия подтверждения (чаще всего зеленый)."}]
+18:["$","$L9",null,{"code":"<Button appearance=\"positive\" mode=\"primary\">\n  Primary\n</Button>\n<Button appearance=\"positive\" mode=\"outline\">\n  Outline\n</Button>\n<Button appearance=\"positive\" mode=\"secondary\">\n  Secondary\n</Button>\n<Button appearance=\"positive\" mode=\"tertiary\">\n  Tertiary\n</Button>\n<Button appearance=\"positive\" mode=\"link\">\n  Link\n</Button>"}]
+19:["$","h4",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading4__c9VtX","id":"negative","children":["$","a",null,{"href":"#negative","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию [object Object]","children":["$5:props:toc:6:value",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+1a:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Значение задаёт кнопке цвет критических действий (чаще всего красный)."}]
+1b:["$","$L9",null,{"code":"<Button appearance=\"negative\" mode=\"primary\">\n  Primary\n</Button>\n<Button appearance=\"negative\" mode=\"outline\">\n  Outline\n</Button>\n<Button appearance=\"negative\" mode=\"secondary\">\n  Secondary\n</Button>\n<Button appearance=\"negative\" mode=\"tertiary\">\n  Tertiary\n</Button>\n<Button appearance=\"negative\" mode=\"link\">\n  Link\n</Button>"}]
+1c:["$","h4",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading4__c9VtX","id":"neutral","children":["$","a",null,{"href":"#neutral","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию [object Object]","children":["$5:props:toc:7:value",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+1d:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Значение задаёт кнопке нейтральный цвет, который также может являться альтернативным акцентным цветом кнопки."}]
+1e:["$","$L9",null,{"code":"<Button appearance=\"neutral\" mode=\"primary\">\n  Primary\n</Button>\n<Button appearance=\"neutral\" mode=\"outline\">\n  Outline\n</Button>\n<Button appearance=\"neutral\" mode=\"secondary\">\n  Secondary\n</Button>\n<Button appearance=\"neutral\" mode=\"tertiary\">\n  Tertiary\n</Button>\n<Button appearance=\"neutral\" mode=\"link\">\n  Link\n</Button>"}]
+1f:["$","h4",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading4__c9VtX","id":"overlay","children":["$","a",null,{"href":"#overlay","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию [object Object]","children":["$5:props:toc:8:value",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+20:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Значение цвета используется для кнопок, располагающихся поверх цветных элементов или фото."}]
+21:["$","$L9",null,{"Wrapper":"$4a","code":"<Button appearance=\"overlay\" mode=\"primary\">\n  Primary\n</Button>\n<Button appearance=\"overlay\" mode=\"outline\">\n  Outline\n</Button>\n<Button appearance=\"overlay\" mode=\"secondary\">\n  Secondary\n</Button>\n<Button appearance=\"overlay\" mode=\"tertiary\">\n  Tertiary\n</Button>\n<Button appearance=\"overlay\" mode=\"link\">\n  Link\n</Button>"}]
+22:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"skruglenie","children":["$","a",null,{"href":"#skruglenie","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Скругление","children":["Скругление",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+23:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Задаётся свойством ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"rounded"}],"."]}]
+24:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Свойство позволяет переопределить радиус скругления для возможности получить полностью скругленную кнопку."}]
+25:["$","$L9",null,{"code":"<Button rounded>Rounded</Button>\n<Button before={<Icon12Add />} rounded aria-label=\"Добавить\" />"}]
+26:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"razmery","children":["$","a",null,{"href":"#razmery","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Размеры","children":["Размеры",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+27:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Задаётся свойством ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"size"}],"."]}]
+28:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Значения, соответствующие каждому размеру, зависят от параметра адаптивности ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"density"}],".\nВ режиме ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"density=\"compact\""}]," значения каждого из размеров будут меньше, чем в режиме ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"density=\"regular\""}],"."]}]
+29:["$","$L9",null,{"direction":"column","code":"<AdaptivityProvider density=\"compact\">\n  <Flex gap=\"m\" align=\"center\">\n    <Button size=\"s\">s</Button>\n    <Button size=\"m\">m</Button>\n    <Button size=\"l\">l</Button>\n  </Flex>\n</AdaptivityProvider>\n<AdaptivityProvider density=\"regular\">\n  <Flex gap=\"m\" align=\"center\">\n    <Button size=\"s\">s</Button>\n    <Button size=\"m\">m</Button>\n    <Button size=\"l\">l</Button>\n  </Flex>\n</AdaptivityProvider>"}]
+2a:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"sostoyaniya","children":["$","a",null,{"href":"#sostoyaniya","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Состояния","children":["Состояния",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+2b:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"disabled","children":["$","a",null,{"href":"#disabled","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию [object Object]","children":["$5:props:toc:12:value",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+2c:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Свойство позволяет отключить возможность взаимодействия с кнопкой и добавляет визуальную индикацию недоступности;"}]
+2d:["$","$L9",null,{"code":"<Button disabled>Button</Button>"}]
+2e:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"loading","children":["$","a",null,{"href":"#loading","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию [object Object]","children":["$5:props:toc:13:value",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+2f:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Свойство позволяет добавить индикацию загрузки вместо содержимого кнопки. Используйте, когда после взаимодействия с кнопкой\nзапускаются затратные по времени действия."}]
+30:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["⚠️ ",["$","strong",null,{"className":"mdx_strong__N7OUG","children":"Важно для доступности"}],": При использовании ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"loading={true}"}]," компонент автоматически устанавливает ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"aria-label"}]," в значение\n",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"loadingLabel"}]," (по умолчанию “Загрузка…”), чтобы скринридер мог объявить контекст загрузки. Вы можете переопределить это\nзначение, передав свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"loadingLabel"}],"."]}]
+31:["$","$L9",null,{"code":"<Button loading>Сохранить</Button>\n<Button loading loadingLabel=\"Сохранение данных...\">Сохранить</Button>"}]
+32:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"vyravnivanie","children":["$","a",null,{"href":"#vyravnivanie","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Выравнивание","children":["Выравнивание",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+33:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Задаётся свойством ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"align"}],"."]}]
+34:["$","$L9",null,{"code":"<Button align=\"left\">Left</Button>\n<Button align=\"center\">Center</Button>\n<Button align=\"right\">Right</Button>"}]
+35:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"kontent-v-nachalev-konce","children":["$","a",null,{"href":"#kontent-v-nachalev-konce","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Контент в начале/в конце","children":["Контент в начале/в конце",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+36:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["В компоненте доступна возможность добавления дополнительного контента слева и/или справа от текста,\nзадаётся свойством ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"before"}]," и ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"after"}]," соответственно. Наиболее частый вариант использования свойств ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"before"}],"/",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"after"}]," - иконки."]}]
+37:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Следует руководствоваться следующими правилами:"}]
+38:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["для кнопок ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"size=\"s\""}]," рекомендуется использовать иконки размером ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"12px"}],";"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["для кнопок ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"size=\"m\""}]," рекомендуется использовать иконки размером ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"16px"}],";"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["для кнопок ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"size=\"l\""}]," рекомендуется использовать иконки размером ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"24px"}],"."]}],"\n"]}]
+39:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Также для кнопок ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"size=\"l\""}]," можно использовать компонент ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"Counter"}]," в ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"before"}],"/",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"after"}],"."]}]
+3a:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Обратите внимание, что есть возможность использовать ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"before"}],"/",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"after"}]," без указания текста (свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"children"}],").\nТаким образом можно создавать кнопки, которые содержат только иконку. Обратитесь к разделу ",["$","$L8",null,{"href":"#a11y","children":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"a11y"}]}],",\nпотому что подобные кнопки требуют дополнительных действий для поддержания доступности."]}]
+3b:["$","$L9",null,{"code":"<Button after={<Icon12Like />} size=\"s\" aria-label=\"Добавить в избранное\" />\n<Button before={<Icon16Add />} size=\"m\">\n  Добавить\n</Button>\n<Button after={<Counter>16</Counter>} size=\"l\">\n  Открыть\n</Button>"}]
+3c:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"a11y","children":["$","a",null,{"href":"#a11y","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Доступность (a11y)","children":["Доступность (a11y)",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+3d:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Как уже было указано выше, компонент автоматически выбирает правильный ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"HTML"}],"-тег\n(по умолчанию ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"button"}]," или ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"a"}]," при передаче свойства ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"href"}],"), обеспечивая базовые требования доступности."]}]
+3e:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Также компонент поддерживает все стандартные ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"aria"}],"-атрибуты, если вам необходимо переопределить\nстандартное поведение."]}]
+3f:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Обратите внимание, что при передаче свойства ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"href"}]," и ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"disabled"}]," одновременно, VKUI перестаёт передавать для тэга ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"a"}],"\nсвойство ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"href"}],", отключая возможность взаимодействия.\nПо возможности старайтесь не передавать ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"href"}]," и ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"disabled"}]," одновременно, потому что это не соответствует ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"a11y"}],"."]}]
+40:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Если вы используете кнопку, которая содержит только иконку (",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"before"}],"/",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"after"}]," свойство без указания ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"children"}],"),\nто обязательно добавьте ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"aria-label"}]," для компонента. Лучшим решением вместо ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"aria-label"}]," будет использование\nкомпонента ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"VisuallyHidden"}]," с необходимым текстом, так как такое решение будет\nнаиболее универсальным для всех ассистивных технологий."]}]
+41:["$","$L4b",null,{"tabIndex":"0","data-language":"jsx","data-word-wrap":"","data-copy":"","data-pagefind-ignore":"all","children":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":[["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#6A737D","--shiki-dark":"#6A737D"},"children":"// хорошо"}]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"<"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Button"}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" before"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"{<"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Icon16Search"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" />} "}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":"size"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"m\""}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" aria-label"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"Найти\""}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" />"}]]}],"\n",["$","span",null,{"children":" "}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#6A737D","--shiki-dark":"#6A737D"},"children":"// ещё лучше"}]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"<"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Button"}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" before"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"{<"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Icon16Search"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" />} "}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":"size"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"m\""}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  <"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"VisuallyHidden"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">Найти</"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"VisuallyHidden"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"</"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Button"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}]]}]}]
+42:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"disablespinneranimation","children":["$","a",null,{"href":"#disablespinneranimation","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию disableSpinnerAnimation","children":["disableSpinnerAnimation",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+43:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Компонент поддерживает свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"disableSpinnerAnimation"}],", которое позволяет отключить анимацию при указании\n",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"loading={true}"}],"."]}]
+44:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"api","children":["$","a",null,{"href":"#api","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Свойства и методы","children":["Свойства и методы",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+45:["$","div",null,{"className":"Table_root__0rGvK","children":["$","table",null,{"className":"Table_table__NzLHi PropsTable_root__O959b","children":[["$","thead",null,{"children":["$","tr",null,{"children":[["$","th",null,{"children":"Свойство","className":"Table_th__EHorR"}],["$","th",null,{"children":"Описание","className":"Table_th__EHorR"}]],"className":"Table_tr__SD2Ot"}]}],["$","tbody",null,{"children":["$@4c","$@4d","$@4e","$@4f","$@50","$@51","$@52","$@53","$@54","$@55","$@56","$@57","$@58","$@59","$@5a","$@5b","$@5c","$@5d","$@5e","$@5f","$@60","$@61","$@62","$@63","$@64","$@65","$@66"]}]]}]}]
+49:null
+4c:["$","tr","activated",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"activated"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"boolean"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Позволяет управлять ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"activated"}],"-состоянием извне."]}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+4d:["$","tr","activeClassName",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ PropsTable_propDeprecated__upMw_","children":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"activeClassName"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"string"}],[["$","p",null,{"className":"mdx_paragraph__nVfmE","children":[["$","strong",null,{"className":"mdx_strong__N7OUG","children":"Deprecated"}],": Since 7.3.0. Будет удалено в ",["$","strong",null,{"className":"mdx_strong__N7OUG","children":"VKUI v9"}],"."]}],"\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Используйте свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"activeMode"}],"."]}]],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+4e:["$","tr","activeEffectDelay",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"activeEffectDelay"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"number"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Длительность показа ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"active"}],"-состояния."]}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+4f:["$","tr","activeMode",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"activeMode"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"StateModeLiteral"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Стиль подсветки active-состояния. Если передать произвольную строку, она добавится как css-класс во время active."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+50:["$","tr","after",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"after"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"ReactNode"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Контент, отображаемый после основного содержимого кнопки."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+51:["$","tr","align",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"align"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"AlignType"}],"$undefined",["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"center"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+52:["$","tr","appearance",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"appearance"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"\"accent\" | \"positive\" | \"negative\" | \"neutral\" | \"overlay\" | \"accent-invariable\""}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Цветовая схема кнопки."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"accent"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+53:["$","tr","before",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"before"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"ReactNode"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Контент, отображаемый перед основным содержимым кнопки."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+54:["$","tr","borderRadiusMode",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"borderRadiusMode"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"\"auto\" | \"inherit\""}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Задает border-radius элементу\nВ режиме ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"auto"}]," на маленьких экранах ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"border-radius: 0"}],", иначе определяется токеном ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"--vkui--size_border_radius--regular"}],"."]}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+55:["$","tr","Component",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"Component"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"ElementType<any, keyof IntrinsicElements>"}],"$undefined",["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+56:["$","tr","disableSpinnerAnimation",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"disableSpinnerAnimation"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"boolean"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Отключает анимацию спиннера загрузки."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+57:["$","tr","elevation",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"elevation"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"Elevation"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Добавляет тень кнопке."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+58:["$","tr","focusVisibleMode",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"focusVisibleMode"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"FocusVisibleMode"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Стиль аутлайна focus visible. Если передать произвольную строку, она добавится как css-класс при :focus-visible"}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+59:["$","tr","getRootRef",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"getRootRef"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"Ref<HTMLElement>"}],"$undefined",["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+5a:["$","tr","hasActive",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"hasActive"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"boolean"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Указывает, должен ли компонент реагировать на ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"active"}],"-состояние."]}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+5b:["$","tr","hasHover",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"hasHover"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"boolean"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Указывает, должен ли компонент реагировать на ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"hover"}],"-состояние."]}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+5c:["$","tr","hasHoverWithChildren",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"hasHoverWithChildren"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"boolean"}],[["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Позволяет родительскому компоненту\nиметь ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"hovered"}],"-cостояние при наведении\nна любой дочерний элемент.\nПо умолчанию состояние hovered у родителя сбрасывается."]}],"\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Присваивается родителькому компоненту."}]],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+5d:["$","tr","hoverClassName",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ PropsTable_propDeprecated__upMw_","children":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"hoverClassName"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"string"}],[["$","p",null,{"className":"mdx_paragraph__nVfmE","children":[["$","strong",null,{"className":"mdx_strong__N7OUG","children":"Deprecated"}],": Since 7.3.0. Будет удалено в ",["$","strong",null,{"className":"mdx_strong__N7OUG","children":"VKUI v9"}],"."]}],"\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Используйте свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"hoverMode"}],"."]}]],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+5e:["$","tr","hovered",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"hovered"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"boolean"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Позволяет управлять ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"hovered"}],"-состоянием извне."]}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+5f:["$","tr","hoverMode",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"hoverMode"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"StateModeLiteral"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Стиль подсветки hover-состояния. Если передать произвольную строку, она добавится как css-класс во время hover."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+60:["$","tr","loading",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"loading"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"boolean"}],[["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Включает состояние загрузки (отображает спиннер)."}],"\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["⚠️ ",["$","strong",null,{"className":"mdx_strong__N7OUG","children":"Важно для доступности"}],": При использовании ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"loading={true}"}]," компонент автоматически\nустанавливает ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"aria-label"}]," в значение ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"loadingLabel"}]," (по умолчанию “Загрузка…”),\nчтобы скринридер мог объявить контекст загрузки. Вы можете переопределить это значение,\nпередав свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"loadingLabel"}],"."]}]],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+61:["$","tr","loadingLabel",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"loadingLabel"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"string"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Текст для ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"aria-label"}]," при состоянии загрузки.\nПодменяет переданный в компонент ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"aria-label"}]," только когда ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"loading={true}"}],"."]}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"Загрузка..."}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+62:["$","tr","mode",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"mode"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"\"link\" | \"primary\" | \"secondary\" | \"tertiary\" | \"outline\""}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Режим отображения кнопки."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"primary"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+63:["$","tr","rounded",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"rounded"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"boolean"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Добавляет скругленные углы кнопке."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+64:["$","tr","size",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"size"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"\"s\" | \"m\" | \"l\""}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Размер кнопки."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"s"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+65:["$","tr","stretched",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"stretched"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"boolean"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Растягивает кнопку на всю ширину контейнера."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"false"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+66:["$","tr","unlockParentHover",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"unlockParentHover"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"boolean"}],[["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Позволяет родительскому компоненту показывать hovered-состояние при наведении\nна текущий дочерний компонент."}],"\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Присваивается дочернему компоненту."}]],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]

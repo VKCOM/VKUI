@@ -1,0 +1,217 @@
+1:"$Sreact.fragment"
+2:I[23450,["275","static/chunks/275-4b587f05af731df9.js","433","static/chunks/433-071e76175aa96067.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Main"]
+7:I[74517,["275","static/chunks/275-4b587f05af731df9.js","433","static/chunks/433-071e76175aa96067.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Overview",1]
+8:I[18443,["275","static/chunks/275-4b587f05af731df9.js","433","static/chunks/433-071e76175aa96067.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Anchor"]
+9:I[19180,["275","static/chunks/275-4b587f05af731df9.js","433","static/chunks/433-071e76175aa96067.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Pre"]
+14:I[91042,["275","static/chunks/275-4b587f05af731df9.js","433","static/chunks/433-071e76175aa96067.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"TOC"]
+15:I[90484,[],"OutletBoundary"]
+16:"$Sreact.suspense"
+18:I[80204,["275","static/chunks/275-4b587f05af731df9.js","433","static/chunks/433-071e76175aa96067.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"PlaygroundLazy"]
+19:I[57621,["275","static/chunks/275-4b587f05af731df9.js","433","static/chunks/433-071e76175aa96067.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"FixedLayoutWrapper"]
+3:T1cff,---
+description: Компонент закрепляет переданный контент сверху или снизу области видимости.
+tags: navigation
+---
+
+<Overview group="layout">
+
+# ~FixedLayout~ [tag:component]
+
+> Компонент устарел начиная с `v8.0.0` и будет **удалён** в `v10.0.0`.
+>
+> Используйте вместо него [`Box`](/components/box) с `position="sticky"` и `insetBlockStart`/`insetBlockEnd`.
+>
+> ```tsx
+> // Пример миграции с `<FixedLayout vertical="top" />`
+> <Box position="sticky" insetBlockStart="0">
+>   Я стики
+> </Box>
+> // Пример миграции с `<FixedLayout vertical="bottom" filled />`
+> <Box position="sticky" insetBlockEnd="0" style={{ backgroundColor: 'var(--vkui--color_background_content)' }}>
+>   Я стики
+> </Box>
+> ```
+> Так как элемент с `position="sticky"` находится в основном потоке документа, при миграции с `<FixedLayout vertical="bottom" />`
+> важно также соблюсти порядок элемента в документе.
+
+Компонент закрепляет переданный контент сверху или снизу области видимости.
+Учитывает высоту шапки и прочие системные отступы.
+
+</Overview>
+
+> Компонент использует `position: fixed` вместо `position: sticky` (ограничение минимально поддерживаемых версий браузеров).
+> По этой причине `FixedLayout` находится вне основного потока. Учитывайте это при разработке интерфейсов.
+
+import { FixedLayoutWrapper } from '@/components/wrappers';
+
+{/* @example-description: Устаревший `FixedLayout` с закреплением поиска в верхней части области. */}
+<Playground Wrapper={FixedLayoutWrapper}>
+  ```jsx
+  <FixedLayout vertical="top">
+    <Search />
+    <Separator />
+  </FixedLayout>
+  <Group mode="plain">
+    {/** Компенсируем место, занятое поиском **/}
+    <Spacing size={40} />
+    <Box paddingInline={16} paddingBlock={12} maxBlockSize={170} overflow="auto" tabIndex={0}>
+      <Paragraph>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed a sollicitudin lectus, a
+        commodo sapien. Vivamus a urna leo. Integer iaculis dignissim urna, sit amet vestibulum diam
+        bibendum a. Donec eu arcu ut augue porttitor faucibus. Vestibulum nec pretium tortor, sit
+        amet congue nunc. Aenean ullamcorper ex sem, sed interdum quam consequat et. Vestibulum a ex
+        non diam fringilla feugiat. Nunc eu tellus sed leo elementum cursus. Mauris blandit porta
+        egestas. Curabitur eget justo elementum, malesuada lacus ut, congue mauris. Integer orci
+        nisi, convallis vitae dapibus sit amet, molestie a risus. Aenean ultricies lacus eros, sit
+        amet condimentum urna malesuada et. Sed quis dolor tempus orci fringilla volutpat in sed
+        velit. Aenean aliquet bibendum pretium. Cras pulvinar lobortis purus. Donec placerat
+        suscipit leo vitae sodales. Phasellus convallis lorem vitae arcu finibus pellentesque. In
+        imperdiet vel leo a euismod. Nam sed odio a neque venenatis suscipit a placerat magna.
+        Mauris magna nisl, consequat nec augue vitae, ultricies scelerisque ante. Phasellus pharetra
+        risus eget imperdiet sodales. Integer dignissim auctor semper. Nulla odio odio, euismod ut
+        interdum in, bibendum sed massa. Proin rutrum molestie massa in ultrices. Donec eu euismod
+        turpis, eget lobortis lorem. Nulla facilisi. Nam lacinia posuere turpis, sed laoreet turpis
+        auctor nec. Curabitur eu fermentum mauris. Phasellus malesuada consectetur mollis.
+        Pellentesque pulvinar mauris turpis. Integer neque dolor, semper quis neque et, gravida
+        commodo eros. Duis efficitur ex a turpis blandit tincidunt. Mauris sem mi, imperdiet quis
+        ligula sit amet, fermentum vulputate felis. Phasellus eu ullamcorper dolor, porttitor
+        pulvinar diam. Aliquam euismod, mauris nec varius lacinia, ligula libero vulputate leo, ut
+        tristique massa nisi vitae tortor. Phasellus purus elit, gravida sit amet neque id, aliquam
+        rutrum dui. Maecenas luctus sem vitae molestie porttitor. Cras viverra mauris risus, at
+        sollicitudin ipsum interdum eu. Sed sit amet tempor enim.
+      </Paragraph>
+    </Box>
+  </Group>
+  ```
+</Playground>
+
+## Миграция на `Box`
+
+{/* @example-description: Пример миграции с `FixedLayout` на `Box` с `position="sticky"`. */}
+<Playground Wrapper={FixedLayoutWrapper}>
+  ```jsx
+  <Group mode="plain">
+    <Box position="sticky" insetBlockStart={0}>
+      <Search />
+      <Separator />
+    </Box>
+    <Box paddingInline={16} paddingBlock={12} maxBlockSize={170} overflow="auto" tabIndex={0}>
+      <Paragraph>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed a sollicitudin lectus, a
+        commodo sapien. Vivamus a urna leo. Integer iaculis dignissim urna, sit amet vestibulum diam
+        bibendum a. Donec eu arcu ut augue porttitor faucibus. Vestibulum nec pretium tortor, sit
+        amet congue nunc. Aenean ullamcorper ex sem, sed interdum quam consequat et. Vestibulum a ex
+        non diam fringilla feugiat. Nunc eu tellus sed leo elementum cursus. Mauris blandit porta
+        egestas. Curabitur eget justo elementum, malesuada lacus ut, congue mauris. Integer orci
+        nisi, convallis vitae dapibus sit amet, molestie a risus. Aenean ultricies lacus eros, sit
+        amet condimentum urna malesuada et. Sed quis dolor tempus orci fringilla volutpat in sed
+        velit. Aenean aliquet bibendum pretium. Cras pulvinar lobortis purus. Donec placerat
+        suscipit leo vitae sodales. Phasellus convallis lorem vitae arcu finibus pellentesque. In
+        imperdiet vel leo a euismod. Nam sed odio a neque venenatis suscipit a placerat magna.
+        Mauris magna nisl, consequat nec augue vitae, ultricies scelerisque ante. Phasellus pharetra
+        risus eget imperdiet sodales. Integer dignissim auctor semper. Nulla odio odio, euismod ut
+        interdum in, bibendum sed massa. Proin rutrum molestie massa in ultrices. Donec eu euismod
+        turpis, eget lobortis lorem. Nulla facilisi. Nam lacinia posuere turpis, sed laoreet turpis
+        auctor nec. Curabitur eu fermentum mauris. Phasellus malesuada consectetur mollis.
+        Pellentesque pulvinar mauris turpis. Integer neque dolor, semper quis neque et, gravida
+        commodo eros. Duis efficitur ex a turpis blandit tincidunt. Mauris sem mi, imperdiet quis
+        ligula sit amet, fermentum vulputate felis. Phasellus eu ullamcorper dolor, porttitor
+        pulvinar diam. Aliquam euismod, mauris nec varius lacinia, ligula libero vulputate leo, ut
+        tristique massa nisi vitae tortor. Phasellus purus elit, gravida sit amet neque id, aliquam
+        rutrum dui. Maecenas luctus sem vitae molestie porttitor. Cras viverra mauris risus, at
+        sollicitudin ipsum interdum eu. Sed sit amet tempor enim.
+      </Paragraph>
+    </Box>
+  </Group>
+  ```
+</Playground>
+
+
+## Свойства и методы [#api]
+
+<PropsTable name="FixedLayout" />0:{"rsc":["$","$1","c",{"children":[[["$","$L2",null,{"metadata":{"description":"Компонент закрепляет переданный контент сверху или снизу области видимости.","tags":"navigation","title":"FixedLayout","filePath":"content/components/fixed-layout.mdx","timestamp":1780314995000},"sourceCode":"$3","children":"$L4"}],"$L5"],null,"$L6"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"02IBK9sLgKxTeOt8DUsGA"}
+4:[["$","$L7",null,{"group":"layout","children":[["$","h1",null,{"className":"mdx_h1__1mgpN","data-pagefind-filter":"tag:component","children":["$","del",null,{"children":"FixedLayout"}]}],["$","aside",null,{"className":"Callout_root__6UBFP","children":["$","div",null,{"className":"Callout_content__MYf_T","children":["\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Компонент устарел начиная с ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"v8.0.0"}]," и будет ",["$","strong",null,{"className":"mdx_strong__N7OUG","children":"удалён"}]," в ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"v10.0.0"}],"."]}],"\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Используйте вместо него ",["$","$L8",null,{"href":"/components/box","children":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"Box"}]}]," с ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"position=\"sticky\""}]," и ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"insetBlockStart"}],"/",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"insetBlockEnd"}],"."]}],"\n",["$","$L9",null,{"tabIndex":"0","data-language":"tsx","data-word-wrap":"","data-copy":"","data-pagefind-ignore":"all","children":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":[["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#6A737D","--shiki-dark":"#6A737D"},"children":"// Пример миграции с `<FixedLayout vertical=\"top\" />`"}]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"<"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Box"}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" position"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"sticky\""}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" insetBlockStart"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"0\""}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  Я стики"}]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"</"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Box"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#6A737D","--shiki-dark":"#6A737D"},"children":"// Пример миграции с `<FixedLayout vertical=\"bottom\" filled />`"}]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"<"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Box"}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" position"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"sticky\""}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" insetBlockEnd"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"0\""}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" style"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"{{ backgroundColor: "}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"'var(--vkui--color_background_content)'"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" }}>"}]]}],"\n",["$","span",null,{"children":"$La"}],"\n","$Lb"]}]}],"\n","$Lc","\n"]}]}],"$Ld"]}],"\n","$Le","\n","\n","\n","$Lf","\n","$L10","\n","\n","$L11","\n","$L12","\n","$L13"]
+5:["$","$L14",null,{"toc":[{"value":["Миграция на ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"Box"}]],"id":"миграция-на-box","depth":2},{"value":"Свойства и методы","id":"api","depth":2}]}]
+6:["$","$L15",null,{"children":["$","$16",null,{"name":"Next.MetadataOutlet","children":"$@17"}]}]
+a:["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  Я стики"}]
+b:["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"</"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Box"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}]
+c:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Так как элемент с ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"position=\"sticky\""}]," находится в основном потоке документа, при миграции с ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"<FixedLayout vertical=\"bottom\" />"}],"\nважно также соблюсти порядок элемента в документе."]}]
+d:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Компонент закрепляет переданный контент сверху или снизу области видимости.\nУчитывает высоту шапки и прочие системные отступы."}]
+e:["$","aside",null,{"className":"Callout_root__6UBFP","children":["$","div",null,{"className":"Callout_content__MYf_T","children":["\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Компонент использует ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"position: fixed"}]," вместо ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"position: sticky"}]," (ограничение минимально поддерживаемых версий браузеров).\nПо этой причине ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"FixedLayout"}]," находится вне основного потока. Учитывайте это при разработке интерфейсов."]}],"\n"]}]}]
+1a:T9c8,<FixedLayout vertical="top">
+  <Search />
+  <Separator />
+</FixedLayout>
+<Group mode="plain">
+  {/** Компенсируем место, занятое поиском **/}
+  <Spacing size={40} />
+  <Box paddingInline={16} paddingBlock={12} maxBlockSize={170} overflow="auto" tabIndex={0}>
+    <Paragraph>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed a sollicitudin lectus, a
+      commodo sapien. Vivamus a urna leo. Integer iaculis dignissim urna, sit amet vestibulum diam
+      bibendum a. Donec eu arcu ut augue porttitor faucibus. Vestibulum nec pretium tortor, sit
+      amet congue nunc. Aenean ullamcorper ex sem, sed interdum quam consequat et. Vestibulum a ex
+      non diam fringilla feugiat. Nunc eu tellus sed leo elementum cursus. Mauris blandit porta
+      egestas. Curabitur eget justo elementum, malesuada lacus ut, congue mauris. Integer orci
+      nisi, convallis vitae dapibus sit amet, molestie a risus. Aenean ultricies lacus eros, sit
+      amet condimentum urna malesuada et. Sed quis dolor tempus orci fringilla volutpat in sed
+      velit. Aenean aliquet bibendum pretium. Cras pulvinar lobortis purus. Donec placerat
+      suscipit leo vitae sodales. Phasellus convallis lorem vitae arcu finibus pellentesque. In
+      imperdiet vel leo a euismod. Nam sed odio a neque venenatis suscipit a placerat magna.
+      Mauris magna nisl, consequat nec augue vitae, ultricies scelerisque ante. Phasellus pharetra
+      risus eget imperdiet sodales. Integer dignissim auctor semper. Nulla odio odio, euismod ut
+      interdum in, bibendum sed massa. Proin rutrum molestie massa in ultrices. Donec eu euismod
+      turpis, eget lobortis lorem. Nulla facilisi. Nam lacinia posuere turpis, sed laoreet turpis
+      auctor nec. Curabitur eu fermentum mauris. Phasellus malesuada consectetur mollis.
+      Pellentesque pulvinar mauris turpis. Integer neque dolor, semper quis neque et, gravida
+      commodo eros. Duis efficitur ex a turpis blandit tincidunt. Mauris sem mi, imperdiet quis
+      ligula sit amet, fermentum vulputate felis. Phasellus eu ullamcorper dolor, porttitor
+      pulvinar diam. Aliquam euismod, mauris nec varius lacinia, ligula libero vulputate leo, ut
+      tristique massa nisi vitae tortor. Phasellus purus elit, gravida sit amet neque id, aliquam
+      rutrum dui. Maecenas luctus sem vitae molestie porttitor. Cras viverra mauris risus, at
+      sollicitudin ipsum interdum eu. Sed sit amet tempor enim.
+    </Paragraph>
+  </Box>
+</Group>f:["$","$L18",null,{"Wrapper":"$19","code":"$1a"}]
+10:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"миграция-на-box","children":["$","a",null,{"href":"#миграция-на-box","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию [object Object]","children":["$5:props:toc:0:value",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+1b:T970,<Group mode="plain">
+  <Box position="sticky" insetBlockStart={0}>
+    <Search />
+    <Separator />
+  </Box>
+  <Box paddingInline={16} paddingBlock={12} maxBlockSize={170} overflow="auto" tabIndex={0}>
+    <Paragraph>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed a sollicitudin lectus, a
+      commodo sapien. Vivamus a urna leo. Integer iaculis dignissim urna, sit amet vestibulum diam
+      bibendum a. Donec eu arcu ut augue porttitor faucibus. Vestibulum nec pretium tortor, sit
+      amet congue nunc. Aenean ullamcorper ex sem, sed interdum quam consequat et. Vestibulum a ex
+      non diam fringilla feugiat. Nunc eu tellus sed leo elementum cursus. Mauris blandit porta
+      egestas. Curabitur eget justo elementum, malesuada lacus ut, congue mauris. Integer orci
+      nisi, convallis vitae dapibus sit amet, molestie a risus. Aenean ultricies lacus eros, sit
+      amet condimentum urna malesuada et. Sed quis dolor tempus orci fringilla volutpat in sed
+      velit. Aenean aliquet bibendum pretium. Cras pulvinar lobortis purus. Donec placerat
+      suscipit leo vitae sodales. Phasellus convallis lorem vitae arcu finibus pellentesque. In
+      imperdiet vel leo a euismod. Nam sed odio a neque venenatis suscipit a placerat magna.
+      Mauris magna nisl, consequat nec augue vitae, ultricies scelerisque ante. Phasellus pharetra
+      risus eget imperdiet sodales. Integer dignissim auctor semper. Nulla odio odio, euismod ut
+      interdum in, bibendum sed massa. Proin rutrum molestie massa in ultrices. Donec eu euismod
+      turpis, eget lobortis lorem. Nulla facilisi. Nam lacinia posuere turpis, sed laoreet turpis
+      auctor nec. Curabitur eu fermentum mauris. Phasellus malesuada consectetur mollis.
+      Pellentesque pulvinar mauris turpis. Integer neque dolor, semper quis neque et, gravida
+      commodo eros. Duis efficitur ex a turpis blandit tincidunt. Mauris sem mi, imperdiet quis
+      ligula sit amet, fermentum vulputate felis. Phasellus eu ullamcorper dolor, porttitor
+      pulvinar diam. Aliquam euismod, mauris nec varius lacinia, ligula libero vulputate leo, ut
+      tristique massa nisi vitae tortor. Phasellus purus elit, gravida sit amet neque id, aliquam
+      rutrum dui. Maecenas luctus sem vitae molestie porttitor. Cras viverra mauris risus, at
+      sollicitudin ipsum interdum eu. Sed sit amet tempor enim.
+    </Paragraph>
+  </Box>
+</Group>11:["$","$L18",null,{"Wrapper":"$19","code":"$1b"}]
+12:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"api","children":["$","a",null,{"href":"#api","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Свойства и методы","children":["Свойства и методы",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+13:["$","div",null,{"className":"Table_root__0rGvK","children":["$","table",null,{"className":"Table_table__NzLHi PropsTable_root__O959b","children":[["$","thead",null,{"children":["$","tr",null,{"children":[["$","th",null,{"children":"Свойство","className":"Table_th__EHorR"}],["$","th",null,{"children":"Описание","className":"Table_th__EHorR"}]],"className":"Table_tr__SD2Ot"}]}],["$","tbody",null,{"children":["$@1c","$@1d","$@1e","$@1f","$@20"]}]]}]}]
+17:null
+1c:["$","tr","Component",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"Component"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"ElementType<any, keyof IntrinsicElements>"}],"$undefined",["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+1d:["$","tr","filled",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"filled"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"boolean"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Это свойство определяет, будет ли фон компонента окрашен в цвет фона контента.\nЭто часто необходимо для фиксированных кнопок в нижней части экрана."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+1e:["$","tr","getRootRef",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"getRootRef"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"Ref<HTMLDivElement>"}],"$undefined",["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+1f:["$","tr","useParentWidth",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"useParentWidth"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"boolean"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Всегда соответствовать ширине родителя.\nШирина пересчитывается по событию ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"window"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"resize"}],"."]}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+20:["$","tr","vertical",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"vertical"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"\"top\" | \"bottom\""}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Положение по вертикали, либо сверху, либо снизу."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]

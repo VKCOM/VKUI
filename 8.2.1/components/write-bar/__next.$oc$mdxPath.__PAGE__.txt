@@ -1,0 +1,416 @@
+1:"$Sreact.fragment"
+2:I[23450,["275","static/chunks/275-4b587f05af731df9.js","433","static/chunks/433-071e76175aa96067.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Main"]
+7:I[74517,["275","static/chunks/275-4b587f05af731df9.js","433","static/chunks/433-071e76175aa96067.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Overview",1]
+8:I[80204,["275","static/chunks/275-4b587f05af731df9.js","433","static/chunks/433-071e76175aa96067.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"PlaygroundLazy"]
+9:I[18443,["275","static/chunks/275-4b587f05af731df9.js","433","static/chunks/433-071e76175aa96067.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Anchor"]
+a:I[19180,["275","static/chunks/275-4b587f05af731df9.js","433","static/chunks/433-071e76175aa96067.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Pre"]
+33:I[91042,["275","static/chunks/275-4b587f05af731df9.js","433","static/chunks/433-071e76175aa96067.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"TOC"]
+34:I[90484,[],"OutletBoundary"]
+35:"$Sreact.suspense"
+3:T2a64,---
+description: Компонент для создания поля ввода сообщений с поддержкой иконок действий.
+---
+
+<Overview group="forms">
+
+# WriteBar [tag:component]
+
+Компонент для создания поля ввода сообщений с поддержкой иконок действий.
+Аналог строки ввода в мессенджерах и соцсетях. Принимает все свойства нативного `<textarea>`.
+
+</Overview>
+
+{/* @example-description: Базовый `WriteBar` с иконкой вложений в слоте `before`. */}
+<Playground>
+  ```jsx
+  <WriteBar before={<WriteBarIcon mode="attach" />} placeholder="Введите сообщение..." />
+  ```
+</Playground>
+
+## Режим работы
+
+Компонент поддерживает работу как в неконтролируемом режиме, так и контролируемом. Это стандартное поведение
+React-компонентов, прочитать про это можно в [документации React](https://react.dev/reference/react-dom/components/input#controlling-an-input-with-a-state-variable).
+
+Для использования неконтролируемого режима достаточно просто _не_ передавать `value` или передавать `defaultValue`, если
+требуется задать значение по умолчанию.
+Для контролируемого режима используйте связку свойств `value`/`onChange` для задания значения и его изменения.
+
+```jsx
+// Неконтролируемое состояние
+<WriteBar defaultValue="Текст" />;
+
+// Контролируемое состояние
+const [text, setText] = React.useState('Текст');
+
+<WriteBar value={text} onChange={(event) => setText(event.target.value)} />;
+```
+
+## Основные элементы
+
+- `before` — элементы слева от поля ввода.
+- `after` — элементы справа.
+- `inlineAfter` — элементы поверх поля (актуально для iOS).
+
+{/* @example-description: Пример `WriteBar` с элементами в `before`, `after` и `inlineAfter`. */}
+<Playground>
+  ```jsx
+  <WriteBar
+    before={<WriteBarIcon mode="attach" />}
+    after={
+      <WriteBarIcon label="Записать голосовое сообщение">
+        <Icon24VoiceOutline />
+      </WriteBarIcon>
+    }
+    inlineAfter={
+      <WriteBarIcon label="Смайлы и стикеры">
+        <Icon24SmileOutline />
+      </WriteBarIcon>
+    }
+    placeholder="Введите сообщение..."
+  />
+  ```
+</Playground>
+
+## Использование иконок [#icons]
+
+Все боковые элементы рекомендуется оборачивать в `WriteBarIcon`.
+Также для адаптирования размеров иконок стоит использовать компонент [`AdaptiveIconRenderer`](/components/adaptive-icon-renderer).
+
+По правилам дизайн-системы в `"regular"`-режиме используются кнопки размером `28px`, в `"compact"`-режиме — `24px`.
+Исключение: на платформе `iOS` допускается использование иконок размером `28px` в `"compact"`-режиме.
+
+{/* @example-description: Адаптивные иконки и динамические действия в `WriteBar` в зависимости от введённого текста. */}
+<Playground style={{ width: 290 }}>
+
+```jsx
+const [text, setText] = React.useState('');
+const platform = usePlatform();
+
+const SmileOutlineIcon = (
+  <AdaptiveIconRenderer
+    IconCompact={platform === 'ios' ? Icon28SmileOutline : Icon24SmileOutline}
+    IconRegular={Icon28SmileOutline}
+  />
+);
+
+const VoiceOutlineIcon = (
+  <AdaptiveIconRenderer
+    IconCompact={platform === 'ios' ? Icon28VoiceOutline : Icon24VoiceOutline}
+    IconRegular={Icon28VoiceOutline}
+  />
+);
+
+const KeyboardBotsOutlineIcon = (
+  <AdaptiveIconRenderer
+    IconCompact={platform === 'ios' ? Icon28KeyboardBotsOutline : Icon24KeyboardBotsOutline}
+    IconRegular={Icon28KeyboardBotsOutline}
+  />
+);
+
+return (
+  <WriteBar
+    value={text}
+    onChange={(e) => setText(e.target.value)}
+    before={<WriteBarIcon mode="attach" />}
+    inlineAfter={
+      <>
+        {text.length === 0 && (
+          <WriteBarIcon label="Открыть меню бота">{KeyboardBotsOutlineIcon}</WriteBarIcon>
+        )}
+        {text.length > 0 && (
+          <WriteBarIcon label="Эмоджи и стикеры">{SmileOutlineIcon}</WriteBarIcon>
+        )}
+      </>
+    }
+    after={
+      <>
+        {text.length === 0 && (
+          <WriteBarIcon label="Эмоджи и стикеры">{SmileOutlineIcon}</WriteBarIcon>
+        )}
+        {text.length === 0 && (
+          <WriteBarIcon label="Записать голосовое сообщение">{VoiceOutlineIcon}</WriteBarIcon>
+        )}
+        {text.length > 0 && <WriteBarIcon mode="send" />}
+      </>
+    }
+    placeholder="Сообщение"
+  />
+);
+```
+
+</Playground>
+
+## WriteBarIcon [tag:component]
+
+Компонент для создания иконок-кнопок внутри `WriteBar`. Обеспечивает стандартное поведение и доступность
+для элементов управления в поле ввода сообщений.
+
+### Особенности поведения
+
+- Наследует все свойства `<button>`.
+- Автоматически адаптируется под платформы Android и iOS при использовании готовых пресетов.
+
+### Предустановленные режимы
+
+Предустановленные типы кнопок в `WriteBar` для отрисовки иконки и установки текста кнопки в зависимости от платформы.
+Если передать валидное значение для этого свойства, `children` игнорируются,
+а для `label` по умолчанию используется текст на "ru_RU".
+
+- `attach` — иконка прикрепления с текстом "Прикрепить файл".
+- `send` — иконка отправки с текстом "Отправить".
+- `done` — иконка подтверждения с текстом "Готово".
+
+{/* @example-description: Предустановленные режимы `WriteBarIcon`: `attach`, `send`, `done`. */}
+<Playground>
+  ```jsx
+  <WriteBarIcon mode="attach" />
+  <WriteBarIcon mode="send" />
+  <WriteBarIcon mode="done" />
+  ```
+</Playground>
+
+### Использование кастомных иконки
+
+{/* @example-description: Пример `WriteBarIcon` с пользовательской иконкой и подписью. */}
+<Playground>
+
+```jsx
+const platform = usePlatform();
+
+return (
+  <WriteBarIcon label="Голосовое сообщение">
+    <AdaptiveIconRenderer
+      IconCompact={platform === 'ios' ? Icon28VoiceOutline : Icon24VoiceOutline}
+      IconRegular={Icon28VoiceOutline}
+    />
+  </WriteBarIcon>
+);
+```
+
+</Playground>
+
+### Отображение счётчика
+
+Значение счётчика для кнопки. Например, для количества прикреплённых файлов.
+
+{/* @example-description: Пример `WriteBarIcon` со счётчиком через свойство `count`. */}
+<Playground>
+  ```jsx
+  <WriteBarIcon mode="attach" count={3} label="Прикреплённые файлы" />
+  ```
+</Playground>
+
+## Кастомизация
+
+Компонент поддерживает свойство `slotProps`, которое даёт возможность прокинуть свойство в некоторые внутренние элементы.
+Это удобно для добавления кастомных классов, data-атрибутов, aria-атрибутов, обработчиков событий, доступов к элементам через `getRootRef` и других расширений, не влияя на внешний API компонента.
+
+{/* @example-description: Кастомизация `WriteBar` через `slotProps` для корня и поля ввода. */}
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  const textareaRef = React.useRef();
+
+  return (
+    <WriteBar
+      before={<WriteBarIcon mode="attach" />}
+      placeholder="Введите сообщение..."
+      className="my-root-class"
+      data-testid="write-bar-root"
+      id="write-bar-textarea-id"
+      slotProps={{
+        root: {
+          id: 'write-bar-root-id',
+        },
+        input: {
+          className: 'my-textarea-class',
+          'aria-label': 'Пример slotProps',
+          getRootRef: textareaRef,
+        },
+      }}
+    />
+  )
+  ```
+</Playground>
+
+### Доступность (a11y) [#a11y]
+
+Укажите текстовое описание одним из способов:
+
+- Через свойство `label`:
+
+  ```jsx
+  <WriteBarIcon label="Прикрепить файл">
+    <Icon24Attachment />
+  </WriteBarIcon>
+  ```
+
+- Через ARIA-атрибуты:
+
+  ```jsx
+  <WriteBarIcon aria-label="Отправить сообщение">
+    <Icon24Send />
+  </WriteBarIcon>
+  ```
+
+- С использованием VisuallyHidden:
+
+  ```jsx
+  <WriteBarIcon>
+    <Icon24SmileOutline />
+    <VisuallyHidden>Эмодзи</VisuallyHidden>
+  </WriteBarIcon>
+  ```
+
+- С использованием `id` в `aria-labelledby`
+
+  ```jsx
+  <VisuallyHidden id="write_bar_icon_voice">Записать голосовое сообщение</VisuallyHidden>
+    <WriteBarIcon aria-labelledby="write_bar_icon_voice">
+    <Icon28VoiceOutline />
+  </WriteBarIcon>
+  ```
+
+## Подкомпоненты
+
+<Playground>
+  ```jsx
+  <WriteBar.Root>
+    <WriteBar.Before>
+      <WriteBarIcon mode="attach" />
+    </WriteBar.Before>
+    <WriteBar.FormField>
+      <WriteBar.Textarea placeholder="Введите сообщение..." />
+      <WriteBar.FormField.InlineAfter>
+        <WriteBarIcon label="Смайлы и стикеры">
+          <Icon24SmileOutline />
+        </WriteBarIcon>
+      </WriteBar.FormField.InlineAfter>
+    </WriteBar.FormField>
+    <WriteBar.After>
+      <WriteBarIcon mode="attach" />
+    </WriteBar.After>
+  </WriteBar.Root>
+  ```
+</Playground>
+
+## Свойства и методы [#api]
+
+<PropsTable name={["WriteBar", "WriteBarIcon"]}>
+### WriteBar [#write-bar-api]
+
+### WriteBarIcon [#write-bar-icon-api]
+
+</PropsTable>0:{"rsc":["$","$1","c",{"children":[[["$","$L2",null,{"metadata":{"description":"Компонент для создания поля ввода сообщений с поддержкой иконок действий.","title":"WriteBar","filePath":"content/components/write-bar.mdx","timestamp":1780314995000},"sourceCode":"$3","children":"$L4"}],"$L5"],null,"$L6"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"02IBK9sLgKxTeOt8DUsGA"}
+4:[["$","$L7",null,{"group":"forms","children":[["$","h1",null,{"className":"mdx_h1__1mgpN","data-pagefind-filter":"tag:component","children":"WriteBar"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Компонент для создания поля ввода сообщений с поддержкой иконок действий.\nАналог строки ввода в мессенджерах и соцсетях. Принимает все свойства нативного ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"<textarea>"}],"."]}]]}],"\n","\n",["$","$L8",null,{"code":"<WriteBar before={<WriteBarIcon mode=\"attach\" />} placeholder=\"Введите сообщение...\" />"}],"\n",["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"rezhim-raboty","children":["$","a",null,{"href":"#rezhim-raboty","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Режим работы","children":["Режим работы",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}],"\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Компонент поддерживает работу как в неконтролируемом режиме, так и контролируемом. Это стандартное поведение\nReact-компонентов, прочитать про это можно в ",["$","$L9",null,{"href":"https://react.dev/reference/react-dom/components/input#controlling-an-input-with-a-state-variable","children":"документации React"}],"."]}],"\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Для использования неконтролируемого режима достаточно просто ",["$","em",null,{"children":"не"}]," передавать ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"value"}]," или передавать ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"defaultValue"}],", если\nтребуется задать значение по умолчанию.\nДля контролируемого режима используйте связку свойств ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"value"}],"/",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"onChange"}]," для задания значения и его изменения."]}],"\n",["$","$La",null,{"tabIndex":"0","data-language":"jsx","data-word-wrap":"","data-copy":"","data-pagefind-ignore":"all","children":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":[["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#6A737D","--shiki-dark":"#6A737D"},"children":"// Неконтролируемое состояние"}]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"<"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"WriteBar"}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" defaultValue"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"Текст\""}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" />;"}]]}],"\n",["$","span",null,{"children":" "}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#6A737D","--shiki-dark":"#6A737D"},"children":"// Контролируемое состояние"}]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"const"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" ["}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"text"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":", "}],"$Lb","$Lc","$Ld","$Le","$Lf","$L10","$L11","$L12"]}],"\n","$L13","\n","$L14"]}]}],"\n","$L15","\n","$L16","\n","\n","$L17","\n","$L18","\n","$L19","\n","$L1a","\n","\n","$L1b","\n","$L1c","\n","$L1d","\n","$L1e","\n","$L1f","\n","$L20","\n","$L21","\n","$L22","\n","\n","$L23","\n","$L24","\n","\n","$L25","\n","$L26","\n","$L27","\n","\n","$L28","\n","$L29","\n","$L2a","\n","\n","$L2b","\n","$L2c","\n","$L2d","\n","$L2e","\n","$L2f","\n","$L30","\n","$L31","\n","$L32"]
+5:["$","$L33",null,{"toc":[{"value":"Режим работы","id":"rezhim-raboty","depth":2},{"value":"Основные элементы","id":"osnovnye-elementy","depth":2},{"value":"Использование иконок","id":"icons","depth":2},{"value":"WriteBarIcon","id":"writebaricon","depth":2},{"value":"Особенности поведения","id":"osobennosti-povedeniya","depth":3},{"value":"Предустановленные режимы","id":"predustanovlennye-rezhimy","depth":3},{"value":"Использование кастомных иконки","id":"ispolzovanie-kastomnyh-ikonki","depth":3},{"value":"Отображение счётчика","id":"otobrazhenie-schyotchika","depth":3},{"value":"Кастомизация","id":"kastomizaciya","depth":2},{"value":"Доступность (a11y)","id":"a11y","depth":3},{"value":"Подкомпоненты","id":"podkomponenty","depth":2},{"value":"Свойства и методы","id":"api","depth":2},{"value":"WriteBar","id":"write-bar-api","depth":3},{"value":"WriteBarIcon","id":"write-bar-icon-api","depth":3}]}]
+6:["$","$L34",null,{"children":["$","$35",null,{"name":"Next.MetadataOutlet","children":"$@36"}]}]
+b:["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"setText"}]
+c:["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"] "}]
+d:["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}]
+e:["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" React."}]
+f:["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":"useState"}]
+10:["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"("}]
+11:["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"'Текст'"}]
+12:["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":");"}]
+13:["$","span",null,{"children":" "}]
+14:["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"<"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"WriteBar"}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" value"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"{text} "}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":"onChange"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"{("}],["$","span",null,{"style":{"--shiki-light":"#E36209","--shiki-dark":"#FFAB70"},"children":"event"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":") "}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"=>"}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" setText"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"(event.target.value)} />;"}]]}]
+15:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"osnovnye-elementy","children":["$","a",null,{"href":"#osnovnye-elementy","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Основные элементы","children":["Основные элементы",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+16:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"before"}]," — элементы слева от поля ввода."]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"after"}]," — элементы справа."]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"inlineAfter"}]," — элементы поверх поля (актуально для iOS)."]}],"\n"]}]
+17:["$","$L8",null,{"code":"<WriteBar\n  before={<WriteBarIcon mode=\"attach\" />}\n  after={\n    <WriteBarIcon label=\"Записать голосовое сообщение\">\n      <Icon24VoiceOutline />\n    </WriteBarIcon>\n  }\n  inlineAfter={\n    <WriteBarIcon label=\"Смайлы и стикеры\">\n      <Icon24SmileOutline />\n    </WriteBarIcon>\n  }\n  placeholder=\"Введите сообщение...\"\n/>"}]
+18:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"icons","children":["$","a",null,{"href":"#icons","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Использование иконок","children":["Использование иконок",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+19:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Все боковые элементы рекомендуется оборачивать в ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"WriteBarIcon"}],".\nТакже для адаптирования размеров иконок стоит использовать компонент ",["$","$L9",null,{"href":"/components/adaptive-icon-renderer","children":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"AdaptiveIconRenderer"}]}],"."]}]
+1a:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["По правилам дизайн-системы в ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"\"regular\""}],"-режиме используются кнопки размером ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"28px"}],", в ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"\"compact\""}],"-режиме — ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"24px"}],".\nИсключение: на платформе ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"iOS"}]," допускается использование иконок размером ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"28px"}]," в ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"\"compact\""}],"-режиме."]}]
+37:T5fe,const [text, setText] = React.useState('');
+const platform = usePlatform();
+
+const SmileOutlineIcon = (
+  <AdaptiveIconRenderer
+    IconCompact={platform === 'ios' ? Icon28SmileOutline : Icon24SmileOutline}
+    IconRegular={Icon28SmileOutline}
+  />
+);
+
+const VoiceOutlineIcon = (
+  <AdaptiveIconRenderer
+    IconCompact={platform === 'ios' ? Icon28VoiceOutline : Icon24VoiceOutline}
+    IconRegular={Icon28VoiceOutline}
+  />
+);
+
+const KeyboardBotsOutlineIcon = (
+  <AdaptiveIconRenderer
+    IconCompact={platform === 'ios' ? Icon28KeyboardBotsOutline : Icon24KeyboardBotsOutline}
+    IconRegular={Icon28KeyboardBotsOutline}
+  />
+);
+
+return (
+  <WriteBar
+    value={text}
+    onChange={(e) => setText(e.target.value)}
+    before={<WriteBarIcon mode="attach" />}
+    inlineAfter={
+      <>
+        {text.length === 0 && (
+          <WriteBarIcon label="Открыть меню бота">{KeyboardBotsOutlineIcon}</WriteBarIcon>
+        )}
+        {text.length > 0 && (
+          <WriteBarIcon label="Эмоджи и стикеры">{SmileOutlineIcon}</WriteBarIcon>
+        )}
+      </>
+    }
+    after={
+      <>
+        {text.length === 0 && (
+          <WriteBarIcon label="Эмоджи и стикеры">{SmileOutlineIcon}</WriteBarIcon>
+        )}
+        {text.length === 0 && (
+          <WriteBarIcon label="Записать голосовое сообщение">{VoiceOutlineIcon}</WriteBarIcon>
+        )}
+        {text.length > 0 && <WriteBarIcon mode="send" />}
+      </>
+    }
+    placeholder="Сообщение"
+  />
+);1b:["$","$L8",null,{"style":{"width":290},"code":"$37"}]
+1c:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"writebaricon","children":["$","a",null,{"href":"#writebaricon","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию WriteBarIcon","children":["WriteBarIcon",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+1d:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Компонент для создания иконок-кнопок внутри ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"WriteBar"}],". Обеспечивает стандартное поведение и доступность\nдля элементов управления в поле ввода сообщений."]}]
+1e:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"osobennosti-povedeniya","children":["$","a",null,{"href":"#osobennosti-povedeniya","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Особенности поведения","children":["Особенности поведения",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+1f:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["Наследует все свойства ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"<button>"}],"."]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":"Автоматически адаптируется под платформы Android и iOS при использовании готовых пресетов."}],"\n"]}]
+20:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"predustanovlennye-rezhimy","children":["$","a",null,{"href":"#predustanovlennye-rezhimy","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Предустановленные режимы","children":["Предустановленные режимы",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+21:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Предустановленные типы кнопок в ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"WriteBar"}]," для отрисовки иконки и установки текста кнопки в зависимости от платформы.\nЕсли передать валидное значение для этого свойства, ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"children"}]," игнорируются,\nа для ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"label"}]," по умолчанию используется текст на “ru_RU”."]}]
+22:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"attach"}]," — иконка прикрепления с текстом “Прикрепить файл”."]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"send"}]," — иконка отправки с текстом “Отправить”."]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"done"}]," — иконка подтверждения с текстом “Готово”."]}],"\n"]}]
+23:["$","$L8",null,{"code":"<WriteBarIcon mode=\"attach\" />\n<WriteBarIcon mode=\"send\" />\n<WriteBarIcon mode=\"done\" />"}]
+24:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"ispolzovanie-kastomnyh-ikonki","children":["$","a",null,{"href":"#ispolzovanie-kastomnyh-ikonki","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Использование кастомных иконки","children":["Использование кастомных иконки",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+25:["$","$L8",null,{"code":"const platform = usePlatform();\n\nreturn (\n  <WriteBarIcon label=\"Голосовое сообщение\">\n    <AdaptiveIconRenderer\n      IconCompact={platform === 'ios' ? Icon28VoiceOutline : Icon24VoiceOutline}\n      IconRegular={Icon28VoiceOutline}\n    />\n  </WriteBarIcon>\n);"}]
+26:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"otobrazhenie-schyotchika","children":["$","a",null,{"href":"#otobrazhenie-schyotchika","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Отображение счётчика","children":["Отображение счётчика",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+27:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Значение счётчика для кнопки. Например, для количества прикреплённых файлов."}]
+28:["$","$L8",null,{"code":"<WriteBarIcon mode=\"attach\" count={3} label=\"Прикреплённые файлы\" />"}]
+29:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"kastomizaciya","children":["$","a",null,{"href":"#kastomizaciya","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Кастомизация","children":["Кастомизация",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+2a:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Компонент поддерживает свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"slotProps"}],", которое даёт возможность прокинуть свойство в некоторые внутренние элементы.\nЭто удобно для добавления кастомных классов, data-атрибутов, aria-атрибутов, обработчиков событий, доступов к элементам через ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"getRootRef"}]," и других расширений, не влияя на внешний API компонента."]}]
+2b:["$","$L8",null,{"style":{"maxWidth":270},"code":"const textareaRef = React.useRef();\n\nreturn (\n  <WriteBar\n    before={<WriteBarIcon mode=\"attach\" />}\n    placeholder=\"Введите сообщение...\"\n    className=\"my-root-class\"\n    data-testid=\"write-bar-root\"\n    id=\"write-bar-textarea-id\"\n    slotProps={{\n      root: {\n        id: 'write-bar-root-id',\n      },\n      input: {\n        className: 'my-textarea-class',\n        'aria-label': 'Пример slotProps',\n        getRootRef: textareaRef,\n      },\n    }}\n  />\n)"}]
+2c:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"a11y","children":["$","a",null,{"href":"#a11y","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Доступность (a11y)","children":["Доступность (a11y)",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+2d:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Укажите текстовое описание одним из способов:"}]
+2e:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Через свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"label"}],":"]}],"\n",["$","$La",null,{"tabIndex":"0","data-language":"jsx","data-word-wrap":"","data-copy":"","data-pagefind-ignore":"all","children":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":[["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"<"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"WriteBarIcon"}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" label"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"Прикрепить файл\""}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  <"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Icon24Attachment"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" />"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"</"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"WriteBarIcon"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}]]}]}],"\n"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Через ARIA-атрибуты:"}],"\n",["$","$La",null,{"tabIndex":"0","data-language":"jsx","data-word-wrap":"","data-copy":"","data-pagefind-ignore":"all","children":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":[["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"<"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"WriteBarIcon"}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" aria-label"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"Отправить сообщение\""}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  <"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Icon24Send"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" />"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"</"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"WriteBarIcon"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}]]}]}],"\n"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"С использованием VisuallyHidden:"}],"\n",["$","$La",null,{"tabIndex":"0","data-language":"jsx","data-word-wrap":"","data-copy":"","data-pagefind-ignore":"all","children":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":[["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"<"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"WriteBarIcon"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  <"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Icon24SmileOutline"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" />"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  <"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"VisuallyHidden"}],"$L38","$L39","$L3a"]}],"\n","$L3b"]}]}],"\n"]}],"\n","$L3c","\n"]}]
+2f:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"podkomponenty","children":["$","a",null,{"href":"#podkomponenty","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Подкомпоненты","children":["Подкомпоненты",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+30:["$","$L8",null,{"code":"<WriteBar.Root>\n  <WriteBar.Before>\n    <WriteBarIcon mode=\"attach\" />\n  </WriteBar.Before>\n  <WriteBar.FormField>\n    <WriteBar.Textarea placeholder=\"Введите сообщение...\" />\n    <WriteBar.FormField.InlineAfter>\n      <WriteBarIcon label=\"Смайлы и стикеры\">\n        <Icon24SmileOutline />\n      </WriteBarIcon>\n    </WriteBar.FormField.InlineAfter>\n  </WriteBar.FormField>\n  <WriteBar.After>\n    <WriteBarIcon mode=\"attach\" />\n  </WriteBar.After>\n</WriteBar.Root>"}]
+31:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"api","children":["$","a",null,{"href":"#api","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Свойства и методы","children":["Свойства и методы",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+32:[["$","div","WriteBar/.0",{"children":[["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"write-bar-api","children":["$","a",null,{"href":"#write-bar-api","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию WriteBar","children":["WriteBar",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}],["$","div",null,{"className":"Table_root__0rGvK","children":["$","table",null,{"className":"Table_table__NzLHi PropsTable_root__O959b","children":[["$","thead",null,{"children":["$","tr",null,{"children":[["$","th",null,{"children":"Свойство","className":"Table_th__EHorR"}],["$","th",null,{"children":"Описание","className":"Table_th__EHorR"}]],"className":"Table_tr__SD2Ot"}]}],["$","tbody",null,{"children":["$@3d","$@3e","$@3f","$@40","$@41","$@42","$@43","$@44"]}]]}]}]]}],["$","div","WriteBarIcon/.1",{"children":[["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"write-bar-icon-api","children":["$","a",null,{"href":"#write-bar-icon-api","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию WriteBarIcon","children":["WriteBarIcon",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}],["$","div",null,{"className":"Table_root__0rGvK","children":["$","table",null,{"className":"Table_table__NzLHi PropsTable_root__O959b","children":[["$","thead",null,{"children":["$","tr",null,{"children":[["$","th",null,{"children":"Свойство","className":"Table_th__EHorR"}],["$","th",null,{"children":"Описание","className":"Table_th__EHorR"}]],"className":"Table_tr__SD2Ot"}]}],["$","tbody",null,{"children":["$@45","$@46","$@47"]}]]}]}]]}]]
+36:null
+38:["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">Эмодзи</"}]
+39:["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"VisuallyHidden"}]
+3a:["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]
+3b:["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"</"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"WriteBarIcon"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}]
+3c:["$","li",null,{"className":"mdx_li__rnY5m","children":["\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["С использованием ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"id"}]," в ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"aria-labelledby"}]]}],"\n",["$","$La",null,{"tabIndex":"0","data-language":"jsx","data-word-wrap":"","data-copy":"","data-pagefind-ignore":"all","children":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":[["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"<"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"VisuallyHidden"}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" id"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"write_bar_icon_voice\""}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">Записать голосовое сообщение</"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"VisuallyHidden"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  <"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"WriteBarIcon"}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" aria-labelledby"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"write_bar_icon_voice\""}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  <"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Icon28VoiceOutline"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" />"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"</"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"WriteBarIcon"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}]]}]}],"\n"]}]
+3d:["$","tr","after",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"after"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"ReactNode"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Содержимое, отображаемое справа от поля ввода."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+3e:["$","tr","before",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"before"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"ReactNode"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Содержимое, отображаемое слева от поля ввода."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+3f:["$","tr","getRef",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ PropsTable_propDeprecated__upMw_","children":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"getRef"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"Ref<HTMLTextAreaElement>"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":[["$","strong",null,{"className":"mdx_strong__N7OUG","children":"Deprecated"}],": Since 7.9.0. Вместо этого используйте ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"slotProps={ textArea: { getRootRef: ... } }"}],"."]}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+40:["$","tr","getRootRef",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"getRootRef"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"Ref<HTMLDivElement>"}],"$undefined",["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+41:["$","tr","inlineAfter",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"inlineAfter"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"ReactNode"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Содержимое, отображаемое поверх поля ввода (актуально для iOS)."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+42:["$","tr","onHeightChange",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"onHeightChange"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"VoidFunction"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Вызывается при смене высоты поля ввода."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+43:["$","tr","shadow",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"shadow"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"boolean"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Добавляет тень вокруг поля ввода."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"false"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+44:["$","tr","slotProps",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"slotProps"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"{ root?: (Omit<HTMLAttributes<HTMLDivElement>, \"children\"> & HasRootRef<HTMLDivElement> & HasDataAttribute); textArea?: (TextareaHTMLAttributes<...> & ... 1 more ... & HasDataAttribute) | undefined; } | undefined"}],[["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Свойства, которые можно прокинуть внутрь компонента:"}],"\n",["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"root"}],": свойства для прокидывания в корень компонента;"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"textArea"}],": свойства для прокидывания в поле ввода."]}],"\n"]}]],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+45:["$","tr","count",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"count"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"number"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Значение счётчика для кнопки. Например, для количества прикреплённых файлов."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+46:["$","tr","label",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"label"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"string"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Текст кнопки. Необходим для ассистивных технологий."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+47:["$","tr","mode",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"mode"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"\"done\" | \"send\" | \"attach\""}],[["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Предустановленные типы кнопок в WriteBar для отрисовки иконки и установки текста кнопки в зависимости от платформы.\nЕсли передать валидное значение для этого свойства, ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"children"}]," игнорируются, а для ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"label"}]," по умолчанию используется текст на “ru_RU”."]}],"\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Валидные значения:"}],"\n",["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"attach"}]," – иконка прикрепления, текст по умолчанию — “Прикрепить файл”;"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"send"}]," – иконка отправки, текст по умолчанию — “Отправить”;"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"done"}]," – иконка отправки в режиме редактирования, текст по умолчанию — “Готово”."]}],"\n"]}]],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_a47d8e","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
