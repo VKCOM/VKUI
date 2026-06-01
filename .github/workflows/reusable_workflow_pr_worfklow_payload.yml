@@ -17,11 +17,17 @@ on:
       pr_number:
         value: ${{ jobs.download.outputs.pr_number }}
 
+permissions:
+  contents: read
+
 jobs:
   download:
     if: ${{ inputs.action == 'download' }}
     runs-on: ubuntu-slim
     name: Download PR workflow payload artifact
+    permissions:
+      actions: read
+      contents: read
     outputs:
       status: ${{ steps.payload.outputs.status || steps.payload_fallback.outputs.status }}
       pr_number: ${{ steps.payload.outputs.pr_number }}
@@ -36,9 +42,19 @@ jobs:
       - name: Extract payload to GITHUB_OUTPUT
         if: ${{ steps.artifact.outputs.found_artifact == 'true' }}
         id: payload
+        shell: bash
         run: |
-          echo "status=success" >> $GITHUB_OUTPUT
-          echo "pr_number=$(cat pr_workflow_payload/pr_number.txt)" >> $GITHUB_OUTPUT
+          PR_NUMBER="$(tr -d '[:space:]' < pr_workflow_payload/pr_number.txt)"
+
+          if [[ ! "$PR_NUMBER" =~ ^[0-9]+$ ]]; then
+            echo "::error::Invalid PR number payload"
+            exit 1
+          fi
+
+          {
+            echo "status=success"
+            echo "pr_number=$PR_NUMBER"
+          } >> "$GITHUB_OUTPUT"
 
       - name: NO ARTEFACT
         if: ${{ steps.artifact.outputs.found_artifact != 'true' }}
@@ -51,9 +67,17 @@ jobs:
     name: Upload PR workflow payload artifact
     steps:
       - name: Prepare data
+        shell: bash
+        env:
+          PR_NUMBER: ${{ inputs.override_pr_number || github.event.pull_request.number }}
         run: |
+          if [[ ! "$PR_NUMBER" =~ ^[0-9]+$ ]]; then
+            echo "::error::Invalid PR number"
+            exit 1
+          fi
+
           mkdir pr_workflow_payload
-          echo ${{ inputs.override_pr_number || github.event.pull_request.number }} > pr_workflow_payload/pr_number.txt
+          printf '%s\n' "$PR_NUMBER" > pr_workflow_payload/pr_number.txt
 
       - name: Upload
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1

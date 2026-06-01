@@ -28,28 +28,45 @@ runs:
   steps:
     - name: Saving current version to env
       id: internal_id_prev_version
-      run: echo "value=$(yarn workspace ${{ inputs.package_name }} node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
+      env:
+        PACKAGE_NAME: ${{ inputs.package_name }}
+      run: |
+        VERSION="$(yarn workspace "$PACKAGE_NAME" node -p "require('./package.json').version")"
+        printf 'value=%s\n' "$VERSION" >> "$GITHUB_OUTPUT"
       shell: bash
 
     - name: Bump ${{ inputs.package_name }} package by version type
       if: ${{ !inputs.prerelease_id }}
-      run: yarn workspace ${{ inputs.package_name }} run g:npm:version ${{ inputs.version_type }}
+      env:
+        PACKAGE_NAME: ${{ inputs.package_name }}
+        VERSION_TYPE: ${{ inputs.version_type }}
+      run: yarn workspace "$PACKAGE_NAME" run g:npm:version "$VERSION_TYPE"
       shell: bash
 
     - name: Bump ${{ inputs.package_name }} package by version type (with --preid flag)
       if: ${{ inputs.prerelease_id }}
-      run: yarn workspace ${{ inputs.package_name }} run g:npm:version ${{ inputs.version_type }} --preid ${{ inputs.prerelease_id }}
+      env:
+        PACKAGE_NAME: ${{ inputs.package_name }}
+        PRERELEASE_ID: ${{ inputs.prerelease_id }}
+        VERSION_TYPE: ${{ inputs.version_type }}
+      run: yarn workspace "$PACKAGE_NAME" run g:npm:version "$VERSION_TYPE" --preid "$PRERELEASE_ID"
       shell: bash
 
     - name: Saving new version to env
       id: internal_id_next_version
-      run: echo "value=$(yarn workspace ${{ inputs.package_name }} node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
+      env:
+        PACKAGE_NAME: ${{ inputs.package_name }}
+      run: |
+        VERSION="$(yarn workspace "$PACKAGE_NAME" node -p "require('./package.json').version")"
+        printf 'value=%s\n' "$VERSION" >> "$GITHUB_OUTPUT"
       shell: bash
 
     - name: Detect release type
       id: internal_id_is_stable_release
+      env:
+        NEXT_VERSION: ${{ steps.internal_id_next_version.outputs.value }}
       run: |
-        if yarn run semver ${{ steps.internal_id_next_version.outputs.value }} --range '>=0.0.0'; then
+        if yarn run semver "$NEXT_VERSION" --range '>=0.0.0'; then
           echo "value=true" >> $GITHUB_OUTPUT
         else
           echo "value=false" >> $GITHUB_OUTPUT

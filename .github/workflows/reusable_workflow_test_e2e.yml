@@ -9,6 +9,9 @@ on:
         required: false
         type: string
 
+permissions:
+  contents: read
+
 jobs:
   get_playwright_docker_image:
     runs-on: ubuntu-slim
