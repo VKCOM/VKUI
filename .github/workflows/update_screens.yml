@@ -10,6 +10,9 @@ on:
 
 run-name: Update screenshots for ${{ github.ref_name }}
 
+permissions:
+  contents: read
+
 jobs:
   get_playwright_docker_image:
     runs-on: ubuntu-slim

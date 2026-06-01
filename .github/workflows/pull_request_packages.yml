@@ -15,10 +15,16 @@ concurrency:
   group: pr-packages-${{ github.event.pull_request.number }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 jobs:
   changed_files:
     runs-on: ubuntu-slim
     name: Detect what files changed
+    permissions:
+      contents: read
+      pull-requests: read
     outputs:
       package_vkui: ${{ steps.changes.outputs.package_vkui }}
       docs_storybook: ${{ steps.changes.outputs.docs_storybook }}
@@ -159,6 +165,7 @@ jobs:
       CI_JOB_NUMBER: 1
     # Для Dependabot
     permissions:
+      contents: read
       pull-requests: write
     steps:
       - name: Checkout
@@ -196,9 +203,11 @@ jobs:
           yarn exec biome format --write --config-path=diff.biome.json
 
       - name: Checkout target
+        env:
+          BASE_REF: ${{ github.base_ref }}
         run: |
-          git fetch origin ${{ github.base_ref }} --depth=1
-          git checkout -f ${{ github.base_ref }}
+          git fetch origin "$BASE_REF" --depth=1
+          git checkout -f "$BASE_REF"
 
       - name: Node setup (target)
         uses: ./.github/actions/node-setup
@@ -316,7 +325,7 @@ jobs:
 
       - name: Install dependencies
         run: YARN_ENABLE_SCRIPTS=false yarn install --immutable --check-cache --check-resolutions
- 
+
   pinact:
     if: ${{ needs.changed_files.outputs.dot_github == 'true' }}
     needs: changed_files

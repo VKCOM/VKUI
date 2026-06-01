@@ -30,13 +30,16 @@ on:
 env:
   CHECKOUT_BRANCH: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_branch || github.ref }}
 
+permissions:
+  contents: read
+
 jobs:
   payload:
     name: Prepare payload data
     runs-on: ubuntu-slim
     outputs:
-      package_name: ${{ steps.publish_workflow_payload.outputs.package_name || inputs.package_name }}
-      next_version: ${{ steps.publish_workflow_payload.outputs.next_version || inputs.next_version }}
+      package_name: ${{ steps.publish_workflow_payload.outputs.package_name || steps.manual_payload.outputs.package_name }}
+      next_version: ${{ steps.publish_workflow_payload.outputs.next_version || steps.manual_payload.outputs.next_version }}
       is_for_prerelease: ${{ contains(github.event.workflow_run.name, 'Publish pre-release') || contains(inputs.publish_type, 'pre-release') }}
     steps:
       - name: Download artifact (if it is 'workflow_run')
@@ -52,9 +55,54 @@ jobs:
       - name: Parse artifact
         if: ${{ steps.artifact.conclusion == 'success' }}
         id: publish_workflow_payload
+        shell: bash
         run: |
-          echo "package_name=$(cat publish_workflow_payload/package_name.txt)" >> $GITHUB_OUTPUT
-          echo "next_version=$(cat publish_workflow_payload/next_version.txt)" >> $GITHUB_OUTPUT
+          PACKAGE_NAME="$(tr -d '\r\n' < publish_workflow_payload/package_name.txt)"
+          NEXT_VERSION="$(tr -d '\r\n' < publish_workflow_payload/next_version.txt)"
+
+          case "$PACKAGE_NAME" in
+            "@vkontakte/vkui"|"@vkontakte/vkui-floating-ui"|"@vkontakte/vkui-date-fns-tz"|"@vkontakte/vkui-codemods"|"@vkontakte/vkui-mcp") ;;
+            *)
+              echo "::error::Invalid package_name payload"
+              exit 1
+              ;;
+          esac
+
+          if [[ ! "$NEXT_VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+([-.+][0-9A-Za-z.-]+)?$ ]]; then
+            echo "::error::Invalid next_version payload"
+            exit 1
+          fi
+
+          {
+            printf 'package_name=%s\n' "$PACKAGE_NAME"
+            printf 'next_version=%s\n' "$NEXT_VERSION"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Validate manual payload
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        id: manual_payload
+        shell: bash
+        env:
+          NEXT_VERSION: ${{ inputs.next_version }}
+          PACKAGE_NAME: ${{ inputs.package_name }}
+        run: |
+          case "$PACKAGE_NAME" in
+            "@vkontakte/vkui") ;;
+            *)
+              echo "::error::Invalid package_name input"
+              exit 1
+              ;;
+          esac
+
+          if [[ ! "$NEXT_VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+([-.+][0-9A-Za-z.-]+)?$ ]]; then
+            echo "::error::Invalid next_version input"
+            exit 1
+          fi
+
+          {
+            printf 'package_name=%s\n' "$PACKAGE_NAME"
+            printf 'next_version=%s\n' "$NEXT_VERSION"
+          } >> "$GITHUB_OUTPUT"
 
   deploy_vkui_docs:
     needs: [payload]
@@ -90,13 +138,14 @@ jobs:
 
       - name: Creating docs for pre-release OR release (version basePath)
         # [Version doc] В S3 будет выгружать с префиксом <version>
-        run: |
-          node --run docs:website:build
-          mkdir -p website/out/${{ needs.payload.outputs.next_version }}/playground
-          cp -R website/tmp/playground/* website/out/${{ needs.payload.outputs.next_version }}/playground/
         env:
+          DOCS_VERSION: ${{ needs.payload.outputs.next_version }}
           NEXT_PUBLIC_VKUI_DOCS_BASE_PATH: /${{ needs.payload.outputs.next_version }}
           NEXT_PUBLIC_VKUI_DOCS_DIST_DIR: out/${{ needs.payload.outputs.next_version }}
+        run: |
+          node --run docs:website:build
+          mkdir -p "website/out/${DOCS_VERSION}/playground"
+          cp -R website/tmp/playground/* "website/out/${DOCS_VERSION}/playground/"
 
       - name: Publishing doc
         uses: JamesIves/github-pages-deploy-action@d92aa235d04922e8f08b40ce78cc5442fcfbfa2f # v4.8.0

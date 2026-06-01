@@ -13,10 +13,16 @@ env:
   PR_HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
   AWS_S3_URL: https://${{ vars.AWS_BUCKET }}.${{ vars.AWS_ENDPOINT }}
 
+permissions:
+  contents: read
+
 jobs:
   pr_workflow_payload:
-    if: ${{ github.event.workflow_run.event == 'pull_request' }}
+    if: ${{ github.event.workflow_run.event == 'pull_request' && github.event.workflow_run.head_repository.full_name == github.repository }}
     name: Call reusable workflow
+    permissions:
+      actions: read
+      contents: read
     uses: ./.github/workflows/reusable_workflow_pr_worfklow_payload.yml
     with:
       action: download
@@ -27,6 +33,7 @@ jobs:
     runs-on: ubuntu-slim
     name: Deploy test coverage
     permissions:
+      actions: read
       id-token: write
       code-quality: write
       contents: read
@@ -36,7 +43,7 @@ jobs:
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           repository: ${{ env.PR_HEAD_REPOSITORY_FULL_NAME }}
-          ref: ${{ env.PR_HEAD_BRANCH }}
+          ref: ${{ env.PR_HEAD_SHA }}
           persist-credentials: false
 
       - name: Download artifact
@@ -71,6 +78,11 @@ jobs:
     if: ${{ needs.pr_workflow_payload.outputs.status == 'success' }}
     runs-on: ubuntu-slim
     name: Deploy Playwright Report and create comment
+    permissions:
+      actions: read
+      contents: read
+      issues: write
+      pull-requests: read
     steps:
       - name: Download artifact
         id: artifact
@@ -105,6 +117,9 @@ jobs:
     if: ${{ needs.pr_workflow_payload.outputs.status == 'success' }}
     runs-on: ubuntu-slim
     name: Deploy docs
+    permissions:
+      actions: read
+      contents: read
     outputs:
       url: ${{ steps.url.outputs.value }}
     steps:
@@ -131,13 +146,20 @@ jobs:
       - name: Create doc url
         if: ${{ steps.deploy.outcome == 'success' }}
         id: url
-        run: echo "value=${{ env.AWS_S3_URL }}/pull/${{ needs.pr_workflow_payload.outputs.pr_number }}/${{ env.PR_HEAD_SHA }}/overview/about/index.html" >> $GITHUB_OUTPUT
+        env:
+          AWS_S3_URL: ${{ env.AWS_S3_URL }}
+          PR_HEAD_SHA: ${{ env.PR_HEAD_SHA }}
+          PR_NUMBER: ${{ needs.pr_workflow_payload.outputs.pr_number }}
+        run: printf 'value=%s\n' "${AWS_S3_URL}/pull/${PR_NUMBER}/${PR_HEAD_SHA}/overview/about/index.html" >> "$GITHUB_OUTPUT"
 
   deploy_storybook:
     needs: pr_workflow_payload
     if: ${{ needs.pr_workflow_payload.outputs.status == 'success' }}
     runs-on: ubuntu-slim
     name: Deploy docs (storybook)
+    permissions:
+      actions: read
+      contents: read
     outputs:
       url: ${{ steps.url.outputs.value }}
     steps:
@@ -164,13 +186,20 @@ jobs:
       - name: Create doc url
         if: ${{ steps.deploy.outcome == 'success' }}
         id: url
-        run: echo "value=${{ env.AWS_S3_URL }}/pull/${{ needs.pr_workflow_payload.outputs.pr_number }}/${{ env.PR_HEAD_SHA }}/playground/index.html" >> $GITHUB_OUTPUT
+        env:
+          AWS_S3_URL: ${{ env.AWS_S3_URL }}
+          PR_HEAD_SHA: ${{ env.PR_HEAD_SHA }}
+          PR_NUMBER: ${{ needs.pr_workflow_payload.outputs.pr_number }}
+        run: printf 'value=%s\n' "${AWS_S3_URL}/pull/${PR_NUMBER}/${PR_HEAD_SHA}/playground/index.html" >> "$GITHUB_OUTPUT"
 
   deploy_package:
     needs: pr_workflow_payload
     if: ${{ needs.pr_workflow_payload.outputs.status == 'success' }}
     runs-on: ubuntu-slim
     name: Deploy package
+    permissions:
+      actions: read
+      contents: read
     outputs:
       url: ${{ steps.url.outputs.value }}
     steps:
@@ -197,13 +226,20 @@ jobs:
       - name: Create doc url
         if: ${{ steps.deploy.outcome == 'success' }}
         id: url
-        run: echo "value=${{ env.AWS_S3_URL }}/pull/${{ needs.pr_workflow_payload.outputs.pr_number }}/${{ env.PR_HEAD_SHA }}/pkg/@vkontakte/vkui/_pkg.tgz" >> $GITHUB_OUTPUT
+        env:
+          AWS_S3_URL: ${{ env.AWS_S3_URL }}
+          PR_HEAD_SHA: ${{ env.PR_HEAD_SHA }}
+          PR_NUMBER: ${{ needs.pr_workflow_payload.outputs.pr_number }}
+        run: printf 'value=%s\n' "${AWS_S3_URL}/pull/${PR_NUMBER}/${PR_HEAD_SHA}/pkg/@vkontakte/vkui/_pkg.tgz" >> "$GITHUB_OUTPUT"
 
   deploy_diff:
     needs: pr_workflow_payload
     if: ${{ needs.pr_workflow_payload.outputs.status == 'success' }}
     runs-on: ubuntu-slim
     name: Deploy diff
+    permissions:
+      actions: read
+      contents: read
     outputs:
       has_diff: ${{ steps.artifact.outputs.found_artifact }}
       url: ${{ steps.url.outputs.value }}
@@ -231,7 +267,11 @@ jobs:
       - name: Create doc url
         if: ${{ steps.deploy.outcome == 'success' }}
         id: url
-        run: echo "value=${{ env.AWS_S3_URL }}/pull/${{ needs.pr_workflow_payload.outputs.pr_number }}/${{ env.PR_HEAD_SHA }}/diff/diff-report.html" >> $GITHUB_OUTPUT
+        env:
+          AWS_S3_URL: ${{ env.AWS_S3_URL }}
+          PR_HEAD_SHA: ${{ env.PR_HEAD_SHA }}
+          PR_NUMBER: ${{ needs.pr_workflow_payload.outputs.pr_number }}
+        run: printf 'value=%s\n' "${AWS_S3_URL}/pull/${PR_NUMBER}/${PR_HEAD_SHA}/diff/diff-report.html" >> "$GITHUB_OUTPUT"
 
   diff_comment:
     needs:
@@ -239,6 +279,10 @@ jobs:
       - pr_workflow_payload
     runs-on: ubuntu-slim
     name: Diff comment
+    permissions:
+      contents: read
+      issues: write
+      pull-requests: read
     steps:
       - name: Find diff URL comment
         uses: peter-evans/find-comment@b30e6a3c0ed37e7c023ccd3f1db5c6c0b0c23aad # v4.0.0
@@ -283,6 +327,10 @@ jobs:
     if: ${{ needs.deploy_storybook.outputs.url != '' || needs.deploy_docs_website.outputs.url != '' || needs.deploy_package.outputs.url != '' }}
     runs-on: ubuntu-slim
     name: Docs comment
+    permissions:
+      contents: read
+      issues: write
+      pull-requests: read
     steps:
       - name: Find docs URLs comment
         uses: peter-evans/find-comment@b30e6a3c0ed37e7c023ccd3f1db5c6c0b0c23aad # v4.0.0

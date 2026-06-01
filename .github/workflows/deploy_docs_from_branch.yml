@@ -4,6 +4,9 @@ on: workflow_dispatch
 
 run-name: Deploy docs from ${{ github.ref_name }}
 
+permissions:
+  contents: read
+
 jobs:
   build_and_deploy_docs:
     runs-on: ubuntu-latest

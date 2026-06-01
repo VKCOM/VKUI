@@ -38,27 +38,44 @@ runs:
   using: composite
   steps:
     - name: Commit
+      env:
+        NEXT_VERSION: ${{ inputs.next_version }}
+        PACKAGE_NAME: ${{ inputs.package_name }}
+        PREV_VERSION: ${{ inputs.prev_version }}
       run: |
         git add -A
-        git commit -m 'bump(${{ inputs.package_name }}): from ${{ inputs.prev_version }} to ${{ inputs.next_version }}'
+        git commit -m "bump(${PACKAGE_NAME}): from ${PREV_VERSION} to ${NEXT_VERSION}"
       shell: bash
 
     - name: Create git tag
       id: git_release_tag
+      env:
+        DISABLE_GIT_TAG_WITH_NAMESPACE: ${{ inputs.disable_git_tag_with_namespace }}
+        NEXT_VERSION: ${{ inputs.next_version }}
+        PACKAGE_NAME: ${{ inputs.package_name }}
       run: |
-        GIT_TAG=${{ fromJSON(inputs.disable_git_tag_with_namespace) == true && format('v{0}', inputs.next_version) || format('{0}@{1}', inputs.package_name, inputs.next_version) }}
-        git tag $GIT_TAG
-        echo "value=$GIT_TAG" >> $GITHUB_OUTPUT
+        if [[ "$DISABLE_GIT_TAG_WITH_NAMESPACE" == "true" ]]; then
+          GIT_TAG="v${NEXT_VERSION}"
+        else
+          GIT_TAG="${PACKAGE_NAME}@${NEXT_VERSION}"
+        fi
+
+        git tag "$GIT_TAG"
+        printf 'value=%s\n' "$GIT_TAG" >> "$GITHUB_OUTPUT"
       shell: bash
 
     - name: Generate archive
       # ../../ – это путь до корня из директории `packages/<name>`
-      run: yarn workspace ${{ inputs.package_name }} pack --out ../../artifact.tgz
+      env:
+        PACKAGE_NAME: ${{ inputs.package_name }}
+      run: yarn workspace "$PACKAGE_NAME" pack --out ../../artifact.tgz
       shell: bash
 
     - name: Publishing release
+      env:
+        NPM_TAG: ${{ inputs.npm_tag }}
       run: |
-        npm publish artifact.tgz --tag ${{ inputs.npm_tag }}
+        npm publish artifact.tgz --tag "$NPM_TAG"
       shell: bash
 
     - name: Pushing changes
@@ -76,14 +93,21 @@ runs:
         directory: packages/vkui/
 
     - name: Prepare payload data
+      env:
+        BRANCH: ${{ inputs.branch }}
+        CLOSE_MILESTONE: ${{ inputs.close_milestone }}
+        GIT_RELEASE_TAG: ${{ steps.git_release_tag.outputs.value }}
+        NEXT_VERSION: ${{ inputs.next_version }}
+        NPM_TAG: ${{ inputs.npm_tag }}
+        PACKAGE_NAME: ${{ inputs.package_name }}
       run: |
         mkdir -p publish_workflow_payload
-        echo ${{ inputs.next_version }} > publish_workflow_payload/next_version.txt
-        echo ${{ inputs.package_name }} > publish_workflow_payload/package_name.txt
-        echo ${{ inputs.npm_tag }} > publish_workflow_payload/npm_tag.txt
-        echo ${{ steps.git_release_tag.outputs.value }} > publish_workflow_payload/git_release_tag.txt
-        echo ${{ inputs.close_milestone }} > publish_workflow_payload/close_milestone.txt
-        echo ${{ inputs.branch }} > publish_workflow_payload/branch.txt
+        printf '%s\n' "$NEXT_VERSION" > publish_workflow_payload/next_version.txt
+        printf '%s\n' "$PACKAGE_NAME" > publish_workflow_payload/package_name.txt
+        printf '%s\n' "$NPM_TAG" > publish_workflow_payload/npm_tag.txt
+        printf '%s\n' "$GIT_RELEASE_TAG" > publish_workflow_payload/git_release_tag.txt
+        printf '%s\n' "$CLOSE_MILESTONE" > publish_workflow_payload/close_milestone.txt
+        printf '%s\n' "$BRANCH" > publish_workflow_payload/branch.txt
       shell: bash
 
     - name: Upload payload data to artifact for deploy workflow

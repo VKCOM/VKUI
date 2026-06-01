@@ -10,6 +10,9 @@ on:
         type: number
         required: true
 
+permissions:
+  contents: read
+
 jobs:
   upload_pr_workflow_payload:
     # Не используем always(), т.к. он не учитывает отмену воркфлоу
@@ -148,6 +151,9 @@ jobs:
     if: ${{ github.event.pull_request.merged == true
       && github.event.pull_request.user.login == 'dependabot[bot]'
       && github.event.pull_request.base.ref == 'master' }}
+    permissions:
+      contents: read
+      pull-requests: read
     outputs:
       result: ${{ steps.check_floating_ui_updated.outputs.floating_ui_updated }}
       prev_floating_ui_version: ${{ steps.check_floating_ui_updated.outputs.prev_version }}
@@ -177,13 +183,17 @@ jobs:
       - name: Check if vkui-floating-ui was updated
         id: check_floating_ui_updated
         if: ${{ steps.file_changes.outputs.vkui_floating_ui_package == 'true' }}
+        env:
+          DEPENDENCY_NAMES: ${{ steps.metadata.outputs.dependency-names }}
+          NEW_VERSION: ${{ steps.metadata.outputs.new-version }}
+          PREVIOUS_VERSION: ${{ steps.metadata.outputs.previous-version }}
         run: |
-          UPDATED_DEPS=$(echo ${{ steps.metadata.outputs.dependency-names }} | sed "s/,/ /g")
+          UPDATED_DEPS="${DEPENDENCY_NAMES//,/ }"
 
           if [[ $UPDATED_DEPS =~ "@floating-ui/react-dom" ]]; then
             echo "floating_ui_updated=true" >> $GITHUB_OUTPUT
-            echo "prev_version=${{ steps.metadata.outputs.previous-version }}" >> $GITHUB_OUTPUT
-            echo "new_version=${{ steps.metadata.outputs.new-version }}" >> $GITHUB_OUTPUT
+            printf 'prev_version=%s\n' "$PREVIOUS_VERSION" >> "$GITHUB_OUTPUT"
+            printf 'new_version=%s\n' "$NEW_VERSION" >> "$GITHUB_OUTPUT"
           else
             echo "floating_ui_updated=false" >> $GITHUB_OUTPUT
           fi
@@ -219,10 +229,11 @@ jobs:
           current_version: ${{ steps.get_version.outputs.floating_ui_version }}
 
       - name: Define branch name for new version release
+        env:
+          NEW_VERSION: ${{ steps.calc_new_version_vkui_floating_ui.outputs.new_version }}
         run: |
           BRANCH_NAME_PREFIX="release/vkui-floating-ui-"
-          VERSION_POSTFIX="${{ steps.calc_new_version_vkui_floating_ui.outputs.new_version }}"
-          echo "RELEASE_BRANCH_NAME="${BRANCH_NAME_PREFIX}${VERSION_POSTFIX}"" >> "$GITHUB_ENV"
+          printf 'RELEASE_BRANCH_NAME=%s%s\n' "$BRANCH_NAME_PREFIX" "$NEW_VERSION" >> "$GITHUB_ENV"
 
       - name: Set Git credentials
         run: |
@@ -240,16 +251,19 @@ jobs:
       # Значение этого поля не важно, так как оно будет проигнорировано из-за поля `custom_version`
       - name: Publish new version
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        env:
+          NEW_VERSION: ${{ steps.calc_new_version_vkui_floating_ui.outputs.new_version }}
+          RELEASE_BRANCH_NAME: ${{ env.RELEASE_BRANCH_NAME }}
         with:
           script: |
             github.rest.actions.createWorkflowDispatch({
               owner: context.repo.owner,
               repo: context.repo.repo,
               workflow_id: 'publish.yml',
-              ref: "${{ env.RELEASE_BRANCH_NAME }}",
+              ref: process.env.RELEASE_BRANCH_NAME,
               inputs: {
                 package_name: '@vkontakte/vkui-floating-ui',
-                custom_version: "${{ steps.calc_new_version_vkui_floating_ui.outputs.new_version }}",
+                custom_version: process.env.NEW_VERSION,
                 version_type: 'patch',
                 close_milestone: false
               }

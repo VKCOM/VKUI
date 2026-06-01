@@ -14,9 +14,13 @@ runs:
       shell: bash
 
     - name: Run build
-      run: yarn workspace ${{ inputs.package_name }} run build
+      env:
+        PACKAGE_NAME: ${{ inputs.package_name }}
+      run: yarn workspace "$PACKAGE_NAME" run build
       shell: bash
 
     - name: Run tests and linters
-      run: yarn workspace ${{ inputs.package_name }} run test
+      env:
+        PACKAGE_NAME: ${{ inputs.package_name }}
+      run: yarn workspace "$PACKAGE_NAME" run test
       shell: bash
