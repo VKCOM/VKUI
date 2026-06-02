@@ -17,7 +17,7 @@ export default story;
 type Story = StoryObj<SearchProps>;
 
 export const Playground: Story = {
-  render: (args) => <Search {...args} after={null} />,
+  render: (args) => <Search {...args} />,
   decorators: [
     (Component, context) => (
       <Group>

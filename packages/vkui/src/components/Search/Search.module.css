@@ -178,8 +178,11 @@
   flex-basis: 0%;
   min-inline-size: 0;
   max-inline-size: min-content;
+  margin-inline-end: 0;
   pointer-events: none;
-  transition: flex-grow 0.3s var(--vkui--animation_easing_platform);
+  transition-timing-function: var(--vkui--animation_easing_platform);
+  transition-duration: 0.3s;
+  transition-property: flex-grow, margin-inline-end;
 }
 
 .focused .after,
@@ -197,15 +200,9 @@
   content: '';
 }
 
-.withPadding .after::after {
+.focused.withPadding .after,
+.hasValue.withPadding .after {
   margin-inline-end: calc(-1 * var(--vkui--size_base_padding_horizontal--regular));
-}
-
-.afterTextClip {
-  display: block;
-  overflow: hidden;
-  text-overflow: clip;
-  white-space: nowrap;
 }
 
 .findButton {
