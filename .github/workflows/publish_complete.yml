@@ -42,7 +42,7 @@ jobs:
       - name: Download artifact (if it is 'workflow_run')
         if: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.event == 'workflow_dispatch' && github.event.workflow_run.conclusion == 'success' }}
         id: artifact
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
           github-token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
           name: publish_workflow_payload
@@ -79,7 +79,7 @@ jobs:
     name: Complete @vkontakte/vkui-floating-ui
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: Node setup
         uses: ./.github/actions/node-setup
@@ -99,7 +99,7 @@ jobs:
       # Создаем pull request с изменениями в ветке
       - name: Create PR with changes
         id: create_pull_request
-        uses: peter-evans/create-pull-request@v8
+        uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           base: master

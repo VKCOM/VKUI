@@ -4,28 +4,32 @@ import { Icon28SunOutline, Icon28MoonOutline } from '@vkontakte/icons';
 
 const STORAGE_KEY = 'vkui-next-js-template:color-scheme';
 
-const getColorSchemeFromStorage = (defaultColorScheme: ColorSchemeType) => {
-  if (typeof window === 'undefined') {
-    return defaultColorScheme;
-  }
-  let colorScheme;
+const subscribers = new Set<() => void>();
+
+const subscribe = (callback: () => void) => {
+  subscribers.add(callback);
+  return () => subscribers.delete(callback);
+};
+
+const getSnapshot = (defaultColorScheme: ColorSchemeType) => {
+  let colorScheme: ColorSchemeType | null = null;
   try {
-    colorScheme = (localStorage.getItem(STORAGE_KEY) as ColorSchemeType) || defaultColorScheme;
+    colorScheme = localStorage.getItem(STORAGE_KEY) as ColorSchemeType | null;
   } catch {
     // Unsupported
   }
   return colorScheme || defaultColorScheme;
 };
 
+const getServerSnapshot = (defaultColorScheme: ColorSchemeType) => defaultColorScheme;
+
 const setColorSchemeToStorage = (colorScheme: ColorSchemeType) => {
-  if (typeof window === 'undefined') {
-    return undefined;
-  }
   try {
     localStorage.setItem(STORAGE_KEY, colorScheme);
   } catch {
     // Unsupported
   }
+  subscribers.forEach((cb) => cb());
 };
 
 const ColorSchemeSwitcher: React.FC<{
@@ -46,17 +50,15 @@ const ColorSchemeSwitcher: React.FC<{
 
 export const useColorSchemeSwitcher = (): [ColorSchemeType, React.ReactNode] => {
   const defaultColorScheme = useColorScheme();
-  const [colorScheme, setColorScheme] = React.useState<ColorSchemeType>(ColorScheme.LIGHT);
+  const colorScheme = React.useSyncExternalStore(
+    subscribe,
+    () => getSnapshot(defaultColorScheme),
+    () => getServerSnapshot(defaultColorScheme),
+  );
 
   const _updateColorScheme = React.useCallback((colorScheme: ColorSchemeType) => {
-    setColorScheme(colorScheme);
     setColorSchemeToStorage(colorScheme);
   }, []);
-
-  React.useLayoutEffect(
-    () => setColorScheme(getColorSchemeFromStorage(defaultColorScheme)),
-    [_updateColorScheme, defaultColorScheme],
-  );
 
   return [
     colorScheme,

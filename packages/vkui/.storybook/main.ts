@@ -16,7 +16,6 @@ const getLocalAddonPath = (addonName: string) => fileURLToPath(import.meta.resol
 const config: StorybookConfig = {
   stories: ['../docs/**/*.mdx', '../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
   addons: [
-    getLocalAddonPath('./addons/source-tab'),
     getGlobalAddonPath('@storybook/addon-links'),
     getGlobalAddonPath('@storybook/addon-a11y'),
     getGlobalAddonPath('@storybook/addon-designs', 'dist'),

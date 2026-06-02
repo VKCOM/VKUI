@@ -5,6 +5,7 @@ import { hasReactNode } from '@vkontakte/vkjs';
 import { useMergeProps } from '../../hooks/useMergeProps';
 import { warnOnce } from '../../lib/warnOnce';
 import type { HasDataAttribute, HasRootRef } from '../../types';
+import { WriteBarBeforeOrAfter } from './WriteBarBeforeOrAfter/WriteBarBeforeOrAfter';
 import { WriteBarFormField } from './WriteBarFormField/WriteBarFormField';
 import { WriteBarFormFieldInlineAfter } from './WriteBarFormField/WriteBarFormFieldInlineAfter/WriteBarFormFieldInlineAfter';
 import { WriteBarRoot } from './WriteBarRoot/WriteBarRoot';
@@ -169,14 +170,14 @@ export const WriteBar = ({
 
   return (
     <WriteBarRoot shadow={shadow} {...rootProps}>
-      {hasReactNode(before) && <WriteBarRoot.Before>{before}</WriteBarRoot.Before>}
+      {hasReactNode(before) && <WriteBarBeforeOrAfter>{before}</WriteBarBeforeOrAfter>}
       <WriteBarFormField>
         <WriteBarTextarea onHeightChange={onHeightChange} {...textAreaRest} />
         {hasReactNode(inlineAfter) && (
           <WriteBarFormFieldInlineAfter>{inlineAfter}</WriteBarFormFieldInlineAfter>
         )}
       </WriteBarFormField>
-      {hasReactNode(after) && <WriteBarRoot.After>{after}</WriteBarRoot.After>}
+      {hasReactNode(after) && <WriteBarBeforeOrAfter>{after}</WriteBarBeforeOrAfter>}
     </WriteBarRoot>
   );
 };
@@ -184,3 +185,5 @@ export const WriteBar = ({
 WriteBar.FormField = WriteBarFormField;
 WriteBar.Textarea = WriteBarTextarea;
 WriteBar.Root = WriteBarRoot;
+WriteBar.Before = WriteBarBeforeOrAfter;
+WriteBar.After = WriteBarBeforeOrAfter;

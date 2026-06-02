@@ -143,6 +143,11 @@ function extractPlaygroundExamples(body) {
   return examples;
 }
 
+function extractCategory(body) {
+  const match = body.match(/<Overview\s+[^>]*group=["']([^"']+)["']/);
+  return match ? match[1] : null;
+}
+
 const ENUM_VALUES_THRESHOLD = 10;
 
 function hasStringLiteralValues(values) {
@@ -191,37 +196,53 @@ export function generateMcpData() {
 
   const components = [];
   const hooks = [];
+  const allTagsSet = new Set();
 
   for (const filePath of mdxFiles) {
     const raw = fs.readFileSync(filePath, 'utf8');
     const { data, body } = parseFrontmatter(raw);
     const slug = slugFromPath(filePath);
-    const itemName = isHook(slug) ? hookKeyFromSlug(slug) : componentNameFromSlug(slug);
+    const hook = isHook(slug);
+    const itemName = hook ? hookKeyFromSlug(slug) : componentNameFromSlug(slug);
     const description = data.description || '';
     const props = docgen[itemName] || [];
     const resolvedBody = resolvePartials(body, filePath);
     const playgroundExamples = extractPlaygroundExamples(resolvedBody);
+    const category = hook ? null : extractCategory(body);
+
+    const tags = hook
+      ? []
+      : [
+          category,
+          ...(data.tags || '')
+            .split(',')
+            .map((t) => t.trim())
+            .filter(Boolean),
+        ].filter(Boolean);
 
     const listItem = {
       name: itemName,
       slug,
       description,
       examplesCount: playgroundExamples.length,
+      ...(hook ? {} : { tags }),
     };
     const detailPayload = {
       name: itemName,
       slug,
       description,
+      ...(hook ? {} : { tags }),
       props: sanitizeProps(props),
     };
 
-    if (isHook(slug)) {
+    if (hook) {
       hooks.push(listItem);
       const hookOutPath = path.join(OUT_HOOKS_DIR, `${slug}.json`);
       ensureDir(path.dirname(hookOutPath));
       fs.writeFileSync(hookOutPath, JSON.stringify(detailPayload, null, 2));
     } else {
       components.push(listItem);
+      tags.forEach((tag) => allTagsSet.add(tag));
       const componentOutPath = path.join(OUT_COMPONENTS_DIR, `${slug}.json`);
       ensureDir(path.dirname(componentOutPath));
       fs.writeFileSync(componentOutPath, JSON.stringify(detailPayload, null, 2));
@@ -235,8 +256,11 @@ export function generateMcpData() {
     }
   }
 
+  const allTags = [...allTagsSet].sort();
+
   fs.writeFileSync(path.join(OUT_DIR, 'components.json'), JSON.stringify(components, null, 2));
   fs.writeFileSync(path.join(OUT_DIR, 'hooks.json'), JSON.stringify(hooks, null, 2));
+  fs.writeFileSync(path.join(OUT_DIR, 'tags.json'), JSON.stringify(allTags, null, 2));
 
   // eslint-disable-next-line no-console
   console.log('✅ MCP данные сгенерированы.');

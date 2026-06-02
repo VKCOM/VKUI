@@ -2,12 +2,12 @@ import * as React from 'react';
 import { useGlobals, addons, useStorybookApi } from 'storybook/manager-api';
 import { styled } from 'storybook/theming';
 import { SET_GLOBALS } from 'storybook/internal/core-events';
-import { IconButton } from 'storybook/internal/components';
+import { Select } from 'storybook/internal/components';
 import { SunIcon, MoonIcon } from '@storybook/icons';
 import { PARAM_KEY, SET_STORYBOOK_THEME } from './constants';
 import { vkuiDarkTheme, vkuiLightTheme } from './vkuiThemes';
 
-const SidebarIconButton = styled(IconButton)(({ theme }) => ({
+const SidebarSelect = styled(Select)(({ theme }) => ({
   position: 'relative',
   overflow: 'visible',
   color: theme.textMutedColor,
@@ -19,48 +19,80 @@ const STORAGE_KEY = 'sb-dark-theme';
 
 const channel = addons.getChannel();
 
+type Theme = 'light' | 'dark';
+
 export const getLocalStorageValue = () => {
   return window.localStorage.getItem(STORAGE_KEY);
 };
 
-export const updateLocalStorageValue = (theme: 'light' | 'dark') => {
+export const updateLocalStorageValue = (theme: Theme) => {
   window.localStorage.setItem(STORAGE_KEY, theme);
 };
 
 export const StorybookTheme = () => {
   const [globals, updateGlobals] = useGlobals();
   const { once } = useStorybookApi();
-  const currentTheme = globals[PARAM_KEY];
-  const isCurrentThemeDark = currentTheme === 'dark';
-  const nextTheme = isCurrentThemeDark ? 'light' : 'dark';
+  const selectedGlobalTheme = globals[PARAM_KEY];
 
-  const updateTheme = (themeProp: 'light' | 'dark') => {
-    channel.emit(SET_STORYBOOK_THEME, themeProp);
-    updateGlobals({ [PARAM_KEY]: themeProp, colorScheme: themeProp });
-    updateLocalStorageValue(themeProp);
-  };
+  const updateTheme = React.useCallback(
+    (globalTheme: Theme, localTheme?: Theme) => {
+      channel.emit(SET_STORYBOOK_THEME, globalTheme);
+      updateGlobals(
+        localTheme
+          ? { [PARAM_KEY]: globalTheme, colorScheme: localTheme }
+          : { [PARAM_KEY]: globalTheme },
+      );
+      updateLocalStorageValue(globalTheme);
+    },
+    [updateGlobals],
+  );
 
-  const toggleTheme = React.useCallback(() => {
-    addons.setConfig({ theme: nextTheme === 'dark' ? vkuiDarkTheme : vkuiLightTheme });
-    updateTheme(nextTheme);
-  }, [nextTheme, updateGlobals]);
+  const handleChange: React.ComponentProps<typeof Select>['onChange'] = React.useCallback(
+    (selectedOptionRaw) => {
+      const selectedOption = selectedOptionRaw[0] as Theme;
+      addons.setConfig({ theme: selectedOption === 'dark' ? vkuiDarkTheme : vkuiLightTheme });
+      updateTheme(selectedOption, selectedOption);
+    },
+    [updateTheme],
+  );
 
   React.useEffect(() => {
     const { theme } = addons.getConfig();
-    const themeNotMatched = theme && theme.base !== currentTheme;
+    const themeNotMatched = theme && theme.base !== selectedGlobalTheme;
 
     once(SET_GLOBALS, () => {
       if (themeNotMatched) {
         updateTheme(theme.base);
       }
     });
-  }, []);
+  }, [once, updateTheme]);
 
-  const title = isCurrentThemeDark ? 'Turn the light theme' : 'Turn the dark theme';
+  if (selectedGlobalTheme === undefined) {
+    return null;
+  }
 
   return (
-    <SidebarIconButton key="sb-dark-theme" onClick={toggleTheme} title={title}>
-      {isCurrentThemeDark ? <SunIcon /> : <MoonIcon />}
-    </SidebarIconButton>
+    <SidebarSelect
+      key="sb-dark-theme"
+      size="small"
+      ariaLabel="Choose global theme"
+      icon={selectedGlobalTheme === 'dark' ? <MoonIcon /> : <SunIcon />}
+      defaultOptions={selectedGlobalTheme}
+      options={[
+        {
+          icon: <SunIcon />,
+          title: 'light (global)',
+          value: 'light',
+        },
+        {
+          icon: <MoonIcon />,
+          title: 'dark (global)',
+          value: 'dark',
+        },
+      ]}
+      onChange={handleChange}
+    >
+      {`${selectedGlobalTheme} (global)`}
+    </SidebarSelect>
   );
 };

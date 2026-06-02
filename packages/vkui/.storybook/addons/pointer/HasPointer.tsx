@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useGlobals } from 'storybook/manager-api';
-import { IconButton } from 'storybook/internal/components';
+import { ToggleButton } from 'storybook/internal/components';
 import { ButtonIcon } from '@storybook/icons';
 import { PARAM_KEY } from './constants';
 
@@ -12,11 +12,21 @@ export const HasPointer = () => {
     updateGlobals({ [PARAM_KEY]: !hasPointer });
   }, [updateGlobals, hasPointer]);
 
+  if (hasPointer === undefined) {
+    return null;
+  }
+
   return (
-    <IconButton active={hasPointer} key="pointer" onClick={toggleHasPointer}>
+    <ToggleButton
+      key="pointer"
+      pressed={hasPointer}
+      size="small"
+      variant="ghost"
+      ariaLabel={`hasPointer property is turned ${hasPointer ? 'on' : 'off'}`}
+      onClick={toggleHasPointer}
+    >
       <ButtonIcon />
-      &nbsp;
-      {`${hasPointer ? '' : 'no '}pointer`}
-    </IconButton>
+      &nbsp;hasPointer
+    </ToggleButton>
   );
 };

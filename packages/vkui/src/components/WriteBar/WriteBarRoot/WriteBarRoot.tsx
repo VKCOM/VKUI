@@ -3,7 +3,6 @@
 import { classNames } from '@vkontakte/vkjs';
 import { usePlatform } from '../../../hooks/usePlatform';
 import { Flex, type FlexProps } from '../../Flex/Flex';
-import { WriteBarRootBeforeOrAfter } from './WriteBarRootBeforeOrAfter/WriteBarRootBeforeOrAfter';
 import styles from './WriteBarRoot.module.css';
 
 type WriteBarRootProps = FlexProps & {
@@ -30,6 +29,3 @@ export const WriteBarRoot = ({ shadow, className, ...restProps }: WriteBarRootPr
     />
   );
 };
-
-WriteBarRoot.Before = WriteBarRootBeforeOrAfter;
-WriteBarRoot.After = WriteBarRootBeforeOrAfter;

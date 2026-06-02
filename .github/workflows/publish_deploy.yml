@@ -42,7 +42,7 @@ jobs:
       - name: Download artifact (if it is 'workflow_run')
         if: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.event == 'workflow_dispatch' && github.event.workflow_run.conclusion == 'success' }}
         id: artifact
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
           github-token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
           name: publish_workflow_payload
@@ -63,7 +63,7 @@ jobs:
     name: Deploy @vkontakte/vkui docs
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           ref: ${{ env.CHECKOUT_BRANCH }}
 
@@ -78,13 +78,18 @@ jobs:
 
       - name: Creating docs for release (default basePath)
         if: ${{ fromJSON(needs.payload.outputs.is_for_prerelease) != true }}
+        # [Latest doc] В S3 будет выгружать с префиксом latest (cм. 86 строчку)
         run: |
           yarn run docs:website:build
           yarn workspace @project-docs/website run next-sitemap
+
+          cp -R website/out/* website/tmp/
+
           mkdir -p website/out/playground
           cp -R website/tmp/playground/* website/out/playground/
 
       - name: Creating docs for pre-release OR release (version basePath)
+        # [Version doc] В S3 будет выгружать с префиксом <version>
         run: |
           yarn run docs:website:build
           mkdir -p website/out/${{ needs.payload.outputs.next_version }}/playground
@@ -94,13 +99,47 @@ jobs:
           NEXT_PUBLIC_VKUI_DOCS_DIST_DIR: out/${{ needs.payload.outputs.next_version }}
 
       - name: Publishing doc
-        uses: JamesIves/github-pages-deploy-action@v4
+        uses: JamesIves/github-pages-deploy-action@d92aa235d04922e8f08b40ce78cc5442fcfbfa2f # v4.8.0
         with:
           token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
           branch: gh-pages
           folder: website/out
           clean: false
           force: false
+
+      - name: Latest doc • Delete old data
+        if: ${{ fromJSON(needs.payload.outputs.is_for_prerelease) != true }}
+        uses: VKCOM/gh-actions/VKUI/s3@main
+        with:
+          awsAccessKeyId: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          awsSecretAccessKey: ${{ secrets.AWS_SECRET_KEY }}
+          awsBucket: ${{ vars.AWS_BUCKET_WEBSITE }}
+          awsEndpoint: https://${{ vars.AWS_ENDPOINT }}
+          command: delete
+          commandDeletePrefix: latest/
+
+      - name: Latest doc • Upload new data
+        if: ${{ fromJSON(needs.payload.outputs.is_for_prerelease) != true }}
+        uses: VKCOM/gh-actions/VKUI/s3@main
+        with:
+          awsAccessKeyId: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          awsSecretAccessKey: ${{ secrets.AWS_SECRET_KEY }}
+          awsBucket: ${{ vars.AWS_BUCKET_WEBSITE }}
+          awsEndpoint: https://${{ vars.AWS_ENDPOINT }}
+          command: upload
+          commandUploadSrc: website/tmp/
+          commandUploadDist: latest
+
+      - name: Version doc • Upload
+        uses: VKCOM/gh-actions/VKUI/s3@main
+        with:
+          awsAccessKeyId: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          awsSecretAccessKey: ${{ secrets.AWS_SECRET_KEY }}
+          awsBucket: ${{ vars.AWS_BUCKET_WEBSITE }}
+          awsEndpoint: https://${{ vars.AWS_ENDPOINT }}
+          command: upload
+          commandUploadSrc: website/out/${{ needs.payload.outputs.next_version }}/
+          commandUploadDist: ${{ needs.payload.outputs.next_version }}
 
   deploy_mcp_data:
     needs: [payload]
@@ -109,7 +148,7 @@ jobs:
     name: Deploy MCP data
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           ref: ${{ env.CHECKOUT_BRANCH }}
 
