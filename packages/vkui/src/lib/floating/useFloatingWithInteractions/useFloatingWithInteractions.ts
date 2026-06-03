@@ -310,7 +310,7 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
       if (shownLocalState.shown) {
         setShownFinalState(true);
         onShownChanged(true, shownLocalState.reason);
-      } else if (hasCSSAnimation.current && !willBeHide) {
+      } else if (hasCSSAnimation.current) {
         setWillBeHide(true);
       } else {
         setShownFinalState(false);
