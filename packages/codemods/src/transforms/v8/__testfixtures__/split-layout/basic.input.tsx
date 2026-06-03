@@ -1,7 +1,7 @@
 import { PanelHeader, SplitLayout } from '@vkontakte/vkui';
 import React from 'react';
 
-const App = () => {
+export const App = () => {
   const rootRef = React.createRef<HTMLDivElement>();
   const contentRef = React.createRef<HTMLDivElement>();
 

@@ -4,7 +4,7 @@ exports[`subnavigation-button > transforms correctly 1`] = `
 "import { SubnavigationButton } from '@vkontakte/vkui';
 import React from 'react';
 
-const App = () => {
+export const App = () => {
   return (
     <React.Fragment>
       <SubnavigationButton chevron={true} selected={true} onClick={() => {}}>

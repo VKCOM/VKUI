@@ -4,7 +4,7 @@ to: src/transforms/v<%= version %>/__testfixtures__/<%= h.changeCase.paramCase(n
 import { } from '@vkontakte/vkui';
 import React from 'react';
 
-const App = () => {
+export const App = () => {
   return (
     <React.Fragment>
       

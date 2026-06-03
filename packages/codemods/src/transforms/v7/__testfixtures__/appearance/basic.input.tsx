@@ -7,7 +7,7 @@ const Component: React.FC<{
   return <div></div>;
 };
 
-const App = () => {
+export const App = () => {
   const appearance: AppearanceType = Appearance.LIGHT;
 
   const fromHookAppearance = useAppearance();

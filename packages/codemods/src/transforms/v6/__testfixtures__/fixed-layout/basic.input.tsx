@@ -2,7 +2,7 @@ import { FixedLayout } from '@vkontakte/vkui';
 import React from 'react';
 import '@vkontakte/vkui/dist/vkui.css';
 
-const App = () => {
+export const App = () => {
   return (
     <React.Fragment>
       <FixedLayout getRef={ref2}>...</FixedLayout>

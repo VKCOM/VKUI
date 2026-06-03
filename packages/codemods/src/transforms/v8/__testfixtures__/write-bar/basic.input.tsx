@@ -1,7 +1,7 @@
 import { WriteBar } from '@vkontakte/vkui';
 import React from 'react';
 
-const App = () => {
+export const App = () => {
   const textAreaRef = React.createRef<HTMLTextAreaElement>();
 
   return (

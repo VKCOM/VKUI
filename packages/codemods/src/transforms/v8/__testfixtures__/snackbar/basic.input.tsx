@@ -1,7 +1,7 @@
 import { Snackbar } from '@vkontakte/vkui';
 import React from 'react';
 
-const App = () => {
+export const App = () => {
   const handleClose = () => {
     console.log('handle close');
   };

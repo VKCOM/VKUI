@@ -1,7 +1,7 @@
 import { Flex } from '@vkontakte/vkui';
 import React from 'react';
 
-const App = () => {
+export const App = () => {
   return (
     <React.Fragment>
       <Flex direction="column" gap={[20, 10]} align="center">

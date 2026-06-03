@@ -4,7 +4,7 @@ exports[`select > transforms correctly 1`] = `
 "import { ChipsSelect, CustomSelect, Select as VKUISelect } from '@vkontakte/vkui';
 import React from 'react';
 
-const App = () => {
+export const App = () => {
   return (
     <React.Fragment>
       <VKUISelect options={options} />
