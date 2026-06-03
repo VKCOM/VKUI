@@ -1,7 +1,7 @@
 import { noop, PanelHeaderSubmit } from '@vkontakte/vkui';
 import React from 'react';
 
-const App = () => {
+export const App = () => {
   return (
     <React.Fragment>
       <PanelHeaderSubmit onClick={noop}>Закрыть</PanelHeaderSubmit>

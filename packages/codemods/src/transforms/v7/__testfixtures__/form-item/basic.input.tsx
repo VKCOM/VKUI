@@ -2,7 +2,7 @@ import { FormItem } from '@vkontakte/vkui';
 import React from 'react';
 import '@vkontakte/vkui/dist/vkui.css';
 
-const App = () => {
+export const App = () => {
   const flag = true;
   const calculateMultiline = () => true;
   return (

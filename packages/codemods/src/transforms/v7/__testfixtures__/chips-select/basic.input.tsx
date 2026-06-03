@@ -1,7 +1,7 @@
 import { ChipsSelect } from '@vkontakte/vkui';
 import React from 'react';
 
-const App = () => {
+export const App = () => {
   const colors = React.useMemo(
     () => [
       { value: 'red', label: 'Красный' },

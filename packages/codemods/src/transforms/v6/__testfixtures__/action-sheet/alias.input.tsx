@@ -1,6 +1,6 @@
 import { ActionSheet } from '@vkontakte-fake/vkui';
 import React from 'react';
 
-const App = () => {
+export const App = () => {
   return <ActionSheet popupDirection="top" />;
 };

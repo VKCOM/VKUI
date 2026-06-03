@@ -2,7 +2,7 @@ import { ImageBase } from '@vkontakte/vkui';
 import { Icon12Add } from '@vkontakte/vkui-icons';
 import React from 'react';
 
-const App = () => {
+export const App = () => {
   const callback = () => {};
   return (
     <React.Fragment>

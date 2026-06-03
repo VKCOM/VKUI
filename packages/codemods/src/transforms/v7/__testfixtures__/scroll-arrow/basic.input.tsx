@@ -1,7 +1,7 @@
 import { Gallery, HorizontalScroll, ScrollArrow } from '@vkontakte/vkui';
 import React from 'react';
 
-const App = () => {
+export const App = () => {
   return (
     <React.Fragment>
       <ScrollArrow direction="down" size="m" />
