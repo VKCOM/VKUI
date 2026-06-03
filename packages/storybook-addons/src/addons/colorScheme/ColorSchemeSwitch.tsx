@@ -1,12 +1,20 @@
 import * as React from 'react';
-import { SunIcon, MoonIcon } from '@storybook/icons';
-import { useGlobals } from 'storybook/manager-api';
+import { MoonIcon, SunIcon } from '@storybook/icons';
 import { Select } from 'storybook/internal/components';
+import { useGlobals, useParameter } from 'storybook/manager-api';
 import { PARAM_KEY } from './constants';
+
+const useLocalColorScheme = () => {
+  const localColorScheme = useParameter('colorScheme');
+  // Для vkcom, так как там используется appearance
+  const localAppearance = useParameter('appearance');
+  return localColorScheme || localAppearance;
+};
 
 export const ColorSchemeSwitch = () => {
   const [globals, updateGlobals] = useGlobals();
-  const selectedOption = globals[PARAM_KEY];
+  const localColorScheme = useLocalColorScheme();
+  const colorScheme = localColorScheme || globals[PARAM_KEY];
 
   const handleChange: React.ComponentProps<typeof Select>['onChange'] = React.useCallback(
     (selected) => {
@@ -15,7 +23,7 @@ export const ColorSchemeSwitch = () => {
     [updateGlobals],
   );
 
-  if (selectedOption === undefined) {
+  if (!colorScheme) {
     return null;
   }
 
@@ -24,8 +32,9 @@ export const ColorSchemeSwitch = () => {
       key="theme"
       size="small"
       ariaLabel="Choose theme"
-      icon={selectedOption === 'dark' ? <MoonIcon /> : <SunIcon />}
-      defaultOptions={selectedOption}
+      disabled={Boolean(localColorScheme)}
+      icon={colorScheme === 'dark' ? <MoonIcon /> : <SunIcon />}
+      defaultOptions={colorScheme}
       options={[
         {
           icon: <SunIcon />,

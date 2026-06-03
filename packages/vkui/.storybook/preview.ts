@@ -2,6 +2,7 @@ import { spyOn } from 'storybook/test';
 import type { Preview } from '@storybook/react';
 import { BREAKPOINTS } from '../src/lib/adaptivity';
 import { withVKUIWrapper } from '../src/storybook/VKUIDecorators';
+import { colorSchemeParamKey, storybookThemeParamKey } from '@vkontakte/storybook-addons';
 // Выносим отдельно, чтобы файл обрабатывался postcss плагином
 import '../src/styles/layout.css';
 import './preview.css';
@@ -79,10 +80,9 @@ const preview: Preview = {
   },
   initialGlobals: {
     docsBaseUrl: __DOCS_BASE_URL__,
-    componentsSourceBaseUrl: __COMPONENTS_SOURCE_BASE_URL__,
-    colorScheme: 'light',
+    [colorSchemeParamKey]: 'light',
+    [storybookThemeParamKey]: 'light',
     hasPointer: true,
-    storybookTheme: 'light',
     hasCustomPanelHeaderAfter: false,
     direction: 'ltr',
     writingMode: 'horizontal-tb',

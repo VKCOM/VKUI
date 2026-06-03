@@ -5302,6 +5302,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@vkontakte/storybook-addons@workspace:^, @vkontakte/storybook-addons@workspace:packages/storybook-addons":
+  version: 0.0.0-use.local
+  resolution: "@vkontakte/storybook-addons@workspace:packages/storybook-addons"
+  dependencies:
+    "@vkontakte/vkjs": "npm:^2.0.2"
+    "@vkontakte/vkui": "npm:^8.2.0"
+    react: "npm:^18.3.1"
+    typescript: "npm:^6.0.3"
+  peerDependencies:
+    "@storybook/icons": ">=2.0.0"
+    "@storybook/react-vite": ">=8.0.0"
+    react: ^18.0.0
+    storybook: ">=8.0.0"
+  languageName: unknown
+  linkType: soft
+
 "@vkontakte/stylelint-config@npm:^4.1.0":
   version: 4.1.0
   resolution: "@vkontakte/stylelint-config@npm:4.1.0"
@@ -5535,6 +5551,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@vkontakte/vkui@npm:^8.2.0":
+  version: 8.2.1
+  resolution: "@vkontakte/vkui@npm:8.2.1"
+  dependencies:
+    "@swc/helpers": "npm:^0.5.21"
+    "@vkontakte/icons": "npm:^3.0.0"
+    "@vkontakte/vkjs": "npm:^2.0.2"
+    "@vkontakte/vkui-date-fns-tz": "npm:^0.0.6"
+    "@vkontakte/vkui-floating-ui": "npm:^0.2.8"
+  peerDependencies:
+    react: ^18.2.0 || ^19.0.0
+    react-dom: ^18.2.0 || ^19.0.0
+  checksum: 10/f685c5cc846c9945a5320de1035467a3fd0a8d5b6003b2f5f7f98cd3d3020273ccf6304fe83aab0097a406632c435122ffc8bf5e744c1a17ae627e97144ada93
+  languageName: node
+  linkType: hard
+
 "@vkontakte/vkui@workspace:^, @vkontakte/vkui@workspace:packages/vkui":
   version: 0.0.0-use.local
   resolution: "@vkontakte/vkui@workspace:packages/vkui"
@@ -5544,6 +5576,7 @@ __metadata:
     "@types/node": "npm:*"
     "@types/postcss-import": "npm:^14.0.3"
     "@vkontakte/icons": "npm:^3.0.0"
+    "@vkontakte/storybook-addons": "workspace:^"
     "@vkontakte/vkjs": "npm:^2.0.2"
     "@vkontakte/vkui-date-fns-tz": "npm:^0.0.6"
     "@vkontakte/vkui-floating-ui": "npm:^0.2.8"

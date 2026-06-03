@@ -1,6 +1,6 @@
 import { create } from 'storybook/theming';
-import darkLogo from './vkui-logo-dark.svg';
-import lightLogo from './vkui-logo-light.svg';
+import darkLogo from './addons/storybook-theme/vkui-logo-dark.svg';
+import lightLogo from './addons/storybook-theme/vkui-logo-light.svg';
 
 const commonProps = {
   brandTitle: 'VKUI Storybook',

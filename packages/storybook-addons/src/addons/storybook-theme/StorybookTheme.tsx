@@ -1,11 +1,12 @@
 import * as React from 'react';
-import { useGlobals, addons, useStorybookApi } from 'storybook/manager-api';
-import { styled } from 'storybook/theming';
-import { SET_GLOBALS } from 'storybook/internal/core-events';
+import { MoonIcon, SunIcon } from '@storybook/icons';
 import { Select } from 'storybook/internal/components';
-import { SunIcon, MoonIcon } from '@storybook/icons';
+import { SET_GLOBALS } from 'storybook/internal/core-events';
+import { addons, useGlobals, useStorybookApi } from 'storybook/manager-api';
+import { styled } from 'storybook/theming';
+import { PARAM_KEY as colorSchemeParamKey } from '../colorScheme/constants';
+import { getThemeConfig } from './config';
 import { PARAM_KEY, SET_STORYBOOK_THEME } from './constants';
-import { vkuiDarkTheme, vkuiLightTheme } from './vkuiThemes';
 
 const SidebarSelect = styled(Select)(({ theme }) => ({
   position: 'relative',
@@ -21,10 +22,6 @@ const channel = addons.getChannel();
 
 type Theme = 'light' | 'dark';
 
-export const getLocalStorageValue = () => {
-  return window.localStorage.getItem(STORAGE_KEY);
-};
-
 export const updateLocalStorageValue = (theme: Theme) => {
   window.localStorage.setItem(STORAGE_KEY, theme);
 };
@@ -39,7 +36,12 @@ export const StorybookTheme = () => {
       channel.emit(SET_STORYBOOK_THEME, globalTheme);
       updateGlobals(
         localTheme
-          ? { [PARAM_KEY]: globalTheme, colorScheme: localTheme }
+          ? {
+              [PARAM_KEY]: globalTheme,
+              [colorSchemeParamKey]: localTheme,
+              // Для vkcom, так как там используется appearance
+              appearance: localTheme,
+            }
           : { [PARAM_KEY]: globalTheme },
       );
       updateLocalStorageValue(globalTheme);
@@ -50,7 +52,8 @@ export const StorybookTheme = () => {
   const handleChange: React.ComponentProps<typeof Select>['onChange'] = React.useCallback(
     (selectedOptionRaw) => {
       const selectedOption = selectedOptionRaw[0] as Theme;
-      addons.setConfig({ theme: selectedOption === 'dark' ? vkuiDarkTheme : vkuiLightTheme });
+      const { lightTheme, darkTheme } = getThemeConfig();
+      addons.setConfig({ theme: selectedOption === 'dark' ? darkTheme : lightTheme });
       updateTheme(selectedOption, selectedOption);
     },
     [updateTheme],
