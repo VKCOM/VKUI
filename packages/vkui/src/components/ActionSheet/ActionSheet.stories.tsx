@@ -12,129 +12,27 @@ import {
 } from '@vkontakte/icons';
 import { CanvasFullLayout, DisableCartesianParam, StringArg } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
-import { ActionSheetItem, type ActionSheetItemProps } from '../ActionSheetItem/ActionSheetItem';
+import { ActionSheetItem } from '../ActionSheetItem/ActionSheetItem';
 import { Button } from '../Button/Button';
 import { Placeholder } from '../Placeholder/Placeholder';
 import { ActionSheet, type ActionSheetProps } from './ActionSheet';
 
-type ActionSheetStoryProps = ActionSheetProps & { items: ActionSheetItemProps[] };
-
-const story: Meta<ActionSheetStoryProps> = {
+const story: Meta<ActionSheetProps> = {
   title: 'Modals/ActionSheet',
   component: ActionSheet,
   parameters: createStoryParameters('ActionSheet', CanvasFullLayout, DisableCartesianParam),
   argTypes: {
     title: StringArg,
     description: StringArg,
-    items: {
-      control: 'select',
-      options: ['simple', 'with-icons', 'with-subtitle', 'with-title', 'with-selectable'],
-      mapping: {
-        'simple': [
-          {
-            children: 'Сохранить в закладках',
-          },
-          {
-            children: 'Закрепить запись',
-          },
-          {
-            children: 'Выключить комментирование',
-          },
-          {
-            children: 'Закрепить запись',
-          },
-          {
-            mode: 'destructive',
-            children: 'Удалить запись',
-          },
-        ],
-        'with-icons': [
-          {
-            before: <Icon28EditOutline />,
-            children: 'Редактировать профиль',
-          },
-          {
-            before: <Icon28ListPlayOutline />,
-            children: 'Слушать далее',
-          },
-          {
-            before: <Icon28ShareOutline />,
-            children: 'Поделиться',
-          },
-          {
-            before: <Icon28CopyOutline />,
-            children: 'Скопировать ссылку',
-          },
-          {
-            before: <Icon28DeleteOutline />,
-            mode: 'destructive',
-            children: 'Удалить плейлист',
-          },
-        ],
-        'with-subtitle': [
-          {
-            before: <Icon28SettingsOutline />,
-            subtitle: 'Авто',
-            children: 'Качество',
-          },
-          {
-            before: <Icon28SubtitlesOutline />,
-            subtitle: 'Отсутствуют',
-            disabled: true,
-            children: 'Субтитры',
-          },
-          {
-            before: <Icon28PlaySpeedOutline />,
-            subtitle: 'Обычная',
-            children: 'Скорость воспроизведения',
-          },
-        ],
-        'with-title': [
-          {
-            mode: 'destructive',
-            children: 'Удалить видео',
-          },
-        ],
-        'with-selectable': [
-          {
-            name: 'menu',
-            selectable: true,
-            children: 'Лучшие друзья',
-            defaultChecked: true,
-          },
-          {
-            name: 'menu',
-            selectable: true,
-            children: 'Родственники',
-          },
-          {
-            name: 'menu',
-            selectable: true,
-            children: 'Коллеги',
-          },
-          {
-            name: 'menu',
-            selectable: true,
-            children: 'Друзья по школе',
-          },
-          {
-            name: 'menu',
-            selectable: true,
-            children: 'Друзья по вузу',
-          },
-        ],
-      },
-    },
   },
   tags: ['Модальные окна'],
 };
 
 export default story;
 
-type Story = StoryFn<ActionSheetStoryProps>;
+type Story = StoryFn<ActionSheetProps>;
 
-export const Playground: Story = (args: ActionSheetStoryProps) => {
-  const items = args.items;
+export const Playground: Story = (args: ActionSheetProps) => {
   const baseToggleRef = React.useRef(null);
   const [visible, setVisible] = React.useState(true);
   return (
@@ -146,19 +44,84 @@ export const Playground: Story = (args: ActionSheetStoryProps) => {
       </Placeholder>
 
       {visible ? (
-        <ActionSheet {...args} onClosed={() => setVisible(false)} toggleRef={baseToggleRef}>
-          {items.map(({ children, ...rest }, index) => (
-            <ActionSheetItem key={index} {...rest}>
-              {children}
-            </ActionSheetItem>
-          ))}
-        </ActionSheet>
+        <ActionSheet {...args} onClosed={() => setVisible(false)} toggleRef={baseToggleRef} />
       ) : null}
     </React.Fragment>
   );
 };
 
 Playground.args = {
-  // @ts-expect-error: TS2322 mapping string -> array
-  items: 'simple',
+  children: (
+    <>
+      <ActionSheetItem>Сохранить в закладках</ActionSheetItem>
+      <ActionSheetItem>Закрепить запись</ActionSheetItem>
+      <ActionSheetItem>Выключить комментирование</ActionSheetItem>
+      <ActionSheetItem>Закрепить запись</ActionSheetItem>
+      <ActionSheetItem mode="destructive">Удалить запись</ActionSheetItem>
+    </>
+  ),
+};
+
+export const WithIcon: Story = Playground.bind({});
+
+WithIcon.args = {
+  children: (
+    <>
+      <ActionSheetItem before={<Icon28EditOutline />}>Редактировать профиль</ActionSheetItem>
+      <ActionSheetItem before={<Icon28ListPlayOutline />}>Слушать далее</ActionSheetItem>
+      <ActionSheetItem before={<Icon28ShareOutline />}>Поделиться</ActionSheetItem>
+      <ActionSheetItem before={<Icon28CopyOutline />}>Скопировать ссылку</ActionSheetItem>
+      <ActionSheetItem before={<Icon28DeleteOutline />} mode="destructive">
+        Удалить плейлист
+      </ActionSheetItem>
+    </>
+  ),
+};
+
+export const WithSubtitle: Story = Playground.bind({});
+
+WithSubtitle.args = {
+  children: (
+    <>
+      <ActionSheetItem before={<Icon28SettingsOutline />} subtitle="Авто">
+        Качество
+      </ActionSheetItem>
+      <ActionSheetItem before={<Icon28SubtitlesOutline />} subtitle="Отсутствуют" disabled>
+        Субтитры
+      </ActionSheetItem>
+      <ActionSheetItem before={<Icon28PlaySpeedOutline />} subtitle="Обычная">
+        Скорость воспроизведения
+      </ActionSheetItem>
+    </>
+  ),
+};
+
+export const WithTitle: Story = Playground.bind({});
+
+WithTitle.args = {
+  children: <ActionSheetItem mode="destructive">Удалить видео</ActionSheetItem>,
+};
+
+export const WithSelectable: Story = Playground.bind({});
+
+WithSelectable.args = {
+  children: (
+    <>
+      <ActionSheetItem name="menu" selectable defaultChecked>
+        Лучшие друзья
+      </ActionSheetItem>
+      <ActionSheetItem name="menu" selectable>
+        Родственники
+      </ActionSheetItem>
+      <ActionSheetItem name="menu" selectable>
+        Коллеги
+      </ActionSheetItem>
+      <ActionSheetItem name="menu" selectable>
+        Друзья по школе
+      </ActionSheetItem>
+      <ActionSheetItem name="menu" selectable>
+        Друзья по вузу
+      </ActionSheetItem>
+    </>
+  ),
 };

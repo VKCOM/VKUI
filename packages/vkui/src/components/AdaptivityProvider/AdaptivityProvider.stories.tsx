@@ -1,4 +1,3 @@
-import * as React from 'react';
 import type { Meta, StoryFn } from '@storybook/react';
 import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditionalRender';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
@@ -14,35 +13,35 @@ const story: Meta<AdaptivityProviderProps> = {
 
 export default story;
 
+const DisplayAdaptivityProvider = () => {
+  const { density } = useAdaptivityConditionalRender();
+  return (
+    <>
+      {density.compact && (
+        <div
+          style={{
+            padding: 5,
+          }}
+        >
+          Density: Compact
+        </div>
+      )}
+      {density.regular && (
+        <div
+          style={{
+            padding: 5,
+          }}
+        >
+          Density: Regular
+        </div>
+      )}
+    </>
+  );
+};
+
 export const Playground: StoryFn<AdaptivityProviderProps> = (args: AdaptivityProviderProps) => {
-  const DisplayAdaptivityProvider = React.useCallback(function Render() {
-    const { density } = useAdaptivityConditionalRender();
-    return (
-      <>
-        {density.compact && (
-          <div
-            style={{
-              padding: 5,
-            }}
-          >
-            Density: Compact
-          </div>
-        )}
-        {density.regular && (
-          <div
-            style={{
-              padding: 5,
-            }}
-          >
-            Density: Regular
-          </div>
-        )}
-      </>
-    );
-  }, []);
   return (
     <AdaptivityProvider {...args}>
-      {/* eslint-disable-next-line react-hooks/static-components */}
       <DisplayAdaptivityProvider />
     </AdaptivityProvider>
   );

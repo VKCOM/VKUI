@@ -1,4 +1,3 @@
-import * as React from 'react';
 import type { Meta, StoryFn } from '@storybook/react';
 import { useLocale } from '../../hooks/useLocale';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
@@ -23,19 +22,20 @@ export default story;
 
 type Story = StoryFn<LocaleProviderProps>;
 
+const DisplayLocaleProvider = () => {
+  const locale = useLocale();
+  return (
+    <div
+      style={{
+        padding: 5,
+      }}
+    >
+      Inner LocaleProvider: {locale}
+    </div>
+  );
+};
+
 export const Playground: Story = (props: LocaleProviderProps) => {
-  const DisplayLocaleProvider = React.useCallback(function Render() {
-    const locale = useLocale();
-    return (
-      <div
-        style={{
-          padding: 5,
-        }}
-      >
-        Inner LocaleProvider: {locale}
-      </div>
-    );
-  }, []);
   const locale = useLocale();
 
   return (
@@ -47,7 +47,6 @@ export const Playground: Story = (props: LocaleProviderProps) => {
       >
         Outer LocaleProvider: {locale}
       </div>
-      {/* eslint-disable-next-line react-hooks/static-components */}
       <DisplayLocaleProvider />
     </LocaleProvider>
   );

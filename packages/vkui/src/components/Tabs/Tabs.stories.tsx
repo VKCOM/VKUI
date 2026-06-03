@@ -89,7 +89,7 @@ export const Playground: Story = (args: StoryTabsProps) => {
   );
 };
 Playground.args = {
-  selectedId: 'groups',
+  defaultSelectedId: 'groups',
   count: 5,
 };
 
@@ -156,7 +156,7 @@ export const WithHorizontalScroll: Story = (args: StoryTabsProps) => {
 };
 
 WithHorizontalScroll.args = {
-  selectedId: 'groups',
+  defaultSelectedId: 'groups',
   withScrollToSelectedTab: true,
   scrollBehaviorToSelectedTab: 'center',
 };

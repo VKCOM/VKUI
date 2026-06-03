@@ -1,4 +1,3 @@
-import * as React from 'react';
 import type { Meta, StoryFn } from '@storybook/react';
 import { usePlatform } from '../../hooks/usePlatform';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
@@ -21,19 +20,20 @@ const story: Meta<PlatformProviderProps> = {
 
 export default story;
 
+const DisplayPlatformProvider = () => {
+  const platform = usePlatform();
+  return (
+    <div
+      style={{
+        padding: 5,
+      }}
+    >
+      Inner LocaleProvider: {platform}
+    </div>
+  );
+};
+
 export const Playground: StoryFn<PlatformProviderProps> = (props: PlatformProviderProps) => {
-  const DisplayPlatformProvider = React.useCallback(function Render() {
-    const platform = usePlatform();
-    return (
-      <div
-        style={{
-          padding: 5,
-        }}
-      >
-        Inner LocaleProvider: {platform}
-      </div>
-    );
-  }, []);
   const outerPlatform = usePlatform();
 
   return (
@@ -45,7 +45,6 @@ export const Playground: StoryFn<PlatformProviderProps> = (props: PlatformProvid
       >
         Outer LocaleProvider: {outerPlatform}
       </div>
-      {/* eslint-disable-next-line react-hooks/static-components */}
       <DisplayPlatformProvider />
     </PlatformProvider>
   );
