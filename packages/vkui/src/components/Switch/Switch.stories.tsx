@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { SimpleCell } from '../../components/SimpleCell/SimpleCell';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
@@ -21,7 +21,7 @@ const story: Meta<SwitchProps> = {
 
 export default story;
 
-type Story = StoryObj<SwitchProps>;
+type Story = StoryFn<SwitchProps>;
 
 export const Playground: Story = (props: SwitchProps) => <Switch {...props} />;
 

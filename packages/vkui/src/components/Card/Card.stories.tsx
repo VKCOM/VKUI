@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
@@ -16,7 +16,7 @@ const story: Meta<CardProps> = {
 
 export default story;
 
-export const Playground: StoryObj<CardProps> = (props: CardProps) => (
+export const Playground: StoryFn<CardProps> = (props: CardProps) => (
   <Card {...props}>
     <div
       style={{

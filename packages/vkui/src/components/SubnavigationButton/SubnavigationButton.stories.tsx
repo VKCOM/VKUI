@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { noop } from '@vkontakte/vkjs';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createFieldWithPresets } from '../../testing/presets';
@@ -31,7 +31,7 @@ const story: Meta<SubnavigationButtonProps> = {
 
 export default story;
 
-type Story = StoryObj<SubnavigationButtonProps>;
+type Story = StoryFn<SubnavigationButtonProps>;
 export const Playground: Story = (props: SubnavigationButtonProps) => (
   <SubnavigationButton {...props} />
 );

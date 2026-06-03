@@ -1,5 +1,5 @@
 import * as React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import {
   Icon24GearOutline,
   Icon24NotificationOutline,
@@ -38,7 +38,7 @@ const story: Meta<PanelHeaderProps> = {
 
 export default story;
 
-type Story = StoryObj<PanelHeaderProps>;
+type Story = StoryFn<PanelHeaderProps>;
 
 export const Playground: Story = () => (
   <View id="main" activePanel="panel1">
@@ -50,7 +50,6 @@ export const Playground: Story = () => (
     </Panel>
   </View>
 );
-Playground.args = {};
 
 export const PanelHeaderWithCounter: Story = () => {
   const platform = usePlatform();
@@ -86,8 +85,6 @@ export const PanelHeaderWithCounter: Story = () => {
     </View>
   );
 };
-
-PanelHeaderWithCounter.args = {};
 
 export const PanelHeaderWithMultipleIcons: Story = () => (
   <View id="main" activePanel="panel1">
@@ -134,8 +131,6 @@ export const PanelHeaderWithMultipleIcons: Story = () => (
   </View>
 );
 
-PanelHeaderWithMultipleIcons.args = {};
-
 export const PanelHeaderWithSearch: Story = () => {
   const platform = usePlatform();
   return (
@@ -150,8 +145,6 @@ export const PanelHeaderWithSearch: Story = () => {
   );
 };
 
-PanelHeaderWithSearch.args = {};
-
 export const PanelHeaderWithTabs: Story = () => (
   <View id="main" activePanel="panel1">
     <Panel id="panel1">
@@ -165,5 +158,3 @@ export const PanelHeaderWithTabs: Story = () => (
     </Panel>
   </View>
 );
-
-PanelHeaderWithTabs.args = {};

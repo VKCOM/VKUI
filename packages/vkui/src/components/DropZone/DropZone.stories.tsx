@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { Icon56CameraOutline } from '@vkontakte/icons';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
@@ -15,7 +15,7 @@ const story: Meta<DropZoneProps> = {
 
 export default story;
 
-export const Playground: StoryObj<DropZoneProps> = (args: DropZoneProps) => (
+export const Playground: StoryFn<DropZoneProps> = (args: DropZoneProps) => (
   <DropZone {...args}>
     <Placeholder.Container>
       <Placeholder.Icon>

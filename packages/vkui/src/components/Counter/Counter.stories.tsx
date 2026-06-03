@@ -1,5 +1,5 @@
 import { withCartesian } from '@project-tools/storybook-addon-cartesian';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { CanvasFullLayout } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
@@ -15,7 +15,7 @@ const story: Meta<CounterProps> = {
 
 export default story;
 
-export const Playground: StoryObj<CounterProps> = (props: CounterProps) => <Counter {...props} />;
+export const Playground: StoryFn<CounterProps> = (props: CounterProps) => <Counter {...props} />;
 
 Playground.args = {
   children: (

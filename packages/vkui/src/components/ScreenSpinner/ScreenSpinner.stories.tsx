@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createFieldWithPresets } from '../../testing/presets';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
@@ -19,7 +19,6 @@ const story: Meta<ScreenSpinnerProps> = {
 
 export default story;
 
-export const Playground: StoryObj<ScreenSpinnerProps> = (props: ScreenSpinnerProps) => (
+export const Playground: StoryFn<ScreenSpinnerProps> = (props: ScreenSpinnerProps) => (
   <ScreenSpinner {...props} />
 );
-Playground.args = {};

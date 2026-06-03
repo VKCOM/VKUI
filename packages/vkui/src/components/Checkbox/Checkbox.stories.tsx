@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam, StringArg } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Checkbox, type CheckboxProps } from './Checkbox';
@@ -15,7 +15,7 @@ const story: Meta<CheckboxProps> = {
 
 export default story;
 
-type Story = StoryObj<CheckboxProps>;
+type Story = StoryFn<CheckboxProps>;
 
 export const Playground: Story = (props: CheckboxProps) => <Checkbox {...props} />;
 

@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { Icon24ThumbsUpOutline, Icon28ErrorCircleOutline } from '@vkontakte/icons';
 import { noop } from '@vkontakte/vkjs';
 import {
@@ -35,9 +35,8 @@ const story: Meta<SnackbarProps> = {
 };
 export default story;
 
-export const Playground: StoryObj<SnackbarProps> = (props: SnackbarProps) => (
+export const Playground: StoryFn<SnackbarProps> = (props: SnackbarProps) => (
   <Snackbar onClosed={noop}>
     <Snackbar.Basic {...props} />
   </Snackbar>
 );
-Playground.args = {};

@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { Icon16MoreHorizontal, Icon28AddOutline, Icon28DeleteOutline } from '@vkontakte/icons';
 import { CanvasFullLayout, DisableCartesianParam } from '../../../storybook/constants';
 import { getAvatarUrl } from '../../../testing/mock';
@@ -51,7 +51,7 @@ const story: Meta<ImageBaseFloatElementProps> = {
 };
 export default story;
 
-export const Playground: StoryObj<ImageBaseFloatElementProps> = (
+export const Playground: StoryFn<ImageBaseFloatElementProps> = (
   props: ImageBaseFloatElementProps,
 ) => (
   <ImageBase size={96} src={getAvatarUrl('app_shorm_online')} alt="Приложение шторм онлайн">

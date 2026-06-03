@@ -1,5 +1,5 @@
 import { withCartesian } from '@project-tools/storybook-addon-cartesian';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { CanvasFullLayout } from '../../../storybook/constants';
 import { createStoryParameters } from '../../../testing/storybook/createStoryParameters';
 import { DisplayTitle, type DisplayTitleProps } from './DisplayTitle';
@@ -14,7 +14,7 @@ const story: Meta<DisplayTitleProps> = {
 
 export default story;
 
-export const Playground: StoryObj<DisplayTitleProps> = (args: DisplayTitleProps) => (
+export const Playground: StoryFn<DisplayTitleProps> = (args: DisplayTitleProps) => (
   <div>
     <DisplayTitle level="1" {...args}>
       DisplayTitle 1
@@ -30,4 +30,3 @@ export const Playground: StoryObj<DisplayTitleProps> = (args: DisplayTitleProps)
     </DisplayTitle>
   </div>
 );
-Playground.args = {};

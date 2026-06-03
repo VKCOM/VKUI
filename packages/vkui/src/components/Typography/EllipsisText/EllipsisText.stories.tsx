@@ -1,5 +1,5 @@
 import { withCartesian } from '@project-tools/storybook-addon-cartesian';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { CanvasFullLayout } from '../../../storybook/constants';
 import { createStoryParameters } from '../../../testing/storybook/createStoryParameters';
 import { EllipsisText, type EllipsisTextProps } from './EllipsisText';
@@ -17,7 +17,7 @@ export default story;
 const ellipsisText =
   'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
 
-export const Playground: StoryObj<EllipsisTextProps> = (args: EllipsisTextProps) => (
+export const Playground: StoryFn<EllipsisTextProps> = (args: EllipsisTextProps) => (
   <>
     <div
       style={{
@@ -38,5 +38,3 @@ export const Playground: StoryObj<EllipsisTextProps> = (args: EllipsisTextProps)
     </div>
   </>
 );
-
-Playground.args = {};

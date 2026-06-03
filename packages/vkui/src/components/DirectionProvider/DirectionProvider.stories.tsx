@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { type Meta, type StoryObj } from '@storybook/react';
+import { type Meta, type StoryFn } from '@storybook/react';
 import { useConfigDirection as useDirection } from '../../hooks/useConfigDirection';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { Div } from '../Div/Div';
@@ -15,7 +15,7 @@ const story: Meta<DirectionProviderProps> = {
 
 export default story;
 
-export const Playground: StoryObj<DirectionProviderProps> = (args: DirectionProviderProps) => {
+export const Playground: StoryFn<DirectionProviderProps> = (args: DirectionProviderProps) => {
   const Fixture = React.useCallback(function Render() {
     const dir = useDirection();
     return (
@@ -33,5 +33,3 @@ export const Playground: StoryObj<DirectionProviderProps> = (args: DirectionProv
     </DirectionProvider>
   );
 };
-
-Playground.args = {};

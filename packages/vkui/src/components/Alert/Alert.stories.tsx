@@ -1,5 +1,5 @@
 import * as React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Button } from '../Button/Button';
@@ -15,7 +15,7 @@ const story: Meta<AlertProps> = {
 
 export default story;
 
-export const Playground: StoryObj<AlertProps> = (args: AlertProps) => {
+export const Playground: StoryFn<AlertProps> = (args: AlertProps) => {
   const [visible, setVisible] = React.useState(true);
   return (
     <React.Fragment>

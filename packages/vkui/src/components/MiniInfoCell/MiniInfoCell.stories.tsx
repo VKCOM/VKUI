@@ -1,5 +1,5 @@
 import { withCartesian } from '@project-tools/storybook-addon-cartesian';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { CanvasFullLayout } from '../../storybook/constants';
 import { getAvatarUrl } from '../../testing/mock';
 import { createFieldWithPresets } from '../../testing/presets';
@@ -37,7 +37,7 @@ const story: Meta<MiniInfoCellProps> = {
 
 export default story;
 
-type Story = StoryObj<MiniInfoCellProps>;
+type Story = StoryFn<MiniInfoCellProps>;
 
 export const Playground: Story = (props: MiniInfoCellProps) => <MiniInfoCell {...props} />;
 

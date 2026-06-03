@@ -1,5 +1,5 @@
 import * as React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Button } from '../Button/Button';
@@ -15,7 +15,7 @@ const story: Meta<PopperProps> = {
 
 export default story;
 
-export const Playground: StoryObj<PopperProps> = (args: PopperProps) => {
+export const Playground: StoryFn<PopperProps> = (args: PopperProps) => {
   const [shown, setShown] = React.useState(args.shown || false);
 
   const buttonRef = React.useRef(null);
@@ -32,5 +32,3 @@ export const Playground: StoryObj<PopperProps> = (args: PopperProps) => {
     </React.Fragment>
   );
 };
-
-Playground.args = {};

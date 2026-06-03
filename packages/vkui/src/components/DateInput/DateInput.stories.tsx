@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { fn } from 'storybook/test';
 import { CanvasFullLayout, DisableCartesianParam, StringArg } from '../../storybook/constants';
 import { createCalendarDayRenderField } from '../../testing/presets/createCalendarDayRenderField';
@@ -36,7 +36,7 @@ type DateInputStoryProps = Omit<DateInputProps, 'renderCustomValue'> & {
   renderCustomValue: string;
 };
 
-type Story = StoryObj<DateInputStoryProps>;
+type Story = StoryFn<DateInputStoryProps>;
 
 export const Playground: Story = ({
   value,
@@ -47,5 +47,3 @@ export const Playground: Story = ({
   const renderCustomValue = () => renderCustomValueProp;
   return <DateInput value={parsedValue} renderCustomValue={renderCustomValue} {...args} />;
 };
-
-Playground.args = {};

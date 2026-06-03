@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import {
   Icon16Dropdown,
   Icon20NewsfeedOutline,
@@ -34,7 +34,7 @@ const story: Meta<StoryTabsProps> = {
 };
 export default story;
 
-type Story = StoryObj<StoryTabsProps>;
+type Story = StoryFn<StoryTabsProps>;
 
 export const Playground: Story = (args: StoryTabsProps) => {
   const count = args.count;

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { Icon56MentionOutline, Icon56UsersOutline } from '@vkontakte/icons';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
@@ -23,7 +23,7 @@ export default story;
 
 const panels = ['panel 1', 'panel 2'];
 
-export const Playground: StoryObj<SplitColProps> = (args: SplitColProps) => {
+export const Playground: StoryFn<SplitColProps> = (args: SplitColProps) => {
   const [panel, setPanel] = React.useState(panels[0]);
   return (
     <SplitLayout center>

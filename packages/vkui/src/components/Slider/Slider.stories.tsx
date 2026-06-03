@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
@@ -37,7 +37,7 @@ const story: Meta<SliderProps> = {
 
 export default story;
 
-type Story = StoryObj<any>;
+type Story = StoryFn<any>;
 
 const forceRemountKey = (args: SliderProps | SliderMultipleProps) =>
   args?.multiple ? 'multiple' : 'single';

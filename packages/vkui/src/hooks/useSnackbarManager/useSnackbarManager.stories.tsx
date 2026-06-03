@@ -3,7 +3,7 @@
 /* eslint-disable no-console, import/no-default-export */
 
 import * as React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { Icon24ThumbsUpOutline } from '@vkontakte/icons';
 import { Button } from '../../components/Button/Button';
 import { Checkbox } from '../../components/Checkbox/Checkbox';
@@ -46,7 +46,7 @@ const PLACEMENT: Array<Exclude<SnackbarProps['placement'], undefined>> = [
 
 const COLUMNS = [PLACEMENT.slice(0, 2), PLACEMENT.slice(2, 4), PLACEMENT.slice(4)];
 
-export const Playground: StoryObj<UseSnackbar.Props> = (props: UseSnackbar.Props) => {
+export const Playground: StoryFn<UseSnackbar.Props> = (props: UseSnackbar.Props) => {
   const [snackbarApi, contextHolder] = useSnackbarManager(props);
   const [snackbars, setSnackbars] = React.useState<Set<string>>(new Set());
   const [autoHide, setAutoHide] = React.useState(true);
@@ -106,5 +106,3 @@ export const Playground: StoryObj<UseSnackbar.Props> = (props: UseSnackbar.Props
     </>
   );
 };
-
-Playground.args = {};

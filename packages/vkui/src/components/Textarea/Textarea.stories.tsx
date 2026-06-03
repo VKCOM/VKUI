@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { fn } from 'storybook/test';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getFormFieldIconsPresets } from '../../testing/presets/getFormFieldIconsPresets';
@@ -21,9 +21,7 @@ const story: Meta<TextareaProps> = {
 
 export default story;
 
-export const Playground: StoryObj<TextareaProps> = (props: TextareaProps) => (
-  <Textarea {...props} />
-);
+export const Playground: StoryFn<TextareaProps> = (props: TextareaProps) => <Textarea {...props} />;
 
 Playground.args = {
   'aria-label': 'Любимая музыка',

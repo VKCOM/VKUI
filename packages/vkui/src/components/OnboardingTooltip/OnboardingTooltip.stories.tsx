@@ -1,5 +1,5 @@
 import * as React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
@@ -24,7 +24,7 @@ const story: Meta<OnboardingTooltipProps> = {
 
 export default story;
 
-type Story = StoryObj<OnboardingTooltipProps>;
+type Story = StoryFn<OnboardingTooltipProps>;
 export const Playground: Story = (args: OnboardingTooltipProps) => (
   <OnboardingTooltipContainer
     style={{
@@ -285,8 +285,6 @@ export const WithOnboardingTooltipContainer: Story = () => (
   </>
 );
 
-WithOnboardingTooltipContainer.args = {};
-
 export const CustomArrowIcon: Story = () => {
   const ARROW_HEIGHT = 11;
   const CustomIcon = (props: React.SVGAttributes<SVGSVGElement>) => {
@@ -325,5 +323,3 @@ export const CustomArrowIcon: Story = () => {
     </OnboardingTooltipContainer>
   );
 };
-
-CustomArrowIcon.args = {};

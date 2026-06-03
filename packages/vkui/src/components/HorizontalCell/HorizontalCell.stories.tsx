@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { usePlatform } from '../../hooks/usePlatform';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam, StringArg } from '../../storybook/constants';
@@ -30,7 +30,7 @@ interface HorizontalCellItemProps {
 
 type HorizontalCellStoryProps = HorizontalCellProps & { values: HorizontalCellItemProps[] };
 
-type Story = StoryObj<HorizontalCellStoryProps>;
+type Story = StoryFn<HorizontalCellStoryProps>;
 
 export const Playground: Story = ({ values, ...args }: HorizontalCellStoryProps) => {
   const platform = usePlatform();

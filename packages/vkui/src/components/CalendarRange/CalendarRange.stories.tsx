@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createCalendarDayRenderField } from '../../testing/presets/createCalendarDayRenderField';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
@@ -40,7 +40,7 @@ const story: Meta<StoryCalendarRangeProps> = {
 
 export default story;
 
-export const Playground: StoryObj<StoryCalendarRangeProps> = ({
+export const Playground: StoryFn<StoryCalendarRangeProps> = ({
   startDate,
   endDate,
   value,
@@ -50,5 +50,3 @@ export const Playground: StoryObj<StoryCalendarRangeProps> = ({
   const parsedEndDate = endDate ? new Date(endDate) : null;
   return <CalendarRange {...args} defaultValue={[parsedStartDate, parsedEndDate]} />;
 };
-
-Playground.args = {};

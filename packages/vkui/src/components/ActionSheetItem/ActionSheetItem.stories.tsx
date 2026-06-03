@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam, StringArg } from '../../storybook/constants';
 import { createFieldWithPresets } from '../../testing/presets';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
@@ -27,7 +27,7 @@ const story: Meta<ActionSheetItemProps> = {
 
 export default story;
 
-type Story = StoryObj<ActionSheetItemProps>;
+type Story = StoryFn<ActionSheetItemProps>;
 
 const commonStyles = {
   border: '1px dashed red',

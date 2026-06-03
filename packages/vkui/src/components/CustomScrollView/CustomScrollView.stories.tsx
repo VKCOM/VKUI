@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Box } from '../Box/Box';
@@ -12,7 +12,7 @@ const story: Meta<CustomScrollViewProps> = {
 };
 export default story;
 
-export const Playground: StoryObj<CustomScrollViewProps> = (props: CustomScrollViewProps) => (
+export const Playground: StoryFn<CustomScrollViewProps> = (props: CustomScrollViewProps) => (
   <div
     style={{
       borderRadius: 10,

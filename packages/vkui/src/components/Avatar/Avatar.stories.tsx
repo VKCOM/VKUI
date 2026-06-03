@@ -1,6 +1,6 @@
 import type * as React from 'react';
 import { withCartesian } from '@project-tools/storybook-addon-cartesian';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { CanvasFullLayout } from '../../storybook/constants';
 import {
   IconExampleForBadgeBasedOnImageBaseSize,
@@ -74,7 +74,7 @@ const story: Meta<AvatarStoryProps> = {
 
 export default story;
 
-type Story = StoryObj<AvatarStoryProps>;
+type Story = StoryFn<AvatarStoryProps>;
 
 export const Playground: Story = (props: AvatarStoryProps) => <Avatar {...props} />;
 

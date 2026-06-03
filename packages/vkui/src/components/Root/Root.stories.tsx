@@ -1,5 +1,5 @@
 import * as React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
@@ -20,7 +20,7 @@ const story: Meta<RootProps> = {
 
 export default story;
 
-export const Example: StoryObj<RootProps> = () => {
+export const Example: StoryFn<RootProps> = () => {
   const [activeView, setActiveView] = React.useState('view1');
   return (
     <Root activeView={activeView}>
@@ -63,5 +63,3 @@ export const Example: StoryObj<RootProps> = () => {
     </Root>
   );
 };
-
-Example.args = {};

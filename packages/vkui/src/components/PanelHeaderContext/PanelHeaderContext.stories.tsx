@@ -1,5 +1,5 @@
 import * as React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import {
   Icon16Dropdown,
   Icon24Done,
@@ -31,7 +31,7 @@ const story: Meta<PanelHeaderContextProps> = {
 
 export default story;
 
-export const Playground: StoryObj<PanelHeaderContextProps> = () => {
+export const Playground: StoryFn<PanelHeaderContextProps> = () => {
   const [contextOpened, setContextOpened] = React.useState(true);
   const [mode, setMode] = React.useState<string | undefined>('all');
 
@@ -92,5 +92,3 @@ export const Playground: StoryObj<PanelHeaderContextProps> = () => {
     </View>
   );
 };
-
-Playground.args = {};

@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { Icon24FavoriteOutline } from '@vkontakte/icons';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
@@ -25,7 +25,7 @@ const story: Meta<StorySubnavigationBarProps> = {
 
 export default story;
 
-type Story = StoryObj<StorySubnavigationBarProps>;
+type Story = StoryFn<StorySubnavigationBarProps>;
 
 export const Playground: Story = (args: StorySubnavigationBarProps) => {
   const selected = args.selected;

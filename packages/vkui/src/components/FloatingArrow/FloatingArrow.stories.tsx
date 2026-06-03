@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { FloatingArrow, type FloatingArrowProps } from './FloatingArrow';
 
@@ -11,7 +11,7 @@ const story: Meta<FloatingArrowProps> = {
 
 export default story;
 
-type Story = StoryObj<FloatingArrowProps>;
+type Story = StoryFn<FloatingArrowProps>;
 export const Playground: Story = (props: FloatingArrowProps) => (
   <div
     style={{

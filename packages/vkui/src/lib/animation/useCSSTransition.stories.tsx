@@ -1,7 +1,7 @@
 /* eslint-disable no-console, import/no-default-export */
 'use client';
 
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { classNames } from '@vkontakte/vkjs';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { type CSSCustomProperties } from '../../types';
@@ -79,7 +79,7 @@ const transitionClassNames = {
   exited: styles.exited,
 };
 
-export const WithClassNameAttribute: StoryObj<DemoProps> = ({
+export const WithClassNameAttribute: StoryFn<DemoProps> = ({
   in: inProp,
   duration,
   ...restProps
@@ -101,8 +101,6 @@ export const WithClassNameAttribute: StoryObj<DemoProps> = ({
     />
   );
 };
-
-WithClassNameAttribute.args = {};
 
 const getTransition = (state: UseCSSTransitionState, duration = 1) =>
   ({
@@ -154,7 +152,7 @@ const getTransition = (state: UseCSSTransitionState, duration = 1) =>
     },
   })[state];
 
-export const WithStyleAttribute: StoryObj<DemoProps> = ({
+export const WithStyleAttribute: StoryFn<DemoProps> = ({
   in: inProp,
   duration,
   ...restProps
@@ -172,5 +170,3 @@ export const WithStyleAttribute: StoryObj<DemoProps> = ({
     />
   );
 };
-
-WithStyleAttribute.args = {};

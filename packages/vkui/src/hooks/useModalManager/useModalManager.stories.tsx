@@ -2,7 +2,7 @@
 /* eslint-disable no-console, import/no-default-export */
 
 import { useRef } from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { Icon24Dismiss, Icon56NotificationOutline } from '@vkontakte/icons';
 import { Button } from '../../components/Button/Button';
 import { ButtonGroup } from '../../components/ButtonGroup/ButtonGroup';
@@ -125,7 +125,7 @@ const ModalPageComponent = ({
   );
 };
 
-export const Playground: StoryObj<UseModalManagerProps> = (props: UseModalManagerProps) => {
+export const Playground: StoryFn<UseModalManagerProps> = (props: UseModalManagerProps) => {
   const [api, contextHolder] = useModalManager(props);
   const modalCount = useRef(0);
 
@@ -169,5 +169,3 @@ export const Playground: StoryObj<UseModalManagerProps> = (props: UseModalManage
     </>
   );
 };
-
-Playground.args = {};

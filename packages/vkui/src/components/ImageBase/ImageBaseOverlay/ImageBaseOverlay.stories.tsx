@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../../storybook/constants';
 import { getAvatarUrl } from '../../../testing/mock';
 import { ImageBase } from '../ImageBase';
@@ -19,7 +19,7 @@ const story: Meta<ImageBaseOverlayProps> = {
 
 export default story;
 
-export const Playground: StoryObj<any> = (props: ImageBaseOverlayProps) => (
+export const Playground: StoryFn<any> = (props: ImageBaseOverlayProps) => (
   <ImageBase size={48} src={getAvatarUrl('app_shorm_online')} alt="Приложение шторм онлайн">
     <ImageBase.Overlay {...props} />
   </ImageBase>

@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { Icon28SmileOutline } from '@vkontakte/icons';
 import { noop } from '@vkontakte/vkjs';
 import { fn } from 'storybook/test';
@@ -17,7 +17,7 @@ const story: Meta<WriteBarProps> = {
 
 export default story;
 
-type Story = StoryObj<WriteBarProps>;
+type Story = StoryFn<WriteBarProps>;
 
 export const Playground: Story = (props: WriteBarProps) => <WriteBar {...props} />;
 

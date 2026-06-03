@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
@@ -15,7 +15,7 @@ const story: Meta<RadioGroupProps> = {
 
 export default story;
 
-export const Playground: StoryObj<RadioGroupProps> = (args: RadioGroupProps) => {
+export const Playground: StoryFn<RadioGroupProps> = (args: RadioGroupProps) => {
   return (
     <Group>
       <RadioGroup {...args}>

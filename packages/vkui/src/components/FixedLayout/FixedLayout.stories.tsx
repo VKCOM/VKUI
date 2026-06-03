@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
@@ -24,7 +24,7 @@ const story: Meta<FixedLayoutProps> = {
 
 export default story;
 
-type Story = StoryObj<FixedLayoutProps>;
+type Story = StoryFn<FixedLayoutProps>;
 
 const hideFixedLayoutPropsControls = {
   controls: {
@@ -55,7 +55,7 @@ Playground.args = {
   filled: true,
 };
 
-export const MigrationGuide: StoryObj<BoxProps> = (props: BoxProps) => (
+export const MigrationGuide: StoryFn<BoxProps> = (props: BoxProps) => (
   <View activePanel="fixedLayout">
     <Panel id="fixedLayout">
       <PanelHeader>Box</PanelHeader>
@@ -81,7 +81,7 @@ MigrationGuide.args = {
 };
 MigrationGuide.parameters = hideFixedLayoutPropsControls;
 
-export const WithSearchAndContent: Story = (args: FixedLayoutProps) => (
+export const WithSearchAndContent: StoryFn = (args: FixedLayoutProps) => (
   <View activePanel="fixedLayout">
     <Panel id="fixedLayout">
       <PanelHeader>Fixed layout</PanelHeader>
@@ -99,7 +99,7 @@ WithSearchAndContent.args = {
 };
 WithSearchAndContent.storyName = 'WithSearchAndContent (deprecated)';
 
-export const WithSearchAndContentMigrationGuide: StoryObj<BoxProps> = (args: BoxProps) => (
+export const WithSearchAndContentMigrationGuide: StoryFn<BoxProps> = (args: BoxProps) => (
   <View activePanel="fixedLayout">
     <Panel id="fixedLayout">
       <PanelHeader>Box</PanelHeader>

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { fn } from 'storybook/test';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
@@ -45,7 +45,7 @@ const containerStyle = {
   position: 'relative',
 } as React.CSSProperties;
 
-export const Playground: StoryObj<TouchProps> = (args: TouchProps) => {
+export const Playground: StoryFn<TouchProps> = (args: TouchProps) => {
   const [shiftX, setShiftX] = React.useState(0);
   const [shiftY, setShiftY] = React.useState(0);
   const [limitX, setLimitX] = React.useState(0);
@@ -104,5 +104,3 @@ export const Playground: StoryObj<TouchProps> = (args: TouchProps) => {
     </div>
   );
 };
-
-Playground.args = {};

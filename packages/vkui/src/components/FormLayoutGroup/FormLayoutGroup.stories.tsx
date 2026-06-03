@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { DateInput } from '../DateInput/DateInput';
@@ -17,7 +17,7 @@ const story: Meta<FormLayoutGroupProps> = {
 
 export default story;
 
-type Story = StoryObj<FormLayoutGroupProps>;
+type Story = StoryFn<FormLayoutGroupProps>;
 export const Playground: Story = (args: FormLayoutGroupProps) => (
   <FormLayoutGroup {...args}>
     <FormItem htmlFor="name" top="Имя ящика">
@@ -34,8 +34,6 @@ export const Playground: Story = (args: FormLayoutGroupProps) => (
     </FormItem>
   </FormLayoutGroup>
 );
-
-Playground.args = {};
 
 export const AccessibleHorizontalSegmented: Story = (args: FormLayoutGroupProps) => (
   <FormLayoutGroup mode="horizontal" segmented {...args}>
@@ -68,5 +66,3 @@ export const AccessibleHorizontalSegmented: Story = (args: FormLayoutGroupProps)
     </FormItem>
   </FormLayoutGroup>
 );
-
-AccessibleHorizontalSegmented.args = {};

@@ -1,5 +1,5 @@
 import { withCartesian } from '@project-tools/storybook-addon-cartesian';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { CanvasFullLayout } from '../../storybook/constants';
 import { getAvatarUrl, getRandomUser } from '../../testing/mock';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
@@ -21,7 +21,7 @@ const story: Meta<UsersStackProps> = {
 
 export default story;
 
-type Story = StoryObj<UsersStackProps>;
+type Story = StoryFn<UsersStackProps>;
 
 export const Playground: Story = (props: UsersStackProps) => <UsersStack {...props} />;
 

@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
@@ -23,7 +23,7 @@ const story: Meta<StoryCardGridProps> = {
 
 export default story;
 
-type Story = StoryObj<StoryCardGridProps>;
+type Story = StoryFn<StoryCardGridProps>;
 
 export const Playground: Story = ({ count, ...args }: StoryCardGridProps) => (
   <CardGrid {...args}>

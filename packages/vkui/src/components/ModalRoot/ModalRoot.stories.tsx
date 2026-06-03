@@ -1,5 +1,5 @@
 import * as React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { type CustomModalProps, type OpenModalPageProps } from '../../hooks/useModalManager';
 import { ModalWrapper } from '../../storybook/ModalWrapper';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
@@ -27,7 +27,7 @@ const story: Meta<ModalRootProps> = {
 
 export default story;
 
-type Story = StoryObj<ModalRootProps>;
+type Story = StoryFn<ModalRootProps>;
 
 const MODAL_ROOT_WITH_AUTO_FOCUS = 'modal-root-with-auto-focus';
 
@@ -155,8 +155,6 @@ export const ModalDynamicHeight: Story = () => {
   return <ModalWrapper type="page" customModal={CustomModal} />;
 };
 
-ModalDynamicHeight.args = {};
-
 export const ModalRootAutoFocus: Story = () => {
   const [activeModal, setActiveModal] = React.useState<string | null>(MODAL_ROOT_WITH_AUTO_FOCUS);
   const inputRef = React.useRef<HTMLInputElement>(null);
@@ -188,8 +186,6 @@ export const ModalRootAutoFocus: Story = () => {
   );
 };
 
-ModalRootAutoFocus.args = {};
-
 export const ModalPageAutoFocus: Story = () => {
   const inputRef = React.useRef<HTMLInputElement>(null);
 
@@ -213,5 +209,3 @@ export const ModalPageAutoFocus: Story = () => {
   );
   return <ModalWrapper type="page" customModal={CustomModal} />;
 };
-
-ModalPageAutoFocus.args = {};

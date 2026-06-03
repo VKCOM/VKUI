@@ -1,5 +1,5 @@
 import * as React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { Icon24ThumbsUpOutline, Icon28ErrorCircleOutline } from '@vkontakte/icons';
 import { CanvasFullLayout, DisableCartesianParam, StringArg } from '../../storybook/constants';
 import { getAvatarUrl } from '../../testing/mock';
@@ -40,7 +40,7 @@ const story: Meta<SnackbarProps> = {
 
 export default story;
 
-export const Playground: StoryObj<SnackbarProps> = (args: SnackbarProps) => {
+export const Playground: StoryFn<SnackbarProps> = (args: SnackbarProps) => {
   const [open, setOpen] = React.useState(true);
   const handleClosed = () => {
     setOpen(false);

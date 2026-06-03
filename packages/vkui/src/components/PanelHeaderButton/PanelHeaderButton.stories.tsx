@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { Icon28AddOutline } from '@vkontakte/icons';
 import { noop } from '@vkontakte/vkjs';
 import { CanvasFullLayout, DisableCartesianParam, StringArg } from '../../storybook/constants';
@@ -22,15 +22,15 @@ const story: Meta<PanelHeaderButtonProps> = {
 };
 export default story;
 
-type PanelHeaderSubmitStory = StoryObj<PanelHeaderSubmitProps>;
+type PanelHeaderSubmitStory = StoryFn<PanelHeaderSubmitProps>;
 
-type PanelHeaderEditStory = StoryObj<PanelHeaderEditProps>;
+type PanelHeaderEditStory = StoryFn<PanelHeaderEditProps>;
 
-type PanelHeaderBackStory = StoryObj<PanelHeaderBackProps>;
+type PanelHeaderBackStory = StoryFn<PanelHeaderBackProps>;
 
-type PanelHeaderCloseStory = StoryObj<PanelHeaderCloseProps>;
+type PanelHeaderCloseStory = StoryFn<PanelHeaderCloseProps>;
 
-type PlaygroundStoryProps = StoryObj<PanelHeaderButtonProps>;
+type PlaygroundStoryProps = StoryFn<PanelHeaderButtonProps>;
 
 export const Playground: PlaygroundStoryProps = (props: PanelHeaderButtonProps) => (
   <PanelHeaderButton {...props} />
@@ -43,13 +43,10 @@ Playground.args = {
 export const PanelHeaderClosePlayground: PanelHeaderCloseStory = (args: PanelHeaderCloseProps) => (
   <PanelHeaderClose {...args} />
 );
-PanelHeaderClosePlayground.args = {};
 
 export const PanelHeaderBackPlayground: PanelHeaderBackStory = (args: PanelHeaderBackProps) => (
   <PanelHeaderBack {...args} />
 );
-
-PanelHeaderBackPlayground.args = {};
 
 PanelHeaderBackPlayground.argTypes = {
   hideLabelOnVKCom: {
@@ -75,4 +72,3 @@ PanelHeaderEditPlayground.argTypes = {
 export const PanelHeaderSubmitPlayground: PanelHeaderSubmitStory = (
   args: PanelHeaderSubmitProps,
 ) => <PanelHeaderSubmit {...args} />;
-PanelHeaderSubmitPlayground.args = {};

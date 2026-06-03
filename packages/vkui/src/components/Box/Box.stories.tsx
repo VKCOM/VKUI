@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { CanvasFullLayout } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Avatar } from '../Avatar/Avatar';
@@ -14,7 +14,7 @@ const story: Meta<BoxProps> = {
 
 export default story;
 
-type Story = StoryObj<BoxProps>;
+type Story = StoryFn<BoxProps>;
 
 export const Playground: Story = (args: BoxProps) => (
   <div
@@ -44,8 +44,6 @@ export const Playground: Story = (args: BoxProps) => (
   </div>
 );
 
-Playground.args = {};
-
 export const MultipleBoxes: Story = () => (
   <div
     style={{
@@ -62,8 +60,6 @@ export const MultipleBoxes: Story = () => (
   </div>
 );
 
-MultipleBoxes.args = {};
-
 export const AbsoluteBox: Story = () => (
   <div
     style={{
@@ -79,5 +75,3 @@ export const AbsoluteBox: Story = () => (
     </Box>
   </div>
 );
-
-AbsoluteBox.args = {};

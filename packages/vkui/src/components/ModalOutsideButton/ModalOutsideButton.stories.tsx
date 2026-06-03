@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { noop } from '@vkontakte/vkjs';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createFieldWithPresets } from '../../testing/presets';
@@ -22,7 +22,7 @@ const story: Meta<ModalOutsideButtonProps> = {
 
 export default story;
 
-export const Playground: StoryObj<ModalOutsideButtonProps> = (props: ModalOutsideButtonProps) => (
+export const Playground: StoryFn<ModalOutsideButtonProps> = (props: ModalOutsideButtonProps) => (
   <ModalOutsideButton {...props} />
 );
 

@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { noop } from '@vkontakte/vkjs';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
@@ -13,7 +13,7 @@ const story: Meta<ModalDismissButtonProps> = {
 
 export default story;
 
-export const Playground: StoryObj<ModalDismissButtonProps> = (props: ModalDismissButtonProps) => (
+export const Playground: StoryFn<ModalDismissButtonProps> = (props: ModalDismissButtonProps) => (
   <ModalDismissButton {...props} />
 );
 

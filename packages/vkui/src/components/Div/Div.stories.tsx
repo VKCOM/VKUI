@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Group } from '../Group/Group';
@@ -13,9 +13,8 @@ const story: Meta<DivProps> = {
 
 export default story;
 
-export const Playground: StoryObj<DivProps> = (args: DivProps) => (
+export const Playground: StoryFn<DivProps> = (args: DivProps) => (
   <Group>
     <Div {...args}>Content with paddings</Div>
   </Group>
 );
-Playground.args = {};

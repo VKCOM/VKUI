@@ -1,5 +1,5 @@
 import type * as React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import type { HasComponent, HasRootRef } from '../../types';
@@ -19,7 +19,7 @@ const story: Meta<VisuallyHiddenProps> = {
 
 export default story;
 
-export const Playground: StoryObj<VisuallyHiddenProps> = (props: VisuallyHiddenProps) => (
+export const Playground: StoryFn<VisuallyHiddenProps> = (props: VisuallyHiddenProps) => (
   <VisuallyHidden {...props} />
 );
 

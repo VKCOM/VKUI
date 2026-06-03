@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { Icon24SmileOutline, Icon28SmileOutline } from '@vkontakte/icons';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
@@ -17,9 +17,8 @@ const story: Meta<AdaptiveIconRendererProps> = {
 
 export default story;
 
-type Story = StoryObj<AdaptiveIconRendererProps>;
+type Story = StoryFn<AdaptiveIconRendererProps>;
 
 export const Playground: Story = () => (
   <AdaptiveIconRenderer IconCompact={Icon24SmileOutline} IconRegular={Icon28SmileOutline} />
 );
-Playground.args = {};

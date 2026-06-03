@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam, StringArg } from '../../../storybook/constants';
 import { getAvatarUrl } from '../../../testing/mock';
@@ -59,7 +59,7 @@ function getNotTooBigHeightBySize({
   return height ?? 96;
 }
 
-export const Playground: StoryObj<HorizontalCellShowModeStoryProps> = (
+export const Playground: StoryFn<HorizontalCellShowModeStoryProps> = (
   args: HorizontalCellShowModeStoryProps,
 ) => {
   const cellImageSize = getNotTooBigHeightBySize(args);

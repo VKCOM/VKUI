@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getFormFieldIconsPresets } from '../../testing/presets/getFormFieldIconsPresets';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
@@ -16,7 +16,7 @@ const story: Meta<NativeSelectProps> = {
 
 export default story;
 
-type Story = StoryObj<NativeSelectProps>;
+type Story = StoryFn<NativeSelectProps>;
 
 export const Playground: Story = (args: NativeSelectProps) => (
   <NativeSelect {...args}>
@@ -24,4 +24,3 @@ export const Playground: Story = (args: NativeSelectProps) => (
     <option value="f">Женский</option>
   </NativeSelect>
 );
-Playground.args = {};

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { Icon12Services, Icon16Services, Icon20ServicesFilled } from '@vkontakte/icons';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
@@ -17,7 +17,7 @@ const meta: Meta<ContentBadgeProps> = {
 
 export default meta;
 
-type Story = StoryObj<ContentBadgeProps>;
+type Story = StoryFn<ContentBadgeProps>;
 
 const commonStyles: React.CSSProperties = {
   display: 'flex',

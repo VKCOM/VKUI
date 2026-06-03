@@ -1,5 +1,5 @@
 import * as React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { Icon28MusicOutline, Icon28UserOutline, Icon28UsersOutline } from '@vkontakte/icons';
 import { withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
@@ -24,7 +24,7 @@ const story: Meta<PanelProps> = {
 
 export default story;
 
-export const Playground: StoryObj<PanelProps> = () => {
+export const Playground: StoryFn<PanelProps> = () => {
   const [activePanel, setActivePanel] = React.useState('panel1');
   return (
     <View activePanel={activePanel}>
@@ -94,5 +94,3 @@ export const Playground: StoryObj<PanelProps> = () => {
     </View>
   );
 };
-
-Playground.args = {};

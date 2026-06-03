@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { ColorSchemeProvider, type ColorSchemeProviderProps } from './ColorSchemeProvider';
 
@@ -11,7 +11,7 @@ const story: Meta<ColorSchemeProviderProps> = {
 
 export default story;
 
-export const Playground: StoryObj<ColorSchemeProviderProps> = (args: ColorSchemeProviderProps) => (
+export const Playground: StoryFn<ColorSchemeProviderProps> = (args: ColorSchemeProviderProps) => (
   <ColorSchemeProvider {...args}>
     <div
       style={{
@@ -24,5 +24,3 @@ export const Playground: StoryObj<ColorSchemeProviderProps> = (args: ColorScheme
     </div>
   </ColorSchemeProvider>
 );
-
-Playground.args = {};

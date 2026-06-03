@@ -1,5 +1,5 @@
 import * as React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getRandomInt, getRandomUser, getRandomUsers } from '../../testing/mock';
@@ -22,7 +22,7 @@ export default story;
 
 const initUsers = getRandomUsers(20);
 
-export const Example: StoryObj<PullToRefreshProps> = () => {
+export const Example: StoryFn<PullToRefreshProps> = () => {
   const [users, setUsers] = React.useState(initUsers);
   const [fetching, setFetching] = React.useState(false);
   const onRefresh = React.useCallback(() => {
@@ -51,5 +51,3 @@ export const Example: StoryObj<PullToRefreshProps> = () => {
     </PullToRefresh>
   );
 };
-
-Example.args = {};

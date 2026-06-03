@@ -1,5 +1,5 @@
 import { withCartesian } from '@project-tools/storybook-addon-cartesian';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { CanvasFullLayout } from '../../../storybook/constants';
 import { createStoryParameters } from '../../../testing/storybook/createStoryParameters';
 import { type SpinnerProps } from '../Spinner';
@@ -14,7 +14,6 @@ const story: Meta<SpinnerProps> = {
 
 export default story;
 
-export const Playground: StoryObj<SpinnerProps> = (props: SpinnerProps) => (
+export const Playground: StoryFn<SpinnerProps> = (props: SpinnerProps) => (
   <ExpressiveSpinner {...props} />
 );
-Playground.args = {};

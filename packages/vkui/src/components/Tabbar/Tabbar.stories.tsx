@@ -1,5 +1,5 @@
 import * as React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import {
   Icon28ClipOutline,
   Icon28MessageOutline,
@@ -24,7 +24,7 @@ const story: Meta<TabbarProps> = {
 
 export default story;
 
-export const Playground: StoryObj<TabbarProps> = (args: TabbarProps) => {
+export const Playground: StoryFn<TabbarProps> = (args: TabbarProps) => {
   const [activeStory, setActiveStory] = React.useState<string>('profile');
   const onStoryChange = (e: React.MouseEvent<HTMLElement>) =>
     setActiveStory(e.currentTarget.dataset.story!);
@@ -79,4 +79,3 @@ export const Playground: StoryObj<TabbarProps> = (args: TabbarProps) => {
     </Tabbar>
   );
 };
-Playground.args = {};

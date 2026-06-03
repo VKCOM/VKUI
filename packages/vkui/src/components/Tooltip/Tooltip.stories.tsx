@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { DisableCartesianParam } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Button } from '../Button/Button';
@@ -13,7 +13,7 @@ const story: Meta<TooltipProps> = {
 
 export default story;
 
-type Story = StoryObj<TooltipProps>;
+type Story = StoryFn<TooltipProps>;
 
 export const Playground: Story = (args: TooltipProps) => (
   <Tooltip {...args}>

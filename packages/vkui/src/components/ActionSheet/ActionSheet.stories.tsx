@@ -1,5 +1,5 @@
 import * as React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import {
   Icon28CopyOutline,
   Icon28DeleteOutline,
@@ -131,7 +131,7 @@ const story: Meta<ActionSheetStoryProps> = {
 
 export default story;
 
-type Story = StoryObj<ActionSheetStoryProps>;
+type Story = StoryFn<ActionSheetStoryProps>;
 
 export const Playground: Story = (args: ActionSheetStoryProps) => {
   const items = args.items;

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { Icon20More } from '@vkontakte/icons';
 import { noop } from '@vkontakte/vkjs';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
@@ -37,7 +37,7 @@ const story: Meta<ModalCardProps> = {
 };
 export default story;
 
-type Story = StoryObj<ModalCardProps>;
+type Story = StoryFn<ModalCardProps>;
 
 export const Playground: Story = (props: ModalCardProps) => {
   const [open, setOpen] = React.useState(true);

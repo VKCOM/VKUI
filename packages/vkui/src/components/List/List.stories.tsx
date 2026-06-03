@@ -1,5 +1,5 @@
 import * as React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { Icon28PrivacyOutline, Icon28SettingsOutline, Icon28UserOutline } from '@vkontakte/icons';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
@@ -23,7 +23,7 @@ type ListStoryProps = ListProps & {
   }>;
 };
 
-export const Playground: StoryObj<ListStoryProps> = ({ items, ...args }: ListStoryProps) => {
+export const Playground: StoryFn<ListStoryProps> = ({ items, ...args }: ListStoryProps) => {
   const [draggingList, updateDraggingList] = React.useState(items);
   const onDragFinish = ({ from, to }: { from: number; to: number }) => {
     const _list = [...draggingList];

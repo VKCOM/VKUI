@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import {
   Icon28AddOutline,
   Icon28CheckShieldDeviceOutline,
@@ -26,7 +26,7 @@ const story: Meta<GroupProps> = {
 
 export default story;
 
-type Story = StoryObj<GroupProps>;
+type Story = StoryFn<GroupProps>;
 
 export const Playground: Story = (props: GroupProps) => <Group {...props} />;
 

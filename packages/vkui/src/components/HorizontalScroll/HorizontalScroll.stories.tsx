@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { withCartesian } from '@project-tools/storybook-addon-cartesian';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getRandomUsers, type UserExtendedInterface } from '../../testing/mock';
@@ -34,7 +34,7 @@ const story: Meta<HorizontalScrollProps> = {
 
 export default story;
 
-export const Playground: StoryObj<HorizontalScrollProps> = (args: HorizontalScrollProps) => {
+export const Playground: StoryFn<HorizontalScrollProps> = (args: HorizontalScrollProps) => {
   const [commonFriends, setCommonFriends] = React.useState<UserExtendedInterface[]>([]);
   const timer = React.useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
@@ -73,5 +73,3 @@ export const Playground: StoryObj<HorizontalScrollProps> = (args: HorizontalScro
     </Group>
   );
 };
-
-Playground.args = {};

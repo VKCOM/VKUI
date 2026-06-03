@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { ContentCard } from '../ContentCard/ContentCard';
@@ -13,7 +13,7 @@ const story: Meta<SimpleGridProps> = {
 
 export default story;
 
-type Story = StoryObj<SimpleGridProps>;
+type Story = StoryFn<SimpleGridProps>;
 
 export const Playground: Story = (args: SimpleGridProps) => (
   <SimpleGrid {...args}>

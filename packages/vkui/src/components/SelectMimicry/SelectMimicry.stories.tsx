@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getFormFieldIconsPresets } from '../../testing/presets/getFormFieldIconsPresets';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
@@ -32,8 +32,7 @@ const story: Meta<StorySelectMimicryProps> = {
 
 export default story;
 
-export const Playground: StoryObj<StorySelectMimicryProps> = ({
+export const Playground: StoryFn<StorySelectMimicryProps> = ({
   selectValue,
   ...args
 }: StorySelectMimicryProps) => <SelectMimicry {...args}>{selectValue}</SelectMimicry>;
-Playground.args = {};

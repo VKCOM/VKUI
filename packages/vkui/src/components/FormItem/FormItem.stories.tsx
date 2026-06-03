@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Input } from '../Input/Input';
@@ -14,7 +14,7 @@ const story: Meta<FormItemProps> = {
 
 export default story;
 
-type Story = StoryObj<FormItemProps>;
+type Story = StoryFn<FormItemProps>;
 
 export const Playground: Story = (props: FormItemProps) => (
   <div

@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Pagination, type PaginationProps } from './Pagination';
@@ -12,7 +12,7 @@ const story: Meta<PaginationProps> = {
 
 export default story;
 
-export const Playground: StoryObj<PaginationProps> = (props: PaginationProps) => (
+export const Playground: StoryFn<PaginationProps> = (props: PaginationProps) => (
   <Pagination {...props} />
 );
 

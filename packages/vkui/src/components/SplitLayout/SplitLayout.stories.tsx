@@ -1,5 +1,5 @@
 import * as React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import {
   Icon56MentionOutline,
   Icon56MessageReadOutline,
@@ -35,7 +35,7 @@ const story: Meta<SplitLayoutProps> = {
 
 export default story;
 
-type Story = StoryObj<SplitLayoutProps>;
+type Story = StoryFn<SplitLayoutProps>;
 
 const panels = ['panel 1', 'panel 2', 'panel 3'];
 const modals = ['modal 1', 'modal 2'];
@@ -174,8 +174,6 @@ export const Playground: Story = ({ children, ...restProps }: SplitLayoutProps) 
   );
 };
 
-Playground.args = {};
-
 export const Empty: Story = () => {
   const { viewWidth } = useAdaptivityConditionalRender();
   return (
@@ -216,8 +214,6 @@ export const Empty: Story = () => {
     </SplitLayout>
   );
 };
-
-Empty.args = {};
 
 function AdditionalContent() {
   return (

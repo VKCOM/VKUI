@@ -1,5 +1,5 @@
 import * as React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { useGlobalEscKeyDown } from '../../hooks/useGlobalEscKeyDown';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
@@ -29,7 +29,7 @@ const story: Meta<FocusTrapProps> = {
 
 export default story;
 
-type Story = StoryObj<FocusTrapProps>;
+type Story = StoryFn<FocusTrapProps>;
 
 export const Playground: Story = (args: FocusTrapProps) => {
   const focusTrapRef = React.useRef(null);
@@ -88,7 +88,6 @@ export const WithToggle: Story = () => {
     </Flex>
   );
 };
-WithToggle.args = {};
 
 export const AutoFocusModes: Story = () => {
   const [mode, setMode] = React.useState<'true' | 'root' | 'false'>('true');
@@ -148,8 +147,6 @@ export const AutoFocusModes: Story = () => {
   );
 };
 
-AutoFocusModes.args = {};
-
 export const RestoreFocusExample: Story = () => {
   const [open, setOpen] = React.useState(false);
   const focusTrapRef = React.useRef<HTMLDivElement>(null);
@@ -182,8 +179,6 @@ export const RestoreFocusExample: Story = () => {
     </Flex>
   );
 };
-
-RestoreFocusExample.args = {};
 
 export const DisabledExample: Story = () => {
   const [disabled, setDisabled] = React.useState(false);
@@ -220,8 +215,6 @@ export const DisabledExample: Story = () => {
     </Flex>
   );
 };
-
-DisabledExample.args = {};
 
 export const NestedFocusTraps: Story = () => {
   const [showSecond, setShowSecond] = React.useState(false);
@@ -274,8 +267,6 @@ export const NestedFocusTraps: Story = () => {
     </Flex>
   );
 };
-
-NestedFocusTraps.args = {};
 
 export const ModalLikeUsage: Story = () => {
   const [open, setOpen] = React.useState(false);
@@ -335,5 +326,3 @@ export const ModalLikeUsage: Story = () => {
     </Flex>
   );
 };
-
-ModalLikeUsage.args = {};

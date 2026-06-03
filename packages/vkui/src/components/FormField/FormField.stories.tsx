@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getFormFieldIconsPresets } from '../../testing/presets/getFormFieldIconsPresets';
@@ -21,7 +21,7 @@ const story: Meta<FormFieldProps> = {
 
 export default story;
 
-type Story = StoryObj<FormFieldProps>;
+type Story = StoryFn<FormFieldProps>;
 export const Playground: Story = (args: FormFieldProps) => (
   <Group>
     <FormField {...args}>

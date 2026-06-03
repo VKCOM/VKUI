@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { Icon12Download } from '@vkontakte/icons';
 import { fn } from 'storybook/test';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
@@ -23,7 +23,7 @@ const story: Meta<ChipsSelectProps<ChipOption>> = {
 
 export default story;
 
-type Story = StoryObj<ChipsSelectProps<ChipOption>>;
+type Story = StoryFn<ChipsSelectProps<ChipOption>>;
 
 const groups = [
   { value: 'download', label: 'Скачать все и вся!', icon: <Icon12Download /> },

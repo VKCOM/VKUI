@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createFieldWithPresets } from '../../testing/presets';
@@ -56,7 +56,7 @@ const story: Meta<HeaderProps> = {
 
 export default story;
 
-type Story = StoryObj<HeaderProps>;
+type Story = StoryFn<HeaderProps>;
 export const Playground: Story = (props: HeaderProps) => <Header {...props} />;
 Playground.args = {
   children: 'Плейлисты',

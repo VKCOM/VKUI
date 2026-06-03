@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createCalendarDayRenderField } from '../../testing/presets/createCalendarDayRenderField';
 import { getFormFieldIconsPresets } from '../../testing/presets/getFormFieldIconsPresets';
@@ -47,12 +47,10 @@ const story: Meta<StoryDateRangeInputProps> = {
 
 export default story;
 
-type Story = StoryObj<StoryDateRangeInputProps>;
+type Story = StoryFn<StoryDateRangeInputProps>;
 
 export const Playground: Story = ({ startDate, endDate, ...args }: StoryDateRangeInputProps) => {
   const parsedStartDate = startDate ? new Date(startDate) : null;
   const parsedEndDate = endDate ? new Date(endDate) : null;
   return <DateRangeInput {...args} defaultValue={[parsedStartDate, parsedEndDate]} />;
 };
-
-Playground.args = {};

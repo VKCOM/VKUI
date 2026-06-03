@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getAvatarUrl } from '../../testing/mock';
 import { createFieldWithPresets } from '../../testing/presets';
@@ -61,7 +61,7 @@ const story: Meta<ModalCardBaseProps> = {
 
 export default story;
 
-type Story = StoryObj<ModalCardBaseProps>;
+type Story = StoryFn<ModalCardBaseProps>;
 
 export const Playground: Story = (props: ModalCardBaseProps) => <ModalCardBase {...props} />;
 

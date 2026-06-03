@@ -1,5 +1,5 @@
 import * as React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { useLocale } from '../../hooks/useLocale';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { LocaleProvider, type LocaleProviderProps } from './LocaleProvider';
@@ -21,7 +21,7 @@ const story: Meta<LocaleProviderProps> = {
 
 export default story;
 
-type Story = StoryObj<LocaleProviderProps>;
+type Story = StoryFn<LocaleProviderProps>;
 
 export const Playground: Story = (props: LocaleProviderProps) => {
   const DisplayLocaleProvider = React.useCallback(function Render() {
@@ -52,5 +52,3 @@ export const Playground: Story = (props: LocaleProviderProps) => {
     </LocaleProvider>
   );
 };
-
-Playground.args = {};

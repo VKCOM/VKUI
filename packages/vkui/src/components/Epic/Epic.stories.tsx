@@ -1,5 +1,5 @@
 import * as React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import {
   Icon28ClipOutline,
   Icon28MessageOutline,
@@ -41,7 +41,7 @@ const story: Meta<EpicProps> = {
 
 export default story;
 
-export const Example: StoryObj<EpicProps> = () => {
+export const Example: StoryFn<EpicProps> = () => {
   const platform = usePlatform();
   const { viewWidth } = useAdaptivityConditionalRender();
   const [activeStory, setActiveStory] = React.useState<string>('profile');
@@ -228,5 +228,3 @@ export const Example: StoryObj<EpicProps> = () => {
     </SplitLayout>
   );
 };
-
-Example.args = {};

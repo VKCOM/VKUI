@@ -1,5 +1,5 @@
 import * as React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { Icon24Cancel, Icon24Done } from '@vkontakte/icons';
 import type { CustomModalProps, OpenModalPageProps } from '../../hooks/useModalManager';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -22,7 +22,7 @@ const story: Meta<ModalPageHeaderProps> = {
 
 export default story;
 
-type Story = StoryObj<ModalPageHeaderProps>;
+type Story = StoryFn<ModalPageHeaderProps>;
 
 const MODAL_ID = 'MODAL_ID';
 
@@ -80,5 +80,3 @@ export const Playground: Story = (args: ModalPageHeaderProps) => {
   );
   return <ModalWrapper type="page" customModal={CustomModal} />;
 };
-
-Playground.args = {};

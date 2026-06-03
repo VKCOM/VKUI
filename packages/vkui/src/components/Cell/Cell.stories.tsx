@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { noop } from '@vkontakte/vkjs';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
@@ -50,7 +50,7 @@ const story: Meta<CellProps> = {
 
 export default story;
 
-type Story = StoryObj<CellProps>;
+type Story = StoryFn<CellProps>;
 
 export const Playground: Story = (props: CellProps) => (
   <Group>

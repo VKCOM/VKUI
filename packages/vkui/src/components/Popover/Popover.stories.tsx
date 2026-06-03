@@ -1,5 +1,5 @@
 import * as React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { Icon16Clear, Icon28AddOutline, Icon28DeleteOutline } from '@vkontakte/icons';
 import { DisableCartesianParam } from '../../storybook/constants';
 import { getAvatarUrl } from '../../testing/mock';
@@ -27,7 +27,7 @@ const story: Meta<PopoverProps> = {
 
 export default story;
 
-type Story = StoryObj<PopoverProps>;
+type Story = StoryFn<PopoverProps>;
 
 export const Playground: Story = (args: PopoverProps) => (
   <Popover
@@ -47,7 +47,6 @@ export const Playground: Story = (args: PopoverProps) => (
     </Button>
   </Popover>
 );
-Playground.args = {};
 
 export const Example: Story = () => {
   const PopoverWithTriggerHover = React.useCallback(() => {
@@ -225,5 +224,3 @@ export const Example: Story = () => {
     </Flex>
   );
 };
-
-Example.args = {};

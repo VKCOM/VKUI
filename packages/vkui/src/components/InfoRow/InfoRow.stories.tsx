@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
@@ -16,7 +16,7 @@ const story: Meta<InfoRowProps> = {
 
 export default story;
 
-type Story = StoryObj<InfoRowProps>;
+type Story = StoryFn<InfoRowProps>;
 
 export const Playground: Story = (props: InfoRowProps) => <InfoRow {...props} />;
 

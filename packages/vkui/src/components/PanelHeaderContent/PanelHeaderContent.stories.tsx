@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { noop } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
 import { withVKUILayout } from '../../storybook/VKUIDecorators';
@@ -23,7 +23,7 @@ export default story;
 
 const PANEL_ID = 'panel1';
 
-export const Playground: StoryObj<PanelHeaderContentProps> = () => {
+export const Playground: StoryFn<PanelHeaderContentProps> = () => {
   const platform = usePlatform();
   return (
     <View id="main" activePanel={PANEL_ID}>
@@ -42,4 +42,3 @@ export const Playground: StoryObj<PanelHeaderContentProps> = () => {
     </View>
   );
 };
-Playground.args = {};

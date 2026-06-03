@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../../storybook/constants';
 import { ImageBase } from '../ImageBase';
 import { ImageBaseBadge, type ImageBaseBadgeProps } from './ImageBaseBadge';
@@ -11,7 +11,7 @@ const story: Meta<ImageBaseBadgeProps> = {
 
 export default story;
 
-type Story = StoryObj<ImageBaseBadgeProps>;
+type Story = StoryFn<ImageBaseBadgeProps>;
 
 export const Playground: Story = (args: ImageBaseBadgeProps) => (
   <div
@@ -25,5 +25,3 @@ export const Playground: Story = (args: ImageBaseBadgeProps) => (
     <ImageBase.Badge {...args} />
   </div>
 );
-
-Playground.args = {};

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getRandomUsers } from '../../testing/mock';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
@@ -122,7 +122,7 @@ const SettingsPanelContent = ({
   );
 };
 
-export const SwipeBlockExample: StoryObj<ViewProps> = () => {
+export const SwipeBlockExample: StoryFn<ViewProps> = () => {
   const [history, setHistory] = React.useState(['main']);
   const activePanel = history[history.length - 1];
 
@@ -200,4 +200,3 @@ export const SwipeBlockExample: StoryObj<ViewProps> = () => {
     </ConfigProviderOverride>
   );
 };
-SwipeBlockExample.args = {};

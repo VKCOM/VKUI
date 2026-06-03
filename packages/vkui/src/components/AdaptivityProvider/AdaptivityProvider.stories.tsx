@@ -1,5 +1,5 @@
 import * as React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditionalRender';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
@@ -14,7 +14,7 @@ const story: Meta<AdaptivityProviderProps> = {
 
 export default story;
 
-export const Playground: StoryObj<AdaptivityProviderProps> = (args: AdaptivityProviderProps) => {
+export const Playground: StoryFn<AdaptivityProviderProps> = (args: AdaptivityProviderProps) => {
   const DisplayAdaptivityProvider = React.useCallback(function Render() {
     const { density } = useAdaptivityConditionalRender();
     return (
@@ -47,5 +47,3 @@ export const Playground: StoryObj<AdaptivityProviderProps> = (args: AdaptivityPr
     </AdaptivityProvider>
   );
 };
-
-Playground.args = {};

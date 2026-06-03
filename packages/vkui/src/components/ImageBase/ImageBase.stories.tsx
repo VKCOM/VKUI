@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getAvatarUrl } from '../../testing/mock';
 import { createFieldWithPresets } from '../../testing/presets';
@@ -30,7 +30,7 @@ const story: Meta<ImageBaseProps> = {
 
 export default story;
 
-type Story = StoryObj<ImageBaseProps>;
+type Story = StoryFn<ImageBaseProps>;
 
 export const Playground: Story = (props: ImageBaseProps) => <ImageBase {...props} />;
 

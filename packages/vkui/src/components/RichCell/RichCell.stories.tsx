@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam, StringArg } from '../../storybook/constants';
 import { getAvatarUrl } from '../../testing/mock';
@@ -83,7 +83,7 @@ const story: Meta<RichCellStoryProps> = {
 
 export default story;
 
-type Story = StoryObj<RichCellStoryProps>;
+type Story = StoryFn<RichCellStoryProps>;
 
 export const Playground: Story = ({
   maxAfterWidth,

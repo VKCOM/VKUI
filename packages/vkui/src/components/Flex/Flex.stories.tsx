@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { Icon24Play } from '@vkontakte/icons';
 import { noop } from '@vkontakte/vkjs';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
@@ -43,7 +43,7 @@ const story: Meta<StoryProps> = {
 
 export default story;
 
-type Story = StoryObj<StoryProps>;
+type Story = StoryFn<StoryProps>;
 export const Playground: Story = ({
   itemsCount = 2,
   rowGap,

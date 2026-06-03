@@ -139,5 +139,3 @@ export const MorphPlayground = () => {
     </Group>
   );
 };
-
-MorphPlayground.args = {};

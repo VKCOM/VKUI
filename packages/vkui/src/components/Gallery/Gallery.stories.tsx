@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { getValueByKey } from '../../helpers/getValueByKey';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
@@ -13,7 +13,7 @@ const story: Meta<GalleryProps> = {
 
 export default story;
 
-export const Playground: StoryObj<GalleryProps> = (args: GalleryProps) => (
+export const Playground: StoryFn<GalleryProps> = (args: GalleryProps) => (
   <Gallery
     {...args}
     style={{
@@ -44,5 +44,3 @@ export const Playground: StoryObj<GalleryProps> = (args: GalleryProps) => (
     <div style={{ backgroundColor: 'var(--vkui--color_background_accent)' }} />
   </Gallery>
 );
-
-Playground.args = {};

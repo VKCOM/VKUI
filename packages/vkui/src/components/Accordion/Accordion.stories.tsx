@@ -1,4 +1,4 @@
-import { type Meta, type StoryObj } from '@storybook/react';
+import { type Meta, type StoryFn } from '@storybook/react';
 import { fn } from 'storybook/test';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
@@ -16,7 +16,7 @@ const story: Meta<AccordionProps> = {
 
 export default story;
 
-type Story = StoryObj<AccordionProps>;
+type Story = StoryFn<AccordionProps>;
 
 export const Playground: Story = (args: AccordionProps) => (
   <Group>

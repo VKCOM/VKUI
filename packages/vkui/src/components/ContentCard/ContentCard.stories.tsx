@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { ContentCard, type ContentCardProps } from './ContentCard';
@@ -17,7 +17,7 @@ const story: Meta<ContentCardProps> = {
 
 export default story;
 
-export const Playground: StoryObj<ContentCardProps> = (props: ContentCardProps) => (
+export const Playground: StoryFn<ContentCardProps> = (props: ContentCardProps) => (
   <ContentCard {...props} />
 );
 

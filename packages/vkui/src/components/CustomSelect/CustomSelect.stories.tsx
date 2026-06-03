@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { fn } from 'storybook/test';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { cities } from '../../testing/mock';
@@ -23,7 +23,7 @@ const story: Meta<SelectProps> = {
 
 export default story;
 
-export const Playground: StoryObj<SelectProps> = (args: SelectProps) => {
+export const Playground: StoryFn<SelectProps> = (args: SelectProps) => {
   const [value, setValue] = useState<SelectProps['value']>(null);
   return (
     <FormItem

@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import * as React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { Icon20More, Icon24Dismiss, Icon56MoneyTransferOutline } from '@vkontakte/icons';
 import { useCallback, useState } from 'storybook/preview-api';
 import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditionalRender';
@@ -49,7 +49,7 @@ const story: Meta<ModalPageProps> = {
 
 export default story;
 
-type Story = StoryObj<ModalPageProps>;
+type Story = StoryFn<ModalPageProps>;
 
 const randomUser = getRandomUser();
 const users = getRandomUsers(25);

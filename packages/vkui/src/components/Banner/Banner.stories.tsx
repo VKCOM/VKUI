@@ -1,5 +1,5 @@
 import { withCartesian } from '@project-tools/storybook-addon-cartesian';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout } from '../../storybook/constants';
 import { getAvatarUrl } from '../../testing/mock';
@@ -99,7 +99,7 @@ const story: Meta<BannerProps> = {
 
 export default story;
 
-type Story = StoryObj<BannerProps>;
+type Story = StoryFn<BannerProps>;
 
 export const Playground: Story = (props: BannerProps) => (
   <Group>

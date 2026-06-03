@@ -1,5 +1,5 @@
 import { withCartesian } from '@project-tools/storybook-addon-cartesian';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { CanvasFullLayout } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { type HasChildren } from '../../types';
@@ -58,7 +58,7 @@ function renderStory(
   return <Story {...storyArgs} {...overrideArgs} />;
 }
 
-export const Playground: StoryObj<TypographyOverview> = (args: TypographyOverview) => {
+export const Playground: StoryFn<TypographyOverview> = (args: TypographyOverview) => {
   return (
     <div>
       <TypographyWrapper>{renderStory(TitleStory, TitleStory.args, args)}</TypographyWrapper>
@@ -82,5 +82,3 @@ export const Playground: StoryObj<TypographyOverview> = (args: TypographyOvervie
     </div>
   );
 };
-
-Playground.args = {};

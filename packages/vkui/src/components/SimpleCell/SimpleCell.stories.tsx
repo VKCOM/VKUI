@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { Icon28MessageOutline } from '@vkontakte/icons';
 import { noop } from '@vkontakte/vkjs';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
@@ -78,7 +78,7 @@ const story: Meta<SimpleCellProps> = {
 
 export default story;
 
-export const Playground: StoryObj<SimpleCellProps> = (props: SimpleCellProps) => (
+export const Playground: StoryFn<SimpleCellProps> = (props: SimpleCellProps) => (
   <Group>
     <SimpleCell {...props} />
   </Group>

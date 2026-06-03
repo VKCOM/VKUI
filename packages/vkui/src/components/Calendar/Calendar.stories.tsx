@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createCalendarDayRenderField } from '../../testing/presets/createCalendarDayRenderField';
 import { createCalendarTimezoneField } from '../../testing/presets/createCalendarTimezoneField';
@@ -30,7 +30,7 @@ const story: Meta<CalendarProps> = {
 
 export default story;
 
-type Story = StoryObj<CalendarProps>;
+type Story = StoryFn<CalendarProps>;
 
 export const Playground: Story = ({
   value,
@@ -53,5 +53,3 @@ export const Playground: Story = ({
     />
   );
 };
-
-Playground.args = {};

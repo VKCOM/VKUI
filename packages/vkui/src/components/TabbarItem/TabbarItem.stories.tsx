@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createFieldWithPresets } from '../../testing/presets';
@@ -34,7 +34,7 @@ const story: Meta<TabbarItemProps> = {
 
 export default story;
 
-type Story = StoryObj<TabbarItemProps>;
+type Story = StoryFn<TabbarItemProps>;
 export const Playground: Story = (args: TabbarItemProps) => <TabbarItem {...args} />;
 Playground.args = {
   children: 'Icon28MessageOutline',

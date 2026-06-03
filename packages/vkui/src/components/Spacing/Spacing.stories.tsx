@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { Icon28BlockOutline, Icon28UserOutline } from '@vkontakte/icons';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
@@ -15,7 +15,7 @@ const story: Meta<SpacingProps> = {
 
 export default story;
 
-type Story = StoryObj<SpacingProps>;
+type Story = StoryFn<SpacingProps>;
 
 export const Playground: Story = (props: SpacingProps) => (
   <div>
@@ -24,7 +24,6 @@ export const Playground: Story = (props: SpacingProps) => (
     After Space
   </div>
 );
-Playground.args = {};
 
 export const Example: Story = (props: SpacingProps) => (
   <Group>
@@ -33,4 +32,3 @@ export const Example: Story = (props: SpacingProps) => (
     <SimpleCell before={<Icon28UserOutline />}>Учётная запись</SimpleCell>
   </Group>
 );
-Example.args = {};

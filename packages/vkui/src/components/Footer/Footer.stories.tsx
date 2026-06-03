@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { noop } from '@vkontakte/vkjs';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
@@ -19,7 +19,7 @@ const story: Meta<FooterProps> = {
 
 export default story;
 
-type Story = StoryObj<FooterProps>;
+type Story = StoryFn<FooterProps>;
 
 export const Playground: Story = (props: FooterProps) => <Footer {...props} />;
 

@@ -1,5 +1,5 @@
 import { withCartesian } from '@project-tools/storybook-addon-cartesian';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { CanvasFullLayout } from '../../storybook/constants';
 import { IconExampleForBadgeBasedOnImageBaseSize } from '../../testing/icons';
 import { getAvatarUrl } from '../../testing/mock';
@@ -30,7 +30,7 @@ const story: Meta<StoryGridAvatarProps> = {
 
 export default story;
 
-export const Playground: StoryObj<StoryGridAvatarProps> = ({
+export const Playground: StoryFn<StoryGridAvatarProps> = ({
   badged,
   size = 48,
   ...args

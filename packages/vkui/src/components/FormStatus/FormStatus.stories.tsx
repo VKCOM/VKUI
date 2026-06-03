@@ -1,5 +1,5 @@
 import { withCartesian } from '@project-tools/storybook-addon-cartesian';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { CanvasFullLayout } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { FormStatus, type FormStatusProps } from './FormStatus';
@@ -14,7 +14,7 @@ const story: Meta<FormStatusProps> = {
 
 export default story;
 
-export const Playground: StoryObj<FormStatusProps> = (props: FormStatusProps) => (
+export const Playground: StoryFn<FormStatusProps> = (props: FormStatusProps) => (
   <FormStatus {...props} />
 );
 

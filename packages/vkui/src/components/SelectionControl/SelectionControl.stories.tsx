@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { Checkbox } from '../Checkbox/Checkbox';
 import { SelectionControl, type SelectionControlProps } from './SelectionControl';
@@ -12,11 +12,9 @@ const story: Meta<SelectionControlProps> = {
 
 export default story;
 
-export const Playground: StoryObj<SelectionControlProps> = (props: SelectionControlProps) => (
+export const Playground: StoryFn<SelectionControlProps> = (props: SelectionControlProps) => (
   <SelectionControl {...props}>
     <Checkbox.Input />
     <SelectionControl.Label>Согласен</SelectionControl.Label>
   </SelectionControl>
 );
-
-Playground.args = {};

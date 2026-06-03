@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../../storybook/constants';
 import { getAvatarUrl } from '../../../testing/mock';
@@ -16,7 +16,7 @@ const story: Meta<CellCheckboxProps> = {
 
 export default story;
 
-export const Playground: StoryObj<CellCheckboxProps> = (props: CellCheckboxProps) => (
+export const Playground: StoryFn<CellCheckboxProps> = (props: CellCheckboxProps) => (
   <Group>
     <Cell
       Component="label"

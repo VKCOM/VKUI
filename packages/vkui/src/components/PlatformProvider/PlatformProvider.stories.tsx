@@ -1,5 +1,5 @@
 import * as React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { usePlatform } from '../../hooks/usePlatform';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { PlatformProvider, type PlatformProviderProps } from './PlatformProvider';
@@ -21,7 +21,7 @@ const story: Meta<PlatformProviderProps> = {
 
 export default story;
 
-export const Playground: StoryObj<PlatformProviderProps> = (props: PlatformProviderProps) => {
+export const Playground: StoryFn<PlatformProviderProps> = (props: PlatformProviderProps) => {
   const DisplayPlatformProvider = React.useCallback(function Render() {
     const platform = usePlatform();
     return (
@@ -50,4 +50,3 @@ export const Playground: StoryObj<PlatformProviderProps> = (props: PlatformProvi
     </PlatformProvider>
   );
 };
-Playground.args = {};

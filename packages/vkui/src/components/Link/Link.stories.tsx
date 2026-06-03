@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { Icon16ChainOutline, Icon24ExternalLinkOutline } from '@vkontakte/icons';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
@@ -13,7 +13,7 @@ const story: Meta<LinkProps> = {
 
 export default story;
 
-type Story = StoryObj<LinkProps>;
+type Story = StoryFn<LinkProps>;
 export const Playground: Story = (props: LinkProps) => <Link {...props} />;
 
 Playground.args = {
@@ -48,5 +48,3 @@ export const WithIcon: Story = () => {
     </>
   );
 };
-
-WithIcon.args = {};

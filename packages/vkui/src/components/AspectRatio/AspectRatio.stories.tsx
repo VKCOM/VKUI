@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
@@ -27,7 +27,7 @@ const story: Meta<AspectRatioProps> = {
 
 export default story;
 
-type Story = StoryObj<Omit<AspectRatioProps, 'ratio'> & { ratio: '16/9' | '1/1' | '3/4' | 'None' }>;
+type Story = StoryFn<Omit<AspectRatioProps, 'ratio'> & { ratio: '16/9' | '1/1' | '3/4' | 'None' }>;
 
 export const Playground: Story = (props: AspectRatioProps) => (
   <Group>
