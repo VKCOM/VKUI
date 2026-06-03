@@ -48,7 +48,7 @@ export const Playground: Story = (props: FixedLayoutProps) => (
   </View>
 );
 
-Playground.name = 'Playground (deprecated)';
+Playground.storyName = 'Playground (deprecated)';
 
 Playground.args = {
   vertical: 'bottom',
@@ -71,7 +71,7 @@ export const MigrationGuide: StoryObj<BoxProps> = (props: BoxProps) => (
     </Panel>
   </View>
 );
-MigrationGuide.name = 'Playground (миграция на Box)';
+MigrationGuide.storyName = 'Playground (миграция на Box)';
 MigrationGuide.args = {
   position: 'sticky',
   insetBlockEnd: 0,
@@ -97,7 +97,7 @@ WithSearchAndContent.args = {
   vertical: 'bottom',
   filled: true,
 };
-WithSearchAndContent.name = 'WithSearchAndContent (deprecated)';
+WithSearchAndContent.storyName = 'WithSearchAndContent (deprecated)';
 
 export const WithSearchAndContentMigrationGuide: StoryObj<BoxProps> = (args: BoxProps) => (
   <View activePanel="fixedLayout">
@@ -120,7 +120,7 @@ WithSearchAndContentMigrationGuide.args = {
     backgroundColor: 'var(--vkui--color_background_content)',
   },
 };
-WithSearchAndContentMigrationGuide.name = 'WithSearchAndContent (миграция на Box)';
+WithSearchAndContentMigrationGuide.storyName = 'WithSearchAndContent (миграция на Box)';
 WithSearchAndContentMigrationGuide.parameters = hideFixedLayoutPropsControls;
 
 function Guide() {
