@@ -132,7 +132,7 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
     if (topMultiline) {
       // Если у FormItem задан topMultiline -> переопределяем
       topMultiline.value = newTopMultilineValue;
-    } else if (topLabelMultiline) {
+    } else {
       // Если у FormItem не задан topMultiline
       // добавляем его в аргументы
       formItemAttributes?.push(
