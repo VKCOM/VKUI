@@ -78,13 +78,18 @@ jobs:
 
       - name: Creating docs for release (default basePath)
         if: ${{ fromJSON(needs.payload.outputs.is_for_prerelease) != true }}
+        # [Latest doc] В S3 будет выгружать с префиксом latest (cм. 86 строчку)
         run: |
           yarn run docs:website:build
           yarn workspace @project-docs/website run next-sitemap
+
+          cp -R website/out/* website/tmp/
+
           mkdir -p website/out/playground
           cp -R website/tmp/playground/* website/out/playground/
 
       - name: Creating docs for pre-release OR release (version basePath)
+        # [Version doc] В S3 будет выгружать с префиксом <version>
         run: |
           yarn run docs:website:build
           mkdir -p website/out/${{ needs.payload.outputs.next_version }}/playground
@@ -101,6 +106,40 @@ jobs:
           folder: website/out
           clean: false
           force: false
+
+      - name: Latest doc • Delete old data
+        if: ${{ fromJSON(needs.payload.outputs.is_for_prerelease) != true }}
+        uses: VKCOM/gh-actions/VKUI/s3@main
+        with:
+          awsAccessKeyId: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          awsSecretAccessKey: ${{ secrets.AWS_SECRET_KEY }}
+          awsBucket: ${{ vars.AWS_BUCKET_WEBSITE }}
+          awsEndpoint: https://${{ vars.AWS_ENDPOINT }}
+          command: delete
+          commandDeletePrefix: latest/
+
+      - name: Latest doc • Upload new data
+        if: ${{ fromJSON(needs.payload.outputs.is_for_prerelease) != true }}
+        uses: VKCOM/gh-actions/VKUI/s3@main
+        with:
+          awsAccessKeyId: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          awsSecretAccessKey: ${{ secrets.AWS_SECRET_KEY }}
+          awsBucket: ${{ vars.AWS_BUCKET_WEBSITE }}
+          awsEndpoint: https://${{ vars.AWS_ENDPOINT }}
+          command: upload
+          commandUploadSrc: website/tmp/
+          commandUploadDist: latest
+
+      - name: Version doc • Upload
+        uses: VKCOM/gh-actions/VKUI/s3@main
+        with:
+          awsAccessKeyId: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          awsSecretAccessKey: ${{ secrets.AWS_SECRET_KEY }}
+          awsBucket: ${{ vars.AWS_BUCKET_WEBSITE }}
+          awsEndpoint: https://${{ vars.AWS_ENDPOINT }}
+          command: upload
+          commandUploadSrc: website/out/${{ needs.payload.outputs.next_version }}/
+          commandUploadDist: ${{ needs.payload.outputs.next_version }}
 
   deploy_mcp_data:
     needs: [payload]
