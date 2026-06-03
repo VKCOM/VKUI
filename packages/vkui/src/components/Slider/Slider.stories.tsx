@@ -33,11 +33,12 @@ const story: Meta<SliderProps> = {
     },
   },
   tags: ['Формы и поля ввода'],
+  decorators: [withSinglePanel, withVKUILayout],
 };
 
 export default story;
 
-type Story = StoryFn<any>;
+type Story = StoryFn<SliderProps>;
 
 const forceRemountKey = (args: SliderProps | SliderMultipleProps) =>
   args?.multiple ? 'multiple' : 'single';
@@ -50,8 +51,6 @@ export const Playground: Story = (props: SliderProps | SliderMultipleProps) => (
   </Group>
 );
 
-Playground.decorators = [withSinglePanel, withVKUILayout];
-
 export const Tooltip: Story = (props: SliderProps | SliderMultipleProps) => (
   <Group>
     <FormItem top="Pineapple Count">
@@ -63,5 +62,3 @@ export const Tooltip: Story = (props: SliderProps | SliderMultipleProps) => (
 Tooltip.args = {
   withTooltip: true,
 };
-
-Tooltip.decorators = [withSinglePanel, withVKUILayout];

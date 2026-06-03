@@ -8,15 +8,14 @@ import { HorizontalCell } from '../../HorizontalCell/HorizontalCell';
 import { HorizontalScroll } from '../HorizontalScroll';
 import { HorizontalCellShowMore, type HorizontalCellShowMoreProps } from './HorizontalCellShowMore';
 
-type HorizontalCellShowModeStoryProps = HorizontalCellShowMoreProps & { imgSize: number };
-
-const story: Meta<HorizontalCellShowModeStoryProps> = {
+const story: Meta<HorizontalCellShowMoreProps> = {
   title: 'Data Display/HorizontalScroll/HorizontalCellShowMore',
   component: HorizontalCellShowMore,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
   argTypes: {
     children: StringArg,
   },
+  decorators: [withSinglePanel, withVKUILayout],
 };
 
 export default story;
@@ -59,9 +58,9 @@ function getNotTooBigHeightBySize({
   return height ?? 96;
 }
 
-export const Playground: StoryFn<HorizontalCellShowModeStoryProps> = (
-  args: HorizontalCellShowModeStoryProps,
-) => {
+type Story = StoryFn<HorizontalCellShowMoreProps>;
+
+export const Playground: Story = (args: HorizontalCellShowMoreProps) => {
   const cellImageSize = getNotTooBigHeightBySize(args);
   return (
     <Group>
@@ -82,4 +81,24 @@ Playground.args = {
   height: 96,
 };
 
-Playground.decorators = [withSinglePanel, withVKUILayout];
+export const Small: Story = Playground.bind({});
+
+Small.args = {
+  size: 's',
+  height: 56,
+};
+
+export const Middle: Story = Playground.bind({});
+
+Middle.args = {
+  size: 'm',
+  height: 88,
+};
+
+export const WithCustomText: Story = Playground.bind({});
+
+WithCustomText.args = {
+  size: 'm',
+  height: 88,
+  children: 'Show More',
+};

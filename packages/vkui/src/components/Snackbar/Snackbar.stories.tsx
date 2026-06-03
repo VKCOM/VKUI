@@ -34,13 +34,18 @@ const story: Meta<SnackbarProps> = {
     }),
     subtitle: StringArg,
     offsetY: StringArg,
+    action: {
+      control: 'text',
+    },
   },
   tags: ['Обратная связь'],
 };
 
 export default story;
 
-export const Playground: StoryFn<SnackbarProps> = (args: SnackbarProps) => {
+type Story = StoryFn<SnackbarProps>;
+
+export const Playground: Story = (args: SnackbarProps) => {
   const [open, setOpen] = React.useState(true);
   const handleClosed = () => {
     setOpen(false);
@@ -60,8 +65,18 @@ Playground.args = {
   children: 'Этот сервис рекомендует один друг',
 };
 
-Playground.argTypes = {
-  action: {
-    control: 'text',
-  },
+export const WithSubtitle = Playground.bind({});
+
+WithSubtitle.args = {
+  ...Playground.args,
+  action: undefined,
+  subtitle: 'Вы можете порекомендовать сервис в дополнительном меню',
+};
+
+export const WithBottomOffset = Playground.bind({});
+
+WithBottomOffset.args = {
+  ...Playground.args,
+  action: undefined,
+  offsetY: '48px',
 };

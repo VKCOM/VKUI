@@ -81,7 +81,7 @@ MigrationGuide.args = {
 };
 MigrationGuide.parameters = hideFixedLayoutPropsControls;
 
-export const WithSearchAndContent: StoryFn = (args: FixedLayoutProps) => (
+export const WithSearchAndContent: Story = (args: FixedLayoutProps) => (
   <View activePanel="fixedLayout">
     <Panel id="fixedLayout">
       <PanelHeader>Fixed layout</PanelHeader>

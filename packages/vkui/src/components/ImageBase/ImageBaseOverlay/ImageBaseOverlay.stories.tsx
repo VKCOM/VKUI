@@ -19,7 +19,7 @@ const story: Meta<ImageBaseOverlayProps> = {
 
 export default story;
 
-export const Playground: StoryFn<any> = (props: ImageBaseOverlayProps) => (
+export const Playground: StoryFn<ImageBaseOverlayProps> = (props: ImageBaseOverlayProps) => (
   <ImageBase size={48} src={getAvatarUrl('app_shorm_online')} alt="Приложение шторм онлайн">
     <ImageBase.Overlay {...props} />
   </ImageBase>
