@@ -99,6 +99,7 @@ WithSubtitle.args = {
 export const WithTitle: Story = Playground.bind({});
 
 WithTitle.args = {
+  title: 'Вы действительно хотите удалить это видео из Ваших видео?',
   children: <ActionSheetItem mode="destructive">Удалить видео</ActionSheetItem>,
 };
 
