@@ -4083,7 +4083,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@swc/helpers@npm:^0.5.23":
+"@swc/helpers@npm:^0.5.21, @swc/helpers@npm:^0.5.23":
   version: 0.5.23
   resolution: "@swc/helpers@npm:0.5.23"
   dependencies:
@@ -5321,9 +5321,9 @@ __metadata:
     typescript: "npm:^6.0.3"
   peerDependencies:
     "@storybook/icons": ">=2.0.0"
-    "@storybook/react-vite": ">=8.0.0"
+    "@storybook/react-vite": ">=10.0.0"
     react: ^18.0.0
-    storybook: ">=8.0.0"
+    storybook: ">=10.0.0"
   languageName: unknown
   linkType: soft
 
