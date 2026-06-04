@@ -12,8 +12,10 @@ tags: forms
 
 </Overview>
 
+import { BlockWrapper } from '@/components/wrappers';
+
 {/* @example-description: Базовый выбор диапазона дат с предустановленными начальной и конечной датами. */}
-<Playground>
+<Playground Wrapper={BlockWrapper}>
   ```jsx
   <CalendarRange defaultValue={[new Date(2024, 2, 1), new Date(2024, 2, 10)]} />
   ```

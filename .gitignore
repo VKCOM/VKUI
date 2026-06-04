@@ -8,6 +8,7 @@ out/
 _pagefind/
 .docgen/
 mcp-data/
+website/generated/
 
 # Next
 .next/
