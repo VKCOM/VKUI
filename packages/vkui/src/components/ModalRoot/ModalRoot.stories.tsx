@@ -129,29 +129,28 @@ Managing.parameters = {
   centered: false,
 };
 
-export const ModalDynamicHeight: Story = () => {
-  const CustomModal = React.useCallback(function Render({
-    modalProps,
-  }: CustomModalProps<OpenModalPageProps>) {
-    const [isLoading, setIsLoading] = React.useState(true);
-    const timer = React.useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
-    React.useEffect(() => {
-      timer.current = setTimeout(() => {
-        setIsLoading(false);
-      }, 2000);
-      return () => {
-        clearTimeout(timer.current);
-      };
-    }, []);
-    return (
-      <ModalPage dynamicContentHeight {...modalProps}>
-        <div className="SelectModal">
-          {isLoading && <Spinner />}
-          {!isLoading && <Placeholder>Loaded</Placeholder>}
-        </div>
-      </ModalPage>
-    );
+const CustomModal = ({ modalProps }: CustomModalProps<OpenModalPageProps>) => {
+  const [isLoading, setIsLoading] = React.useState(true);
+  const timer = React.useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  React.useEffect(() => {
+    timer.current = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+    return () => {
+      clearTimeout(timer.current);
+    };
   }, []);
+  return (
+    <ModalPage dynamicContentHeight {...modalProps}>
+      <div className="SelectModal">
+        {isLoading && <Spinner />}
+        {!isLoading && <Placeholder>Loaded</Placeholder>}
+      </div>
+    </ModalPage>
+  );
+};
+
+export const ModalDynamicHeight: Story = () => {
   return <ModalWrapper type="page" customModal={CustomModal} />;
 };
 

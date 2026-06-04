@@ -31,23 +31,24 @@ Playground.args = {
   avatarsPosition: 'inline-start',
 };
 
+const AvatarWrapper = (props: UsersStackRenderWrapperProps) => {
+  const user = getRandomUser();
+  return (
+    <Tooltip description={`${user.first_name} ${user.last_name}`}>
+      <div
+        style={{
+          cursor: 'pointer',
+        }}
+        // eslint-disable-next-line no-console
+        onClick={() => console.log('click to avatar with url ' + props['data-src'])}
+      >
+        {props.children}
+      </div>
+    </Tooltip>
+  );
+};
+
 export const WithCustomWrapper: Story = (props: UsersStackProps) => {
-  const AvatarWrapper = (props: UsersStackRenderWrapperProps) => {
-    const user = getRandomUser();
-    return (
-      <Tooltip description={`${user.first_name} ${user.last_name}`}>
-        <div
-          style={{
-            cursor: 'pointer',
-          }}
-          // eslint-disable-next-line no-console
-          onClick={() => console.log('click to avatar with url ' + props['data-src'])}
-        >
-          {props.children}
-        </div>
-      </Tooltip>
-    );
-  };
   return (
     <UsersStack
       photos={[getAvatarUrl(), getAvatarUrl(), getAvatarUrl(), getAvatarUrl()].map(
