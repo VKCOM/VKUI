@@ -75,6 +75,8 @@
   flex-grow: 1;
   flex-direction: column;
   overflow: hidden;
+  /* TODO [>=9]: использовать clip чтобы не создовать контекст контейнера прокрутки и не мешать sticky элементам */
+  overflow: clip;
   transition: transform 400ms var(--vkui--animation_easing_platform);
 }
 
