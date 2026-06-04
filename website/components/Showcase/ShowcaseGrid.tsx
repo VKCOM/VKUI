@@ -14,7 +14,9 @@ export function ShowcaseGrid() {
       <Flex direction="column" gap="4xl">
         {data.groups.map((group) => (
           <Flex key={group.key} Component="section" direction="column" gap="2xl" id={group.key}>
-            <Title level="2" Component="h2">{group.title}</Title>
+            <Title level="2" Component="h2">
+              {group.title}
+            </Title>
             <ul className={styles.grid}>
               {group.items.map((item) => (
                 <ShowcaseCard key={item.slug} item={item} />
