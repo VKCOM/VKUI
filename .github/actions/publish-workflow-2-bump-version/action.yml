@@ -14,10 +14,13 @@ inputs:
 
 outputs:
   prev_version:
+    description: Previous version before bump
     value: ${{ steps.internal_id_prev_version.outputs.value }}
   next_version:
+    description: New version after bump
     value: ${{ steps.internal_id_next_version.outputs.value }}
   is_stable_release:
+    description: Whether the release is stable (not a prerelease)
     value: ${{ steps.internal_id_is_stable_release.outputs.value }}
 
 runs:

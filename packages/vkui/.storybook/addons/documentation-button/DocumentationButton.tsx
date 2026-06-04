@@ -1,4 +1,4 @@
-import { IconButton } from 'storybook/internal/components';
+import { Button, Link } from 'storybook/internal/components';
 import { useStorybookState, useGlobals } from 'storybook/manager-api';
 import { DocumentIcon } from '@storybook/icons';
 import * as React from 'react';
@@ -67,10 +67,10 @@ export const DocumentationButton = () => {
   const documentationUrl = getComponentUrl(componentName, parent, docsBaseUrl);
 
   return (
-    <a href={documentationUrl} target="_blank" rel="noreferrer">
-      <IconButton>
+    <Button asChild size="small" variant="ghost" ariaLabel="Open documentation">
+      <a href={documentationUrl} target="_blank" rel="noreferrer">
         <DocumentIcon />
-      </IconButton>
-    </a>
+      </a>
+    </Button>
   );
 };

@@ -162,11 +162,14 @@ export const Banner = ({
     ),
   };
 
-  const after = afterProp && (
-    <div className={styles.after}>
-      {typeof afterProp === 'string' ? afterMap[afterProp] : afterProp}
-    </div>
-  );
+  const getAfterContent = () => {
+    if (typeof afterProp === 'string') {
+      return afterMap[afterProp] || afterProp;
+    }
+    return afterProp;
+  };
+
+  const after = afterProp && <div className={styles.after}>{getAfterContent()}</div>;
 
   const isClickable = restProps.onClick || restProps.onClickCapture || restProps.href;
 
