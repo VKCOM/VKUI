@@ -8,7 +8,7 @@ import { normalizePages } from 'nextra/normalize-pages';
 type Config = {
   normalizePagesResult: ReturnType<typeof normalizePages>;
   isBlog?: boolean | undefined;
-  isShowCase?: boolean | undefined;
+  isComponentsShowCase?: boolean | undefined;
 };
 
 // @ts-expect-error: TS2740 No default value
@@ -27,7 +27,7 @@ export const ConfigProvider = ({
 }): React.ReactElement => {
   const fsPath = useFSRoute();
   const isBlog = fsPath.includes('/blog');
-  const isShowCase = fsPath.includes('/components-showcase');
+  const isComponentsShowCase = fsPath.includes('/components-showcase');
 
   const normalizePagesResult = React.useMemo(
     () => normalizePages({ list: pageMap, route: fsPath }),
@@ -36,7 +36,7 @@ export const ConfigProvider = ({
 
   const extendedConfig: Config = {
     isBlog,
-    isShowCase,
+    isComponentsShowCase,
     normalizePagesResult,
   };
 

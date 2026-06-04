@@ -4,8 +4,10 @@
   transition: transform 120ms ease;
 }
 
-.root:hover {
-  transform: translateY(-2px);
+@media (hover: hover) and (pointer: fine) {
+  .root:hover {
+    transform: translateY(-2px);
+  }
 }
 
 .inheritBorderRadius {
