@@ -71,7 +71,7 @@ function copyStylesInto(targetDoc: Document): void {
 }
 
 export interface IframePreviewContentProps {
-  contentRef: React.RefObject<HTMLElement | null>;
+  contentRef: React.RefObject<HTMLIFrameElement | null>;
   code: string;
   colorScheme: ColorSchemeType;
   Wrapper: React.ComponentType<React.PropsWithChildren>;
@@ -91,7 +91,7 @@ export function IframePreviewContent({
     if (!mounted) {
       return;
     }
-    const iframe = contentRef.current as HTMLIFrameElement | null;
+    const iframe = contentRef.current;
     if (!iframe) {
       return;
     }
@@ -126,10 +126,22 @@ export function IframePreviewContent({
 
   React.useEffect(() => {
     const root = reactRootRef.current;
-    const iframe = contentRef.current as HTMLIFrameElement | null;
-    const doc = iframe?.contentDocument;
-    const win = doc?.defaultView;
-    if (!mounted || !root || !iframe || !doc || !win) {
+    const iframe = contentRef.current;
+    if (!iframe) {
+      return;
+    }
+
+    const doc = iframe.contentDocument;
+    if (!doc) {
+      return;
+    }
+
+    const win = doc.defaultView;
+    if (!win) {
+      return;
+    }
+
+    if (!mounted || !root) {
       return;
     }
 
@@ -157,7 +169,7 @@ export function IframePreviewContent({
 
   return (
     <iframe
-      ref={contentRef as React.Ref<HTMLIFrameElement>}
+      ref={contentRef}
       width={IFRAME_SIZE}
       height={IFRAME_SIZE}
       tabIndex={-1}

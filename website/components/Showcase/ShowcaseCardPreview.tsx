@@ -18,21 +18,22 @@ export interface ShowcaseCardPreviewProps {
 }
 
 export function ShowcaseCardPreview({ slug, code, direction, wrapper }: ShowcaseCardPreviewProps) {
+  const isIsolated = ISOLATED_PREVIEW_SLUGS.has(slug);
+
   const stageRef = React.useRef<HTMLDivElement | null>(null);
   const contentRef = React.useRef<HTMLElement | null>(null);
+  const iframeRef = React.useRef<HTMLIFrameElement | null>(null);
 
   const mounted = useMounted();
   const colorScheme = useColorScheme();
 
-  const scale = useFitScale(stageRef, contentRef, {
+  const scale = useFitScale(stageRef, isIsolated ? iframeRef : contentRef, {
     minScale: 0.1,
     maxScale: 1,
     enabled: mounted,
   });
 
   const Wrapper = React.useMemo(() => resolveWrapper(wrapper, direction), [wrapper, direction]);
-
-  const isIsolated = ISOLATED_PREVIEW_SLUGS.has(slug);
 
   const style: Record<`--${string}`, string> = { '--showcase-scale': String(scale) };
 
@@ -71,7 +72,7 @@ export function ShowcaseCardPreview({ slug, code, direction, wrapper }: Showcase
         >
           {isIsolated ? (
             <IframePreviewContent
-              contentRef={contentRef}
+              contentRef={iframeRef}
               code={code}
               colorScheme={colorScheme}
               Wrapper={Wrapper}

@@ -48,8 +48,6 @@ export function useFitScale(
       setScale((prev) => (Math.abs(prev - next) < 0.001 ? prev : next));
     };
 
-    update();
-
     const ro = new ResizeObserver(update);
     ro.observe(container);
     ro.observe(content);
