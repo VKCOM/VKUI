@@ -3,6 +3,7 @@
 import * as React from 'react';
 import { Card, Flex, Footnote, PanelSpinner, Tappable, Title } from '@vkontakte/vkui';
 import dynamic from 'next/dynamic';
+import { useRouter } from 'next/navigation';
 import type { ShowcaseItem } from './types';
 import styles from './ShowcaseCard.module.css';
 
@@ -30,13 +31,15 @@ export interface ShowcaseCardProps {
 }
 
 export const ShowcaseCard = React.memo(function ShowcaseCard({ item }: ShowcaseCardProps) {
+  const router = useRouter();
+
   return (
     <Card
       Component={Tappable}
       mode="outline-tint"
       className={styles.root}
       aria-label={`Перейти на страницу компонента ${item.name}`}
-      onClick={() => window.open(`/components/${item.slug}/`, '_self')}
+      onClick={() => router.push(`/components/${item.slug}/`)}
     >
       <Flex
         direction="column"
