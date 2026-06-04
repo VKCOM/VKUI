@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam, StringArg } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Radio, type RadioProps } from './Radio';
@@ -16,19 +16,18 @@ const story: Meta<RadioProps> = {
 
 export default story;
 
-type Story = StoryObj<RadioProps>;
+type Story = StoryFn<RadioProps>;
+export const Playground: Story = (props: RadioProps) => <Radio {...props} />;
 
-export const Playground: Story = {
-  args: {
-    name: 'payment',
-    children: 'VK Pay',
-  },
+Playground.args = {
+  name: 'payment',
+  children: 'VK Pay',
 };
 
-export const WithDescription: Story = {
-  ...Playground,
-  args: {
-    ...Playground.args,
-    description: 'Баланс 7 320 ₽',
-  },
+export const WithDescription: Story = (props: RadioProps) => <Radio {...props} />;
+
+WithDescription.args = {
+  name: 'payment',
+  children: 'VK Pay',
+  description: 'Баланс 7 320 ₽',
 };

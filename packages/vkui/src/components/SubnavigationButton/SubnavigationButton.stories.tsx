@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { noop } from '@vkontakte/vkjs';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createFieldWithPresets } from '../../testing/presets';
@@ -31,27 +31,27 @@ const story: Meta<SubnavigationButtonProps> = {
 
 export default story;
 
-type Story = StoryObj<SubnavigationButtonProps>;
-
-export const Playground: Story = {
-  args: {
-    children: 'Размер',
-  },
+type Story = StoryFn<SubnavigationButtonProps>;
+export const Playground: Story = (props: SubnavigationButtonProps) => (
+  <SubnavigationButton {...props} />
+);
+Playground.args = {
+  children: 'Размер',
 };
 
-export const WithIcon: Story = {
-  ...Playground,
-  args: {
-    before: 'Icon24FavoriteOutline',
-    children: 'Избранное',
-    chevron: true,
-  },
+export const WithIcon: Story = (props: SubnavigationButtonProps) => (
+  <SubnavigationButton {...props} />
+);
+WithIcon.args = {
+  before: 'Icon24FavoriteOutline',
+  children: 'Избранное',
+  chevron: true,
 };
 
-export const WithCounter: Story = {
-  ...Playground,
-  args: {
-    children: 'Фильтры',
-    after: 'Counter',
-  },
+export const WithCounter: Story = (props: SubnavigationButtonProps) => (
+  <SubnavigationButton {...props} />
+);
+WithCounter.args = {
+  children: 'Фильтры',
+  after: 'Counter',
 };

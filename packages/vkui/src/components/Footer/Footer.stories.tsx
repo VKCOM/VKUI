@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { noop } from '@vkontakte/vkjs';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
@@ -19,37 +19,34 @@ const story: Meta<FooterProps> = {
 
 export default story;
 
-type Story = StoryObj<FooterProps>;
+type Story = StoryFn<FooterProps>;
 
-export const Playground: Story = {
-  args: {
-    children: '3 сообщества',
-  },
+export const Playground: Story = (props: FooterProps) => <Footer {...props} />;
+
+Playground.args = {
+  children: '3 сообщества',
 };
 
-export const Example: Story = {
-  ...Playground,
-  decorators: [
-    (Component) => (
-      <>
-        <PanelHeader>Footer</PanelHeader>
-        <Group>
-          <List>
-            <Cell before={<Avatar />} subtitle="Веб-сайт" onClick={noop}>
-              Команда ВКонтакте
-            </Cell>
-            <Cell before={<Avatar />} subtitle="Музыкант" onClick={noop}>
-              Robbie Williams
-            </Cell>
-            <Cell before={<Avatar />} subtitle="Издательский дом" onClick={noop}>
-              ПостНаука
-            </Cell>
-          </List>
-        </Group>
-        <Component />
-      </>
-    ),
-    withSinglePanel,
-    withVKUILayout,
-  ],
-};
+export const Example: Story = (props: FooterProps) => (
+  <>
+    <PanelHeader>Footer</PanelHeader>
+    <Group>
+      <List>
+        <Cell before={<Avatar />} subtitle="Веб-сайт" onClick={noop}>
+          Команда ВКонтакте
+        </Cell>
+        <Cell before={<Avatar />} subtitle="Музыкант" onClick={noop}>
+          Robbie Williams
+        </Cell>
+        <Cell before={<Avatar />} subtitle="Издательский дом" onClick={noop}>
+          ПостНаука
+        </Cell>
+      </List>
+    </Group>
+    <Footer {...props} />
+  </>
+);
+
+Example.args = Playground.args;
+
+Example.decorators = [withSinglePanel, withVKUILayout];

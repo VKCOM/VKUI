@@ -1,5 +1,5 @@
 import { withCartesian } from '@project-tools/storybook-addon-cartesian';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { CanvasFullLayout } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Badge, type BadgeProps } from './Badge';
@@ -14,20 +14,20 @@ const story: Meta<BadgeProps> = {
 
 export default story;
 
-type Story = StoryObj<BadgeProps>;
+type Story = StoryFn<BadgeProps>;
 
-export const Playground: Story = {};
+export const Playground: Story = (props: BadgeProps) => <Badge {...props} />;
 
-export const NewMode: Story = {
-  args: {
-    mode: 'new',
-    children: 'Есть обновления',
-  },
+export const NewMode: Story = (props: BadgeProps) => <Badge {...props} />;
+
+NewMode.args = {
+  mode: 'new',
+  children: 'Есть обновления',
 };
 
-export const ProminentMode: Story = {
-  args: {
-    mode: 'prominent',
-    children: 'Новый раздел',
-  },
+export const ProminentMode: Story = (props: BadgeProps) => <Badge {...props} />;
+
+ProminentMode.args = {
+  mode: 'prominent',
+  children: 'Новый раздел',
 };

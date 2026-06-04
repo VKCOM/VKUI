@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../../storybook/constants';
 import { getAvatarUrl } from '../../../testing/mock';
@@ -16,23 +16,18 @@ const story: Meta<CellCheckboxProps> = {
 
 export default story;
 
-type Story = StoryObj<CellCheckboxProps>;
+export const Playground: StoryFn<CellCheckboxProps> = (props: CellCheckboxProps) => (
+  <Group>
+    <Cell
+      Component="label"
+      before={<Avatar src={getAvatarUrl('user_xyz')} />}
+      after={<CellCheckbox {...props} />}
+    >
+      Игорь Федоров
+    </Cell>
+  </Group>
+);
 
-export const Playground: Story = {
-  args: {
-    defaultChecked: true,
-  },
-  decorators: [
-    (Component, context) => (
-      <Group>
-        <Cell
-          Component="label"
-          before={<Avatar src={getAvatarUrl('user_xyz')} />}
-          after={<Component {...context.args} />}
-        >
-          Игорь Федоров
-        </Cell>
-      </Group>
-    ),
-  ],
+Playground.args = {
+  defaultChecked: true,
 };

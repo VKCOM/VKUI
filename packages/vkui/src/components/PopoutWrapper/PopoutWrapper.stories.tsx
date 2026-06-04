@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { PopoutWrapper, type PopoutWrapperProps } from './PopoutWrapper';
@@ -12,15 +12,18 @@ const story: Meta<PopoutWrapperProps> = {
 
 export default story;
 
-type Story = StoryObj<PopoutWrapperProps>;
+export const Playground: StoryFn<PopoutWrapperProps> = (args: PopoutWrapperProps) => (
+  <div
+    style={{
+      width: 500,
+      height: 500,
+      position: 'relative',
+    }}
+  >
+    <PopoutWrapper {...args} />
+  </div>
+);
 
-export const Playground: Story = {
-  render: (args) => (
-    <div style={{ width: 500, height: 500, position: 'relative' }}>
-      <PopoutWrapper {...args} />
-    </div>
-  ),
-  args: {
-    children: 'Some content',
-  },
+Playground.args = {
+  children: 'Some content',
 };

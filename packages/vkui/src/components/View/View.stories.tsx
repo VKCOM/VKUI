@@ -1,5 +1,5 @@
 import * as React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getRandomUsers } from '../../testing/mock';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
@@ -30,8 +30,6 @@ const story: Meta<ViewProps> = {
 };
 
 export default story;
-
-type Story = StoryObj<ViewProps>;
 
 const MainPanelContent = ({ onProfileClick }: { onProfileClick: VoidFunction }) => {
   return (
@@ -124,82 +122,81 @@ const SettingsPanelContent = ({
   );
 };
 
-export const SwipeBlockExample: Story = {
-  render: function Render() {
-    const [history, setHistory] = React.useState(['main']);
-    const activePanel = history[history.length - 1];
+export const SwipeBlockExample: StoryFn<ViewProps> = () => {
+  const [history, setHistory] = React.useState(['main']);
+  const activePanel = history[history.length - 1];
 
-    const go = React.useCallback((panel: string) => {
-      setHistory((prevHistory) => [...prevHistory, panel]);
-    }, []);
-    const goBack = React.useCallback(() => {
-      setHistory((prevHistory) => prevHistory.slice(0, -1));
-    }, []);
+  const go = React.useCallback((panel: string) => {
+    setHistory((prevHistory) => [...prevHistory, panel]);
+  }, []);
+  const goBack = React.useCallback(() => {
+    setHistory((prevHistory) => prevHistory.slice(0, -1));
+  }, []);
 
-    const handleProfileClick = React.useCallback(() => go('profile'), [go]);
-    const handleSettingsClick = React.useCallback(() => go('settings'), [go]);
+  const handleProfileClick = React.useCallback(() => go('profile'), [go]);
+  const handleSettingsClick = React.useCallback(() => go('settings'), [go]);
 
-    const [userName, setUserName] = React.useState('');
-    const [popoutWithRestriction, setPopoutWithRestriction] =
-      React.useState<React.ReactNode | null>(null);
+  const [userName, setUserName] = React.useState('');
+  const [popoutWithRestriction, setPopoutWithRestriction] = React.useState<React.ReactNode | null>(
+    null,
+  );
 
-    const validateUserName = React.useCallback(() => {
-      if (userName !== '') {
-        return true;
-      }
+  const validateUserName = React.useCallback(() => {
+    if (userName !== '') {
+      return true;
+    }
 
-      setPopoutWithRestriction(
-        <Alert
-          title="Поле Имя не заполнено"
-          description="Пожалуйста, заполните его."
-          onClosed={() => setPopoutWithRestriction(null)}
-        />,
-      );
-
-      return false;
-    }, [userName]);
-
-    const handleSwipeBackStartForPreventIfNeeded = React.useCallback(
-      (activePanel: string | null) => {
-        if (activePanel === 'settings') {
-          const isValid = validateUserName();
-          return isValid ? undefined : 'prevent';
-        }
-        return;
-      },
-      [validateUserName],
+    setPopoutWithRestriction(
+      <Alert
+        title="Поле Имя не заполнено"
+        description="Пожалуйста, заполните его."
+        onClosed={() => setPopoutWithRestriction(null)}
+      />,
     );
 
-    const handleBackForPreventIfNeeded = React.useCallback(() => {
-      if (validateUserName()) {
-        goBack();
-      }
-    }, [validateUserName, goBack]);
+    return false;
+  }, [userName]);
 
-    return (
-      <ConfigProviderOverride platform="ios" isWebView>
-        <View
-          history={history}
-          activePanel={activePanel}
-          onSwipeBackStart={handleSwipeBackStartForPreventIfNeeded}
-          onSwipeBack={goBack}
-        >
-          <Panel id="main">
-            <MainPanelContent onProfileClick={handleProfileClick} />
-          </Panel>
-          <Panel id="profile">
-            <ProfilePanelContent onSettingsClick={handleSettingsClick} onBack={goBack} />
-          </Panel>
-          <Panel id="settings">
-            <SettingsPanelContent
-              name={userName}
-              onChangeName={setUserName}
-              onBack={handleBackForPreventIfNeeded}
-            />
-          </Panel>
-        </View>
-        {popoutWithRestriction}
-      </ConfigProviderOverride>
-    );
-  },
+  const handleSwipeBackStartForPreventIfNeeded = React.useCallback(
+    (activePanel: string | null) => {
+      if (activePanel === 'settings') {
+        const isValid = validateUserName();
+        return isValid ? undefined : 'prevent';
+      }
+      return;
+    },
+    [validateUserName],
+  );
+
+  const handleBackForPreventIfNeeded = React.useCallback(() => {
+    if (validateUserName()) {
+      goBack();
+    }
+  }, [validateUserName, goBack]);
+
+  return (
+    <ConfigProviderOverride platform="ios" isWebView>
+      <View
+        history={history}
+        activePanel={activePanel}
+        onSwipeBackStart={handleSwipeBackStartForPreventIfNeeded}
+        onSwipeBack={goBack}
+      >
+        <Panel id="main">
+          <MainPanelContent onProfileClick={handleProfileClick} />
+        </Panel>
+        <Panel id="profile">
+          <ProfilePanelContent onSettingsClick={handleSettingsClick} onBack={goBack} />
+        </Panel>
+        <Panel id="settings">
+          <SettingsPanelContent
+            name={userName}
+            onChangeName={setUserName}
+            onBack={handleBackForPreventIfNeeded}
+          />
+        </Panel>
+      </View>
+      {popoutWithRestriction}
+    </ConfigProviderOverride>
+  );
 };

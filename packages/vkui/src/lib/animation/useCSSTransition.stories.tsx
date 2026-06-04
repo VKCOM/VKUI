@@ -1,10 +1,10 @@
 /* eslint-disable no-console, import/no-default-export */
 'use client';
 
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { classNames } from '@vkontakte/vkjs';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import type { CSSCustomProperties } from '../../types';
+import { type CSSCustomProperties } from '../../types';
 import {
   useCSSTransition,
   type UseCSSTransitionOptions,
@@ -79,27 +79,27 @@ const transitionClassNames = {
   exited: styles.exited,
 };
 
-export const WithClassNameAttribute: StoryObj<DemoProps> = {
-  render: function Render({ in: inProp, duration, ...restProps }) {
-    const [state, { ref, onTransitionEnd }] = useCSSTransition<HTMLDivElement>(inProp, restProps);
-
-    if (state === 'exited') {
-      return <div />;
-    }
-
-    return (
-      <div
-        ref={ref}
-        className={classNames(styles.host, transitionClassNames[state])}
-        style={
-          duration
-            ? ({ '--css-transition-duration': `${duration}s` } as unknown as CSSCustomProperties)
-            : undefined
-        }
-        onTransitionEnd={onTransitionEnd}
-      />
-    );
-  },
+export const WithClassNameAttribute: StoryFn<DemoProps> = ({
+  in: inProp,
+  duration,
+  ...restProps
+}: DemoProps) => {
+  const [state, { ref, onTransitionEnd }] = useCSSTransition<HTMLDivElement>(inProp, restProps);
+  if (state === 'exited') {
+    return <div />;
+  }
+  return (
+    <div
+      ref={ref}
+      className={classNames(styles.host, transitionClassNames[state])}
+      style={
+        duration
+          ? ({ '--css-transition-duration': `${duration}s` } as unknown as CSSCustomProperties)
+          : undefined
+      }
+      onTransitionEnd={onTransitionEnd}
+    />
+  );
 };
 
 const getTransition = (state: UseCSSTransitionState, duration = 1) =>
@@ -152,21 +152,21 @@ const getTransition = (state: UseCSSTransitionState, duration = 1) =>
     },
   })[state];
 
-export const WithStyleAttribute: StoryObj<DemoProps> = {
-  render: function Render({ in: inProp, duration, ...restProps }) {
-    const [state, { ref, onTransitionEnd }] = useCSSTransition<HTMLDivElement>(inProp, restProps);
-
-    if (state === 'exited') {
-      return <div />;
-    }
-
-    return (
-      <div
-        ref={ref}
-        className={styles.host}
-        style={getTransition(state, duration)}
-        onTransitionEnd={onTransitionEnd}
-      />
-    );
-  },
+export const WithStyleAttribute: StoryFn<DemoProps> = ({
+  in: inProp,
+  duration,
+  ...restProps
+}: DemoProps) => {
+  const [state, { ref, onTransitionEnd }] = useCSSTransition<HTMLDivElement>(inProp, restProps);
+  if (state === 'exited') {
+    return <div />;
+  }
+  return (
+    <div
+      ref={ref}
+      className={styles.host}
+      style={getTransition(state, duration)}
+      onTransitionEnd={onTransitionEnd}
+    />
+  );
 };

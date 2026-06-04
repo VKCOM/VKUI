@@ -1,14 +1,12 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createCalendarDayRenderField } from '../../testing/presets/createCalendarDayRenderField';
 import { getFormFieldIconsPresets } from '../../testing/presets/getFormFieldIconsPresets';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
-import { useCustomArgs } from '../../testing/useCustomArgs';
 import { DateRangeInput, type DateRangeInputProps } from './DateRangeInput';
+const iconsPresets = getFormFieldIconsPresets();
 
 type StoryDateRangeInputProps = DateRangeInputProps & { startDate: number; endDate: number };
-
-const iconsPresets = getFormFieldIconsPresets();
 
 const story: Meta<StoryDateRangeInputProps> = {
   title: 'Dates/DateRangeInput',
@@ -49,29 +47,10 @@ const story: Meta<StoryDateRangeInputProps> = {
 
 export default story;
 
-type Story = StoryObj<StoryDateRangeInputProps>;
+type Story = StoryFn<StoryDateRangeInputProps>;
 
-export const Playground: Story = {
-  render: function Render({ startDate, endDate, ...args }) {
-    const [, updateArgs] = useCustomArgs();
-
-    const handleDateRangeUpdate: DateRangeInputProps['onChange'] = (updatedValue) => {
-      const [changedStartDate, changedEndDate] = updatedValue || [null, null];
-      updateArgs({
-        startDate: changedStartDate ? new Date(changedStartDate) : null,
-        endDate: changedEndDate ? new Date(changedEndDate) : null,
-      });
-    };
-
-    const parsedStartDate = startDate ? new Date(startDate) : null;
-    const parsedEndDate = endDate ? new Date(endDate) : null;
-
-    return (
-      <DateRangeInput
-        {...args}
-        value={[parsedStartDate, parsedEndDate]}
-        onChange={handleDateRangeUpdate}
-      />
-    );
-  },
+export const Playground: Story = ({ startDate, endDate, ...args }: StoryDateRangeInputProps) => {
+  const parsedStartDate = startDate ? new Date(startDate) : null;
+  const parsedEndDate = endDate ? new Date(endDate) : null;
+  return <DateRangeInput {...args} defaultValue={[parsedStartDate, parsedEndDate]} />;
 };

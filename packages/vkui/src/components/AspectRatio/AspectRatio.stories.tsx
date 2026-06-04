@@ -1,8 +1,8 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
-import { Div } from '../Div/Div';
+import { Box } from '../Box/Box';
 import { Group } from '../Group/Group';
 import { AspectRatio, type AspectRatioProps } from './AspectRatio';
 
@@ -27,44 +27,44 @@ const story: Meta<AspectRatioProps> = {
 
 export default story;
 
-type Story = StoryObj<Omit<AspectRatioProps, 'ratio'> & { ratio: '16/9' | '1/1' | '3/4' | 'None' }>;
+type Story = StoryFn<Omit<AspectRatioProps, 'ratio'> & { ratio: '16/9' | '1/1' | '3/4' | 'None' }>;
 
-export const Playground: Story = {
-  args: {
-    children: (
-      <img
-        loading="lazy"
-        alt="Лаунж зона в розовом неоне"
-        src="https://sun9-35.userapi.com/TH0O6TfKR2O5W8hjgSdzQzHvV_2TGRAXhLHuog/Js_f2L5EMYM.jpg"
-      />
-    ),
-    ratio: '16/9',
-  },
-  decorators: [
-    (Component, context) => (
-      <Group>
-        <Div>
-          <Component {...context.args} />
-        </Div>
-      </Group>
-    ),
-    withSinglePanel,
-    withVKUILayout,
-  ],
+export const Playground: Story = (props: AspectRatioProps) => (
+  <Group>
+    <Box padding="system">
+      <AspectRatio {...props}>
+        <img
+          loading="lazy"
+          alt="Лаунж зона в розовом неоне"
+          src="https://sun9-35.userapi.com/TH0O6TfKR2O5W8hjgSdzQzHvV_2TGRAXhLHuog/Js_f2L5EMYM.jpg"
+        />
+      </AspectRatio>
+    </Box>
+  </Group>
+);
+Playground.args = {
+  ratio: '16/9',
 };
+Playground.decorators = [withSinglePanel, withVKUILayout];
 
-export const WithModeNone: Story = {
-  ...Playground,
-  args: {
-    ratio: '16/9',
-    mode: 'none',
-    children: (
-      <img
-        loading="lazy"
-        style={{ height: '100%' }}
-        alt="Лаунж зона в розовом неоне"
-        src="https://sun9-35.userapi.com/TH0O6TfKR2O5W8hjgSdzQzHvV_2TGRAXhLHuog/Js_f2L5EMYM.jpg"
-      />
-    ),
-  },
+export const WithModeNone: Story = (props: AspectRatioProps) => (
+  <Group>
+    <Box padding="system">
+      <AspectRatio {...props}>
+        <img
+          loading="lazy"
+          style={{
+            height: '100%',
+          }}
+          alt="Лаунж зона в розовом неоне"
+          src="https://sun9-35.userapi.com/TH0O6TfKR2O5W8hjgSdzQzHvV_2TGRAXhLHuog/Js_f2L5EMYM.jpg"
+        />
+      </AspectRatio>
+    </Box>
+  </Group>
+);
+WithModeNone.args = {
+  ratio: '16/9',
+  mode: 'none',
 };
+WithModeNone.decorators = Playground.decorators;

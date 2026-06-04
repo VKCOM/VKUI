@@ -1,11 +1,18 @@
-import type { Meta, ReactRenderer, StoryObj } from '@storybook/react';
-import type { PartialStoryFn } from 'storybook/internal/types';
+import type { Meta, StoryFn } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
-import { Div } from '../Div/Div';
+import { Box } from '../Box/Box';
 import { CustomScrollView, type CustomScrollViewProps } from './CustomScrollView';
 
-const Wrapper = (Story: PartialStoryFn<ReactRenderer>) => (
+const story: Meta<CustomScrollViewProps> = {
+  title: 'Utils/CustomScrollView',
+  component: CustomScrollView,
+  parameters: createStoryParameters('CustomScrollView', CanvasFullLayout, DisableCartesianParam),
+  tags: ['Утилиты'],
+};
+export default story;
+
+export const Playground: StoryFn<CustomScrollViewProps> = (props: CustomScrollViewProps) => (
   <div
     style={{
       borderRadius: 10,
@@ -17,26 +24,9 @@ const Wrapper = (Story: PartialStoryFn<ReactRenderer>) => (
       boxSizing: 'content-box',
     }}
   >
-    <Story />
-  </div>
-);
-
-const story: Meta<CustomScrollViewProps> = {
-  title: 'Utils/CustomScrollView',
-  component: CustomScrollView,
-  parameters: createStoryParameters('CustomScrollView', CanvasFullLayout, DisableCartesianParam),
-  tags: ['Утилиты'],
-};
-
-export default story;
-
-type Story = StoryObj<CustomScrollViewProps>;
-
-export const Playground: Story = {
-  args: {
-    enableHorizontalScroll: true,
-    children: (
-      <Div
+    <CustomScrollView {...props}>
+      <Box
+        padding="system"
         style={{
           width: 1440,
           boxSizing: 'content-box',
@@ -89,8 +79,11 @@ export const Playground: Story = {
         in quam eget quam lacinia pharetra. Phasellus ipsum magna, aliquet id elit eget, cursus
         tincidunt ex. In rhoncus turpis turpis, et viverra ex malesuada vel. Donec nisi tellus,
         mollis et posuere vel, dictum eget neque.
-      </Div>
-    ),
-  },
-  decorators: [Wrapper],
+      </Box>
+    </CustomScrollView>
+  </div>
+);
+
+Playground.args = {
+  enableHorizontalScroll: true,
 };

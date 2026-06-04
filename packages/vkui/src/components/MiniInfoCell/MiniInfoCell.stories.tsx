@@ -1,5 +1,5 @@
 import { withCartesian } from '@project-tools/storybook-addon-cartesian';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { CanvasFullLayout } from '../../storybook/constants';
 import { getAvatarUrl } from '../../testing/mock';
 import { createFieldWithPresets } from '../../testing/presets';
@@ -37,12 +37,12 @@ const story: Meta<MiniInfoCellProps> = {
 
 export default story;
 
-type Story = StoryObj<MiniInfoCellProps>;
+type Story = StoryFn<MiniInfoCellProps>;
 
-export const Playground: Story = {
-  args: {
-    before: 'Icon20ArticleOutline',
-    children:
-      'ВКонтакте начинался как сайт для выпускников вузов, а сейчас это огромная экосистема с безграничными возможностями и миллионами пользователей.',
-  },
+export const Playground: Story = (props: MiniInfoCellProps) => <MiniInfoCell {...props} />;
+
+Playground.args = {
+  before: 'Icon20ArticleOutline',
+  children:
+    'ВКонтакте начинался как сайт для выпускников вузов, а сейчас это огромная экосистема с безграничными возможностями и миллионами пользователей.',
 };
