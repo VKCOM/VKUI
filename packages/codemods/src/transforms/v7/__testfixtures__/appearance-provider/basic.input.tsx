@@ -5,7 +5,7 @@ type Props = AppearanceProviderProps & {
   additionalProp: string;
 };
 
-const App = () => {
+export const App = () => {
   const props: AppearanceProviderProps = {
     value: 'dark',
     children: <Snackbar action="Поделиться">Поделиться</Snackbar>,

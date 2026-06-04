@@ -4,7 +4,7 @@ exports[`horizontal-cell > transforms correctly 1`] = `
 "import { HorizontalCell, Image } from '@vkontakte/vkui';
 import React from 'react';
 
-const App = () => {
+export const App = () => {
   return (
     <React.Fragment>
       <HorizontalCell title="Title" subtitle="Subtitle" extraSubtitle="Extra Subtitle" size="m">

@@ -1,7 +1,7 @@
 import { Input } from '@vkontakte/vkui';
 import React from 'react';
 
-const App = () => {
+export const App = () => {
   const inputRef = React.createRef<HTMLInputElement>();
 
   return (

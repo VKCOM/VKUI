@@ -2,7 +2,7 @@ import { ActionSheet, ActionSheetItem } from '@vkontakte/vkui';
 import React from 'react';
 import '@vkontakte/vkui/dist/vkui.css';
 
-const App = () => {
+export const App = () => {
   return (
     <React.Fragment>
       <ActionSheet>

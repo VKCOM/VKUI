@@ -5,7 +5,7 @@ import {
 } from '@vkontakte/vkui';
 import React from 'react';
 
-const App = () => {
+export const App = () => {
   const props: AppearanceProviderPropsAlias = {
     value: 'dark',
     children: <Snackbar action="Поделиться">Поделиться</Snackbar>,
