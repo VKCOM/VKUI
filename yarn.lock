@@ -4083,7 +4083,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@swc/helpers@npm:^0.5.21, @swc/helpers@npm:^0.5.23":
+"@swc/helpers@npm:^0.5.23":
   version: 0.5.23
   resolution: "@swc/helpers@npm:0.5.23"
   dependencies:
@@ -5315,8 +5315,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@vkontakte/storybook-addons@workspace:packages/storybook-addons"
   dependencies:
-    "@vkontakte/vkjs": "npm:^2.0.2"
-    "@vkontakte/vkui": "npm:^8.2.0"
     react: "npm:^18.3.1"
     typescript: "npm:^6.0.3"
   peerDependencies:
@@ -5557,22 +5555,6 @@ __metadata:
     "@swc/helpers": "npm:^0.5.19"
     csstype: "npm:^3.1.1"
   checksum: 10/6d0e488b25bd58d4e9f7d8b2ba857c4511cf04c4b02acceadca6d4d48c4c28ba0b6ee20e890f3b3c7ba3e97f99a9582e546d67ca25b632925b626d1e3396a6e5
-  languageName: node
-  linkType: hard
-
-"@vkontakte/vkui@npm:^8.2.0":
-  version: 8.2.1
-  resolution: "@vkontakte/vkui@npm:8.2.1"
-  dependencies:
-    "@swc/helpers": "npm:^0.5.21"
-    "@vkontakte/icons": "npm:^3.0.0"
-    "@vkontakte/vkjs": "npm:^2.0.2"
-    "@vkontakte/vkui-date-fns-tz": "npm:^0.0.6"
-    "@vkontakte/vkui-floating-ui": "npm:^0.2.8"
-  peerDependencies:
-    react: ^18.2.0 || ^19.0.0
-    react-dom: ^18.2.0 || ^19.0.0
-  checksum: 10/f685c5cc846c9945a5320de1035467a3fd0a8d5b6003b2f5f7f98cd3d3020273ccf6304fe83aab0097a406632c435122ffc8bf5e744c1a17ae627e97144ada93
   languageName: node
   linkType: hard
 
