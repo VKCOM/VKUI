@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { fn } from 'storybook/test';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getFormFieldIconsPresets } from '../../testing/presets/getFormFieldIconsPresets';
@@ -23,20 +23,31 @@ const story: Meta<ChipsInputProps<ChipOption>> = {
 
 export default story;
 
-type Story = StoryObj<ChipsInputProps<ChipOption>>;
+type Story = StoryFn<ChipsInputProps<ChipOption>>;
 
 const DEFAULT_TAGS = [
-  { label: 'Тег 1', value: 'tag-1' },
-  { label: 'Тег 2', value: 'tag-2' },
+  {
+    label: 'Тег 1',
+    value: 'tag-1',
+  },
+  {
+    label: 'Тег 2',
+    value: 'tag-2',
+  },
 ];
 
-export const Playground: Story = {
-  render: (args) => (
-    <FormItem top="Добавьте любимые теги" htmlFor="chips-input" style={{ width: 320 }}>
-      <ChipsInput {...args} aria-label="Добавьте любимые теги" id="chips-input" />
-    </FormItem>
-  ),
-  args: {
-    defaultValue: DEFAULT_TAGS,
-  },
+export const Playground: Story = (args: ChipsInputProps<ChipOption>) => (
+  <FormItem
+    top="Добавьте любимые теги"
+    htmlFor="chips-input"
+    style={{
+      width: 320,
+    }}
+  >
+    <ChipsInput {...args} aria-label="Добавьте любимые теги" id="chips-input" />
+  </FormItem>
+);
+
+Playground.args = {
+  defaultValue: DEFAULT_TAGS,
 };

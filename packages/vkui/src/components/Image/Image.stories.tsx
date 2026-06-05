@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getAvatarUrl } from '../../testing/mock';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
@@ -26,11 +26,9 @@ const story: Meta<ImageProps> = {
 
 export default story;
 
-type Story = StoryObj<ImageProps>;
+export const Playground: StoryFn<ImageProps> = (props: ImageProps) => <Image {...props} />;
 
-export const Playground: Story = {
-  args: {
-    src: getAvatarUrl('app_shorm_online'),
-    alt: 'Приложение шторм онлайн',
-  },
+Playground.args = {
+  src: getAvatarUrl('app_shorm_online'),
+  alt: 'Приложение шторм онлайн',
 };

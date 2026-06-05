@@ -11,6 +11,28 @@ tags: overlay
 
 </Overview>
 
+<Playground hide>
+  ```jsx
+  <Popover
+    placement="bottom"
+    hideWhenReferenceHidden
+    strategy="absolute"
+    disableFlipMiddleware
+    shown
+    autoFocus={false}
+    content={
+      <Div>
+        <Text>Привет</Text>
+      </Div>
+    }
+  >
+    <Button mode="outline">
+      Нажми на меня
+    </Button>
+  </Popover>
+  ```
+</Playground>
+
 {/* @example-description: Базовый `Popover` с триггером по клику и всплывающим текстовым контентом. */}
 <Playground>
   ```jsx

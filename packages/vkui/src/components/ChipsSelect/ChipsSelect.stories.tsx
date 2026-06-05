@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { Icon12Download } from '@vkontakte/icons';
 import { fn } from 'storybook/test';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
@@ -23,7 +23,7 @@ const story: Meta<ChipsSelectProps<ChipOption>> = {
 
 export default story;
 
-type Story = StoryObj<ChipsSelectProps<ChipOption>>;
+type Story = StoryFn<ChipsSelectProps<ChipOption>>;
 
 const groups = [
   { value: 'download', label: 'Скачать все и вся!', icon: <Icon12Download /> },
@@ -40,20 +40,28 @@ const groups = [
   { value: '5', label: 'Linkin Park' },
 ];
 
-export const Playground: Story = {
-  render: (args) => (
-    <FormItem top="Выберите музыкальные группы" htmlFor="chips-select" style={{ width: 320 }}>
-      <ChipsSelect aria-label="Выберите музыкальные группы" {...args} id="chips-select" />
-    </FormItem>
-  ),
-  args: {
-    options: groups,
-    defaultValue: [
-      {
-        value: '1',
-        label: 'Arctic Monkeys',
-      },
-      { value: '4', label: 'FACE' },
-    ],
-  },
+export const Playground: Story = (args: ChipsSelectProps<ChipOption>) => (
+  <FormItem
+    top="Выберите музыкальные группы"
+    htmlFor="chips-select"
+    style={{
+      width: 320,
+    }}
+  >
+    <ChipsSelect aria-label="Выберите музыкальные группы" {...args} id="chips-select" />
+  </FormItem>
+);
+
+Playground.args = {
+  options: groups,
+  defaultValue: [
+    {
+      value: '1',
+      label: 'Arctic Monkeys',
+    },
+    {
+      value: '4',
+      label: 'FACE',
+    },
+  ],
 };

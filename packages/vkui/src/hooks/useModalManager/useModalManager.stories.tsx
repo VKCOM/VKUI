@@ -2,7 +2,7 @@
 /* eslint-disable no-console, import/no-default-export */
 
 import { useRef } from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { Icon24Dismiss, Icon56NotificationOutline } from '@vkontakte/icons';
 import { Button } from '../../components/Button/Button';
 import { ButtonGroup } from '../../components/ButtonGroup/ButtonGroup';
@@ -35,8 +35,6 @@ const story: Meta<UseModalManagerProps> = {
 };
 
 export default story;
-
-type Story = StoryObj<UseModalManagerProps>;
 
 const ModalCardComponent = ({
   close,
@@ -127,49 +125,47 @@ const ModalPageComponent = ({
   );
 };
 
-export const Playground: Story = {
-  render: function Render(props) {
-    const [api, contextHolder] = useModalManager(props);
-    const modalCount = useRef(0);
+export const Playground: StoryFn<UseModalManagerProps> = (props: UseModalManagerProps) => {
+  const [api, contextHolder] = useModalManager(props);
+  const modalCount = useRef(0);
 
-    const openCustomModal = (type: 'card' | 'page') => {
-      modalCount.current += 1;
-      const count = modalCount.current;
+  const openCustomModal = (type: 'card' | 'page') => {
+    modalCount.current += 1;
+    const count = modalCount.current;
 
-      if (type === 'card') {
-        api.openCustomModalCard({
-          component: ModalCardComponent,
-          additionalProps: {
-            openNextModal: openCustomModal,
-            modalNumber: count,
-          },
-        });
-      } else {
-        api.openCustomModalPage({
-          component: ModalPageComponent,
-          additionalProps: {
-            openNextModal: openCustomModal,
-            modalNumber: count,
-          },
-        });
-      }
-    };
+    if (type === 'card') {
+      api.openCustomModalCard({
+        component: ModalCardComponent,
+        additionalProps: {
+          openNextModal: openCustomModal,
+          modalNumber: count,
+        },
+      });
+    } else {
+      api.openCustomModalPage({
+        component: ModalPageComponent,
+        additionalProps: {
+          openNextModal: openCustomModal,
+          modalNumber: count,
+        },
+      });
+    }
+  };
 
-    return (
-      <>
-        <Flex direction="column" gap="m">
-          <Checkbox defaultChecked onChange={(e) => api.setSaveHistory(e.target.checked)}>
-            Сохранять историю открытия
-          </Checkbox>
-          <Button appearance="overlay" onClick={() => openCustomModal('page')}>
-            Открыть ModalPage
-          </Button>
-          <Button appearance="overlay" onClick={() => openCustomModal('card')}>
-            Открыть ModalCard
-          </Button>
-        </Flex>
-        {contextHolder}
-      </>
-    );
-  },
+  return (
+    <>
+      <Flex direction="column" gap="m">
+        <Checkbox defaultChecked onChange={(e) => api.setSaveHistory(e.target.checked)}>
+          Сохранять историю открытия
+        </Checkbox>
+        <Button appearance="overlay" onClick={() => openCustomModal('page')}>
+          Открыть ModalPage
+        </Button>
+        <Button appearance="overlay" onClick={() => openCustomModal('card')}>
+          Открыть ModalCard
+        </Button>
+      </Flex>
+      {contextHolder}
+    </>
+  );
 };

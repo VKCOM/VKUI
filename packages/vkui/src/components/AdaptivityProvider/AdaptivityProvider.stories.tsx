@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditionalRender';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
@@ -15,19 +15,34 @@ export default story;
 
 const DisplayAdaptivityProvider = () => {
   const { density } = useAdaptivityConditionalRender();
-
   return (
     <>
-      {density.compact && <div style={{ padding: 5 }}>Density: Compact</div>}
-      {density.regular && <div style={{ padding: 5 }}>Density: Regular</div>}
+      {density.compact && (
+        <div
+          style={{
+            padding: 5,
+          }}
+        >
+          Density: Compact
+        </div>
+      )}
+      {density.regular && (
+        <div
+          style={{
+            padding: 5,
+          }}
+        >
+          Density: Regular
+        </div>
+      )}
     </>
   );
 };
 
-export const Playground: StoryObj<AdaptivityProviderProps> = {
-  render: (args) => (
+export const Playground: StoryFn<AdaptivityProviderProps> = (args: AdaptivityProviderProps) => {
+  return (
     <AdaptivityProvider {...args}>
       <DisplayAdaptivityProvider />
     </AdaptivityProvider>
-  ),
+  );
 };

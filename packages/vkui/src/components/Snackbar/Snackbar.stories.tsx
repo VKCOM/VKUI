@@ -1,5 +1,5 @@
 import * as React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { Icon24ThumbsUpOutline, Icon28ErrorCircleOutline } from '@vkontakte/icons';
 import { CanvasFullLayout, DisableCartesianParam, StringArg } from '../../storybook/constants';
 import { getAvatarUrl } from '../../testing/mock';
@@ -34,54 +34,49 @@ const story: Meta<SnackbarProps> = {
     }),
     subtitle: StringArg,
     offsetY: StringArg,
+    action: {
+      control: 'text',
+    },
   },
   tags: ['Обратная связь'],
 };
 
 export default story;
 
-type Story = StoryObj<Omit<SnackbarProps, 'after'> & { after?: boolean | undefined }>;
+type Story = StoryFn<SnackbarProps>;
 
-export const Playground: Story = {
-  render: function Render({ onClosed, ...args }) {
-    const [open, setOpen] = React.useState(true);
-
-    const handleClosed = () => {
-      setOpen(false);
-      onClosed?.();
-    };
-
-    return (
-      <>
-        <button onClick={() => setOpen(true)}>Открыть</button>
-        {open ? <Snackbar onClosed={handleClosed} {...args} /> : null}
-      </>
-    );
-  },
-  args: {
-    before: 'Icon24ThumbsUpOutline',
-    action: 'Поделиться',
-    children: 'Этот сервис рекомендует один друг',
-  },
-  argTypes: {
-    action: { control: 'text' },
-  },
+export const Playground: Story = (args: SnackbarProps) => {
+  const [open, setOpen] = React.useState(true);
+  const handleClosed = () => {
+    setOpen(false);
+    args.onClosed?.();
+  };
+  return (
+    <>
+      <button onClick={() => setOpen(true)}>Открыть</button>
+      {open ? <Snackbar {...args} onClosed={handleClosed} /> : null}
+    </>
+  );
 };
 
-export const WithSubtitle: Story = {
-  ...Playground,
-  args: {
-    ...Playground.args,
-    action: undefined,
-    subtitle: 'Вы можете порекомендовать сервис в дополнительном меню',
-  },
+Playground.args = {
+  before: 'Icon24ThumbsUpOutline',
+  action: 'Поделиться',
+  children: 'Этот сервис рекомендует один друг',
 };
 
-export const WithBottomOffset: Story = {
-  ...Playground,
-  args: {
-    ...Playground.args,
-    action: undefined,
-    offsetY: '48px',
-  },
+export const WithSubtitle = Playground.bind({});
+
+WithSubtitle.args = {
+  ...Playground.args,
+  action: undefined,
+  subtitle: 'Вы можете порекомендовать сервис в дополнительном меню',
+};
+
+export const WithBottomOffset = Playground.bind({});
+
+WithBottomOffset.args = {
+  ...Playground.args,
+  action: undefined,
+  offsetY: '48px',
 };

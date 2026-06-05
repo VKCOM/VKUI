@@ -12,6 +12,25 @@ tags: overlay
 
 </Overview>
 
+<Playground hide>
+
+```jsx
+const buttonRef = React.useRef(null);
+
+return (
+  <React.Fragment>
+    <Button getRootRef={buttonRef}>
+      Закрыть
+    </Button>
+    <Popper usePortal={false} targetRef={buttonRef} disableFlipMiddleware>
+      Привет
+    </Popper>
+  </React.Fragment>
+);
+```
+
+</Playground>
+
 {/* @example-description: Базовый `Popper`, позиционируемый относительно кнопки-якоря через `targetRef`. */}
 <Playground>
 

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { Icon28PrivacyOutline, Icon28SettingsOutline, Icon28UserOutline } from '@vkontakte/icons';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
@@ -16,27 +16,23 @@ const story: Meta<ListProps> = {
 
 export default story;
 
-type Story = StoryObj<
-  ListProps & {
-    items: Array<{
-      before: React.ReactNode;
-      title: string;
-    }>;
-  }
->;
+type ListStoryProps = ListProps & {
+  items: Array<{
+    before: React.ReactNode;
+    title: string;
+  }>;
+};
 
-export const Playground: Story = {
-  render: function Render({ items, ...args }) {
-    const [draggingList, updateDraggingList] = React.useState(items);
-
-    const onDragFinish = ({ from, to }: { from: number; to: number }) => {
-      const _list = [...draggingList];
-      _list.splice(from, 1);
-      _list.splice(to, 0, draggingList[from]);
-      updateDraggingList(_list);
-    };
-
-    return (
+export const Playground: StoryFn<ListStoryProps> = ({ items, ...args }: ListStoryProps) => {
+  const [draggingList, updateDraggingList] = React.useState(items);
+  const onDragFinish = ({ from, to }: { from: number; to: number }) => {
+    const _list = [...draggingList];
+    _list.splice(from, 1);
+    _list.splice(to, 0, draggingList[from]);
+    updateDraggingList(_list);
+  };
+  return (
+    <Group>
       <List {...args}>
         {draggingList.map((item) => (
           <Cell key={item.title} before={item.before} draggable onDragFinish={onDragFinish}>
@@ -44,22 +40,25 @@ export const Playground: Story = {
           </Cell>
         ))}
       </List>
-    );
-  },
-  args: {
-    items: [
-      { before: <Icon28UserOutline />, title: 'Учетная запись' },
-      { before: <Icon28SettingsOutline />, title: 'Основные' },
-      { before: <Icon28PrivacyOutline />, title: 'Приватность' },
-    ],
-  },
-  decorators: [
-    (Component, context) => (
-      <Group>
-        <Component {...context.args} />
-      </Group>
-    ),
-    withSinglePanel,
-    withVKUILayout,
+    </Group>
+  );
+};
+
+Playground.args = {
+  items: [
+    {
+      before: <Icon28UserOutline />,
+      title: 'Учетная запись',
+    },
+    {
+      before: <Icon28SettingsOutline />,
+      title: 'Основные',
+    },
+    {
+      before: <Icon28PrivacyOutline />,
+      title: 'Приватность',
+    },
   ],
 };
+
+Playground.decorators = [withSinglePanel, withVKUILayout];

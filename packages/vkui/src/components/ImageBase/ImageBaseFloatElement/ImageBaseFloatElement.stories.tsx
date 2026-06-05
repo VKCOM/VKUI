@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { Icon16MoreHorizontal, Icon28AddOutline, Icon28DeleteOutline } from '@vkontakte/icons';
 import { CanvasFullLayout, DisableCartesianParam } from '../../../storybook/constants';
 import { getAvatarUrl } from '../../../testing/mock';
@@ -44,25 +44,24 @@ const ContextMenu = () => {
 const story: Meta<ImageBaseFloatElementProps> = {
   title: 'Data Display/ImageBase/ImageBaseFloatElement',
   component: ImageBaseFloatElement,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
-  decorators: [
-    (Component) => (
-      <ImageBase size={96} src={getAvatarUrl('app_shorm_online')} alt="Приложение шторм онлайн">
-        <Component />
-      </ImageBase>
-    ),
-  ],
+  parameters: {
+    ...CanvasFullLayout,
+    ...DisableCartesianParam,
+  },
 };
-
 export default story;
 
-type Story = StoryObj<ImageBaseFloatElementProps>;
+export const Playground: StoryFn<ImageBaseFloatElementProps> = (
+  props: ImageBaseFloatElementProps,
+) => (
+  <ImageBase size={96} src={getAvatarUrl('app_shorm_online')} alt="Приложение шторм онлайн">
+    <ImageBase.FloatElement {...props} />
+  </ImageBase>
+);
 
-export const Playground: Story = {
-  args: {
-    placement: 'top-start',
-    blockIndent: '5%',
-    inlineIndent: '5%',
-    children: <ContextMenu />,
-  },
+Playground.args = {
+  placement: 'top-start',
+  blockIndent: '5%',
+  inlineIndent: '5%',
+  children: <ContextMenu />,
 };

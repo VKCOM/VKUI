@@ -1,4 +1,4 @@
-import type { Meta, ReactRenderer, StoryObj } from '@storybook/react';
+import type { Meta, ReactRenderer, StoryFn } from '@storybook/react';
 import type { PartialStoryFn } from 'storybook/internal/types';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getAvatarUrl } from '../../testing/mock';
@@ -34,13 +34,16 @@ const story: Meta<CustomSelectOptionProps> = {
 
 export default story;
 
-type Story = StoryObj<CustomSelectOptionProps>;
+export const Playground: StoryFn<CustomSelectOptionProps> = (props: CustomSelectOptionProps) => (
+  <CustomSelectOption {...props} />
+);
 
-export const Playground: Story = {
-  args: {
-    style: { width: 300 },
-    children: 'Игорь Федоров',
-    description: 'Россия, Санкт-Петербург',
+Playground.args = {
+  style: {
+    width: 300,
   },
-  decorators: [withListBox],
+  children: 'Игорь Федоров',
+  description: 'Россия, Санкт-Петербург',
 };
+
+Playground.decorators = [withListBox];

@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { ContentCard } from '../ContentCard/ContentCard';
@@ -13,32 +13,49 @@ const story: Meta<SimpleGridProps> = {
 
 export default story;
 
-type Story = StoryObj<SimpleGridProps>;
+type Story = StoryFn<SimpleGridProps>;
 
-export const Playground: Story = {
-  args: {
-    gap: 'm',
-  },
-  render: (args) => (
-    <SimpleGrid {...args}>
-      {Array.from({ length: 5 }, (_, index) => {
+export const Playground: Story = (args: SimpleGridProps) => (
+  <SimpleGrid {...args}>
+    {Array.from(
+      {
+        length: 5,
+      },
+      (_, index) => {
         return (
-          <ContentCard
+          <div
             key={index}
-            overTitle="ALBUM"
-            title="Halsey – Badlands"
-            caption="Blue Vinyl · EU · 2015"
-            description="Badlands is the story about dreams and cruel reality..."
-          />
+            style={{
+              width: '80%',
+              border: '1px dotted red',
+            }}
+          >
+            <ContentCard
+              overTitle="ALBUM"
+              title="Halsey – Badlands"
+              caption="Blue Vinyl · EU · 2015"
+              description="Badlands is the story about dreams and cruel reality..."
+            />
+          </div>
         );
-      })}
-    </SimpleGrid>
-  ),
-  decorators: [
-    (Component) => (
-      <div style={{ width: '80%', border: '1px dotted red' }}>
-        <Component />
-      </div>
-    ),
-  ],
+      },
+    )}
+  </SimpleGrid>
+);
+
+Playground.args = {
+  gap: 'm',
 };
+
+Playground.decorators = [
+  (Component) => (
+    <div
+      style={{
+        width: '80%',
+        border: '1px dotted red',
+      }}
+    >
+      <Component />
+    </div>
+  ),
+];

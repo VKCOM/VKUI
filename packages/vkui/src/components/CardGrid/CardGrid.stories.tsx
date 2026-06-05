@@ -1,11 +1,10 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { isArray } from '@vkontakte/vkjs';
+import type { Meta, StoryFn } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
-import { Card as BasicCard } from '../Card/Card';
-import { playgroundArgs as basicCardPlaygroundArgs } from '../Card/Card.stories';
+import { Card } from '../Card/Card';
 import { Group } from '../Group/Group';
+import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import { CardGrid, type CardGridProps } from './CardGrid';
 
 type StoryCardGridProps = CardGridProps & { count: number };
@@ -24,32 +23,58 @@ const story: Meta<StoryCardGridProps> = {
 
 export default story;
 
-type Story = StoryObj<StoryCardGridProps>;
+type Story = StoryFn<StoryCardGridProps>;
 
-export const Playground: Story = {
-  render: ({ count, ...args }) => (
+export const Playground: Story = ({ count, ...args }: StoryCardGridProps) => (
+  <CardGrid {...args}>
+    {Array(count)
+      .fill(null)
+      .map((_, index) => (
+        <Card key={index}>
+          <div
+            style={{
+              height: 96,
+            }}
+          >
+            <VisuallyHidden>
+              Контент для вашей карточки (визуальный компонент-обертка)
+            </VisuallyHidden>
+          </div>
+        </Card>
+      ))}
+  </CardGrid>
+);
+
+Playground.args = {
+  count: 3,
+};
+
+Playground.decorators = [withSinglePanel, withVKUILayout];
+
+export const InsideGroup: Story = ({ count, ...args }: StoryCardGridProps) => (
+  <Group>
     <CardGrid {...args}>
       {Array(count)
         .fill(null)
         .map((_, index) => (
-          <BasicCard key={index} {...basicCardPlaygroundArgs} />
+          <Card key={index}>
+            <div
+              style={{
+                height: 96,
+              }}
+            >
+              <VisuallyHidden>
+                Контент для вашей карточки (визуальный компонент-обертка)
+              </VisuallyHidden>
+            </div>
+          </Card>
         ))}
     </CardGrid>
-  ),
-  args: {
-    count: 3,
-  },
-  decorators: [withSinglePanel, withVKUILayout],
+  </Group>
+);
+
+InsideGroup.args = {
+  count: 3,
 };
 
-export const InsideGroup: Story = {
-  ...Playground,
-  decorators: [
-    (Component, context) => (
-      <Group>
-        <Component {...context.args} />
-      </Group>
-    ),
-    ...(isArray(Playground.decorators) ? Playground.decorators : []),
-  ],
-};
+InsideGroup.decorators = [withSinglePanel, withVKUILayout];

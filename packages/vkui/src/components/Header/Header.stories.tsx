@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createFieldWithPresets } from '../../testing/presets';
@@ -56,66 +56,50 @@ const story: Meta<HeaderProps> = {
 
 export default story;
 
-type Story = StoryObj<HeaderProps>;
+type Story = StoryFn<HeaderProps>;
+export const Playground: Story = (props: HeaderProps) => <Header {...props} />;
+Playground.args = {
+  children: 'Плейлисты',
+};
+export const WithSubtitle: Story = (props: HeaderProps) => <Header {...props} />;
+Object.assign(WithSubtitle, Playground);
+WithSubtitle.args = {
+  ...Playground.args,
+  subtitle: 'SOHN — Conrad',
+  subtitleComponent: 'h3',
+};
+export const WithAside: Story = (props: HeaderProps) => <Header {...props} />;
+WithAside.args = {
+  ...Playground.args,
+  after: 'Link',
+};
+export const WithIndicator: Story = (props: HeaderProps) => <Header {...props} />;
+WithIndicator.args = {
+  ...Playground.args,
+  indicator: 'Text',
+};
+export const WithCounter: Story = (props: HeaderProps) => (
+  <Group>
+    <Header {...props} />
+  </Group>
+);
 
-export const Playground: Story = {
-  args: {
-    children: 'Плейлисты',
-  },
+WithCounter.args = {
+  ...Playground.args,
+  indicator: 'Counter',
 };
 
-export const WithSubtitle: Story = {
-  ...Playground,
-  args: {
-    ...Playground.args,
-    subtitle: 'SOHN — Conrad',
-    subtitleComponent: 'h3',
-  },
-};
+WithCounter.decorators = [withSinglePanel, withVKUILayout];
 
-export const WithAside: Story = {
-  ...Playground,
-  args: {
-    ...Playground.args,
-    after: 'Link',
-  },
-};
+export const WithAllFeatures: Story = (props: HeaderProps) => <Header {...props} />;
 
-export const WithIndicator: Story = {
-  ...Playground,
-  args: {
-    ...Playground.args,
-    indicator: 'Text',
-  },
-};
-
-export const WithCounter: Story = {
-  ...Playground,
-  args: {
-    ...Playground.args,
-    indicator: 'Counter',
-  },
-  decorators: [
-    (Component, context) => (
-      <Group>
-        <Component {...context.args} />
-      </Group>
-    ),
-    withSinglePanel,
-    withVKUILayout,
-  ],
-};
-
-export const WithAllFeatures: Story = {
-  ...Playground,
-  args: {
-    ...Playground.args,
-    before: 'Icon28UserCircleFillBlue',
-    beforeTitle: 'Icon16LockOutline',
-    afterTitle: 'Icon16UnlockOutline',
-    beforeSubtitle: 'Icon12Tag',
-    afterSubtitle: 'Icon12Fire',
-    subtitle: 'SOHN — Conrad',
-    after: 'Link',
-  },
+WithAllFeatures.args = {
+  ...Playground.args,
+  before: 'Icon28UserCircleFillBlue',
+  beforeTitle: 'Icon16LockOutline',
+  afterTitle: 'Icon16UnlockOutline',
+  beforeSubtitle: 'Icon12Tag',
+  afterSubtitle: 'Icon12Fire',
+  subtitle: 'SOHN — Conrad',
+  after: 'Link',
 };

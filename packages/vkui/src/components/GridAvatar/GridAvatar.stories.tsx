@@ -1,5 +1,5 @@
 import { withCartesian } from '@project-tools/storybook-addon-cartesian';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { CanvasFullLayout } from '../../storybook/constants';
 import { IconExampleForBadgeBasedOnImageBaseSize } from '../../testing/icons';
 import { getAvatarUrl } from '../../testing/mock';
@@ -30,25 +30,25 @@ const story: Meta<StoryGridAvatarProps> = {
 
 export default story;
 
-type Story = StoryObj<StoryGridAvatarProps>;
+export const Playground: StoryFn<StoryGridAvatarProps> = ({
+  badged,
+  size = 48,
+  ...args
+}: StoryGridAvatarProps) => {
+  const badge =
+    size >= 24 && badged ? (
+      <GridAvatar.Badge>
+        <IconExampleForBadgeBasedOnImageBaseSize />
+      </GridAvatar.Badge>
+    ) : undefined;
+  return (
+    <GridAvatar {...args} size={size}>
+      {badge}
+    </GridAvatar>
+  );
+};
 
-export const Playground: Story = {
-  render: ({ badged, size = 48, ...args }) => {
-    const badge =
-      size >= 24 && badged ? (
-        <GridAvatar.Badge>
-          <IconExampleForBadgeBasedOnImageBaseSize />
-        </GridAvatar.Badge>
-      ) : undefined;
-
-    return (
-      <GridAvatar {...args} size={size}>
-        {badge}
-      </GridAvatar>
-    );
-  },
-  args: {
-    src: [getAvatarUrl(), getAvatarUrl(), getAvatarUrl(), getAvatarUrl()],
-    badged: false,
-  },
+Playground.args = {
+  src: [getAvatarUrl(), getAvatarUrl(), getAvatarUrl(), getAvatarUrl()],
+  badged: false,
 };

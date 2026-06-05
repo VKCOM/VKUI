@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { DisableCartesianParam } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Button } from '../Button/Button';
@@ -13,28 +13,38 @@ const story: Meta<TooltipProps> = {
 
 export default story;
 
-type Story = StoryObj<TooltipProps>;
+type Story = StoryFn<TooltipProps>;
 
-export const Playground: Story = {
-  render: (args) => (
-    <Tooltip {...args}>
-      <Button style={{ margin: 20 }}>Наведи</Button>
-    </Tooltip>
-  ),
-  args: {
-    description: 'Привет',
-  },
+export const Playground: Story = (args: TooltipProps) => (
+  <Tooltip {...args}>
+    <Button
+      style={{
+        margin: 20,
+      }}
+    >
+      Наведи
+    </Button>
+  </Tooltip>
+);
+
+Playground.args = {
+  description: 'Привет',
 };
 
-export const InteractiveTooltipWithCloseAction: Story = {
-  render: (args) => (
-    <Tooltip {...args}>
-      <Button style={{ margin: 20 }}>Наведи</Button>
-    </Tooltip>
-  ),
-  args: {
-    description: 'Привет',
-    enableInteractive: true,
-    closable: true,
-  },
+export const InteractiveTooltipWithCloseAction: Story = (args: TooltipProps) => (
+  <Tooltip {...args}>
+    <Button
+      style={{
+        margin: 20,
+      }}
+    >
+      Наведи
+    </Button>
+  </Tooltip>
+);
+
+InteractiveTooltipWithCloseAction.args = {
+  description: 'Привет',
+  enableInteractive: true,
+  closable: true,
 };

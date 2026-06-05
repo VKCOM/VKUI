@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getFormFieldIconsPresets } from '../../testing/presets/getFormFieldIconsPresets';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
@@ -19,10 +19,8 @@ const story: Meta<InputProps> = {
 
 export default story;
 
-type Story = StoryObj<InputProps>;
+export const Playground: StoryFn<InputProps> = (props: InputProps) => <Input {...props} />;
 
-export const Playground: Story = {
-  args: {
-    'aria-label': 'Напишите сообщение...',
-  },
+Playground.args = {
+  'aria-label': 'Напишите сообщение...',
 };

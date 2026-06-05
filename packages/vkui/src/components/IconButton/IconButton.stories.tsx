@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { Icon16Delete } from '@vkontakte/icons';
 import { noop } from '@vkontakte/vkjs';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
@@ -14,12 +14,11 @@ const story: Meta<IconButtonProps> = {
 
 export default story;
 
-type Story = StoryObj<IconButtonProps>;
+type Story = StoryFn<IconButtonProps>;
+export const Playground: Story = (props: IconButtonProps) => <IconButton {...props} />;
 
-export const Playground: Story = {
-  args: {
-    label: 'Удалить',
-    children: <Icon16Delete />,
-    onClick: noop,
-  },
+Playground.args = {
+  label: 'Удалить',
+  children: <Icon16Delete />,
+  onClick: noop,
 };

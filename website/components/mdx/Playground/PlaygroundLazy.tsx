@@ -18,5 +18,9 @@ const PlaygroundDynamic = dynamic(() => import('./Playground').then((mod) => mod
 export function PlaygroundLazy(props: PlaygroundProps) {
   const mounted = useMounted();
 
+  if (props.hide) {
+    return null;
+  }
+
   return mounted ? <PlaygroundDynamic {...props} /> : <Placeholder className={styles.skeleton} />;
 }

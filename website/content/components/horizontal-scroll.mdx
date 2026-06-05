@@ -16,6 +16,22 @@ tags: layout
 
 </Overview>
 
+<Playground hide>
+  ```jsx
+  <Box maxInlineSize={400}>
+    <HorizontalScroll showArrows="always" getScrollToLeft={(i) => i - 120} getScrollToRight={(i) => i + 120}>
+      {Array.from({ length: 20 }).map((_, index) => {
+        return (
+          <HorizontalCell onClick={() => {}} key={index} title={index}>
+            <Avatar size={56} />
+          </HorizontalCell>
+        );
+      })}
+    </HorizontalScroll>
+  </Box>
+  ```
+</Playground>
+
 {/* @example-description: Базовый `HorizontalScroll` со списком `HorizontalCell` и шагом прокрутки по стрелкам. */}
 <Playground>
   ```jsx
