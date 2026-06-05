@@ -4,7 +4,7 @@ import { getThemeConfig, setThemeConfig } from './config';
 import type { StorybookThemeConfig } from './config';
 import { ADDON_ID } from './constants';
 
-export const registerStorybookThemeAddon = (themeConfig?: StorybookThemeConfig) => {
+export const registerStorybookThemeAddon = (themeConfig?: Partial<StorybookThemeConfig>) => {
   if (themeConfig) {
     setThemeConfig(themeConfig);
   }
