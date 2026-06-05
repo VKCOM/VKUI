@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
@@ -14,17 +14,10 @@ const story: Meta<SearchProps> = {
 
 export default story;
 
-type Story = StoryObj<SearchProps>;
+export const Playground: StoryFn<SearchProps> = (args: SearchProps) => (
+  <Group>
+    <Search {...args} />
+  </Group>
+);
 
-export const Playground: Story = {
-  render: (args) => <Search {...args} />,
-  decorators: [
-    (Component, context) => (
-      <Group>
-        <Component {...context.args} />
-      </Group>
-    ),
-    withSinglePanel,
-    withVKUILayout,
-  ],
-};
+Playground.decorators = [withSinglePanel, withVKUILayout];

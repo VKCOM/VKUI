@@ -1,0 +1,38 @@
+.root {
+  color: inherit;
+  text-decoration: none;
+  transition: transform 120ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .root:hover {
+    transform: translateY(-2px);
+  }
+}
+
+.inheritBorderRadius {
+  border-start-start-radius: inherit;
+  border-start-end-radius: inherit;
+}
+
+.scene {
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(var(--showcase-scale, 1));
+  transform-origin: center center;
+  will-change: transform;
+}
+
+.description {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  color: var(--vkui--color_text_secondary);
+  -webkit-box-orient: vertical;
+}
+
+.iframe {
+  color-scheme: normal;
+  background: transparent;
+  border: 0;
+}

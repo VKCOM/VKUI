@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { Icon56UsersOutline } from '@vkontakte/icons';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
@@ -13,12 +13,12 @@ const story: Meta<PlaceholderProps> = {
 
 export default story;
 
-type Story = StoryObj<PlaceholderProps>;
+export const Playground: StoryFn<PlaceholderProps> = (props: PlaceholderProps) => (
+  <Placeholder {...props} />
+);
 
-export const Playground: Story = {
-  args: {
-    children: 'Подключите сообщества, от которых Вы хотите получать уведомления',
-    title: 'Уведомления от сообществ',
-    icon: <Icon56UsersOutline />,
-  },
+Playground.args = {
+  children: 'Подключите сообщества, от которых Вы хотите получать уведомления',
+  title: 'Уведомления от сообществ',
+  icon: <Icon56UsersOutline />,
 };

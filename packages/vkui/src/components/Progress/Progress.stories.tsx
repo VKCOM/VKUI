@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Progress, type ProgressProps } from './Progress';
@@ -17,14 +17,14 @@ const story: Meta<ProgressProps> = {
 
 export default story;
 
-type Story = StoryObj<ProgressProps>;
-
-export const Playground: Story = {
-  decorators: [
-    (Component) => (
-      <div style={{ width: '100%', padding: '16px', boxSizing: 'border-box' }}>
-        <Component />
-      </div>
-    ),
-  ],
-};
+export const Playground: StoryFn<ProgressProps> = (props: ProgressProps) => (
+  <div
+    style={{
+      width: '100%',
+      padding: '16px',
+      boxSizing: 'border-box',
+    }}
+  >
+    <Progress {...props} />
+  </div>
+);

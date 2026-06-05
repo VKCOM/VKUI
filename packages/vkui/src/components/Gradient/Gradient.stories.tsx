@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Gradient, type GradientProps } from './Gradient';
@@ -12,17 +12,28 @@ const story: Meta<GradientProps> = {
 
 export default story;
 
-type Story = StoryObj<GradientProps>;
+export const Playground: StoryFn<GradientProps> = (props: GradientProps) => <Gradient {...props} />;
 
-export const Playground: Story = {
-  args: {
-    children: <div style={{ width: '100%', height: '200px' }} />,
-  },
-  decorators: [
-    (Component, context) => (
-      <div style={{ width: '50%', height: '50%' }}>
-        <Component args={context.args} />
-      </div>
-    ),
-  ],
+Playground.args = {
+  children: (
+    <div
+      style={{
+        width: '100%',
+        height: '200px',
+      }}
+    />
+  ),
 };
+
+Playground.decorators = [
+  (Component, context) => (
+    <div
+      style={{
+        width: '50%',
+        height: '50%',
+      }}
+    >
+      <Component args={context.args} />
+    </div>
+  ),
+];

@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { noop } from '@vkontakte/vkjs';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
@@ -13,12 +13,14 @@ const story: Meta<TappableProps> = {
 
 export default story;
 
-type Story = StoryObj<TappableProps>;
-
-export const Playground: Story = {
-  render: (args) => (
-    <Tappable {...args} onClick={noop}>
-      <div style={{ padding: 16 }}>Кнопка</div>
-    </Tappable>
-  ),
-};
+export const Playground: StoryFn<TappableProps> = (args: TappableProps) => (
+  <Tappable {...args} onClick={noop}>
+    <div
+      style={{
+        padding: 16,
+      }}
+    >
+      Кнопка
+    </div>
+  </Tappable>
+);

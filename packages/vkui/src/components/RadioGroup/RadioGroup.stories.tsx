@@ -1,13 +1,9 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Group } from '../Group/Group';
-import { Radio as BasicRadio } from '../Radio/Radio';
-import {
-  Playground as BasicRadioStory,
-  WithDescription as RadioWithDescriptionStory,
-} from '../Radio/Radio.stories';
+import { Radio } from '../Radio/Radio';
 import { RadioGroup, type RadioGroupProps } from './RadioGroup';
 
 const story: Meta<RadioGroupProps> = {
@@ -19,24 +15,17 @@ const story: Meta<RadioGroupProps> = {
 
 export default story;
 
-type Story = StoryObj<RadioGroupProps>;
-
-export const Playground: Story = {
-  render: function Render(args) {
-    return (
+export const Playground: StoryFn<RadioGroupProps> = (args: RadioGroupProps) => {
+  return (
+    <Group>
       <RadioGroup {...args}>
-        <BasicRadio {...BasicRadioStory.args}>SberPay</BasicRadio>
-        <BasicRadio {...RadioWithDescriptionStory.args} />
+        <Radio name="payment">Sber Pay</Radio>
+        <Radio name="payment" description="Баланс 7 320 ₽">
+          VK Pay
+        </Radio>
       </RadioGroup>
-    );
-  },
-  decorators: [
-    (Component, context) => (
-      <Group>
-        <Component {...context.args} />
-      </Group>
-    ),
-    withSinglePanel,
-    withVKUILayout,
-  ],
+    </Group>
+  );
 };
+
+Playground.decorators = [withSinglePanel, withVKUILayout];

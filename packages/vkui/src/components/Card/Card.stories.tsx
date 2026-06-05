@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
@@ -16,19 +16,19 @@ const story: Meta<CardProps> = {
 
 export default story;
 
-type Story = StoryObj<CardProps>;
-export const playgroundArgs: Story['args'] = {
-  children: (
-    <div style={{ height: 96 }}>
+export const Playground: StoryFn<CardProps> = (props: CardProps) => (
+  <Card {...props}>
+    <div
+      style={{
+        height: 96,
+      }}
+    >
       <VisuallyHidden>Контент для вашей карточки (визуальный компонент-обертка)</VisuallyHidden>
     </div>
-  ),
-};
+  </Card>
+);
 
-export const Playground: Story = {
-  args: {
-    ...playgroundArgs,
-    // переопределяем дефолтный `li` так как в примере нету `ul`.
-    Component: 'div',
-  },
+Playground.args = {
+  // переопределяем дефолтный `li` так как в примере нету `ul`.
+  Component: 'div',
 };

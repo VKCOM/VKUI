@@ -59,7 +59,8 @@ export function PlaygroundPreview({
     <div
       className={classNames(
         styles.root,
-        colorScheme === 'dark' && styles.rootDark,
+        styles.previewBackground,
+        colorScheme === 'dark' && styles.previewBackgroundDark,
         error && styles.error,
         className,
       )}

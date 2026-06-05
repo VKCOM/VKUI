@@ -15,6 +15,14 @@ tags: buttons
 
 import { BlockWrapper } from '@/components/wrappers';
 
+<Playground hide>
+  ```jsx
+  <Box position="relative" inlineSize={1}>
+    <ModalDismissButton onClick={() => {}}>Закрыть модальное окно</ModalDismissButton>
+  </Box>
+  ```
+</Playground>
+
 {/* @example-description: Кнопка закрытия модального окна для `compact`-режима на широких экранах. */}
 <Playground Wrapper={BlockWrapper} style={{ width: 1 }}>
   ```jsx

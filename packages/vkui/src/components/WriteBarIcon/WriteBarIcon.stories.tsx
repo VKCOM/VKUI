@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { noop } from '@vkontakte/vkjs';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
@@ -12,11 +12,11 @@ const story: Meta<WriteBarIconProps> = {
 
 export default story;
 
-type Story = StoryObj<WriteBarIconProps>;
+export const Playground: StoryFn<WriteBarIconProps> = (props: WriteBarIconProps) => (
+  <WriteBarIcon {...props} />
+);
 
-export const Playground: Story = {
-  args: {
-    mode: 'attach',
-    onClick: noop,
-  },
+Playground.args = {
+  mode: 'attach',
+  onClick: noop,
 };

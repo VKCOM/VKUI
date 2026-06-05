@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { fn } from 'storybook/test';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { cities } from '../../testing/mock';
@@ -23,30 +23,35 @@ const story: Meta<SelectProps> = {
 
 export default story;
 
-type Story = StoryObj<SelectProps>;
+export const Playground: StoryFn<SelectProps> = (args: SelectProps) => {
+  const [value, setValue] = useState<SelectProps['value']>(null);
+  return (
+    <FormItem
+      top="Выберите город"
+      htmlFor="custom-select"
+      style={{
+        width: 320,
+      }}
+    >
+      <CustomSelect
+        {...args}
+        value={value}
+        onChange={(_, newValue) => setValue(newValue)}
+        slotProps={{
+          input: {
+            'id': 'custom-select',
+            'aria-label': 'Выберите город',
+          },
+        }}
+      />
+    </FormItem>
+  );
+};
 
-export const Playground: Story = {
-  render: function Render(args) {
-    const [value, setValue] = useState<SelectProps['value']>(null);
-    return (
-      <FormItem top="Выберите город" htmlFor="custom-select" style={{ width: 320 }}>
-        <CustomSelect
-          {...args}
-          value={value}
-          onChange={(_, newValue) => setValue(newValue)}
-          slotProps={{
-            input: {
-              'id': 'custom-select',
-              'aria-label': 'Выберите город',
-            },
-          }}
-        />
-      </FormItem>
-    );
+Playground.args = {
+  style: {
+    width: 300,
   },
-  args: {
-    style: { width: 300 },
-    placeholder: 'Город',
-    options: cities,
-  },
+  placeholder: 'Город',
+  options: cities,
 };
