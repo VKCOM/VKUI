@@ -10,7 +10,7 @@ const Component: React.FC<{
   return <div></div>;
 };
 
-const App = () => {
+export const App = () => {
   const appearance: AppearanceTypeAlias = AppearanceAlias.LIGHT;
 
   return (

@@ -1,7 +1,7 @@
 import { ChipsSelect, CustomSelect, Select as VKUISelect } from '@vkontakte/vkui';
 import React from 'react';
 
-const App = () => {
+export const App = () => {
   return (
     <React.Fragment>
       <VKUISelect fixDropdownWidth options={options} />

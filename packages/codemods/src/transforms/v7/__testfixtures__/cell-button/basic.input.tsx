@@ -1,7 +1,7 @@
 import { CellButton } from '@vkontakte/vkui';
 import React from 'react';
 
-const App = () => {
+export const App = () => {
   return (
     <React.Fragment>
       {/* mode="primary" -> appearance="accent" */}

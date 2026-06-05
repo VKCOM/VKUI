@@ -1,7 +1,7 @@
 import { Button, OnboardingTooltip } from '@vkontakte/vkui';
 import React from 'react';
 
-const App = () => {
+export const App = () => {
   return (
     <React.Fragment>
       <OnboardingTooltip placement="right" header="Header" text="Привет">

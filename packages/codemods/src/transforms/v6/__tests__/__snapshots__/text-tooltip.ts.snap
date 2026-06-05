@@ -4,7 +4,7 @@ exports[`text-tooltip > should apply after \`transforms/tooltip.ts\` 1`] = `
 "import { Tooltip as TextTooltip } from '@vkontakte/vkui';
 import React from 'react';
 
-const App = () => {
+export const App = () => {
   return (
     <React.Fragment>
       <TextTooltip
@@ -26,7 +26,7 @@ exports[`text-tooltip > transforms correctly 1`] = `
 "import { Tooltip as TextTooltip } from '@vkontakte/vkui';
 import React from 'react';
 
-const App = () => {
+export const App = () => {
   return (
     <React.Fragment>
       <TextTooltip

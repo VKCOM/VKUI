@@ -13,7 +13,6 @@ runs:
       with:
         node-version-file: '.nvmrc'
         cache: 'yarn'
-        always-auth: true
         registry-url: 'https://registry.npmjs.org'
 
     - name: Install dependencies

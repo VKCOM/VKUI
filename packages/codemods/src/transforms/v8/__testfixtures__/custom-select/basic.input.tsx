@@ -1,7 +1,7 @@
 import { CustomSelect } from '@vkontakte/vkui';
 import React from 'react';
 
-const App = () => {
+export const App = () => {
   const inputRef = React.createRef<HTMLInputElement>();
   const selectRef = React.createRef<HTMLSelectElement>();
 

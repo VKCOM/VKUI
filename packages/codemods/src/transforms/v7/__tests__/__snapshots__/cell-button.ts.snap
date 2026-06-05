@@ -4,7 +4,7 @@ exports[`cell-button > transforms correctly 1`] = `
 "import { CellButton } from '@vkontakte/vkui';
 import React from 'react';
 
-const App = () => {
+export const App = () => {
   return (
     <React.Fragment>
       {/* mode="primary" -> appearance="accent" */}

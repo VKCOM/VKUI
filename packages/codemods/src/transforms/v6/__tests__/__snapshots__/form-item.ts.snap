@@ -4,7 +4,7 @@ exports[`form-item > transforms correctly 1`] = `
 "import { FormItem } from '@vkontakte/vkui';
 import React from 'react';
 
-const App = () => {
+export const App = () => {
   return (
     <React.Fragment>
       <FormItem top={top} topComponent="h5"></FormItem>

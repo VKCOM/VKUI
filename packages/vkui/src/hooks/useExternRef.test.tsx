@@ -27,19 +27,7 @@ describe(useExternRef, () => {
         });
         return null;
       };
-      render(
-        <RefForwarder
-          getRef={() => {
-            null;
-          }}
-        />,
-      ).rerender(
-        <RefForwarder
-          getRef={() => {
-            null;
-          }}
-        />,
-      );
+      render(<RefForwarder getRef={noop} />).rerender(<RefForwarder getRef={noop} />);
       expect((firstRef as any)?.current).toBe(counter);
     });
   });

@@ -1,7 +1,7 @@
 import { CustomScrollView, Div, Flex } from '@vkontakte/vkui';
 import React, { useRef } from 'react';
 
-const App = () => {
+export const App = () => {
   const ref = useRef();
   return (
     <React.Fragment>

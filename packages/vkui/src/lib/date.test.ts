@@ -486,14 +486,41 @@ describe('eachDayOfInterval', () => {
     expect(result).toEqual([new Date(2023, 0, 1, 0, 0, 0, 0), new Date(2023, 0, 2, 0, 0, 0, 0)]);
   });
 
-  it('step greater than one does not affect the number of days', () => {
+  it('step greater than one skips days', () => {
     const start = new Date(2023, 0, 1);
-    const end = new Date(2023, 0, 4);
+    const end = new Date(2023, 0, 5);
 
     const resultStep1 = eachDayOfInterval(start, end, { step: 1 });
     const resultStep2 = eachDayOfInterval(start, end, { step: 2 });
+    const resultStep3 = eachDayOfInterval(start, end, { step: 3 });
 
-    expect(resultStep1).toEqual(resultStep2);
+    expect(resultStep1).toEqual([
+      new Date(2023, 0, 1),
+      new Date(2023, 0, 2),
+      new Date(2023, 0, 3),
+      new Date(2023, 0, 4),
+      new Date(2023, 0, 5),
+    ]);
+    expect(resultStep2).toEqual([new Date(2023, 0, 1), new Date(2023, 0, 3), new Date(2023, 0, 5)]);
+    expect(resultStep3).toEqual([new Date(2023, 0, 1), new Date(2023, 0, 4)]);
+  });
+
+  it('step of 2 with reversed interval skips days', () => {
+    const start = new Date(2023, 0, 5);
+    const end = new Date(2023, 0, 1);
+
+    const result = eachDayOfInterval(start, end, { step: 2 });
+
+    expect(result).toEqual([new Date(2023, 0, 5), new Date(2023, 0, 3), new Date(2023, 0, 1)]);
+  });
+
+  it('negative step greater than one skips days and reverses order', () => {
+    const start = new Date(2023, 0, 1);
+    const end = new Date(2023, 0, 5);
+
+    const result = eachDayOfInterval(start, end, { step: -2 });
+
+    expect(result).toEqual([new Date(2023, 0, 5), new Date(2023, 0, 3), new Date(2023, 0, 1)]);
   });
 
   it('negative step reverses the order of dates', () => {

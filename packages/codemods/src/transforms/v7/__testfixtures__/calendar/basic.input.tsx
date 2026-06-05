@@ -1,7 +1,7 @@
 import { Calendar } from '@vkontakte/vkui';
 import React from 'react';
 
-const App = () => {
+export const App = () => {
   const callback = () => {};
   return (
     <React.Fragment>
