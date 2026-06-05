@@ -2,7 +2,6 @@ import { spyOn } from 'storybook/test';
 import type { Preview } from '@storybook/react';
 import { BREAKPOINTS } from '../src/lib/adaptivity';
 import { withVKUIWrapper } from '../src/storybook/VKUIDecorators';
-import { colorSchemeParamKey, storybookThemeParamKey } from '@vkontakte/storybook-addons';
 // Выносим отдельно, чтобы файл обрабатывался postcss плагином
 import '../src/styles/layout.css';
 import './preview.css';
@@ -80,8 +79,8 @@ const preview: Preview = {
   },
   initialGlobals: {
     docsBaseUrl: __DOCS_BASE_URL__,
-    [colorSchemeParamKey]: 'light',
-    [storybookThemeParamKey]: 'light',
+    colorScheme: 'light',
+    storybookTheme: 'light',
     hasPointer: true,
     hasCustomPanelHeaderAfter: false,
     direction: 'ltr',

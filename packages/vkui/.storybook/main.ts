@@ -24,7 +24,6 @@ const config: StorybookConfig = {
     getLocalAddonPath('@vkontakte/storybook-addons/colorScheme'),
     getLocalAddonPath('./addons/pointer'),
     getLocalAddonPath('./addons/customPanelHeaderAfter'),
-    getLocalAddonPath('@vkontakte/storybook-addons/source-button'),
     getLocalAddonPath('./addons/documentation-button'),
   ],
   framework: getGlobalAddonPath('@storybook/react-vite'),

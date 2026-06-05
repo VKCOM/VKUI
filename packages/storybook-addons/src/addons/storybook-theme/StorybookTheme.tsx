@@ -4,9 +4,9 @@ import { Select } from 'storybook/internal/components';
 import { SET_GLOBALS } from 'storybook/internal/core-events';
 import { addons, useGlobals, useStorybookApi } from 'storybook/manager-api';
 import { styled } from 'storybook/theming';
-import { PARAM_KEY as colorSchemeParamKey } from '../colorScheme/constants';
+import { getColorSchemeConfig } from '../colorScheme/config';
 import { getThemeConfig } from './config';
-import { PARAM_KEY, SET_STORYBOOK_THEME } from './constants';
+import { SET_STORYBOOK_THEME } from './constants';
 
 const SidebarSelect = styled(Select)(({ theme }) => ({
   position: 'relative',
@@ -26,10 +26,15 @@ export const updateLocalStorageValue = (theme: Theme) => {
   window.localStorage.setItem(STORAGE_KEY, theme);
 };
 
+export const getLocalStorageValue = (): Theme => {
+  return window.localStorage.getItem(STORAGE_KEY) as Theme;
+};
+
 export const StorybookTheme = () => {
   const [globals, updateGlobals] = useGlobals();
   const { once } = useStorybookApi();
-  const selectedGlobalTheme = globals[PARAM_KEY];
+  const { lightTheme, darkTheme, parameterName } = getThemeConfig();
+  const selectedGlobalTheme = globals[parameterName];
 
   const updateTheme = React.useCallback(
     (globalTheme: Theme, localTheme?: Theme) => {
@@ -37,12 +42,10 @@ export const StorybookTheme = () => {
       updateGlobals(
         localTheme
           ? {
-              [PARAM_KEY]: globalTheme,
-              [colorSchemeParamKey]: localTheme,
-              // Для vkcom, так как там используется appearance
-              appearance: localTheme,
+              [parameterName]: globalTheme,
+              [getColorSchemeConfig().parameterName]: localTheme,
             }
-          : { [PARAM_KEY]: globalTheme },
+          : { [parameterName]: globalTheme },
       );
       updateLocalStorageValue(globalTheme);
     },
@@ -52,7 +55,6 @@ export const StorybookTheme = () => {
   const handleChange: React.ComponentProps<typeof Select>['onChange'] = React.useCallback(
     (selectedOptionRaw) => {
       const selectedOption = selectedOptionRaw[0] as Theme;
-      const { lightTheme, darkTheme } = getThemeConfig();
       addons.setConfig({ theme: selectedOption === 'dark' ? darkTheme : lightTheme });
       updateTheme(selectedOption, selectedOption);
     },

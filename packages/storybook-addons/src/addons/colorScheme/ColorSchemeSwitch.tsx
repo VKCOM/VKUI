@@ -2,25 +2,19 @@ import * as React from 'react';
 import { MoonIcon, SunIcon } from '@storybook/icons';
 import { Select } from 'storybook/internal/components';
 import { useGlobals, useParameter } from 'storybook/manager-api';
-import { PARAM_KEY } from './constants';
-
-const useLocalColorScheme = () => {
-  const localColorScheme = useParameter('colorScheme');
-  // Для vkcom, так как там используется appearance
-  const localAppearance = useParameter('appearance');
-  return localColorScheme || localAppearance;
-};
+import { getColorSchemeConfig } from './config';
 
 export const ColorSchemeSwitch = () => {
   const [globals, updateGlobals] = useGlobals();
-  const localColorScheme = useLocalColorScheme();
-  const colorScheme = localColorScheme || globals[PARAM_KEY];
+  const { parameterName } = getColorSchemeConfig();
+  const localColorScheme = useParameter(parameterName);
+  const colorScheme = localColorScheme || globals[parameterName];
 
   const handleChange: React.ComponentProps<typeof Select>['onChange'] = React.useCallback(
     (selected) => {
-      updateGlobals({ [PARAM_KEY]: selected[0] });
+      updateGlobals({ [parameterName]: selected[0] });
     },
-    [updateGlobals],
+    [updateGlobals, parameterName],
   );
 
   if (!colorScheme) {

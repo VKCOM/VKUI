@@ -1,10 +1,8 @@
-export {
-  ADDON_ID as colorSchemeAddonId,
-  PARAM_KEY as colorSchemeParamKey,
-} from './addons/colorScheme/constants';
+export { ADDON_ID as colorSchemeAddonId } from './addons/colorScheme/constants';
+export type { ColorSchemeConfig } from './addons/colorScheme/config';
+export { registerColorSchemeAddon } from './addons/colorScheme/register';
 export {
   ADDON_ID as storybookThemeAddonId,
-  PARAM_KEY as storybookThemeParamKey,
   SET_STORYBOOK_THEME,
 } from './addons/storybook-theme/constants';
 export type { StorybookThemeConfig } from './addons/storybook-theme/config';

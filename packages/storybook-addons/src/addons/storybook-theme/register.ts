@@ -1,5 +1,5 @@
 import { addons, types } from 'storybook/manager-api';
-import { StorybookTheme } from './StorybookTheme';
+import { getLocalStorageValue, StorybookTheme } from './StorybookTheme';
 import { getThemeConfig, setThemeConfig } from './config';
 import type { StorybookThemeConfig } from './config';
 import { ADDON_ID } from './constants';
@@ -10,7 +10,7 @@ export const registerStorybookThemeAddon = (themeConfig?: StorybookThemeConfig) 
   }
 
   const currentTheme =
-    (window.localStorage.getItem('sb-dark-theme') as 'light' | 'dark') ||
+    getLocalStorageValue() ||
     (window.matchMedia?.('(prefers-color-scheme: dark)').matches && 'dark') ||
     'light';
   const { lightTheme, darkTheme } = getThemeConfig();
