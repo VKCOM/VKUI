@@ -17,6 +17,10 @@
   padding-inline: var(--vkui--size_base_padding_horizontal--regular);
 }
 
+.hasAfter.withPadding {
+  padding-inline-end: 0;
+}
+
 /*
   density-compact
  */
@@ -178,11 +182,12 @@
   flex-basis: 0%;
   min-inline-size: 0;
   max-inline-size: min-content;
-  margin-inline-end: 0;
   pointer-events: none;
-  transition-timing-function: var(--vkui--animation_easing_platform);
-  transition-duration: 0.3s;
-  transition-property: flex-grow, margin-inline-end;
+  transition: flex-grow 0.3s var(--vkui--animation_easing_platform);
+}
+
+.hasAfter.withPadding .after {
+  min-inline-size: var(--vkui--size_base_padding_horizontal--regular);
 }
 
 .focused .after,
@@ -198,11 +203,6 @@
   inline-size: 4px;
   block-size: 100%;
   content: '';
-}
-
-.focused.withPadding .after,
-.hasValue.withPadding .after {
-  margin-inline-end: calc(-1 * var(--vkui--size_base_padding_horizontal--regular));
 }
 
 .findButton {
