@@ -16,7 +16,7 @@ export default story;
 
 export const Playground: StoryFn<SearchProps> = (args: SearchProps) => (
   <Group>
-    <Search {...args} after={null} />
+    <Search {...args} />
   </Group>
 );
 
