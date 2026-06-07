@@ -5476,7 +5476,7 @@ __metadata:
     "@vkontakte/stylelint-config": "npm:^4.1.0"
     "@vkontakte/vkui-tokens": "npm:4.78.1"
     autoprefixer: "npm:^10.5.0"
-    concurrently: "npm:^10.0.0"
+    concurrently: "npm:^10.0.3"
     cross-env: "npm:^10.1.0"
     css-loader: "npm:^7.1.2"
     css-minimizer-webpack-plugin: "npm:^8.0.0"
@@ -7047,9 +7047,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"concurrently@npm:^10.0.0":
-  version: 10.0.0
-  resolution: "concurrently@npm:10.0.0"
+"concurrently@npm:^10.0.3":
+  version: 10.0.3
+  resolution: "concurrently@npm:10.0.3"
   dependencies:
     chalk: "npm:5.6.2"
     rxjs: "npm:7.8.2"
@@ -7060,7 +7060,7 @@ __metadata:
   bin:
     conc: dist/bin/index.js
     concurrently: dist/bin/index.js
-  checksum: 10/b067954282c641899d4555321c1bc350fc02d1ab6690fa315b1bc35526272b107e47eddc7bb6210adfd4d43bcd030572da060829b2228ddcde5676142c2019cf
+  checksum: 10/ef1ffc31df0df3663af33fb39c4f7f40b5e84affc0d397537b586e7cfedefeb513b643273afbbf00bbc252b8539c336dc854afb52f6cb74e6dbe3e5c812bd256
   languageName: node
   linkType: hard
 
