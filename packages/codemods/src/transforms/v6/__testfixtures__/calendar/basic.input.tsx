@@ -1,7 +1,7 @@
 import { Calendar } from '@vkontakte/vkui';
 import React from 'react';
 
-const App = ({ value, setValue, ...rest }) => {
+export const App = ({ value, setValue, ...rest }) => {
   return (
     <React.Fragment>
       <Calendar

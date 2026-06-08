@@ -4,7 +4,7 @@ import React from 'react';
 export const App = () => {
   const selectRef = React.createRef<HTMLSelectElement>();
 
-  const onInputChange = () => {};
+  const _onInputChange = () => {};
 
   return (
     <React.Fragment>
