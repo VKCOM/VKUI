@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { resolvePartials } from './resolvePartials.mjs';
+import { transformMdxBody } from './mdx-utils.mjs';
 
 const SCRIPT_FILE = fileURLToPath(import.meta.url);
 const SCRIPT_DIR = path.dirname(SCRIPT_FILE);
@@ -13,6 +14,7 @@ const OUT_DIR = path.join(REPO_ROOT, 'mcp-data');
 const OUT_COMPONENTS_DIR = path.join(OUT_DIR, 'components');
 const OUT_HOOKS_DIR = path.join(OUT_DIR, 'hooks');
 const OUT_EXAMPLES_DIR = path.join(OUT_DIR, 'examples');
+const OUT_DOCS_DIR = path.join(OUT_DIR, 'docs');
 
 function isHook(slug) {
   const base = slug.split('/').pop() || slug;
@@ -190,6 +192,7 @@ export function generateMcpData() {
   ensureDir(OUT_COMPONENTS_DIR);
   ensureDir(OUT_HOOKS_DIR);
   ensureDir(OUT_EXAMPLES_DIR);
+  ensureDir(OUT_DOCS_DIR);
 
   const docgen = readDocgen();
   const mdxFiles = collectMdxFiles(COMPONENTS_DIR);
@@ -254,6 +257,10 @@ export function generateMcpData() {
       ensureDir(path.dirname(examplesOutPath));
       fs.writeFileSync(examplesOutPath, examplesText);
     }
+
+    const docsOutPath = path.join(OUT_DOCS_DIR, `${slug}.text`);
+    ensureDir(path.dirname(docsOutPath));
+    fs.writeFileSync(docsOutPath, transformMdxBody(resolvedBody, docgen));
   }
 
   const allTags = [...allTagsSet].sort();
