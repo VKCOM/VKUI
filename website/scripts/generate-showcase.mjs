@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { resolvePartials } from './resolvePartials.mjs';
 
 const SCRIPT_FILE = fileURLToPath(import.meta.url);
 const SCRIPT_DIR = path.dirname(SCRIPT_FILE);
@@ -47,6 +48,7 @@ function collectMdxFiles(dirPath) {
   const results = [];
   const entries = fs.readdirSync(dirPath, { withFileTypes: true });
   for (const entry of entries) {
+    if (entry.name === '_partials') continue;
     const fullPath = path.join(dirPath, entry.name);
     if (entry.isDirectory()) {
       results.push(...collectMdxFiles(fullPath));
@@ -137,6 +139,14 @@ function isHookSlug(slug) {
   return (slug.split('/').pop() || slug).startsWith('use-');
 }
 
+function componentNameFromSlug(slug) {
+  const base = slug.split('/').pop() || slug;
+  return base
+    .split('-')
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join('');
+}
+
 export function generateShowcaseData() {
   // eslint-disable-next-line no-console
   console.log('🔄 Генерация данных витрины компонентов...');
@@ -150,19 +160,20 @@ export function generateShowcaseData() {
   for (const filePath of mdxFiles) {
     const raw = fs.readFileSync(filePath, 'utf8');
     const { data, body } = parseFrontmatter(raw);
+    const resolvedBody = resolvePartials(body, filePath);
     const slug = slugFromPath(filePath);
 
     if (IGNORED_COMPONENTS.has(slug) || isHookSlug(slug)) {
       continue;
     }
 
-    const { group, type } = extractOverviewMeta(body);
+    const { group, type } = extractOverviewMeta(resolvedBody);
     if (type === 'hook') {
       continue;
     }
 
-    const name = extractHeading(body);
-    const playground = extractFirstPlayground(body);
+    const name = componentNameFromSlug(slug);
+    const playground = extractFirstPlayground(resolvedBody);
 
     if (!name) {
       skipped.push({ slug, reason: 'no-name' });

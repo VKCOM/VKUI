@@ -1,6 +1,19 @@
-import { FixedLayoutWrapper } from '@/components/wrappers';
+import { FixedLayoutWrapper, BlockWrapper } from '@/components/wrappers';
 
 Подкомпонент прибивает элементы навигации ([`TabbarItem`](#tabbar-item)) к низу экрана. Передаётся в свойство `tabbar` компонента [`Epic`](/components/epic).
+
+<Playground hide Wrapper={BlockWrapper}>
+  ```jsx
+  <Tabbar>
+    <TabbarItem label="Новости">
+      <Icon28NewsfeedOutline />
+    </TabbarItem>
+    <TabbarItem label="Профиль" selected>
+      <Icon28UserCircleOutline />
+    </TabbarItem>
+  </Tabbar>
+  ```
+</Playground>
 
 {/* @example-description: Базовый `Tabbar` с двумя пунктами и активным разделом. */}
 <Playground Wrapper={FixedLayoutWrapper} style={{ height: 60 }}>
