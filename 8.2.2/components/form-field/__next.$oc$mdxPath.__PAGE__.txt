@@ -1,0 +1,206 @@
+1:"$Sreact.fragment"
+2:I[23450,["275","static/chunks/275-458f2cf71ccd9ea6.js","433","static/chunks/433-4713d5ecc6182126.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Main"]
+7:I[74517,["275","static/chunks/275-458f2cf71ccd9ea6.js","433","static/chunks/433-4713d5ecc6182126.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Overview",1]
+8:I[18443,["275","static/chunks/275-458f2cf71ccd9ea6.js","433","static/chunks/433-4713d5ecc6182126.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Anchor"]
+9:I[80204,["275","static/chunks/275-458f2cf71ccd9ea6.js","433","static/chunks/433-4713d5ecc6182126.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"PlaygroundLazy"]
+22:I[91042,["275","static/chunks/275-458f2cf71ccd9ea6.js","433","static/chunks/433-4713d5ecc6182126.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"TOC"]
+23:I[90484,[],"OutletBoundary"]
+24:"$Sreact.suspense"
+3:T1bef,---
+description: Компонент для создания полей ввода с возможностью добавления иконок и статусов.
+---
+
+<Overview group="forms">
+
+# FormField [tag:component]
+
+Компонент для создания полей ввода с возможностью добавления иконок и статусов,
+лежит в основе таких элементов форм, как [`Input`](/components/input), [`Select`](/components/select),
+[`Textarea`](/components/textarea), но может использоваться как база для пользовательских полей ввода.
+
+</Overview>
+
+{/* @example-description: Базовый `FormField` с кастомным полем ввода на основе `UnstyledTextField`. */}
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <FormField>
+    <UnstyledTextField
+      as="input"
+      name="location"
+      placeholder="Введите локацию"
+      style={{ padding: 8 }}
+    />
+  </FormField>
+  ```
+</Playground>
+
+## Режимы отображения
+
+Задаётся свойством `mode`.
+
+- `"default"` — стандартный режим отображения с фоном, обводкой и текстом-подсказкой;
+- `"plain"` — упрощенный режим, который показывает только текст-подсказку без фона и обводки.
+
+{/* @example-description: Сравнение режимов `FormField`: стандартный `default` и упрощённый `plain`. */}
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <FormField before={<Icon20LocationMapOutline />} mode="default">
+    <UnstyledTextField as="input" name="location" placeholder="Введите локацию" />
+  </FormField>
+  <FormField before={<Icon20LocationMapOutline />} mode="plain">
+    <UnstyledTextField as="input" name="location" placeholder="Введите локацию" />
+  </FormField>
+  ```
+</Playground>
+
+## Контент в начале/в конце
+
+В компоненте доступна возможность добавления дополнительного контента слева и/или справа от содержимого,
+задаётся свойством `before` и `after` соответственно. Наиболее частый вариант использования свойств `before`/`after` - иконки.
+
+Придерживайтесь следующих рекомендаций:
+
+- используйте иконки следующих размеров: `12px`, `16px`, `20px`, `24px` и `28px`;
+- для интерактивных иконок используйте компонент [`IconButton`](/components/icon-button).
+
+{/* @example-description: Поле с иконкой слева и интерактивной кнопкой справа через `before/after`. */}
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <FormField
+    before={<Icon20LocationMapOutline />}
+    after={
+      <IconButton aria-label="Выбрать локацию" onClick={() => alert('Диалог с локациями')}>
+        <Icon16DropdownOutline />
+      </IconButton>
+    }
+  >
+    <UnstyledTextField as="input" name="location" placeholder="Введите локацию" />
+  </FormField>
+  ```
+</Playground>
+
+### Выравнивание иконок
+
+Для каждой иконки можно задать вертикальное выравнивание с помощью свойств:
+
+- `beforeAlign` — выравнивание левой иконки;
+- `afterAlign` — выравнивание правой иконки.
+
+Доступные значения:
+
+- `"center"` — по центру (значение по умолчанию);
+- `"start"` — по верхнему краю;
+- `"end"` — по нижнему краю.
+
+{/* @example-description: Настройка вертикального выравнивания иконки в `after` для многострочного поля. */}
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <FormField after={<Icon20CopyOutline />} afterAlign="center">
+    <UnstyledTextField
+      as="textarea"
+      name="location"
+      rows={3}
+      placeholder="Введите локацию"
+      style={{ padding: 8 }}
+    />
+  </FormField>
+  ```
+</Playground>
+
+## Состояния
+
+### `disabled`
+
+Свойство `disabled` блокирует взаимодействие с компонентом и добавляет визуальную индикацию недоступности.
+
+{/* @example-description: `FormField` в состоянии `disabled` без возможности редактирования. */}
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <FormField disabled>
+    <UnstyledTextField
+      as="input"
+      name="location"
+      placeholder="Введите локацию"
+      style={{ padding: 8 }}
+    />
+  </FormField>
+  ```
+</Playground>
+
+## Валидация
+
+Свойство `status` используется для визуализации валидации компонента - некорректности заполненного поля (значение `"error"`)
+или успешной валидации (значение `"valid"`).
+
+> Если вы используете `FormField` вместе с [`FormItem`](/components/form-item), вам достаточно указать свойство `status` только у
+> [`FormItem`](/components/form-item).
+
+{/* @example-description: Валидация `FormField` со статусами `valid` и `error`. */}
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <FormField status="valid">
+    <UnstyledTextField
+      as="input"
+      name="location"
+      defaultValue="Санкт-Петербург"
+      style={{ padding: 8 }}
+    />
+  </FormField>
+  <FormField status="error">
+    <UnstyledTextField as="input" name="location" defaultValue="Москва" style={{ padding: 8 }} />
+  </FormField>
+  ```
+</Playground>
+
+## Доступность (a11y) [#a11y]
+
+`FormField` автоматически обрабатывает состояния фокуса и наведения, обеспечивая визуальную обратную связь для пользователей.
+Компонент поддерживает все стандартные `HTML`-атрибуты доступности.
+
+При использовании `FormField` с полями ввода убедитесь, что:
+
+- у поля есть описание (используйте свойство `top` у `FormItem` или оборачивайте `FormField` в `HTML`-тэг `label`);
+- при наличии ошибок валидации или при необходимости подтверждения валидности, оставляйте пояснение
+  (используйте свойство `bottom` у `FormItem` или воспользуйтесь `aria-describedby`).
+
+## Свойства и методы [#api]
+
+<PropsTable name="FormField" />0:{"rsc":["$","$1","c",{"children":[[["$","$L2",null,{"metadata":{"description":"Компонент для создания полей ввода с возможностью добавления иконок и статусов.","title":"FormField","filePath":"content/components/form-field.mdx","timestamp":1780929687000},"sourceCode":"$3","children":"$L4"}],"$L5"],null,"$L6"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"VO29Ey2XY6_PfolneEqSf"}
+4:[["$","$L7",null,{"group":"forms","children":[["$","h1",null,{"className":"mdx_h1__1mgpN","data-pagefind-filter":"tag:component","children":"FormField"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Компонент для создания полей ввода с возможностью добавления иконок и статусов,\nлежит в основе таких элементов форм, как ",["$","$L8",null,{"href":"/components/input","children":["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"Input"}]}],", ",["$","$L8",null,{"href":"/components/select","children":["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"Select"}]}],",\n",["$","$L8",null,{"href":"/components/textarea","children":["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"Textarea"}]}],", но может использоваться как база для пользовательских полей ввода."]}]]}],"\n","\n",["$","$L9",null,{"style":{"maxWidth":270},"code":"<FormField>\n  <UnstyledTextField\n    as=\"input\"\n    name=\"location\"\n    placeholder=\"Введите локацию\"\n    style={{ padding: 8 }}\n  />\n</FormField>"}],"\n",["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"rezhimy-otobrazheniya","children":["$","a",null,{"href":"#rezhimy-otobrazheniya","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Режимы отображения","children":["Режимы отображения",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}],"\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Задаётся свойством ",["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"mode"}],"."]}],"\n",["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"\"default\""}]," — стандартный режим отображения с фоном, обводкой и текстом-подсказкой;"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"\"plain\""}]," — упрощенный режим, который показывает только текст-подсказку без фона и обводки."]}],"\n"]}],"\n","\n",["$","$L9",null,{"style":{"maxWidth":270},"code":"<FormField before={<Icon20LocationMapOutline />} mode=\"default\">\n  <UnstyledTextField as=\"input\" name=\"location\" placeholder=\"Введите локацию\" />\n</FormField>\n<FormField before={<Icon20LocationMapOutline />} mode=\"plain\">\n  <UnstyledTextField as=\"input\" name=\"location\" placeholder=\"Введите локацию\" />\n</FormField>"}],"\n",["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"kontent-v-nachalev-konce","children":["$","a",null,{"href":"#kontent-v-nachalev-konce","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Контент в начале/в конце","children":["Контент в начале/в конце",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}],"\n","$La","\n","$Lb","\n","$Lc","\n","\n","$Ld","\n","$Le","\n","$Lf","\n","$L10","\n","$L11","\n","$L12","\n","\n","$L13","\n","$L14","\n","$L15","\n","$L16","\n","\n","$L17","\n","$L18","\n","$L19","\n","$L1a","\n","\n","$L1b","\n","$L1c","\n","$L1d","\n","$L1e","\n","$L1f","\n","$L20","\n","$L21"]
+5:["$","$L22",null,{"toc":[{"value":"Режимы отображения","id":"rezhimy-otobrazheniya","depth":2},{"value":"Контент в начале/в конце","id":"kontent-v-nachalev-konce","depth":2},{"value":"Выравнивание иконок","id":"vyravnivanie-ikonok","depth":3},{"value":"Состояния","id":"sostoyaniya","depth":2},{"value":["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"disabled"}],"id":"disabled","depth":3},{"value":"Валидация","id":"validaciya","depth":2},{"value":"Доступность (a11y)","id":"a11y","depth":2},{"value":"Свойства и методы","id":"api","depth":2}]}]
+6:["$","$L23",null,{"children":["$","$24",null,{"name":"Next.MetadataOutlet","children":"$@25"}]}]
+a:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["В компоненте доступна возможность добавления дополнительного контента слева и/или справа от содержимого,\nзадаётся свойством ",["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"before"}]," и ",["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"after"}]," соответственно. Наиболее частый вариант использования свойств ",["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"before"}],"/",["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"after"}]," - иконки."]}]
+b:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Придерживайтесь следующих рекомендаций:"}]
+c:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["используйте иконки следующих размеров: ",["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"12px"}],", ",["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"16px"}],", ",["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"20px"}],", ",["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"24px"}]," и ",["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"28px"}],";"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["для интерактивных иконок используйте компонент ",["$","$L8",null,{"href":"/components/icon-button","children":["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"IconButton"}]}],"."]}],"\n"]}]
+d:["$","$L9",null,{"style":{"maxWidth":270},"code":"<FormField\n  before={<Icon20LocationMapOutline />}\n  after={\n    <IconButton aria-label=\"Выбрать локацию\" onClick={() => alert('Диалог с локациями')}>\n      <Icon16DropdownOutline />\n    </IconButton>\n  }\n>\n  <UnstyledTextField as=\"input\" name=\"location\" placeholder=\"Введите локацию\" />\n</FormField>"}]
+e:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"vyravnivanie-ikonok","children":["$","a",null,{"href":"#vyravnivanie-ikonok","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Выравнивание иконок","children":["Выравнивание иконок",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+f:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Для каждой иконки можно задать вертикальное выравнивание с помощью свойств:"}]
+10:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"beforeAlign"}]," — выравнивание левой иконки;"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"afterAlign"}]," — выравнивание правой иконки."]}],"\n"]}]
+11:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Доступные значения:"}]
+12:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"\"center\""}]," — по центру (значение по умолчанию);"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"\"start\""}]," — по верхнему краю;"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"\"end\""}]," — по нижнему краю."]}],"\n"]}]
+13:["$","$L9",null,{"style":{"maxWidth":270},"code":"<FormField after={<Icon20CopyOutline />} afterAlign=\"center\">\n  <UnstyledTextField\n    as=\"textarea\"\n    name=\"location\"\n    rows={3}\n    placeholder=\"Введите локацию\"\n    style={{ padding: 8 }}\n  />\n</FormField>"}]
+14:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"sostoyaniya","children":["$","a",null,{"href":"#sostoyaniya","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Состояния","children":["Состояния",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+15:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"disabled","children":["$","a",null,{"href":"#disabled","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию [object Object]","children":["$5:props:toc:4:value",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+16:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"disabled"}]," блокирует взаимодействие с компонентом и добавляет визуальную индикацию недоступности."]}]
+17:["$","$L9",null,{"style":{"maxWidth":270},"code":"<FormField disabled>\n  <UnstyledTextField\n    as=\"input\"\n    name=\"location\"\n    placeholder=\"Введите локацию\"\n    style={{ padding: 8 }}\n  />\n</FormField>"}]
+18:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"validaciya","children":["$","a",null,{"href":"#validaciya","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Валидация","children":["Валидация",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+19:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"status"}]," используется для визуализации валидации компонента - некорректности заполненного поля (значение ",["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"\"error\""}],")\nили успешной валидации (значение ",["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"\"valid\""}],")."]}]
+1a:["$","aside",null,{"className":"Callout_root__6UBFP","children":["$","div",null,{"className":"Callout_content__MYf_T","children":["\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Если вы используете ",["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"FormField"}]," вместе с ",["$","$L8",null,{"href":"/components/form-item","children":["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"FormItem"}]}],", вам достаточно указать свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"status"}]," только у\n",["$","$L8",null,{"href":"/components/form-item","children":["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"FormItem"}]}],"."]}],"\n"]}]}]
+1b:["$","$L9",null,{"style":{"maxWidth":270},"code":"<FormField status=\"valid\">\n  <UnstyledTextField\n    as=\"input\"\n    name=\"location\"\n    defaultValue=\"Санкт-Петербург\"\n    style={{ padding: 8 }}\n  />\n</FormField>\n<FormField status=\"error\">\n  <UnstyledTextField as=\"input\" name=\"location\" defaultValue=\"Москва\" style={{ padding: 8 }} />\n</FormField>"}]
+1c:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"a11y","children":["$","a",null,{"href":"#a11y","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Доступность (a11y)","children":["Доступность (a11y)",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+1d:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"FormField"}]," автоматически обрабатывает состояния фокуса и наведения, обеспечивая визуальную обратную связь для пользователей.\nКомпонент поддерживает все стандартные ",["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"HTML"}],"-атрибуты доступности."]}]
+1e:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["При использовании ",["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"FormField"}]," с полями ввода убедитесь, что:"]}]
+1f:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["у поля есть описание (используйте свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"top"}]," у ",["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"FormItem"}]," или оборачивайте ",["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"FormField"}]," в ",["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"HTML"}],"-тэг ",["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"label"}],");"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["при наличии ошибок валидации или при необходимости подтверждения валидности, оставляйте пояснение\n(используйте свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"bottom"}]," у ",["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"FormItem"}]," или воспользуйтесь ",["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"aria-describedby"}],")."]}],"\n"]}]
+20:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"api","children":["$","a",null,{"href":"#api","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Свойства и методы","children":["Свойства и методы",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+21:["$","div",null,{"className":"Table_root__0rGvK","children":["$","table",null,{"className":"Table_table__NzLHi PropsTable_root__O959b","children":[["$","thead",null,{"children":["$","tr",null,{"children":[["$","th",null,{"children":"Свойство","className":"Table_th__EHorR"}],["$","th",null,{"children":"Описание","className":"Table_th__EHorR"}]],"className":"Table_tr__SD2Ot"}]}],["$","tbody",null,{"children":["$@26","$@27","$@28","$@29","$@2a","$@2b","$@2c","$@2d","$@2e","$@2f"]}]]}]}]
+25:null
+26:["$","tr","after",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"after"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"ReactNode"}],[["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Добавляет иконку справа."}],"\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Рекомендации:"}],"\n",["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["Используйте следующие размеры иконок ",["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"12"}]," | ",["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"16"}]," | ",["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"20"}]," | ",["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"24"}]," | ",["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"28"}],"."]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["Используйте ",["$","$L8",null,{"href":"https://vkui.io/components/icon-button","children":"IconButton"}],", если вам нужна иконка, реагируюущая на нажатие."]}],"\n"]}]],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+27:["$","tr","afterAlign",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"afterAlign"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"FieldIconsAlign"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Вертикальное выравнивание иконки справа."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"center"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+28:["$","tr","before",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"before"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"ReactNode"}],[["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Добавляет иконку слева."}],"\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Рекомендации:"}],"\n",["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["Используйте следующие размеры иконок ",["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"12"}]," | ",["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"16"}]," | ",["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"20"}]," | ",["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"24"}]," | ",["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"28"}],"."]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["Используйте ",["$","$L8",null,{"href":"https://vkui.io/components/icon-button","children":"IconButton"}],", если вам нужна иконка, реагирующая на нажатие."]}],"\n"]}]],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+29:["$","tr","beforeAlign",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"beforeAlign"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"FieldIconsAlign"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Вертикальное выравнивание иконки слева."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"center"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+2a:["$","tr","Component",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"Component"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"ElementType<any, keyof IntrinsicElements>"}],"$undefined",["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"span"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+2b:["$","tr","disabled",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"disabled"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"boolean"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Блокировка взаимодействия с компонентом."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+2c:["$","tr","getRootRef",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"getRootRef"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"Ref<HTMLElement>"}],"$undefined",["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+2d:["$","tr","maxHeight",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"maxHeight"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"number"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Максимальная высота поля."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+2e:["$","tr","mode",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"mode"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"\"default\" | \"plain\""}],[["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Режим отображения."}],"\n",["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"default"}]," — показывает фон, обводку и, при наличии, текст-подсказку."]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"plain"}]," — показывает только текст-подсказку."]}],"\n"]}]],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"default"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+2f:["$","tr","status",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"status"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"\"default\" | \"error\" | \"valid\""}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Статус отображения поля в форме."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"default"}]]}]]}]],"className":"Table_tr__SD2Ot"}]

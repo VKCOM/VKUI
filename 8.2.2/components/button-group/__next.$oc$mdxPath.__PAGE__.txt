@@ -1,0 +1,118 @@
+1:"$Sreact.fragment"
+2:I[23450,["275","static/chunks/275-458f2cf71ccd9ea6.js","433","static/chunks/433-4713d5ecc6182126.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Main"]
+4:I[74517,["275","static/chunks/275-458f2cf71ccd9ea6.js","433","static/chunks/433-4713d5ecc6182126.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Overview",1]
+5:I[18443,["275","static/chunks/275-458f2cf71ccd9ea6.js","433","static/chunks/433-4713d5ecc6182126.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Anchor"]
+17:I[80204,["275","static/chunks/275-458f2cf71ccd9ea6.js","433","static/chunks/433-4713d5ecc6182126.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"PlaygroundLazy"]
+1d:I[91042,["275","static/chunks/275-458f2cf71ccd9ea6.js","433","static/chunks/433-4713d5ecc6182126.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"TOC"]
+1e:I[90484,[],"OutletBoundary"]
+1f:"$Sreact.suspense"
+3:Te99,---
+description: Компонент, который позволяет группировать кнопки и управлять их расположением и выравниванием.
+tags: buttons
+---
+
+<Overview group="layout">
+
+# ButtonGroup [tag:component]
+
+Компонент, который позволяет группировать кнопки
+(компонент [`Button`](/components/button)) и управлять их расположением и выравниванием.
+Поддерживает как горизонтальное, так и вертикальное расположение кнопок,
+а также позволяет настраивать отступы между ними.
+
+Связанные компоненты:
+
+- [`Button`](/components/button)
+
+</Overview>
+
+{/* @example-description: Базовая горизонтальная группа из нескольких кнопок. */}
+<Playground>
+  ```jsx
+  <ButtonGroup>
+    <Button>Button</Button>
+    <Button>Button</Button>
+    <Button>Button</Button>
+  </ButtonGroup>
+  ```
+</Playground>
+
+## Особенности использования
+
+- `ButtonGroup` не управляет свойствами вложенных кнопок или групп кнопок.
+  Параметры, такие как размер, цвет или состояние кнопок, должны быть установлены на самих кнопках.
+- При использовании свойства `stretched`, для вложенных кнопок или групп кнопок необходимо самостоятельно определять,
+  должны ли они также растягиваться.
+
+## Вложенные `ButtonGroup`
+
+`ButtonGroup` поддерживает вложенные `ButtonGroup` для создания более сложных структур.
+
+{/* @example-description: Вертикальная группа с вложенной горизонтальной подгруппой действий. */}
+<Playground>
+  ```jsx
+  <ButtonGroup mode="vertical" gap="m">
+    <Button size="l" appearance="accent" stretched>
+      Разрешить
+    </Button>
+    <Button size="l" appearance="accent" stretched>
+      Завершить
+    </Button>
+    <ButtonGroup mode="horizontal" gap="s" stretched>
+      <Button size="l" appearance="negative" stretched>
+        Не сейчас
+      </Button>
+      <Button size="l" appearance="positive" stretched>
+        Продолжить
+      </Button>
+    </ButtonGroup>
+  </ButtonGroup>
+  ```
+</Playground>
+
+## Выравнивание кнопок
+
+Если вы используете свойство `stretched` для `ButtonGroup`, то можно указать свойство `align`,
+которое позволит управлять выравниванием кнопок по горизонтали.
+
+{/* @example-description: Выравнивание растянутой группы кнопок по правому краю контейнера. */}
+<Playground>
+  ```jsx
+  <ButtonGroup gap="s" stretched align="right">
+    <Button before={<Icon12Add />} aria-label="Добавить" />
+    <Button before={<Icon12Favorite />} aria-label="В Избранное" />
+  </ButtonGroup>
+  ```
+</Playground>
+
+## Доступность (a11y) [#a11y]
+
+- `ButtonGroup` является контейнером для кнопок, поэтому основная ответственность за доступность лежит на самих кнопках.
+- По умолчанию использует `role="group"`
+
+## Свойства и методы [#api]
+
+<PropsTable name="ButtonGroup" />0:{"rsc":["$","$1","c",{"children":[[["$","$L2",null,{"metadata":{"description":"Компонент, который позволяет группировать кнопки и управлять их расположением и выравниванием.","tags":"buttons","title":"ButtonGroup","filePath":"content/components/button-group.mdx","timestamp":1780929687000},"sourceCode":"$3","children":[["$","$L4",null,{"group":"layout","children":[["$","h1",null,{"className":"mdx_h1__1mgpN","data-pagefind-filter":"tag:component","children":"ButtonGroup"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Компонент, который позволяет группировать кнопки\n(компонент ",["$","$L5",null,{"href":"/components/button","children":["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"Button"}]}],") и управлять их расположением и выравниванием.\nПоддерживает как горизонтальное, так и вертикальное расположение кнопок,\nа также позволяет настраивать отступы между ними."]}],"$L6","$L7"]}],"\n","\n","$L8","\n","$L9","\n","$La","\n","$Lb","\n","$Lc","\n","\n","$Ld","\n","$Le","\n","$Lf","\n","\n","$L10","\n","$L11","\n","$L12","\n","$L13","\n","$L14"]}],"$L15"],null,"$L16"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"VO29Ey2XY6_PfolneEqSf"}
+6:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Связанные компоненты:"}]
+7:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["$","$L5",null,{"href":"/components/button","children":["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"Button"}]}]}],"\n"]}]
+8:["$","$L17",null,{"code":"<ButtonGroup>\n  <Button>Button</Button>\n  <Button>Button</Button>\n  <Button>Button</Button>\n</ButtonGroup>"}]
+9:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"osobennosti-ispolzovaniya","children":["$","a",null,{"href":"#osobennosti-ispolzovaniya","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Особенности использования","children":["Особенности использования",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+a:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"ButtonGroup"}]," не управляет свойствами вложенных кнопок или групп кнопок.\nПараметры, такие как размер, цвет или состояние кнопок, должны быть установлены на самих кнопках."]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["При использовании свойства ",["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"stretched"}],", для вложенных кнопок или групп кнопок необходимо самостоятельно определять,\nдолжны ли они также растягиваться."]}],"\n"]}]
+b:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"вложенные-buttongroup","children":["$","a",null,{"href":"#вложенные-buttongroup","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию [object Object]","children":[["Вложенные ",["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"ButtonGroup"}]],["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+c:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"ButtonGroup"}]," поддерживает вложенные ",["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"ButtonGroup"}]," для создания более сложных структур."]}]
+d:["$","$L17",null,{"code":"<ButtonGroup mode=\"vertical\" gap=\"m\">\n  <Button size=\"l\" appearance=\"accent\" stretched>\n    Разрешить\n  </Button>\n  <Button size=\"l\" appearance=\"accent\" stretched>\n    Завершить\n  </Button>\n  <ButtonGroup mode=\"horizontal\" gap=\"s\" stretched>\n    <Button size=\"l\" appearance=\"negative\" stretched>\n      Не сейчас\n    </Button>\n    <Button size=\"l\" appearance=\"positive\" stretched>\n      Продолжить\n    </Button>\n  </ButtonGroup>\n</ButtonGroup>"}]
+e:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"vyravnivanie-knopok","children":["$","a",null,{"href":"#vyravnivanie-knopok","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Выравнивание кнопок","children":["Выравнивание кнопок",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+f:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Если вы используете свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"stretched"}]," для ",["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"ButtonGroup"}],", то можно указать свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"align"}],",\nкоторое позволит управлять выравниванием кнопок по горизонтали."]}]
+10:["$","$L17",null,{"code":"<ButtonGroup gap=\"s\" stretched align=\"right\">\n  <Button before={<Icon12Add />} aria-label=\"Добавить\" />\n  <Button before={<Icon12Favorite />} aria-label=\"В Избранное\" />\n</ButtonGroup>"}]
+11:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"a11y","children":["$","a",null,{"href":"#a11y","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Доступность (a11y)","children":["Доступность (a11y)",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+12:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"ButtonGroup"}]," является контейнером для кнопок, поэтому основная ответственность за доступность лежит на самих кнопках."]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["По умолчанию использует ",["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"role=\"group\""}]]}],"\n"]}]
+13:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"api","children":["$","a",null,{"href":"#api","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Свойства и методы","children":["Свойства и методы",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+14:["$","div",null,{"className":"Table_root__0rGvK","children":["$","table",null,{"className":"Table_table__NzLHi PropsTable_root__O959b","children":[["$","thead",null,{"children":["$","tr",null,{"children":[["$","th",null,{"children":"Свойство","className":"Table_th__EHorR"}],["$","th",null,{"children":"Описание","className":"Table_th__EHorR"}]],"className":"Table_tr__SD2Ot"}]}],["$","tbody",null,{"children":["$@18","$@19","$@1a","$@1b","$@1c"]}]]}]}]
+15:["$","$L1d",null,{"toc":[{"value":"Особенности использования","id":"osobennosti-ispolzovaniya","depth":2},{"value":"$b:props:children:props:children:0","id":"вложенные-buttongroup","depth":2},{"value":"Выравнивание кнопок","id":"vyravnivanie-knopok","depth":2},{"value":"Доступность (a11y)","id":"a11y","depth":2},{"value":"Свойства и методы","id":"api","depth":2}]}]
+16:["$","$L1e",null,{"children":["$","$1f",null,{"name":"Next.MetadataOutlet","children":"$@20"}]}]
+18:["$","tr","align",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"align"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"AlignType"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Горизонтальное выравнивание элементов внутри группы."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"left"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+19:["$","tr","gap",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"gap"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"\"s\" | \"none\" | \"m\" | \"space\""}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Выставляет в зависимости от ",["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"mode"}]," отступ по вертикали или горизонтали."]}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"m"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+1a:["$","tr","getRootRef",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"getRootRef"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"Ref<HTMLDivElement>"}],"$undefined",["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+1b:["$","tr","mode",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"mode"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"\"horizontal\" | \"vertical\""}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Задает расположение элементов внутри группы, вертикальное или горизонтальное."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"horizontal"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+1c:["$","tr","stretched",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"stretched"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"boolean"}],[["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Растягивает компонент на всю ширину контейнера."}],"\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Note: Для потомков соответствующее поведение нужно определять самостоятельно, где это необходимо."}]],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"false"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+20:null

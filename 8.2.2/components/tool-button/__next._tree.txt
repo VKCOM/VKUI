@@ -1,0 +1,12 @@
+:HL["/8.2.2/_next/static/media/0aa834ed78bf6d07-s.p.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/8.2.2/_next/static/media/bb3ef058b751a6ad-s.p.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/8.2.2/_next/static/css/f808438e96c3650f.css","style"]
+:HL["/8.2.2/_next/static/css/c9419660aafea8d0.css","style"]
+:HL["/8.2.2/_next/static/css/a80c0b5705787237.css","style"]
+:HL["/8.2.2/_next/static/css/6c3ebacc556a3252.css","style"]
+:HL["/8.2.2/_next/static/css/92e0823513906679.css","style"]
+:HL["/8.2.2/_next/static/css/42c24a9150222be4.css","style"]
+:HL["/8.2.2/_next/static/css/1877bb3b85fe02a0.css","style"]
+:HL["/8.2.2/_next/static/css/5c2a320308788194.css","style"]
+:HL["/8.2.2/_next/static/css/4aa85b615e950812.css","style"]
+0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"mdxPath","param":{"type":"oc","key":"components/tool-button","siblings":null},"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"VO29Ey2XY6_PfolneEqSf"}

@@ -1,10 +1,10 @@
 1:"$Sreact.fragment"
-2:I[23450,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-8b15f4951e4a63c2.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Main"]
-4:I[74517,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-8b15f4951e4a63c2.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Overview",1]
-26:I[18443,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-8b15f4951e4a63c2.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Anchor"]
-27:I[80204,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-8b15f4951e4a63c2.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"PlaygroundLazy"]
-28:I[19180,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-8b15f4951e4a63c2.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Pre"]
-2e:I[91042,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-8b15f4951e4a63c2.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"TOC"]
+2:I[23450,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-73bc4d4ad0df4963.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Main"]
+4:I[74517,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-73bc4d4ad0df4963.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Overview",1]
+26:I[18443,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-73bc4d4ad0df4963.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Anchor"]
+27:I[80204,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-73bc4d4ad0df4963.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"PlaygroundLazy"]
+28:I[19180,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-73bc4d4ad0df4963.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Pre"]
+2e:I[91042,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-73bc4d4ad0df4963.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"TOC"]
 2f:I[90484,[],"OutletBoundary"]
 30:"$Sreact.suspense"
 3:Tf11,---
@@ -128,7 +128,7 @@ tags: loading
 
 ## Свойства и методы [#api]
 
-<PropsTable name="Spinner" />0:{"rsc":["$","$1","c",{"children":[[["$","$L2",null,{"metadata":{"description":"Компонент для отображения индикатора загрузки.","tags":"loading","title":"Spinner","filePath":"content/components/spinner.mdx","timestamp":1780314995000},"sourceCode":"$3","children":[["$","$L4",null,{"group":"feedback","children":[["$","h1",null,{"className":"mdx_h1__1mgpN","data-pagefind-filter":"tag:component","children":"Spinner"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Компонент для отображения индикатора загрузки. Используется во время выполнения асинхронных операций."}],"$L5","$L6"]}],"\n","\n","$L7","\n","$L8","\n","$L9","\n","$La","\n","\n","$Lb","\n","$Lc","\n","$Ld","\n","\n","$Le","\n","$Lf","\n","$L10","\n","$L11","\n","\n","$L12","\n","$L13","\n","$L14","\n","$L15","\n","$L16","\n","$L17","\n","$L18","\n","$L19","\n","$L1a","\n","$L1b","\n","$L1c","\n","$L1d","\n","$L1e","\n","$L1f","\n","$L20","\n","$L21","\n","$L22","\n","$L23"]}],"$L24"],null,"$L25"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"akOMQeU_OnoCo5Z5szjmq"}
+<PropsTable name="Spinner" />0:{"rsc":["$","$1","c",{"children":[[["$","$L2",null,{"metadata":{"description":"Компонент для отображения индикатора загрузки.","tags":"loading","title":"Spinner","filePath":"content/components/spinner.mdx","timestamp":1780929687000},"sourceCode":"$3","children":[["$","$L4",null,{"group":"feedback","children":[["$","h1",null,{"className":"mdx_h1__1mgpN","data-pagefind-filter":"tag:component","children":"Spinner"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Компонент для отображения индикатора загрузки. Используется во время выполнения асинхронных операций."}],"$L5","$L6"]}],"\n","\n","$L7","\n","$L8","\n","$L9","\n","$La","\n","\n","$Lb","\n","$Lc","\n","$Ld","\n","\n","$Le","\n","$Lf","\n","$L10","\n","$L11","\n","\n","$L12","\n","$L13","\n","$L14","\n","$L15","\n","$L16","\n","$L17","\n","$L18","\n","$L19","\n","$L1a","\n","$L1b","\n","$L1c","\n","$L1d","\n","$L1e","\n","$L1f","\n","$L20","\n","$L21","\n","$L22","\n","$L23"]}],"$L24"],null,"$L25"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"MoN-jF1vjsNh7N6XCMgWI"}
 5:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Связанные компоненты:"}]
 6:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["$","$L26",null,{"href":"/components/screen-spinner","children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"ScreenSpinner"}]}]}],"\n"]}]
 7:["$","$L27",null,{"code":"<Spinner />"}]

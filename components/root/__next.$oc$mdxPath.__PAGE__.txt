@@ -1,11 +1,11 @@
 1:"$Sreact.fragment"
-2:I[23450,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-8b15f4951e4a63c2.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Main"]
-4:I[74517,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-8b15f4951e4a63c2.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Overview",1]
-15:I[18443,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-8b15f4951e4a63c2.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Anchor"]
-16:I[80204,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-8b15f4951e4a63c2.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"PlaygroundLazy"]
-17:I[57621,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-8b15f4951e4a63c2.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"FixedLayoutWrapper"]
-18:I[19180,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-8b15f4951e4a63c2.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Pre"]
-26:I[91042,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-8b15f4951e4a63c2.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"TOC"]
+2:I[23450,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-73bc4d4ad0df4963.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Main"]
+4:I[74517,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-73bc4d4ad0df4963.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Overview",1]
+15:I[18443,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-73bc4d4ad0df4963.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Anchor"]
+16:I[80204,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-73bc4d4ad0df4963.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"PlaygroundLazy"]
+17:I[57621,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-73bc4d4ad0df4963.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"FixedLayoutWrapper"]
+18:I[19180,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-73bc4d4ad0df4963.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Pre"]
+26:I[91042,["275","static/chunks/275-c374be00771e264d.js","433","static/chunks/433-73bc4d4ad0df4963.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"TOC"]
 27:I[90484,[],"OutletBoundary"]
 28:"$Sreact.suspense"
 3:Tea3,---
@@ -120,7 +120,7 @@ function transitionHandler({
 
 ## Свойства и методы [#api]
 
-<PropsTable name="Root" />0:{"rsc":["$","$1","c",{"children":[[["$","$L2",null,{"metadata":{"description":"Компонент для создания набора сценариев из View и возможностью переключаться между ними.","title":"Root","filePath":"content/components/root.mdx","timestamp":1780314995000},"sourceCode":"$3","children":[["$","$L4",null,{"group":"navigation","children":[["$","h1",null,{"className":"mdx_h1__1mgpN","data-pagefind-filter":"tag:component","children":"Root"}],"$L5","$L6","$L7"]}],"\n","\n","\n","$L8","\n","$L9","\n","$La","\n","$Lb","\n","$Lc","\n","$Ld","\n","$Le","\n","$Lf","\n","$L10","\n","$L11","\n","$L12"]}],"$L13"],null,"$L14"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"akOMQeU_OnoCo5Z5szjmq"}
+<PropsTable name="Root" />0:{"rsc":["$","$1","c",{"children":[[["$","$L2",null,{"metadata":{"description":"Компонент для создания набора сценариев из View и возможностью переключаться между ними.","title":"Root","filePath":"content/components/root.mdx","timestamp":1780929687000},"sourceCode":"$3","children":[["$","$L4",null,{"group":"navigation","children":[["$","h1",null,{"className":"mdx_h1__1mgpN","data-pagefind-filter":"tag:component","children":"Root"}],"$L5","$L6","$L7"]}],"\n","\n","\n","$L8","\n","$L9","\n","$La","\n","$Lb","\n","$Lc","\n","$Ld","\n","$Le","\n","$Lf","\n","$L10","\n","$L11","\n","$L12"]}],"$L13"],null,"$L14"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"MoN-jF1vjsNh7N6XCMgWI"}
 5:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Компонент для создания набора сценариев из ",["$","$L15",null,{"href":"/components/view","children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"View"}]}]," и возможностью переключаться между ними."]}]
 6:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Связанные страницы:"}]
 7:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["$","$L15",null,{"href":"/overview/navigation","children":"Навигация"}]}],"\n"]}]

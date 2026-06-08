@@ -1,0 +1,113 @@
+1:"$Sreact.fragment"
+2:I[23450,["275","static/chunks/275-458f2cf71ccd9ea6.js","433","static/chunks/433-4713d5ecc6182126.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Main"]
+4:I[74517,["275","static/chunks/275-458f2cf71ccd9ea6.js","433","static/chunks/433-4713d5ecc6182126.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Overview",1]
+5:I[80204,["275","static/chunks/275-458f2cf71ccd9ea6.js","433","static/chunks/433-4713d5ecc6182126.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"PlaygroundLazy"]
+6:I[73143,["275","static/chunks/275-458f2cf71ccd9ea6.js","433","static/chunks/433-4713d5ecc6182126.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"BlockWrapper"]
+18:I[18443,["275","static/chunks/275-458f2cf71ccd9ea6.js","433","static/chunks/433-4713d5ecc6182126.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Anchor"]
+1e:I[91042,["275","static/chunks/275-458f2cf71ccd9ea6.js","433","static/chunks/433-4713d5ecc6182126.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"TOC"]
+1f:I[90484,[],"OutletBoundary"]
+20:"$Sreact.suspense"
+3:Tc4f,---
+description: Компонент для визуализации прогресса выполнения задачи.
+tags: loading
+---
+
+<Overview group="feedback">
+
+# Progress [tag:component]
+
+Компонент для визуализации прогресса выполнения задачи. Поддерживает различные стили оформления и настройку высоты.
+
+</Overview>
+
+import { BlockWrapper } from '@/components/wrappers';
+
+{/* @example-description: Базовый прогресс-бар `Progress` с текущим значением выполнения. */}
+<Playground Wrapper={BlockWrapper} style={{ maxWidth: 270 }}>
+  ```jsx
+  <Progress value={25} />
+  ```
+</Playground>
+
+## Предустановленные цвета
+
+{/* @example-description: Предустановленные варианты `Progress` для обычного, негативного и позитивного состояний. */}
+<Playground Wrapper={BlockWrapper} style={{ maxWidth: 270 }}>
+  ```jsx
+  <FormItem id="progresslabel" top="Прогресс">
+    <Progress aria-labelledby="progresslabel" value={40} />
+  </FormItem>
+  <FormItem id="progresslabelNegative" top="Ошибка">
+    <Progress appearance="negative" aria-labelledby="progresslabelNegative" value={75} />
+  </FormItem>
+  <FormItem id="progresslabelPositive" top="Завершено">
+    <Progress appearance="positive" aria-labelledby="progresslabelPositive" value={100} />
+  </FormItem>
+  ```
+</Playground>
+
+## Пользовательские цвета
+
+Используйте свойство `appearance` для задания произвольного цвета полоски прогресса. Поддерживаются:
+
+### HEX-коды
+
+{/* @example-description: Пользовательский цвет прогресса через HEX-значение в `appearance`. */}
+<Playground Wrapper={BlockWrapper} style={{ maxWidth: 270 }}>
+  ```jsx
+  <Progress appearance="#FFA500" value={45} />
+  ```
+</Playground>
+
+### CSS-переменные
+
+{/* @example-description: Пользовательский цвет прогресса через CSS-переменную в `appearance`. */}
+<Playground Wrapper={BlockWrapper} style={{ maxWidth: 270 }}>
+  ```jsx
+  <div style={{ '--custom-progress': '#00FF00' }}>
+    <Progress appearance="var(--custom-progress)" value={80} />
+  </div>
+  ```
+</Playground>
+
+## Прозрачный фон
+
+Для отключения фона можно использовать свойство `trackDisable`:
+
+{/* @example-description: Прогресс-бар без фона трека с включенным `trackDisable`. */}
+<Playground Wrapper={BlockWrapper} style={{ maxWidth: 270 }}>
+  ```jsx
+  <Progress appearance="#FFA500" trackDisable value={65} />
+  ```
+</Playground>
+
+## Доступность (a11y) [#a11y]
+
+Доступность реализована на основе рекомендаций из [Meter WAI-ARIA design pattern](https://www.w3.org/WAI/ARIA/apg/patterns/meter/).
+
+## Свойства и методы [#api]
+
+<PropsTable name="Progress" />0:{"rsc":["$","$1","c",{"children":[[["$","$L2",null,{"metadata":{"description":"Компонент для визуализации прогресса выполнения задачи.","tags":"loading","title":"Progress","filePath":"content/components/progress.mdx","timestamp":1780929687000},"sourceCode":"$3","children":[["$","$L4",null,{"group":"feedback","children":[["$","h1",null,{"className":"mdx_h1__1mgpN","data-pagefind-filter":"tag:component","children":"Progress"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Компонент для визуализации прогресса выполнения задачи. Поддерживает различные стили оформления и настройку высоты."}]]}],"\n","\n","\n",["$","$L5",null,{"Wrapper":"$6","style":{"maxWidth":270},"code":"<Progress value={25} />"}],"\n",["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"predustanovlennye-cveta","children":["$","a",null,{"href":"#predustanovlennye-cveta","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Предустановленные цвета","children":["Предустановленные цвета","$L7"]}]}],"\n","\n","$L8","\n","$L9","\n","$La","\n","$Lb","\n","\n","$Lc","\n","$Ld","\n","\n","$Le","\n","$Lf","\n","$L10","\n","\n","$L11","\n","$L12","\n","$L13","\n","$L14","\n","$L15"]}],"$L16"],null,"$L17"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"VO29Ey2XY6_PfolneEqSf"}
+7:["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]
+8:["$","$L5",null,{"Wrapper":"$6","style":{"maxWidth":270},"code":"<FormItem id=\"progresslabel\" top=\"Прогресс\">\n  <Progress aria-labelledby=\"progresslabel\" value={40} />\n</FormItem>\n<FormItem id=\"progresslabelNegative\" top=\"Ошибка\">\n  <Progress appearance=\"negative\" aria-labelledby=\"progresslabelNegative\" value={75} />\n</FormItem>\n<FormItem id=\"progresslabelPositive\" top=\"Завершено\">\n  <Progress appearance=\"positive\" aria-labelledby=\"progresslabelPositive\" value={100} />\n</FormItem>"}]
+9:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"polzovatelskie-cveta","children":["$","a",null,{"href":"#polzovatelskie-cveta","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Пользовательские цвета","children":["Пользовательские цвета",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+a:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Используйте свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"appearance"}]," для задания произвольного цвета полоски прогресса. Поддерживаются:"]}]
+b:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"hex-kody","children":["$","a",null,{"href":"#hex-kody","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию HEX-коды","children":["HEX-коды",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+c:["$","$L5",null,{"Wrapper":"$6","style":{"maxWidth":270},"code":"<Progress appearance=\"#FFA500\" value={45} />"}]
+d:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"css-peremennye","children":["$","a",null,{"href":"#css-peremennye","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию CSS-переменные","children":["CSS-переменные",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+e:["$","$L5",null,{"Wrapper":"$6","style":{"maxWidth":270},"code":"<div style={{ '--custom-progress': '#00FF00' }}>\n  <Progress appearance=\"var(--custom-progress)\" value={80} />\n</div>"}]
+f:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"prozrachnyj-fon","children":["$","a",null,{"href":"#prozrachnyj-fon","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Прозрачный фон","children":["Прозрачный фон",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+10:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Для отключения фона можно использовать свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"trackDisable"}],":"]}]
+11:["$","$L5",null,{"Wrapper":"$6","style":{"maxWidth":270},"code":"<Progress appearance=\"#FFA500\" trackDisable value={65} />"}]
+12:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"a11y","children":["$","a",null,{"href":"#a11y","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Доступность (a11y)","children":["Доступность (a11y)",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+13:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Доступность реализована на основе рекомендаций из ",["$","$L18",null,{"href":"https://www.w3.org/WAI/ARIA/apg/patterns/meter/","children":"Meter WAI-ARIA design pattern"}],"."]}]
+14:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"api","children":["$","a",null,{"href":"#api","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Свойства и методы","children":["Свойства и методы",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+15:["$","div",null,{"className":"Table_root__0rGvK","children":["$","table",null,{"className":"Table_table__NzLHi PropsTable_root__O959b","children":[["$","thead",null,{"children":["$","tr",null,{"children":[["$","th",null,{"children":"Свойство","className":"Table_th__EHorR"}],["$","th",null,{"children":"Описание","className":"Table_th__EHorR"}]],"className":"Table_tr__SD2Ot"}]}],["$","tbody",null,{"children":["$@19","$@1a","$@1b","$@1c","$@1d"]}]]}]}]
+16:["$","$L1e",null,{"toc":[{"value":"Предустановленные цвета","id":"predustanovlennye-cveta","depth":2},{"value":"Пользовательские цвета","id":"polzovatelskie-cveta","depth":2},{"value":"HEX-коды","id":"hex-kody","depth":3},{"value":"CSS-переменные","id":"css-peremennye","depth":3},{"value":"Прозрачный фон","id":"prozrachnyj-fon","depth":2},{"value":"Доступность (a11y)","id":"a11y","depth":2},{"value":"Свойства и методы","id":"api","depth":2}]}]
+17:["$","$L1f",null,{"children":["$","$20",null,{"name":"Next.MetadataOutlet","children":"$@21"}]}]
+19:["$","tr","appearance",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"appearance"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"\"accent\" | \"positive\" | \"negative\" | `var(--${string})` | `#${string}`"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Стиль отображения прогрессбара."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"accent"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+1a:["$","tr","getRootRef",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"getRootRef"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"Ref<HTMLDivElement>"}],"$undefined",["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+1b:["$","tr","height",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"height"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"number"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Высота элемента."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+1c:["$","tr","trackDisable",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"trackDisable"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"boolean"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Сделать прогрессбар прозрачным."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"false"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+1d:["$","tr","value",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"value"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"number"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Значение прогресса."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_1dc19f","dir":"ltr","children":"0"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+21:null
