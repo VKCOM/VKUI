@@ -73,7 +73,7 @@ export function createDataProvider(): DataProvider {
       return readJson<HookMetadata>(`hooks/${slug}.json`);
     },
     async getExamples(slug) {
-      return await readText(`examples/${slug}.txt`);
+      return readText(`examples/${slug}.txt`);
     },
     async getDocs(slug) {
       return readText(`docs/${slug}.txt`);

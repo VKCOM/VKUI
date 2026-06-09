@@ -258,7 +258,7 @@ export function generateMcpData() {
       fs.writeFileSync(examplesOutPath, examplesText);
     }
 
-    const docsOutPath = path.join(OUT_DOCS_DIR, `${slug}.text`);
+    const docsOutPath = path.join(OUT_DOCS_DIR, `${slug}.txt`);
     ensureDir(path.dirname(docsOutPath));
     fs.writeFileSync(docsOutPath, transformMdxBody(resolvedBody, docgen));
   }
