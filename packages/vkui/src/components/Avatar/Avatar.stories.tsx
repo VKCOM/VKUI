@@ -24,7 +24,7 @@ const story: Meta<AvatarStoryProps> = {
       },
       options: [...imageBaseSizes],
     },
-    badge: {
+    children: {
       description: 'Использовать Badge',
       table: {
         type: {
@@ -36,7 +36,7 @@ const story: Meta<AvatarStoryProps> = {
         None: null,
         BadgeOnline: <Avatar.BadgeWithPreset preset="online" />,
         BadgeOnlineMobile: <Avatar.BadgeWithPreset preset="online-mobile" />,
-        Icon: (
+        BadgeIcon: (
           <Avatar.Badge>
             <IconExampleForBadgeBasedOnImageBaseSize />
           </Avatar.Badge>
