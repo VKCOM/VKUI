@@ -31,6 +31,8 @@ const MOCK_TAGS = ['modal', 'notification'];
 const MOCK_ALERT_EXAMPLES_TEXT =
   'Базовый пример\n\n<Alert title="Пример" />\n\n---------------------------------\n\n<Alert title="Второй" />';
 
+const MOCK_ALERT_DOCS_TEXT = 'Документация компонента Alert';
+
 /** Мок метаданных компонента Alert (для get_component_metadata) */
 const MOCK_ALERT_METADATA = {
   name: 'Alert',
@@ -62,6 +64,7 @@ function startMockDocsServer(): Promise<{ baseUrl: string; close: () => void }> 
     '/hooks.json': JSON.stringify(MOCK_HOOKS),
     '/tags.json': JSON.stringify(MOCK_TAGS),
     '/examples/alert.txt': MOCK_ALERT_EXAMPLES_TEXT,
+    '/docs/alert.txt': MOCK_ALERT_DOCS_TEXT,
     '/components/alert.json': JSON.stringify(MOCK_ALERT_METADATA),
     '/hooks/use-modal-manager.json': JSON.stringify(MOCK_USE_MODAL_MANAGER_METADATA),
   };
@@ -329,6 +332,31 @@ describe.skipIf(!hasBuiltCli())('MCP server over stdio (integration)', () => {
     expect(parsed.slug).toBe('alert');
     expect(parsed.content).toContain('<Alert');
     expect(parsed.content).toContain('Базовый пример');
+
+    child.kill('SIGTERM');
+  });
+
+  it('get_docs через stdio возвращает документацию компонента', async () => {
+    const child = spawnMcpProcess(mockBaseUrl);
+    await initMcpSession(child);
+
+    const callResponse = await sendRequest(child, {
+      jsonrpc: '2.0',
+      id: 2,
+      method: 'tools/call',
+      params: {
+        name: 'get_docs',
+        arguments: { name: 'Alert' },
+      },
+    });
+
+    assertNoMcpError(callResponse);
+    const parsed = JSON.parse(
+      getResultTextContent(callResponse.result as Record<string, unknown>),
+    ) as { name: string; slug: string; content: string };
+    expect(parsed.name).toBe('Alert');
+    expect(parsed.slug).toBe('alert');
+    expect(parsed.content).toContain('Документация компонента Alert');
 
     child.kill('SIGTERM');
   });
