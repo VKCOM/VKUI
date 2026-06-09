@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { resolvePartials } from './resolvePartials.mjs';
 
 const SCRIPT_FILE = fileURLToPath(import.meta.url);
 const SCRIPT_DIR = path.dirname(SCRIPT_FILE);
@@ -47,6 +48,7 @@ function collectMdxFiles(dirPath) {
   const results = [];
   const entries = fs.readdirSync(dirPath, { withFileTypes: true });
   for (const entry of entries) {
+    if (entry.name === '_partials') continue;
     const fullPath = path.join(dirPath, entry.name);
     if (entry.isDirectory()) {
       results.push(...collectMdxFiles(fullPath));
@@ -66,15 +68,31 @@ function parseFrontmatter(content) {
   }
   const block = match[1];
   const data = {};
+  let currentParent = null;
   for (const line of block.split('\n')) {
-    const lineMatch = line.match(/^([A-Za-z0-9_-]+)\s*:\s*(.+)$/);
+    const nestedMatch = line.match(/^  ([A-Za-z0-9_-]+)\s*:\s*(.*)$/);
+    if (nestedMatch && currentParent) {
+      const key = nestedMatch[1];
+      let value = nestedMatch[2].trim();
+      value = value.replace(/^['"]|['"]$/g, '');
+      data[currentParent][key] = value === '' ? true : value;
+      continue;
+    }
+    const lineMatch = line.match(/^([A-Za-z0-9_-]+)\s*:\s*(.*)$/);
     if (!lineMatch) {
+      currentParent = null;
       continue;
     }
     const key = lineMatch[1];
-    let value = lineMatch[2].trim();
-    value = value.replace(/^['"]|['"]$/g, '');
-    data[key] = value;
+    const rawValue = lineMatch[2].trim();
+    if (rawValue === '') {
+      data[key] = {};
+      currentParent = key;
+    } else {
+      let value = rawValue.replace(/^['"]|['"]$/g, '');
+      data[key] = value;
+      currentParent = null;
+    }
   }
   const body = content.slice(match[0].length);
   return { data, body };
@@ -137,6 +155,28 @@ function isHookSlug(slug) {
   return (slug.split('/').pop() || slug).startsWith('use-');
 }
 
+function componentNameFromSlug(slug) {
+  const base = slug.split('/').pop() || slug;
+  return base
+    .split('-')
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join('');
+}
+
+function toKebabCase(componentName) {
+  return componentName
+    .replace(/([A-Z]+)([A-Z][a-z])/g, '$1-$2')
+    .replace(/([a-z\d])([A-Z])/g, '$1-$2')
+    .toLowerCase();
+}
+
+function buildDocsUrl(name, parent) {
+  if (parent) {
+    return `/components/${toKebabCase(parent)}#${toKebabCase(name)}`;
+  }
+  return `/components/${toKebabCase(name)}`;
+}
+
 export function generateShowcaseData() {
   // eslint-disable-next-line no-console
   console.log('🔄 Генерация данных витрины компонентов...');
@@ -150,19 +190,22 @@ export function generateShowcaseData() {
   for (const filePath of mdxFiles) {
     const raw = fs.readFileSync(filePath, 'utf8');
     const { data, body } = parseFrontmatter(raw);
+    const resolvedBody = resolvePartials(body, filePath);
     const slug = slugFromPath(filePath);
 
     if (IGNORED_COMPONENTS.has(slug) || isHookSlug(slug)) {
       continue;
     }
 
-    const { group, type } = extractOverviewMeta(body);
+    const other = typeof data.other === 'object' ? data.other : {};
+
+    const { group, type } = extractOverviewMeta(resolvedBody);
     if (type === 'hook') {
       continue;
     }
 
-    const name = extractHeading(body);
-    const playground = extractFirstPlayground(body);
+    const name = componentNameFromSlug(slug);
+    const playground = extractFirstPlayground(resolvedBody);
 
     if (!name) {
       skipped.push({ slug, reason: 'no-name' });
@@ -178,6 +221,7 @@ export function generateShowcaseData() {
     }
 
     const description = (data.description || '').replace(/\s+/g, ' ').trim();
+    const docsUrl = buildDocsUrl(name, other.parent || undefined);
 
     items.push({
       name,
@@ -187,6 +231,7 @@ export function generateShowcaseData() {
       wrapper: playground.wrapper,
       description,
       code: playground.code,
+      docsUrl,
     });
   }
 

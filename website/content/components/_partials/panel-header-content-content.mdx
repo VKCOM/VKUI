@@ -1,5 +1,15 @@
 Подкомпонент, предназначенный для создания сложного контента в [`PanelHeader`](/components/panel-header), включая добавление аватаров и подзаголовков.
 
+<Playground hide>
+  ```jsx
+  <Box inlineSize={270}>
+    <PanelHeaderContent subtitle="был в сети сегодня, в 18:46" before={<Avatar size={36} />}>
+      Жук Петрович
+    </PanelHeaderContent>
+  </Box>
+  ```
+</Playground>
+
 {/* @example-description: `PanelHeaderContent` с аватаром и подзаголовком в составе шапки. */}
 <Playground style={{ width: 270 }}>
   ```jsx
