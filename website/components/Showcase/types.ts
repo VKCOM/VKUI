@@ -6,6 +6,7 @@ export interface ShowcaseItem {
   wrapper?: string;
   description?: string;
   code: string;
+  docsUrl: string;
 }
 
 export interface ShowcaseGroup {

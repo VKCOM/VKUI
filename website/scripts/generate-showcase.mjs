@@ -68,15 +68,31 @@ function parseFrontmatter(content) {
   }
   const block = match[1];
   const data = {};
+  let currentParent = null;
   for (const line of block.split('\n')) {
-    const lineMatch = line.match(/^([A-Za-z0-9_-]+)\s*:\s*(.+)$/);
+    const nestedMatch = line.match(/^  ([A-Za-z0-9_-]+)\s*:\s*(.*)$/);
+    if (nestedMatch && currentParent) {
+      const key = nestedMatch[1];
+      let value = nestedMatch[2].trim();
+      value = value.replace(/^['"]|['"]$/g, '');
+      data[currentParent][key] = value === '' ? true : value;
+      continue;
+    }
+    const lineMatch = line.match(/^([A-Za-z0-9_-]+)\s*:\s*(.*)$/);
     if (!lineMatch) {
+      currentParent = null;
       continue;
     }
     const key = lineMatch[1];
-    let value = lineMatch[2].trim();
-    value = value.replace(/^['"]|['"]$/g, '');
-    data[key] = value;
+    const rawValue = lineMatch[2].trim();
+    if (rawValue === '') {
+      data[key] = {};
+      currentParent = key;
+    } else {
+      let value = rawValue.replace(/^['"]|['"]$/g, '');
+      data[key] = value;
+      currentParent = null;
+    }
   }
   const body = content.slice(match[0].length);
   return { data, body };
@@ -147,6 +163,20 @@ function componentNameFromSlug(slug) {
     .join('');
 }
 
+function toKebabCase(componentName) {
+  return componentName
+    .replace(/([A-Z]+)([A-Z][a-z])/g, '$1-$2')
+    .replace(/([a-z\d])([A-Z])/g, '$1-$2')
+    .toLowerCase();
+}
+
+function buildDocsUrl(name, parent) {
+  if (parent) {
+    return `/components/${toKebabCase(parent)}#${toKebabCase(name)}`;
+  }
+  return `/components/${toKebabCase(name)}`;
+}
+
 export function generateShowcaseData() {
   // eslint-disable-next-line no-console
   console.log('🔄 Генерация данных витрины компонентов...');
@@ -166,6 +196,8 @@ export function generateShowcaseData() {
     if (IGNORED_COMPONENTS.has(slug) || isHookSlug(slug)) {
       continue;
     }
+
+    const other = typeof data.other === 'object' ? data.other : {};
 
     const { group, type } = extractOverviewMeta(resolvedBody);
     if (type === 'hook') {
@@ -189,6 +221,7 @@ export function generateShowcaseData() {
     }
 
     const description = (data.description || '').replace(/\s+/g, ' ').trim();
+    const docsUrl = buildDocsUrl(name, other.parent || undefined);
 
     items.push({
       name,
@@ -198,6 +231,7 @@ export function generateShowcaseData() {
       wrapper: playground.wrapper,
       description,
       code: playground.code,
+      docsUrl,
     });
   }
 
