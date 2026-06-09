@@ -89,12 +89,12 @@
   "dependencies": {
     "@swc/helpers": "^0.5.23",
     "@vkontakte/icons": "^3.0.0",
-    "@vkontakte/storybook-addons": "workspace:^",
     "@vkontakte/vkjs": "^2.0.2",
     "@vkontakte/vkui-date-fns-tz": "^0.0.6",
     "@vkontakte/vkui-floating-ui": "^0.2.8"
   },
   "devDependencies": {
+    "@vkontakte/storybook-addons": "workspace:^",
     "@biomejs/biome": "^2.4.16",
     "@types/node": "*",
     "@types/postcss-import": "^14.0.3",

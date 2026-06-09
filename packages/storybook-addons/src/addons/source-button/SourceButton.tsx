@@ -17,13 +17,12 @@ export const SourceButton = () => {
   }
 
   const importPath = story && 'importPath' in story && story.importPath;
-  const resolvedBaseUrl = baseUrl;
 
-  if (!importPath || !resolvedBaseUrl) {
+  if (!importPath || !baseUrl) {
     return null;
   }
 
-  const sourceUrl = getUrl(resolvedBaseUrl, importPath);
+  const sourceUrl = getUrl(baseUrl, importPath);
 
   return (
     <Button asChild size="small" variant="ghost" ariaLabel={label} title={title}>

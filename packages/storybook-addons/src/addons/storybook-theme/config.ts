@@ -1,6 +1,6 @@
 import { create } from 'storybook/theming';
 import type { ThemeVars } from 'storybook/theming';
-import { DEFAULT_PARAM_KEY } from './constants.ts';
+import { DEFAULT_PARAM_KEY } from './constants';
 
 export interface StorybookThemeConfig {
   lightTheme: ThemeVars;
