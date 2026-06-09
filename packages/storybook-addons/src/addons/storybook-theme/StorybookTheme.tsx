@@ -1,11 +1,12 @@
 import * as React from 'react';
-import { useGlobals, addons, useStorybookApi } from 'storybook/manager-api';
-import { styled } from 'storybook/theming';
-import { SET_GLOBALS } from 'storybook/internal/core-events';
+import { MoonIcon, SunIcon } from '@storybook/icons';
 import { Select } from 'storybook/internal/components';
-import { SunIcon, MoonIcon } from '@storybook/icons';
-import { PARAM_KEY, SET_STORYBOOK_THEME } from './constants';
-import { vkuiDarkTheme, vkuiLightTheme } from './vkuiThemes';
+import { SET_GLOBALS } from 'storybook/internal/core-events';
+import { addons, useGlobals, useStorybookApi } from 'storybook/manager-api';
+import { styled } from 'storybook/theming';
+import { getColorSchemeConfig } from '../colorScheme/config';
+import { getThemeConfig } from './config';
+import { SET_STORYBOOK_THEME } from './constants';
 
 const SidebarSelect = styled(Select)(({ theme }) => ({
   position: 'relative',
@@ -21,26 +22,30 @@ const channel = addons.getChannel();
 
 type Theme = 'light' | 'dark';
 
-export const getLocalStorageValue = () => {
-  return window.localStorage.getItem(STORAGE_KEY);
-};
-
 export const updateLocalStorageValue = (theme: Theme) => {
   window.localStorage.setItem(STORAGE_KEY, theme);
+};
+
+export const getLocalStorageValue = (): Theme => {
+  return window.localStorage.getItem(STORAGE_KEY) as Theme;
 };
 
 export const StorybookTheme = () => {
   const [globals, updateGlobals] = useGlobals();
   const { once } = useStorybookApi();
-  const selectedGlobalTheme = globals[PARAM_KEY];
+  const { lightTheme, darkTheme, parameterName } = getThemeConfig();
+  const selectedGlobalTheme = globals[parameterName];
 
   const updateTheme = React.useCallback(
     (globalTheme: Theme, localTheme?: Theme) => {
       channel.emit(SET_STORYBOOK_THEME, globalTheme);
       updateGlobals(
         localTheme
-          ? { [PARAM_KEY]: globalTheme, colorScheme: localTheme }
-          : { [PARAM_KEY]: globalTheme },
+          ? {
+              [parameterName]: globalTheme,
+              [getColorSchemeConfig().parameterName]: localTheme,
+            }
+          : { [parameterName]: globalTheme },
       );
       updateLocalStorageValue(globalTheme);
     },
@@ -50,7 +55,7 @@ export const StorybookTheme = () => {
   const handleChange: React.ComponentProps<typeof Select>['onChange'] = React.useCallback(
     (selectedOptionRaw) => {
       const selectedOption = selectedOptionRaw[0] as Theme;
-      addons.setConfig({ theme: selectedOption === 'dark' ? vkuiDarkTheme : vkuiLightTheme });
+      addons.setConfig({ theme: selectedOption === 'dark' ? darkTheme : lightTheme });
       updateTheme(selectedOption, selectedOption);
     },
     [updateTheme],

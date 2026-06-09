@@ -22,14 +22,16 @@ const CenteredStyle: React.CSSProperties = {
 export const withVKUIWrapper: Decorator = (Component, context) => {
   const {
     platform,
-    colorScheme,
+    colorScheme: colorSchemeGlobal,
     hasPointer = false,
     hasCustomPanelHeaderAfter,
     direction,
     writingMode,
   } = context.globals;
 
-  const { centered, background } = context.parameters;
+  const { centered, background, colorScheme: colorSchemeParameter } = context.parameters;
+
+  const colorScheme = colorSchemeParameter || colorSchemeGlobal;
 
   const style: React.CSSProperties = {
     writingMode,

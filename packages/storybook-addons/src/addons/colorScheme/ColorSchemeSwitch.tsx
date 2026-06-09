@@ -1,21 +1,23 @@
 import * as React from 'react';
-import { SunIcon, MoonIcon } from '@storybook/icons';
-import { useGlobals } from 'storybook/manager-api';
+import { MoonIcon, SunIcon } from '@storybook/icons';
 import { Select } from 'storybook/internal/components';
-import { PARAM_KEY } from './constants';
+import { useGlobals, useParameter } from 'storybook/manager-api';
+import { getColorSchemeConfig } from './config';
 
 export const ColorSchemeSwitch = () => {
   const [globals, updateGlobals] = useGlobals();
-  const selectedOption = globals[PARAM_KEY];
+  const { parameterName } = getColorSchemeConfig();
+  const localColorScheme = useParameter(parameterName);
+  const colorScheme = localColorScheme || globals[parameterName];
 
   const handleChange: React.ComponentProps<typeof Select>['onChange'] = React.useCallback(
     (selected) => {
-      updateGlobals({ [PARAM_KEY]: selected[0] });
+      updateGlobals({ [parameterName]: selected[0] });
     },
-    [updateGlobals],
+    [updateGlobals, parameterName],
   );
 
-  if (selectedOption === undefined) {
+  if (!colorScheme) {
     return null;
   }
 
@@ -24,8 +26,9 @@ export const ColorSchemeSwitch = () => {
       key="theme"
       size="small"
       ariaLabel="Choose theme"
-      icon={selectedOption === 'dark' ? <MoonIcon /> : <SunIcon />}
-      defaultOptions={selectedOption}
+      disabled={Boolean(localColorScheme)}
+      icon={colorScheme === 'dark' ? <MoonIcon /> : <SunIcon />}
+      defaultOptions={colorScheme}
       options={[
         {
           icon: <SunIcon />,

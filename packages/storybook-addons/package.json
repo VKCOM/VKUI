@@ -1,0 +1,46 @@
+{
+  "name": "@vkontakte/storybook-addons",
+  "version": "0.0.1",
+  "description": "VKUI Storybook addons",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/VKCOM/VKUI.git",
+    "directory": "packages/storybook-addons"
+  },
+  "homepage": "https://vkcom.github.io/VKUI/",
+  "license": "MIT",
+  "type": "module",
+  "module": "src/index.ts",
+  "exports": {
+    ".": {
+      "import": "./src/index.ts"
+    },
+    "./colorScheme": {
+      "import": "./src/addons/colorScheme/preset.js"
+    },
+    "./storybook-theme": {
+      "import": "./src/addons/storybook-theme/preset.js"
+    },
+    "./source-button": {
+      "import": "./src/addons/source-button/preset.js"
+    }
+  },
+  "files": [
+    "src"
+  ],
+  "peerDependencies": {
+    "@storybook/icons": ">=2.0.0",
+    "@storybook/react-vite": ">=10.0.0",
+    "react": "^18.0.0",
+    "storybook": ">=10.0.0"
+  },
+  "devDependencies": {
+    "react": "^18.3.1",
+    "typescript": "^6.0.3"
+  },
+  "scripts": {
+    "test": "echo no test",
+    "lint": "tsc",
+    "build": "tsc"
+  }
+}
