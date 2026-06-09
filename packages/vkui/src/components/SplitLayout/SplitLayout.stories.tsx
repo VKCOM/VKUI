@@ -26,19 +26,27 @@ import { SplitCol } from '../SplitCol/SplitCol';
 import { View } from '../View/View';
 import { SplitLayout, type SplitLayoutProps } from './SplitLayout';
 
+const panels = ['panel 1', 'panel 2', 'panel 3'];
+const modals = ['modal 1', 'modal 2'];
+
 const story: Meta<SplitLayoutProps> = {
   title: 'Layout/SplitLayout',
   component: SplitLayout,
-  parameters: createStoryParameters('SplitLayout', CanvasFullLayout, DisableCartesianParam),
+  parameters: createStoryParameters('SplitLayout', CanvasFullLayout, DisableCartesianParam, {
+    liveCodeEditor: {
+      scope: {
+        panels,
+        modals,
+        AdditionalContent,
+      },
+    },
+  }),
   tags: ['Раскладка'],
 };
 
 export default story;
 
 type Story = StoryFn<SplitLayoutProps>;
-
-const panels = ['panel 1', 'panel 2', 'panel 3'];
-const modals = ['modal 1', 'modal 2'];
 
 export const Playground: Story = ({ children, ...restProps }: SplitLayoutProps) => {
   const platform = usePlatform();

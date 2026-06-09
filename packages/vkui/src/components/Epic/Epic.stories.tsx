@@ -32,10 +32,17 @@ const ActiveStoryStyle = {
   backgroundColor: 'var(--vkui--color_background_secondary)',
   borderRadius: 8,
 };
+
 const story: Meta<EpicProps> = {
   title: 'Navigation/Epic',
   component: Epic,
-  parameters: createStoryParameters('Epic', CanvasFullLayout, DisableCartesianParam),
+  parameters: createStoryParameters('Epic', CanvasFullLayout, DisableCartesianParam, {
+    liveCodeEditor: {
+      scope: {
+        ActiveStoryStyle,
+      },
+    },
+  }),
   tags: ['Навигация'],
 };
 

@@ -5,27 +5,6 @@ import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constan
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { type CustomTouchEvent, Touch, type TouchProps } from './Touch';
 
-const story: Meta<TouchProps> = {
-  title: 'Utils/Touch',
-  component: Touch,
-  args: {
-    onClick: fn(),
-    onStart: fn(),
-    onMove: fn(),
-    onEnd: fn(),
-    onEndX: fn(),
-    onEndY: fn(),
-  },
-  parameters: createStoryParameters('Touch', {
-    ...CanvasFullLayout,
-    cantered: false,
-    ...DisableCartesianParam,
-  }),
-  tags: ['Утилиты'],
-};
-
-export default story;
-
 const circleStyle = {
   width: 40,
   height: 40,
@@ -44,6 +23,28 @@ const containerStyle = {
   border: '8px solid var(--vkui--color_icon_secondary)',
   position: 'relative',
 } as React.CSSProperties;
+
+const story: Meta<TouchProps> = {
+  title: 'Utils/Touch',
+  component: Touch,
+  args: {
+    onClick: fn(),
+    onStart: fn(),
+    onMove: fn(),
+    onEnd: fn(),
+    onEndX: fn(),
+    onEndY: fn(),
+  },
+  parameters: createStoryParameters('Touch', {
+    ...CanvasFullLayout,
+    cantered: false,
+    ...DisableCartesianParam,
+    liveCodeEditor: { scope: { circleStyle, containerStyle } },
+  }),
+  tags: ['Утилиты'],
+};
+
+export default story;
 
 export const Playground: StoryFn<TouchProps> = (args: TouchProps) => {
   const [shiftX, setShiftX] = React.useState(0);

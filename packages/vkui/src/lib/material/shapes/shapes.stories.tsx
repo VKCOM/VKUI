@@ -21,7 +21,13 @@ const story: Meta<object> = {
   title: 'DevTools/lib/material/shapes',
   tags: ['test'], // скрываем из публичной документации
   component: () => <div />,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: {
+    ...CanvasFullLayout,
+    ...DisableCartesianParam,
+    liveCodeEditor: {
+      disabled: true,
+    },
+  },
 };
 
 // eslint-disable-next-line import/no-default-export

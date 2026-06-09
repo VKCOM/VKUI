@@ -12,16 +12,22 @@ import { PanelHeaderBack } from '../PanelHeaderBack/PanelHeaderBack';
 import { View } from '../View/View';
 import { PanelHeaderContent, type PanelHeaderContentProps } from './PanelHeaderContent';
 
+const PANEL_ID = 'panel1';
+
 const story: Meta<PanelHeaderContentProps> = {
   title: 'Navigation/PanelHeader/PanelHeaderContent',
   component: PanelHeaderContent,
-  parameters: createStoryParameters('PanelHeaderContent', CanvasFullLayout, DisableCartesianParam),
+  parameters: createStoryParameters('PanelHeaderContent', CanvasFullLayout, DisableCartesianParam, {
+    liveCodeEditor: {
+      scope: {
+        PANEL_ID,
+      },
+    },
+  }),
   decorators: [withVKUILayout],
 };
 
 export default story;
-
-const PANEL_ID = 'panel1';
 
 export const Playground: StoryFn<PanelHeaderContentProps> = () => {
   const platform = usePlatform();

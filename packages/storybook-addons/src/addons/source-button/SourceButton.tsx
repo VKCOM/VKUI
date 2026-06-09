@@ -1,4 +1,3 @@
-// @ts-expect-error: TS6133 нужно чтобы аддон работал
 import * as React from 'react';
 import { GithubIcon } from '@storybook/icons';
 import { Button } from 'storybook/internal/components';

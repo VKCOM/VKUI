@@ -8,17 +8,6 @@ import { Group } from '../Group/Group';
 import { ContentBadge, type ContentBadgeAppearance, type ContentBadgeProps } from './ContentBadge';
 import type { ContentBadgeModeType } from './types.ts';
 
-const meta: Meta<ContentBadgeProps> = {
-  title: 'Data Display/ContentBadge',
-  component: ContentBadge,
-  parameters: createStoryParameters('ContentBadge', CanvasFullLayout, DisableCartesianParam),
-  tags: ['Отображение данных'],
-};
-
-export default meta;
-
-type Story = StoryFn<ContentBadgeProps>;
-
 const commonStyles: React.CSSProperties = {
   display: 'flex',
   alignItems: 'center',
@@ -27,6 +16,21 @@ const commonStyles: React.CSSProperties = {
   outline: '1px dashed',
   padding: 24,
 };
+
+const meta: Meta<ContentBadgeProps> = {
+  title: 'Data Display/ContentBadge',
+  component: ContentBadge,
+  parameters: createStoryParameters('ContentBadge', CanvasFullLayout, DisableCartesianParam, {
+    liveCodeEditor: {
+      scope: { commonStyles },
+    },
+  }),
+  tags: ['Отображение данных'],
+};
+
+export default meta;
+
+type Story = StoryFn<ContentBadgeProps>;
 
 export const Playground: Story = (props: ContentBadgeProps) => {
   return (
@@ -66,13 +70,13 @@ Playground.args = {
   children: 'Text',
 };
 
-const CUSTOM_APPEARANCES: ContentBadgeAppearance[] = [
-  '#FF6699',
-  'var(--vkui--color_icon_tertiary)',
-];
-const MODES: ContentBadgeModeType[] = ['primary', 'secondary', 'outline'];
-
 export const CustomAppearance: Story = (props: ContentBadgeProps) => {
+  const CUSTOM_APPEARANCES: ContentBadgeAppearance[] = [
+    '#FF6699',
+    'var(--vkui--color_icon_tertiary)',
+  ];
+  const MODES: ContentBadgeModeType[] = ['primary', 'secondary', 'outline'];
+
   return (
     <Group style={commonStyles}>
       <Flex direction="column" gap={16}>

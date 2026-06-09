@@ -21,7 +21,7 @@ export const Playground: StoryFn<CellCheckboxProps> = (props: CellCheckboxProps)
     <Cell
       Component="label"
       before={<Avatar src={getAvatarUrl('user_xyz')} />}
-      after={<CellCheckbox {...props} />}
+      after={<Cell.Checkbox {...props} />}
     >
       Игорь Федоров
     </Cell>

@@ -17,7 +17,14 @@ const story: Meta<FixedLayoutProps> = {
   id: 'Layout/FixedLayout',
   title: 'Layout/FixedLayout (deprecated)',
   component: FixedLayout,
-  parameters: createStoryParameters('FixedLayout', CanvasFullLayout, DisableCartesianParam),
+  parameters: createStoryParameters('FixedLayout', CanvasFullLayout, DisableCartesianParam, {
+    liveCodeEditor: {
+      scope: {
+        StubContent,
+        Guide,
+      },
+    },
+  }),
   decorators: [withVKUILayout],
   tags: ['Раскладка'],
 };
