@@ -4,7 +4,7 @@ import { Select } from 'storybook/internal/components';
 import { SET_GLOBALS } from 'storybook/internal/core-events';
 import { addons, useGlobals, useStorybookApi } from 'storybook/manager-api';
 import { styled } from 'storybook/theming';
-import { getColorSchemeConfig } from '../colorScheme/config';
+import { getColorSchemeConfig } from '../color-scheme/config';
 import { getThemeConfig } from './config';
 import { SET_STORYBOOK_THEME } from './constants';
 

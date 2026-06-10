@@ -21,7 +21,7 @@ const config: StorybookConfig = {
     getGlobalAddonPath('@storybook/addon-designs', 'dist'),
     getGlobalAddonPath('@storybook/addon-docs'),
     getGlobalAddonPath('@project-tools/storybook-addon-cartesian'),
-    getLocalAddonPath('@vkontakte/storybook-addons/colorScheme'),
+    getLocalAddonPath('@vkontakte/storybook-addons/color-scheme'),
     getLocalAddonPath('./addons/pointer'),
     getLocalAddonPath('./addons/customPanelHeaderAfter'),
     getLocalAddonPath('./addons/documentation-button'),
