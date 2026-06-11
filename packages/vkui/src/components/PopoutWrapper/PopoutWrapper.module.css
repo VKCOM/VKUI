@@ -32,22 +32,22 @@
   opacity: 1;
 }
 
-.opened .overlay {
+.opened > .container > .overlay {
   animation: animationPopoutWrapperFullFadeIn var(--vkui--animation_duration_m) ease both;
 }
 
-.closing .overlay {
+.closing > .container > .overlay {
   opacity: 0;
   animation: animationPopoutWrapperFullFadeOut var(--vkui--animation_duration_m)
     var(--vkui--animation_easing_default) both;
 }
 
-.masked .overlay {
+.masked > .container > .overlay {
   background: var(--vkui--color_overlay_primary);
 }
 
-.fixed .overlay,
-.absolute .overlay {
+.fixed > .container > .overlay,
+.absolute > .container > .overlay {
   position: absolute;
 }
 
@@ -72,27 +72,27 @@
   pointer-events: auto;
 }
 
-.alignYCenter .container {
+.alignYCenter > .container {
   align-items: center;
 }
 
-.alignYBottom .container {
+.alignYBottom > .container {
   align-items: flex-end;
 }
 
-.alignYTop .container {
+.alignYTop > .container {
   align-items: flex-start;
 }
 
-.alignXCenter .container {
+.alignXCenter > .container {
   justify-content: center;
 }
 
-.alignXLeft .container {
+.alignXLeft > .container {
   justify-content: flex-start;
 }
 
-.alignXRight .container {
+.alignXRight > .container {
   justify-content: flex-end;
 }
 
