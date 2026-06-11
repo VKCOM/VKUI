@@ -257,7 +257,7 @@ export const COMPONENTS_DATA: Record<string, ComponentConfigData> = {
   ImageBaseBadge: {
     customPath: 'Image/ImageBaseBadge',
     component: ImageBaseBadge,
-    playgroundRender: ImageBaseBadgePlayground.render,
+    playgroundRender: ImageBaseBadgePlayground,
     args: {
       ...ImageBaseBadgePlayground.args,
       children: <IconExampleForBadgeBasedOnImageBaseSize />,
@@ -267,7 +267,7 @@ export const COMPONENTS_DATA: Record<string, ComponentConfigData> = {
   ImageBaseFloatElement: {
     customPath: 'Image/ImageBaseFloatElement',
     component: ImageBaseFloatElement,
-    playgroundRender: ImageBaseFloatElementPlayground.render,
+    playgroundRender: ImageBaseFloatElementPlayground,
     args: {
       ...ImageBaseFloatElementPlayground.args,
       visibility: 'always',
@@ -277,7 +277,7 @@ export const COMPONENTS_DATA: Record<string, ComponentConfigData> = {
   ImageBaseOverlay: {
     customPath: 'Image/ImageBaseOverlay',
     component: ImageBaseOverlay,
-    playgroundRender: ImageBaseOverlayPlayground.render,
+    playgroundRender: ImageBaseOverlayPlayground,
     args: {
       ...ImageBaseOverlayPlayground.args,
       visibility: 'always',
@@ -287,38 +287,38 @@ export const COMPONENTS_DATA: Record<string, ComponentConfigData> = {
   },
   Div: {
     component: Div,
-    playgroundRender: DivPlayground.render,
+    playgroundRender: DivPlayground,
     args: DivPlayground.args,
     decorator: Group,
     minWidth: 150,
   },
   Spacing: {
     component: Spacing,
-    playgroundRender: SpacingPlayground.render,
+    playgroundRender: SpacingPlayground,
     args: SpacingPlayground.args,
     decorator: SpacingDecorator,
     minWidth: 150,
   },
   Separator: {
     component: Separator,
-    playgroundRender: SeparatorPlayground.render,
+    playgroundRender: SeparatorPlayground,
     args: SeparatorPlayground.args,
     decorator: SeparatorDecorator,
     minWidth: 150,
   },
   Link: {
     component: Link,
-    playgroundRender: LinkPlayground.render,
+    playgroundRender: LinkPlayground,
     args: LinkPlayground.args,
   },
   IconButton: {
     component: IconButton,
-    playgroundRender: IconButtonPlayground.render,
+    playgroundRender: IconButtonPlayground,
     args: IconButtonPlayground.args,
   },
   Chip: {
     component: Chip,
-    playgroundRender: ChipPlayground.render,
+    playgroundRender: ChipPlayground,
     args: ChipPlayground.args,
   },
   ActionSheet: {
@@ -353,7 +353,7 @@ export const COMPONENTS_DATA: Record<string, ComponentConfigData> = {
   },
   ActionSheetItem: {
     component: ActionSheetItem,
-    playgroundRender: ActionSheetItemPlayground.render,
+    playgroundRender: ActionSheetItemPlayground,
     args: {
       ...ActionSheetItemPlayground.args,
       style: {
@@ -368,7 +368,7 @@ export const COMPONENTS_DATA: Record<string, ComponentConfigData> = {
   Tabbar: {
     customPath: 'Epic/Tabbar',
     component: Tabbar,
-    playgroundRender: TabbarPlayground.render,
+    playgroundRender: TabbarPlayground,
     args: {
       ...TabbarPlayground.args,
       style: {
@@ -380,17 +380,17 @@ export const COMPONENTS_DATA: Record<string, ComponentConfigData> = {
   TabbarItem: {
     customPath: 'Epic/Tabbar/TabbarItem',
     component: TabbarItem,
-    playgroundRender: TabbarItemPlayground.render,
+    playgroundRender: TabbarItemPlayground,
     args: { ...TabbarItemPlayground.args, children: <Icon28MessageOutline />, label: 'Messages' },
   },
   SplitLayout: {
     component: SplitLayout,
-    playgroundRender: SplitLayoutPlayground.render,
+    playgroundRender: SplitLayoutPlayground,
   },
   SplitCol: {
     customPath: 'SplitLayout/SplitCol',
     component: SplitCol,
-    playgroundRender: SplitColPlayground.render,
+    playgroundRender: SplitColPlayground,
     args: SplitColPlayground.args,
     minWidth: 500,
   },
@@ -403,7 +403,7 @@ export const COMPONENTS_DATA: Record<string, ComponentConfigData> = {
   PanelHeaderButton: {
     customPath: 'PanelHeader/PanelHeaderButton',
     component: PanelHeaderButton,
-    playgroundRender: PanelHeaderButtonPlayground.render,
+    playgroundRender: PanelHeaderButtonPlayground,
   },
   Panel: {
     component: PanelPreview,
@@ -413,7 +413,7 @@ export const COMPONENTS_DATA: Record<string, ComponentConfigData> = {
   },
   Flex: {
     component: Flex,
-    playgroundRender: FlexPlayground.render,
+    playgroundRender: FlexPlayground,
     args: {
       ...FlexPlayground.args,
       itemsCount: 3,
@@ -423,7 +423,7 @@ export const COMPONENTS_DATA: Record<string, ComponentConfigData> = {
   },
   SimpleGrid: {
     component: SimpleGrid,
-    playgroundRender: SimpleGridPlayground.render,
+    playgroundRender: SimpleGridPlayground,
     args: {
       ...SimpleGridPlayground.args,
       columns: 3,
@@ -438,14 +438,14 @@ export const COMPONENTS_DATA: Record<string, ComponentConfigData> = {
   Footer: {
     customPath: 'Group/Footer',
     component: Footer,
-    playgroundRender: FooterPlayground.render,
+    playgroundRender: FooterPlayground,
     args: FooterPlayground.args,
     minWidth: 200,
   },
   Header: {
     customPath: 'Group/Header',
     component: Header,
-    playgroundRender: HeaderPlayground.render,
+    playgroundRender: HeaderPlayground,
     args: {
       ...HeaderPlayground.args,
       before: <Icon28UserCircleFillBlue />,
@@ -459,7 +459,7 @@ export const COMPONENTS_DATA: Record<string, ComponentConfigData> = {
   },
   Group: {
     component: Group,
-    playgroundRender: GroupPlayground.render,
+    playgroundRender: GroupPlayground,
     args: {
       ...GroupPlayground.args,
       separator: 'hide',
@@ -467,7 +467,7 @@ export const COMPONENTS_DATA: Record<string, ComponentConfigData> = {
   },
   OnboardingTooltip: {
     component: OnboardingTooltip,
-    playgroundRender: OnboardingTooltipPlayground.render,
+    playgroundRender: OnboardingTooltipPlayground,
     args: {
       ...OnboardingTooltipPlayground.args,
       shown: true,
@@ -476,7 +476,7 @@ export const COMPONENTS_DATA: Record<string, ComponentConfigData> = {
   },
   Popper: {
     component: Popper,
-    playgroundRender: PopperPlayground.render,
+    playgroundRender: PopperPlayground,
     args: {
       ...PopperPlayground.args,
       shown: true,
@@ -484,7 +484,7 @@ export const COMPONENTS_DATA: Record<string, ComponentConfigData> = {
   },
   Popover: {
     component: Popover,
-    playgroundRender: PopoverPlayground.render,
+    playgroundRender: PopoverPlayground,
     args: {
       ...PopoverPlayground.args,
       shown: true,
@@ -495,7 +495,7 @@ export const COMPONENTS_DATA: Record<string, ComponentConfigData> = {
   },
   Tooltip: {
     component: Tooltip,
-    playgroundRender: TooltipPlayground.render,
+    playgroundRender: TooltipPlayground,
     args: {
       ...TooltipPlayground.args,
       shown: true,
@@ -504,61 +504,61 @@ export const COMPONENTS_DATA: Record<string, ComponentConfigData> = {
   Title: {
     customPath: 'Typography/Title',
     component: Title,
-    playgroundRender: TitlePlayground.render,
+    playgroundRender: TitlePlayground,
     args: TitlePlayground.args,
   },
   Text: {
     customPath: 'Typography/Text',
     component: Text,
-    playgroundRender: TextPlayground.render,
+    playgroundRender: TextPlayground,
     args: TextPlayground.args,
   },
   Subhead: {
     customPath: 'Typography/Subhead',
     component: Subhead,
-    playgroundRender: SubheadPlayground.render,
+    playgroundRender: SubheadPlayground,
     args: SubheadPlayground.args,
   },
   DisplayTitle: {
     customPath: 'Typography/DisplayTitle',
     component: DisplayTitle,
-    playgroundRender: DisplayTitlePlayground.render,
+    playgroundRender: DisplayTitlePlayground,
     args: DisplayTitlePlayground.args,
     minWidth: 150,
   },
   EllipsisText: {
     customPath: 'Typography/EllipsisText',
     component: EllipsisText,
-    playgroundRender: EllipsisTextPlayground.render,
+    playgroundRender: EllipsisTextPlayground,
     args: EllipsisTextPlayground.args,
   },
   Footnote: {
     customPath: 'Typography/Footnote',
     component: Footnote,
-    playgroundRender: FootnotePlayground.render,
+    playgroundRender: FootnotePlayground,
     args: FootnotePlayground.args,
   },
   Caption: {
     customPath: 'Typography/Caption',
     component: Caption,
-    playgroundRender: CaptionPlayground.render,
+    playgroundRender: CaptionPlayground,
     args: CaptionPlayground.args,
   },
   Headline: {
     customPath: 'Typography/Headline',
     component: Headline,
-    playgroundRender: HeadlinePlayground.render,
+    playgroundRender: HeadlinePlayground,
     args: HeadlinePlayground.args,
   },
   Paragraph: {
     customPath: 'Typography/Paragraph',
     component: Paragraph,
-    playgroundRender: ParagraphPlayground.render,
+    playgroundRender: ParagraphPlayground,
     args: ParagraphPlayground.args,
   },
   WriteBar: {
     component: WriteBar,
-    playgroundRender: WriteBarPlayground.render,
+    playgroundRender: WriteBarPlayground,
     args: {
       ...WriteBarPlayground.args,
     },
@@ -567,7 +567,7 @@ export const COMPONENTS_DATA: Record<string, ComponentConfigData> = {
   },
   UsersStack: {
     component: UsersStack,
-    playgroundRender: UsersStackPlayground.render,
+    playgroundRender: UsersStackPlayground,
     args: {
       ...UsersStackPlayground.args,
       avatarsPosition: 'block-start',
@@ -575,7 +575,7 @@ export const COMPONENTS_DATA: Record<string, ComponentConfigData> = {
   },
   ToolButton: {
     component: ToolButton,
-    playgroundRender: ToolButtonPlayground.render,
+    playgroundRender: ToolButtonPlayground,
     args: {
       ...ToolButtonPlayground.args,
       IconCompact: Icon20Add,
@@ -585,7 +585,7 @@ export const COMPONENTS_DATA: Record<string, ComponentConfigData> = {
   TabsItem: {
     customPath: 'Tabs/TabsItem',
     component: TabsItem,
-    playgroundRender: TabsItemPlayground.render,
+    playgroundRender: TabsItemPlayground,
     args: {
       ...TabsItemPlayground.args,
       before: <Icon20NewsfeedOutline />,
@@ -594,7 +594,7 @@ export const COMPONENTS_DATA: Record<string, ComponentConfigData> = {
   },
   Tabs: {
     component: Tabs,
-    playgroundRender: TabsPlayground.render,
+    playgroundRender: TabsPlayground,
     decorator: Group,
     args: {
       ...TabsPlayground.args,
@@ -603,28 +603,28 @@ export const COMPONENTS_DATA: Record<string, ComponentConfigData> = {
   },
   Switch: {
     component: Switch,
-    playgroundRender: SwitchPlayground.render,
+    playgroundRender: SwitchPlayground,
     args: SwitchPlayground.args,
   },
   SubnavigationButton: {
     customPath: 'SubnavigationBar/SubnavigationButton',
     component: SubnavigationButton,
-    playgroundRender: SubnavigationButtonPlayground.render,
+    playgroundRender: SubnavigationButtonPlayground,
     args: SubnavigationButtonPlayground.args,
   },
   SubnavigationBar: {
     component: SubnavigationBar,
-    playgroundRender: SubnavigationBarPlayground.render,
+    playgroundRender: SubnavigationBarPlayground,
     args: SubnavigationBarPlayground.args,
   },
   Spinner: {
     component: Spinner,
-    playgroundRender: SpinnerPlayground.render,
+    playgroundRender: SpinnerPlayground,
     args: SpinnerPlayground.args,
   },
   Skeleton: {
     component: Skeleton,
-    playgroundRender: SkeletonPlayground.render,
+    playgroundRender: SkeletonPlayground,
     args: {
       ...SkeletonPlayground.args,
       style: {
@@ -635,7 +635,7 @@ export const COMPONENTS_DATA: Record<string, ComponentConfigData> = {
   },
   SimpleCell: {
     component: SimpleCell,
-    playgroundRender: SimpleCellPlayground.render,
+    playgroundRender: SimpleCellPlayground,
     decorator: Group,
     args: {
       ...SimpleCellPlayground.args,
@@ -655,7 +655,7 @@ export const COMPONENTS_DATA: Record<string, ComponentConfigData> = {
   },
   Search: {
     component: Search,
-    playgroundRender: SearchPlayground.render,
+    playgroundRender: SearchPlayground,
     decorator: Group,
     args: SearchPlayground.args,
     minWidth: 300,
@@ -663,12 +663,12 @@ export const COMPONENTS_DATA: Record<string, ComponentConfigData> = {
   },
   ScrollArrow: {
     component: ScrollArrow,
-    playgroundRender: ScrollArrowPlayground.render,
+    playgroundRender: ScrollArrowPlayground,
     args: ScrollArrowPlayground.args,
   },
   RichCell: {
     component: RichCell,
-    playgroundRender: RichCellPlayground.render,
+    playgroundRender: RichCellPlayground,
     decorator: Group,
     args: {
       ...RichCellPlayground.args,
@@ -678,7 +678,7 @@ export const COMPONENTS_DATA: Record<string, ComponentConfigData> = {
   },
   Progress: {
     component: Progress,
-    playgroundRender: ProgressPlayground.render,
+    playgroundRender: ProgressPlayground,
     args: {
       ...ProgressPlayground.args,
       value: 30,
@@ -687,24 +687,24 @@ export const COMPONENTS_DATA: Record<string, ComponentConfigData> = {
   },
   Placeholder: {
     component: Placeholder,
-    playgroundRender: PlaceholderPlayground.render,
+    playgroundRender: PlaceholderPlayground,
     args: PlaceholderPlayground.args,
     minWidth: 300,
   },
   PanelSpinner: {
     customPath: 'Panel/PanelSpinner',
     component: PanelSpinner,
-    playgroundRender: PanelSpinnerPlayground.render,
+    playgroundRender: PanelSpinnerPlayground,
     args: PanelSpinnerPlayground.args,
   },
   Pagination: {
     component: Pagination,
-    playgroundRender: PaginationPlayground.render,
+    playgroundRender: PaginationPlayground,
     args: PaginationPlayground.args,
   },
   ModalCardBase: {
     component: ModalCardBase,
-    playgroundRender: ModalCardBasePlayground.render,
+    playgroundRender: ModalCardBasePlayground,
     args: {
       ...ModalCardBasePlayground.args,
       actions: (
@@ -748,7 +748,7 @@ export const COMPONENTS_DATA: Record<string, ComponentConfigData> = {
   },
   MiniInfoCell: {
     component: MiniInfoCell,
-    playgroundRender: MiniInfoCellPlayground.render,
+    playgroundRender: MiniInfoCellPlayground,
     args: {
       ...MiniInfoCellPlayground.args,
       before: <Icon20ArticleOutline />,
@@ -758,47 +758,47 @@ export const COMPONENTS_DATA: Record<string, ComponentConfigData> = {
   },
   Mark: {
     component: Mark,
-    playgroundRender: MarkPlayground.render,
+    playgroundRender: MarkPlayground,
     args: MarkPlayground.args,
   },
   List: {
     customPath: 'Cell/List',
     component: List,
-    playgroundRender: ListPlayground.render,
+    playgroundRender: ListPlayground,
     args: ListPlayground.args,
     minWidth: 300,
   },
   InfoRow: {
     component: InfoRow,
-    playgroundRender: InfoRowPlayground.render,
+    playgroundRender: InfoRowPlayground,
     args: InfoRowPlayground.args,
   },
   Image: {
     component: Image,
-    playgroundRender: ImagePlayground.render,
+    playgroundRender: ImagePlayground,
     args: ImagePlayground.args,
   },
   HorizontalCell: {
     component: HorizontalCell,
-    playgroundRender: HorizontalCellPlayground.render,
+    playgroundRender: HorizontalCellPlayground,
     decorator: Group,
     args: HorizontalCellPlayground.args,
     minWidth: 400,
   },
   GridAvatar: {
     component: GridAvatar,
-    playgroundRender: GridAvatarPlayground.render,
+    playgroundRender: GridAvatarPlayground,
     args: GridAvatarPlayground.args,
   },
   Gradient: {
     component: Gradient,
-    playgroundRender: GradientPlayground.render,
+    playgroundRender: GradientPlayground,
     args: GradientPlayground.args,
     minWidth: 300,
   },
   Gallery: {
     component: Gallery,
-    playgroundRender: GalleryPlayground.render,
+    playgroundRender: GalleryPlayground,
     args: {
       ...GalleryPlayground.args,
       showArrows: true,
@@ -811,24 +811,24 @@ export const COMPONENTS_DATA: Record<string, ComponentConfigData> = {
   },
   Counter: {
     component: Counter,
-    playgroundRender: CounterPlayground.render,
+    playgroundRender: CounterPlayground,
     args: CounterPlayground.args,
   },
   ContentCard: {
     component: ContentCard,
-    playgroundRender: ContentCardPlayground.render,
+    playgroundRender: ContentCardPlayground,
     args: ContentCardPlayground.args,
     minWidth: 300,
   },
   ContentBadge: {
     component: ContentBadge,
-    playgroundRender: ContentBadgePlayground.render,
+    playgroundRender: ContentBadgePlayground,
     args: ContentBadgePlayground.args,
     minWidth: 300,
   },
   CellButton: {
     component: CellButton,
-    playgroundRender: CellButtonPlayground.render,
+    playgroundRender: CellButtonPlayground,
     args: {
       ...CellButtonPlayground.args,
       before: <Icon28AddOutline />,
@@ -836,14 +836,14 @@ export const COMPONENTS_DATA: Record<string, ComponentConfigData> = {
   },
   CellButtonGroup: {
     component: CellButtonGroup,
-    playgroundRender: CellButtonGroupPlayground.render,
+    playgroundRender: CellButtonGroupPlayground,
     args: CellButtonGroupPlayground.args,
     decorator: Group,
     minWidth: 300,
   },
   Cell: {
     component: Cell,
-    playgroundRender: CellPlayground.render,
+    playgroundRender: CellPlayground,
     decorator: Group,
     args: {
       ...CellPlayground.args,
@@ -853,14 +853,14 @@ export const COMPONENTS_DATA: Record<string, ComponentConfigData> = {
   },
   CardScroll: {
     component: CardScroll,
-    playgroundRender: CardScrollPlayground.render,
+    playgroundRender: CardScrollPlayground,
     decorator: Group,
     args: CardScrollPlayground.args,
     minWidth: 300,
   },
   Card: {
     component: Card,
-    playgroundRender: CardPlayground.render,
+    playgroundRender: CardPlayground,
     decorator: Group,
     args: {
       ...CardPlayground.args,
@@ -872,17 +872,17 @@ export const COMPONENTS_DATA: Record<string, ComponentConfigData> = {
   },
   ButtonGroup: {
     component: ButtonGroup,
-    playgroundRender: ButtonGroupPlayground.render,
+    playgroundRender: ButtonGroupPlayground,
     args: ButtonGroupPlayground.args,
   },
   Badge: {
     component: Badge,
-    playgroundRender: BadgePlayground.render,
+    playgroundRender: BadgePlayground,
     args: BadgePlayground.args,
   },
   Banner: {
     component: Banner,
-    playgroundRender: BannerPlayground.render,
+    playgroundRender: BannerPlayground,
     decorator: Group,
     args: {
       ...BannerPlayground.args,
@@ -897,7 +897,7 @@ export const COMPONENTS_DATA: Record<string, ComponentConfigData> = {
   },
   Accordion: {
     component: Accordion,
-    playgroundRender: AccordionPlayground.render,
+    playgroundRender: AccordionPlayground,
     decorator: Group,
     args: {
       ...AccordionPlayground.args,
@@ -906,19 +906,19 @@ export const COMPONENTS_DATA: Record<string, ComponentConfigData> = {
   },
   Avatar: {
     component: Avatar,
-    playgroundRender: AvatarPlayground.render,
+    playgroundRender: AvatarPlayground,
     args: AvatarPlayground.args,
   },
   FormItem: {
     component: FormItem,
-    playgroundRender: FormItemPlayground.render,
+    playgroundRender: FormItemPlayground,
     args: FormItemPlayground.args,
     minWidth: 150,
     maxWidth: 150,
   },
   Select: {
     component: Select,
-    playgroundRender: SelectPlayground.render,
+    playgroundRender: SelectPlayground,
     args: {
       ...SelectPlayground.args,
       placeholder: 'Placeholder',
@@ -926,7 +926,7 @@ export const COMPONENTS_DATA: Record<string, ComponentConfigData> = {
   },
   Checkbox: {
     component: Checkbox,
-    playgroundRender: CheckboxPlayground.render,
+    playgroundRender: CheckboxPlayground,
     args: {
       ...CheckboxPlayground.args,
       children: 'Чекбокс',
@@ -936,7 +936,7 @@ export const COMPONENTS_DATA: Record<string, ComponentConfigData> = {
   },
   ChipsInput: {
     component: ChipsInput,
-    playgroundRender: ChipsInputPlayground.render,
+    playgroundRender: ChipsInputPlayground,
     args: {
       ...ChipsInputPlayground.args,
       value: [
@@ -953,7 +953,7 @@ export const COMPONENTS_DATA: Record<string, ComponentConfigData> = {
   },
   ChipsSelect: {
     component: ChipsSelect,
-    playgroundRender: ChipsSelectPlayground.render,
+    playgroundRender: ChipsSelectPlayground,
     args: {
       ...ChipsSelectPlayground.args,
       value: [
@@ -967,7 +967,7 @@ export const COMPONENTS_DATA: Record<string, ComponentConfigData> = {
   },
   Calendar: {
     component: Calendar,
-    playgroundRender: CalendarPlayground.render,
+    playgroundRender: CalendarPlayground,
     args: {
       ...CalendarPlayground.args,
       value: new Date('2023-09-01T07:40:00.000Z'),
@@ -975,7 +975,7 @@ export const COMPONENTS_DATA: Record<string, ComponentConfigData> = {
   },
   CalendarRange: {
     component: CalendarRange,
-    playgroundRender: CalendarRangePlayground.render,
+    playgroundRender: CalendarRangePlayground,
     args: {
       ...CalendarRangePlayground.args,
       startDate: new Date('2023-09-01T07:40:00.000Z'),
@@ -984,12 +984,12 @@ export const COMPONENTS_DATA: Record<string, ComponentConfigData> = {
   },
   Button: {
     component: Button,
-    playgroundRender: ButtonPlayground.render,
+    playgroundRender: ButtonPlayground,
     args: ButtonPlayground.args,
   },
   DateInput: {
     component: DateInput,
-    playgroundRender: DateInputPlayground.render,
+    playgroundRender: DateInputPlayground,
     args: {
       ...DateInputPlayground.args,
       value: new Date(),
@@ -998,7 +998,7 @@ export const COMPONENTS_DATA: Record<string, ComponentConfigData> = {
   },
   DateRangeInput: {
     component: DateRangeInput,
-    playgroundRender: DateRangeInputPlayground.render,
+    playgroundRender: DateRangeInputPlayground,
     args: {
       ...DateRangeInputPlayground.args,
       startDate: new Date(),
@@ -1008,12 +1008,12 @@ export const COMPONENTS_DATA: Record<string, ComponentConfigData> = {
   },
   FormLayoutGroup: {
     component: FormLayoutGroup,
-    playgroundRender: FormLayoutGroupPlayground.render,
+    playgroundRender: FormLayoutGroupPlayground,
     args: FormLayoutGroupPlayground.args,
   },
   CardGrid: {
     component: CardGrid,
-    playgroundRender: CardGridPlayground.render,
+    playgroundRender: CardGridPlayground,
     decorator: Group,
     args: CardGridPlayground.args,
     minWidth: 300,
@@ -1021,7 +1021,7 @@ export const COMPONENTS_DATA: Record<string, ComponentConfigData> = {
   },
   DropZone: {
     component: DropZone,
-    playgroundRender: DropZonePlayground.render,
+    playgroundRender: DropZonePlayground,
     decorator: Group,
     args: DropZonePlayground.args,
     minWidth: 300,
@@ -1029,18 +1029,18 @@ export const COMPONENTS_DATA: Record<string, ComponentConfigData> = {
   },
   File: {
     component: File,
-    playgroundRender: FilePlayground.render,
+    playgroundRender: FilePlayground,
     args: FilePlayground.args,
   },
   FormStatus: {
     component: FormStatus,
-    playgroundRender: FormStatusPlayground.render,
+    playgroundRender: FormStatusPlayground,
     args: FormStatusPlayground.args,
     minWidth: 300,
   },
   Input: {
     component: Input,
-    playgroundRender: InputPlayground.render,
+    playgroundRender: InputPlayground,
     args: {
       ...InputPlayground.args,
       value: 'Текст',
@@ -1049,25 +1049,25 @@ export const COMPONENTS_DATA: Record<string, ComponentConfigData> = {
   },
   Radio: {
     component: Radio,
-    playgroundRender: RadioPlayground.render,
+    playgroundRender: RadioPlayground,
     args: RadioPlayground.args,
     minWidth: 145,
   },
   RadioGroup: {
     component: RadioGroup,
-    playgroundRender: RadioGroupPlayground.render,
+    playgroundRender: RadioGroupPlayground,
     args: RadioGroupPlayground.args,
     minWidth: 200,
   },
   SegmentedControl: {
     component: SegmentedControl,
-    playgroundRender: SegmentedControlPlayground.render,
+    playgroundRender: SegmentedControlPlayground,
     args: SegmentedControlPlayground.args,
     minWidth: 300,
   },
   Slider: {
     component: Slider,
-    playgroundRender: SliderPlayground.render,
+    playgroundRender: SliderPlayground,
     decorator: Group,
     args: {
       ...SliderPlayground.args,
@@ -1077,7 +1077,7 @@ export const COMPONENTS_DATA: Record<string, ComponentConfigData> = {
   },
   Textarea: {
     component: Textarea,
-    playgroundRender: TextareaPlayground.render,
+    playgroundRender: TextareaPlayground,
     args: {
       ...TextareaPlayground.args,
       value: 'Поле ввода',
@@ -1087,13 +1087,13 @@ export const COMPONENTS_DATA: Record<string, ComponentConfigData> = {
   },
   SelectionControl: {
     component: SelectionControl,
-    playgroundRender: SelectionControlPlayground.render,
+    playgroundRender: SelectionControlPlayground,
     args: SelectionControlPlayground.args,
     minWidth: 150,
   },
   FloatingArrow: {
     component: FloatingArrow,
-    playgroundRender: FloatingArrowPlayground.render,
+    playgroundRender: FloatingArrowPlayground,
     args: FloatingArrowPlayground.args,
     decorator: ({ children }) => (
       <div
