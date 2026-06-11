@@ -11,7 +11,7 @@ const Component: React.FC<{
 };
 
 export const App = () => {
-  const appearance: AppearanceTypeAlias = AppearanceAlias.LIGHT;
+  const _appearance: AppearanceTypeAlias = AppearanceAlias.LIGHT;
 
   return (
     <React.Fragment>

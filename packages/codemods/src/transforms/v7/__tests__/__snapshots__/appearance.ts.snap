@@ -11,9 +11,9 @@ const Component: React.FC<{
 };
 
 export const App = () => {
-  const appearance: ColorSchemeType = ColorScheme.LIGHT;
+  const _appearance: ColorSchemeType = ColorScheme.LIGHT;
 
-  const fromHookAppearance = useColorScheme();
+  const _fromHookAppearance = useColorScheme();
 
   return (
     <React.Fragment>
@@ -37,7 +37,7 @@ const Component: React.FC<{
 };
 
 export const App = () => {
-  const appearance: AppearanceTypeAlias = AppearanceAlias.LIGHT;
+  const _appearance: AppearanceTypeAlias = AppearanceAlias.LIGHT;
 
   return (
     <React.Fragment>
