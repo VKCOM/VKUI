@@ -23,7 +23,7 @@ export interface MiniInfoCellProps
       TappableOmitProps,
       'hoverMode' | 'activeMode' | 'hovered' | 'activated' | 'hasHover' | 'hasActive'
     >,
-    RootComponentProps<HTMLDivElement> {
+    RootComponentProps<HTMLElement> {
   /**
    * Иконка слева.<br />
    * Рекомендуется использовать иконки размера 20.
