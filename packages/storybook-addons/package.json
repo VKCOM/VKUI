@@ -23,11 +23,21 @@
     },
     "./source-button": {
       "import": "./src/addons/source-button/preset.js"
+    },
+    "./liveCodeEditor": {
+      "import": "./src/addons/liveCodeEditor/preset.js"
     }
   },
   "files": [
     "src"
   ],
+  "dependencies": {
+    "@babel/standalone": "^7.0.0",
+    "@vkontakte/vkjs": "^2.0.2",
+    "@vkontakte/vkui": "^8.2.0",
+    "monaco-editor": "^0.52.0",
+    "prettier": "^3.0.0"
+  },
   "peerDependencies": {
     "@storybook/icons": ">=2.0.0",
     "@storybook/react-vite": ">=10.0.0",

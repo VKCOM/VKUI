@@ -49,3 +49,9 @@ export const Playground: StoryFn<PlatformProviderProps> = (props: PlatformProvid
     </PlatformProvider>
   );
 };
+
+Playground.parameters = {
+  liveCodeEditor: {
+    scope: { DisplayPlatformProvider },
+  },
+};

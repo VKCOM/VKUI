@@ -12,16 +12,20 @@ import { SplitLayout } from '../SplitLayout/SplitLayout';
 import { View } from '../View/View';
 import { SplitCol, type SplitColProps } from './SplitCol';
 
+const panels = ['panel 1', 'panel 2'];
+
 const story: Meta<SplitColProps> = {
   title: 'Layout/SplitLayout/SplitCol',
   component: SplitCol,
-  parameters: createStoryParameters('SplitCol', CanvasFullLayout, DisableCartesianParam),
+  parameters: createStoryParameters('SplitCol', CanvasFullLayout, DisableCartesianParam, {
+    liveCodeEditor: {
+      scope: { panels },
+    },
+  }),
   tags: ['Раскладка'],
 };
 
 export default story;
-
-const panels = ['panel 1', 'panel 2'];
 
 export const Playground: StoryFn<SplitColProps> = (args: SplitColProps) => {
   const [panel, setPanel] = React.useState(panels[0]);

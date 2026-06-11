@@ -48,7 +48,7 @@ export const Playground: Story = (args: PopoverProps) => (
   </Popover>
 );
 
-const PopoverWithTriggerHover = () => {
+function PopoverWithTriggerHover() {
   return (
     <Popover
       trigger="hover"
@@ -66,9 +66,9 @@ const PopoverWithTriggerHover = () => {
       </Button>
     </Popover>
   );
-};
+}
 
-const PopoverWithTriggerClick = () => {
+function PopoverWithTriggerClick() {
   return (
     <Popover
       noStyling
@@ -97,9 +97,9 @@ const PopoverWithTriggerClick = () => {
       </Button>
     </Popover>
   );
-};
+}
 
-const PopoverWithTriggerFocus = () => {
+function PopoverWithTriggerFocus() {
   return (
     <Popover
       trigger="focus"
@@ -127,9 +127,9 @@ const PopoverWithTriggerFocus = () => {
       </Button>
     </Popover>
   );
-};
+}
 
-const PopoverWithAllTriggers = () => {
+function PopoverWithAllTriggers() {
   return (
     <Popover
       trigger={['click', 'hover', 'focus']}
@@ -147,9 +147,9 @@ const PopoverWithAllTriggers = () => {
       </Button>
     </Popover>
   );
-};
+}
 
-const PopoverWithTriggerManual = () => {
+function PopoverWithTriggerManual() {
   const [shown, setShown] = React.useState(false);
 
   const handleShownChange: PopoverOnShownChange = React.useCallback((value, reason) => {
@@ -194,7 +194,7 @@ const PopoverWithTriggerManual = () => {
       </Button>
     </Popover>
   );
-};
+}
 
 export const Example: Story = () => {
   return (
@@ -206,4 +206,16 @@ export const Example: Story = () => {
       <PopoverWithTriggerManual />
     </Flex>
   );
+};
+
+Example.parameters = {
+  liveCodeEditor: {
+    scope: {
+      PopoverWithTriggerHover,
+      PopoverWithAllTriggers,
+      PopoverWithTriggerManual,
+      PopoverWithTriggerClick,
+      PopoverWithTriggerFocus,
+    },
+  },
 };

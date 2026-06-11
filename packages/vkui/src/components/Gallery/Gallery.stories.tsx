@@ -7,7 +7,13 @@ import { Gallery, type GalleryProps } from './Gallery';
 const story: Meta<GalleryProps> = {
   title: 'Data Display/Gallery',
   component: Gallery,
-  parameters: createStoryParameters('Gallery', CanvasFullLayout, DisableCartesianParam),
+  parameters: createStoryParameters('Gallery', CanvasFullLayout, DisableCartesianParam, {
+    liveCodeEditor: {
+      scope: {
+        getValueByKey,
+      },
+    },
+  }),
   tags: ['Отображение данных'],
 };
 

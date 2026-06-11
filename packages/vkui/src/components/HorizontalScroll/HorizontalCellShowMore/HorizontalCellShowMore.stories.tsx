@@ -81,11 +81,23 @@ Playground.args = {
   height: 96,
 };
 
+Playground.parameters = {
+  liveCodeEditor: {
+    scope: { CELL_ITEMS, getNotTooBigHeightBySize },
+  },
+};
+
 export const Small: Story = Playground.bind({});
 
 Small.args = {
   size: 's',
   height: 56,
+};
+
+Small.parameters = {
+  liveCodeEditor: {
+    disabled: true,
+  },
 };
 
 export const Middle: Story = Playground.bind({});
@@ -95,10 +107,22 @@ Middle.args = {
   height: 88,
 };
 
+Middle.parameters = {
+  liveCodeEditor: {
+    disabled: true,
+  },
+};
+
 export const WithCustomText: Story = Playground.bind({});
 
 WithCustomText.args = {
   size: 'm',
   height: 88,
   children: 'Show More',
+};
+
+WithCustomText.parameters = {
+  liveCodeEditor: {
+    disabled: true,
+  },
 };

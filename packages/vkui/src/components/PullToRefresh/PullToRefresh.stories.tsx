@@ -10,17 +10,21 @@ import { Group } from '../Group/Group';
 import { List } from '../List/List';
 import { PullToRefresh, type PullToRefreshProps } from './PullToRefresh';
 
+const initUsers = getRandomUsers(20);
+
 const story: Meta<PullToRefreshProps> = {
   title: 'Feedback/PullToRefresh',
   component: PullToRefresh,
-  parameters: createStoryParameters('PullToRefresh', CanvasFullLayout, DisableCartesianParam),
+  parameters: createStoryParameters('PullToRefresh', CanvasFullLayout, DisableCartesianParam, {
+    liveCodeEditor: {
+      scope: { initUsers },
+    },
+  }),
   decorators: [withSinglePanel, withVKUILayout],
   tags: ['Обратная связь'],
 };
 
 export default story;
-
-const initUsers = getRandomUsers(20);
 
 export const Example: StoryFn<PullToRefreshProps> = () => {
   const [users, setUsers] = React.useState(initUsers);

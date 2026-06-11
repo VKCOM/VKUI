@@ -65,3 +65,9 @@ WithCustomWrapper.args = {
   children: 'Алексей, Илья, Михаил и ещё 1 человек',
   avatarsPosition: 'inline-start',
 };
+
+WithCustomWrapper.parameters = {
+  liveCodeEditor: {
+    scope: { AvatarWrapper },
+  },
+};

@@ -12,10 +12,22 @@ import { ModalRootContext } from '../ModalRoot/ModalRootContext';
 import { PanelHeaderButton } from '../PanelHeaderButton/PanelHeaderButton';
 import { ModalPageHeader, type ModalPageHeaderProps } from './ModalPageHeader';
 
+const MODAL_ID = 'MODAL_ID';
+
 const story: Meta<ModalPageHeaderProps> = {
   title: 'Modals/ModalPageHeader',
   component: ModalPageHeader,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: {
+    ...CanvasFullLayout,
+    ...DisableCartesianParam,
+    liveCodeEditor: {
+      scope: {
+        MODAL_ID,
+        HeaderButton,
+        ModalWrapper,
+      },
+    },
+  },
   decorators: [withVKUILayout],
   tags: ['Модальные окна'],
 };
@@ -24,12 +36,10 @@ export default story;
 
 type Story = StoryFn<ModalPageHeaderProps>;
 
-const MODAL_ID = 'MODAL_ID';
-
-const HeaderButton = ({ children }: { children: React.ReactNode }) => {
+function HeaderButton({ children }: { children: React.ReactNode }) {
   const { onClose } = React.useContext(ModalRootContext);
   return <PanelHeaderButton onClick={() => onClose?.(MODAL_ID)}>{children}</PanelHeaderButton>;
-};
+}
 
 export const Playground: Story = (args: ModalPageHeaderProps) => {
   const platform = usePlatform();

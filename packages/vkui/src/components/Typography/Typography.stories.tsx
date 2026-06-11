@@ -82,3 +82,22 @@ export const Playground: StoryFn<TypographyOverview> = (args: TypographyOverview
     </div>
   );
 };
+
+Playground.parameters = {
+  liveCodeEditor: {
+    scope: {
+      TypographyWrapper,
+      renderStory,
+      TitleStory,
+      HeadlineStory,
+      TextStory,
+      EllipsisTextStory,
+      ParagraphStory,
+      SubheadStory,
+      FootnoteStory,
+      FootnoteWithCapsStory,
+      CaptionStory,
+      CaptionWithCapsStory,
+    },
+  },
+};

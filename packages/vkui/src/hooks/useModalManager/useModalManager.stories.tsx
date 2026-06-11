@@ -31,12 +31,21 @@ import { useModalManager } from './useModalManager';
 const story: Meta<UseModalManagerProps> = {
   title: 'Utils/useModalManager',
   component: () => <div />,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: {
+    ...CanvasFullLayout,
+    ...DisableCartesianParam,
+    liveCodeEditor: {
+      scope: {
+        ModalCardComponent,
+        ModalPageComponent,
+      },
+    },
+  },
 };
 
 export default story;
 
-const ModalCardComponent = ({
+function ModalCardComponent({
   close,
   update,
   openNextModal,
@@ -45,7 +54,7 @@ const ModalCardComponent = ({
 }: CustomModalProps<
   OpenModalCardProps,
   { openNextModal: (type: 'card' | 'page') => void; modalNumber: number }
->) => {
+>) {
   return (
     <ModalCard
       icon={<Icon56NotificationOutline />}
@@ -73,9 +82,9 @@ const ModalCardComponent = ({
       </FormItem>
     </ModalCard>
   );
-};
+}
 
-const ModalPageComponent = ({
+function ModalPageComponent({
   openNextModal,
   close,
   modalProps,
@@ -83,7 +92,7 @@ const ModalPageComponent = ({
 }: CustomModalProps<
   OpenModalPageProps,
   { openNextModal: (type: 'card' | 'page') => void; modalNumber: number }
->) => {
+>) {
   const platform = usePlatform();
   const { viewWidth } = useAdaptivityConditionalRender();
 
@@ -123,7 +132,7 @@ const ModalPageComponent = ({
       </Group>
     </ModalPage>
   );
-};
+}
 
 export const Playground: StoryFn<UseModalManagerProps> = (props: UseModalManagerProps) => {
   const [api, contextHolder] = useModalManager(props);

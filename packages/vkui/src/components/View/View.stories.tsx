@@ -25,13 +25,22 @@ import { View, type ViewProps } from './View';
 const story: Meta<ViewProps> = {
   title: 'Navigation/View',
   component: View,
-  parameters: createStoryParameters('View', CanvasFullLayout, DisableCartesianParam),
+  parameters: createStoryParameters('View', CanvasFullLayout, DisableCartesianParam, {
+    liveCodeEditor: {
+      scope: {
+        MainPanelContent,
+        ProfilePanelContent,
+        SettingsPanelContent,
+        ConfigProviderOverride,
+      },
+    },
+  }),
   tags: ['Навигация'],
 };
 
 export default story;
 
-const MainPanelContent = ({ onProfileClick }: { onProfileClick: VoidFunction }) => {
+function MainPanelContent({ onProfileClick }: { onProfileClick: VoidFunction }) {
   return (
     <React.Fragment>
       <PanelHeader>Main</PanelHeader>
@@ -40,15 +49,15 @@ const MainPanelContent = ({ onProfileClick }: { onProfileClick: VoidFunction }) 
       </Group>
     </React.Fragment>
   );
-};
+}
 
-const ProfilePanelContent = ({
+function ProfilePanelContent({
   onSettingsClick,
   onBack,
 }: {
   onSettingsClick: VoidFunction;
   onBack: VoidFunction;
-}) => {
+}) {
   return (
     <React.Fragment>
       <PanelHeader before={<PanelHeaderBack onClick={onBack} />}>Профиль</PanelHeader>
@@ -91,9 +100,9 @@ const ProfilePanelContent = ({
       </Group>
     </React.Fragment>
   );
-};
+}
 
-const SettingsPanelContent = ({
+function SettingsPanelContent({
   name,
   onChangeName,
   onBack,
@@ -101,7 +110,7 @@ const SettingsPanelContent = ({
   name: string;
   onChangeName: (val: string) => void;
   onBack: VoidFunction;
-}) => {
+}) {
   const handleNameChange: React.ChangeEventHandler<HTMLInputElement> = React.useCallback(
     (event) => {
       onChangeName(event.target.value.trim());
@@ -120,7 +129,7 @@ const SettingsPanelContent = ({
       </Group>
     </React.Fragment>
   );
-};
+}
 
 export const SwipeBlockExample: StoryFn<ViewProps> = () => {
   const [history, setHistory] = React.useState(['main']);

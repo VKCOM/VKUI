@@ -13,7 +13,11 @@ function getAriaLabel(index: number) {
 const story: Meta<SliderProps> = {
   title: 'Forms/Slider',
   component: Slider,
-  parameters: createStoryParameters('Slider', CanvasFullLayout, DisableCartesianParam),
+  parameters: createStoryParameters('Slider', CanvasFullLayout, DisableCartesianParam, {
+    liveCodeEditor: {
+      scope: { forceRemountKey },
+    },
+  }),
   args: {
     getAriaLabel,
   },
@@ -40,8 +44,9 @@ export default story;
 
 type Story = StoryFn<SliderProps>;
 
-const forceRemountKey = (args: SliderProps | SliderMultipleProps) =>
-  args?.multiple ? 'multiple' : 'single';
+function forceRemountKey(args: SliderProps | SliderMultipleProps): 'multiple' | 'single' {
+  return args?.multiple ? 'multiple' : 'single';
+}
 
 export const Playground: Story = (props: SliderProps | SliderMultipleProps) => (
   <Group>

@@ -17,11 +17,34 @@ interface DemoProps extends UseCSSTransitionOptions {
   duration: number;
 }
 
+const transitionClassNames = {
+  appear: styles.appear,
+  appearing: styles.appearing,
+  appeared: styles.appeared,
+  enter: styles.enter,
+  entering: styles.entering,
+  entered: styles.entered,
+  exit: styles.exit,
+  exiting: styles.exiting,
+  exited: styles.exited,
+};
+
 const story: Meta<DemoProps> = {
   title: 'DevTools/useCSSTransition',
   tags: ['test'], // скрываем из публичной документации, т.к. хук внутренний
   component: () => <div />,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: {
+    ...CanvasFullLayout,
+    ...DisableCartesianParam,
+    liveCodeEditor: {
+      scope: {
+        // eslint-disable-next-line @vkontakte/no-computed-hit-css-modules
+        styles,
+        useCSSTransition,
+        transitionClassNames,
+      },
+    },
+  },
   argTypes: {
     in: { control: { type: 'boolean' } },
     enableAppear: { control: { type: 'boolean' } },
@@ -66,18 +89,6 @@ const story: Meta<DemoProps> = {
 };
 
 export default story;
-
-const transitionClassNames = {
-  appear: styles.appear,
-  appearing: styles.appearing,
-  appeared: styles.appeared,
-  enter: styles.enter,
-  entering: styles.entering,
-  entered: styles.entered,
-  exit: styles.exit,
-  exiting: styles.exiting,
-  exited: styles.exited,
-};
 
 export const WithClassNameAttribute: StoryFn<DemoProps> = ({
   in: inProp,
@@ -169,4 +180,10 @@ export const WithStyleAttribute: StoryFn<DemoProps> = ({
       onTransitionEnd={onTransitionEnd}
     />
   );
+};
+
+WithStyleAttribute.parameters = {
+  liveCodeEditor: {
+    scope: { getTransition },
+  },
 };

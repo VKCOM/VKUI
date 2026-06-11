@@ -51,3 +51,9 @@ export const Playground: Story = (props: LocaleProviderProps) => {
     </LocaleProvider>
   );
 };
+
+Playground.parameters = {
+  liveCodeEditor: {
+    scope: { DisplayLocaleProvider },
+  },
+};
