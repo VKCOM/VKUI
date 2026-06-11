@@ -1,6 +1,8 @@
 import { describe, expect, test, vi } from 'vitest';
 import { randomUUID } from './randomUUID';
 
+const originalCrypto = globalThis.crypto;
+
 describe('generateUUID', () => {
   test('generates a valid UUID v4 format', () => {
     const uuid = randomUUID();
@@ -70,8 +72,6 @@ describe('generateUUID', () => {
   });
 
   describe('fallback when crypto.randomUUID is not available', () => {
-    const originalCrypto = global.crypto;
-
     beforeEach(() => {
       vi.stubGlobal('crypto', {
         ...originalCrypto,
@@ -85,7 +85,7 @@ describe('generateUUID', () => {
     });
 
     afterEach(() => {
-      vi.unstubAllGlobals();
+      vi.stubGlobal('crypto', originalCrypto);
     });
 
     test('uses crypto.getRandomValues when available', () => {
@@ -118,7 +118,6 @@ describe('generateUUID', () => {
 
   describe('fallback when crypto.randomUUID and crypto.getRandomValues are not available', () => {
     beforeEach(() => {
-      const originalCrypto = globalThis.crypto;
       vi.stubGlobal('crypto', {
         ...originalCrypto,
         randomUUID: undefined,
@@ -127,7 +126,7 @@ describe('generateUUID', () => {
     });
 
     afterEach(() => {
-      vi.unstubAllGlobals();
+      vi.stubGlobal('crypto', originalCrypto);
     });
 
     test('uses Math.random as fallback', () => {
@@ -175,7 +174,7 @@ describe('generateUUID', () => {
     });
 
     afterEach(() => {
-      vi.unstubAllGlobals();
+      vi.stubGlobal('crypto', originalCrypto);
     });
 
     test('uses Math.random as fallback', () => {

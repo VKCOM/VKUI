@@ -129,13 +129,96 @@ vi.stubGlobal(
 vi.stubGlobal('scrollTo', vi.fn());
 Element.prototype.scrollTo = vi.fn();
 
-// Mock ResizeObserver for JSDOM
+type MockResizeObserverEntry = Partial<ResizeObserverEntry> & {
+  target: Element;
+  contentRect: DOMRectReadOnly;
+};
+
 class MockResizeObserver {
-  observe = vi.fn();
-  unobserve = vi.fn();
-  disconnect = vi.fn();
+  public static instances: MockResizeObserver[] = [];
+
+  private readonly observedTargets = new Set<Element>();
+
+  public observe = vi.fn((target: Element) => {
+    this.observedTargets.add(target);
+  });
+  public unobserve = vi.fn((target: Element) => {
+    this.observedTargets.delete(target);
+  });
+  public disconnect = vi.fn(() => {
+    this.observedTargets.clear();
+  });
+
+  private readonly callback: ResizeObserverCallback;
+
+  public constructor(callback: ResizeObserverCallback) {
+    this.callback = callback;
+    MockResizeObserver.instances.push(this);
+  }
+
+  public emit(entries: MockResizeObserverEntry[]) {
+    this.callback(entries as ResizeObserverEntry[], this as unknown as ResizeObserver);
+  }
+
+  public emitObserved() {
+    const entries = [...this.observedTargets].map((target) => ({
+      target,
+      contentRect: DOMRect.fromRect({ width: 0, height: 0 }),
+    }));
+    this.emit(entries);
+  }
+
+  /**
+   * Сбрасываем состояние мока между тестами, но не обнуляем `instances`:
+   * в `useResizeObserver` пул (`resizePools`) живёт весь прогон и переиспользует
+   * один и тот же `ResizeObserver`. Если очистить только массив `instances`,
+   * `triggerAll` перестаёт вызывать колбэки для уже существующего инстанса.
+   */
+  public static reset() {
+    for (const instance of MockResizeObserver.instances) {
+      instance.observedTargets.clear();
+      instance.observe.mockClear();
+      instance.unobserve.mockClear();
+      instance.disconnect.mockClear();
+    }
+  }
 }
+
+function getResizeObserverForTarget(target: Element): MockResizeObserver {
+  const observer = MockResizeObserver.instances.find((instance) =>
+    instance.observe.mock.calls.some(([observedTarget]) => observedTarget === target),
+  );
+  if (!observer) {
+    throw new Error('ResizeObserver for target was not found');
+  }
+  return observer;
+}
+
 vi.stubGlobal('ResizeObserver', MockResizeObserver);
+vi.stubGlobal('__resizeObserverMock', {
+  reset: () => MockResizeObserver.reset(),
+  getInstances: () => MockResizeObserver.instances,
+  getObserverForTarget: (target: Element) => getResizeObserverForTarget(target),
+  emitForTarget: (target: Element, entries: MockResizeObserverEntry[] = []) => {
+    getResizeObserverForTarget(target).emit(entries);
+  },
+  emitAll: (entries: MockResizeObserverEntry[] = []) => {
+    MockResizeObserver.instances.forEach((observer) => observer.emit(entries));
+  },
+  triggerAll: () => {
+    MockResizeObserver.instances.forEach((observer) => observer.emitObserved());
+  },
+  triggerForTarget: (target: Element, rect: { width?: number; height?: number } = {}) => {
+    const { width = 0, height = 0 } = rect;
+    getResizeObserverForTarget(target).emit([
+      { target, contentRect: DOMRect.fromRect({ width, height }) },
+    ]);
+  },
+});
+
+beforeEach(() => {
+  globalThis.__resizeObserverMock.reset();
+});
 
 class FakeTransitionEvent extends Event {
   propertyName: string;

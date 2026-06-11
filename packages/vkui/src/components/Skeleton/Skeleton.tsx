@@ -5,10 +5,9 @@ import { classNames } from '@vkontakte/vkjs';
 import { mergeStyle } from '../../helpers/mergeStyle';
 import { useBooleanState } from '../../hooks/useBooleanState';
 import { useExternRef } from '../../hooks/useExternRef';
-import { useResizeObserver } from '../../hooks/useResizeObserver';
+import { useWindowResizeObserver } from '../../hooks/useResizeObserver/useWindowResizeObserver';
 import { useStateWithPrev } from '../../hooks/useStateWithPrev';
 import { millisecondsInSecond } from '../../lib/date';
-import { useDOM } from '../../lib/dom';
 import { animationVisibilityDelayStyles } from '../../styles/animationVisibilityDelay';
 import type { CSSCustomProperties, HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
@@ -68,7 +67,6 @@ function useSkeletonSyncAnimation(disableAnimation: boolean, duration = 1.5) {
  * Вычисляет позицию скелетона.
  */
 function useSkeletonPosition(rootRef: React.RefObject<HTMLElement | null>) {
-  const { window } = useDOM();
   const [[skeletonGradientLeft, prevSkeletonGradientLeft], setSkeletonGradientLeft] =
     useStateWithPrev('0');
 
@@ -88,7 +86,9 @@ function useSkeletonPosition(rootRef: React.RefObject<HTMLElement | null>) {
   }, [prevSkeletonGradientLeft, rootRef, setSkeletonGradientLeft]);
 
   React.useEffect(updatePosition, [updatePosition]);
-  useResizeObserver(window, updatePosition);
+  useWindowResizeObserver({
+    onResize: updatePosition,
+  });
 
   return skeletonGradientLeft;
 }

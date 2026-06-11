@@ -1,4 +1,4 @@
-import { createRef } from 'react';
+import { act, createRef } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
 import { Platform } from '../../lib/platform';
@@ -235,7 +235,10 @@ describe(Textarea, () => {
       const onResize = vi.fn();
       render(<Textarea value="" onResize={onResize} />);
       mockTextareaScrollHeight();
-      fireEvent(window, new Event('resize'));
+      act(() => {
+        globalThis.__resizeObserverMock.triggerAll();
+        vi.runAllTimers();
+      });
       expect(onResize).toHaveBeenCalledTimes(2);
     });
     it("won't resize if parent is invisible", () => {
