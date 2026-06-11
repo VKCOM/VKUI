@@ -20,6 +20,8 @@ on:
 
 run-name: Deprecate version ${{ inputs.version }}
 
+permissions: {}
+
 jobs:
   deprecate:
     runs-on: ubuntu-slim
@@ -34,6 +36,15 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
 
       - name: Deprecate version
-        run: npm deprecate "${{ github.event.inputs.package_name }}@${{ github.event.inputs.version }}" "${{ github.event.inputs.reason }}"
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPMJS_PUBLISH_TOKEN }}
+          PACKAGE_NAME: ${{ inputs.package_name }}
+          REASON: ${{ inputs.reason }}
+          VERSION: ${{ inputs.version }}
+        run: |
+          if [[ ! "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+([-.+][0-9A-Za-z.-]+)?$ ]]; then
+            echo "::error::Invalid semver version"
+            exit 1
+          fi
+
+          npm deprecate "${PACKAGE_NAME}@${VERSION}" "$REASON"

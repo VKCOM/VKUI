@@ -28,16 +28,19 @@ on:
           - 'latest'
           - 'legacy'
 
+permissions:
+  contents: read
+
 jobs:
   payload:
     name: Prepare payload data
     runs-on: ubuntu-slim
     outputs:
-      package_name: ${{ steps.publish_workflow_payload.outputs.package_name || inputs.package_name }}
-      npm_tag: ${{ steps.publish_workflow_payload.outputs.npm_tag || inputs.npm_tag }}
-      git_release_tag: ${{ steps.publish_workflow_payload.outputs.git_release_tag || inputs.git_release_tag }}
-      close_milestone: ${{ steps.publish_workflow_payload.outputs.close_milestone || github.event_name == 'workflow_dispatch' }}
-      branch: ${{ steps.publish_workflow_payload.outputs.branch || github.ref }}
+      package_name: ${{ steps.publish_workflow_payload.outputs.package_name || steps.manual_payload.outputs.package_name }}
+      npm_tag: ${{ steps.publish_workflow_payload.outputs.npm_tag || steps.manual_payload.outputs.npm_tag }}
+      git_release_tag: ${{ steps.publish_workflow_payload.outputs.git_release_tag || steps.manual_payload.outputs.git_release_tag }}
+      close_milestone: ${{ steps.publish_workflow_payload.outputs.close_milestone || steps.manual_payload.outputs.close_milestone || 'false' }}
+      branch: ${{ steps.publish_workflow_payload.outputs.branch || steps.manual_payload.outputs.branch }}
     steps:
       - name: Download artifact (if it is 'workflow_run')
         if: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.event == 'workflow_dispatch' && github.event.workflow_run.conclusion == 'success' }}
@@ -52,12 +55,90 @@ jobs:
       - name: Parse artifact
         if: ${{ steps.artifact.conclusion == 'success' }}
         id: publish_workflow_payload
+        shell: bash
         run: |
-          echo "package_name=$(cat publish_workflow_payload/package_name.txt)" >> $GITHUB_OUTPUT
-          echo "npm_tag=$(cat publish_workflow_payload/npm_tag.txt)" >> $GITHUB_OUTPUT
-          echo "git_release_tag=$(cat publish_workflow_payload/git_release_tag.txt)" >> $GITHUB_OUTPUT
-          echo "close_milestone=$(cat publish_workflow_payload/close_milestone.txt)" >> $GITHUB_OUTPUT
-          echo "branch=$(cat publish_workflow_payload/branch.txt)" >> $GITHUB_OUTPUT
+          PACKAGE_NAME="$(tr -d '\r\n' < publish_workflow_payload/package_name.txt)"
+          NPM_TAG="$(tr -d '\r\n' < publish_workflow_payload/npm_tag.txt)"
+          GIT_RELEASE_TAG="$(tr -d '\r\n' < publish_workflow_payload/git_release_tag.txt)"
+          CLOSE_MILESTONE="$(tr -d '\r\n' < publish_workflow_payload/close_milestone.txt)"
+          BRANCH="$(tr -d '\r\n' < publish_workflow_payload/branch.txt)"
+
+          case "$PACKAGE_NAME" in
+            "@vkontakte/vkui"|"@vkontakte/vkui-floating-ui"|"@vkontakte/vkui-date-fns-tz"|"@vkontakte/vkui-codemods"|"@vkontakte/vkui-mcp") ;;
+            *)
+              echo "::error::Invalid package_name payload"
+              exit 1
+              ;;
+          esac
+
+          if [[ ! "$NPM_TAG" =~ ^[A-Za-z0-9._-]+$ ]]; then
+            echo "::error::Invalid npm_tag payload"
+            exit 1
+          fi
+
+          if [[ ! "$GIT_RELEASE_TAG" =~ ^(v[0-9]+\.[0-9]+\.[0-9]+([-.+][0-9A-Za-z.-]+)?|@vkontakte/[A-Za-z0-9._-]+@[0-9]+\.[0-9]+\.[0-9]+([-.+][0-9A-Za-z.-]+)?)$ ]]; then
+            echo "::error::Invalid git_release_tag payload"
+            exit 1
+          fi
+
+          if [[ "$CLOSE_MILESTONE" != "true" && "$CLOSE_MILESTONE" != "false" ]]; then
+            echo "::error::Invalid close_milestone payload"
+            exit 1
+          fi
+
+          if [[ ! "$BRANCH" =~ ^(refs/heads/)?[A-Za-z0-9._/-]+$ ]]; then
+            echo "::error::Invalid branch payload"
+            exit 1
+          fi
+
+          {
+            printf 'package_name=%s\n' "$PACKAGE_NAME"
+            printf 'npm_tag=%s\n' "$NPM_TAG"
+            printf 'git_release_tag=%s\n' "$GIT_RELEASE_TAG"
+            printf 'close_milestone=%s\n' "$CLOSE_MILESTONE"
+            printf 'branch=%s\n' "$BRANCH"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Validate manual payload
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        id: manual_payload
+        shell: bash
+        env:
+          BRANCH: ${{ github.ref }}
+          GIT_RELEASE_TAG: ${{ inputs.git_release_tag }}
+          NPM_TAG: ${{ inputs.npm_tag }}
+          PACKAGE_NAME: ${{ inputs.package_name }}
+        run: |
+          case "$PACKAGE_NAME" in
+            "@vkontakte/vkui"|"@vkontakte/vkui-floating-ui") ;;
+            *)
+              echo "::error::Invalid package_name input"
+              exit 1
+              ;;
+          esac
+
+          if [[ ! "$NPM_TAG" =~ ^(latest|legacy)$ ]]; then
+            echo "::error::Invalid npm_tag input"
+            exit 1
+          fi
+
+          if [[ ! "$GIT_RELEASE_TAG" =~ ^(v[0-9]+\.[0-9]+\.[0-9]+([-.+][0-9A-Za-z.-]+)?|@vkontakte/[A-Za-z0-9._-]+@[0-9]+\.[0-9]+\.[0-9]+([-.+][0-9A-Za-z.-]+)?)$ ]]; then
+            echo "::error::Invalid git_release_tag input"
+            exit 1
+          fi
+
+          if [[ ! "$BRANCH" =~ ^(refs/heads/)?[A-Za-z0-9._/-]+$ ]]; then
+            echo "::error::Invalid branch input"
+            exit 1
+          fi
+
+          {
+            printf 'package_name=%s\n' "$PACKAGE_NAME"
+            printf 'npm_tag=%s\n' "$NPM_TAG"
+            printf 'git_release_tag=%s\n' "$GIT_RELEASE_TAG"
+            printf 'close_milestone=true\n'
+            printf 'branch=%s\n' "$BRANCH"
+          } >> "$GITHUB_OUTPUT"
 
   package_vkui_complete:
     needs: ['payload']
@@ -77,6 +158,10 @@ jobs:
     if: ${{ success() && needs.payload.outputs.package_name == '@vkontakte/vkui-floating-ui' }}
     runs-on: ubuntu-slim
     name: Complete @vkontakte/vkui-floating-ui
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
     steps:
       - name: Checkout
         uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
@@ -86,15 +171,31 @@ jobs:
 
       - name: get vkui-floating-ui version from git release tag
         id: vkui_floating_ui_version
+        env:
+          GIT_RELEASE_TAG: ${{ needs.payload.outputs.git_release_tag }}
         run: |
-          TAG="${{ needs.payload.outputs.git_release_tag }}"
-          VERSION="${TAG##*@}"
-          echo "value=$VERSION" >> $GITHUB_OUTPUT
+          if [[ "$GIT_RELEASE_TAG" =~ ^@vkontakte/vkui-floating-ui@(.+)$ ]]; then
+            VERSION="${BASH_REMATCH[1]}"
+          elif [[ "$GIT_RELEASE_TAG" =~ ^v(.+)$ ]]; then
+            VERSION="${BASH_REMATCH[1]}"
+          else
+            echo "::error::Invalid vkui-floating-ui release tag"
+            exit 1
+          fi
+
+          if [[ ! "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+([-.+][0-9A-Za-z.-]+)?$ ]]; then
+            echo "::error::Invalid vkui-floating-ui version"
+            exit 1
+          fi
+
+          printf 'value=%s\n' "$VERSION" >> "$GITHUB_OUTPUT"
 
       # Обновляем версию vkui-floating-ui в vkui
       - name: update vkui-floating-ui version in vkui
+        env:
+          VKUI_FLOATING_UI_VERSION: ${{ steps.vkui_floating_ui_version.outputs.value }}
         run: |
-          yarn workspace @vkontakte/vkui add @vkontakte/vkui-floating-ui@${{ steps.vkui_floating_ui_version.outputs.value }}
+          yarn workspace @vkontakte/vkui add "@vkontakte/vkui-floating-ui@$VKUI_FLOATING_UI_VERSION"
 
       # Создаем pull request с изменениями в ветке
       - name: Create PR with changes

@@ -10,6 +10,9 @@ on:
 
 run-name: Deduplicate dependencies on ${{ github.ref_name }}
 
+permissions:
+  contents: read
+
 jobs:
   dedupe_deps:
     runs-on: ubuntu-slim

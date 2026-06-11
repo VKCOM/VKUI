@@ -19,6 +19,9 @@ concurrency:
   group: branch-test-coverage-${{ github.ref_name }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 jobs:
   # Создаем кэш для LFS в мастере, чтобы другие ветки могли его получить.
   # Кэш требуется для того, чтобы не превышать лимиты GitHub
@@ -48,6 +51,7 @@ jobs:
     permissions:
       id-token: write
       code-quality: write
+      contents: read
     steps:
       - name: Checkout
         uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
