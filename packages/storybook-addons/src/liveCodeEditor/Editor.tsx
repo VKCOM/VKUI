@@ -195,6 +195,7 @@ export const Editor = ({
     return () => {
       containerRef.current?.removeEventListener('pointerdown', handlePointerDown, true);
       editor.dispose();
+      editor.getModel()?.dispose();
     };
   }, []);
 
