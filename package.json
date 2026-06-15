@@ -59,7 +59,7 @@
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-server-components": "^1.2.0",
     "eslint-plugin-unicorn": "^55.0.0",
-    "happy-css-modules": "^4.0.0",
+    "happy-css-modules": "^5.0.1",
     "husky": "^9.1.6",
     "jsdom": "^29.1.1",
     "lint-staged": "^17.0.7",
