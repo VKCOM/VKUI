@@ -17,16 +17,16 @@ const getLocalAddonPath = (addonName: string) => fileURLToPath(import.meta.resol
 const config: StorybookConfig = {
   stories: ['../docs/**/*.mdx', '../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
   staticDirs: [
-    // нужно для подключения воркеров monaco-editor (liveCodeEditor addon)
+    // нужно для подключения воркеров monaco-editor (live-code-editor addon)
     {
       from: path.resolve(DIRNAME, '../../../node_modules/monaco-editor/esm'),
       to: 'monaco-editor/esm',
     },
-    // нужно для добавления типов react в monaco-editor (liveCodeEditor addon)
+    // нужно для добавления типов react в monaco-editor (live-code-editor addon)
     { from: path.resolve(DIRNAME, '../../../node_modules/@types/react'), to: '@types/react' },
   ],
   addons: [
-    getLocalAddonPath('@vkontakte/storybook-addons/liveCodeEditor'),
+    getLocalAddonPath('@vkontakte/storybook-addons/live-code-editor'),
     getGlobalAddonPath('@storybook/addon-links'),
     getGlobalAddonPath('@storybook/addon-a11y'),
     getGlobalAddonPath('@storybook/addon-designs', 'dist'),

@@ -24,8 +24,8 @@
     "./source-button": {
       "import": "./src/addons/source-button/preset.js"
     },
-    "./liveCodeEditor": {
-      "import": "./src/addons/liveCodeEditor/preset.js"
+    "./live-code-editor": {
+      "import": "./src/addons/live-code-editor/preset.js"
     }
   },
   "files": [
