@@ -4053,7 +4053,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@swc/helpers@npm:^0.5.0, @swc/helpers@npm:^0.5.17, @swc/helpers@npm:^0.5.19, @swc/helpers@npm:^0.5.23":
+"@swc/helpers@npm:^0.5.0, @swc/helpers@npm:^0.5.19, @swc/helpers@npm:^0.5.23":
   version: 0.5.23
   resolution: "@swc/helpers@npm:0.5.23"
   dependencies:
@@ -5281,7 +5281,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vkontakte/icons-sprite@npm:^3.1.1":
+"@vkontakte/icons-sprite@npm:^3.2.1":
   version: 3.2.1
   resolution: "@vkontakte/icons-sprite@npm:3.2.1"
   dependencies:
@@ -5292,15 +5292,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vkontakte/icons@npm:^3.0.0":
-  version: 3.33.0
-  resolution: "@vkontakte/icons@npm:3.33.0"
+"@vkontakte/icons@npm:^3.58.0":
+  version: 3.58.0
+  resolution: "@vkontakte/icons@npm:3.58.0"
   dependencies:
-    "@swc/helpers": "npm:^0.5.17"
-    "@vkontakte/icons-sprite": "npm:^3.1.1"
+    "@swc/helpers": "npm:^0.5.23"
+    "@vkontakte/icons-sprite": "npm:^3.2.1"
   peerDependencies:
     react: ^18 || ^19
-  checksum: 10/2678eb9a36f3176593b92fa9f6a97a3d85ef224f034d06fe5bf09c34758cf772ac74621ff0f8fa3dcad3cdd45301a011d52a774d816e1f1e6615d8db69bd1c78
+  checksum: 10/fa702317fdebf27624ddcc6fa07d4f2f8afb215a9d7a63780f0e77a49da6192e0735651a6189866cd2fb5ca7a57bd86a2c40ef220e34286c0a9ed861be02bd97
   languageName: node
   linkType: hard
 
@@ -5383,7 +5383,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@vkontakte/vkui-docs-theme@workspace:packages/vkui-docs-theme"
   dependencies:
-    "@vkontakte/icons": "npm:^3.0.0"
+    "@vkontakte/icons": "npm:^3.58.0"
     "@vkontakte/vkjs": "npm:^2.0.2"
     "@vkontakte/vkui": "workspace:^"
     "@vkontakte/vkui-tokens": "npm:4.78.1"
@@ -5559,7 +5559,7 @@ __metadata:
     "@swc/helpers": "npm:^0.5.23"
     "@types/node": "npm:*"
     "@types/postcss-import": "npm:^14.0.3"
-    "@vkontakte/icons": "npm:^3.0.0"
+    "@vkontakte/icons": "npm:^3.58.0"
     "@vkontakte/storybook-addons": "workspace:^"
     "@vkontakte/vkjs": "npm:^2.0.2"
     "@vkontakte/vkui-date-fns-tz": "npm:^0.0.6"
