@@ -33,7 +33,9 @@ function copyMdxToPublic() {
     const transformedContent = replacePropsTable(rawContent, docgen);
 
     ensureDirectoryExists(destinationPath);
-    fs.writeFileSync(destinationPath, transformedContent, 'utf-8');
+    // BOM (﻿) заставляет браузер распознавать кодировку UTF-8
+    // независимо от Content-Type заголовка сервера
+    fs.writeFileSync(destinationPath, '﻿' + transformedContent, 'utf-8');
 
     copiedCount++;
   });
