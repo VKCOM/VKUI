@@ -11,18 +11,6 @@ function ensureDirectoryExists(targetPath) {
   fs.mkdirSync(path.dirname(targetPath), { recursive: true });
 }
 
-function createIndexAliasPath(relativeMdxPath) {
-  if (path.basename(relativeMdxPath) !== 'index.mdx') {
-    return undefined;
-  }
-
-  const parentDirectory = path.dirname(relativeMdxPath);
-
-  return parentDirectory === '.'
-    ? path.join(PUBLIC_DIRECTORY, 'index.mdx')
-    : path.join(PUBLIC_DIRECTORY, `${parentDirectory}.mdx`);
-}
-
 function copyMdxToPublic() {
   if (!fs.existsSync(CONTENT_DIRECTORY)) {
     console.warn('⚠️ Директория content не найдена, пропускаем');
@@ -46,12 +34,6 @@ function copyMdxToPublic() {
 
     ensureDirectoryExists(destinationPath);
     fs.writeFileSync(destinationPath, transformedContent, 'utf-8');
-
-    const indexAliasPath = createIndexAliasPath(relativeMdxPath);
-    if (indexAliasPath) {
-      ensureDirectoryExists(indexAliasPath);
-      fs.writeFileSync(indexAliasPath, transformedContent, 'utf-8');
-    }
 
     copiedCount++;
   });

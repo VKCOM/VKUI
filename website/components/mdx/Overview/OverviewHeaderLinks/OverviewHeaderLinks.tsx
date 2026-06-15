@@ -10,7 +10,6 @@ export function OverviewHeaderLinks({
   type = 'component',
   forcedPath,
   forcedName,
-  showOnlyMdx,
 }: OverviewHeaderLinksProps) {
   const {
     normalizePagesResult: { activeMetadata },
@@ -18,7 +17,7 @@ export function OverviewHeaderLinks({
   const fsRoute = useFSRoute();
   const mdxUrl = createMdxUrl(fsRoute);
 
-  if (showOnlyMdx) {
+  if (type === 'doc') {
     return (
       <Subhead>
         <Flex className={styles.header} gap="2xl">

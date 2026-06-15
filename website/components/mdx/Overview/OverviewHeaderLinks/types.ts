@@ -11,10 +11,9 @@ export interface OverviewHeaderLinksProps {
     | 'typography'
     | 'configuration'
     | 'utils';
-  type?: 'component' | 'hook' | undefined;
+  type?: 'component' | 'hook' | 'doc' | undefined;
   forcedPath?: string | undefined;
   forcedName?: string | undefined;
-  showOnlyMdx?: boolean | undefined;
 }
 
 export interface OverviewHeaderLinkProps {

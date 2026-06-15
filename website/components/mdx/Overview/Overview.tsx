@@ -13,11 +13,7 @@ export interface OverviewProps extends Omit<OverviewHeaderLinksProps, 'type'> {
 export function Overview({ children, type, ...restProps }: OverviewProps) {
   return (
     <div className={styles.root}>
-      {type === 'doc' ? (
-        <OverviewHeaderLinks showOnlyMdx />
-      ) : (
-        <OverviewHeaderLinks type={type} {...restProps} />
-      )}
+      <OverviewHeaderLinks type={type} {...restProps} />
       {children}
     </div>
   );

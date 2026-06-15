@@ -22,8 +22,9 @@ export function createStorybookUrl(componentName: string, group: string) {
 }
 
 export function createMdxUrl(fsRoute: string) {
-  const normalized = fsRoute.replace(/\/$/, '') || '/index';
-  return `${normalized}.mdx`;
+  const normalized = fsRoute.replace(/\/$/, '');
+  const basePath = process.env.NEXT_PUBLIC_VKUI_DOCS_BASE_PATH || '';
+  return `${basePath}${normalized}.mdx`;
 }
 
 export function getComponentName(metadata?: FrontMatter) {
