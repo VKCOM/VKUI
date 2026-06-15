@@ -1,5 +1,6 @@
 ---
 description: Компонент для отображения изображений с поддержкой адаптивных размеров, скруглений и позиционированных элементов.
+tags: media
 ---
 
 <Overview group="data-display">
@@ -12,6 +13,7 @@ description: Компонент для отображения изображен
 
 </Overview>
 
+{/* @example-description: Базовый компонент `Image` для отображения изображения заданного размера. */}
 <Playground>
   ```jsx
   <Image size={96} src="https://sun9-51.userapi.com/c857024/v857024436/f927/rG9fac2cuac.jpg" />
@@ -28,6 +30,7 @@ description: Компонент для отображения изображен
 
 ### Единое скругление
 
+{/* @example-description: Скругление всех углов изображения через свойство `borderRadius`. */}
 <Playground>
   ```jsx
   <Image
@@ -40,6 +43,7 @@ description: Компонент для отображения изображен
 
 ### Индивидуальные углы
 
+{/* @example-description: Настройка скругления отдельных углов изображения. */}
 <Playground>
   ```jsx
   <Image
@@ -60,6 +64,7 @@ description: Компонент для отображения изображен
 На случай, если картинка не смогла загрузиться, будет отображаться иконка-заглушка.
 Размер иконки-заглушки должен зависеть от размеров изображения.
 
+{/* @example-description: `Image` с fallback-иконкой для случая ошибки загрузки картинки. */}
 <Playground>
   ```jsx
   <Image fallbackIcon={<Icon3218CircleOutline />} />
@@ -72,6 +77,7 @@ description: Компонент для отображения изображен
 
 Индикатор в правом нижнем углу компонента:
 
+{/* @example-description: Индикатор состояния в углу изображения через `Image.Badge`. */}
 <Playground>
   ```jsx
   <Image src="https://sun9-51.userapi.com/c857024/v857024436/f927/rG9fac2cuac.jpg">
@@ -88,6 +94,7 @@ description: Компонент для отображения изображен
 
 Перекрывающий картинку элемент задаётся через `Image.Overlay`:
 
+{/* @example-description: Оверлей поверх изображения с иконкой действия и постоянной видимостью. */}
 <Playground>
   ```jsx
   <Image src="https://sun9-51.userapi.com/c857024/v857024436/f927/rG9fac2cuac.jpg">
@@ -108,6 +115,7 @@ description: Компонент для отображения изображен
 
 Позиционированный компонент расположенный поверх изображения в произвольном месте задаётся `Image.FloatElement`:
 
+{/* @example-description: Позиционированная кнопка поверх изображения через `Image.FloatElement`. */}
 <Playground>
   ```jsx
   <Image size={96} src="https://sun9-51.userapi.com/c857024/v857024436/f927/rG9fac2cuac.jpg">

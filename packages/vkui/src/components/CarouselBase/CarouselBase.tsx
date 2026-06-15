@@ -449,6 +449,7 @@ export const CarouselBase = ({
         canSlideRight: calculateCanSlideRight(),
       }));
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [slideIndex],
   );
 
@@ -463,7 +464,7 @@ export const CarouselBase = ({
   );
 
   useMutationObserver(layerRef, initializeSlides);
-
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useIsomorphicLayoutEffect(initializeSlides, [align, slideWidth, looped, isRtl]);
 
   const calculateMinDeltaXToSlide = () => {

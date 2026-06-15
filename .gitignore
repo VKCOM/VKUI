@@ -7,6 +7,8 @@ storybook-static/
 out/
 _pagefind/
 .docgen/
+mcp-data/
+website/generated/
 website/public/**/*.mdx
 
 # Next
@@ -70,3 +72,5 @@ __diff_output__
 
 *.css.d.ts
 *.d.ts.map
+
+.claude

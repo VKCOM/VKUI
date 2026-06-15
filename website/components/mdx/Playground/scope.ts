@@ -45,6 +45,7 @@ import {
   DropZone,
   EllipsisText,
   Epic,
+  unstable_ExpressiveSpinner as ExpressiveSpinner,
   File,
   FixedLayout,
   Flex,
@@ -148,6 +149,7 @@ import {
   usePatchChildren,
   usePlatform,
   usePopover,
+  useReducedMotion,
   UsersStack,
   useScroll,
   useScrollLock,
@@ -205,6 +207,7 @@ export const vkuiScope: Record<string, unknown> = {
   DropZone,
   EllipsisText,
   Epic,
+  ExpressiveSpinner,
   File,
   FixedLayout,
   Flex,
@@ -318,6 +321,7 @@ export const vkuiScope: Record<string, unknown> = {
   useSnackbarManager,
   useTodayDate,
   useTooltip,
+  useReducedMotion,
 };
 
 export const scope: Record<string, unknown> = {

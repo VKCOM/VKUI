@@ -11,7 +11,7 @@ const config = defineConfig({
     globalSetup: [resolve(__dirname, 'vitest.global-setup.ts')],
     coverage: {
       provider: 'v8',
-      reporter: ['json'],
+      reporter: ['json', 'cobertura'],
       reportsDirectory: '../../.nyc_output',
       include: [
         'src/components/**/*.{ts,tsx}',

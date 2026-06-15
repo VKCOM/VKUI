@@ -5,7 +5,7 @@ exports[`modal-page-header > transforms correctly 1`] = `
 import React from 'react';
 import '@vkontakte/vkui/dist/vkui.css';
 
-const App = () => {
+export const App = () => {
   return (
     <React.Fragment>
       <ModalPageHeader getRootRef={ref2}>...</ModalPageHeader>

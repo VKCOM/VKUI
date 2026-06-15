@@ -1,0 +1,84 @@
+Подкомпонент позволяет создать навигационный элемент. Чаще всего представлен иконкой размером `28px`. Допускается использовать текст
+рядом с иконкой. Иконку необходимо передавать в свойство `children`, текст — в свойство `label`.
+
+{/* @example-description: Пример `TabbarItem` с иконкой и текстовой подписью. */}
+<Playground>
+  ```jsx
+  <TabbarItem label="Профиль">
+    <Icon28UserCircleOutline />
+  </TabbarItem>
+  ```
+</Playground>
+
+Иконка и текст могут располагаться либо горизонтально, либо вертикально. Управлять этим поведением можно с помощью свойства `mode` у
+[`Tabbar`](/components/tabbar#tabbar-align).
+
+### Выбранное состояние
+
+Используйте свойство `selected`, чтобы показать текущий активный раздел.
+
+{/* @example-description: Выбранный `TabbarItem` с текстом для скринридера через `VisuallyHidden`. */}
+<Playground>
+  ```jsx
+  <TabbarItem selected>
+    {/* Данный текст будет озвучен скринридером */}
+    <VisuallyHidden>Профиль</VisuallyHidden>
+    <Icon28UserCircleOutline />
+  </TabbarItem>
+  ```
+</Playground>
+
+### Индикатор
+
+С помощью свойства `indicator` можно задать для компонента счётчик или индикатор уведомления.
+Передавайте компоненты `Counter` с `size="s"` или `Badge`.
+
+{/* @example-description: `TabbarItem` с индикатором уведомления, переданным в свойство `indicator`. */}
+<Playground>
+  ```jsx
+  <TabbarItem indicator={<Badge />}>
+    {/* Данный текст будет озвучен скринридером */}
+    <VisuallyHidden>Профиль</VisuallyHidden>
+    <Icon28UserCircleOutline />
+  </TabbarItem>
+  ```
+</Playground>
+
+### Тэг компонента
+
+Через свойство `Component` можно переопределить тэг, который будет отрендерен компонентом (по умолчанию при
+передаче свойства `href` компонент использует тэг `a`, в иных случаях `button`);
+
+### Доступность (a11y) [#a11y]
+
+Если вы не передаете свойство `label`, то ассистивные технологии не смогут однозначно озвучить ваш элемент.
+В таком случае рекомендуется вместе с иконкой передавать в свойство `children` компонент `VisuallyHidden`
+с поясняющим текстом.
+
+```jsx
+import { Icon28UserCircleOutline } from '@vkontakte/icons';
+import { TabbarItem, VisuallyHidden } from '@vkontakte/vkui';
+
+<TabbarItem>
+  {/* Данный текст будет озвучен скринридером */}
+  <VisuallyHidden>Профиль</VisuallyHidden>
+  <Icon28UserCircleOutline />
+</TabbarItem>;
+```
+
+В качестве альтернативного решение можно передать текст для скринридера в свойство `aria-label` или создать
+отдельный элемент с текстом и передать его `id` в свойство `aria-labelledby`.
+
+```jsx
+<TabbarItem aria-label="Профиль">
+  <Icon28UserCircleOutline />
+</TabbarItem>
+```
+
+```jsx
+<span id="my-label">Профиль</span>
+
+<TabbarItem aria-labelledby="my-label">
+  <Icon28UserCircleOutline />
+</TabbarItem>
+```

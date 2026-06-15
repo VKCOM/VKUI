@@ -4,7 +4,7 @@ exports[`popover > transforms correctly 1`] = `
 "import { Popover } from '@vkontakte/vkui';
 import React from 'react';
 
-const App = () => {
+export const App = () => {
   return (
     <React.Fragment>
       <Popover trigger="click">content</Popover>

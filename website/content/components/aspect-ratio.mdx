@@ -1,5 +1,6 @@
 ---
 description: Компонент позволяет поддерживать заданное соотношение сторон для вложенного контента.
+tags: layout
 ---
 
 <Overview group="utils">
@@ -13,6 +14,7 @@ description: Компонент позволяет поддерживать за
 
 import { BlockWrapper } from '@/components/wrappers';
 
+{/* @example-description: Изображение в контейнере с фиксированным соотношением сторон `16:9`. */}
 <Playground Wrapper={BlockWrapper}>
   ```jsx
   <AspectRatio ratio={16 / 9}>

@@ -1,7 +1,7 @@
 import { SimpleGrid } from '@vkontakte/vkui';
 import React from 'react';
 
-const App = () => {
+export const App = () => {
   return (
     <React.Fragment>
       <SimpleGrid columns={2} gap={[20, 10]} align="center">

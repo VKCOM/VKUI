@@ -1,31 +1,62 @@
 'use client';
 
-import { type ChangeEvent, useState } from 'react';
 import * as React from 'react';
-import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
-import { CustomSelect, type SelectProps } from '../CustomSelect/CustomSelect';
-import { CustomSelectOption } from '../CustomSelectOption/CustomSelectOption';
+import { clamp, overflow } from '../../helpers/math';
+import { useBooleanState } from '../../hooks/useBooleanState';
+import { useExternRef } from '../../hooks/useExternRef';
+import { Keys } from '../../lib/accessibility';
+import { isActiveElement } from '../../lib/dom';
+import { ComboBox } from './ComboBox';
 import styles from './CalendarTime.module.css';
 
-const selectFilterFn = () => true;
+function validateValueInput(event: React.ChangeEvent<HTMLInputElement>, maxValue: number) {
+  if (event.target.value === '') {
+    return event.target.value;
+  }
 
-const validateValue = (
-  value: string,
-  validValues: Array<{
-    value: number;
-    label: string;
-  }>,
-): boolean => {
-  const numValue = Number(value);
-  return !isNaN(numValue) && validValues.some((v) => v.value === numValue);
-};
+  const inputValue = /\d\d?/.exec(event.target.value)?.[0] || '';
+  if (event.target.value !== inputValue) {
+    return inputValue;
+  }
+
+  const inputValueNumber = Number(inputValue);
+  if (isNaN(inputValueNumber)) {
+    return '';
+  }
+
+  const resultValueNumber = clamp(inputValueNumber, 0, maxValue);
+
+  if (inputValueNumber === resultValueNumber) {
+    return inputValue;
+  }
+
+  return resultValueNumber.toString();
+}
+
+export function padStartTimeValue(value: Pick<string, 'toString'>): string {
+  return value.toString().padStart(2, '0');
+}
+
+function newValueOnInputKeyDown(event: React.KeyboardEvent<HTMLInputElement>, maxValue: number) {
+  if (!(event.target instanceof HTMLInputElement)) {
+    return '';
+  }
+
+  switch (event.key) {
+    case Keys.ARROW_UP:
+      return padStartTimeValue(overflow(Number(event.target.value) + 1, 0, maxValue));
+    case Keys.ARROW_DOWN:
+      return padStartTimeValue(overflow(Number(event.target.value) - 1, 0, maxValue));
+  }
+
+  return event.target.value;
+}
 
 /* eslint-disable jsdoc/require-jsdoc */
-interface CalendarTimePickerProps extends Pick<SelectProps, 'onInputKeyDown'> {
-  value: Date;
-  getNumericValue: (date: Date) => number;
-  options: Array<{
-    value: number;
+interface CalendarTimePickerProps {
+  valueDate: Date;
+  options: ReadonlyArray<{
+    value: string;
     label: string;
   }>;
   onChange?: ((value: Date) => void) | undefined;
@@ -33,68 +64,123 @@ interface CalendarTimePickerProps extends Pick<SelectProps, 'onInputKeyDown'> {
   inputRef: React.Ref<HTMLInputElement>;
   inputLabel?: string | undefined;
   inputTestId?: string | undefined;
+  value: number;
+  maxValue: number;
+  onInputEnd?: () => void;
+  onKeyDown?: (e: React.KeyboardEvent) => void;
+  isDayDisabled?: ((day: Date, withTime?: boolean) => boolean) | undefined;
 }
 /* eslint-enable jsdoc/require-jsdoc */
 
 export const CalendarTimePicker = ({
+  valueDate,
   value,
-  getNumericValue,
   options,
   onChange,
   setTime,
   inputRef,
   inputLabel,
   inputTestId,
-  onInputKeyDown,
+  maxValue,
+  onInputEnd,
+  onKeyDown: onKeyDownProp,
+  isDayDisabled,
 }: CalendarTimePickerProps) => {
-  const [inputValue, setInputValue] = useState<string | undefined>(undefined);
+  const ref = useExternRef(inputRef);
 
-  const onBlur = React.useCallback(() => {
-    setInputValue(undefined);
-  }, []);
+  const [isInputFocused, onFocus, setInputBlur] = useBooleanState(false);
 
-  const _onChange = React.useCallback(
-    (_: ChangeEvent<HTMLSelectElement>, newValue: SelectProps['value']) =>
-      onChange?.(setTime(value, Number(newValue))),
-    [onChange, setTime, value],
-  );
+  const [editableValue, setEditableValue] = React.useState(padStartTimeValue(value));
 
-  const onPickerValueChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const numericValue = e.target.value.replace(/\D/g, '');
-    setInputValue(numericValue);
-    if (validateValue(numericValue, options)) {
-      onChange?.(setTime(value, Number(numericValue)));
+  const updateValue = (newValue: string) => {
+    const newDate = setTime(valueDate, Number(newValue));
+    if (isDayDisabled?.(newDate, true)) {
+      return;
+    }
+    setEditableValue(newValue);
+    onChange?.(newDate);
+  };
+
+  // Обработка ввода
+
+  const onInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const validateValue = validateValueInput(event, maxValue);
+    updateValue(validateValue);
+
+    if (validateValue.length > 1 && event.target.selectionStart) {
+      onInputEnd?.();
     }
   };
 
+  // Управление числом с клавиатуры стрелками вниз/вверх.
+
+  const onKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    const validateValue = newValueOnInputKeyDown(event, maxValue);
+    updateValue(validateValue);
+  };
+
+  // Обработка каретки если время уже задано
+
+  const onSelectionChange = React.useCallback((event: Event) => {
+    if (event.target instanceof HTMLInputElement) {
+      if (event.target.value.length > 1 && isActiveElement(event.target)) {
+        event.target.select();
+      }
+    }
+  }, []);
+
+  React.useEffect(() => {
+    const el = ref.current;
+    el?.addEventListener('selectionchange', onSelectionChange);
+
+    return () => {
+      el?.removeEventListener('selectionchange', onSelectionChange);
+    };
+  }, [onSelectionChange, ref]);
+
+  // Обработка ухода с поля ввода
+
+  const onBlur = () => {
+    setInputBlur();
+    setEditableValue((value) => {
+      const newValue = padStartTimeValue(value);
+
+      return newValue;
+    });
+  };
+
+  // Обработка значения при нажатии в барабане
+
+  const onClickOption = (newValue: string) => {
+    updateValue(newValue);
+  };
+
+  const valueAsString = padStartTimeValue(value);
+
+  const viewValue =
+    isInputFocused || padStartTimeValue(editableValue) !== valueAsString
+      ? editableValue
+      : valueAsString;
+
   return (
     <div className={styles.picker}>
-      <AdaptivityProvider density="compact">
-        <CustomSelect
-          value={getNumericValue(value)}
-          options={options}
-          onChange={_onChange}
-          forceDropdownPortal={false}
-          searchable
-          filterFn={selectFilterFn}
-          onInputChange={onPickerValueChange}
-          onInputKeyDown={onInputKeyDown}
-          renderOption={({ children: optionChildren, ...optionProps }) => (
-            <CustomSelectOption {...optionProps} textNoWrap>
-              {optionChildren}
-            </CustomSelectOption>
-          )}
-          slotProps={{
-            input: {
-              'aria-label': inputLabel,
-              'data-testid': inputTestId,
-              'value': inputValue,
-              'getRootRef': inputRef,
-              onBlur,
-            },
-          }}
-        />
-      </AdaptivityProvider>
+      <ComboBox
+        value={viewValue}
+        slotProps={{
+          input: {
+            'getRootRef': ref,
+            'aria-label': inputLabel,
+            'data-testid': inputTestId,
+            'onKeyDown': onKeyDownProp,
+          },
+        }}
+        labels={options}
+        onChange={onInput}
+        onKeyDown={onKeyDown}
+        onClickOption={onClickOption}
+        onFocus={onFocus}
+        onBlur={onBlur}
+      />
     </div>
   );
 };

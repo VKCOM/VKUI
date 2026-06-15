@@ -5,7 +5,9 @@ import { useMediaQueryMatches } from './useMediaQueryMatch';
  * @private
  */
 export const useAutoDetectColorScheme = (colorSchemeProp?: ColorSchemeType): ColorSchemeType => {
-  const isDark = useMediaQueryMatches('(prefers-color-scheme: dark)');
+  const isDark = useMediaQueryMatches('(prefers-color-scheme: dark)', {
+    disable: colorSchemeProp !== undefined,
+  });
 
   if (colorSchemeProp) {
     return colorSchemeProp;

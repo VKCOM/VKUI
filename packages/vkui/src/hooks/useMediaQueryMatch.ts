@@ -3,14 +3,20 @@ import * as React from 'react';
 import { useDOM } from '../lib/dom';
 import { useIsomorphicLayoutEffect } from '../lib/useIsomorphicLayoutEffect';
 
-export function useMediaQueryMatches(media: string): boolean | undefined {
+type Options = {
+  disable?: boolean | undefined;
+};
+
+export function useMediaQueryMatches(
+  media: string,
+  { disable }: Options = {},
+): boolean | undefined {
   const { window } = useDOM();
 
   const [matches, setMatches] = React.useState<boolean | undefined>(undefined);
 
   useIsomorphicLayoutEffect(() => {
-    /* istanbul ignore if: невозможный кейс (в SSR вызова этой функции не будет) */
-    if (!window) {
+    if (!window || disable) {
       return;
     }
     const match = window.matchMedia(media);
@@ -22,7 +28,7 @@ export function useMediaQueryMatches(media: string): boolean | undefined {
     };
     match.addEventListener('change', handleMediaQueryChange);
     return () => match.removeEventListener('change', handleMediaQueryChange);
-  }, [media, window]);
+  }, [disable, media, window]);
 
   return matches;
 }

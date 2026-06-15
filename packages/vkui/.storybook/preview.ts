@@ -62,6 +62,7 @@ const preview: Preview = {
       source: {
         type: 'dynamic',
       },
+      codePanel: true,
     },
     controls: {
       expanded: true,
@@ -78,10 +79,9 @@ const preview: Preview = {
   },
   initialGlobals: {
     docsBaseUrl: __DOCS_BASE_URL__,
-    componentsSourceBaseUrl: __COMPONENTS_SOURCE_BASE_URL__,
     colorScheme: 'light',
-    hasPointer: true,
     storybookTheme: 'light',
+    hasPointer: true,
     hasCustomPanelHeaderAfter: false,
     direction: 'ltr',
     writingMode: 'horizontal-tb',

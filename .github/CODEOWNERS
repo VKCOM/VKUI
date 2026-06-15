@@ -1,6 +1,7 @@
 *                        @VKCOM/vkui-core
 .github/CODEOWNERS       @VKCOM/vk-sec
 .github/actions/         @VKCOM/vk-sec
-.github/workflows/       @VKCOM/vk-sec
+.github/workflows/        @VKCOM/vk-sec
 .github/dependabot.yml   @VKCOM/vk-sec
-.github/file-filters.yml @VKCOM/vk-sec
+.github/file-filters.yml   @VKCOM/vk-sec
+.github/pinact.yml       @VKCOM/vk-sec

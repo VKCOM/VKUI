@@ -1,5 +1,6 @@
 ---
 description: Компонент окна оповещения, для отображения важных сообщений и подтверждения действий пользователя.
+tags: notification
 ---
 
 <Overview group="feedback">
@@ -12,6 +13,24 @@ description: Компонент окна оповещения, для отобр
 
 </Overview>
 
+<Playground hide>
+
+```jsx
+<Alert
+  onClosed={() => {}}
+  dismissLabel="Отмена"
+  actions={[
+    { title: 'Отмена', mode: 'cancel' },
+    { title: 'Удалить', mode: 'destructive' },
+  ]}
+  title="Удаление документа"
+  description="Вы уверены, что хотите удалить этот документ?"
+/>
+```
+
+</Playground>
+
+{/* @example-description: Базовый пример вызова `Alert` с подтверждением и отменой деструктивного действия. */}
 <Playground>
 
 ```jsx

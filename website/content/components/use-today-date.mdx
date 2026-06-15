@@ -10,40 +10,60 @@ description: Хук для работы с текущей датой с возм
 
 </Overview>
 
-## Практический пример
-
-```jsx
-const TodayTracker = () => {
-  const today = useTodayDate(true); // Автообновление при смене дня
-  const [counter, setCounter] = useState(0);
-
-  // Сброс счетчика каждый день
-  useEffect(() => {
-    setCounter(0);
-  }, [today]);
-
-  return (
-    <div>
-      <p>Сегодня: {format(today, 'dd.MM.yyyy')}</p>
-      <p>Действий сегодня: {counter}</p>
-      <button onClick={() => setCounter((c) => c + 1)}>Выполнить действие</button>
-    </div>
-  );
-};
-```
-
-## Особенности работы
+## API
 
 ### Параметры
 
-Принимает единственный параметр `listenDayChangesForUpdate`, который при `true`:
+| Параметр                    | Тип       | По умолчанию | Описание |
+| --------------------------- | --------- | ------------ | -------- |
+| `listenDayChangesForUpdate` | `boolean` | `false`      | Включает подписку на смену календарного дня и пересчет даты. |
 
-- Обновляет дату ровно в 00:00 следующего дня.
-- Следит за изменением видимости вкладки ([Page Visibility API](https://developer.mozilla.org/ru/docs/Web/API/Page_Visibility_API)).
-- Автоматически корректирует время при возврате на вкладку.
+### Возвращаемое значение
 
-### Возвращаемая дата
+`Date` с текущей датой в системной таймзоне. День, месяц и год всегда актуальны.
 
-- Всегда содержит актуальные день/месяц/год.
-- Время соответствует текущему системному времени.
-- Оптимизирован для работы с "замороженными" вкладками.
+## Особенности работы
+
+- При `listenDayChangesForUpdate=true` дата обновляется в момент смены календарного дня.
+- Хук использует [Page Visibility API](https://developer.mozilla.org/ru/docs/Web/API/Page_Visibility_API), чтобы не пропускать обновление после неактивности вкладки.
+- При возврате на вкладку значение автоматически синхронизируется с системным временем.
+
+## Практический пример
+
+{/* @example-description: Счетчик с авто-сбросом по дате. */}
+
+<Playground direction="column" align="stretch">
+  ```jsx
+  const [listenDayChanges, setListenDayChanges] = React.useState(true);
+  const [counter, setCounter] = React.useState(0);
+  const today = useTodayDate(listenDayChanges);
+
+  React.useEffect(() => {
+    setCounter(0);
+  }, [today]);
+
+  const formattedToday = new Intl.DateTimeFormat("ru-RU", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  }).format(today);
+
+  return (
+    <Flex direction="column" align="start" gap="m">
+      <Checkbox
+        checked={listenDayChanges}
+        onChange={(event) => setListenDayChanges(event.target.checked)}
+      >
+        Обновлять дату при смене календарного дня
+      </Checkbox>
+
+      <Caption level="1">Сегодня: {formattedToday}</Caption>
+      <Caption level="1">Действий за день: {counter}</Caption>
+
+      <Button size="m" onClick={() => setCounter((value) => value + 1)}>
+        Выполнить действие
+      </Button>
+    </Flex>
+  );
+  ```
+</Playground>

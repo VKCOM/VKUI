@@ -1,5 +1,6 @@
 ---
 description: Компонент для отображения индикатора загрузки.
+tags: loading
 ---
 
 <Overview group="feedback">
@@ -14,6 +15,7 @@ description: Компонент для отображения индикатор
 
 </Overview>
 
+{/* @example-description: Базовый индикатор загрузки `Spinner`. */}
 <Playground>
   ```jsx
   <Spinner />
@@ -26,6 +28,7 @@ description: Компонент для отображения индикатор
 
 Задаются свойством `size`:
 
+{/* @example-description: Сравнение размеров `Spinner`: `xl`, `l`, `m`, `s`. */}
 <Playground aria-busy={true} aria-live="polite">
   ```jsx
   <Spinner size="xl" />
@@ -39,6 +42,7 @@ description: Компонент для отображения индикатор
 
 Можно отключить анимацию с помощью свойства `disableAnimation`:
 
+{/* @example-description: `Spinner` с отключенной анимацией через `disableAnimation`. */}
 <Playground>
   ```jsx
   <Spinner disableAnimation />
@@ -51,9 +55,10 @@ description: Компонент для отображения индикатор
 
 Для ручного управления цветом используйте свойство `noColor`:
 
+{/* @example-description: `Spinner` с пользовательским цветом контейнера и `noColor`. */}
 <Playground>
   ```jsx
-  <div style={{ color: '#FF0000' }}>
+  <div style={{ color: "#FF0000" }}>
     <Spinner noColor />
   </div>
   ```
@@ -96,6 +101,21 @@ description: Компонент для отображения индикатор
   <VisuallyHidden>Идёт загрузка профиля...</VisuallyHidden>
 </Spinner>
 ```
+
+## unstable_ExpressiveSpinner
+
+Нестабильный компонент индикации загрузки в стиле
+[M3 Expressive](https://m3.material.io/components/loading-indicator/overview).
+Принимает все свойства, которые принимает компонент `Spinner`.
+Для платформы `ios` используется обычный `Spinner`.
+
+<Playground>
+  ```jsx
+  import { unstable_ExpressiveSpinner as ExpressiveSpinner} from "@vkontakte/vkui";
+
+  <ExpressiveSpinner size="xl" />
+  ```
+</Playground>
 
 ## Свойства и методы [#api]
 

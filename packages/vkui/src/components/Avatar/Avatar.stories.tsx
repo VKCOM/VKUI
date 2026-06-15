@@ -1,6 +1,6 @@
 import type * as React from 'react';
 import { withCartesian } from '@project-tools/storybook-addon-cartesian';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { CanvasFullLayout } from '../../storybook/constants';
 import {
   IconExampleForBadgeBasedOnImageBaseSize,
@@ -24,7 +24,7 @@ const story: Meta<AvatarStoryProps> = {
       },
       options: [...imageBaseSizes],
     },
-    badge: {
+    children: {
       description: 'Использовать Badge',
       table: {
         type: {
@@ -36,7 +36,7 @@ const story: Meta<AvatarStoryProps> = {
         None: null,
         BadgeOnline: <Avatar.BadgeWithPreset preset="online" />,
         BadgeOnlineMobile: <Avatar.BadgeWithPreset preset="online-mobile" />,
-        Icon: (
+        BadgeIcon: (
           <Avatar.Badge>
             <IconExampleForBadgeBasedOnImageBaseSize />
           </Avatar.Badge>
@@ -74,41 +74,38 @@ const story: Meta<AvatarStoryProps> = {
 
 export default story;
 
-type Story = StoryObj<AvatarStoryProps>;
+type Story = StoryFn<AvatarStoryProps>;
 
-export const Playground: Story = {
-  args: {
-    alt: 'Фотография Татьяны Плуталовой',
-  },
-  render: ({ badge, overlay, children, size = 48, ...args }) => (
-    <Avatar src={args.initials ? undefined : getAvatarUrl('user_id34')} {...args} size={size}>
-      {size >= 24 && badge}
-      {overlay}
-      {children}
-    </Avatar>
+export const Playground: Story = (props: AvatarStoryProps) => <Avatar {...props} />;
+
+Playground.args = {
+  alt: 'Фотография Татьяны Плуталовой',
+  size: 48,
+  src: getAvatarUrl('user_id34'),
+};
+
+export const WithBadge: Story = (props: AvatarStoryProps) => <Avatar {...props} />;
+
+WithBadge.args = {
+  alt: 'Фотография Татьяны Плуталовой',
+  size: 48,
+  src: getAvatarUrl('user_id34'),
+  children: (
+    <Avatar.Badge>
+      <IconExampleForBadgeBasedOnImageBaseSize />
+    </Avatar.Badge>
   ),
 };
 
-export const WithBadge: Story = {
-  ...Playground,
-  args: {
-    ...Playground.args,
-    children: (
-      <Avatar.Badge>
-        <IconExampleForBadgeBasedOnImageBaseSize />
-      </Avatar.Badge>
-    ),
-  },
-};
+export const WithOverlay: Story = (props: AvatarStoryProps) => <Avatar {...props} />;
 
-export const WithOverlay: Story = {
-  ...Playground,
-  args: {
-    ...Playground.args,
-    children: (
-      <Avatar.Overlay aria-label="Кнопка для изображения">
-        <IconExampleForOverlayBasedOnImageBaseSize />
-      </Avatar.Overlay>
-    ),
-  },
+WithOverlay.args = {
+  alt: 'Фотография Татьяны Плуталовой',
+  size: 48,
+  src: getAvatarUrl('user_id34'),
+  children: (
+    <Avatar.Overlay aria-label="Кнопка для изображения">
+      <IconExampleForOverlayBasedOnImageBaseSize />
+    </Avatar.Overlay>
+  ),
 };

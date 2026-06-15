@@ -1,5 +1,6 @@
 ---
 description: Компонент для выбора значения из выпадающего списка.
+tags: selection
 ---
 
 <Overview group="forms">
@@ -19,6 +20,7 @@ description: Компонент для выбора значения из вып
 >
 > `undefined` ипользуется только для неконтролируемого компонента.
 
+{/* @example-description: Базовый `CustomSelect` с набором опций и кнопкой очистки выбора. */}
 <Playground style={{ maxWidth: 270 }}>
 
 ```jsx
@@ -76,6 +78,7 @@ const [color, setColor] = React.useState('red');
 
 Свойство `disabled` блокирует взаимодействие с компонентом и добавляет визуальную индикацию недоступности.
 
+{/* @example-description: `CustomSelect` в неактивном состоянии с предвыбранным значением. */}
 <Playground style={{ maxWidth: 270 }}>
 
 ```jsx
@@ -92,6 +95,7 @@ const [color, setColor] = React.useState('red');
 > Если вы используете `CustomSelect` вместе с [`FormItem`](/components/form-item), вам достаточно указать свойство `status` только у
 > [`FormItem`](/components/form-item).
 
+{/* @example-description: Варианты валидации `CustomSelect` со статусами `error` и `valid`. */}
 <Playground style={{ maxWidth: 270 }}>
 
 ```jsx
@@ -112,6 +116,7 @@ const [color, setColor] = React.useState('red');
 С помощью свойства `renderOption` можно влиять на отображение конкретного элемента выпадающего списка.
 Вы можете изменить стандартный компонент [`CustomSelectOption`](#customselectoption) или использовать свой компонент.
 
+{/* @example-description: Кастомный рендер опций `CustomSelect` с дополнительным описанием города. */}
 <Playground style={{ maxWidth: 270 }}>
 
 ```jsx
@@ -137,6 +142,7 @@ const [color, setColor] = React.useState('red');
 Пример показывает, как реализовать кастомное поведение поиска: при вводе сохраняется локальный `query`, при отсутствии совпадений в списке появляется опция «Добавить пользователя …»,
 её выбор добавляет новый элемент в `options` — вместе с пользовательским рендером опций это даёт удобный UX для создания элементов на лету.
 
+{/* @example-description: Кастомный поиск с возможностью добавления новой опции прямо из выпадающего списка. */}
 <Playground style={{ maxWidth: 270 }}>
 
 ```jsx
@@ -242,6 +248,7 @@ return (
 Демонстрация кастомного алгоритма поиска иллюстрирует передачу `filterFn` для гибкого соответствия (по `label` и `description`),
 поддержку `searchable` и кастомного рендера опций — полезно, когда нужно искать по нескольким полям или использовать нестандартные критерии.
 
+{/* @example-description: Кастомный алгоритм фильтрации опций через `filterFn` по нескольким полям. */}
 <Playground style={{ maxWidth: 270 }}>
 
 ```jsx
@@ -299,6 +306,7 @@ return (
 Асинхронный пример показывает подгрузку опций с задержкой/дебаунсом, управление состояниями `fetching`/`remoteQuery`,
 минимальную длину запроса, очистку таймаутов и возможность заменить содержимое выпадающего списка (например, подсказкой «введите хотя бы три символа») — стандартный шаблон для работы с удалёнными API.
 
+{/* @example-description: Асинхронная подгрузка опций `CustomSelect` с поиском, дебаунсом и состоянием загрузки. */}
 <Playground style={{ maxWidth: 600 }}>
 
 ```jsx
@@ -445,6 +453,7 @@ return (
 Передавайте данный компонент в свойство `renderOption`, для кастомизации значений выпадающего списка.
 Помимо `CustomSelect` используется и в `ChipsSelect`.
 
+{/* @example-description: Базовый пример `CustomSelectOption` с иконками в `before` и `after`. */}
 <Playground style={{ maxWidth: 270 }}>
   ```jsx
   <CustomSelectOption before={<Avatar initials="ИИ" size={20} aria-hidden />} after={<Icon16Pin />}>
@@ -456,6 +465,7 @@ return (
 Для реализации многоуровневых `CustomSelectOption` используйте свойство `hierarchy`,
 которое позволяет создать нужный отступ в зависимости от уровня вложенности.
 
+{/* @example-description: Многоуровневые опции с отступами через свойство `hierarchy`. */}
 <Playground style={{ maxWidth: 270 }}>
   ```jsx
   <CustomSelectOption>Диск</CustomSelectOption>
@@ -498,6 +508,7 @@ return (
 Компонент поддерживает свойство `slotProps`, которое даёт возможность прокинуть свойство в некоторые внутренние элементы.
 Это удобно для добавления кастомных классов, data-атрибутов, aria-атрибутов, обработчиков событий, доступов к элементам через `getRootRef` и других расширений, не влияя на внешний API компонента.
 
+{/* @example-description: Настройка внутренних слотов `CustomSelect` через `slotProps` и ссылки на DOM-элементы. */}
 <Playground style={{ maxWidth: 270 }}>
   ```jsx
   const inputRef = React.useRef();

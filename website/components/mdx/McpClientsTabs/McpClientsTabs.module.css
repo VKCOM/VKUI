@@ -1,0 +1,15 @@
+.root {
+  margin-block: 16px;
+}
+
+.tabs {
+  margin-block-end: 12px;
+}
+
+.panel > :first-child {
+  margin-block-start: 0;
+}
+
+.panel > :last-child {
+  margin-block-end: 0;
+}

@@ -1,5 +1,5 @@
 import { withCartesian } from '@project-tools/storybook-addon-cartesian';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout } from '../../storybook/constants';
 import { getAvatarUrl } from '../../testing/mock';
@@ -38,6 +38,7 @@ const story: Meta<BannerProps> = {
       additionalPresets: {
         dismiss: 'dismiss',
         chevron: 'chevron',
+        TextAfter: 'After',
       },
     }),
     actions: createFieldWithPresets({
@@ -98,26 +99,22 @@ const story: Meta<BannerProps> = {
 
 export default story;
 
-type Story = StoryObj<BannerProps>;
+type Story = StoryFn<BannerProps>;
 
-export const Playground: Story = {
-  args: {
-    before: 'Image',
-    title: 'Баста в Ледовом',
-    subtitle: 'Большой концерт',
-    after: 'dismiss',
-    actions: 'ButtonPrimary',
-  },
-  decorators: [
-    (Component, context) => (
-      <Group>
-        <Div>
-          <Component {...context.args} />
-        </Div>
-      </Group>
-    ),
-    withCartesian,
-    withSinglePanel,
-    withVKUILayout,
-  ],
+export const Playground: Story = (props: BannerProps) => (
+  <Group>
+    <Div>
+      <Banner {...props} />
+    </Div>
+  </Group>
+);
+
+Playground.args = {
+  before: 'Image',
+  title: 'Баста в Ледовом',
+  subtitle: 'Большой концерт',
+  after: 'dismiss',
+  actions: 'ButtonPrimary',
 };
+
+Playground.decorators = [withCartesian, withSinglePanel, withVKUILayout];

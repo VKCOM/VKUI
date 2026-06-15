@@ -1,7 +1,7 @@
 import { Avatar, RichCell } from '@vkontakte/vkui';
 import React from 'react';
 
-const App = () => {
+export const App = () => {
   const text = 'Text';
   return (
     <React.Fragment>

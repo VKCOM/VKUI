@@ -1,7 +1,7 @@
 import { Select } from '@vkontakte/vkui';
 import React from 'react';
 
-const App = () => {
+export const App = () => {
   const [selectType, setSelectType] = React.useState(undefined);
   const selectTypes = [
     {

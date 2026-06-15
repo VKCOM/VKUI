@@ -127,8 +127,15 @@ const meta: MetaRecord = {
     type: 'separator',
     title: 'Типографика',
   },
+  'display-title': 'DisplayTitle',
+  'title': 'Title',
+  'headline': 'Headline',
+  'text': 'Text',
+  'paragraph': 'Paragraph',
+  'subhead': 'Subhead',
+  'footnote': 'Footnote',
+  'caption': 'Caption',
   'ellipsis-text': 'EllipsisText',
-  'typography': 'Типографика',
   'mark': 'Mark',
   'link': 'Link',
   '#': {
@@ -171,6 +178,21 @@ const meta: MetaRecord = {
   'use-modal-manager': 'useModalManager',
   'use-today-date': 'useTodayDate',
   'visually-hidden': 'VisuallyHidden',
+
+  // Эти страницы нужны только для MCP, поэтому скрыты из навигации
+  '_partials': { display: 'hidden' },
+  'action-sheet-item': { display: 'hidden' },
+  'footer': { display: 'hidden' },
+  'header': { display: 'hidden' },
+  'list': { display: 'hidden' },
+  'panel-header-button': { display: 'hidden' },
+  'panel-header-content': { display: 'hidden' },
+  'panel-spinner': { display: 'hidden' },
+  'split-col': { display: 'hidden' },
+  'subnavigation-button': { display: 'hidden' },
+  'tabbar': { display: 'hidden' },
+  'tabbar-item': { display: 'hidden' },
+  'tabs-item': { display: 'hidden' },
 };
 
 export default meta;

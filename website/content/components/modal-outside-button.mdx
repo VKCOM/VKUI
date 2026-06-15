@@ -1,5 +1,6 @@
 ---
 description: Компонент для отрисовки кнопок в правом верхнем углу в compact-версии ModalPage и ModalCard.
+tags: buttons
 ---
 
 <Overview group="modals">
@@ -17,14 +18,17 @@ description: Компонент для отрисовки кнопок в пра
 
 import { BlockWrapper } from '@/components/wrappers';
 
-<Playground Wrapper={BlockWrapper} style={{ width: 1 }}>
+{/* @example-description: Набор внешних кнопок `ModalOutsideButton` для правого верхнего угла модального окна. */}
+<Playground>
   ```jsx
-  <ModalOutsideButton aria-label="Больше" onClick={() => {}}>
-    <Icon20More />
-  </ModalOutsideButton>
-  <ModalOutsideButton aria-label="Нравится" onClick={() => {}}>
-    <Icon20Like />
-  </ModalOutsideButton>
+  <Flex direction="column" gap="m">
+    <ModalOutsideButton aria-label="Больше" onClick={() => {}}>
+      <Icon20More />
+    </ModalOutsideButton>
+    <ModalOutsideButton aria-label="Нравится" onClick={() => {}}>
+      <Icon20Like />
+    </ModalOutsideButton>
+  </Flex>
   ```
 </Playground>
 

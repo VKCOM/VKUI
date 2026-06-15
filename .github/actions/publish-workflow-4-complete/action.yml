@@ -22,12 +22,15 @@ inputs:
     required: false
     default: latest
   disable_git_tag_with_namespace:
+    description: Whether to omit package name from git tag
     required: false
     default: false
   close_milestone:
+    description: Whether to close the milestone after publishing
     required: false
     default: false
   prerelease:
+    description: Whether the published version is a prerelease
     required: false
     default: false
 
@@ -59,7 +62,7 @@ runs:
       shell: bash
 
     - name: Pushing changes
-      uses: ad-m/github-push-action@master
+      uses: ad-m/github-push-action@4cc74773234f74829a8c21bc4d69dd4be9cfa599 # v1.1.0
       with:
         github_token: ${{ inputs.token }}
         branch: ${{ inputs.branch }}
@@ -84,7 +87,7 @@ runs:
       shell: bash
 
     - name: Upload payload data to artifact for deploy workflow
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
       with:
         name: publish_workflow_payload
         path: publish_workflow_payload/

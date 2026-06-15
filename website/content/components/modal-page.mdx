@@ -11,6 +11,42 @@ description: Компонент реализующий модальное окн
 
 </Overview>
 
+<Playground hide>
+
+```jsx
+<PlatformProvider value="vkcom">
+  <ModalPage
+    open={open}
+    onClose={() => {}}
+    disableModalOverlay
+    header={
+      <ModalPageHeader
+        before={
+          <PanelHeaderBack label="Назад" />
+        }
+      >
+        Информация о пользователе
+      </ModalPageHeader>
+    }
+  >
+    <Group>
+      <Cell>
+        <InfoRow header="Дата рождения">5 ноября 1994</InfoRow>
+      </Cell>
+      <Cell>
+        <InfoRow header="Родной город">Санкт-Петербург</InfoRow>
+      </Cell>
+      <Cell>
+        <InfoRow header="Место работы">Команда ВКонтакте</InfoRow>
+      </Cell>
+    </Group>
+  </ModalPage>
+</PlatformProvider>
+```
+
+</Playground>
+
+{/* @example-description: Базовая `ModalPage` с заголовком и содержимым профиля, управляемая через состояние `open`. */}
 <Playground>
 
 ```jsx
@@ -214,6 +250,7 @@ return (
 
 Чтобы исправить проблему, следует отказаться от `autoFocus` и выставлять фокус вручную при событии `onOpened`.
 
+{/* @example-description: Ручной фокус в поле ввода `ModalPage` после завершения анимации открытия. */}
 <Playground>
 
 ```jsx

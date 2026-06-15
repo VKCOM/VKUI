@@ -2,7 +2,7 @@ import { ModalPageHeader } from '@vkontakte/vkui';
 import React from 'react';
 import '@vkontakte/vkui/dist/vkui.css';
 
-const App = () => {
+export const App = () => {
   return (
     <React.Fragment>
       <ModalPageHeader getRef={ref2}>...</ModalPageHeader>

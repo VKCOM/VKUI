@@ -4,6 +4,8 @@ const meta: MetaRecord = {
   'about': 'Обзор',
   'install': 'Установка',
   'usage': 'Использование',
+  'components-showcase': 'Витрина компонентов',
+  'mcp': 'MCP-сервер',
   '#': {
     type: 'separator',
     title: 'Погружение',

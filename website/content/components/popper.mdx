@@ -1,5 +1,6 @@
 ---
 description: Низкоуровневый компонент для отрисовки выпадающего блока.
+tags: overlay
 ---
 
 <Overview group="modals">
@@ -11,6 +12,26 @@ description: Низкоуровневый компонент для отрисо
 
 </Overview>
 
+<Playground hide>
+
+```jsx
+const buttonRef = React.useRef(null);
+
+return (
+  <React.Fragment>
+    <Button getRootRef={buttonRef}>
+      Закрыть
+    </Button>
+    <Popper usePortal={false} targetRef={buttonRef} disableFlipMiddleware>
+      Привет
+    </Popper>
+  </React.Fragment>
+);
+```
+
+</Playground>
+
+{/* @example-description: Базовый `Popper`, позиционируемый относительно кнопки-якоря через `targetRef`. */}
 <Playground>
 
 ```jsx
@@ -41,6 +62,7 @@ return (
 > Чтобы не задавать все свойства координат вручную,
 > можно использовать [DOMRect.fromRect](https://developer.mozilla.org/en-US/docs/Web/API/DOMRect/fromRect_static)
 
+{/* @example-description: Позиционирование `Popper` от виртуального элемента по координатам курсора. */}
 <Playground>
 
 ```jsx

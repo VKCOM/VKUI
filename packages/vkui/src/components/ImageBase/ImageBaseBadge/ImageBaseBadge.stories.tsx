@@ -1,5 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../../storybook/constants';
+import { ImageBase } from '../ImageBase';
 import { ImageBaseBadge, type ImageBaseBadgeProps } from './ImageBaseBadge';
 
 const story: Meta<ImageBaseBadgeProps> = {
@@ -10,15 +11,17 @@ const story: Meta<ImageBaseBadgeProps> = {
 
 export default story;
 
-type Story = StoryObj<ImageBaseBadgeProps>;
+type Story = StoryFn<ImageBaseBadgeProps>;
 
-export const Playground: Story = {
-  render: ({ children, ...args }) => <ImageBaseBadge {...args}>{children}</ImageBaseBadge>,
-  decorators: [
-    (Component, context) => (
-      <div style={{ width: 50, height: 50, border: '1px dashed red', position: 'relative' }}>
-        <Component args={{ ...context.args }} />
-      </div>
-    ),
-  ],
-};
+export const Playground: Story = (args: ImageBaseBadgeProps) => (
+  <div
+    style={{
+      width: 50,
+      height: 50,
+      border: '1px dashed red',
+      position: 'relative',
+    }}
+  >
+    <ImageBase.Badge {...args} />
+  </div>
+);

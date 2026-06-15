@@ -4,7 +4,7 @@ exports[`chips-input > transforms correctly 1`] = `
 "import { ChipsInput } from '@vkontakte/vkui';
 import React from 'react';
 
-const App = () => {
+export const App = () => {
   return (
     <React.Fragment>
       <ChipsInput id="color" value={colors} placeholder="Введите название цвета">

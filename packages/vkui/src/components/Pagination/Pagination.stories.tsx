@@ -1,7 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
-import { useCustomArgs } from '../../testing/useCustomArgs';
 import { Pagination, type PaginationProps } from './Pagination';
 
 const story: Meta<PaginationProps> = {
@@ -13,20 +12,12 @@ const story: Meta<PaginationProps> = {
 
 export default story;
 
-type Story = StoryObj<PaginationProps>;
+export const Playground: StoryFn<PaginationProps> = (props: PaginationProps) => (
+  <Pagination {...props} />
+);
 
-export const Playground: Story = {
-  render: function Render(args) {
-    const [, updateArg] = useCustomArgs();
-    const onPageChange = (page: number) => {
-      updateArg({ currentPage: page });
-    };
-
-    return <Pagination {...args} onChange={onPageChange} />;
-  },
-  args: {
-    currentPage: 1,
-    boundaryCount: 2,
-    totalPages: 25,
-  },
+Playground.args = {
+  currentPage: 1,
+  boundaryCount: 2,
+  totalPages: 25,
 };

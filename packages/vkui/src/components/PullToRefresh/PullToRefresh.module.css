@@ -10,7 +10,7 @@
 }
 
 .controls {
-  inline-size: 100%;
+  z-index: var(--vkui_internal--z_index_fixed_layout);
   pointer-events: none;
 }
 
@@ -75,6 +75,8 @@
   flex-grow: 1;
   flex-direction: column;
   overflow: hidden;
+  /* TODO [>=9]: использовать clip чтобы не создовать контекст контейнера прокрутки и не мешать sticky элементам */
+  overflow: clip;
   transition: transform 400ms var(--vkui--animation_easing_platform);
 }
 

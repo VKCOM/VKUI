@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { usePlatform } from '../../hooks/usePlatform';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam, StringArg } from '../../storybook/constants';
@@ -22,19 +22,20 @@ const story: Meta<HorizontalCellProps> = {
 
 export default story;
 
-type Story = StoryObj<HorizontalCellProps & { values: HorizontalCellItemProps[] }>;
-
 interface HorizontalCellItemProps {
   id: number;
   title: string;
   icon: string;
 }
 
-export const Playground: Story = {
-  render: function Render({ values, ...args }) {
-    const platform = usePlatform();
+type HorizontalCellStoryProps = HorizontalCellProps & { values: HorizontalCellItemProps[] };
 
-    return (
+type Story = StoryFn<HorizontalCellStoryProps>;
+
+export const Playground: Story = ({ values, ...args }: HorizontalCellStoryProps) => {
+  const platform = usePlatform();
+  return (
+    <Group>
       <Flex>
         {values.map((value) => {
           return (
@@ -44,39 +45,33 @@ export const Playground: Story = {
           );
         })}
       </Flex>
-    );
-  },
-  args: {
-    values: [
-      {
-        id: 1,
-        title: 'Промокот',
-        icon: getAvatarUrl('app_promokot'),
-      },
-      {
-        id: 2,
-        title: 'Разделите счёт',
-        icon: getAvatarUrl('app_split_bill'),
-      },
-      {
-        id: 3,
-        title: 'Рассылки',
-        icon: getAvatarUrl('app_emails'),
-      },
-      {
-        id: 4,
-        title: 'Тексты песен',
-        icon: getAvatarUrl('app_lyrics'),
-      },
-    ],
-  },
-  decorators: [
-    (Component, context) => (
-      <Group>
-        <Component {...context.args} />
-      </Group>
-    ),
-    withSinglePanel,
-    withVKUILayout,
+    </Group>
+  );
+};
+
+Playground.args = {
+  values: [
+    {
+      id: 1,
+      title: 'Промокот',
+      icon: getAvatarUrl('app_promokot'),
+    },
+    {
+      id: 2,
+      title: 'Разделите счёт',
+      icon: getAvatarUrl('app_split_bill'),
+    },
+    {
+      id: 3,
+      title: 'Рассылки',
+      icon: getAvatarUrl('app_emails'),
+    },
+    {
+      id: 4,
+      title: 'Тексты песен',
+      icon: getAvatarUrl('app_lyrics'),
+    },
   ],
 };
+
+Playground.decorators = [withSinglePanel, withVKUILayout];

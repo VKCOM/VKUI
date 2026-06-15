@@ -28,9 +28,12 @@ jobs:
     name: Deploy test coverage
     permissions:
       id-token: write
+      code-quality: write
+      contents: read
+      pull-requests: read
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
           repository: ${{ env.PR_HEAD_REPOSITORY_FULL_NAME }}
           ref: ${{ env.PR_HEAD_BRANCH }}
@@ -44,7 +47,7 @@ jobs:
 
       - name: Upload coverage to Codecov
         if: ${{ steps.artifact.outputs.found_artifact == 'true' }}
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@fb8b3582c8e4def4969c97caa2f19720cb33a72f # v7.0.0
         with:
           use_oidc: true
           flags: unittests
@@ -54,6 +57,14 @@ jobs:
           override_pr: ${{ needs.pr_workflow_payload.outputs.pr_number }}
           fail_ci_if_error: true
           verbose: true
+
+      - name: Upload coverage to GitHub
+        if: ${{ steps.artifact.outputs.found_artifact == 'true' }}
+        uses: actions/upload-code-coverage@abb5995db9e0199b0e2bb9dbd136fce4cb1ec4d3 # v1.3.0
+        with:
+          file: .nyc_output/cobertura-coverage.xml
+          language: TypeScript
+          label: code-coverage/vitest
 
   deploy_playwright_report:
     needs: pr_workflow_payload
@@ -155,31 +166,6 @@ jobs:
         id: url
         run: echo "value=${{ env.AWS_S3_URL }}/pull/${{ needs.pr_workflow_payload.outputs.pr_number }}/${{ env.PR_HEAD_SHA }}/playground/index.html" >> $GITHUB_OUTPUT
 
-  deploy_mcp_data:
-    needs: pr_workflow_payload
-    if: ${{ needs.pr_workflow_payload.outputs.status == 'success' }}
-    runs-on: ubuntu-slim
-    name: Deploy MCP data
-    steps:
-      - name: Download artifact
-        id: artifact
-        uses: VKCOM/gh-actions/shared/download-workflow-artifact@main
-        with:
-          name: mcp-data
-          path: mcp-data/
-
-      - name: Upload MCP data to S3
-        if: ${{ steps.artifact.outputs.found_artifact == 'true' }}
-        uses: VKCOM/gh-actions/VKUI/s3@main
-        with:
-          awsAccessKeyId: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          awsSecretAccessKey: ${{ secrets.AWS_SECRET_KEY }}
-          awsBucket: ${{ vars.AWS_BUCKET_MCP }}
-          awsEndpoint: https://${{ vars.AWS_ENDPOINT }}
-          command: upload
-          commandUploadSrc: mcp-data/
-          commandUploadDist: pull/${{ needs.pr_workflow_payload.outputs.pr_number }}/${{ env.PR_HEAD_SHA }}
-
   deploy_package:
     needs: pr_workflow_payload
     if: ${{ needs.pr_workflow_payload.outputs.status == 'success' }}
@@ -255,7 +241,7 @@ jobs:
     name: Diff comment
     steps:
       - name: Find diff URL comment
-        uses: peter-evans/find-comment@v4
+        uses: peter-evans/find-comment@b30e6a3c0ed37e7c023ccd3f1db5c6c0b0c23aad # v4.0.0
         id: find_url_comment
         with:
           issue-number: ${{ needs.pr_workflow_payload.outputs.pr_number }}
@@ -264,7 +250,7 @@ jobs:
 
       - name: Create or update comment with not empty diff
         if: ${{ needs.deploy_diff.outputs.has_diff == 'true' }}
-        uses: peter-evans/create-or-update-comment@v5
+        uses: peter-evans/create-or-update-comment@e8674b075228eee787fea43ef493e45ece1004c9 # v5.0.0
         with:
           comment-id: ${{ steps.find_url_comment.outputs.comment-id }}
           issue-number: ${{ needs.pr_workflow_payload.outputs.pr_number }}
@@ -277,7 +263,7 @@ jobs:
 
       - name: Create or update comment with empty diff
         if: ${{ needs.deploy_diff.outputs.has_diff == 'false' }}
-        uses: peter-evans/create-or-update-comment@v5
+        uses: peter-evans/create-or-update-comment@e8674b075228eee787fea43ef493e45ece1004c9 # v5.0.0
         with:
           comment-id: ${{ steps.find_url_comment.outputs.comment-id }}
           issue-number: ${{ needs.pr_workflow_payload.outputs.pr_number }}
@@ -299,7 +285,7 @@ jobs:
     name: Docs comment
     steps:
       - name: Find docs URLs comment
-        uses: peter-evans/find-comment@v4
+        uses: peter-evans/find-comment@b30e6a3c0ed37e7c023ccd3f1db5c6c0b0c23aad # v4.0.0
         id: find_url_comment
         with:
           issue-number: ${{ needs.pr_workflow_payload.outputs.pr_number }}
@@ -307,7 +293,7 @@ jobs:
           body-includes: <!-- docs_urls -->
 
       - name: Create or update comment
-        uses: peter-evans/create-or-update-comment@v5
+        uses: peter-evans/create-or-update-comment@e8674b075228eee787fea43ef493e45ece1004c9 # v5.0.0
         with:
           comment-id: ${{ steps.find_url_comment.outputs.comment-id }}
           issue-number: ${{ needs.pr_workflow_payload.outputs.pr_number }}

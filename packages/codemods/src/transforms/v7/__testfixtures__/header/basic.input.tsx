@@ -1,7 +1,7 @@
 import { Header, Icon12ChevronOutline, Link } from '@vkontakte/vkui';
 import React from 'react';
 
-const App = () => {
+export const App = () => {
   const aside = (
     <Link>
       Показать все

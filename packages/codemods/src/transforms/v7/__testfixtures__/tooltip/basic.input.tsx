@@ -1,7 +1,7 @@
 import { Button, Tooltip } from '@vkontakte/vkui';
 import React from 'react';
 
-const App = () => {
+export const App = () => {
   return (
     <React.Fragment>
       <Tooltip placement="right" header="Header" text="Привет">

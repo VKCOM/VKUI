@@ -11,6 +11,36 @@ description: Компонент реализующий модальную кар
 
 </Overview>
 
+<Playground hide>
+
+```jsx
+<PlatformProvider value="vkcom">
+  <ModalCard
+    open
+    onClose={() => {}}
+    icon={<Icon56NotificationOutline />}
+    disableModalOverlay
+    title="Приложение запрашивает разрешение на отправку Вам уведомлений"
+    actions={
+      <React.Fragment>
+        <Spacing size={16} />
+        <ButtonGroup gap="m" stretched>
+          <Button key="deny" size="l" mode="secondary" stretched>
+            Запретить
+          </Button>
+          <Button key="allow" size="l" mode="primary" stretched>
+            Разрешить
+          </Button>
+        </ButtonGroup>
+      </React.Fragment>
+    }
+  />
+</PlatformProvider>
+```
+
+</Playground>
+
+{/* @example-description: Базовая `ModalCard` с управлением через `open/onClose` и действиями подтверждения. */}
 <Playground>
 
 ```jsx
@@ -160,6 +190,7 @@ return (
 
 Чтобы исправить проблему, следует отказаться от `autoFocus` и выставлять фокус вручную при событии `onOpened`.
 
+{/* @example-description: Ручная установка фокуса в `ModalCard` после открытия через обработчик `onOpened`. */}
 <Playground>
 
 ```jsx

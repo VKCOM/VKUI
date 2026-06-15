@@ -13,6 +13,7 @@ import {
   useConfigProvider,
   useConfigProviderContextMemo,
 } from './ConfigProviderContext';
+import { ConfigProviderSubContexts } from './ConfigProviderSubContexts';
 
 export interface ConfigProviderProps extends PartialWithUndefined<ConfigProviderContextInterface> {
   /**
@@ -44,9 +45,11 @@ export const ConfigProvider = (propsRaw: ConfigProviderProps): React.ReactNode =
 
   return (
     <ConfigProviderContext.Provider value={configContext}>
-      <IconAppearanceProvider value={colorScheme}>
-        <TokensClassProvider>{mergeProps.children}</TokensClassProvider>
-      </IconAppearanceProvider>
+      <ConfigProviderSubContexts value={configContext}>
+        <IconAppearanceProvider value={colorScheme}>
+          <TokensClassProvider>{mergeProps.children}</TokensClassProvider>
+        </IconAppearanceProvider>
+      </ConfigProviderSubContexts>
     </ConfigProviderContext.Provider>
   );
 };

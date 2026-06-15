@@ -88,7 +88,7 @@ export interface CalendarProps
   /**
    * `aria-label` для изменения дня.
    *
-   * @deprecated Будет удалeно в **VKUI v9**.
+   * @deprecated Будет удалено в **VKUI v9**.
    * Использовалось для задания aria-label для контейнера дней в календаре.
    * Теперь этот контейнер является таблицей (с помощью role="grid") и
    * в aria-label рендерится текущий открытый в календаре месяц и год.
@@ -243,7 +243,7 @@ export const Calendar = ({
     if (timeZonedValue) {
       setViewDate(timeZonedValue);
     }
-  }, [timeZonedValue]);
+  }, [timeZonedValue, setViewDate]);
 
   if (process.env.NODE_ENV === 'development' && !disablePickers && size === 's') {
     warn("Нельзя включить селекты выбора месяца/года, если размер календаря 's'", 'error');

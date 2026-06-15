@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Input } from '../Input/Input';
@@ -14,60 +14,77 @@ const story: Meta<FormItemProps> = {
 
 export default story;
 
-type Story = StoryObj<FormItemProps>;
+type Story = StoryFn<FormItemProps>;
 
-export const Playground: Story = {
-  args: {
-    top: 'Top form item',
-    bottom: 'Bottom form item',
-    children: 'Form Item',
-  },
-  decorators: [
-    (Component) => (
-      <div style={{ maxWidth: '300px' }}>
-        <Component />
-      </div>
-    ),
-  ],
+export const Playground: Story = (props: FormItemProps) => (
+  <div
+    style={{
+      maxWidth: '300px',
+    }}
+  >
+    <FormItem {...props} />
+  </div>
+);
+
+Playground.args = {
+  top: 'Top form item',
+  bottom: 'Bottom form item',
+  children: 'Form Item',
 };
 
-export const WithInputField: Story = {
-  ...Playground,
-  args: {
-    top: 'Пароль',
-    htmlFor: 'password',
-    children: <Input id="password" type="password" placeholder="Введите пароль" />,
-  },
+export const WithInputField: Story = (props: FormItemProps) => (
+  <div
+    style={{
+      maxWidth: '300px',
+    }}
+  >
+    <FormItem {...props} />
+  </div>
+);
+
+WithInputField.args = {
+  top: 'Пароль',
+  htmlFor: 'password',
+  children: <Input id="password" type="password" placeholder="Введите пароль" />,
 };
 
-export const WithInputFieldWithError: Story = {
-  ...Playground,
-  args: {
-    top: 'Пароль',
-    htmlFor: 'password',
-    children: (
-      <Input
-        id="password"
-        type="password"
-        placeholder="Введите пароль"
-        aria-describedby="errorId"
-      />
-    ),
-    bottom: 'Пароль должен быть не короче 8 символов.',
-    bottomId: 'errorId',
-    status: 'error',
-  },
+export const WithInputFieldWithError: Story = (props: FormItemProps) => (
+  <div
+    style={{
+      maxWidth: '300px',
+    }}
+  >
+    <FormItem {...props} />
+  </div>
+);
+
+WithInputFieldWithError.args = {
+  top: 'Пароль',
+  htmlFor: 'password',
+  children: (
+    <Input id="password" type="password" placeholder="Введите пароль" aria-describedby="errorId" />
+  ),
+  bottom: 'Пароль должен быть не короче 8 символов.',
+  bottomId: 'errorId',
+  status: 'error',
 };
 
-export const WithTopAside: Story = {
-  ...Playground,
-  args: {
-    top: (
-      <FormItem.Top>
-        <FormItem.TopLabel htmlFor="about">Дополнительная информация</FormItem.TopLabel>
-        <FormItem.TopAside id="counter">0/100</FormItem.TopAside>
-      </FormItem.Top>
-    ),
-    children: <Textarea id="about" name="about" />,
-  },
+export const WithTopAside: Story = (props: FormItemProps) => (
+  <div
+    style={{
+      maxWidth: '300px',
+    }}
+  >
+    <FormItem {...props} />
+  </div>
+);
+
+WithTopAside.args = {
+  top: (
+    <FormItem.Top>
+      <FormItem.TopLabel htmlFor="about">Дополнительная информация</FormItem.TopLabel>
+      <FormItem.TopAside id="counter">0/100</FormItem.TopAside>
+    </FormItem.Top>
+  ),
+  children: <Textarea id="about" name="about" />,
 };

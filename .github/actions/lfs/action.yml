@@ -1,6 +1,13 @@
 name: Workflow / Checkout LFS objects
 description: Get lfs from cache
 
+inputs:
+  apt_mirror:
+    description: apt mirror
+  sudo_cmd:
+    description: Command prefix for privileged operations
+    default: sudo
+
 runs:
   using: composite
   steps:
@@ -9,15 +16,24 @@ runs:
       shell: bash
       run: git config --global --add safe.directory /__w/VKUI/VKUI
 
+
+    - name: Configure apt mirror
+      if: ${{ inputs.apt_mirror }}
+      shell: bash
+      run: |
+        ${{ inputs.sudo_cmd }} sed -i "s|http://archive.ubuntu.com|${{ inputs.apt_mirror }}|g" /etc/apt/sources.list
+        ${{ inputs.sudo_cmd }} sed -i "s|http://security.ubuntu.com|${{ inputs.apt_mirror }}|g" /etc/apt/sources.list
+        ${{ inputs.sudo_cmd }} apt-get update
+
     # см. https://github.com/microsoft/playwright/issues/21920
     - name: Install git lfs
       shell: bash
       run: |
         if git lfs > /dev/null ; then
-            echo "git-lfs installed"
+          echo "git-lfs installed"
         else
-          curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash
-          apt-get install -y git-lfs
+          curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | ${{ inputs.sudo_cmd }} bash
+          ${{ inputs.sudo_cmd }} apt-get install -y git-lfs
         fi
 
     # см. https://github.com/actions/cache/issues/1455
@@ -25,9 +41,9 @@ runs:
       shell: bash
       run: |
         if zstd > /dev/null ; then
-            echo "zstd installed"
+          echo "zstd installed"
         else
-          apt-get install -y zstd
+          ${{ inputs.sudo_cmd }} apt-get install -y zstd
         fi
 
     - name: Create LFS file list
@@ -35,7 +51,7 @@ runs:
       run: git lfs ls-files -l | cut -d' ' -f1 | sort > .lfs-assets-id
 
     - name: Restore LFS cache
-      uses: actions/cache@v4
+      uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
       with:
         path: .git/lfs
         key: lfs-${{ hashFiles('.lfs-assets-id') }}

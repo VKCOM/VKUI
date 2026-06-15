@@ -8,6 +8,7 @@ import { useDateInput } from '../../hooks/useDateInput';
 import { useCustomEnsuredControl } from '../../hooks/useEnsuredControl';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useGlobalEscKeyDown } from '../../hooks/useGlobalEscKeyDown';
+import { useLocale } from '../../hooks/useLocale';
 import { dateFormatter, isMatch, parse } from '../../lib/date';
 import type { PlacementWithAuto } from '../../lib/floating';
 import { cacheDateTimeFormat } from '../../lib/intlCache';
@@ -18,7 +19,6 @@ import {
   type CalendarRangeTestsProps,
   type DateRangeType,
 } from '../CalendarRange/CalendarRange';
-import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
 import { FocusTrap } from '../FocusTrap/FocusTrap';
 import { FormField, type FormFieldProps } from '../FormField/FormField';
 import { IconButton } from '../IconButton/IconButton';
@@ -390,7 +390,7 @@ export const DateRangeInput = ({
   const [calendarPlacement, setCalendarPlacement] =
     React.useState<PlacementWithAuto>(calendarPlacementProp);
 
-  const { locale } = useConfigProvider();
+  const locale = useLocale();
   const currentDateLabel = React.useMemo(() => {
     if (!value) {
       return null;
@@ -415,7 +415,7 @@ export const DateRangeInput = ({
     }
   }, [handleFieldEnter, openCalendar, accessible]);
 
-  const showCalendarButton = !disableCalendar && (accessible || (!accessible && !value));
+  const showCalendarButton = !disableCalendar && (accessible || !value);
   const showClearButton = value && !readOnly;
 
   useGlobalEscKeyDown(open && !disableCalendar, closeCalendar, {

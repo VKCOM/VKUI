@@ -44,13 +44,13 @@ export interface TappableProps extends ClickableProps, StateProps {
    */
   borderRadiusMode?: 'auto' | 'inherit' | undefined;
   /**
-   * @deprecated Since 7.3.0. Будет удалeно в **VKUI v9**.
+   * @deprecated Since 7.3.0. Будет удалено в **VKUI v9**.
    *
    * Используйте свойство `activeMode`.
    */
   activeClassName?: string | undefined; // TODO [>=9]: удалить неиспользуемое свойство.
   /**
-   * @deprecated Since 7.3.0. Будет удалeно в **VKUI v9**.
+   * @deprecated Since 7.3.0. Будет удалено в **VKUI v9**.
    *
    * Используйте свойство `hoverMode`.
    */

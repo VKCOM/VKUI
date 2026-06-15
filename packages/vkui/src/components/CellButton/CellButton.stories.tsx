@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { noop } from '@vkontakte/vkjs';
 import { CanvasFullLayout, DisableCartesianParam, StringArg } from '../../storybook/constants';
 import { getAvatarUrl } from '../../testing/mock';
@@ -53,12 +53,12 @@ const story: Meta<CellButtonProps> = {
 
 export default story;
 
-type Story = StoryObj<CellButtonProps>;
+export const Playground: StoryFn<CellButtonProps> = (props: CellButtonProps) => (
+  <CellButton {...props} />
+);
 
-export const Playground: Story = {
-  args: {
-    children: 'Создать беседу',
-    before: 'Icon28AddOutline',
-    onClick: noop,
-  },
+Playground.args = {
+  children: 'Создать беседу',
+  before: 'Icon28AddOutline',
+  onClick: noop,
 };

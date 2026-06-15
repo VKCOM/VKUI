@@ -12,7 +12,9 @@
     "generated.d.ts",
     "src/**/*.ts",
     "src/**/*.tsx",
-    "out/types/**/*.ts"
+    "out/types/**/*.ts",
+    ".next/dev/types/**/*.ts",
+    "out/dev/types/**/*.ts"
   ],
   "exclude": [
     "**/node_modules",
@@ -30,7 +32,7 @@
     "module": "ESNext",
     "lib": ["es2020", "dom", "dom.Iterable"],
     "moduleResolution": "bundler",
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "allowJs": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
@@ -59,6 +61,7 @@
       "@/components/*": ["./components/*"],
       "@/stores/*": ["./stores/*"],
       "@/providers/*": ["./providers/*"],
+      "@/generated/*": ["./generated/*"],
       "@vkontakte/vkui": ["../packages/vkui/src"]
     }
   }

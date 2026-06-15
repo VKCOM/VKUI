@@ -16,18 +16,15 @@ const getLocalAddonPath = (addonName: string) => fileURLToPath(import.meta.resol
 const config: StorybookConfig = {
   stories: ['../docs/**/*.mdx', '../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
   addons: [
-    getLocalAddonPath('./addons/source-tab'),
     getGlobalAddonPath('@storybook/addon-links'),
     getGlobalAddonPath('@storybook/addon-a11y'),
     getGlobalAddonPath('@storybook/addon-designs', 'dist'),
     getGlobalAddonPath('@storybook/addon-docs'),
     getGlobalAddonPath('@project-tools/storybook-addon-cartesian'),
-    getLocalAddonPath('./addons/colorScheme'),
+    getLocalAddonPath('@vkontakte/storybook-addons/color-scheme'),
     getLocalAddonPath('./addons/pointer'),
     getLocalAddonPath('./addons/customPanelHeaderAfter'),
-    getLocalAddonPath('./addons/source-button'),
     getLocalAddonPath('./addons/documentation-button'),
-    getLocalAddonPath('./addons/storybook-theme'),
   ],
   framework: getGlobalAddonPath('@storybook/react-vite'),
   viteFinal: async (config) => {
@@ -47,6 +44,7 @@ const config: StorybookConfig = {
     reactDocgen: 'react-docgen-typescript',
     reactDocgenTypescriptOptions: {
       tsconfigPath: fileURLToPath(new URL('../tsconfig.storybook.json', import.meta.url)),
+      shouldExtractLiteralValuesFromEnum: true,
       shouldRemoveUndefinedFromOptional: true,
     },
   },
