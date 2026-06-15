@@ -1,6 +1,6 @@
-export { ADDON_ID as colorSchemeAddonId } from './addons/colorScheme/constants';
-export type { ColorSchemeConfig } from './addons/colorScheme/config';
-export { registerColorSchemeAddon } from './addons/colorScheme/register';
+export { ADDON_ID as colorSchemeAddonId } from './addons/color-scheme/constants';
+export type { ColorSchemeConfig } from './addons/color-scheme/config';
+export { registerColorSchemeAddon } from './addons/color-scheme/register';
 export {
   ADDON_ID as storybookThemeAddonId,
   SET_STORYBOOK_THEME,

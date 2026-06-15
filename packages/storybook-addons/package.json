@@ -15,8 +15,8 @@
     ".": {
       "import": "./src/index.ts"
     },
-    "./colorScheme": {
-      "import": "./src/addons/colorScheme/preset.js"
+    "./color-scheme": {
+      "import": "./src/addons/color-scheme/preset.js"
     },
     "./storybook-theme": {
       "import": "./src/addons/storybook-theme/preset.js"

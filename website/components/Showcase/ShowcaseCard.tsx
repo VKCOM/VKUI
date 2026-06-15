@@ -39,7 +39,7 @@ export const ShowcaseCard = React.memo(function ShowcaseCard({ item }: ShowcaseC
       mode="outline-tint"
       className={styles.root}
       aria-label={`Перейти на страницу компонента ${item.name}`}
-      onClick={() => router.push(`/components/${item.slug}/`)}
+      onClick={() => router.push(item.docsUrl)}
     >
       <Flex
         direction="column"

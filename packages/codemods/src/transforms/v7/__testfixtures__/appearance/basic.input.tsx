@@ -8,9 +8,9 @@ const Component: React.FC<{
 };
 
 export const App = () => {
-  const appearance: AppearanceType = Appearance.LIGHT;
+  const _appearance: AppearanceType = Appearance.LIGHT;
 
-  const fromHookAppearance = useAppearance();
+  const _fromHookAppearance = useAppearance();
 
   return (
     <React.Fragment>
