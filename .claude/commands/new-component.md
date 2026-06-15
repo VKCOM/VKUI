@@ -10,7 +10,7 @@ description: Создание нового компонента VKUI по кон
 
 Пользователь передаёт **название компонента** (PascalCase) и опционально:
 - **категорию** для Storybook (например, "Отображение данных", "Контролы", "Навигация")
-- **список пропсов** с типами и значениями по умолчанию
+- **список свойств** с типами и значениями по умолчанию
 
 ## Что нужно создать
 
@@ -47,7 +47,7 @@ export const <ComponentName> = ({ children, ...restProps }: <ComponentName>Props
 Правила:
 - `'use client'` в начале
 - `import * as React from 'react'`
-- Пропсы деструктурированы, дефолты через `= 'default'`, НЕ `defaultProps`
+- Свойства деструктурированы, значения по умолчанию через `= 'default'`, НЕ `defaultProps`
 - `className` и `style` навешиваются на корневой элемент
 - `...restProps` на корневой элемент
 - CSS-классы через `classNames()` из `@vkontakte/vkjs`
@@ -82,7 +82,7 @@ describe('<ComponentName>', () => {
 
 `baselineComponent` автоматически проверяет: mount/unmount, a11y, передачу className/style/data-testid, getRootRef.
 
-Если компонент использует пропсы-переключатели (mode, size, appearance) — добавь дополнительные describe блоки для проверки каждой опции.
+Если компонент использует свойства-переключатели (mode, size, appearance) — добавь дополнительные describe блоки для проверки каждой опции.
 
 ### 4. `<ComponentName>.stories.tsx`
 
