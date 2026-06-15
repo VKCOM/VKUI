@@ -1,7 +1,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { resolvePartials } from './resolvePartials.mjs';
+import { resolvePartials } from './common/resolvePartials.mjs';
+import { collectMdxFiles } from './common/collectMdxFiles.mjs';
 
 const SCRIPT_FILE = fileURLToPath(import.meta.url);
 const SCRIPT_DIR = path.dirname(SCRIPT_FILE);
@@ -44,23 +45,6 @@ function ensureDir(dirPath) {
   fs.mkdirSync(dirPath, { recursive: true });
 }
 
-function collectMdxFiles(dirPath) {
-  const results = [];
-  const entries = fs.readdirSync(dirPath, { withFileTypes: true });
-  for (const entry of entries) {
-    if (entry.name === '_partials') continue;
-    const fullPath = path.join(dirPath, entry.name);
-    if (entry.isDirectory()) {
-      results.push(...collectMdxFiles(fullPath));
-      continue;
-    }
-    if (entry.isFile() && entry.name.endsWith('.mdx')) {
-      results.push(fullPath);
-    }
-  }
-  return results;
-}
-
 function parseFrontmatter(content) {
   const match = content.match(/^---\s*\n([\s\S]*?)\n---\s*\n?/);
   if (!match) {
@@ -96,17 +80,6 @@ function parseFrontmatter(content) {
   }
   const body = content.slice(match[0].length);
   return { data, body };
-}
-
-function extractHeading(body) {
-  const match = body.match(/^#\s+(.+?)\s*$/m);
-  if (!match) {
-    return null;
-  }
-  return match[1]
-    .split('[')[0]
-    .replace(/[~*_]+/g, '')
-    .trim();
 }
 
 function extractOverviewMeta(body) {
@@ -177,7 +150,7 @@ function buildDocsUrl(name, parent) {
   return `/components/${toKebabCase(name)}`;
 }
 
-export function generateShowcaseData() {
+function generateShowcaseData() {
   // eslint-disable-next-line no-console
   console.log('🔄 Генерация данных витрины компонентов...');
 
@@ -263,6 +236,4 @@ export function generateShowcaseData() {
   }
 }
 
-if (process.argv[1] === SCRIPT_FILE) {
-  generateShowcaseData();
-}
+generateShowcaseData();

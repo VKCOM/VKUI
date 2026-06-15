@@ -1,15 +1,16 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { resolvePartials } from './resolvePartials.mjs';
-import { transformMdxBody } from './mdx-utils.mjs';
+import { resolvePartials } from './common/resolvePartials.mjs';
+import { replacePropsTable } from './common/replacePropsTable.mjs';
+import { collectMdxFiles } from './common/collectMdxFiles.mjs';
+import { loadDocgen } from './common/loadDocgen.mjs';
 
 const SCRIPT_FILE = fileURLToPath(import.meta.url);
 const SCRIPT_DIR = path.dirname(SCRIPT_FILE);
 const WEBSITE_DIR = path.resolve(SCRIPT_DIR, '..');
 const REPO_ROOT = path.resolve(WEBSITE_DIR, '..');
 const COMPONENTS_DIR = path.join(WEBSITE_DIR, 'content', 'components');
-const DOCGEN_PATH = path.join(WEBSITE_DIR, '.docgen', 'docgen.json');
 const OUT_DIR = path.join(REPO_ROOT, 'mcp-data');
 const OUT_COMPONENTS_DIR = path.join(OUT_DIR, 'components');
 const OUT_HOOKS_DIR = path.join(OUT_DIR, 'hooks');
@@ -23,31 +24,6 @@ function isHook(slug) {
 
 function ensureDir(dirPath) {
   fs.mkdirSync(dirPath, { recursive: true });
-}
-
-function readDocgen() {
-  if (!fs.existsSync(DOCGEN_PATH)) {
-    return {};
-  }
-  const raw = fs.readFileSync(DOCGEN_PATH, 'utf8');
-  return JSON.parse(raw);
-}
-
-function collectMdxFiles(dirPath) {
-  const results = [];
-  const entries = fs.readdirSync(dirPath, { withFileTypes: true });
-  for (const entry of entries) {
-    if (entry.name === '_partials') continue;
-    const fullPath = path.join(dirPath, entry.name);
-    if (entry.isDirectory()) {
-      results.push(...collectMdxFiles(fullPath));
-      continue;
-    }
-    if (entry.isFile() && entry.name.endsWith('.mdx')) {
-      results.push(fullPath);
-    }
-  }
-  return results;
 }
 
 function parseFrontmatter(content) {
@@ -186,7 +162,7 @@ function formatExamplesText(examples) {
     .join(SEPARATOR);
 }
 
-export function generateMcpData() {
+function generateMcpData() {
   // eslint-disable-next-line no-console
   console.log('🔄 Генерация MCP данных...');
   ensureDir(OUT_COMPONENTS_DIR);
@@ -194,7 +170,7 @@ export function generateMcpData() {
   ensureDir(OUT_EXAMPLES_DIR);
   ensureDir(OUT_DOCS_DIR);
 
-  const docgen = readDocgen();
+  const docgen = loadDocgen();
   const mdxFiles = collectMdxFiles(COMPONENTS_DIR);
 
   const components = [];
@@ -260,7 +236,7 @@ export function generateMcpData() {
 
     const docsOutPath = path.join(OUT_DOCS_DIR, `${slug}.txt`);
     ensureDir(path.dirname(docsOutPath));
-    fs.writeFileSync(docsOutPath, transformMdxBody(resolvedBody, docgen));
+    fs.writeFileSync(docsOutPath, replacePropsTable(resolvedBody, docgen));
   }
 
   const allTags = [...allTagsSet].sort();
@@ -273,6 +249,4 @@ export function generateMcpData() {
   console.log('✅ MCP данные сгенерированы.');
 }
 
-if (process.argv[1] === SCRIPT_FILE) {
-  generateMcpData();
-}
+generateMcpData();
