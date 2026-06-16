@@ -27,22 +27,6 @@ export const withLiveCodeEditor: DecoratorFunction<ReactRenderer> = (Component, 
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const emit = useChannel({});
 
-  if (disabled) {
-    return fallback;
-  }
-
-  const decorators = [
-    ...(hooks as { mountedDecorators: Set<DecoratorFunction<ReactRenderer>> }).mountedDecorators,
-  ];
-
-  const decoratorIndex = decorators.indexOf(withLiveCodeEditor);
-  const decoratorsToApply = decorators.slice(1, decoratorIndex);
-  const withDecorators = (renderComponent: () => React.JSX.Element) =>
-    decoratorsToApply.reduce<() => React.JSX.Element>(
-      (res, decorator) => () => decorator(res, context),
-      renderComponent,
-    );
-
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const updateStoryCompilingStatus = React.useCallback(
     (compiling: boolean) => {
@@ -58,6 +42,22 @@ export const withLiveCodeEditor: DecoratorFunction<ReactRenderer> = (Component, 
     },
     [emit],
   );
+
+  if (disabled) {
+    return fallback;
+  }
+
+  const decorators = [
+    ...(hooks as { mountedDecorators: Set<DecoratorFunction<ReactRenderer>> }).mountedDecorators,
+  ];
+
+  const decoratorIndex = decorators.indexOf(withLiveCodeEditor);
+  const decoratorsToApply = decorators.slice(1, decoratorIndex);
+  const withDecorators = (renderComponent: () => React.JSX.Element) =>
+    decoratorsToApply.reduce<() => React.JSX.Element>(
+      (res, decorator) => () => decorator(res, context),
+      renderComponent,
+    );
 
   return (
     <LivePreview

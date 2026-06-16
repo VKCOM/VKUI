@@ -38,17 +38,25 @@ export const LiveEditor = ({
   const [formattedCode, setFormattedCode] = useState(initialCodeWithInlineProps);
 
   useEffect(() => {
-    let cancelled = false;
-    void (async () => {
-      const text = await format(initialCodeWithInlineProps);
+    let active = true;
 
-      if (!cancelled) {
-        setFormattedCode(text);
-      }
-    })();
+    format(initialCodeWithInlineProps)
+      .then((text) => {
+        if (active) {
+          setFormattedCode(text);
+        }
+      })
+      .catch((error) => {
+        // eslint-disable-next-line no-console
+        console.error('Error formatting code:', error);
+
+        if (active) {
+          setFormattedCode(initialCodeWithInlineProps);
+        }
+      });
 
     return () => {
-      cancelled = true;
+      active = false;
     };
   }, [initialCodeWithInlineProps]);
 
@@ -120,13 +128,15 @@ export const LiveEditor = ({
     [debouncedHandleUpdate],
   );
 
-  if (storyState && storyState.initialCode !== code) {
-    handleReset();
-  }
+  useEffect(() => {
+    if (storyState && storyState.initialCode !== code) {
+      handleReset();
+    }
+  }, [storyState?.initialCode, code]);
 
   return (
     <Editor
-      value={storyState?.code || formattedCode || initialCodeWithInlineProps}
+      value={storyState?.code ?? formattedCode ?? initialCodeWithInlineProps}
       extraLibs={extraLibs}
       theme={theme}
       onInput={debouncedHandleUpdate}

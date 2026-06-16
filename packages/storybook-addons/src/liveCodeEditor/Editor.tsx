@@ -205,6 +205,10 @@ export const Editor = ({
   }, [extraLibs]);
 
   React.useEffect(() => {
+    monaco.editor.setTheme(theme === 'dark' ? 'vs-dark' : 'vs');
+  }, [theme]);
+
+  React.useEffect(() => {
     if (editorRef.current && editorRef.current.getValue() !== value) {
       editorRef.current.setValue(value);
     }

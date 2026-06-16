@@ -32,7 +32,7 @@ const resolveArgs = (args: any, argTypes: any) => {
   );
 };
 
-export const LiveCodeEditorPanel = ({ api }: LiveCodeEditorPanelProps) => {
+const LiveCodeEditorPanel = ({ api }: LiveCodeEditorPanelProps) => {
   const story = api.getCurrentStoryData();
   const theme = useTheme();
   const { code, disabled } = useParameter<LiveCodeEditorParameters>(PARAM_ID, {});
@@ -61,3 +61,5 @@ export const LiveCodeEditorPanel = ({ api }: LiveCodeEditorPanelProps) => {
     />
   );
 };
+
+export default LiveCodeEditorPanel;

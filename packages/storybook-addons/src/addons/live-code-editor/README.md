@@ -9,19 +9,11 @@
 Добавьте пресет аддона в `.storybook/main.ts`:
 
 ```ts
-import { dirname, join, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 const addons = [
   // Другие аддоны...
-  join(dirname(import.meta.url), '../node_modules/@vkontakte/storybook-addons/live-code-editor'),
-];
-```
-
-Или если пакет доступен через алиас:
-
-```ts
-addons: [
-  getLocalAddonPath('@vkontakte/storybook-addons/live-code-editor'),
+  fileURLToPath(import.meta.resolve('@vkontakte/storybook-addons/live-code-editor')),
 ];
 ```
 
@@ -30,6 +22,11 @@ addons: [
 Monaco Editor и типы React нужно раздавать как статику. Добавьте в `.storybook/main.ts`:
 
 ```ts
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
 staticDirs: [
   { from: path.resolve(__dirname, '../../../node_modules/monaco-editor/esm'), to: 'monaco-editor/esm' },
   { from: path.resolve(__dirname, '../../../node_modules/@types/react'), to: '@types/react' },
