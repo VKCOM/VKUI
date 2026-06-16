@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useSnackbarManager } from '@vkontakte/vkui';
 import { Preview } from './Preview';
 import type { LiveCodeEditorParameters } from './types';
 import { useLiveCodeEditorState } from './useLiveCodeEditorState';
@@ -12,6 +11,7 @@ interface LivePreviewPropsBase {
   name?: string;
   code?: string;
   updateStoryCompilingStatus: (compiling: boolean) => void;
+  notify: (message: string) => void;
 }
 
 type LivePreviewProps = LivePreviewPropsBase &
@@ -30,8 +30,8 @@ export const LivePreview = ({
   withDecorators,
   code = '',
   updateStoryCompilingStatus,
+  notify,
 }: LivePreviewProps): React.JSX.Element => {
-  const [snackbarApi, holder] = useSnackbarManager();
   const [
     {
       stories: { [storyId]: storyState },
@@ -72,10 +72,7 @@ export const LivePreview = ({
           });
         }
       } catch {
-        snackbarApi.open({
-          children: 'Ошибка! Не удалось распарсить код из параметра.',
-          placement: 'bottom-end',
-        });
+        notify('Ошибка! Не удалось распарсить код из параметра.');
       }
     }
   }, []);
@@ -85,18 +82,15 @@ export const LivePreview = ({
   }
 
   return (
-    <>
-      <Preview
-        getGlobals={getGlobals}
-        scope={scope}
-        code={storyState.code}
-        componentProps={storyArgs}
-        name={name}
-        fallback={fallback}
-        withDecorators={withDecorators}
-        updateStoryCompilingStatus={updateStoryCompilingStatus}
-      />
-      {holder}
-    </>
+    <Preview
+      getGlobals={getGlobals}
+      scope={scope}
+      code={storyState.code}
+      componentProps={storyArgs}
+      name={name}
+      fallback={fallback}
+      withDecorators={withDecorators}
+      updateStoryCompilingStatus={updateStoryCompilingStatus}
+    />
   );
 };

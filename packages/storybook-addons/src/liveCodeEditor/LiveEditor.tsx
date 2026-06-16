@@ -1,14 +1,11 @@
 import * as React from 'react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { debounce } from '@vkontakte/vkjs';
-import { ConfigProvider, useSnackbarManager } from '@vkontakte/vkui';
 import { useStorybookApi } from 'storybook/manager-api';
 import { Editor } from './Editor';
 import { addComponentExport, format, inlinePropsSpread } from './codeModifications';
+import { debounce } from './debounce';
 import { useLiveCodeEditorState } from './useLiveCodeEditorState';
 import { toURLSafeBase64 } from './utils';
-// @ts-expect-error: TS2882 нужно для компонентов VKUI
-import '@vkontakte/vkui/dist/vkui.css';
 
 interface LiveEditorProps {
   storyId: string;
@@ -55,7 +52,15 @@ export const LiveEditor = ({
     };
   }, [initialCodeWithInlineProps]);
 
-  const [snackbarApi, holder] = useSnackbarManager();
+  const notify = React.useCallback(
+    (message: string) => {
+      api.addNotification({
+        id: `live-code-editor-${Date.now()}`,
+        content: { headline: message },
+      });
+    },
+    [api],
+  );
 
   const handleExportByLink = React.useCallback(async () => {
     try {
@@ -66,17 +71,11 @@ export const LiveEditor = ({
       }
 
       await navigator.clipboard.writeText(window.location.href);
-      snackbarApi.open({
-        children: 'Ссылка скопирована!',
-        placement: 'bottom-end',
-      });
+      notify('Ссылка скопирована!');
     } catch {
-      snackbarApi.open({
-        children: 'Ошибка! Ссылка не скопирована.',
-        placement: 'bottom-end',
-      });
+      notify('Ошибка! Ссылка не скопирована.');
     }
-  }, [api, storyState?.code, storyId]);
+  }, [api, storyState?.code, storyId, notify]);
 
   const handleReset = React.useCallback(() => {
     setLiveCodeEditorState((state) => {
@@ -126,16 +125,13 @@ export const LiveEditor = ({
   }
 
   return (
-    <>
-      <Editor
-        value={storyState?.code || formattedCode || initialCodeWithInlineProps}
-        extraLibs={extraLibs}
-        theme={theme}
-        onInput={debouncedHandleUpdate}
-        onReset={handleReset}
-        onExportByLink={() => void handleExportByLink()}
-      />
-      <ConfigProvider colorScheme={theme}>{holder}</ConfigProvider>
-    </>
+    <Editor
+      value={storyState?.code || formattedCode || initialCodeWithInlineProps}
+      extraLibs={extraLibs}
+      theme={theme}
+      onInput={debouncedHandleUpdate}
+      onReset={handleReset}
+      onExportByLink={() => void handleExportByLink()}
+    />
   );
 };

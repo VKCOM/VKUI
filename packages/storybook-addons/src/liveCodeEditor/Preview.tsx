@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { type FC, type JSX, useEffect, useState } from 'react';
-import { ContentBadge, Spinner } from '@vkontakte/vkui';
+import { CompilingBadge } from './CompilingBadge';
 import { ErrorBoundary } from './ErrorBoundary';
 import { evalCommonJSWithJSXRuntime } from './evalCommonJSWithJSXRuntime';
 import type { LiveCodeEditorParameters } from './types';
@@ -109,16 +109,7 @@ export const Preview = ({
   return (
     <>
       {renderComponent()}
-      {compiling && (
-        <ContentBadge
-          style={{ position: 'fixed', right: 20, bottom: 20, zIndex: 100 }}
-          appearance="overlay"
-          size="l"
-        >
-          <Spinner style={{ color: 'currentColor' }} size="s" />
-          Компиляция...
-        </ContentBadge>
-      )}
+      {compiling && <CompilingBadge />}
     </>
   );
 };

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Spinner } from '@vkontakte/vkui';
+import { Loader } from 'storybook/internal/components';
 import { type API, useParameter } from 'storybook/manager-api';
 import { useTheme } from 'storybook/theming';
 import { type LiveCodeEditorParameters, LiveEditor, PARAM_ID } from '../../liveCodeEditor';
@@ -43,7 +43,7 @@ export const LiveCodeEditorPanel = ({ api }: LiveCodeEditorPanelProps) => {
   }
 
   if (!source) {
-    return <Spinner size="m" />;
+    return <Loader />;
   }
 
   const args = resolveArgs(

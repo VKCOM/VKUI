@@ -51,6 +51,14 @@ export const withLiveCodeEditor: DecoratorFunction<ReactRenderer> = (Component, 
     [emit],
   );
 
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const notify = React.useCallback(
+    (message: string) => {
+      emit(EVENTS.SHOW_NOTIFICATION, message);
+    },
+    [emit],
+  );
+
   return (
     <LivePreview
       getGlobals={getGlobals}
@@ -63,6 +71,7 @@ export const withLiveCodeEditor: DecoratorFunction<ReactRenderer> = (Component, 
       withDecorators={withDecorators}
       code={source}
       updateStoryCompilingStatus={updateStoryCompilingStatus}
+      notify={notify}
     />
   );
 };
