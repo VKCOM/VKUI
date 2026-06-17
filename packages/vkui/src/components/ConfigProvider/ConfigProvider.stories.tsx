@@ -32,3 +32,9 @@ export const Playground: StoryFn<ConfigProviderProps> = (args: ConfigProviderPro
     </ConfigProvider>
   );
 };
+
+Playground.parameters = {
+  liveCodeEditor: {
+    scope: { DisplayConfigProvider },
+  },
+};

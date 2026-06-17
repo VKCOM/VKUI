@@ -6,7 +6,7 @@
     "module": "ESNext",
     "lib": ["esnext", "dom", "dom.Iterable"],
     "moduleResolution": "bundler",
-    "jsx": "react-jsx",
+    "jsx": "react",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "allowImportingTsExtensions": true,

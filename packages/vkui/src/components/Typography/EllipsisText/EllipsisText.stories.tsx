@@ -38,3 +38,9 @@ export const Playground: StoryFn<EllipsisTextProps> = (args: EllipsisTextProps) 
     </div>
   </>
 );
+
+Playground.parameters = {
+  liveCodeEditor: {
+    scope: { ellipsisText },
+  },
+};

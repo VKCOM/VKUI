@@ -17,7 +17,7 @@ export default story;
 type Story = StoryFn<FootnoteProps>;
 export const Playground: Story = (args: FootnoteProps) => <Footnote {...args}>Footnote</Footnote>;
 
-export const WithCaps: Story = (args: FootnoteProps) => <Footnote {...args} />;
+export const WithCaps: Story = (args: FootnoteProps) => <Footnote {...args}>Footnote</Footnote>;
 WithCaps.args = {
   ...Playground.args,
   caps: true,

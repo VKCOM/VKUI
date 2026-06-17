@@ -40,10 +40,25 @@ import { Textarea } from '../Textarea/Textarea';
 import { ModalPage } from './ModalPage';
 import type { ModalPageCloseReason, ModalPageProps } from './types';
 
+const randomUser = getRandomUser();
+const users = getRandomUsers(25);
+
 const story: Meta<ModalPageProps> = {
   title: 'Modals/ModalPage',
   component: ModalPage,
-  parameters: createStoryParameters('ModalPage', CanvasFullLayout, DisableCartesianParam),
+  parameters: createStoryParameters('ModalPage', CanvasFullLayout, DisableCartesianParam, {
+    liveCodeEditor: {
+      scope: {
+        randomUser,
+        users,
+        DoneButton,
+        AndroidCloseButton,
+        IosCloseButton,
+        ModalPageFooter,
+        stopPropagation,
+      },
+    },
+  }),
   tags: ['Модальные окна'],
 };
 
@@ -51,24 +66,22 @@ export default story;
 
 type Story = StoryFn<ModalPageProps>;
 
-const randomUser = getRandomUser();
-const users = getRandomUsers(25);
-
-const DoneButton = ({ onClick }: React.ComponentProps<'div'>) => {
+function DoneButton({ onClick }: React.ComponentProps<'div'>) {
   return <PanelHeaderSubmit onClick={onClick} />;
-};
+}
 
-const AndroidCloseButton = ({ className, onClick }: React.ComponentProps<'div'>) => {
+function AndroidCloseButton({ className, onClick }: React.ComponentProps<'div'>) {
   return <PanelHeaderClose className={className} onClick={onClick} />;
-};
+}
 
-const IosCloseButton = ({ className, onClick }: React.ComponentProps<'div'>) => {
+function IosCloseButton({ className, onClick }: React.ComponentProps<'div'>) {
   return (
     <PanelHeaderButton onClick={onClick} className={className}>
       <Icon24Dismiss />
     </PanelHeaderButton>
   );
-};
+}
+
 export const Playground: Story = (props: ModalPageProps) => {
   const [open, setOpen] = React.useState(true);
   const close = () => setOpen(false);
@@ -426,4 +439,11 @@ export const Sandbox: Story = (props: ModalPageProps) => {
 };
 Sandbox.args = {
   id: 'modal-page',
+};
+Sandbox.parameters = {
+  liveCodeEditor: {
+    scope: {
+      mockData,
+    },
+  },
 };

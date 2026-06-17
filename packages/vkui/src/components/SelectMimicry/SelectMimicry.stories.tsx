@@ -13,7 +13,7 @@ const story: Meta<StorySelectMimicryProps> = {
   component: SelectMimicry,
   parameters: createStoryParameters('SelectMimicry', CanvasFullLayout, DisableCartesianParam),
   argTypes: {
-    selectValue: {
+    children: {
       description: 'Для отображения выбранного значения',
       table: {
         type: {
@@ -32,7 +32,6 @@ const story: Meta<StorySelectMimicryProps> = {
 
 export default story;
 
-export const Playground: StoryFn<StorySelectMimicryProps> = ({
-  selectValue,
-  ...args
-}: StorySelectMimicryProps) => <SelectMimicry {...args}>{selectValue}</SelectMimicry>;
+export const Playground: StoryFn<StorySelectMimicryProps> = (args: StorySelectMimicryProps) => (
+  <SelectMimicry {...args} />
+);

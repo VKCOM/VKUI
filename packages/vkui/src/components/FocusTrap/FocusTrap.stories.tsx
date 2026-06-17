@@ -23,7 +23,11 @@ const containerStyle = {
 const story: Meta<FocusTrapProps> = {
   title: 'Utils/FocusTrap',
   component: FocusTrap,
-  parameters: createStoryParameters('FocusTrap', CanvasFullLayout, DisableCartesianParam),
+  parameters: createStoryParameters('FocusTrap', CanvasFullLayout, DisableCartesianParam, {
+    liveCodeEditor: {
+      scope: { containerStyle },
+    },
+  }),
   tags: ['Утилиты'],
 };
 
@@ -325,4 +329,8 @@ export const ModalLikeUsage: Story = () => {
       )}
     </Flex>
   );
+};
+
+ModalLikeUsage.parameters = {
+  liveCodeEditor: { scope: { useGlobalEscKeyDown } },
 };

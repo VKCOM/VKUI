@@ -27,9 +27,8 @@ const story: Meta<ChipProps> = {
 export default story;
 
 type Story = StoryFn<ChipProps>;
-export const Playground: Story = ({ ...args }) => {
-  return <Chip {...args} />;
-};
+
+export const Playground: Story = (args: ChipProps) => <Chip {...args} />;
 
 Playground.args = {
   value: 'chip',

@@ -33,3 +33,9 @@ export const Playground: StoryFn<DirectionProviderProps> = (args: DirectionProvi
     </DirectionProvider>
   );
 };
+
+Playground.parameters = {
+  liveCodeEditor: {
+    scope: { Fixture },
+  },
+};

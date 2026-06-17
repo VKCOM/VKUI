@@ -4,10 +4,18 @@ import { createFieldWithPresets } from '../../testing/presets';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { ActionSheetItem, type ActionSheetItemProps } from './ActionSheetItem';
 
+const commonStyles = {
+  border: '1px dashed red',
+};
+
 const story: Meta<ActionSheetItemProps> = {
   title: 'Modals/ActionSheet/ActionSheetItem',
   component: ActionSheetItem,
-  parameters: createStoryParameters('ActionSheetItem', CanvasFullLayout, DisableCartesianParam),
+  parameters: createStoryParameters('ActionSheetItem', CanvasFullLayout, DisableCartesianParam, {
+    liveCodeEditor: {
+      scope: { commonStyles },
+    },
+  }),
   argTypes: {
     before: createFieldWithPresets({
       iconSizes: ['16', '20', '24', '28'],
@@ -28,10 +36,6 @@ const story: Meta<ActionSheetItemProps> = {
 export default story;
 
 type Story = StoryFn<ActionSheetItemProps>;
-
-const commonStyles = {
-  border: '1px dashed red',
-};
 
 export const Playground: Story = (args: ActionSheetItemProps) => {
   return <ActionSheetItem style={commonStyles} {...args} />;

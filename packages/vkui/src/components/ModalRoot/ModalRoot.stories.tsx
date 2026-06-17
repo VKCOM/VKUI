@@ -18,17 +18,6 @@ import { Spinner } from '../Spinner/Spinner';
 import { ModalRoot } from './ModalRoot';
 import type { ModalRootProps } from './types';
 
-const story: Meta<ModalRootProps> = {
-  title: 'Utils/ModalRoot',
-  component: ModalRoot,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
-  tags: ['Утилиты'],
-};
-
-export default story;
-
-type Story = StoryFn<ModalRootProps>;
-
 const MODAL_ROOT_WITH_AUTO_FOCUS = 'modal-root-with-auto-focus';
 
 const modalsPayload = {
@@ -53,7 +42,30 @@ const modalsPayload = {
     subtitle: 'dynamicContentHeight',
   },
 };
+
 const modalIds = [1, 2, 3, 4] as const;
+
+const story: Meta<ModalRootProps> = {
+  title: 'Utils/ModalRoot',
+  component: ModalRoot,
+  parameters: {
+    ...CanvasFullLayout,
+    ...DisableCartesianParam,
+    liveCodeEditor: {
+      scope: {
+        MODAL_ROOT_WITH_AUTO_FOCUS,
+        modalsPayload,
+        modalIds,
+        ModalWrapper,
+      },
+    },
+  },
+  tags: ['Утилиты'],
+};
+
+export default story;
+
+type Story = StoryFn<ModalRootProps>;
 
 export const Managing: Story = () => {
   const [withHeader, setWithHeader] = React.useState(false);
@@ -152,6 +164,12 @@ const CustomModal = ({ modalProps }: CustomModalProps<OpenModalPageProps>) => {
 
 export const ModalDynamicHeight: Story = () => {
   return <ModalWrapper type="page" customModal={CustomModal} />;
+};
+
+ModalDynamicHeight.parameters = {
+  liveCodeEditor: {
+    scope: { CustomModal },
+  },
 };
 
 export const ModalRootAutoFocus: Story = () => {

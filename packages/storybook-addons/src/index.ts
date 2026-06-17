@@ -10,3 +10,6 @@ export { registerStorybookThemeAddon } from './addons/storybook-theme/register';
 export { ADDON_ID as sourceButtonAddonId } from './addons/source-button/constants';
 export type { SourceButtonConfig } from './addons/source-button/config';
 export { registerSourceButtonAddon } from './addons/source-button/register';
+
+export { withLiveCodeEditor } from './liveCodeEditor';
+export type { LiveCodeEditorParameters, ExtraLibs, NamedImports } from './liveCodeEditor';

@@ -23,11 +23,19 @@
     },
     "./source-button": {
       "import": "./src/addons/source-button/preset.js"
+    },
+    "./live-code-editor": {
+      "import": "./src/addons/live-code-editor/preset.js"
     }
   },
   "files": [
     "src"
   ],
+  "dependencies": {
+    "@babel/standalone": "^7.0.0",
+    "monaco-editor": "^0.52.0",
+    "prettier": "^3.0.0"
+  },
   "peerDependencies": {
     "@storybook/icons": ">=2.0.0",
     "@storybook/react-vite": ">=10.0.0",

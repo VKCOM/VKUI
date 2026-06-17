@@ -17,7 +17,16 @@ const ButtonWithIconLabel = 'Кнопка с иконкой';
 const story: Meta<ButtonGroupProps> = {
   title: 'Layout/ButtonGroup',
   component: ButtonGroup,
-  parameters: createStoryParameters('ButtonGroup', CanvasFullLayout),
+  parameters: createStoryParameters('ButtonGroup', CanvasFullLayout, {
+    liveCodeEditor: {
+      scope: {
+        ButtonText,
+        StretchedButtonText,
+        ButtonWithIconLabel,
+        ButtonGroupHighlightStyles,
+      },
+    },
+  }),
   decorators: [withCartesian],
   tags: ['Раскладка'],
 };

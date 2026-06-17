@@ -46,3 +46,9 @@ export const Playground: StoryFn<AdaptivityProviderProps> = (args: AdaptivityPro
     </AdaptivityProvider>
   );
 };
+
+Playground.parameters = {
+  liveCodeEditor: {
+    scope: { DisplayAdaptivityProvider },
+  },
+};
