@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { type FC, type JSX, useEffect, useState } from 'react';
 import { CompilingBadge } from './CompilingBadge';
 import { ErrorBoundary } from './ErrorBoundary';
 import { evalCommonJSWithJSXRuntime } from './evalCommonJSWithJSXRuntime';
@@ -9,13 +8,13 @@ interface PreviewPropsBase {
   code: string;
   componentProps?: any;
   name?: string;
-  fallback: JSX.Element;
+  fallback: React.JSX.Element;
   updateStoryCompilingStatus: (compiling: boolean) => void;
 }
 
 type PreviewProps = PreviewPropsBase &
   Pick<LiveCodeEditorParameters, 'getGlobals' | 'scope'> & {
-    withDecorators: (renderComponent: () => JSX.Element) => () => JSX.Element;
+    withDecorators: (renderComponent: () => React.JSX.Element) => () => React.JSX.Element;
   };
 
 export const Preview = ({
@@ -27,13 +26,13 @@ export const Preview = ({
   fallback,
   withDecorators,
   updateStoryCompilingStatus,
-}: PreviewProps): JSX.Element => {
-  const [data, setData] = useState<
-    { error: Error; Component: null } | { error: null; Component: FC } | null
+}: PreviewProps): React.JSX.Element => {
+  const [data, setData] = React.useState<
+    { error: Error; Component: null } | { error: null; Component: React.FC } | null
   >(null);
-  const [compiling, setCompiling] = useState<boolean>(false);
+  const [compiling, setCompiling] = React.useState<boolean>(false);
 
-  useEffect(() => {
+  React.useEffect(() => {
     let cancelled = false;
     updateStoryCompilingStatus(true);
 
@@ -73,7 +72,7 @@ export const Preview = ({
           );
         }
 
-        setData({ error: null, Component: Component as FC });
+        setData({ error: null, Component: Component as React.FC });
       } catch (error) {
         if (!cancelled) {
           setData({ error: error as Error, Component: null });

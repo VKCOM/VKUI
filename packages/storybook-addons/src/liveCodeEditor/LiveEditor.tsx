@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useStorybookApi } from 'storybook/manager-api';
 import { Editor } from './Editor';
 import { addComponentExport, format, inlinePropsSpread } from './codeModifications';
@@ -30,14 +29,14 @@ export const LiveEditor = ({
     },
     setLiveCodeEditorState,
   ] = useLiveCodeEditorState();
-  const initialCodeWithExport = useMemo(() => addComponentExport(code, name), [code, name]);
-  const initialCodeWithInlineProps = useMemo(
+  const initialCodeWithExport = React.useMemo(() => addComponentExport(code, name), [code, name]);
+  const initialCodeWithInlineProps = React.useMemo(
     () => inlinePropsSpread(initialCodeWithExport, storyArgs),
     [initialCodeWithExport, storyArgs],
   );
-  const [formattedCode, setFormattedCode] = useState(initialCodeWithInlineProps);
+  const [formattedCode, setFormattedCode] = React.useState(initialCodeWithInlineProps);
 
-  useEffect(() => {
+  React.useEffect(() => {
     let active = true;
 
     format(initialCodeWithInlineProps)
@@ -101,7 +100,7 @@ export const LiveEditor = ({
       live_code_editor: undefined,
     });
   }, [api, storyId]);
-  const handleUpdate = useCallback(
+  const handleUpdate = React.useCallback(
     (nextCode: string) => {
       setLiveCodeEditorState((state) => {
         return {
@@ -119,16 +118,16 @@ export const LiveEditor = ({
     },
     [storyId, code],
   );
-  const debouncedHandleUpdate = useMemo(() => debounce(handleUpdate, 350), [handleUpdate]);
+  const debouncedHandleUpdate = React.useMemo(() => debounce(handleUpdate, 350), [handleUpdate]);
 
-  useEffect(
+  React.useEffect(
     () => () => {
       debouncedHandleUpdate.cancel();
     },
     [debouncedHandleUpdate],
   );
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (storyState && storyState.initialCode !== code) {
       handleReset();
     }
