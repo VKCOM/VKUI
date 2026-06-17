@@ -9,6 +9,7 @@ const scripts = [
   './generate-props/generate-props.mjs',
   './generate-showcase.mjs',
   './copy-mdx-to-public.mjs',
+  './generate-llms-txt.mjs',
 ];
 
 for (const script of scripts) {

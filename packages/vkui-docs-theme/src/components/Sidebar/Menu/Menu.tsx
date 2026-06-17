@@ -84,6 +84,7 @@ function File({ item, itemIdPrefix, hovered = false }: FileProps): React.ReactEl
   const active = Boolean(item.route && route === item.route);
   const href = (item as PageItem).href || item.route;
   const ref = React.useRef<HTMLLIElement>(null);
+  const isStaticFile = href.endsWith('.txt');
 
   React.useEffect(() => {
     const container = document.getElementById('vkui-docs-sidebar');
@@ -108,11 +109,11 @@ function File({ item, itemIdPrefix, hovered = false }: FileProps): React.ReactEl
       id={itemIdPrefix ? `${itemIdPrefix}_${item.name}` : undefined}
     >
       <Tappable
-        href={href}
+        href={isStaticFile ? `${process.env.NEXT_PUBLIC_VKUI_DOCS_BASE_PATH || ''}${href}` : href}
         className={classNames(styles.menuItem, active && styles.activeMenuItem)}
         activeMode="opacity"
         hoverMode={styles.hoverMenuItem}
-        Component={NextLink}
+        Component={isStaticFile ? 'a' : NextLink}
         focusVisibleMode="inside"
         borderRadiusMode="inherit"
         hovered={hovered}
