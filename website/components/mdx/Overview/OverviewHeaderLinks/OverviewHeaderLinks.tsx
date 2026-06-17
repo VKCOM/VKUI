@@ -17,6 +17,10 @@ export function OverviewHeaderLinks({
   const fsRoute = useFSRoute();
   const mdxUrl = createMdxUrl(fsRoute);
 
+  if (fsRoute === '/blog') {
+    return null;
+  }
+
   if (type === 'doc') {
     return (
       <Subhead>

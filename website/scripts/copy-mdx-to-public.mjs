@@ -3,6 +3,7 @@ import path from 'node:path';
 import { replacePropsTable } from './common/replacePropsTable.mjs';
 import { collectMdxFiles } from './common/collectMdxFiles.mjs';
 import { loadDocgen } from './common/loadDocgen.mjs';
+import { resolvePartials } from './common/resolvePartials.mjs';
 
 const CONTENT_DIRECTORY = path.resolve('content');
 const PUBLIC_DIRECTORY = path.resolve('public');
@@ -26,11 +27,20 @@ function copyMdxToPublic() {
   let copiedCount = 0;
 
   mdxFiles.forEach((absoluteMdxPath) => {
+    if (absoluteMdxPath.endsWith('index.mdx')) {
+      return;
+    }
     const relativeMdxPath = path.relative(CONTENT_DIRECTORY, absoluteMdxPath);
     const destinationPath = path.join(PUBLIC_DIRECTORY, relativeMdxPath);
 
     const rawContent = fs.readFileSync(absoluteMdxPath, 'utf-8');
-    const transformedContent = replacePropsTable(rawContent, docgen);
+
+    const transformers = [
+      (content) => resolvePartials(content, absoluteMdxPath),
+      (content) => replacePropsTable(content, docgen),
+    ];
+
+    const transformedContent = transformers.reduce((result, fn) => fn(result), rawContent);
 
     ensureDirectoryExists(destinationPath);
     // BOM (﻿) заставляет браузер распознавать кодировку UTF-8
