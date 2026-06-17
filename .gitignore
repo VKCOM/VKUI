@@ -9,6 +9,7 @@ _pagefind/
 .docgen/
 mcp-data/
 website/generated/
+website/public/**/*.mdx
 
 # Next
 .next/

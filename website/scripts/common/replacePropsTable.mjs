@@ -43,7 +43,7 @@ const WITH_CHILDREN_RE =
  * @param {Record<string, unknown[]>} docgen - данные из docgen.json
  * @returns {string} трансформированное содержимое
  */
-export function transformMdxBody(body, docgen) {
+export function replacePropsTable(body, docgen) {
   let result = body;
 
   result = result.replace(SELF_CLOSING_RE, (_match, name) => {
