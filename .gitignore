@@ -10,6 +10,7 @@ _pagefind/
 mcp-data/
 website/generated/
 website/public/**/*.mdx
+website/public/llms.txt
 
 # Next
 .next/

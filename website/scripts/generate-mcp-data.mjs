@@ -5,6 +5,8 @@ import { resolvePartials } from './common/resolvePartials.mjs';
 import { replacePropsTable } from './common/replacePropsTable.mjs';
 import { collectMdxFiles } from './common/collectMdxFiles.mjs';
 import { loadDocgen } from './common/loadDocgen.mjs';
+import { parseFrontmatter } from './common/parseFrontmatter.mjs';
+import { componentNameFromSlug } from './common/componentNameFromSlug.mjs';
 
 const SCRIPT_FILE = fileURLToPath(import.meta.url);
 const SCRIPT_DIR = path.dirname(SCRIPT_FILE);
@@ -26,38 +28,14 @@ function ensureDir(dirPath) {
   fs.mkdirSync(dirPath, { recursive: true });
 }
 
-function parseFrontmatter(content) {
-  const match = content.match(/^---\s*\n([\s\S]*?)\n---\s*\n?/);
-  if (!match) {
-    return { data: {}, body: content };
-  }
-  const block = match[1];
-  const data = {};
-  for (const line of block.split('\n')) {
-    const lineMatch = line.match(/^([A-Za-z0-9_-]+)\s*:\s*(.+)$/);
-    if (!lineMatch) {
-      continue;
-    }
-    const key = lineMatch[1];
-    let value = lineMatch[2].trim();
-    value = value.replace(/^['"]|['"]$/g, '');
-    data[key] = value;
-  }
-  const body = content.slice(match[0].length);
-  return { data, body };
-}
-
 function slugFromPath(filePath) {
   const relative = path.relative(COMPONENTS_DIR, filePath);
   return relative.replace(/\\/g, '/').replace(/\.mdx$/, '');
 }
 
-function componentNameFromSlug(slug) {
-  const base = slug.split('/').pop() || slug;
-  return base
-    .split('-')
-    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-    .join('');
+function getComponentName(fileName) {
+  const base = fileName.split('/').pop() || fileName;
+  return componentNameFromSlug(base);
 }
 
 const SPECIFIC_HOOKS_SLUG_TO_NAME_MAP = {
@@ -182,7 +160,7 @@ function generateMcpData() {
     const { data, body } = parseFrontmatter(raw);
     const slug = slugFromPath(filePath);
     const hook = isHook(slug);
-    const itemName = hook ? hookKeyFromSlug(slug) : componentNameFromSlug(slug);
+    const itemName = hook ? hookKeyFromSlug(slug) : getComponentName(slug);
     const description = data.description || '';
     const props = docgen[itemName] || [];
     const resolvedBody = resolvePartials(body, filePath);
