@@ -1,3 +1,5 @@
+// eslint-disable-next-line spaced-comment
+/// <reference path="./declarations.d.ts" />
 import * as React from 'react';
 import { CompilingBadge } from './CompilingBadge';
 import { ErrorBoundary } from './ErrorBoundary';
@@ -40,7 +42,7 @@ export const Preview = ({
 
     void (async () => {
       try {
-        const [{ transform }, globals] = await Promise.all([
+        const [babelModule, globals] = await Promise.all([
           import(
             /* webpackChunkName: 'babel/standalone' */
             '@babel/standalone'
@@ -53,12 +55,13 @@ export const Preview = ({
           return;
         }
 
+        const babel = babelModule.default ?? babelModule;
         const moduleGlobals = Object.assign({ React }, React, ...globals, scope);
 
         delete moduleGlobals['default'];
         delete moduleGlobals[name];
 
-        const { code: moduleCode } = transform(code, {
+        const { code: moduleCode } = babel.transform(code, {
           filename: 'index.tsx',
           presets: ['typescript', ['react', { runtime: 'automatic' }]],
           plugins: ['transform-modules-commonjs'],
