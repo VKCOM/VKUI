@@ -33,7 +33,7 @@
   ],
   "dependencies": {
     "@babel/standalone": "^8.0.2",
-    "monaco-editor": "^0.52.0",
+    "monaco-editor": "^0.55.1",
     "prettier": "^3.8.4"
   },
   "peerDependencies": {
