@@ -34,7 +34,7 @@
   "dependencies": {
     "@babel/standalone": "^7.0.0",
     "monaco-editor": "^0.52.0",
-    "prettier": "^3.0.0"
+    "prettier": "^3.8.4"
   },
   "peerDependencies": {
     "@storybook/icons": ">=2.0.0",
