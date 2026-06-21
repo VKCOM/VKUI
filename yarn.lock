@@ -2933,37 +2933,37 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@playwright/experimental-ct-core@npm:1.60.0":
-  version: 1.60.0
-  resolution: "@playwright/experimental-ct-core@npm:1.60.0"
+"@playwright/experimental-ct-core@npm:1.61.0":
+  version: 1.61.0
+  resolution: "@playwright/experimental-ct-core@npm:1.61.0"
   dependencies:
-    playwright: "npm:1.60.0"
-    playwright-core: "npm:1.60.0"
+    playwright: "npm:1.61.0"
+    playwright-core: "npm:1.61.0"
     vite: "npm:^6.4.1"
-  checksum: 10/804ca36a48e520a1035d9136532497eb4b77f8af5f5bb9f906320722332d50e50460c0b995c0e0091fa0a197980e08e4a276bd70e7b2d5cdb36d7220a68e5bd1
+  checksum: 10/5c7f91c1ab97e8e9ed9b4829f0184900b60934e0136fe00ac9510f89a47f7d8f9b94674c9f63c1fa0c6be19931161f50f05deb8f6da9b455b00569444d8d562a
   languageName: node
   linkType: hard
 
-"@playwright/experimental-ct-react@npm:1.60.0":
-  version: 1.60.0
-  resolution: "@playwright/experimental-ct-react@npm:1.60.0"
+"@playwright/experimental-ct-react@npm:1.61.0":
+  version: 1.61.0
+  resolution: "@playwright/experimental-ct-react@npm:1.61.0"
   dependencies:
-    "@playwright/experimental-ct-core": "npm:1.60.0"
+    "@playwright/experimental-ct-core": "npm:1.61.0"
     "@vitejs/plugin-react": "npm:^4.2.1"
   bin:
     playwright: cli.js
-  checksum: 10/19df9c33570f5d1bd42db2534f1131b8c4f29646d6a366d717e9d2e84a18b01999c4b248ccc30be3080e8dd558ce824a50a63eb593afe122b7ec360d935e9991
+  checksum: 10/dbae4ba1cb86255227090219818eda97aacb427f0024425a2d2c30177fce36063e3029dcc50183bbb8eb45e1a6e24c2fe28822919eaf7665ba2164265e797045
   languageName: node
   linkType: hard
 
-"@playwright/test@npm:1.60.0":
-  version: 1.60.0
-  resolution: "@playwright/test@npm:1.60.0"
+"@playwright/test@npm:1.61.0":
+  version: 1.61.0
+  resolution: "@playwright/test@npm:1.61.0"
   dependencies:
-    playwright: "npm:1.60.0"
+    playwright: "npm:1.61.0"
   bin:
     playwright: cli.js
-  checksum: 10/a13d369014e1934b0aa484c5d59537f5249af0fe006ac4ecbcbe14c673221412706193ea2d9cf3b2c0cc69e3ddbb4daddb006f0bedfdeb05f687776ed8c35f5f
+  checksum: 10/359a9a4a59a87361d416818966bb810a38970d9f2b8364349d22099fb23eb043530714374a83010f9f3471c7e758df43c49bf32128745af13277adfb211aa752
   languageName: node
   linkType: hard
 
@@ -5571,8 +5571,8 @@ __metadata:
     "@biomejs/biome": "npm:2.5.0"
     "@csstools/postcss-global-data": "npm:4.0.0"
     "@morev/stylelint-testing-library": "npm:^1.1.0"
-    "@playwright/experimental-ct-react": "npm:1.60.0"
-    "@playwright/test": "npm:1.60.0"
+    "@playwright/experimental-ct-react": "npm:1.61.0"
+    "@playwright/test": "npm:1.61.0"
     "@project-docs/website": "workspace:1.0.0"
     "@project-tools/eslint-plugin-vkui": "workspace:1.0.0"
     "@project-tools/postcss-layout-classes": "workspace:1.0.0"
@@ -14379,27 +14379,27 @@ __metadata:
   languageName: node
   linkType: hard
 
-"playwright-core@npm:1.60.0":
-  version: 1.60.0
-  resolution: "playwright-core@npm:1.60.0"
+"playwright-core@npm:1.61.0":
+  version: 1.61.0
+  resolution: "playwright-core@npm:1.61.0"
   bin:
     playwright-core: cli.js
-  checksum: 10/66c0f83d627e673261c848dd6fe1f2856d5b5b6859268acb61a45c00f5bf926e596a351a9c481a3a4e82a45022c7c6b5d99ebc3906fc6876ac582ed6f7e16190
+  checksum: 10/e7ac4b2ef1c5f1701ec8086e47bc341988a3f753009d450e2a62daab5ade1fa943f1ef7fb48c721618dd7bd42667a11ff73c2e5dbd0674c20a3397b3c5be2f61
   languageName: node
   linkType: hard
 
-"playwright@npm:1.60.0":
-  version: 1.60.0
-  resolution: "playwright@npm:1.60.0"
+"playwright@npm:1.61.0":
+  version: 1.61.0
+  resolution: "playwright@npm:1.61.0"
   dependencies:
     fsevents: "npm:2.3.2"
-    playwright-core: "npm:1.60.0"
+    playwright-core: "npm:1.61.0"
   dependenciesMeta:
     fsevents:
       optional: true
   bin:
     playwright: cli.js
-  checksum: 10/8569770637ee35d08cca3b53a5b56c21e9236bd1ac4718456d5988fb8acd51c5b3cc2cf90748363a36199529e870a9b6c68d6fc9e19571261cd867005d6331c1
+  checksum: 10/b5faf97391315334a30e88e03216fd6090988b99896e71b341995a27c49d49dcebc825ec389dabc9b2d2cab6368c418cad9cbb925a88de35fb3b26a19bf05bea
   languageName: node
   linkType: hard
 
