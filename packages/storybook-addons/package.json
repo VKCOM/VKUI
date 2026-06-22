@@ -50,5 +50,8 @@
     "test": "echo no test",
     "lint": "tsc",
     "build": "tsc"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
