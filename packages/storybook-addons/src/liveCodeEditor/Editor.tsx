@@ -43,10 +43,10 @@ const setupMonaco = () => {
     },
   };
 
-  monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
-    jsx: monaco.languages.typescript.JsxEmit.Preserve,
+  monaco.typescript.typescriptDefaults.setCompilerOptions({
+    jsx: monaco.typescript.JsxEmit.Preserve,
   });
-  monaco.languages.typescript.typescriptDefaults.setDiagnosticsOptions({
+  monaco.typescript.typescriptDefaults.setDiagnosticsOptions({
     noSemanticValidation: true,
     noSyntaxValidation: false,
   });
@@ -87,7 +87,7 @@ const addExtraLibs = async (extraLibs: ExtraLibs = {}) => {
     try {
       pendingExtraLibs.add(key);
 
-      monaco.languages.typescript.typescriptDefaults.addExtraLib(
+      monaco.typescript.typescriptDefaults.addExtraLib(
         typeof allExtraLibs[key] === 'function' ? await allExtraLibs[key]() : allExtraLibs[key],
         `file:///node_modules/${key}/index.d.ts`,
       );
