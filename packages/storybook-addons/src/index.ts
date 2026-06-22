@@ -11,5 +11,9 @@ export { ADDON_ID as sourceButtonAddonId } from './addons/source-button/constant
 export type { SourceButtonConfig } from './addons/source-button/config';
 export { registerSourceButtonAddon } from './addons/source-button/register';
 
-export { withLiveCodeEditor, EVENTS } from './liveCodeEditor';
+export {
+  withLiveCodeEditor,
+  EVENTS as liveCodeEditorEvents,
+  ADDON_ID as liveCodeEditorId,
+} from './liveCodeEditor';
 export type { LiveCodeEditorParameters, ExtraLibs, NamedImports } from './liveCodeEditor';
