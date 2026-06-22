@@ -552,6 +552,7 @@ export type { PopperProps } from './components/Popper/Popper';
 /**
  * Types
  */
+export type { LayoutProps } from './lib/layouts';
 export type { AlignType, HasPlatform, HasRef, HasRootRef } from './types';
 export type { NavIdProps } from './lib/getNavId';
 export type { PlatformType } from './lib/platform';
