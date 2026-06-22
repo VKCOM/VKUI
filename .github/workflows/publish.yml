@@ -14,6 +14,7 @@ on:
           - "@vkontakte/vkui-date-fns-tz"
           - "@vkontakte/vkui-codemods"
           - "@vkontakte/vkui-mcp"
+          - "@vkontakte/storybook-addons"
       version_type:
         description: "[2] Version type (!!! CHOOSE THE RIGHT BRANCH BEFORE !!!):"
         required: true
