@@ -1,6 +1,6 @@
 {
   "name": "@vkontakte/storybook-addons",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "VKUI Storybook addons",
   "repository": {
     "type": "git",
