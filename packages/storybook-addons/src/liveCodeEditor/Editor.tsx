@@ -141,6 +141,7 @@ export const Editor = ({
 
     const editor = monaco.editor.create(containerRef.current, {
       automaticLayout: true,
+      editContext: false,
       fixedOverflowWidgets: true,
       model: monaco.editor.createModel(
         value,
