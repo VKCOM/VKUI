@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useStorybookApi } from 'storybook/manager-api';
 import { Editor } from './Editor';
-import { addComponentExport, format, inlinePropsSpread } from './codeModifications';
+import { addComponentExport, inlinePropsSpread } from './codeModifications';
 import { debounce } from './debounce';
 import { useLiveCodeEditorState } from './useLiveCodeEditorState';
 import { toURLSafeBase64 } from './utils';
@@ -12,6 +12,7 @@ interface LiveEditorProps {
   theme?: 'dark' | 'light' | undefined;
   code?: string;
   name?: string;
+  format?: (code: string) => Promise<string>;
 }
 
 export const LiveEditor = ({
@@ -20,6 +21,7 @@ export const LiveEditor = ({
   theme,
   code = '',
   name = 'Story',
+  format,
 }: LiveEditorProps) => {
   const api = useStorybookApi();
   const [
@@ -34,30 +36,6 @@ export const LiveEditor = ({
     () => inlinePropsSpread(initialCodeWithExport, storyArgs),
     [initialCodeWithExport, storyArgs],
   );
-  const [formattedCode, setFormattedCode] = React.useState(initialCodeWithInlineProps);
-
-  React.useEffect(() => {
-    let active = true;
-
-    format(initialCodeWithInlineProps)
-      .then((text) => {
-        if (active) {
-          setFormattedCode(text);
-        }
-      })
-      .catch((error) => {
-        // eslint-disable-next-line no-console
-        console.error('Error formatting code:', error);
-
-        if (active) {
-          setFormattedCode(initialCodeWithInlineProps);
-        }
-      });
-
-    return () => {
-      active = false;
-    };
-  }, [initialCodeWithInlineProps]);
 
   const notify = React.useCallback(
     (message: string) => {
@@ -135,9 +113,10 @@ export const LiveEditor = ({
 
   return (
     <Editor
-      value={storyState?.code ?? formattedCode ?? initialCodeWithInlineProps}
+      value={storyState?.code ?? initialCodeWithInlineProps}
       extraLibs={extraLibs}
       theme={theme}
+      format={format}
       onInput={debouncedHandleUpdate}
       onReset={handleReset}
       onExportByLink={() => void handleExportByLink()}

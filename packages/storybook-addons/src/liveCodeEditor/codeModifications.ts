@@ -1,7 +1,3 @@
-import prettierPluginEstree from 'prettier/plugins/estree';
-import prettierPluginTS from 'prettier/plugins/typescript';
-import prettier from 'prettier/standalone';
-
 /**
  * Находит название первого аргумента функции: `(props: ComponentProps)`
  * match[1] - имя аргумента
@@ -67,14 +63,3 @@ export const inlinePropsSpread = (storyCode: string, storyArgs: any) => {
     storyArgsSubstringWithSpace ? ` ${storyArgsSubstringWithSpace}` : '',
   );
 };
-
-export const format = (code = '') =>
-  prettier.format(code, {
-    parser: 'typescript',
-    plugins: [prettierPluginTS, prettierPluginEstree],
-    printWidth: 110,
-    singleQuote: true,
-    trailingComma: 'all',
-    bracketSpacing: true,
-    semi: true,
-  });

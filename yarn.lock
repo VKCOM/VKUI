@@ -5439,7 +5439,6 @@ __metadata:
   dependencies:
     "@babel/standalone": "npm:^8.0.2"
     monaco-editor: "npm:^0.55.1"
-    prettier: "npm:^3.8.4"
     react: "npm:^18.3.1"
     typescript: "npm:^6.0.3"
   peerDependencies:
@@ -15333,15 +15332,6 @@ __metadata:
   version: 1.2.1
   resolution: "prelude-ls@npm:1.2.1"
   checksum: 10/0b9d2c76801ca652a7f64892dd37b7e3fab149a37d2424920099bf894acccc62abb4424af2155ab36dea8744843060a2d8ddc983518d0b1e22265a22324b72ed
-  languageName: node
-  linkType: hard
-
-"prettier@npm:^3.8.4":
-  version: 3.8.4
-  resolution: "prettier@npm:3.8.4"
-  bin:
-    prettier: bin/prettier.cjs
-  checksum: 10/54684a3cc6689238692b29fab541c01934af7677be94c02293ba49981a1ac121c8bebe2a865f0c3b963e99d208f847c53aed354cc0ce8750e2d45791d64506c5
   languageName: node
   linkType: hard
 
