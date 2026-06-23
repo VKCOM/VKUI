@@ -82,6 +82,8 @@ interface LiveCodeEditorParameters {
   extraLibs?: ExtraLibs;
   /** Отключить живое редактирование для конкретного сториса */
   disabled?: boolean;
+  /** Кастомная функция форматирования кода. Если не указана — используется встроенный форматтер Monaco */
+  format?: (code: string) => Promise<string>;
 }
 ```
 
@@ -160,6 +162,29 @@ parameters: {
 },
 ```
 
+### Кастомная функция форматирования
+
+По умолчанию код форматируется встроенным форматтером Monaco. Чтобы использовать Prettier или другой форматтер, передайте функцию `format`:
+
+```tsx
+import * as prettier from 'prettier/standalone';
+import * as prettierPluginTS from 'prettier/plugins/typescript';
+import * as prettierPluginEstree from 'prettier/plugins/estree';
+
+export const parameters = {
+  liveCodeEditor: {
+    format: async (code) =>
+      prettier.format(code, {
+        parser: 'typescript',
+        plugins: [prettierPluginTS, prettierPluginEstree],
+        singleQuote: true,
+        trailingComma: 'all',
+        printWidth: 110,
+      }),
+  },
+};
+```
+
 ### Отключение для конкретного сториса
 
 ```tsx
@@ -188,7 +213,7 @@ export const CustomCode: StoryFn = {
 
 - **Monaco Editor** — полноценный редактор кода с подсветкой синтаксиса TypeScript/JSX
 - **Автодополнение** — типы React подгружаются автоматически; дополнительные типы можно добавить через `extraLibs`
-- **Форматирование** — код автоматически форматируется через Prettier при загрузке; также доступно ручное форматирование через контекстное меню
+- **Форматирование** — код автоматически форматируется при загрузке и смене стори; по умолчанию используется встроенный форматтер Monaco, также можно указать кастомную функцию через параметр `format`; ручное форматирование доступно через контекстное меню
 - **Живой предпросмотр** — изменения в редакторе компилируются на лету через Babel и отображаются в области превью
 - **Экспорт по ссылке** — можно скопировать ссылку с закодированным кодом (через контекстное меню → «Export By Link» или URL-параметр `live_code_editor`)
 - **Сброс изменений** — через контекстное меню → «Reset all changes»

@@ -35,7 +35,7 @@ const resolveArgs = (args: any, argTypes: any) => {
 const LiveCodeEditorPanel = ({ api }: LiveCodeEditorPanelProps) => {
   const story = api.getCurrentStoryData();
   const theme = useTheme();
-  const { code, disabled } = useParameter<LiveCodeEditorParameters>(PARAM_ID, {});
+  const { code, disabled, format } = useParameter<LiveCodeEditorParameters>(PARAM_ID, {});
   const { source: { originalSource } = {} } = useParameter<DocsParams>('docs', {});
   const source = code || originalSource;
   if (disabled || !story) {
@@ -58,6 +58,7 @@ const LiveCodeEditorPanel = ({ api }: LiveCodeEditorPanelProps) => {
       theme={theme.base}
       code={source}
       name={normalizeStoryName(story.name)}
+      format={format}
     />
   );
 };

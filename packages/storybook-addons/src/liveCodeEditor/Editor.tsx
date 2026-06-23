@@ -1,6 +1,5 @@
 import * as React from 'react';
 import * as monaco from 'monaco-editor';
-import { format } from './codeModifications';
 import type { ExtraLibs } from './types';
 
 let initialized = false;
@@ -51,17 +50,6 @@ const setupMonaco = () => {
     noSyntaxValidation: false,
   });
 
-  monaco.languages.registerDocumentFormattingEditProvider('typescript', {
-    async provideDocumentFormattingEdits(model) {
-      return [
-        {
-          range: model.getFullModelRange(),
-          text: await format(model.getValue()),
-        },
-      ];
-    },
-  });
-
   initialized = true;
 };
 
@@ -104,6 +92,7 @@ interface EditorProps {
   value: string;
   extraLibs?: ExtraLibs;
   theme?: 'dark' | 'light' | undefined;
+  format?: (code: string) => Promise<string>;
   onInput: (value: string) => void;
   onReset: () => void;
   onExportByLink: () => void;
@@ -115,6 +104,7 @@ export const Editor = ({
   value,
   extraLibs,
   theme = 'dark',
+  format,
   onInput,
   onReset,
   onExportByLink,
@@ -124,12 +114,29 @@ export const Editor = ({
   const onInputRef = React.useRef(onInput);
   const onResetRef = React.useRef(onReset);
   const onExportByLinkRef = React.useRef(onExportByLink);
+  const formatRef = React.useRef(format);
 
   React.useEffect(() => {
     onInputRef.current = onInput;
     onResetRef.current = onReset;
     onExportByLinkRef.current = onExportByLink;
-  }, [onInput, onReset, onExportByLink]);
+    formatRef.current = format;
+  }, [onInput, onReset, onExportByLink, format]);
+
+  React.useEffect(() => {
+    if (!format) {
+      return;
+    }
+
+    const disposable = monaco.languages.registerDocumentFormattingEditProvider('typescript', {
+      async provideDocumentFormattingEdits(model) {
+        const text = await formatRef.current!(model.getValue());
+        return [{ range: model.getFullModelRange(), text }];
+      },
+    });
+
+    return () => disposable.dispose();
+  }, [format]);
 
   React.useEffect(() => {
     if (!containerRef.current) {
@@ -176,6 +183,11 @@ export const Editor = ({
 
     editorRef.current = editor;
 
+    const formatAction = editor.getAction('editor.action.formatDocument');
+    if (formatAction) {
+      void formatAction.run();
+    }
+
     // When the document doesn't have focus (e.g. the preview iframe captured it),
     // Monaco can't receive keyboard input after a click. This handler waits for
     // the document to gain focus and then explicitly focuses the editor.
@@ -212,6 +224,10 @@ export const Editor = ({
   React.useEffect(() => {
     if (editorRef.current && editorRef.current.getValue() !== value) {
       editorRef.current.setValue(value);
+      const formatAction = editorRef.current.getAction('editor.action.formatDocument');
+      if (formatAction) {
+        void formatAction.run();
+      }
     }
   }, [value]);
   return <div ref={containerRef} style={{ height: '100%' }} />;
