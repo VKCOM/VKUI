@@ -114,13 +114,11 @@ export const Editor = ({
   const onInputRef = React.useRef(onInput);
   const onResetRef = React.useRef(onReset);
   const onExportByLinkRef = React.useRef(onExportByLink);
-  const formatRef = React.useRef(format);
 
   React.useEffect(() => {
     onInputRef.current = onInput;
     onResetRef.current = onReset;
     onExportByLinkRef.current = onExportByLink;
-    formatRef.current = format;
   }, [onInput, onReset, onExportByLink, format]);
 
   React.useEffect(() => {
@@ -130,10 +128,7 @@ export const Editor = ({
 
     const disposable = monaco.languages.registerDocumentFormattingEditProvider('typescript', {
       async provideDocumentFormattingEdits(model) {
-        if (!formatRef.current) {
-          return [];
-        }
-        const text = await formatRef.current(model.getValue());
+        const text = await format(model.getValue());
         return [{ range: model.getFullModelRange(), text }];
       },
     });
