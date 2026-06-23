@@ -130,7 +130,10 @@ export const Editor = ({
 
     const disposable = monaco.languages.registerDocumentFormattingEditProvider('typescript', {
       async provideDocumentFormattingEdits(model) {
-        const text = await formatRef.current!(model.getValue());
+        if (!formatRef.current) {
+          return [];
+        }
+        const text = await formatRef.current(model.getValue());
         return [{ range: model.getFullModelRange(), text }];
       },
     });
