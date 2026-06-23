@@ -1,0 +1,45 @@
+import{i as e,s as t}from"./preload-helper-xPQekRTU.js";import{t as n}from"./jsx-runtime-BqsN2jGA.js";import{Fn as r,Ft as i,In as a,Ln as o,Mn as s,Nn as c,Nt as l,On as u,Pn as d,Pt as f,jt as p,kn as m}from"./iframe-CsHaVY-5.js";import{n as h,t as g}from"./Group-LwNPJiLD.js";import{n as _,t as v}from"./Search-BBbLfBfz.js";import{n as y,t as b}from"./Tabs-DKMbg0Et.js";import{n as x,t as S}from"./TabsItem-CoiF44Xf.js";import{n as C,t as w}from"./Box-xmPGKkNi.js";import{i as T,n as E,t as D}from"./constants-cjed6ZWB.js";import{n as O,t as k}from"./createStoryParameters-CMHckkzt.js";function A(){return(0,M.jsx)(g,{children:(0,M.jsxs)(w,{padding:`l`,children:[`Используйте `,(0,M.jsx)(`a`,{href:`/?path=/story/layout-box--playground`,children:`Box`}),` со следующими свойствами:`,(0,M.jsxs)(`ul`,{children:[(0,M.jsx)(`li`,{children:(0,M.jsx)(`code`,{children:`position="sticky"`})}),(0,M.jsx)(`li`,{children:(0,M.jsxs)(`code`,{children:[`insetBlockEnd=`,`{`,`0`,`}`]})}),(0,M.jsx)(`li`,{children:(0,M.jsxs)(`code`,{children:[`style=`,`{{ backgroundColor: 'var(--vkui--color_background_content)' }}`]})})]}),(0,M.jsxs)(`p`,{children:[`Так как элемент с `,(0,M.jsx)(`code`,{children:`position="sticky"`}),` находится в основном потоке документа, при миграции с `,(0,M.jsx)(`code`,{children:`<FixedLayout vertical="bottom" />`}),` важно также соблюсти порядок элемента в документе.`]}),(0,M.jsxs)(`p`,{children:[`Пример вёрстки см. на вкладке `,(0,M.jsx)(`b`,{children:`Source`}),` в панели аддонов.`]})]})})}function j(){return(0,M.jsx)(g,{children:(0,M.jsxs)(w,{padding:`l`,children:[`Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed a sollicitudin lectus, a commodo sapien. Vivamus a urna leo. Integer iaculis dignissim urna, sit amet vestibulum diam bibendum a. Donec eu arcu ut augue porttitor faucibus. Vestibulum nec pretium tortor, sit amet congue nunc. Aenean ullamcorper ex sem, sed interdum quam consequat et. Vestibulum a ex non diam fringilla feugiat. Nunc eu tellus sed leo elementum cursus. Mauris blandit porta egestas. Curabitur eget justo elementum, malesuada lacus ut, congue mauris. Integer orci nisi, convallis vitae dapibus sit amet, molestie a risus. Aenean ultricies lacus eros, sit amet condimentum urna malesuada et. Sed quis dolor tempus orci fringilla volutpat in sed velit. Aenean aliquet bibendum pretium.`,(0,M.jsx)(`br`,{}),(0,M.jsx)(`br`,{}),`Cras pulvinar lobortis purus. Donec placerat suscipit leo vitae sodales. Phasellus convallis lorem vitae arcu finibus pellentesque. In imperdiet vel leo a euismod. Nam sed odio a neque venenatis suscipit a placerat magna. Mauris magna nisl, consequat nec augue vitae, ultricies scelerisque ante. Phasellus pharetra risus eget imperdiet sodales. Integer dignissim auctor semper. Nulla odio odio, euismod ut interdum in, bibendum sed massa. Proin rutrum molestie massa in ultrices. Donec eu euismod turpis, eget lobortis lorem. Nulla facilisi. Nam lacinia posuere turpis, sed laoreet turpis auctor nec.`,(0,M.jsx)(`br`,{}),(0,M.jsx)(`br`,{}),`Curabitur eu fermentum mauris. Phasellus malesuada consectetur mollis. Pellentesque pulvinar mauris turpis. Integer neque dolor, semper quis neque et, gravida commodo eros. Duis efficitur ex a turpis blandit tincidunt. Mauris sem mi, imperdiet quis ligula sit amet, fermentum vulputate felis. Phasellus eu ullamcorper dolor, porttitor pulvinar diam. Aliquam euismod, mauris nec varius lacinia, ligula libero vulputate leo, ut tristique massa nisi vitae tortor. Phasellus purus elit, gravida sit amet neque id, aliquam rutrum dui. Maecenas luctus sem vitae molestie porttitor. Cras viverra mauris risus, at sollicitudin ipsum interdum eu. Sed sit amet tempor enim.`,(0,M.jsx)(`br`,{}),(0,M.jsx)(`br`,{}),`In hac habitasse platea dictumst. Etiam luctus erat metus, quis efficitur quam vulputate quis. Duis ultricies non mauris condimentum molestie. Maecenas sollicitudin ex sem, quis ultrices libero blandit eu. Vivamus in turpis pulvinar, malesuada enim at, hendrerit magna. Proin eu nulla eget arcu pretium pharetra. Sed ullamcorper pulvinar est eu dapibus. Cras at varius justo. In ex odio, condimentum id pellentesque a, sodales ut diam.`,(0,M.jsx)(`br`,{}),(0,M.jsx)(`br`,{}),`Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nam aliquet tempor laoreet. Maecenas eu pulvinar diam. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Maecenas et elit eros. Quisque ullamcorper sodales nisi, eleifend aliquet metus venenatis in. Aliquam ornare a lacus in tincidunt. Cras vel tristique metus. Sed vitae nisl at nisl imperdiet sollicitudin. Sed sit amet enim in lectus imperdiet interdum condimentum et diam. Proin venenatis sit amet diam ac vulputate. Donec mauris orci, semper volutpat nunc ut, efficitur condimentum dolor. Vivamus in quam eget quam lacinia pharetra. Phasellus ipsum magna, aliquet id elit eget, cursus tincidunt ex. In rhoncus turpis turpis, et viverra ex malesuada vel. Donec nisi tellus, mollis et posuere vel, dictum eget neque.`]})})}var M,N,P,F,I,L,R,z;e((()=>{p(),T(),O(),C(),h(),o(),m(),_(),c(),y(),x(),i(),r(),M=t(n(),1),N={id:`Layout/FixedLayout`,title:`Layout/FixedLayout (deprecated)`,component:d,parameters:k(`FixedLayout`,D,E,{liveCodeEditor:{scope:{StubContent:j,Guide:A}}}),decorators:[l],tags:[`Раскладка`]},P={controls:{exclude:[`filled`,`vertical`,`useParentWidth`,`getRootRef`,`Component`,`getRef`]}},F=e=>(0,M.jsx)(f,{activePanel:`fixedLayout`,children:(0,M.jsxs)(a,{id:`fixedLayout`,children:[(0,M.jsx)(u,{children:`Fixed layout`}),(0,M.jsxs)(d,{...e,children:[(0,M.jsx)(s,{}),(0,M.jsxs)(b,{children:[(0,M.jsx)(S,{selected:!0,children:`176 сообществ`}),(0,M.jsx)(S,{children:`9 событий`})]})]}),(0,M.jsx)(j,{})]})}),F.storyName=`Playground (deprecated)`,F.args={vertical:`bottom`,filled:!0},I=e=>(0,M.jsx)(f,{activePanel:`fixedLayout`,children:(0,M.jsxs)(a,{id:`fixedLayout`,children:[(0,M.jsx)(u,{children:`Box`}),(0,M.jsx)(A,{}),(0,M.jsx)(j,{}),(0,M.jsxs)(w,{...e,children:[(0,M.jsx)(s,{}),(0,M.jsxs)(b,{children:[(0,M.jsx)(S,{selected:!0,children:`176 сообществ`}),(0,M.jsx)(S,{children:`9 событий`})]})]})]})}),I.storyName=`Playground (миграция на Box)`,I.args={position:`sticky`,insetBlockEnd:0,style:{backgroundColor:`var(--vkui--color_background_content)`}},I.parameters=P,L=e=>(0,M.jsx)(f,{activePanel:`fixedLayout`,children:(0,M.jsxs)(a,{id:`fixedLayout`,children:[(0,M.jsx)(u,{children:`Fixed layout`}),(0,M.jsx)(j,{}),(0,M.jsxs)(d,{...e,children:[(0,M.jsx)(v,{}),(0,M.jsx)(s,{})]})]})}),L.args={vertical:`bottom`,filled:!0},L.storyName=`WithSearchAndContent (deprecated)`,R=e=>(0,M.jsx)(f,{activePanel:`fixedLayout`,children:(0,M.jsxs)(a,{id:`fixedLayout`,children:[(0,M.jsx)(u,{children:`Box`}),(0,M.jsx)(A,{}),(0,M.jsx)(j,{}),(0,M.jsxs)(w,{...e,children:[(0,M.jsx)(v,{}),(0,M.jsx)(s,{})]})]})}),R.args={position:`sticky`,insetBlockEnd:0,style:{backgroundColor:`var(--vkui--color_background_content)`}},R.storyName=`WithSearchAndContent (миграция на Box)`,R.parameters=P,F.parameters={...F.parameters,docs:{...F.parameters?.docs,source:{originalSource:`(props: FixedLayoutProps) => <View activePanel="fixedLayout">
+    <Panel id="fixedLayout">
+      <PanelHeader>Fixed layout</PanelHeader>
+      <FixedLayout {...props}>
+        <Separator />
+        <Tabs>
+          <TabsItem selected>176 сообществ</TabsItem>
+          <TabsItem>9 событий</TabsItem>
+        </Tabs>
+      </FixedLayout>
+      <StubContent />
+    </Panel>
+  </View>`,...F.parameters?.docs?.source}}},I.parameters={...I.parameters,docs:{...I.parameters?.docs,source:{originalSource:`(props: BoxProps) => <View activePanel="fixedLayout">
+    <Panel id="fixedLayout">
+      <PanelHeader>Box</PanelHeader>
+      <Guide />
+      <StubContent />
+      <Box {...props}>
+        <Separator />
+        <Tabs>
+          <TabsItem selected>176 сообществ</TabsItem>
+          <TabsItem>9 событий</TabsItem>
+        </Tabs>
+      </Box>
+    </Panel>
+  </View>`,...I.parameters?.docs?.source}}},L.parameters={...L.parameters,docs:{...L.parameters?.docs,source:{originalSource:`(args: FixedLayoutProps) => <View activePanel="fixedLayout">
+    <Panel id="fixedLayout">
+      <PanelHeader>Fixed layout</PanelHeader>
+      <StubContent />
+      <FixedLayout {...args}>
+        <Search />
+        <Separator />
+      </FixedLayout>
+    </Panel>
+  </View>`,...L.parameters?.docs?.source}}},R.parameters={...R.parameters,docs:{...R.parameters?.docs,source:{originalSource:`(args: BoxProps) => <View activePanel="fixedLayout">
+    <Panel id="fixedLayout">
+      <PanelHeader>Box</PanelHeader>
+      <Guide />
+      <StubContent />
+      <Box {...args}>
+        <Search />
+        <Separator />
+      </Box>
+    </Panel>
+  </View>`,...R.parameters?.docs?.source}}},z=[`Playground`,`MigrationGuide`,`WithSearchAndContent`,`WithSearchAndContentMigrationGuide`]}))();export{I as MigrationGuide,F as Playground,L as WithSearchAndContent,R as WithSearchAndContentMigrationGuide,z as __namedExportsOrder,N as default};

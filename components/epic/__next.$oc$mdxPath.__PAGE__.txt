@@ -1,14 +1,14 @@
 1:"$Sreact.fragment"
-2:I[23450,["876","static/chunks/876-d2b3b0d0166ea28a.js","236","static/chunks/236-8b044a6b5a164fa0.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-4d7fea37bd782b11.js"],"Main"]
-7:I[74517,["876","static/chunks/876-d2b3b0d0166ea28a.js","236","static/chunks/236-8b044a6b5a164fa0.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-4d7fea37bd782b11.js"],"Overview",1]
-8:I[18443,["876","static/chunks/876-d2b3b0d0166ea28a.js","236","static/chunks/236-8b044a6b5a164fa0.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-4d7fea37bd782b11.js"],"Anchor"]
-9:I[80204,["876","static/chunks/876-d2b3b0d0166ea28a.js","236","static/chunks/236-8b044a6b5a164fa0.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-4d7fea37bd782b11.js"],"PlaygroundLazy"]
-a:I[57621,["876","static/chunks/876-d2b3b0d0166ea28a.js","236","static/chunks/236-8b044a6b5a164fa0.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-4d7fea37bd782b11.js"],"FixedLayoutWrapper"]
-19:I[91042,["876","static/chunks/876-d2b3b0d0166ea28a.js","236","static/chunks/236-8b044a6b5a164fa0.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-4d7fea37bd782b11.js"],"TOC"]
+2:I[23450,["876","static/chunks/876-d2b3b0d0166ea28a.js","236","static/chunks/236-23cff53571071b2e.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-4d7fea37bd782b11.js"],"Main"]
+7:I[74517,["876","static/chunks/876-d2b3b0d0166ea28a.js","236","static/chunks/236-23cff53571071b2e.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-4d7fea37bd782b11.js"],"Overview",1]
+8:I[18443,["876","static/chunks/876-d2b3b0d0166ea28a.js","236","static/chunks/236-23cff53571071b2e.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-4d7fea37bd782b11.js"],"Anchor"]
+9:I[80204,["876","static/chunks/876-d2b3b0d0166ea28a.js","236","static/chunks/236-23cff53571071b2e.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-4d7fea37bd782b11.js"],"PlaygroundLazy"]
+a:I[57621,["876","static/chunks/876-d2b3b0d0166ea28a.js","236","static/chunks/236-23cff53571071b2e.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-4d7fea37bd782b11.js"],"FixedLayoutWrapper"]
+19:I[91042,["876","static/chunks/876-d2b3b0d0166ea28a.js","236","static/chunks/236-23cff53571071b2e.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-4d7fea37bd782b11.js"],"TOC"]
 1a:I[90484,[],"OutletBoundary"]
 1b:"$Sreact.suspense"
-1d:I[19180,["876","static/chunks/876-d2b3b0d0166ea28a.js","236","static/chunks/236-8b044a6b5a164fa0.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-4d7fea37bd782b11.js"],"Pre"]
-1e:I[73143,["876","static/chunks/876-d2b3b0d0166ea28a.js","236","static/chunks/236-8b044a6b5a164fa0.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-4d7fea37bd782b11.js"],"BlockWrapper"]
+1d:I[19180,["876","static/chunks/876-d2b3b0d0166ea28a.js","236","static/chunks/236-23cff53571071b2e.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-4d7fea37bd782b11.js"],"Pre"]
+1e:I[73143,["876","static/chunks/876-d2b3b0d0166ea28a.js","236","static/chunks/236-23cff53571071b2e.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-4d7fea37bd782b11.js"],"BlockWrapper"]
 3:T13f3,---
 description: Компонент, реализующий интерфейс с централизованной навигацией через закреплённую нижнюю панель.
 ---
@@ -169,7 +169,7 @@ export default function App() {
 
 ### TabbarItem [#tabbar-item-api]
 
-</PropsTable>0:{"rsc":["$","$1","c",{"children":[[["$","$L2",null,{"metadata":{"description":"Компонент, реализующий интерфейс с централизованной навигацией через закреплённую нижнюю панель.","title":"Epic","filePath":"content/components/epic.mdx","timestamp":1782228015000},"sourceCode":"$3","children":"$L4"}],"$L5"],null,"$L6"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"UNNFoPjySZ4gHn-eZ3LKH"}
+</PropsTable>0:{"rsc":["$","$1","c",{"children":[[["$","$L2",null,{"metadata":{"description":"Компонент, реализующий интерфейс с централизованной навигацией через закреплённую нижнюю панель.","title":"Epic","filePath":"content/components/epic.mdx","timestamp":1782228015000},"sourceCode":"$3","children":"$L4"}],"$L5"],null,"$L6"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"B-O3PQw0B8dPYjMimZYcE"}
 b:T448,const [activeStory, setActiveStory] = useState('feed');
 return (
   <Epic

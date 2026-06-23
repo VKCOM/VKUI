@@ -1,0 +1,3 @@
+import{i as e,s as t}from"./preload-helper-xPQekRTU.js";import{t as n}from"./jsx-runtime-BqsN2jGA.js";import{Jn as r,qn as i}from"./iframe-CsHaVY-5.js";import{c as a,l as o,m as s,n as c,u as l}from"./blocks-D4rK9BJw.js";import{t as u}from"./mdx-react-shim-CN47v6F_.js";function d(e){return(0,p.jsxs)(p.Fragment,{children:[(0,p.jsx)(a,{title:`Configuration/AppRoot`,tags:[`Конфигурация`]}),`
+`,(0,p.jsx)(o,{children:`AppRoot`}),`
+`,(0,p.jsx)(c,{of:i})]})}function f(e={}){let{wrapper:t}={...s(),...e.components};return t?(0,p.jsx)(t,{...e,children:(0,p.jsx)(d,{...e})}):d(e)}var p;e((()=>{p=t(n()),u(),l(),r()}))();export{f as default};

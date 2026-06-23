@@ -1,0 +1,5 @@
+import{i as e,s as t}from"./preload-helper-xPQekRTU.js";import{t as n}from"./jsx-runtime-BqsN2jGA.js";import{n as r,t as i}from"./useConfigDirection-CAkJZA_M.js";import{n as a,t as o}from"./Flex-B8Cr5qNM.js";import{n as s,t as c}from"./Div-Cd0q8MDi.js";import{n as l,t as u}from"./DirectionProvider-CTO_rkqb.js";import{i as d,n as f,t as p}from"./constants-cjed6ZWB.js";var m,h,g,_,v;e((()=>{i(),d(),s(),a(),l(),m=t(n(),1),h={title:`Configuration/DirectionProvider`,component:u,parameters:{...p,...f},tags:[`Конфигурация`]},g=()=>(0,m.jsxs)(o,{dir:r(),children:[(0,m.jsx)(c,{children:`1`}),(0,m.jsx)(c,{children:`2`}),(0,m.jsx)(c,{children:`3`})]}),_=e=>(0,m.jsx)(u,{...e,children:(0,m.jsx)(g,{})}),_.parameters={liveCodeEditor:{scope:{Fixture:g}}},_.parameters={..._.parameters,docs:{..._.parameters?.docs,source:{originalSource:`(args: DirectionProviderProps) => {
+  return <DirectionProvider {...args}>
+      <Fixture />
+    </DirectionProvider>;
+}`,..._.parameters?.docs?.source}}},v=[`Playground`]}))();export{_ as Playground,v as __namedExportsOrder,h as default};

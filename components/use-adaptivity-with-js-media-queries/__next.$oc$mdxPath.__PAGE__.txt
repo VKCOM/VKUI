@@ -1,9 +1,9 @@
 1:"$Sreact.fragment"
-2:I[23450,["876","static/chunks/876-d2b3b0d0166ea28a.js","236","static/chunks/236-8b044a6b5a164fa0.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-4d7fea37bd782b11.js"],"Main"]
-4:I[74517,["876","static/chunks/876-d2b3b0d0166ea28a.js","236","static/chunks/236-8b044a6b5a164fa0.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-4d7fea37bd782b11.js"],"Overview",1]
-15:I[18443,["876","static/chunks/876-d2b3b0d0166ea28a.js","236","static/chunks/236-8b044a6b5a164fa0.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-4d7fea37bd782b11.js"],"Anchor"]
-16:I[80204,["876","static/chunks/876-d2b3b0d0166ea28a.js","236","static/chunks/236-8b044a6b5a164fa0.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-4d7fea37bd782b11.js"],"PlaygroundLazy"]
-17:I[91042,["876","static/chunks/876-d2b3b0d0166ea28a.js","236","static/chunks/236-8b044a6b5a164fa0.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-4d7fea37bd782b11.js"],"TOC"]
+2:I[23450,["876","static/chunks/876-d2b3b0d0166ea28a.js","236","static/chunks/236-23cff53571071b2e.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-4d7fea37bd782b11.js"],"Main"]
+4:I[74517,["876","static/chunks/876-d2b3b0d0166ea28a.js","236","static/chunks/236-23cff53571071b2e.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-4d7fea37bd782b11.js"],"Overview",1]
+15:I[18443,["876","static/chunks/876-d2b3b0d0166ea28a.js","236","static/chunks/236-23cff53571071b2e.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-4d7fea37bd782b11.js"],"Anchor"]
+16:I[80204,["876","static/chunks/876-d2b3b0d0166ea28a.js","236","static/chunks/236-23cff53571071b2e.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-4d7fea37bd782b11.js"],"PlaygroundLazy"]
+17:I[91042,["876","static/chunks/876-d2b3b0d0166ea28a.js","236","static/chunks/236-23cff53571071b2e.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-4d7fea37bd782b11.js"],"TOC"]
 18:I[90484,[],"OutletBoundary"]
 19:"$Sreact.suspense"
 3:Tf5e,---
@@ -94,7 +94,7 @@ description: Хук, возвращающий расширенную верси�
     </Flex>
   );
   ```
-</Playground>0:{"rsc":["$","$1","c",{"children":[[["$","$L2",null,{"metadata":{"description":"Хук, возвращающий расширенную версию параметров адаптивности.","title":"useAdaptivityWithJSMediaQueries","filePath":"content/components/use-adaptivity-with-js-media-queries.mdx","timestamp":1782228015000},"sourceCode":"$3","children":[["$","$L4",null,{"type":"hook","children":[["$","h1",null,{"className":"mdx_h1__1mgpN","children":"useAdaptivityWithJSMediaQueries"}],"$L5","$L6","$L7"]}],"\n","$L8","\n","$L9","\n","$La","\n","$Lb","\n","$Lc","\n","$Ld","\n","$Le","\n","$Lf","\n","$L10","\n","$L11","\n","\n","$L12"]}],"$L13"],null,"$L14"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"UNNFoPjySZ4gHn-eZ3LKH"}
+</Playground>0:{"rsc":["$","$1","c",{"children":[[["$","$L2",null,{"metadata":{"description":"Хук, возвращающий расширенную версию параметров адаптивности.","title":"useAdaptivityWithJSMediaQueries","filePath":"content/components/use-adaptivity-with-js-media-queries.mdx","timestamp":1782228015000},"sourceCode":"$3","children":[["$","$L4",null,{"type":"hook","children":[["$","h1",null,{"className":"mdx_h1__1mgpN","children":"useAdaptivityWithJSMediaQueries"}],"$L5","$L6","$L7"]}],"\n","$L8","\n","$L9","\n","$La","\n","$Lb","\n","$Lc","\n","$Ld","\n","$Le","\n","$Lf","\n","$L10","\n","$L11","\n","\n","$L12"]}],"$L13"],null,"$L14"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"B-O3PQw0B8dPYjMimZYcE"}
 5:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Хук возвращает расширенную версию ",["$","$L15",null,{"href":"/overview/adaptivity#adaptivity-props","children":"параметров адаптивности"}],". Условия реализованы через\n",["$","$L15",null,{"href":"https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia","children":"matchMedia()"}],"."]}]
 6:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Связанные страницы:"}]
 7:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["$","$L15",null,{"href":"/overview/adaptivity","children":"Адаптивность"}]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["$","$L15",null,{"href":"/overview/ssr#adaptivity-note","children":"Серверный рендер | Примечание к адаптивности"}]}],"\n"]}]
