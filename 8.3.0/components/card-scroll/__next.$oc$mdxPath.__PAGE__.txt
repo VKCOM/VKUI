@@ -1,0 +1,135 @@
+1:"$Sreact.fragment"
+2:I[23450,["876","static/chunks/876-9dba29d671cd8288.js","236","static/chunks/236-8052d4f712a2c76a.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-4d7fea37bd782b11.js"],"Main"]
+7:I[74517,["876","static/chunks/876-9dba29d671cd8288.js","236","static/chunks/236-8052d4f712a2c76a.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-4d7fea37bd782b11.js"],"Overview",1]
+8:I[18443,["876","static/chunks/876-9dba29d671cd8288.js","236","static/chunks/236-8052d4f712a2c76a.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-4d7fea37bd782b11.js"],"Anchor"]
+9:I[80204,["876","static/chunks/876-9dba29d671cd8288.js","236","static/chunks/236-8052d4f712a2c76a.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-4d7fea37bd782b11.js"],"PlaygroundLazy"]
+a:I[73143,["876","static/chunks/876-9dba29d671cd8288.js","236","static/chunks/236-8052d4f712a2c76a.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-4d7fea37bd782b11.js"],"BlockWrapper"]
+16:I[91042,["876","static/chunks/876-9dba29d671cd8288.js","236","static/chunks/236-8052d4f712a2c76a.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-4d7fea37bd782b11.js"],"TOC"]
+17:I[90484,[],"OutletBoundary"]
+18:"$Sreact.suspense"
+3:Tf7b,---
+description: Компонент для создания горизонтально прокручиваемых списков Card.
+tags: card
+---
+
+<Overview group="layout">
+
+# CardScroll [tag:component]
+
+Компонент для создания горизонтально прокручиваемых списков [`Card`](/components/card).
+Отвечает за ширину карточки и прокрутку при переполнении. Обеспечивает гибкую настройку базовой разметки.
+
+Связанные компоненты:
+
+- [Card](/components/card)
+- [ContentCard](/components/content-card)
+
+</Overview>
+
+import { BlockWrapper } from '@/components/wrappers';
+
+{/* @example-description: Горизонтальный скролл карточек размера `s` с единым соотношением сторон. */}
+<Playground Wrapper={BlockWrapper}>
+  ```jsx
+  <CardScroll size="s">
+    <Card mode="shadow">
+      <AspectRatio ratio={100 / 66}>
+        <div />
+      </AspectRatio>
+    </Card>
+    <Card mode="shadow">
+      <AspectRatio ratio={100 / 66}>
+        <div />
+      </AspectRatio>
+    </Card>
+    <Card mode="shadow">
+      <AspectRatio ratio={100 / 66}>
+        <div />
+      </AspectRatio>
+    </Card>
+    <Card mode="shadow">
+      <AspectRatio ratio={100 / 66}>
+        <div />
+      </AspectRatio>
+    </Card>
+  </CardScroll>
+  ```
+</Playground>
+
+## Размер карточек
+
+Свойство `size` задаёт ширину каждой карточки и накладывает определённые ограничения на её пропорции.
+Соблюдение пропорций осуществляется самостоятельно
+(например, с помощью компонента [`AspectRatio`](/components/aspect-ratio), как в примере выше).
+
+| Размер  | Пропорции                      | Особенности                   |
+| ------- | ------------------------------ | ----------------------------- |
+| `s`     | высота 66% (≈1:1.5) от ширины  | Компактные элементы           |
+| `m`     | высота 42% (≈1:2.38) от ширины | Универсальный размер          |
+| `l`     | высота 29% (≈1:3.45) от ширины | Широкие элементы              |
+| `false` | Авто                           | Ширина определяется контентом |
+
+## Управление видимостью стрелок
+
+В реализации `CardScroll` используется компонент [`HorizontalScroll`](/components/horizontal-scroll).
+Поэтому для управления видимостью стрелок можно использовать свойство `showArrows` компонента `HorizontalScroll`:
+
+{/* @example-description: `CardScroll` c постоянно видимыми стрелками навигации через `showArrows="always"`. */}
+<Playground Wrapper={BlockWrapper}>
+  ```jsx
+  <CardScroll size="m" showArrows="always">
+    <Card mode="shadow">
+      <AspectRatio ratio={100 / 42}>
+        <div />
+      </AspectRatio>
+    </Card>
+    <Card mode="shadow">
+      <AspectRatio ratio={100 / 42}>
+        <div />
+      </AspectRatio>
+    </Card>
+    <Card mode="shadow">
+      <AspectRatio ratio={100 / 42}>
+        <div />
+      </AspectRatio>
+    </Card>
+    <Card mode="shadow">
+      <AspectRatio ratio={100 / 42}>
+        <div />
+      </AspectRatio>
+    </Card>
+  </CardScroll>
+  ```
+</Playground>
+
+## Доступность (a11y) [#a11y]
+
+- По умолчанию используется семантический список (`<ul>`).
+- Для несписочных структур меняйте тег через свойство `CardsListComponent`.
+
+## Свойства и методы [#api]
+
+<PropsTable name="CardScroll" />0:{"rsc":["$","$1","c",{"children":[[["$","$L2",null,{"metadata":{"description":"Компонент для создания горизонтально прокручиваемых списков Card.","tags":"card","title":"CardScroll","filePath":"content/components/card-scroll.mdx","timestamp":1782228015000},"sourceCode":"$3","children":"$L4"}],"$L5"],null,"$L6"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"wNnF0fHR6sBzNbr9-Inum"}
+4:[["$","$L7",null,{"group":"layout","children":[["$","h1",null,{"className":"mdx_h1__1mgpN","data-pagefind-filter":"tag:component","children":"CardScroll"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Компонент для создания горизонтально прокручиваемых списков ",["$","$L8",null,{"href":"/components/card","children":["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"Card"}]}],".\nОтвечает за ширину карточки и прокрутку при переполнении. Обеспечивает гибкую настройку базовой разметки."]}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Связанные компоненты:"}],["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["$","$L8",null,{"href":"/components/card","children":"Card"}]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["$","$L8",null,{"href":"/components/content-card","children":"ContentCard"}]}],"\n"]}]]}],"\n","\n","\n",["$","$L9",null,{"Wrapper":"$a","code":"<CardScroll size=\"s\">\n  <Card mode=\"shadow\">\n    <AspectRatio ratio={100 / 66}>\n      <div />\n    </AspectRatio>\n  </Card>\n  <Card mode=\"shadow\">\n    <AspectRatio ratio={100 / 66}>\n      <div />\n    </AspectRatio>\n  </Card>\n  <Card mode=\"shadow\">\n    <AspectRatio ratio={100 / 66}>\n      <div />\n    </AspectRatio>\n  </Card>\n  <Card mode=\"shadow\">\n    <AspectRatio ratio={100 / 66}>\n      <div />\n    </AspectRatio>\n  </Card>\n</CardScroll>"}],"\n",["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"razmer-kartochek","children":["$","a",null,{"href":"#razmer-kartochek","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Размер карточек","children":["Размер карточек",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}],"\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"size"}]," задаёт ширину каждой карточки и накладывает определённые ограничения на её пропорции.\nСоблюдение пропорций осуществляется самостоятельно\n(например, с помощью компонента ",["$","$L8",null,{"href":"/components/aspect-ratio","children":["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"AspectRatio"}]}],", как в примере выше)."]}],"\n",["$","div",null,{"className":"Table_root__0rGvK","children":["$","table",null,{"children":[["$","thead",null,{"children":["$","tr",null,{"children":[["$","th",null,{"children":"Размер","className":"Table_th__EHorR"}],["$","th",null,{"children":"Пропорции","className":"Table_th__EHorR"}],["$","th",null,{"children":"Особенности","className":"Table_th__EHorR"}]],"className":"Table_tr__SD2Ot"}]}],["$","tbody",null,{"children":[["$","tr",null,{"children":[["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"s"}],"className":"Table_td__L3qz5"}],["$","td",null,{"children":"высота 66% (≈1:1.5) от ширины","className":"Table_td__L3qz5"}],["$","td",null,{"children":"Компактные элементы","className":"Table_td__L3qz5"}]],"className":"Table_tr__SD2Ot"}],["$","tr",null,{"children":[["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"m"}],"className":"Table_td__L3qz5"}],["$","td",null,{"children":"высота 42% (≈1:2.38) от ширины","className":"Table_td__L3qz5"}],["$","td",null,{"children":"Универсальный размер","className":"Table_td__L3qz5"}]],"className":"Table_tr__SD2Ot"}],["$","tr",null,{"children":["$Lb","$Lc","$Ld"],"className":"Table_tr__SD2Ot"}],"$Le"]}]],"className":"Table_table__NzLHi"}]}],"\n","$Lf","\n","$L10","\n","\n","$L11","\n","$L12","\n","$L13","\n","$L14","\n","$L15"]
+5:["$","$L16",null,{"toc":[{"value":"Размер карточек","id":"razmer-kartochek","depth":2},{"value":"Управление видимостью стрелок","id":"upravlenie-vidimostyu-strelok","depth":2},{"value":"Доступность (a11y)","id":"a11y","depth":2},{"value":"Свойства и методы","id":"api","depth":2}]}]
+6:["$","$L17",null,{"children":["$","$18",null,{"name":"Next.MetadataOutlet","children":"$@19"}]}]
+b:["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"l"}],"className":"Table_td__L3qz5"}]
+c:["$","td",null,{"children":"высота 29% (≈1:3.45) от ширины","className":"Table_td__L3qz5"}]
+d:["$","td",null,{"children":"Широкие элементы","className":"Table_td__L3qz5"}]
+e:["$","tr",null,{"children":[["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"false"}],"className":"Table_td__L3qz5"}],["$","td",null,{"children":"Авто","className":"Table_td__L3qz5"}],["$","td",null,{"children":"Ширина определяется контентом","className":"Table_td__L3qz5"}]],"className":"Table_tr__SD2Ot"}]
+f:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"upravlenie-vidimostyu-strelok","children":["$","a",null,{"href":"#upravlenie-vidimostyu-strelok","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Управление видимостью стрелок","children":["Управление видимостью стрелок",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+10:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["В реализации ",["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"CardScroll"}]," используется компонент ",["$","$L8",null,{"href":"/components/horizontal-scroll","children":["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"HorizontalScroll"}]}],".\nПоэтому для управления видимостью стрелок можно использовать свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"showArrows"}]," компонента ",["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"HorizontalScroll"}],":"]}]
+11:["$","$L9",null,{"Wrapper":"$a","code":"<CardScroll size=\"m\" showArrows=\"always\">\n  <Card mode=\"shadow\">\n    <AspectRatio ratio={100 / 42}>\n      <div />\n    </AspectRatio>\n  </Card>\n  <Card mode=\"shadow\">\n    <AspectRatio ratio={100 / 42}>\n      <div />\n    </AspectRatio>\n  </Card>\n  <Card mode=\"shadow\">\n    <AspectRatio ratio={100 / 42}>\n      <div />\n    </AspectRatio>\n  </Card>\n  <Card mode=\"shadow\">\n    <AspectRatio ratio={100 / 42}>\n      <div />\n    </AspectRatio>\n  </Card>\n</CardScroll>"}]
+12:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"a11y","children":["$","a",null,{"href":"#a11y","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Доступность (a11y)","children":["Доступность (a11y)",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+13:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["По умолчанию используется семантический список (",["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"<ul>"}],")."]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["Для несписочных структур меняйте тег через свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"CardsListComponent"}],"."]}],"\n"]}]
+14:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"api","children":["$","a",null,{"href":"#api","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Свойства и методы","children":["Свойства и методы",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+15:["$","div",null,{"className":"Table_root__0rGvK","children":["$","table",null,{"className":"Table_table__NzLHi PropsTable_root__O959b","children":[["$","thead",null,{"children":["$","tr",null,{"children":[["$","th",null,{"children":"Свойство","className":"Table_th__EHorR"}],["$","th",null,{"children":"Описание","className":"Table_th__EHorR"}]],"className":"Table_tr__SD2Ot"}]}],["$","tbody",null,{"children":["$@1a","$@1b","$@1c","$@1d","$@1e","$@1f","$@20","$@21"]}]]}]}]
+19:null
+1a:["$","tr","CardsListComponent",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"CardsListComponent"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"ElementType<any, keyof IntrinsicElements>"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Позволяет поменять тег используемый для обертки над карточками."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"ul"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+1b:["$","tr","Component",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"Component"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"ElementType<any, keyof IntrinsicElements>"}],"$undefined",["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+1c:["$","tr","getRootRef",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"getRootRef"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"Ref<HTMLDivElement>"}],"$undefined",["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+1d:["$","tr","nextButtonTestId",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ PropsTable_propDeprecated__upMw_","children":["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"nextButtonTestId"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"string"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":[["$","strong",null,{"className":"mdx_strong__N7OUG","children":"Deprecated"}],": Since 8.0.0. Вместо этого используйте ",["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"slotProps={ nextArrow: { 'data-testid': ... } }"}],".\nПередает атрибут ",["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"data-testid"}]," для кнопки прокрутки горизонтального скролла в направлении следующего элемента."]}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+1e:["$","tr","padding",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"padding"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"boolean"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Добавляет отступы по краям слева и справа."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"false"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+1f:["$","tr","prevButtonTestId",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ PropsTable_propDeprecated__upMw_","children":["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"prevButtonTestId"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"string"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":[["$","strong",null,{"className":"mdx_strong__N7OUG","children":"Deprecated"}],": Since 8.0.0. Вместо этого используйте ",["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"slotProps={ prevArrow: { 'data-testid': ... } }"}],".\nПередает атрибут ",["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"data-testid"}]," для кнопки прокрутки горизонтального скролла в направлении предыдущего элемента."]}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+20:["$","tr","showArrows",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"showArrows"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"boolean | \"always\""}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Показывать ли стрелки."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"true"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+21:["$","tr","size",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"size"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"false | \"s\" | \"m\" | \"l\""}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["При ",["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"size=false"}]," ширина ",["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"Card"}]," будет регулироваться контентом внутри. В остальных случаях — будет явно задана в процентах."]}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"s"}]]}]]}]],"className":"Table_tr__SD2Ot"}]

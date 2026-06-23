@@ -1,0 +1,202 @@
+﻿---
+description: Расширенная версия SimpleCell с поддержкой удаления, перетаскивания и выбора элементов.
+tags: list
+---
+
+<Overview group="buttons">
+
+# Cell [tag:component]
+
+Расширенная версия [`SimpleCell`](/components/simple-cell) с поддержкой удаления, перетаскивания и выбора элементов.
+Используется для создания интерактивных списков с расширенной функциональностью.
+
+</Overview>
+
+{/* @example-description: Базовый `Cell` в режиме выбора с аватаром в начале строки. */}
+<Playground>
+  ```jsx
+  <Cell mode="selectable" before={<Avatar />}>
+    Пётр Кузнецов
+  </Cell>
+  ```
+</Playground>
+
+## Основные режимы
+
+### `mode="removable"`
+
+Добавляет кнопку удаления:
+
+{/* @example-description: `Cell` с поддержкой удаления через `mode="removable"` и `onRemove`. */}
+<Playground>
+  ```jsx
+  <Cell
+    mode="removable"
+    before={<Avatar />}
+    onRemove={() => alert('Обработчик удаления')}
+  >
+    Пётр Кузнецов
+  </Cell>
+  ```
+</Playground>
+
+### `mode="selectable"`
+
+Добавляет чекбокс выбора:
+
+{/* @example-description: `Cell` с чекбоксом выбора в режиме `selectable`. */}
+<Playground>
+  ```jsx
+  <Cell mode="selectable" before={<Avatar />}>
+    Пётр Кузнецов
+  </Cell>
+  ```
+</Playground>
+
+### `draggable`
+
+Включает возможность перетаскивания. При использовании данного режима обязательно
+оборачивайте `Cell` в компонент `List`.
+
+Пример можно увидеть в документации компонента [`List`](#list).
+
+### Ограничения
+
+- Перетаскивание работает только внутри `List`.
+- Не меняет порядок `DOM`-элементов автоматически.
+
+## Комбинирование режимов
+
+Одноврменно вы можете использовать перетаскиваемые ячейки либо с `mode="removable"`, либо с `mode="selectable"`.
+Одновременно удалять, перетаскивать и выбирать ячейки нельзя.
+
+## Cell.Checkbox [tag:component]
+
+Используйте подкомпонент `Cell.Checkbox` для возможности размещать чекбокс по бокам
+(передавайте его в свойства `before` или `after`). С помощью данного подкомпонента также можно изменить
+внешний вид чекбоксов.
+
+{/* @example-description: Кастомное размещение `Cell.Checkbox` в правой части ячейки через `after`. */}
+<Playground>
+  ```jsx
+  <Cell Component="label" after={<Cell.Checkbox />}>
+    Элемент с чекбоксом
+  </Cell>
+  ```
+</Playground>
+
+### Доступность (a11y) [#a11y]
+
+- При использовании `mode="selectable"` автоматически использует в качестве `Component` тег `label` для корректного связывания с чекбоксом.
+- У кнопки для перетаскивания есть текст для скринридера, его можно переопределить с помощью свойства `draggerLabel`.
+- Также стоит ознакомиться с [рекомендациями по доступности компонента [`SimpleCell`](/components/simple-cell#a11y).
+
+## List [#list] [tag:component]
+
+Специализированный контейнер для работы с компонентами `<Cell draggable />`.
+Обеспечивает правильное отображение и взаимодействие элементов.
+Также можно использовать как семантический контейнер для обычных `Cell`.
+
+{/* @example-description: Пример `List` с перетаскиваемыми элементами `Cell` и обновлением порядка. */}
+<Playground style={{ height: 250, overflowY: 'auto' }}>
+
+```jsx
+const [draggingList, updateDraggingList] = React.useState([
+  'Say',
+  'Hello',
+  'To',
+  'My',
+  'Little',
+  'Friend',
+]);
+
+const onDragFinish = ({ from, to }) => {
+  const _list = [...draggingList];
+  _list.splice(from, 1);
+  _list.splice(to, 0, draggingList[from]);
+  updateDraggingList(_list);
+};
+
+return (
+  <List gap={5}>
+    {draggingList.map((item) => (
+      <Cell key={item} before={<Avatar />} draggable onDragFinish={onDragFinish}>
+        {item}
+      </Cell>
+    ))}
+  </List>
+);
+```
+
+</Playground>
+
+### Отступы между элементами
+
+Контролируется свойством `gap`:
+
+```jsx
+<List gap={16}>
+  <Cell before={<Icon28User />}>Профиль</Cell>
+  <Cell before={<Icon28Settings />}>Настройки</Cell>
+</List>
+```
+
+### Доступность (a11y) [#list-a11y]
+
+- Автоматически добавляет `role="list"`.
+
+## Свойства и методы [#api]
+
+### Cell
+
+| Свойство | Тип | По умолчанию | Описание |
+| --- | --- | --- | --- |
+| `activated` | `boolean` | `-` | Позволяет управлять `activated`-состоянием извне. |
+| `activeClassName` | `string` | `-` | **Deprecated**: Since 7.3.0. Будет удалено в **VKUI v9**.  Используйте свойство `activeMode`. |
+| `activeEffectDelay` | `number` | `-` | Длительность показа `active`-состояния. |
+| `activeMode` | `StateModeLiteral` | `-` | Стиль подсветки active-состояния. Если передать произвольную строку, она добавится как css-класс во время active. |
+| `after` | `ReactNode` | `-` | Иконка 24\|28 или `<Switch />`. Располагается справа от `indicator`. |
+| `badgeAfterSubtitle` | `ReactNode` | `-` | Иконка 12. Добавится справа от текста `subtitle`. |
+| `badgeAfterTitle` | `ReactNode` | `-` | Иконка 12 или `<Badge />`. Добавится справа от текста `children`. |
+| `badgeBeforeSubtitle` | `ReactNode` | `-` | Иконка 12. Добавится слева от текста `subtitle`. |
+| `badgeBeforeTitle` | `ReactNode` | `-` | Иконка 12 или `<Badge />`. Добавится слева от текста `children`. |
+| `before` | `ReactNode` | `-` | Иконка 28 или `<Avatar size={28\|32\|40\|48\|72} />`. |
+| `borderRadiusMode` | `"auto" \| "inherit"` | `-` | Задает border-radius элементу В режиме `auto` на маленьких экранах `border-radius: 0`, иначе определяется токеном `--vkui--size_border_radius--regular`. |
+| `checked` | `boolean` | `-` | В режиме `selectable` реагирует на входящие значения пропса `cheсked`, как зависящий напрямую от входящего значения. |
+| `chevron` | `"auto" \| "always"` | `-` | Управляет видимостью иконки шеврона `›`.  - `auto` - добавляет шеврон справа только для платформы `ios`; - `always` - всегда показывает шеврон. |
+| `chevronSize` | `"s" \| "m"` | `-` | Размер chevron. |
+| `Component` | `ElementType<any, keyof IntrinsicElements>` | `-` |  |
+| `defaultChecked` | `boolean` | `-` | В режиме `selectable` реагирует на входящие значения пропса `defaultChecked` как неконтролируемый компонент. |
+| `disabled` | `boolean` | `-` | Блокировка взаимодействия с компонентом. |
+| `draggable` | `boolean` | `-` | В режиме перетаскивания ячейка перестает реагировать на нажатие, то есть при нажатии переданный `onClick` вызываться не будет. |
+| `draggerLabel` | `string` | `Перенести ячейку` | Текст для кнопки перетаскивания ячейки. |
+| `draggerTestId` | `string` | `-` | Передает атрибут `data-testid` для кнопки перетаскивания ячейки. |
+| `extraSubtitle` | `ReactNode` | `-` | Дополнительная строка текста под `children` и `subtitle`. |
+| `focusVisibleMode` | `FocusVisibleMode` | `-` | Стиль аутлайна focus visible. Если передать произвольную строку, она добавится как css-класс при :focus-visible |
+| `getRootRef` | `Ref<HTMLDivElement>` | `-` |  |
+| `hasActive` | `boolean` | `-` | Указывает, должен ли компонент реагировать на `active`-состояние. |
+| `hasHover` | `boolean` | `-` | Указывает, должен ли компонент реагировать на `hover`-состояние. |
+| `hasHoverWithChildren` | `boolean` | `-` | Позволяет родительскому компоненту иметь `hovered`-cостояние при наведении на любой дочерний элемент. По умолчанию состояние hovered у родителя сбрасывается.  Присваивается родителькому компоненту. |
+| `hoverClassName` | `string` | `-` | **Deprecated**: Since 7.3.0. Будет удалено в **VKUI v9**.  Используйте свойство `hoverMode`. |
+| `hovered` | `boolean` | `-` | Позволяет управлять `hovered`-состоянием извне. |
+| `hoverMode` | `StateModeLiteral` | `-` | Стиль подсветки hover-состояния. Если передать произвольную строку, она добавится как css-класс во время hover. |
+| `indicator` | `ReactNode` | `-` | Контейнер для текста справа от `children`. |
+| `mode` | `"selectable" \| "removable"` | `-` | Режим отображения ячейки:  - "removable": добавляется кнопка для удаления - "selectable": добавляется чекбокс для выбора. |
+| `multiline` | `boolean` | `-` | Включает многострочный режим для отображения текста. |
+| `name` | `string` | `-` | Имя для `input` в режиме `selectable`. |
+| `onDragFinish` | `((swappedItemRange: SwappedItemRange) => void)` | `-` | Обработчик, срабатывающий при завершении перетаскивания. **Важно:** режим перетаскивания не меняет порядок ячеек в DOM. В обработчике есть объект с полями `from` и `to`. Эти числа нужны для того, чтобы разработчик понимал, с какого индекса на какой произошел переход. В песочнице есть рабочий пример с обработкой этих чисел и перерисовкой списка. |
+| `onRemove` | `((e: MouseEvent<Element, MouseEvent>, rootEl?: HTMLElement \| null) => void) \| undefined` | `-` | Обработчик, срабатывающий при нажатии на контрол удаления. |
+| `overTitle` | `ReactNode` | `-` | Дополнительная строка текста над `children`. |
+| `removeButtonTestId` | `string` | `-` | Передает атрибут `data-testid` для кнопки удаления. |
+| `removePlaceholder` | `ReactNode` | `Удалить` | Текст кнопки удаления ячейки. Визуально скрыт везде, кроме iOS. На iOS появляется в выезжающей кнопке для удаления ячейки. |
+| `subtitle` | `ReactNode` | `-` | Дополнительная строка текста под `children`. |
+| `toggleButtonTestId` | `string` | `-` | Передает атрибут `data-testid` для кнопки, которая активирует кнопку удаления (iOS only). |
+| `unlockParentHover` | `boolean` | `-` | Позволяет родительскому компоненту показывать hovered-состояние при наведении на текущий дочерний компонент.  Присваивается дочернему компоненту. |
+
+### List
+
+| Свойство | Тип | По умолчанию | Описание |
+| --- | --- | --- | --- |
+| `gap` | `number` | `0` | Задает отступ между элементами. |
+| `getRootRef` | `Ref<HTMLDivElement>` | `-` |  |
+

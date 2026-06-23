@@ -1,0 +1,200 @@
+﻿---
+other:
+  hidden: true
+  parent: SubnavigationBar
+description: Кнопка для использования внутри SubnavigationBar — навигация, фильтры, модальные окна.
+---
+
+<Overview group="navigation">
+
+# SubnavigationButton [tag:component]
+
+Кнопка/ссылка для использования внутри [`SubnavigationBar`](/components/subnavigation-bar). Предназначена для навигации между подразделами или управления контентом (активация фильтров, открытие модальных окон).
+
+</Overview>
+
+Кнопка/ссылка для использования внутри [`SubnavigationBar`](/components/subnavigation-bar). Предназначена для навигации между подразделами или управления
+контентом (активация фильтров, открытие модальных окон).
+
+{/* @example-description: Одиночная кнопка `SubnavigationButton` с иконкой в слоте `before`. */}
+<Playground style={{ width: 270 }}>
+  ```jsx
+  <SubnavigationButton onClick={() => {}} before={<Icon24FavoriteOutline />}>
+    Избранное
+  </SubnavigationButton>
+  ```
+</Playground>
+
+### Состояния
+
+`selected` — выделяет кнопку как активную. Используйте для индикации текущего раздела или применённого фильтра.
+
+{/* @example-description: Пример состояния `selected` у `SubnavigationButton` внутри панели навигации. */}
+<Playground style={{ width: 270 }}>
+  ```jsx
+  <SubnavigationBar>
+    <SubnavigationButton selected onClick={() => {}}>
+      Выбран
+    </SubnavigationButton>
+    <SubnavigationButton onClick={() => {}}>Не выбран</SubnavigationButton>
+  </SubnavigationBar>
+  ```
+</Playground>
+
+### Режимы отображения
+
+Задается свойством `mode`:
+
+- `primary` — первичный вид для привлечения внимания;
+- `outline` — вид с обводкой;
+- `tertiary` — третичный вид без фона.
+
+### Внешний вид
+
+Задается свойством `appearance`.
+
+#### `accent`
+
+{/* @example-description: Сравнение режимов `primary`, `outline` и `tertiary` в `appearance="accent"`. */}
+<Playground style={{ width: 270 }}>
+  ```jsx
+  <SubnavigationBar>
+    <SubnavigationButton mode="primary" appearance="accent" selected onClick={() => {}}>
+      primary accent selected
+    </SubnavigationButton>
+    <SubnavigationButton mode="primary" appearance="accent" onClick={() => {}}>
+      primary accent
+    </SubnavigationButton>
+  </SubnavigationBar>
+  <SubnavigationBar>
+    <SubnavigationButton mode="outline" appearance="accent" selected onClick={() => {}}>
+      outline accent selected
+    </SubnavigationButton>
+    <SubnavigationButton mode="outline" appearance="accent" onClick={() => {}}>
+      outline accent
+    </SubnavigationButton>
+  </SubnavigationBar>
+  <SubnavigationBar>
+    <SubnavigationButton mode="tertiary" appearance="accent" selected onClick={() => {}}>
+      tertiary accent selected
+    </SubnavigationButton>
+    <SubnavigationButton mode="tertiary" appearance="accent" onClick={() => {}}>
+      tertiary accent
+    </SubnavigationButton>
+  </SubnavigationBar>
+  ```
+</Playground>
+
+#### `neutral`
+
+{/* @example-description: Сравнение режимов `primary`, `outline` и `tertiary` в `appearance="neutral"`. */}
+<Playground style={{ width: 270 }}>
+  ```jsx
+  <SubnavigationBar>
+    <SubnavigationButton mode="primary" appearance="neutral" selected onClick={() => {}}>
+      primary neutral selected
+    </SubnavigationButton>
+    <SubnavigationButton mode="primary" appearance="neutral" onClick={() => {}}>
+      primary neutral
+    </SubnavigationButton>
+  </SubnavigationBar>
+  <SubnavigationBar>
+    <SubnavigationButton mode="outline" appearance="neutral" selected onClick={() => {}}>
+      outline neutral selected
+    </SubnavigationButton>
+    <SubnavigationButton mode="outline" appearance="neutral" onClick={() => {}}>
+      outline neutral
+    </SubnavigationButton>
+  </SubnavigationBar>
+  <SubnavigationBar>
+    <SubnavigationButton mode="tertiary" appearance="neutral" selected onClick={() => {}}>
+      tertiary neutral selected
+    </SubnavigationButton>
+    <SubnavigationButton mode="tertiary" appearance="neutral" onClick={() => {}}>
+      tertiary neutral
+    </SubnavigationButton>
+  </SubnavigationBar>
+  ```
+</Playground>
+
+### Размеры и контент
+
+Размер самой кнопки задается свойством `size`:
+
+- `s` — компактный;
+- `m` — стандартный;
+- `l` — увеличенный.
+
+`textLevel` — отдельно настраивает размер текста (1 — крупный, 3 — мелкий).
+Полезно в режиме `fixed` у родительского [`SubnavigationBar`](/components/subnavigation-bar).
+
+{/* @example-description: Пример размеров `SubnavigationButton` (`s`, `m`, `l`). */}
+<Playground style={{ width: 270 }}>
+  ```jsx
+  <SubnavigationButton size="s" onClick={() => {}}>
+    size="s"
+  </SubnavigationButton>
+  <SubnavigationButton size="m" onClick={() => {}}>
+    size="m"
+  </SubnavigationButton>
+  <SubnavigationButton size="l" onClick={() => {}}>
+    size="l"
+  </SubnavigationButton>
+  ```
+</Playground>
+
+### Дополнительные элементы
+
+- `before` — иконка перед текстом (рекомендуемый размер `24px`).
+- `after` — счётчик или бейдж (рекомендуется использовать только `Counter size="s"` или `Badge`).
+- `chevron` — добавляет стрелку-индикатор справа.
+
+{/* @example-description: Кнопка с дополнительными элементами: `before`, `after` со счётчиком и `chevron`. */}
+<Playground style={{ width: 270 }}>
+  ```jsx
+  <SubnavigationButton
+    before={<Icon24Filter />}
+    selected
+    chevron
+    after={
+      <Counter size="s">
+        <VisuallyHidden>Применено: </VisuallyHidden>3
+      </Counter>
+    }
+    onClick={() => {}}
+  >
+    Фильтры
+  </SubnavigationButton>
+  ```
+</Playground>
+
+## Свойства и методы [#api]
+
+### SubnavigationButton
+
+| Свойство | Тип | По умолчанию | Описание |
+| --- | --- | --- | --- |
+| `activated` | `boolean` | `-` | Позволяет управлять `activated`-состоянием извне. |
+| `activeClassName` | `string` | `-` | **Deprecated**: Since 7.3.0. Будет удалено в **VKUI v9**.  Используйте свойство `activeMode`. |
+| `activeEffectDelay` | `number` | `-` | Длительность показа `active`-состояния. |
+| `activeMode` | `StateModeLiteral` | `-` | Стиль подсветки active-состояния. Если передать произвольную строку, она добавится как css-класс во время active. |
+| `after` | `ReactNode` | `-` | Рекомендуется использовать только `<Counter size="s" />` или `<Badge />`. |
+| `appearance` | `"accent" \| "neutral"` | `accent` | Тип внешнего вида кнопки. |
+| `before` | `ReactNode` | `-` | Рекомендуется использовать только иконки с размером 24. |
+| `borderRadiusMode` | `"auto" \| "inherit"` | `-` | Задает border-radius элементу В режиме `auto` на маленьких экранах `border-radius: 0`, иначе определяется токеном `--vkui--size_border_radius--regular`. |
+| `chevron` | `boolean` | `-` | Нужно ли отображать иконку `"chevron"`. |
+| `Component` | `ElementType<any, keyof IntrinsicElements>` | `-` |  |
+| `focusVisibleMode` | `FocusVisibleMode` | `-` | Стиль аутлайна focus visible. Если передать произвольную строку, она добавится как css-класс при :focus-visible |
+| `getRootRef` | `Ref<HTMLElement>` | `-` |  |
+| `hasActive` | `boolean` | `-` | Указывает, должен ли компонент реагировать на `active`-состояние. |
+| `hasHover` | `boolean` | `-` | Указывает, должен ли компонент реагировать на `hover`-состояние. |
+| `hasHoverWithChildren` | `boolean` | `-` | Позволяет родительскому компоненту иметь `hovered`-cостояние при наведении на любой дочерний элемент. По умолчанию состояние hovered у родителя сбрасывается.  Присваивается родителькому компоненту. |
+| `hoverClassName` | `string` | `-` | **Deprecated**: Since 7.3.0. Будет удалено в **VKUI v9**.  Используйте свойство `hoverMode`. |
+| `hovered` | `boolean` | `-` | Позволяет управлять `hovered`-состоянием извне. |
+| `hoverMode` | `StateModeLiteral` | `-` | Стиль подсветки hover-состояния. Если передать произвольную строку, она добавится как css-класс во время hover. |
+| `mode` | `"primary" \| "tertiary" \| "outline"` | `primary` | Стиль отображения кнопки. |
+| `selected` | `boolean` | `-` | Выбранное состояние. |
+| `size` | `"s" \| "m" \| "l"` | `m` | Размер кнопки. |
+| `textLevel` | `"1" \| "2" \| "3"` | `1` | Размер шрифта. Этим свойством рекомендуется пользоваться, чтобы отрегулировать размер шрифта у кнопок в `<SubnavigationBar fixed />`. |
+| `unlockParentHover` | `boolean` | `-` | Позволяет родительскому компоненту показывать hovered-состояние при наведении на текущий дочерний компонент.  Присваивается дочернему компоненту. |
+

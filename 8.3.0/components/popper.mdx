@@ -1,0 +1,157 @@
+﻿---
+description: Низкоуровневый компонент для отрисовки выпадающего блока.
+tags: overlay
+---
+
+<Overview group="modals">
+
+# Popper [tag:component]
+
+Низкоуровневый компонент для отрисовки выпадающего блока.
+Единственная его задача — корректно позиционироваться рядом с целевым элементом.
+
+</Overview>
+
+<Playground hide>
+
+```jsx
+const buttonRef = React.useRef(null);
+
+return (
+  <React.Fragment>
+    <Button getRootRef={buttonRef}>
+      Закрыть
+    </Button>
+    <Popper usePortal={false} targetRef={buttonRef} disableFlipMiddleware>
+      Привет
+    </Popper>
+  </React.Fragment>
+);
+```
+
+</Playground>
+
+{/* @example-description: Базовый `Popper`, позиционируемый относительно кнопки-якоря через `targetRef`. */}
+<Playground>
+
+```jsx
+const [shown, setShown] = React.useState(false);
+const buttonRef = React.useRef(null);
+
+return (
+  <React.Fragment>
+    <Button getRootRef={buttonRef} onClick={() => setShown(!shown)}>
+      {shown ? 'Закрыть' : 'Открыть'}
+    </Button>
+    {shown && (
+      <Popper usePortal={false} targetRef={buttonRef}>
+        Привет
+      </Popper>
+    )}
+  </React.Fragment>
+);
+```
+
+</Playground>
+
+## Виртуальный элемент
+
+Помимо ссылки на DOM элемент, `Popper` можем принимать координаты виртуального элемента.
+Виртуальный элемент представляет из себя объект со свойством `getBoundingClientRect()`.
+
+> Чтобы не задавать все свойства координат вручную,
+> можно использовать [DOMRect.fromRect](https://developer.mozilla.org/en-US/docs/Web/API/DOMRect/fromRect_static)
+
+{/* @example-description: Позиционирование `Popper` от виртуального элемента по координатам курсора. */}
+<Playground>
+
+```jsx
+const [virtualElement, setVirtualElement] = React.useState(() =>
+  DOMRect.fromRect({
+    x: -200,
+    y: -200,
+    width: 10,
+    height: 10,
+  }),
+);
+
+const handleClick = (event) => {
+  setVirtualElement(({ width, height }) =>
+    DOMRect.fromRect({
+      x: event.clientX,
+      y: event.clientY,
+      width,
+      height,
+    }),
+  );
+};
+
+return (
+  <>
+    <Div onClick={handleClick}>Нажми в любое место этого текста</Div>
+    <Popper
+      arrow
+      arrowProps={{ iconStyle: { color: 'green' } }}
+      placement="bottom"
+      usePortal={false}
+      style={{ padding: '9px 12px', backgroundColor: 'green', color: '#fff' }}
+      targetRef={{
+        getBoundingClientRect() {
+          return virtualElement;
+        },
+      }}
+    >
+      Привет
+    </Popper>
+  </>
+);
+```
+
+</Playground>
+
+## Свойства и методы [#api]
+
+| Свойство | Тип | По умолчанию | Описание |
+| --- | --- | --- | --- |
+| `arrow` | `boolean` | `-` | Отображать ли стрелку, указывающую на якорный элемент. |
+| `arrowHeight` | `number` | `8` | Высота стрелки. Складывается с `mainAxis`, чтобы стрелка не залезала на якорный элемент. |
+| `ArrowIcon` | `ComponentType<SVGAttributes<SVGSVGElement>>` | `(props: React.SVGAttributes<SVGSVGElement>): React.ReactNode => {
+  return (
+    <svg
+      width={DEFAULT_ARROW_WIDTH}
+      height={ARROW_HEIGHT_WITH_WHITE_SPACE}
+      viewBox={`0 0 ${DEFAULT_ARROW_WIDTH} ${ARROW_HEIGHT_WITH_WHITE_SPACE}`}
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path d="M10 0c3 0 6 8 10 8v1H0V8c3.975 0 7-8 10-8Z" fill="currentColor" />
+    </svg>
+  );
+}` | Пользовательская SVG иконка.  Требования:  1. Иконка по умолчанию должна быть направлена вверх (a.k.a `IconUp`). 2. Чтобы избежать проблемы с пространством между стрелкой и контентом на некоторых экранах,    растяните кривую по высоте на `1px` и увеличьте на этот размер `height` и `viewBox` SVG.    (смотри https://github.com/VKCOM/VKUI/pull/4496). 3. Передайте высоту иконки в параметр `arrowHeight`. В значении высоты можно исключить хак с `1px` из п.2. 4. Убедитесь, что компонент принимает все валидные для SVG параметры. 5. Убедитесь, что SVG и её элементы наследует цвет через `fill="currentColor"`. |
+| `arrowPadding` | `number` | `10` | Безопасная зона вокруг стрелки, чтобы та не выходила за края контента. |
+| `arrowProps` | `FloatingArrowProps` | `-` | Позволяет набросить на стрелку пользовательские атрибуты. |
+| `arrowRef` | `Element \| MutableRefObject<Element \| null> \| null` | `-` |  |
+| `autoUpdateOnAnimationFrame` | `boolean` | `false` | Пытаться обновлять позицию всплывающего элемента каждый фрейм. |
+| `autoUpdateOnTargetResize` | `boolean` | `false` | Подписывается на изменение геометрии `targetRef`, чтобы пересчитать свою позицию. |
+| `customMiddlewares` | `{ name: string; options?: any; fn: (state: { x: number; y: number; placement: Placement; platform: { detectOverflow: (state: MiddlewareState, options?: DetectOverflowOptions \| Derivable<...>) => Promise<...>; } & Platform; ... 4 more ...; elements: Elements; }) => Promisable<...>; }[] \| undefined` | `-` | Позволяет задать или переопределить модификаторы библиотеки **Floating UI** (подробнее в документации про [middleware](https://floating-ui.com/docs/middleware)). |
+| `defaultShown` | `boolean` | `-` | Начальное состояние всплывающего элемента. |
+| `disableFlipMiddleware` | `boolean` | `false` | Указанное значение `placement` форсируется, даже если для выпадающего элемента недостаточно места. Не оказывает влияния при `placement` значениях - `'auto' \| 'auto-start' \| 'auto-end'` |
+| `disableShiftMiddleware` | `boolean` | `false` | Позволяет отключить смещение по главной оси, которое не даёт всплывающему элементу выходить за границы видимой области. |
+| `flipMiddlewareFallbackAxisSideDirection` | `"start" \| "none" \| "end"` | `-` | Задаёт резервный вариант размещения по перпендикулярной оси. |
+| `getRootRef` | `Ref<HTMLDivElement>` | `-` |  |
+| `hideWhenReferenceHidden` | `boolean` | `-` | Принудительно скрывает компонент если целевой элемент вышел за область видимости. |
+| `hoverDelay` | `number \| [number, number]` | `-` | Количество миллисекунд, после которых произойдёт показ/скрытие всплывающего элемента при наведении.  > Чтобы задать разное время на показ и скрытие, передайте массив типа `[<показ>, <скрытие>]`.  > Используется только для `trigger="hover"`. |
+| `offsetByCrossAxis` | `number` | `0` | Отступ по вспомогательной оси. |
+| `offsetByMainAxis` | `number` | `8` | Отступ по главной оси. |
+| `onPlacementChange` | `OnPlacementChange` | `-` | В зависимости от области видимости, позиция может смениться на более оптимальную, чтобы всплывающий элемент вместился в эту область видимости. |
+| `onReferenceHiddenChange` | `((hidden: boolean) => void)` | `-` | Событие скрытия / раскрытия компонента при использовании свойства `hideWhenReferenceHidden`.  > Стоит иметь ввиду, что событие также будет вызвано и при новом рендере компонента |
+| `onShownChange` | `OnShownChange` | `-` | Вызывается при каждом изменении видимости всплывающего элемента. |
+| `overflowPadding` | `Padding` | `-` | Отступ для смещения. |
+| `placement` | `PlacementWithAuto` | `bottom-start` | По умолчанию компонент выберет наилучшее расположение сам, но приоритетное можно задать с помощью этого свойства. |
+| `sameWidth` | `boolean` | `-` | Выставлять ширину равной target элементу. |
+| `shown` | `boolean` | `-` | Если передан, то всплывающий элемент будет показано/скрыто в зависимости от значения свойства. |
+| `strategy` | `Strategy` | `-` | Стратегия позиционирования всплывающего элемента.  - `"fixed"` - позиционируется, используя `position: fixed`. Является значением по умолчанию - `"absolute"` - позиционируется, используя `position: absolute`, относительно ближайшего элемента с `position: relative`  > `strategy="absolute"` Рекомендуется использовать с `usePortal={false}`. И нужно не забыть обернуть в элемент с `position: relative` |
+| `**targetRef** \*` | `RefObject<HTMLElement \| null> \| VirtualElement` | `-` | Ref на якорный элемент. |
+| `usePortal` | `boolean \| HTMLElement \| RefObject<HTMLElement>` | `true` | По умолчанию используется document.body. |
+| `zIndex` | `string \| number` | `-` | Перебивает zIndex заданный по умолчанию. |
+

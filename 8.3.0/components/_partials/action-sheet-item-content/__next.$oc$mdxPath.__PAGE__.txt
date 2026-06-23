@@ -1,0 +1,279 @@
+1:"$Sreact.fragment"
+2:I[23450,["876","static/chunks/876-9dba29d671cd8288.js","236","static/chunks/236-8052d4f712a2c76a.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-4d7fea37bd782b11.js"],"Main"]
+7:I[18443,["876","static/chunks/876-9dba29d671cd8288.js","236","static/chunks/236-8052d4f712a2c76a.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-4d7fea37bd782b11.js"],"Anchor"]
+8:I[80204,["876","static/chunks/876-9dba29d671cd8288.js","236","static/chunks/236-8052d4f712a2c76a.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-4d7fea37bd782b11.js"],"PlaygroundLazy"]
+36:I[91042,["876","static/chunks/876-9dba29d671cd8288.js","236","static/chunks/236-8052d4f712a2c76a.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-4d7fea37bd782b11.js"],"TOC"]
+37:I[90484,[],"OutletBoundary"]
+38:"$Sreact.suspense"
+3a:I[19180,["876","static/chunks/876-9dba29d671cd8288.js","236","static/chunks/236-8052d4f712a2c76a.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-4d7fea37bd782b11.js"],"Pre"]
+3:T272b,Подкомпонент для отображения элемента всплывающего меню [`ActionSheet`](/components/action-sheet). Каждому компоненту можно задать различные режимы отображения,
+добавлять иконки и метаданные.
+
+<Playground>
+  ```jsx
+  <ActionSheetItem>Сохранить</ActionSheetItem>
+  ```
+</Playground>
+
+### Цвет
+
+Задаётся свойством `mode`.
+
+#### `"default"`
+
+Стандартный цвет отображения текста, используется в действиях, где нет необходимости в привлечении дополнительного внимания.
+
+<Playground>
+  ```jsx
+  <ActionSheetItem>Сохранить</ActionSheetItem>
+  ```
+</Playground>
+
+#### `"destructive"`
+
+Цвет критических действий (чаще всего красный), старайтесь располагать такие действия сверху списка,
+где они наиболее заметны.
+
+<Playground>
+  ```jsx
+  <ActionSheetItem mode="destructive">Удалить</ActionSheetItem>
+  ```
+</Playground>
+
+#### ~`"cancel"`~
+
+> **@deprecated** Since 8.0.0. Значение `"cancel"` устарело и будет удалено в **VKUI v10**.
+> Используйте компонент [`ActionSheetDefaultIosCloseItem`](/components/action-sheet#action-sheet-default-ios-close-item) или передайте пропсы через `slotProps.iosCloseItem` в `ActionSheet`.
+
+Цвет действия отмены.
+
+<Playground>
+  ```jsx
+  <ActionSheetItem mode="cancel">Отмена</ActionSheetItem>
+  ```
+</Playground>
+
+### ~Кнопка "Отмена"~
+
+> **@deprecated** Since 8.0.0. Свойство `isCancelItem` устарело и будет удалено в **VKUI v10**.
+> Используйте компонент [`ActionSheetDefaultIosCloseItem`](/components/action-sheet#action-sheet-default-ios-close-item) или передайте пропсы через `slotProps.iosCloseItem` в `ActionSheet`.
+
+Свойство `isCancelItem` позволяет пометить пункт действия как "Отмена".
+
+Согласно рекомендациям **Apple** в `ActionSheet` должен быть вариант действия "Отмена", который
+бы позволял закрывать всплывающее окно без выполнения дополнительных действий.
+
+> Обратите внимание, что такой компонент необходимо передавать в свойство `iosCloseItem` у `ActionSheet`,
+> потому что данный компонент должен визуально отделяться от остальных пунктов.
+
+Подробнее с использованием можно ознакомиться на странице [`ActionSheet`](/components/action-sheet#cancel-item).
+
+### Текстовые элементы
+
+Основной контент компонента (заголовок) можно задать, передав в свойство `children` необходимый текст:
+
+<Playground>
+  ```jsx
+  <ActionSheetItem>Скорость воспроизведения</ActionSheetItem>
+  ```
+</Playground>
+
+Свойство `subtitle` позволяет отобразить дополнительный текст под заголовком:
+
+<Playground>
+  ```jsx
+  <ActionSheetItem subtitle="Обычная">Скорость воспроизведения</ActionSheetItem>
+  ```
+</Playground>
+
+Свойство `meta` даёт возможность отобразить небольшой пояснительный текст или индикатор рядом с заголовком:
+
+<Playground>
+  ```jsx
+  <ActionSheetItem meta={<Icon12Circle fill="var(--vkui--color_icon_negative)" />}>
+    Закрепить запись
+  </ActionSheetItem>
+  ```
+</Playground>
+
+#### Многострочный режим
+
+По умолчанию большое количество текста обрезается и заменяется на многоточие, поддерживая однострочный режим отображения.
+Это поведение можно отключить (_для всех текстовых элементов_) с помощью свойства `multiline`:
+
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <ActionSheetItem multiline>
+    Очень длинный заголовок просто для примера, старайтесь избегать такого
+  </ActionSheetItem>
+  ```
+</Playground>
+
+### Контент в начале/в конце
+
+В компоненте доступна возможность добавления дополнительного контента слева и/или справа от текста,
+задаётся свойством `before` и `after` соответственно.
+Наиболее частый вариант использования свойств `before`/`after` - иконки или аватары.
+
+В соответствии с рекомендациями дизайн-системы, для десктопного представления (`compact`-режим) следует
+использовать иконки размером `20px`, для мобильного представления (`regular`-режим) — `28px`.
+Проще всего это сделать, используя компонент [`AdaptiveIconRenderer`](/components/adaptive-icon-renderer).
+
+<Playground>
+  ```jsx
+  <ActionSheetItem
+    before={
+      <AdaptiveIconRenderer IconCompact={Icon20WriteOutline} IconRegular={Icon28EditOutline} />
+    }
+  >
+    Редактировать профиль
+  </ActionSheetItem>
+  ```
+</Playground>
+
+### Состояния
+
+#### `disabled`
+
+Свойство позволяет отключить возможность взаимодействия с пунктом меню.
+
+<Playground>
+  ```jsx
+  <ActionSheetItem subtitle="Отсутствуют" disabled>
+    Субтитры
+  </ActionSheetItem>
+  ```
+</Playground>
+
+#### `selectable`
+
+Свойство даёт возможность выбирать элемент (визуальная и нативная имитация элемента радиокнопки).
+При использовании данного свойства вы также можете передавать стандартные свойства радиокнопок, для управления поведением:
+
+- `name` — имя группы для радиокнопок;
+- `value` — значение радиокнопки;
+- `defaultChecked` — установить выбранным по умолчанию;
+- `checked` и [`onChange`](#onchange) — для контролируемого извне использования выбранного значения;
+
+<Playground direction="column">
+
+```jsx
+const [filter, setFilter] = useState('Нормальная');
+
+const onChange = (e) => {
+  // e.target.value будет равно значению, переданному в `value` выбранного компонента `ActionSheetItem`
+  setFilter(e.target.value);
+};
+
+return ['0.25x', '0.5x', '0.75x', 'Нормальная', '1.25x', '1.5x', '2x', '3x'].map((speed) => (
+  <ActionSheetItem
+    key={speed}
+    onChange={onChange}
+    checked={filter === speed}
+    name="filter"
+    value={speed}
+    selectable
+  >
+    {speed}
+  </ActionSheetItem>
+));
+```
+
+</Playground>
+
+Дополнительно через свойство `iconChecked` есть возможность изменить иконки радиокнопки, которая рисуется по умолчанию.
+
+<Playground>
+  ```jsx
+  <ActionSheetItem
+    defaultChecked
+    selectable
+    iconChecked={
+      // квадратные иконки выбора
+      <AdaptiveIconRenderer IconCompact={Icon20CheckBoxOn} IconRegular={Icon24CheckBoxOn} />
+    }
+  >
+    0.75x
+  </ActionSheetItem>
+  ```
+</Playground>
+
+### Обработчики событий
+
+#### `onClick`/ `onImmediateClick`
+
+Нажатие на пункт меню можно обработать с помощью свойств `onClick` и `onImmediateClick`.
+
+По умолчанию `onClick` будет вызван после завершения анимации скрытия всплывающего меню и после вызова `onClosed`.
+Из этого следует, что в объекте события значение поля `currentTarget` будет не определено.
+Если вам нужен объект события именно на момент нажатия, воспользуйтесь `onImmediateClick`.
+
+> По умолчанию клик на пункт меню автоматически вызывает закрытие всплывающего меню (функцию, переданную в `onClosed` у `ActionSheet`).
+>
+> Если такое поведение нежелательно, то используйте свойство `autoCloseDisabled`. В таком случае закрытие всплывающего окна
+> следует вызывать самостоятельно.
+
+#### `onChange`
+
+Если задано свойство `selectable={true}`, то выбор пункта следует обрабатывать с помощью свойства `onChange`.
+Пример можно увидеть [выше](#selectable).
+
+### Ссылки
+
+Если указать свойство `href`, компонент будет рендериться как ссылка `<a>`.
+Также можно задать стандартное свойство `target`:
+
+```jsx
+<ActionSheetItem href="https://vk.com" target="_blank">
+  Перейти на vk.com
+</ActionSheetItem>
+```0:{"rsc":["$","$1","c",{"children":[[["$","$L2",null,{"metadata":{"title":"Action Sheet Item Content","filePath":"content/components/_partials/action-sheet-item-content.mdx","timestamp":1782228015000},"sourceCode":"$3","children":"$L4"}],"$L5"],null,"$L6"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"wNnF0fHR6sBzNbr9-Inum"}
+4:[["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Подкомпонент для отображения элемента всплывающего меню ",["$","$L7",null,{"href":"/components/action-sheet","children":["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"ActionSheet"}]}],". Каждому компоненту можно задать различные режимы отображения,\nдобавлять иконки и метаданные."]}],"\n",["$","$L8",null,{"code":"<ActionSheetItem>Сохранить</ActionSheetItem>"}],"\n",["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"cvet","children":["$","a",null,{"href":"#cvet","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Цвет","children":["Цвет",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}],"\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Задаётся свойством ",["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"mode"}],"."]}],"\n",["$","h4",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading4__c9VtX","id":"default","children":["$","a",null,{"href":"#default","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию [object Object]","children":[["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"\"default\""}],["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}],"\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Стандартный цвет отображения текста, используется в действиях, где нет необходимости в привлечении дополнительного внимания."}],"\n",["$","$L8",null,{"code":"<ActionSheetItem>Сохранить</ActionSheetItem>"}],"\n",["$","h4",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading4__c9VtX","id":"destructive","children":["$","a",null,{"href":"#destructive","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию [object Object]","children":[["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"\"destructive\""}],["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}],"\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Цвет критических действий (чаще всего красный), старайтесь располагать такие действия сверху списка,\nгде они наиболее заметны."}],"\n","$L9","\n","$La","\n","$Lb","\n","$Lc","\n","$Ld","\n","$Le","\n","$Lf","\n","$L10","\n","$L11","\n","$L12","\n","$L13","\n","$L14","\n","$L15","\n","$L16","\n","$L17","\n","$L18","\n","$L19","\n","$L1a","\n","$L1b","\n","$L1c","\n","$L1d","\n","$L1e","\n","$L1f","\n","$L20","\n","$L21","\n","$L22","\n","$L23","\n","$L24","\n","$L25","\n","$L26","\n","$L27","\n","$L28","\n","$L29","\n","$L2a","\n","$L2b","\n","$L2c","\n","$L2d","\n","$L2e","\n","$L2f","\n","$L30","\n","$L31","\n","$L32","\n","$L33","\n","$L34","\n","$L35"]
+5:["$","$L36",null,{"toc":[{"value":"Цвет","id":"cvet","depth":3},{"value":"$4:8:props:children:props:children:0","id":"default","depth":4},{"value":"$4:14:props:children:props:children:0","id":"destructive","depth":4},{"value":["$","del",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"\"cancel\""}]}],"id":"cancel","depth":4},{"value":["$","del",null,{"children":"Кнопка “Отмена”"}],"id":"кнопка-отмена","depth":3},{"value":"Текстовые элементы","id":"tekstovye-elementy","depth":3},{"value":"Многострочный режим","id":"mnogostrochnyj-rezhim","depth":4},{"value":"Контент в начале/в конце","id":"kontent-v-nachalev-konce","depth":3},{"value":"Состояния","id":"sostoyaniya","depth":3},{"value":["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"disabled"}],"id":"disabled","depth":4},{"value":["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"selectable"}],"id":"selectable","depth":4},{"value":"Обработчики событий","id":"obrabotchiki-sobytij","depth":3},{"value":[["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"onClick"}],"/ ",["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"onImmediateClick"}]],"id":"onclick-onimmediateclick","depth":4},{"value":["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"onChange"}],"id":"onchange","depth":4},{"value":"Ссылки","id":"ssylki","depth":3}]}]
+6:["$","$L37",null,{"children":["$","$38",null,{"name":"Next.MetadataOutlet","children":"$@39"}]}]
+9:["$","$L8",null,{"code":"<ActionSheetItem mode=\"destructive\">Удалить</ActionSheetItem>"}]
+a:["$","h4",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading4__c9VtX","id":"cancel","children":["$","a",null,{"href":"#cancel","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию [object Object]","children":["$5:props:toc:3:value",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+b:["$","aside",null,{"className":"Callout_root__6UBFP","children":["$","div",null,{"className":"Callout_content__MYf_T","children":["\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":[["$","strong",null,{"className":"mdx_strong__N7OUG","children":"@deprecated"}]," Since 8.0.0. Значение ",["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"\"cancel\""}]," устарело и будет удалено в ",["$","strong",null,{"className":"mdx_strong__N7OUG","children":"VKUI v10"}],".\nИспользуйте компонент ",["$","$L7",null,{"href":"/components/action-sheet#action-sheet-default-ios-close-item","children":["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"ActionSheetDefaultIosCloseItem"}]}]," или передайте пропсы через ",["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"slotProps.iosCloseItem"}]," в ",["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"ActionSheet"}],"."]}],"\n"]}]}]
+c:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Цвет действия отмены."}]
+d:["$","$L8",null,{"code":"<ActionSheetItem mode=\"cancel\">Отмена</ActionSheetItem>"}]
+e:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"кнопка-отмена","children":["$","a",null,{"href":"#кнопка-отмена","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию [object Object]","children":["$5:props:toc:4:value",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+f:["$","aside",null,{"className":"Callout_root__6UBFP","children":["$","div",null,{"className":"Callout_content__MYf_T","children":["\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":[["$","strong",null,{"className":"mdx_strong__N7OUG","children":"@deprecated"}]," Since 8.0.0. Свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"isCancelItem"}]," устарело и будет удалено в ",["$","strong",null,{"className":"mdx_strong__N7OUG","children":"VKUI v10"}],".\nИспользуйте компонент ",["$","$L7",null,{"href":"/components/action-sheet#action-sheet-default-ios-close-item","children":["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"ActionSheetDefaultIosCloseItem"}]}]," или передайте пропсы через ",["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"slotProps.iosCloseItem"}]," в ",["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"ActionSheet"}],"."]}],"\n"]}]}]
+10:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"isCancelItem"}]," позволяет пометить пункт действия как “Отмена”."]}]
+11:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Согласно рекомендациям ",["$","strong",null,{"className":"mdx_strong__N7OUG","children":"Apple"}]," в ",["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"ActionSheet"}]," должен быть вариант действия “Отмена”, который\nбы позволял закрывать всплывающее окно без выполнения дополнительных действий."]}]
+12:["$","aside",null,{"className":"Callout_root__6UBFP","children":["$","div",null,{"className":"Callout_content__MYf_T","children":["\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Обратите внимание, что такой компонент необходимо передавать в свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"iosCloseItem"}]," у ",["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"ActionSheet"}],",\nпотому что данный компонент должен визуально отделяться от остальных пунктов."]}],"\n"]}]}]
+13:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Подробнее с использованием можно ознакомиться на странице ",["$","$L7",null,{"href":"/components/action-sheet#cancel-item","children":["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"ActionSheet"}]}],"."]}]
+14:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"tekstovye-elementy","children":["$","a",null,{"href":"#tekstovye-elementy","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Текстовые элементы","children":["Текстовые элементы",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+15:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Основной контент компонента (заголовок) можно задать, передав в свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"children"}]," необходимый текст:"]}]
+16:["$","$L8",null,{"code":"<ActionSheetItem>Скорость воспроизведения</ActionSheetItem>"}]
+17:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"subtitle"}]," позволяет отобразить дополнительный текст под заголовком:"]}]
+18:["$","$L8",null,{"code":"<ActionSheetItem subtitle=\"Обычная\">Скорость воспроизведения</ActionSheetItem>"}]
+19:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"meta"}]," даёт возможность отобразить небольшой пояснительный текст или индикатор рядом с заголовком:"]}]
+1a:["$","$L8",null,{"code":"<ActionSheetItem meta={<Icon12Circle fill=\"var(--vkui--color_icon_negative)\" />}>\n  Закрепить запись\n</ActionSheetItem>"}]
+1b:["$","h4",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading4__c9VtX","id":"mnogostrochnyj-rezhim","children":["$","a",null,{"href":"#mnogostrochnyj-rezhim","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Многострочный режим","children":["Многострочный режим",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+1c:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["По умолчанию большое количество текста обрезается и заменяется на многоточие, поддерживая однострочный режим отображения.\nЭто поведение можно отключить (",["$","em",null,{"children":"для всех текстовых элементов"}],") с помощью свойства ",["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"multiline"}],":"]}]
+1d:["$","$L8",null,{"style":{"maxWidth":270},"code":"<ActionSheetItem multiline>\n  Очень длинный заголовок просто для примера, старайтесь избегать такого\n</ActionSheetItem>"}]
+1e:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"kontent-v-nachalev-konce","children":["$","a",null,{"href":"#kontent-v-nachalev-konce","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Контент в начале/в конце","children":["Контент в начале/в конце",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+1f:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["В компоненте доступна возможность добавления дополнительного контента слева и/или справа от текста,\nзадаётся свойством ",["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"before"}]," и ",["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"after"}]," соответственно.\nНаиболее частый вариант использования свойств ",["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"before"}],"/",["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"after"}]," - иконки или аватары."]}]
+20:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["В соответствии с рекомендациями дизайн-системы, для десктопного представления (",["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"compact"}],"-режим) следует\nиспользовать иконки размером ",["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"20px"}],", для мобильного представления (",["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"regular"}],"-режим) — ",["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"28px"}],".\nПроще всего это сделать, используя компонент ",["$","$L7",null,{"href":"/components/adaptive-icon-renderer","children":["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"AdaptiveIconRenderer"}]}],"."]}]
+21:["$","$L8",null,{"code":"<ActionSheetItem\n  before={\n    <AdaptiveIconRenderer IconCompact={Icon20WriteOutline} IconRegular={Icon28EditOutline} />\n  }\n>\n  Редактировать профиль\n</ActionSheetItem>"}]
+22:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"sostoyaniya","children":["$","a",null,{"href":"#sostoyaniya","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Состояния","children":["Состояния",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+23:["$","h4",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading4__c9VtX","id":"disabled","children":["$","a",null,{"href":"#disabled","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию [object Object]","children":["$5:props:toc:9:value",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+24:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Свойство позволяет отключить возможность взаимодействия с пунктом меню."}]
+25:["$","$L8",null,{"code":"<ActionSheetItem subtitle=\"Отсутствуют\" disabled>\n  Субтитры\n</ActionSheetItem>"}]
+26:["$","h4",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading4__c9VtX","id":"selectable","children":["$","a",null,{"href":"#selectable","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию [object Object]","children":["$5:props:toc:10:value",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+27:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Свойство даёт возможность выбирать элемент (визуальная и нативная имитация элемента радиокнопки).\nПри использовании данного свойства вы также можете передавать стандартные свойства радиокнопок, для управления поведением:"}]
+28:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"name"}]," — имя группы для радиокнопок;"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"value"}]," — значение радиокнопки;"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"defaultChecked"}]," — установить выбранным по умолчанию;"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"checked"}]," и ",["$","$L7",null,{"href":"#onchange","children":["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"onChange"}]}]," — для контролируемого извне использования выбранного значения;"]}],"\n"]}]
+29:["$","$L8",null,{"direction":"column","code":"const [filter, setFilter] = useState('Нормальная');\n\nconst onChange = (e) => {\n  // e.target.value будет равно значению, переданному в `value` выбранного компонента `ActionSheetItem`\n  setFilter(e.target.value);\n};\n\nreturn ['0.25x', '0.5x', '0.75x', 'Нормальная', '1.25x', '1.5x', '2x', '3x'].map((speed) => (\n  <ActionSheetItem\n    key={speed}\n    onChange={onChange}\n    checked={filter === speed}\n    name=\"filter\"\n    value={speed}\n    selectable\n  >\n    {speed}\n  </ActionSheetItem>\n));"}]
+2a:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Дополнительно через свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"iconChecked"}]," есть возможность изменить иконки радиокнопки, которая рисуется по умолчанию."]}]
+2b:["$","$L8",null,{"code":"<ActionSheetItem\n  defaultChecked\n  selectable\n  iconChecked={\n    // квадратные иконки выбора\n    <AdaptiveIconRenderer IconCompact={Icon20CheckBoxOn} IconRegular={Icon24CheckBoxOn} />\n  }\n>\n  0.75x\n</ActionSheetItem>"}]
+2c:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"obrabotchiki-sobytij","children":["$","a",null,{"href":"#obrabotchiki-sobytij","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Обработчики событий","children":["Обработчики событий",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+2d:["$","h4",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading4__c9VtX","id":"onclick-onimmediateclick","children":["$","a",null,{"href":"#onclick-onimmediateclick","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию [object Object]","children":["$5:props:toc:12:value",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+2e:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Нажатие на пункт меню можно обработать с помощью свойств ",["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"onClick"}]," и ",["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"onImmediateClick"}],"."]}]
+2f:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["По умолчанию ",["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"onClick"}]," будет вызван после завершения анимации скрытия всплывающего меню и после вызова ",["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"onClosed"}],".\nИз этого следует, что в объекте события значение поля ",["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"currentTarget"}]," будет не определено.\nЕсли вам нужен объект события именно на момент нажатия, воспользуйтесь ",["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"onImmediateClick"}],"."]}]
+30:["$","aside",null,{"className":"Callout_root__6UBFP","children":["$","div",null,{"className":"Callout_content__MYf_T","children":["\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["По умолчанию клик на пункт меню автоматически вызывает закрытие всплывающего меню (функцию, переданную в ",["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"onClosed"}]," у ",["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"ActionSheet"}],")."]}],"\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Если такое поведение нежелательно, то используйте свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"autoCloseDisabled"}],". В таком случае закрытие всплывающего окна\nследует вызывать самостоятельно."]}],"\n"]}]}]
+31:["$","h4",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading4__c9VtX","id":"onchange","children":["$","a",null,{"href":"#onchange","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию [object Object]","children":["$5:props:toc:13:value",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+32:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Если задано свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"selectable={true}"}],", то выбор пункта следует обрабатывать с помощью свойства ",["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"onChange"}],".\nПример можно увидеть ",["$","$L7",null,{"href":"#selectable","children":"выше"}],"."]}]
+33:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"ssylki","children":["$","a",null,{"href":"#ssylki","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Ссылки","children":["Ссылки",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+34:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Если указать свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"href"}],", компонент будет рендериться как ссылка ",["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"<a>"}],".\nТакже можно задать стандартное свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"target"}],":"]}]
+35:["$","$L3a",null,{"tabIndex":"0","data-language":"jsx","data-word-wrap":"","data-copy":"","data-pagefind-ignore":"all","children":["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":[["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"<"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"ActionSheetItem"}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" href"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"https://vk.com\""}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" target"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"_blank\""}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  Перейти на vk.com"}]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"</"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"ActionSheetItem"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}]]}]}]
+39:null

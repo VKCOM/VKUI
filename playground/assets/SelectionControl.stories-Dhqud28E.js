@@ -1,0 +1,4 @@
+import{a as e,i as t,s as n}from"./preload-helper-xPQekRTU.js";import{t as r}from"./jsx-runtime-BqsN2jGA.js";import{n as i,t as a}from"./SelectionControl-DwN2Th9c.js";import{n as o,t as s}from"./Checkbox-D0vBZy5R.js";import{i as c,n as l,t as u}from"./constants-cjed6ZWB.js";var d=e({Playground:()=>m,__namedExportsOrder:()=>h,default:()=>p}),f,p,m,h,g=t((()=>{c(),o(),i(),f=n(r(),1),p={title:`Utils/SelectionControl`,component:a,parameters:{...u,...l},tags:[`Утилиты`]},m=e=>(0,f.jsxs)(a,{...e,children:[(0,f.jsx)(s.Input,{}),(0,f.jsx)(a.Label,{children:`Согласен`})]}),m.parameters={...m.parameters,docs:{...m.parameters?.docs,source:{originalSource:`(props: SelectionControlProps) => <SelectionControl {...props}>
+    <Checkbox.Input />
+    <SelectionControl.Label>Согласен</SelectionControl.Label>
+  </SelectionControl>`,...m.parameters?.docs?.source}}},h=[`Playground`]}));export{d as n,g as r,m as t};

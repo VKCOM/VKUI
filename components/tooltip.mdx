@@ -1,0 +1,202 @@
+﻿---
+description: Компонент всплывающей подсказки.
+tags: overlay
+---
+
+<Overview group="modals">
+
+# Tooltip [tag:component]
+
+Небольшое всплывающее окно-подсказка, открывающееся при наведении мыши на `children` (или при нажатии на мобильных устройствах).
+В качестве содержимого рекомендуется использовать только текст.
+
+</Overview>
+
+<Playground hide>
+  ```jsx
+  <Tooltip hideWhenReferenceHidden strategy="absolute" disableFlipMiddleware placement="bottom" description="Привет" shown>
+    <Button>Наведи</Button>
+  </Tooltip>
+  ```
+</Playground>
+
+{/* @example-description: Базовый `Tooltip` с текстовой подсказкой справа от якорного элемента. */}
+<Playground>
+  ```jsx
+  <Tooltip placement="right" description="Привет">
+    <Button>Наведи</Button>
+  </Tooltip>
+  ```
+</Playground>
+
+## Пользовательская стрелка
+
+Воспользуйтесь свойством `ArrowIcon`, чтобы переопределить иконку, которая используется по умолчанию.
+
+Пользовательский компонент иконки должен удовлетворять следующим требованиям:
+
+1. Иконка по умолчанию должна быть отрисована в направлении вверх.
+2. Чтобы избежать проблемы с пространством между стрелкой и контентом на некоторых экранах,
+   растяните кривую по высоте на `1px` и увеличьте на этот размер `height` и `viewBox` SVG.
+   (смотри https://github.com/VKCOM/VKUI/pull/4496).
+3. Убедитесь, что компонент принимает все валидные для SVG параметры.
+4. Убедитесь, что SVG и её элементы наследует цвет через `fill="currentColor"`.
+5. Если стрелка наезжает на якорный элемент, то увеличьте смещение между целевым и всплывающим элементами.
+
+{/* @example-description: Тултип с пользовательской SVG-стрелкой через свойство `ArrowIcon`. */}
+<Playground>
+
+```jsx
+const ARROW_HEIGHT = 11;
+
+const CustomIcon = (props) => {
+  return (
+    <svg
+      width="80"
+      height={ARROW_HEIGHT}
+      viewBox={`0 0 80 ${ARROW_HEIGHT}`}
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path d="M40 0C33 5.5 20 10 0 10v1h80v-1C60 10 47 5.5 40 0Z" fill="currentColor" />
+    </svg>
+  );
+};
+
+return (
+  <Tooltip
+    description="У этого тултипа кастомная стрелка"
+    offsetByCrossAxis={ARROW_HEIGHT}
+    arrowPadding={6}
+    ArrowIcon={CustomIcon}
+    shown
+  >
+    <Button>Якорь</Button>
+  </Tooltip>
+);
+```
+
+</Playground>
+
+## Хук useTooltip [#use-tooltip]
+
+Вы можете использовать хук `useTooltip`, который позволяет устанавливать якорный элемент для `Tooltip`,
+не прокидывая его в качестве `children`:
+
+{/* @example-description: Использование хука `useTooltip` для привязки подсказки к элементу через `anchorRef`. */}
+<Playground>
+
+```jsx
+const { anchorRef, anchorProps, tooltip } = useTooltip({
+  placement: 'right',
+  description: 'Привет',
+});
+
+return (
+  <>
+    {tooltip}
+    <Button getRootRef={anchorRef} {...anchorProps}>
+      Наведи на меня
+    </Button>
+  </>
+);
+```
+
+</Playground>
+
+## Доступность (a11y) [#a11y]
+
+### Использование `disableTriggerOnFocus`
+
+Использования `disableTriggerOnFocus` приводит к тому, что единственным механизмом активации тултипа остается `"hover"`, из-за этого события наведения не генерируются при клавиатурной навигации или скринридером.
+
+В связи с этим данное свойство стоит использовать только для декоративных элементов с `aria-hidden`.
+
+```jsx
+<Tooltip
+  aria-hidden="true"
+  disableTriggerOnFocus
+  description="Какая-то информация"
+  aria-label="Тултип с какой-то информацией"
+>
+  <Button>Якорь</Button>
+</Tooltip>
+```
+
+## Свойства и методы [#api]
+
+### Tooltip
+
+| Свойство | Тип | По умолчанию | Описание |
+| --- | --- | --- | --- |
+| `appearance` | `"accent" \| "neutral" \| "white" \| "black" \| "inversion"` | `-` | Стиль отображения подсказки. |
+| `arrowHeight` | `number` | `-` | Высота стрелки. Складывается с `mainAxis`, чтобы стрелка не залезала на якорный элемент. |
+| `ArrowIcon` | `ComponentType<SVGAttributes<SVGSVGElement>>` | `-` | Пользовательская SVG иконка.  Требования:  1. Иконка по умолчанию должна быть направлена вверх (a.k.a `IconUp`). 2. Чтобы избежать проблемы с пространством между стрелкой и контентом на некоторых экранах,    растяните кривую по высоте на `1px` и увеличьте на этот размер `height` и `viewBox` SVG.    (смотри https://github.com/VKCOM/VKUI/pull/4496). 3. Убедитесь, что компонент принимает все валидные для SVG параметры. 4. Убедитесь, что SVG и её элементы наследует цвет через `fill="currentColor"`. 5. Если стрелка наезжает на якорный элемент, то увеличьте смещение между целевым и всплывающим элементами. |
+| `arrowPadding` | `number` | `-` | Безопасная зона вокруг стрелки, чтобы та не выходила за края контента. |
+| `children` | `ReactElement<unknown, string \| JSXElementConstructor<any>>` | `-` | Целевой элемент. Всплывающее окно появится возле него.  > ⚠️ Если это пользовательский компонент, то он должен: > 1. предоставлять параметры либо `getRootRef`, либо `ref` (cм. `React.forwardRef()`) для получения ссылки на DOM-узел; > 2. принимать DOM атрибуты и события. |
+| `className` | `string` | `-` | Пользовательские css-классы, будут добавлены на root-элемент. |
+| `closable` | `boolean` | `-` | Добавляет возможность закрыть тултип через иконку-крестик.  > Работает в сочетании с `enableInteractive` или при использовании `shown` и `onShownChange`. |
+| `closeIconLabel` | `string` | `-` | Скрытый текст для кнопки закрытия. |
+| `defaultShown` | `boolean` | `-` | Начальное состояние всплывающего элемента. |
+| `description` | `ReactNode` | `-` | Текст тултипа. |
+| `disableArrow` | `boolean` | `-` | Скрывает стрелку, указывающую на якорный элемент. |
+| `disableCloseAfterClick` | `boolean` | `-` | Отключает закрытие по нажатию. |
+| `disableFlipMiddleware` | `boolean` | `-` | Указанное значение `placement` форсируется, даже если для выпадающего элемента недостаточно места. Не оказывает влияния при `placement` значениях - `'auto' \| 'auto-start' \| 'auto-end'` |
+| `disableShiftMiddleware` | `boolean` | `-` | Позволяет отключить смещение по главной оси, которое не даёт всплывающему элементу выходить за границы видимой области. |
+| `disableTriggerOnFocus` | `boolean` | `-` | Отключает появление при фокусе. |
+| `enableInteractive` | `boolean` | `-` | Добавляет возможность наводить на тултип. |
+| `getRootRef` | `Ref<HTMLDivElement>` | `-` |  |
+| `hideWhenReferenceHidden` | `boolean` | `-` | Принудительно скрывает компонент если целевой элемент вышел за область видимости. |
+| `hoverDelay` | `number \| [number, number]` | `-` | Количество миллисекунд, после которых произойдёт показ/скрытие всплывающего элемента при наведении.  > Чтобы задать разное время на показ и скрытие, передайте массив типа `[<показ>, <скрытие>]`.  > Используется только для `trigger="hover"`. |
+| `maxWidth` | `string \| number \| null` | `-` | Перебивает максимальную ширину заданную по умолчанию.  Передача `null` полностью сбрасывает установку `max-width` на элемент. |
+| `offsetByCrossAxis` | `number` | `-` | Отступ по вспомогательной оси. |
+| `offsetByMainAxis` | `number` | `-` | Отступ по главной оси. |
+| `onPlacementChange` | `OnPlacementChange` | `-` | В зависимости от области видимости, позиция может смениться на более оптимальную, чтобы всплывающий элемент вместился в эту область видимости. |
+| `onReferenceHiddenChange` | `((hidden: boolean) => void)` | `-` | Событие скрытия / раскрытия компонента при использовании свойства `hideWhenReferenceHidden`.  > Стоит иметь ввиду, что событие также будет вызвано и при новом рендере компонента |
+| `onShownChange` | `OnShownChange` | `-` | Вызывается при каждом изменении видимости всплывающего элемента. |
+| `overflowPadding` | `Padding` | `-` | Отступ для смещения. |
+| `placement` | `PlacementWithAuto` | `-` | По умолчанию компонент выберет наилучшее расположение сам, но приоритетное можно задать с помощью этого свойства. |
+| `shown` | `boolean` | `-` | Передача `boolean` позволяет контролировать состояния показа и скрытия вручную. Используйте совместно с `onShownChange`.  > Если нужно разово инициировать показ тултипа при первом рендере, то используйте `defaultShown`. |
+| `strategy` | `Strategy` | `-` | Стратегия позиционирования всплывающего элемента.  - `"fixed"` - позиционируется, используя `position: fixed`. Является значением по умолчанию - `"absolute"` - позиционируется, используя `position: absolute`, относительно ближайшего элемента с `position: relative`  > `strategy="absolute"` Рекомендуется использовать с `usePortal={false}`. И нужно не забыть обернуть в элемент с `position: relative` |
+| `title` | `ReactNode` | `-` | Заголовок тултипа. |
+| `titleId` | `string` | `-` | [a11y] Id для заголовка тултипа. Можно использовать для связи элемента с `role="dialog"` и заголовка через `aria-labelledby`. |
+| `usePortal` | `boolean \| HTMLElement \| RefObject<HTMLElement>` | `-` | По умолчанию используется document.body. |
+| `zIndex` | `string \| number` | `-` | Перебивает zIndex заданный по умолчанию. |
+
+### useTooltip
+
+| Свойство | Тип | По умолчанию | Описание |
+| --- | --- | --- | --- |
+| `appearance` | `"accent" \| "neutral" \| "white" \| "black" \| "inversion"` | `neutral` | Стиль отображения подсказки. |
+| `arrowHeight` | `number` | `8` | Высота стрелки. Складывается с `mainAxis`, чтобы стрелка не залезала на якорный элемент. |
+| `ArrowIcon` | `ComponentType<SVGAttributes<SVGSVGElement>>` | `-` | Пользовательская SVG иконка.  Требования:  1. Иконка по умолчанию должна быть направлена вверх (a.k.a `IconUp`). 2. Чтобы избежать проблемы с пространством между стрелкой и контентом на некоторых экранах,    растяните кривую по высоте на `1px` и увеличьте на этот размер `height` и `viewBox` SVG.    (смотри https://github.com/VKCOM/VKUI/pull/4496). 3. Убедитесь, что компонент принимает все валидные для SVG параметры. 4. Убедитесь, что SVG и её элементы наследует цвет через `fill="currentColor"`. 5. Если стрелка наезжает на якорный элемент, то увеличьте смещение между целевым и всплывающим элементами. |
+| `arrowPadding` | `number` | `10` | Безопасная зона вокруг стрелки, чтобы та не выходила за края контента. |
+| `className` | `string` | `-` | Пользовательские css-классы, будут добавлены на root-элемент. |
+| `closable` | `boolean` | `-` | Добавляет возможность закрыть тултип через иконку-крестик.  > Работает в сочетании с `enableInteractive` или при использовании `shown` и `onShownChange`. |
+| `closeIconLabel` | `string` | `-` | Скрытый текст для кнопки закрытия. |
+| `defaultShown` | `boolean` | `-` | Начальное состояние всплывающего элемента. |
+| `description` | `ReactNode` | `-` | Текст тултипа. |
+| `disableArrow` | `boolean` | `false` | Скрывает стрелку, указывающую на якорный элемент. |
+| `disableCloseAfterClick` | `boolean` | `false` | Отключает закрытие по нажатию. |
+| `disableFlipMiddleware` | `boolean` | `false` | Указанное значение `placement` форсируется, даже если для выпадающего элемента недостаточно места. Не оказывает влияния при `placement` значениях - `'auto' \| 'auto-start' \| 'auto-end'` |
+| `disableShiftMiddleware` | `boolean` | `false` | Позволяет отключить смещение по главной оси, которое не даёт всплывающему элементу выходить за границы видимой области. |
+| `disableTriggerOnFocus` | `boolean` | `false` | Отключает появление при фокусе. |
+| `enableInteractive` | `boolean` | `false` | Добавляет возможность наводить на тултип. |
+| `getRootRef` | `Ref<HTMLDivElement>` | `-` |  |
+| `hideWhenReferenceHidden` | `boolean` | `-` | Принудительно скрывает компонент если целевой элемент вышел за область видимости. |
+| `hoverDelay` | `number \| [number, number]` | `150` | Количество миллисекунд, после которых произойдёт показ/скрытие всплывающего элемента при наведении.  > Чтобы задать разное время на показ и скрытие, передайте массив типа `[<показ>, <скрытие>]`.  > Используется только для `trigger="hover"`. |
+| `maxWidth` | `string \| number \| null` | `-` | Перебивает максимальную ширину заданную по умолчанию.  Передача `null` полностью сбрасывает установку `max-width` на элемент. |
+| `offsetByCrossAxis` | `number` | `0` | Отступ по вспомогательной оси. |
+| `offsetByMainAxis` | `number` | `8` | Отступ по главной оси. |
+| `onPlacementChange` | `OnPlacementChange` | `-` | В зависимости от области видимости, позиция может смениться на более оптимальную, чтобы всплывающий элемент вместился в эту область видимости. |
+| `onReferenceHiddenChange` | `((hidden: boolean) => void)` | `-` | Событие скрытия / раскрытия компонента при использовании свойства `hideWhenReferenceHidden`.  > Стоит иметь ввиду, что событие также будет вызвано и при новом рендере компонента |
+| `onShownChange` | `OnShownChange` | `-` | Вызывается при каждом изменении видимости всплывающего элемента. |
+| `overflowPadding` | `Padding` | `-` | Отступ для смещения. |
+| `placement` | `PlacementWithAuto` | `bottom` | По умолчанию компонент выберет наилучшее расположение сам, но приоритетное можно задать с помощью этого свойства. |
+| `shown` | `boolean` | `-` | Передача `boolean` позволяет контролировать состояния показа и скрытия вручную. Используйте совместно с `onShownChange`.  > Если нужно разово инициировать показ тултипа при первом рендере, то используйте `defaultShown`. |
+| `strategy` | `Strategy` | `-` | Стратегия позиционирования всплывающего элемента.  - `"fixed"` - позиционируется, используя `position: fixed`. Является значением по умолчанию - `"absolute"` - позиционируется, используя `position: absolute`, относительно ближайшего элемента с `position: relative`  > `strategy="absolute"` Рекомендуется использовать с `usePortal={false}`. И нужно не забыть обернуть в элемент с `position: relative` |
+| `title` | `ReactNode` | `-` | Заголовок тултипа. |
+| `titleId` | `string` | `-` | [a11y] Id для заголовка тултипа. Можно использовать для связи элемента с `role="dialog"` и заголовка через `aria-labelledby`. |
+| `usePortal` | `boolean \| HTMLElement \| RefObject<HTMLElement>` | `-` | По умолчанию используется document.body. |
+| `zIndex` | `string \| number` | `var(--vkui--z_index_popout)` | Перебивает zIndex заданный по умолчанию. |
+

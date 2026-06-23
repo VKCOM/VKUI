@@ -1,0 +1,179 @@
+1:"$Sreact.fragment"
+2:I[23450,["876","static/chunks/876-9dba29d671cd8288.js","236","static/chunks/236-8052d4f712a2c76a.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-4d7fea37bd782b11.js"],"Main"]
+7:I[18443,["876","static/chunks/876-9dba29d671cd8288.js","236","static/chunks/236-8052d4f712a2c76a.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-4d7fea37bd782b11.js"],"Anchor"]
+8:I[80204,["876","static/chunks/876-9dba29d671cd8288.js","236","static/chunks/236-8052d4f712a2c76a.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-4d7fea37bd782b11.js"],"PlaygroundLazy"]
+17:I[91042,["876","static/chunks/876-9dba29d671cd8288.js","236","static/chunks/236-8052d4f712a2c76a.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-4d7fea37bd782b11.js"],"TOC"]
+18:I[90484,[],"OutletBoundary"]
+19:"$Sreact.suspense"
+3:T16ae,Кнопка/ссылка для использования внутри [`SubnavigationBar`](/components/subnavigation-bar). Предназначена для навигации между подразделами или управления
+контентом (активация фильтров, открытие модальных окон).
+
+{/* @example-description: Одиночная кнопка `SubnavigationButton` с иконкой в слоте `before`. */}
+<Playground style={{ width: 270 }}>
+  ```jsx
+  <SubnavigationButton onClick={() => {}} before={<Icon24FavoriteOutline />}>
+    Избранное
+  </SubnavigationButton>
+  ```
+</Playground>
+
+### Состояния
+
+`selected` — выделяет кнопку как активную. Используйте для индикации текущего раздела или применённого фильтра.
+
+{/* @example-description: Пример состояния `selected` у `SubnavigationButton` внутри панели навигации. */}
+<Playground style={{ width: 270 }}>
+  ```jsx
+  <SubnavigationBar>
+    <SubnavigationButton selected onClick={() => {}}>
+      Выбран
+    </SubnavigationButton>
+    <SubnavigationButton onClick={() => {}}>Не выбран</SubnavigationButton>
+  </SubnavigationBar>
+  ```
+</Playground>
+
+### Режимы отображения
+
+Задается свойством `mode`:
+
+- `primary` — первичный вид для привлечения внимания;
+- `outline` — вид с обводкой;
+- `tertiary` — третичный вид без фона.
+
+### Внешний вид
+
+Задается свойством `appearance`.
+
+#### `accent`
+
+{/* @example-description: Сравнение режимов `primary`, `outline` и `tertiary` в `appearance="accent"`. */}
+<Playground style={{ width: 270 }}>
+  ```jsx
+  <SubnavigationBar>
+    <SubnavigationButton mode="primary" appearance="accent" selected onClick={() => {}}>
+      primary accent selected
+    </SubnavigationButton>
+    <SubnavigationButton mode="primary" appearance="accent" onClick={() => {}}>
+      primary accent
+    </SubnavigationButton>
+  </SubnavigationBar>
+  <SubnavigationBar>
+    <SubnavigationButton mode="outline" appearance="accent" selected onClick={() => {}}>
+      outline accent selected
+    </SubnavigationButton>
+    <SubnavigationButton mode="outline" appearance="accent" onClick={() => {}}>
+      outline accent
+    </SubnavigationButton>
+  </SubnavigationBar>
+  <SubnavigationBar>
+    <SubnavigationButton mode="tertiary" appearance="accent" selected onClick={() => {}}>
+      tertiary accent selected
+    </SubnavigationButton>
+    <SubnavigationButton mode="tertiary" appearance="accent" onClick={() => {}}>
+      tertiary accent
+    </SubnavigationButton>
+  </SubnavigationBar>
+  ```
+</Playground>
+
+#### `neutral`
+
+{/* @example-description: Сравнение режимов `primary`, `outline` и `tertiary` в `appearance="neutral"`. */}
+<Playground style={{ width: 270 }}>
+  ```jsx
+  <SubnavigationBar>
+    <SubnavigationButton mode="primary" appearance="neutral" selected onClick={() => {}}>
+      primary neutral selected
+    </SubnavigationButton>
+    <SubnavigationButton mode="primary" appearance="neutral" onClick={() => {}}>
+      primary neutral
+    </SubnavigationButton>
+  </SubnavigationBar>
+  <SubnavigationBar>
+    <SubnavigationButton mode="outline" appearance="neutral" selected onClick={() => {}}>
+      outline neutral selected
+    </SubnavigationButton>
+    <SubnavigationButton mode="outline" appearance="neutral" onClick={() => {}}>
+      outline neutral
+    </SubnavigationButton>
+  </SubnavigationBar>
+  <SubnavigationBar>
+    <SubnavigationButton mode="tertiary" appearance="neutral" selected onClick={() => {}}>
+      tertiary neutral selected
+    </SubnavigationButton>
+    <SubnavigationButton mode="tertiary" appearance="neutral" onClick={() => {}}>
+      tertiary neutral
+    </SubnavigationButton>
+  </SubnavigationBar>
+  ```
+</Playground>
+
+### Размеры и контент
+
+Размер самой кнопки задается свойством `size`:
+
+- `s` — компактный;
+- `m` — стандартный;
+- `l` — увеличенный.
+
+`textLevel` — отдельно настраивает размер текста (1 — крупный, 3 — мелкий).
+Полезно в режиме `fixed` у родительского [`SubnavigationBar`](/components/subnavigation-bar).
+
+{/* @example-description: Пример размеров `SubnavigationButton` (`s`, `m`, `l`). */}
+<Playground style={{ width: 270 }}>
+  ```jsx
+  <SubnavigationButton size="s" onClick={() => {}}>
+    size="s"
+  </SubnavigationButton>
+  <SubnavigationButton size="m" onClick={() => {}}>
+    size="m"
+  </SubnavigationButton>
+  <SubnavigationButton size="l" onClick={() => {}}>
+    size="l"
+  </SubnavigationButton>
+  ```
+</Playground>
+
+### Дополнительные элементы
+
+- `before` — иконка перед текстом (рекомендуемый размер `24px`).
+- `after` — счётчик или бейдж (рекомендуется использовать только `Counter size="s"` или `Badge`).
+- `chevron` — добавляет стрелку-индикатор справа.
+
+{/* @example-description: Кнопка с дополнительными элементами: `before`, `after` со счётчиком и `chevron`. */}
+<Playground style={{ width: 270 }}>
+  ```jsx
+  <SubnavigationButton
+    before={<Icon24Filter />}
+    selected
+    chevron
+    after={
+      <Counter size="s">
+        <VisuallyHidden>Применено: </VisuallyHidden>3
+      </Counter>
+    }
+    onClick={() => {}}
+  >
+    Фильтры
+  </SubnavigationButton>
+  ```
+</Playground>0:{"rsc":["$","$1","c",{"children":[[["$","$L2",null,{"metadata":{"title":"Subnavigation Button Content","filePath":"content/components/_partials/subnavigation-button-content.mdx","timestamp":1782228015000},"sourceCode":"$3","children":"$L4"}],"$L5"],null,"$L6"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"wNnF0fHR6sBzNbr9-Inum"}
+4:[["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Кнопка/ссылка для использования внутри ",["$","$L7",null,{"href":"/components/subnavigation-bar","children":["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"SubnavigationBar"}]}],". Предназначена для навигации между подразделами или управления\nконтентом (активация фильтров, открытие модальных окон)."]}],"\n","\n",["$","$L8",null,{"style":{"width":270},"code":"<SubnavigationButton onClick={() => {}} before={<Icon24FavoriteOutline />}>\n  Избранное\n</SubnavigationButton>"}],"\n",["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"sostoyaniya","children":["$","a",null,{"href":"#sostoyaniya","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Состояния","children":["Состояния",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}],"\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"selected"}]," — выделяет кнопку как активную. Используйте для индикации текущего раздела или применённого фильтра."]}],"\n","\n",["$","$L8",null,{"style":{"width":270},"code":"<SubnavigationBar>\n  <SubnavigationButton selected onClick={() => {}}>\n    Выбран\n  </SubnavigationButton>\n  <SubnavigationButton onClick={() => {}}>Не выбран</SubnavigationButton>\n</SubnavigationBar>"}],"\n",["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"rezhimy-otobrazheniya","children":["$","a",null,{"href":"#rezhimy-otobrazheniya","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Режимы отображения","children":["Режимы отображения",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}],"\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Задается свойством ",["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"mode"}],":"]}],"\n",["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"primary"}]," — первичный вид для привлечения внимания;"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"outline"}]," — вид с обводкой;"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"tertiary"}]," — третичный вид без фона."]}],"\n"]}],"\n",["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"vneshnij-vid","children":["$","a",null,{"href":"#vneshnij-vid","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Внешний вид","children":["Внешний вид","$L9"]}]}],"\n","$La","\n","$Lb","\n","\n","$Lc","\n","$Ld","\n","\n","$Le","\n","$Lf","\n","$L10","\n","$L11","\n","$L12","\n","\n","$L13","\n","$L14","\n","$L15","\n","\n","$L16"]
+5:["$","$L17",null,{"toc":[{"value":"Состояния","id":"sostoyaniya","depth":3},{"value":"Режимы отображения","id":"rezhimy-otobrazheniya","depth":3},{"value":"Внешний вид","id":"vneshnij-vid","depth":3},{"value":["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"accent"}],"id":"accent","depth":4},{"value":["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"neutral"}],"id":"neutral","depth":4},{"value":"Размеры и контент","id":"razmery-i-kontent","depth":3},{"value":"Дополнительные элементы","id":"dopolnitelnye-elementy","depth":3}]}]
+6:["$","$L18",null,{"children":["$","$19",null,{"name":"Next.MetadataOutlet","children":"$@1a"}]}]
+9:["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]
+a:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Задается свойством ",["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"appearance"}],"."]}]
+b:["$","h4",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading4__c9VtX","id":"accent","children":["$","a",null,{"href":"#accent","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию [object Object]","children":["$5:props:toc:3:value",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+c:["$","$L8",null,{"style":{"width":270},"code":"<SubnavigationBar>\n  <SubnavigationButton mode=\"primary\" appearance=\"accent\" selected onClick={() => {}}>\n    primary accent selected\n  </SubnavigationButton>\n  <SubnavigationButton mode=\"primary\" appearance=\"accent\" onClick={() => {}}>\n    primary accent\n  </SubnavigationButton>\n</SubnavigationBar>\n<SubnavigationBar>\n  <SubnavigationButton mode=\"outline\" appearance=\"accent\" selected onClick={() => {}}>\n    outline accent selected\n  </SubnavigationButton>\n  <SubnavigationButton mode=\"outline\" appearance=\"accent\" onClick={() => {}}>\n    outline accent\n  </SubnavigationButton>\n</SubnavigationBar>\n<SubnavigationBar>\n  <SubnavigationButton mode=\"tertiary\" appearance=\"accent\" selected onClick={() => {}}>\n    tertiary accent selected\n  </SubnavigationButton>\n  <SubnavigationButton mode=\"tertiary\" appearance=\"accent\" onClick={() => {}}>\n    tertiary accent\n  </SubnavigationButton>\n</SubnavigationBar>"}]
+d:["$","h4",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading4__c9VtX","id":"neutral","children":["$","a",null,{"href":"#neutral","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию [object Object]","children":["$5:props:toc:4:value",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+e:["$","$L8",null,{"style":{"width":270},"code":"<SubnavigationBar>\n  <SubnavigationButton mode=\"primary\" appearance=\"neutral\" selected onClick={() => {}}>\n    primary neutral selected\n  </SubnavigationButton>\n  <SubnavigationButton mode=\"primary\" appearance=\"neutral\" onClick={() => {}}>\n    primary neutral\n  </SubnavigationButton>\n</SubnavigationBar>\n<SubnavigationBar>\n  <SubnavigationButton mode=\"outline\" appearance=\"neutral\" selected onClick={() => {}}>\n    outline neutral selected\n  </SubnavigationButton>\n  <SubnavigationButton mode=\"outline\" appearance=\"neutral\" onClick={() => {}}>\n    outline neutral\n  </SubnavigationButton>\n</SubnavigationBar>\n<SubnavigationBar>\n  <SubnavigationButton mode=\"tertiary\" appearance=\"neutral\" selected onClick={() => {}}>\n    tertiary neutral selected\n  </SubnavigationButton>\n  <SubnavigationButton mode=\"tertiary\" appearance=\"neutral\" onClick={() => {}}>\n    tertiary neutral\n  </SubnavigationButton>\n</SubnavigationBar>"}]
+f:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"razmery-i-kontent","children":["$","a",null,{"href":"#razmery-i-kontent","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Размеры и контент","children":["Размеры и контент",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+10:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Размер самой кнопки задается свойством ",["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"size"}],":"]}]
+11:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"s"}]," — компактный;"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"m"}]," — стандартный;"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"l"}]," — увеличенный."]}],"\n"]}]
+12:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"textLevel"}]," — отдельно настраивает размер текста (1 — крупный, 3 — мелкий).\nПолезно в режиме ",["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"fixed"}]," у родительского ",["$","$L7",null,{"href":"/components/subnavigation-bar","children":["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"SubnavigationBar"}]}],"."]}]
+13:["$","$L8",null,{"style":{"width":270},"code":"<SubnavigationButton size=\"s\" onClick={() => {}}>\n  size=\"s\"\n</SubnavigationButton>\n<SubnavigationButton size=\"m\" onClick={() => {}}>\n  size=\"m\"\n</SubnavigationButton>\n<SubnavigationButton size=\"l\" onClick={() => {}}>\n  size=\"l\"\n</SubnavigationButton>"}]
+14:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"dopolnitelnye-elementy","children":["$","a",null,{"href":"#dopolnitelnye-elementy","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Дополнительные элементы","children":["Дополнительные элементы",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+15:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"before"}]," — иконка перед текстом (рекомендуемый размер ",["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"24px"}],")."]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"after"}]," — счётчик или бейдж (рекомендуется использовать только ",["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"Counter size=\"s\""}]," или ",["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"Badge"}],")."]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"chevron"}]," — добавляет стрелку-индикатор справа."]}],"\n"]}]
+16:["$","$L8",null,{"style":{"width":270},"code":"<SubnavigationButton\n  before={<Icon24Filter />}\n  selected\n  chevron\n  after={\n    <Counter size=\"s\">\n      <VisuallyHidden>Применено: </VisuallyHidden>3\n    </Counter>\n  }\n  onClick={() => {}}\n>\n  Фильтры\n</SubnavigationButton>"}]
+1a:null

@@ -1,0 +1,86 @@
+1:"$Sreact.fragment"
+2:I[23450,["876","static/chunks/876-d2b3b0d0166ea28a.js","236","static/chunks/236-8b044a6b5a164fa0.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-4d7fea37bd782b11.js"],"Main"]
+4:I[80204,["876","static/chunks/876-d2b3b0d0166ea28a.js","236","static/chunks/236-8b044a6b5a164fa0.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-4d7fea37bd782b11.js"],"PlaygroundLazy"]
+5:I[73143,["876","static/chunks/876-d2b3b0d0166ea28a.js","236","static/chunks/236-8b044a6b5a164fa0.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-4d7fea37bd782b11.js"],"BlockWrapper"]
+e:I[19180,["876","static/chunks/876-d2b3b0d0166ea28a.js","236","static/chunks/236-8b044a6b5a164fa0.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-4d7fea37bd782b11.js"],"Pre"]
+f:I[91042,["876","static/chunks/876-d2b3b0d0166ea28a.js","236","static/chunks/236-8b044a6b5a164fa0.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-4d7fea37bd782b11.js"],"TOC"]
+10:I[90484,[],"OutletBoundary"]
+11:"$Sreact.suspense"
+3:Ta21,import { BlockWrapper } from '@/components/wrappers';
+
+Заголовок группы. Передаётся либо в свойство `header`, либо в начале `children`, либо в `Group.Header`.
+
+{/* @example-description: Отдельный `Header` с индикатором и правым управляющим элементом. */}
+<Playground Wrapper={BlockWrapper}>
+  ```jsx
+  <Header indicator={<Badge mode="prominent">12</Badge>} after={<Switch label="Уведомления" />}>Уведомления</Header>
+  ```
+</Playground>
+
+### Рекомендуемые размеры иконок
+
+| Свойство         | Расположение            | Рекомендуемый размер |
+| ---------------- | ----------------------- | -------------------- |
+| `before`         | Слева от всего контента | `28px`               |
+| `beforeTitle`    | Слева от заголовка      | `16px`               |
+| `afterTitle`     | Справа от заголовка     | `16px`               |
+| `beforeSubtitle` | Слева от подзаголовка   | `12px`               |
+| `afterSubtitle`  | Справа от подзаголовка  | `12px`               |
+
+### Дополнительные элементы
+
+- `indicator` — отображает счётчик/статус:
+
+  ```jsx
+  <Header indicator={<Badge mode="prominent">12</Badge>}>Уведомления</Header>
+  ```
+
+- `after` — контент справа от всего заголовка:
+
+  ```jsx
+  <Header after={<Switch label="Настройки" />}>Настройки</Header>
+  ```
+
+### Пример использования
+
+{/* @example-description: Расширенный пример `Header` с иконками, подзаголовком, счетчиком и ссылкой. */}
+<Playground Wrapper={BlockWrapper}>
+  ```jsx
+  <Group
+    mode="card"
+    separator="hide"
+    header={
+      <Header
+        before={<Icon28UserCircleFillBlue />}
+        beforeTitle={<Icon16LockOutline />}
+        afterTitle={<Icon16UnlockOutline />}
+        beforeSubtitle={<Icon12Tag />}
+        afterSubtitle={<Icon12Fire />}
+        subtitle="SOHN — Conrad"
+        subtitleComponent="h3"
+        indicator={
+          <Counter size="s" mode="primary" appearance="accent-red">
+            3
+          </Counter>
+        }
+        after={<Link href="#">Показать все</Link>}
+      >
+        Плейлисты
+      </Header>
+    }
+  >
+    <Div>
+      <Text>Контент</Text>
+    </Div>
+  </Group>
+  ```
+</Playground>0:{"rsc":["$","$1","c",{"children":[[["$","$L2",null,{"metadata":{"title":"Header Content","filePath":"content/components/_partials/header-content.mdx","timestamp":1782228015000},"sourceCode":"$3","children":[["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Заголовок группы. Передаётся либо в свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"header"}],", либо в начале ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"children"}],", либо в ",["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"Group.Header"}],"."]}],"\n","\n",["$","$L4",null,{"Wrapper":"$5","code":"<Header indicator={<Badge mode=\"prominent\">12</Badge>} after={<Switch label=\"Уведомления\" />}>Уведомления</Header>"}],"\n",["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"rekomenduemye-razmery-ikonok","children":["$","a",null,{"href":"#rekomenduemye-razmery-ikonok","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Рекомендуемые размеры иконок","children":["Рекомендуемые размеры иконок",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined","$L6"]]}]]}]}],"\n","$L7","\n","$L8","\n","$L9","\n","$La","\n","\n","$Lb"]}],"$Lc"],null,"$Ld"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"UNNFoPjySZ4gHn-eZ3LKH"}
+6:["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]
+7:["$","div",null,{"className":"Table_root__0rGvK","children":["$","table",null,{"children":[["$","thead",null,{"children":["$","tr",null,{"children":[["$","th",null,{"children":"Свойство","className":"Table_th__EHorR"}],["$","th",null,{"children":"Расположение","className":"Table_th__EHorR"}],["$","th",null,{"children":"Рекомендуемый размер","className":"Table_th__EHorR"}]],"className":"Table_tr__SD2Ot"}]}],["$","tbody",null,{"children":[["$","tr",null,{"children":[["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"before"}],"className":"Table_td__L3qz5"}],["$","td",null,{"children":"Слева от всего контента","className":"Table_td__L3qz5"}],["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"28px"}],"className":"Table_td__L3qz5"}]],"className":"Table_tr__SD2Ot"}],["$","tr",null,{"children":[["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"beforeTitle"}],"className":"Table_td__L3qz5"}],["$","td",null,{"children":"Слева от заголовка","className":"Table_td__L3qz5"}],["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"16px"}],"className":"Table_td__L3qz5"}]],"className":"Table_tr__SD2Ot"}],["$","tr",null,{"children":[["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"afterTitle"}],"className":"Table_td__L3qz5"}],["$","td",null,{"children":"Справа от заголовка","className":"Table_td__L3qz5"}],["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"16px"}],"className":"Table_td__L3qz5"}]],"className":"Table_tr__SD2Ot"}],["$","tr",null,{"children":[["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"beforeSubtitle"}],"className":"Table_td__L3qz5"}],["$","td",null,{"children":"Слева от подзаголовка","className":"Table_td__L3qz5"}],["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"12px"}],"className":"Table_td__L3qz5"}]],"className":"Table_tr__SD2Ot"}],["$","tr",null,{"children":[["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"afterSubtitle"}],"className":"Table_td__L3qz5"}],["$","td",null,{"children":"Справа от подзаголовка","className":"Table_td__L3qz5"}],["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"12px"}],"className":"Table_td__L3qz5"}]],"className":"Table_tr__SD2Ot"}]]}]],"className":"Table_table__NzLHi"}]}]
+8:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"dopolnitelnye-elementy","children":["$","a",null,{"href":"#dopolnitelnye-elementy","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Дополнительные элементы","children":["Дополнительные элементы",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+9:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"indicator"}]," — отображает счётчик/статус:"]}],"\n",["$","$Le",null,{"tabIndex":"0","data-language":"jsx","data-word-wrap":"","data-copy":"","data-pagefind-ignore":"all","children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"<"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Header"}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" indicator"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"{<"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Badge"}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" mode"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"prominent\""}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">12</"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Badge"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">}>Уведомления</"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Header"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}]}]}],"\n"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":"after"}]," — контент справа от всего заголовка:"]}],"\n",["$","$Le",null,{"tabIndex":"0","data-language":"jsx","data-word-wrap":"","data-copy":"","data-pagefind-ignore":"all","children":["$","code",null,{"className":"Code_root__TR_dq __className_89caef","dir":"ltr","children":["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"<"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Header"}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" after"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"{<"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Switch"}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" label"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"Настройки\""}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" />}>Настройки</"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Header"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}]}]}],"\n"]}],"\n"]}]
+a:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"primer-ispolzovaniya","children":["$","a",null,{"href":"#primer-ispolzovaniya","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Пример использования","children":["Пример использования",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+b:["$","$L4",null,{"Wrapper":"$5","code":"<Group\n  mode=\"card\"\n  separator=\"hide\"\n  header={\n    <Header\n      before={<Icon28UserCircleFillBlue />}\n      beforeTitle={<Icon16LockOutline />}\n      afterTitle={<Icon16UnlockOutline />}\n      beforeSubtitle={<Icon12Tag />}\n      afterSubtitle={<Icon12Fire />}\n      subtitle=\"SOHN — Conrad\"\n      subtitleComponent=\"h3\"\n      indicator={\n        <Counter size=\"s\" mode=\"primary\" appearance=\"accent-red\">\n          3\n        </Counter>\n      }\n      after={<Link href=\"#\">Показать все</Link>}\n    >\n      Плейлисты\n    </Header>\n  }\n>\n  <Div>\n    <Text>Контент</Text>\n  </Div>\n</Group>"}]
+c:["$","$Lf",null,{"toc":[{"value":"Рекомендуемые размеры иконок","id":"rekomenduemye-razmery-ikonok","depth":3},{"value":"Дополнительные элементы","id":"dopolnitelnye-elementy","depth":3},{"value":"Пример использования","id":"primer-ispolzovaniya","depth":3}]}]
+d:["$","$L10",null,{"children":["$","$11",null,{"name":"Next.MetadataOutlet","children":"$@12"}]}]
+12:null

@@ -1,0 +1,5 @@
+import{a as e,i as t,s as n}from"./preload-helper-xPQekRTU.js";import{t as r}from"./jsx-runtime-BqsN2jGA.js";import{n as i,t as a}from"./SegmentedControl-RhIFrI5y.js";import{i as o,n as s,t as c}from"./constants-cjed6ZWB.js";import{n as l,t as u}from"./createStoryParameters-CMHckkzt.js";var d=e({Playground:()=>h,__namedExportsOrder:()=>g,default:()=>m}),f,p,m,h,g,_=t((()=>{o(),l(),i(),f=n(r(),1),{fn:p}=__STORYBOOK_MODULE_TEST__,m={title:`Forms/SegmentedControl`,component:a,parameters:u(`SegmentedControl`,c,s),args:{onChange:p()},argTypes:{role:{control:`select`,options:[`radiogroup`,`tablist`]}},tags:[`Формы и поля ввода`]},h=e=>(0,f.jsx)(`div`,{style:{width:`100%`},children:(0,f.jsx)(a,{...e})}),h.args={options:[{label:`Баг`,value:`bug`},{label:`Идея`,value:`idea`},{label:`Другое`,value:`other`}],role:`radiogroup`},h.parameters={...h.parameters,docs:{...h.parameters?.docs,source:{originalSource:`(props: SegmentedControlProps) => <div style={{
+  width: '100%'
+}}>
+    <SegmentedControl {...props} />
+  </div>`,...h.parameters?.docs?.source}}},g=[`Playground`]}));export{d as n,_ as r,h as t};

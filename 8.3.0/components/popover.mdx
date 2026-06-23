@@ -1,0 +1,362 @@
+﻿---
+description: Компонент, предназначенный для отображения части пользовательского интерфейса во всплывающем окне.
+tags: overlay
+---
+
+<Overview group="modals">
+
+# Popover [tag:component]
+
+Компонент, предназначенный для отображения части пользовательского интерфейса во всплывающем окне.
+
+</Overview>
+
+<Playground hide>
+  ```jsx
+  <Popover
+    placement="bottom"
+    hideWhenReferenceHidden
+    strategy="absolute"
+    disableFlipMiddleware
+    shown
+    autoFocus={false}
+    content={
+      <Div>
+        <Text>Привет</Text>
+      </Div>
+    }
+  >
+    <Button mode="outline">
+      Нажми на меня
+    </Button>
+  </Popover>
+  ```
+</Playground>
+
+{/* @example-description: Базовый `Popover` с триггером по клику и всплывающим текстовым контентом. */}
+<Playground>
+  ```jsx
+  <Popover
+    placement="bottom"
+    role="tooltip"
+    aria-describedby="tooltip-1"
+    content={
+      <Div>
+        <Text>Привет</Text>
+      </Div>
+    }
+    restoreFocus="anchor-element"
+  >
+    <Button id="tooltip-1" mode="outline">
+      Нажми на меня
+    </Button>
+  </Popover>
+  ```
+</Playground>
+
+## Функциональность
+
+Компонент позволяет отобразить всплывающее окно, позиционированное рядом с якорным элементом.
+В качестве якорного используется элемент, переданный в свойство `children`.
+
+> Обратите внимание, что если вы используете в качестве якорного элемента пользовательский компонент, то
+> он должен передавать либо свойство `getRootRef`, либо реализовывать [forwardRef](https://react.dev/reference/react/forwardRef)
+> на корневой `DOM`-элемент.
+> Также передавайте на корневой элемент все `DOM`-атрибуты и обработчики событий
+> (в частности, `onMouseOver`, `onMouseLeave`, `onClick`, `onFocus`, `onBlur`).
+
+## Механизм вызова всплывающего окна
+
+Свойство `trigger` определяет способ взаимодействия, при котором всплывающее окно будет отображаться или скрываться.
+
+### `"click"`
+
+Показ/скрытие происходит при нажатии на якорный элемент;
+
+{/* @example-description: Поведение `Popover` с триггером `click` для явного открытия/закрытия. */}
+<Playground>
+  ```jsx
+  <Popover
+    placement="bottom"
+    role="tooltip"
+    aria-describedby="tooltip-1"
+    content={
+      <Div>
+        <Text>Привет</Text>
+      </Div>
+    }
+    restoreFocus="anchor-element"
+  >
+    <Button id="tooltip-1" mode="outline">
+      Нажми на меня
+    </Button>
+  </Popover>
+  ```
+</Playground>
+
+### `"hover"`
+
+Показ происходит при наведении мыши на якорных элемент, скрытие - при отведении.
+
+Используйте как единственный механизм активации только для декоративных элементов в сочетании с `aria-hidden` и `disableFocusTrap` (см. секцию [Доступность (a11y)](#a11y))
+
+> ⚠️ Предупреждение про `"hover"`:
+>
+> - Избегайте использования только `trigger="hover"`, так как пользователи клавиатуры или скринридеров не смогут использовать компонент.
+> - На сенсорных экранах (тач-устройствах) будет работать как `"click"`, с единственным отличием, что всплывающее окно
+>   не будет закрываться при повторном нажатии на целевой элемент. Для закрытия необходимо нажать
+>   на область вне целевого элемента и всплывающего окна.
+
+{/* @example-description: `Popover` с триггером `hover` для декоративной подсказки. */}
+<Playground>
+  ```jsx
+  <Popover
+    trigger="hover"
+    placement="bottom"
+    content={
+      <Div>
+        <Text>Привет</Text>
+      </Div>
+    }
+    aria-hidden="true"
+    disableFocusTrap
+  >
+    <Button mode="outline">Наведи на меня</Button>
+  </Popover>
+  ```
+</Playground>
+
+### `"focus"`
+
+Показ происходит при фокусе на якорном элементе, скрытие - при потере фокуса;
+
+{/* @example-description: `Popover` с триггером `focus` для клавиатурной навигации. */}
+<Playground>
+  ```jsx
+  <Popover
+    trigger="focus"
+    placement="bottom"
+    role="tooltip"
+    aria-describedby="tooltip-1"
+    content={
+      <Div>
+        <Text>Привет</Text>
+      </Div>
+    }
+    restoreFocus="anchor-element"
+  >
+    <Button id="tooltip-1" mode="outline">
+      Сфокусируйся на меня (Tab или клик)
+    </Button>
+  </Popover>
+  ```
+</Playground>
+
+### `"manual"`
+
+Показ/скрытие контролируется только через свойство `shown`.
+Обработчик, переданный в свойство `onShownChange`, будет вызываться при нажатии за пределами якорного и всплывающего элементов,
+а также по кнопке `ESC`.
+
+{/* @example-description: Ручное управление видимостью `Popover` через `shown` и `onShownChange`. */}
+<Playground>
+
+```jsx
+const [shown, setShown] = React.useState(false);
+
+const handleShownChange = React.useCallback((value, reason) => {
+  if (!value) {
+    switch (reason) {
+      case 'callback':
+      case 'escape-key':
+      case 'click-outside':
+        setShown(false);
+        break;
+      default:
+        break;
+    }
+  }
+}, []);
+
+return (
+  <Popover
+    trigger="manual"
+    shown={shown}
+    placement="bottom"
+    role="tooltip"
+    aria-describedby="tooltip-1"
+    onShownChange={handleShownChange}
+    content={
+      <Div>
+        <Text>Привет</Text>
+      </Div>
+    }
+    restoreFocus="anchor-element"
+  >
+    <Button id="tooltip-1" onClick={() => setShown((prev) => !prev)} mode="outline">
+      Нажми на меня
+    </Button>
+  </Popover>
+);
+```
+
+</Playground>
+
+## Хук usePopover [#use-popover]
+
+Вы можете использовать хук `usePopover`, который позволяет устанавливать якорный элемент для `Popover`,
+не прокидывая его в качестве `children`.
+
+{/* @example-description: Использование хука `usePopover` для управления якорем и рендером поповера. */}
+<Playground>
+
+```jsx
+const { anchorRef, anchorProps, popover } = usePopover({
+  'trigger': 'click',
+  'role': 'dialog',
+  'id': 'menupopup',
+  'aria-labelledby': 'menubutton',
+  'content': ({ onClose }) => (
+    <Div>
+      <Text>Привет</Text>
+    </Div>
+  ),
+});
+
+return (
+  <>
+    {popover}
+    <Button getRootRef={anchorRef} id="menubutton" aria-controls="menupopup" {...anchorProps}>
+      Нажми на меня
+    </Button>
+  </>
+);
+```
+
+</Playground>
+## Доступность (a11y) [#a11y]
+
+### Текстовые метки
+
+Старайтесь сопровождать элемент текстовым описанием для корректной работы скринридеров. Для этого
+необходимо вручную передавать некоторые параметры.
+
+- у всплывающего элемента обязательно должен быть указан [`role`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles).
+  Зачастую это либо [`"tooltip"`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/tooltip_role), либо [`"dialog"`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/dialog_role);
+- у якорного элемента, в зависимости от `role` всплывающего элемента, должны быть заданы атрибуты
+  `aria-*`. Какие именно можно ознакомиться в документации конкретного `role`.
+
+> **Исключение:** `aria-expanded` компонент выставляет самостоятельно в зависимости от `role`,
+> поэтому об этом атрибуте можно не беспокоиться.
+
+### `trigger="hover"` [#a11y-hover]
+
+Использования `trigger="hover"`, как единственного механизма активации, приводит к тому, что события наведения не генерируются при клавиатурной навигации или скринридером.
+
+Если нужно, чтобы контент из `Popover` был доступен, комбинируйте `hover` с триггером `focus`.
+
+```jsx
+// ❌ WCAG
+<Popover trigger="hover">{children}</Popover>
+
+// ✅ WCAG
+<Popover trigger={['hover', 'focus']}>{children}</Popover>
+```
+
+## Свойства и методы [#api]
+
+### Popover
+
+| Свойство | Тип | По умолчанию | Описание |
+| --- | --- | --- | --- |
+| `arrow` | `boolean` | `-` | Отображать ли стрелку, указывающую на якорный элемент. |
+| `arrowHeight` | `number` | `-` | Высота стрелки. Складывается с `mainAxis`, чтобы стрелка не залезала на якорный элемент. |
+| `ArrowIcon` | `ComponentType<SVGAttributes<SVGSVGElement>>` | `-` | Пользовательская SVG иконка.  Требования:  1. Иконка по умолчанию должна быть направлена вверх (a.k.a `IconUp`). 2. Чтобы избежать проблемы с пространством между стрелкой и контентом на некоторых экранах,    растяните кривую по высоте на `1px` и увеличьте на этот размер `height` и `viewBox` SVG.    (смотри https://github.com/VKCOM/VKUI/pull/4496). 3. Передайте высоту иконки в параметр `arrowHeight`. В значении высоты можно исключить хак с `1px` из п.2. 4. Убедитесь, что компонент принимает все валидные для SVG параметры. 5. Убедитесь, что SVG и её элементы наследует цвет через `fill="currentColor"`. |
+| `arrowPadding` | `number` | `-` | Безопасная зона вокруг стрелки, чтобы та не выходила за края контента. |
+| `arrowProps` | `PopoverArrowProps` | `-` | Позволяет набросить на стрелку пользовательские атрибуты. |
+| `autoFocus` | `boolean \| "root"` | `-` | Управление автоматическим фокусом при открытии всплывающего элемента. |
+| `children` | `ReactElement<unknown, string \| JSXElementConstructor<any>>` | `-` | Целевой элемент. Всплывающее окно появится возле него.  > ⚠️ Если это пользовательский компонент, то он должен: > 1. предоставлять параметры либо `getRootRef`, либо `ref` (cм. `React.forwardRef()`) для получения ссылки на DOM-узел; > 2. принимать DOM атрибуты и события. |
+| `closeAfterClick` | `boolean` | `-` | При `trigger="hover"` закрывает всплывающий элемент при нажатии на целевой элемент. |
+| `content` | `ReactNode \| FloatingContentRenderProp` | `-` | Содержимое всплывающего окна.  При передаче контента в виде [render prop](https://react.dev/reference/react/cloneElement#passing-data-with-a-render-prop), в аргументе функции можно получить метод `onClose`, с помощью которого можно программно закрывать всплывающее окно. |
+| `customMiddlewares` | `{ name: string; options?: any; fn: (state: { x: number; y: number; placement: Placement; platform: { detectOverflow: (state: MiddlewareState, options?: DetectOverflowOptions \| Derivable<...>) => Promise<...>; } & Platform; ... 4 more ...; elements: Elements; }) => Promisable<...>; }[] \| undefined` | `-` | Позволяет задать или переопределить модификаторы библиотеки **Floating UI** (подробнее в документации про [middleware](https://floating-ui.com/docs/middleware)). |
+| `defaultShown` | `boolean` | `-` | Начальное состояние всплывающего элемента. |
+| `disableCloseOnClickOutside` | `boolean` | `-` | Отключает закрытие нажатием на область вне целевого и всплывающего элемента. |
+| `disableCloseOnEscKey` | `boolean` | `-` | Отключает закрытие нажатием на кнопку ESC. |
+| `disabled` | `boolean` | `-` | Блокирует изменение состояния. |
+| `disableFlipMiddleware` | `boolean` | `-` | Указанное значение `placement` форсируется, даже если для выпадающего элемента недостаточно места. Не оказывает влияния при `placement` значениях - `'auto' \| 'auto-start' \| 'auto-end'` |
+| `disableFocusTrap` | `boolean` | `-` | Позволяет отключить захват фокуса. |
+| `disableInteractive` | `boolean` | `-` | Отключает взаимодействие со всплывающим элементом. |
+| `disableShiftMiddleware` | `boolean` | `-` | Позволяет отключить смещение по главной оси, которое не даёт всплывающему элементу выходить за границы видимой области. |
+| `getRootRef` | `Ref<HTMLDivElement>` | `-` |  |
+| `hideWhenReferenceHidden` | `boolean` | `-` | Принудительно скрывает компонент если целевой элемент вышел за область видимости. |
+| `hoverDelay` | `number \| [number, number]` | `-` | Количество миллисекунд, после которых произойдёт показ/скрытие всплывающего элемента при наведении.  > Чтобы задать разное время на показ и скрытие, передайте массив типа `[<показ>, <скрытие>]`.  > Используется только для `trigger="hover"`. |
+| `keepMounted` | `boolean` | `-` | Используется для того, чтобы не удалять всплывающий элемент из DOM дерева при скрытии. |
+| `noStyling` | `boolean` | `-` | Отключает у всплывающего элемента стилизацию по умолчанию.  У `content`: - _background_ - _border-radius_ - _box-shadow_.  У `arrow`: - _color_.  Используется в случае, если необходимо стилизовать по своему. Для `arrow` _color_ можно определить через в `arrowProps.iconClassName` или `arrowProps.iconStyle`. |
+| `offsetByCrossAxis` | `number` | `-` | Отступ по вспомогательной оси. |
+| `offsetByMainAxis` | `number` | `-` | Отступ по главной оси. |
+| `onPlacementChange` | `OnPlacementChange` | `-` | В зависимости от области видимости, позиция может смениться на более оптимальную, чтобы всплывающий элемент вместился в эту область видимости. |
+| `onReferenceHiddenChange` | `((hidden: boolean) => void)` | `-` | Событие скрытия / раскрытия компонента при использовании свойства `hideWhenReferenceHidden`.  > Стоит иметь ввиду, что событие также будет вызвано и при новом рендере компонента |
+| `onShownChange` | `OnShownChange` | `-` | Вызывается при каждом изменении видимости всплывающего элемента. |
+| `onShownChanged` | `OnShownChange` | `-` | Вызывается при каждом изменении видимости всплывающего элемента, но после завершении анимации. |
+| `placement` | `PlacementWithAuto` | `-` | По умолчанию компонент выберет наилучшее расположение сам, но приоритетное можно задать с помощью этого свойства. |
+| `restoreFocus` | `RestoreFocusType` | `-` | Нужно ли после закрытия всплывающего элемента возвращать фокус на предыдущий активный элемент. |
+| `sameWidth` | `boolean` | `-` | Выставлять ширину равной target элементу. |
+| `shown` | `boolean` | `-` | Если передан, то всплывающий элемент будет показано/скрыто в зависимости от значения свойства. |
+| `strategy` | `Strategy` | `-` | Стратегия позиционирования всплывающего элемента.  - `"fixed"` - позиционируется, используя `position: fixed`. Является значением по умолчанию - `"absolute"` - позиционируется, используя `position: absolute`, относительно ближайшего элемента с `position: relative`  > `strategy="absolute"` Рекомендуется использовать с `usePortal={false}`. И нужно не забыть обернуть в элемент с `position: relative` |
+| `trigger` | `TriggerType` | `-` | Механика вызова всплывающего элемента.  - `"click"` – показывается/скрывается только при нажатии. - `"hover"` – будет показываться/скрывается при наведении/отведении мыши. - `"focus"` – будет показываться/скрывается при фокусе/потере фокуса мыши. - `"manual"` – будет показываться/скрывается только через свойство `shown`. `onShownChange`    будет вызываться при нажатии за пределы целевого и всплывающего элементов, а также по кнопке    ESC.  > ⚠️`"hover"` на тач-устройствах будет работать как `"click"`, с одним лишь нюансом, что > не будет закрываться при повторном нажатии на целевой элемент. Для закрытия необходимо нажать > на область вне целевого элемента и выпадающего окна.  **Избегайте использования `trigger="hover"` как единственного механизма активации, так как пользователи клавиатуры или скринридеров не смогут использовать компонент** |
+| `usePortal` | `boolean \| HTMLElement \| RefObject<HTMLElement>` | `-` | По умолчанию используется document.body. |
+| `zIndex` | `string \| number` | `-` | Перебивает zIndex заданный по умолчанию. |
+
+### usePopover
+
+| Свойство | Тип | По умолчанию | Описание |
+| --- | --- | --- | --- |
+| `arrow` | `boolean` | `-` | Отображать ли стрелку, указывающую на якорный элемент. |
+| `arrowHeight` | `number` | `8` | Высота стрелки. Складывается с `mainAxis`, чтобы стрелка не залезала на якорный элемент. |
+| `ArrowIcon` | `ComponentType<SVGAttributes<SVGSVGElement>>` | `(props: React.SVGAttributes<SVGSVGElement>): React.ReactNode => {
+  return (
+    <svg
+      width={DEFAULT_ARROW_WIDTH}
+      height={ARROW_HEIGHT_WITH_WHITE_SPACE}
+      viewBox={`0 0 ${DEFAULT_ARROW_WIDTH} ${ARROW_HEIGHT_WITH_WHITE_SPACE}`}
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path d="M10 0c3 0 6 8 10 8v1H0V8c3.975 0 7-8 10-8Z" fill="currentColor" />
+    </svg>
+  );
+}` | Пользовательская SVG иконка.  Требования:  1. Иконка по умолчанию должна быть направлена вверх (a.k.a `IconUp`). 2. Чтобы избежать проблемы с пространством между стрелкой и контентом на некоторых экранах,    растяните кривую по высоте на `1px` и увеличьте на этот размер `height` и `viewBox` SVG.    (смотри https://github.com/VKCOM/VKUI/pull/4496). 3. Передайте высоту иконки в параметр `arrowHeight`. В значении высоты можно исключить хак с `1px` из п.2. 4. Убедитесь, что компонент принимает все валидные для SVG параметры. 5. Убедитесь, что SVG и её элементы наследует цвет через `fill="currentColor"`. |
+| `arrowPadding` | `number` | `10` | Безопасная зона вокруг стрелки, чтобы та не выходила за края контента. |
+| `arrowProps` | `PopoverArrowProps` | `-` | Позволяет набросить на стрелку пользовательские атрибуты. |
+| `autoFocus` | `boolean \| "root"` | `true` | Управление автоматическим фокусом при открытии всплывающего элемента. |
+| `closeAfterClick` | `boolean` | `-` | При `trigger="hover"` закрывает всплывающий элемент при нажатии на целевой элемент. |
+| `content` | `ReactNode \| FloatingContentRenderProp` | `-` | Содержимое всплывающего окна.  При передаче контента в виде [render prop](https://react.dev/reference/react/cloneElement#passing-data-with-a-render-prop), в аргументе функции можно получить метод `onClose`, с помощью которого можно программно закрывать всплывающее окно. |
+| `customMiddlewares` | `{ name: string; options?: any; fn: (state: { x: number; y: number; placement: Placement; platform: { detectOverflow: (state: MiddlewareState, options?: DetectOverflowOptions \| Derivable<...>) => Promise<...>; } & Platform; ... 4 more ...; elements: Elements; }) => Promisable<...>; }[] \| undefined` | `-` | Позволяет задать или переопределить модификаторы библиотеки **Floating UI** (подробнее в документации про [middleware](https://floating-ui.com/docs/middleware)). |
+| `defaultShown` | `boolean` | `false` | Начальное состояние всплывающего элемента. |
+| `disableCloseOnClickOutside` | `boolean` | `-` | Отключает закрытие нажатием на область вне целевого и всплывающего элемента. |
+| `disableCloseOnEscKey` | `boolean` | `-` | Отключает закрытие нажатием на кнопку ESC. |
+| `disabled` | `boolean` | `-` | Блокирует изменение состояния. |
+| `disableFlipMiddleware` | `boolean` | `false` | Указанное значение `placement` форсируется, даже если для выпадающего элемента недостаточно места. Не оказывает влияния при `placement` значениях - `'auto' \| 'auto-start' \| 'auto-end'` |
+| `disableFocusTrap` | `boolean` | `-` | Позволяет отключить захват фокуса. |
+| `disableInteractive` | `boolean` | `-` | Отключает взаимодействие со всплывающим элементом. |
+| `disableShiftMiddleware` | `boolean` | `false` | Позволяет отключить смещение по главной оси, которое не даёт всплывающему элементу выходить за границы видимой области. |
+| `getRootRef` | `Ref<HTMLDivElement>` | `-` |  |
+| `hideWhenReferenceHidden` | `boolean` | `-` | Принудительно скрывает компонент если целевой элемент вышел за область видимости. |
+| `hoverDelay` | `number \| [number, number]` | `150` | Количество миллисекунд, после которых произойдёт показ/скрытие всплывающего элемента при наведении.  > Чтобы задать разное время на показ и скрытие, передайте массив типа `[<показ>, <скрытие>]`.  > Используется только для `trigger="hover"`. |
+| `keepMounted` | `boolean` | `false` | Используется для того, чтобы не удалять всплывающий элемент из DOM дерева при скрытии. |
+| `noStyling` | `boolean` | `false` | Отключает у всплывающего элемента стилизацию по умолчанию.  У `content`: - _background_ - _border-radius_ - _box-shadow_.  У `arrow`: - _color_.  Используется в случае, если необходимо стилизовать по своему. Для `arrow` _color_ можно определить через в `arrowProps.iconClassName` или `arrowProps.iconStyle`. |
+| `offsetByCrossAxis` | `number` | `0` | Отступ по вспомогательной оси. |
+| `offsetByMainAxis` | `number` | `8` | Отступ по главной оси. |
+| `onPlacementChange` | `OnPlacementChange` | `-` | В зависимости от области видимости, позиция может смениться на более оптимальную, чтобы всплывающий элемент вместился в эту область видимости. |
+| `onReferenceHiddenChange` | `((hidden: boolean) => void)` | `-` | Событие скрытия / раскрытия компонента при использовании свойства `hideWhenReferenceHidden`.  > Стоит иметь ввиду, что событие также будет вызвано и при новом рендере компонента |
+| `onShownChange` | `OnShownChange` | `-` | Вызывается при каждом изменении видимости всплывающего элемента. |
+| `onShownChanged` | `OnShownChange` | `-` | Вызывается при каждом изменении видимости всплывающего элемента, но после завершении анимации. |
+| `placement` | `PlacementWithAuto` | `bottom-start` | По умолчанию компонент выберет наилучшее расположение сам, но приоритетное можно задать с помощью этого свойства. |
+| `restoreFocus` | `RestoreFocusType` | `true` | Нужно ли после закрытия всплывающего элемента возвращать фокус на предыдущий активный элемент. |
+| `sameWidth` | `boolean` | `-` | Выставлять ширину равной target элементу. |
+| `shown` | `boolean` | `-` | Если передан, то всплывающий элемент будет показано/скрыто в зависимости от значения свойства. |
+| `strategy` | `Strategy` | `-` | Стратегия позиционирования всплывающего элемента.  - `"fixed"` - позиционируется, используя `position: fixed`. Является значением по умолчанию - `"absolute"` - позиционируется, используя `position: absolute`, относительно ближайшего элемента с `position: relative`  > `strategy="absolute"` Рекомендуется использовать с `usePortal={false}`. И нужно не забыть обернуть в элемент с `position: relative` |
+| `trigger` | `TriggerType` | `click` | Механика вызова всплывающего элемента.  - `"click"` – показывается/скрывается только при нажатии. - `"hover"` – будет показываться/скрывается при наведении/отведении мыши. - `"focus"` – будет показываться/скрывается при фокусе/потере фокуса мыши. - `"manual"` – будет показываться/скрывается только через свойство `shown`. `onShownChange`    будет вызываться при нажатии за пределы целевого и всплывающего элементов, а также по кнопке    ESC.  > ⚠️`"hover"` на тач-устройствах будет работать как `"click"`, с одним лишь нюансом, что > не будет закрываться при повторном нажатии на целевой элемент. Для закрытия необходимо нажать > на область вне целевого элемента и выпадающего окна.  **Избегайте использования `trigger="hover"` как единственного механизма активации, так как пользователи клавиатуры или скринридеров не смогут использовать компонент** |
+| `usePortal` | `boolean \| HTMLElement \| RefObject<HTMLElement>` | `true` | По умолчанию используется document.body. |
+| `zIndex` | `string \| number` | `var(--vkui--z_index_popout)` | Перебивает zIndex заданный по умолчанию. |
+

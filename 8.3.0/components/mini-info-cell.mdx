@@ -1,0 +1,159 @@
+﻿---
+description: Компонент для отображения компактной информации или быстрых действий.
+tags: list
+---
+
+<Overview group="data-display">
+
+# MiniInfoCell [tag:component]
+
+Компонент для отображения компактной информации или быстрых действий.
+Идеален для метаданных, статусов и кратких уведомлений.
+
+</Overview>
+
+{/* @example-description: Базовый `MiniInfoCell` с иконкой и многострочным текстом в режиме `textWrap="full"`. */}
+<Playground>
+  ```jsx
+  <MiniInfoCell before={<Icon20ArticleOutline />} textWrap="full">
+    ВКонтакте начинался как сайт для выпускников вузов, а сейчас это огромная экосистема с
+    безграничными возможностями и миллионами пользователей.
+  </MiniInfoCell>
+  ```
+</Playground>
+
+## Основные свойства
+
+{/* @example-description: Пример `MiniInfoCell` с контентом в `before/after`, акцентным режимом и сокращённым переносом текста. */}
+<Playground>
+  ```jsx
+  <MiniInfoCell
+    before={<Icon20ArticleOutline />}
+    after={<Avatar size={24} initials="СД" />}
+    mode="accent"
+    textWrap="short"
+  >
+    Место работы: Команда ВКонтакте
+  </MiniInfoCell>
+  ```
+</Playground>
+
+## Структура элемента
+
+### Визуальные элементы
+
+- **before** - иконка `20px` слева.
+- **after** - контент справа (`<UsersStack size="s" />` или `<Avatar size={24} />`).
+
+### Текстовые режимы
+
+Свойство `textWrap` управляет переносом текста:
+
+- `nowrap` - одна строка, остальной контент ограничивается `...`;
+- `short` - контент ограничен тремя строками, остальной контент ограничивается `...`;
+- `full` - полный текст с переносами.
+
+## Режимы отображения
+
+### `mode="base"` (по умолчанию)
+
+Стандартный стиль для информации:
+
+{/* @example-description: Стандартный режим `MiniInfoCell` для отображения нейтральной информации. */}
+<Playground>
+  ```jsx
+  <MiniInfoCell before={<Icon20GlobeOutline />}>vk.com/team</MiniInfoCell>
+  ```
+</Playground>
+
+### `mode="accent"`
+
+Акцентное выделение:
+
+{/* @example-description: Акцентный режим `MiniInfoCell` для выделения важного значения. */}
+<Playground>
+  ```jsx
+  <MiniInfoCell mode="accent" before={<Icon20WorkOutline />}>
+    Место работы: Команда ВКонтакте
+  </MiniInfoCell>
+  ```
+</Playground>
+
+### `mode="add"`
+
+Призыв к действию:
+
+{/* @example-description: Режим `add` с шевроном для добавления недостающей информации. */}
+<Playground>
+  ```jsx
+  <MiniInfoCell mode="add" before={<Icon20EducationOutline />} onClick={() => {}} chevron>
+    Укажите место учёбы
+  </MiniInfoCell>
+  ```
+</Playground>
+
+### `mode="more"`
+
+Индикатор дополнительной информации:
+
+{/* @example-description: Режим `more` для перехода к подробной информации. */}
+<Playground>
+  ```jsx
+  <MiniInfoCell mode="more" before={<Icon20InfoCircleOutline />} onClick={() => {}} chevron>
+    Подробная информация
+  </MiniInfoCell>
+  ```
+</Playground>
+
+## Особенности
+
+### Шеврон (chevron)
+
+Используйте для интерактивных элементов:
+
+{/* @example-description: Отдельный пример `chevron` для кликабельной строки настроек. */}
+<Playground>
+  ```jsx
+  <MiniInfoCell chevron onClick={() => {}} before={<Icon20GearOutline />}>
+    Настройки профиля
+  </MiniInfoCell>
+  ```
+</Playground>
+
+## Рекомендации
+
+- Для иконок используйте только 20px версии;
+- В режиме `add` обязательно добавляйте обработчик `onClick`;
+- Избегайте длинных текстов в `nowrap` режиме;
+- Для групп элементов используйте общий `Group` с отступами;
+
+## Доступность (a11y) [#a11y]
+
+- Для кликабельных элементов добавляйте `aria-label`.
+
+- Сочетайте с семантическими тегами:
+
+  ```jsx
+  <MiniInfoCell Component="a" href="/settings">
+    {/*...*/}
+  </MiniInfoCell>
+  ```
+
+## Свойства и методы [#api]
+
+| Свойство | Тип | По умолчанию | Описание |
+| --- | --- | --- | --- |
+| `activated` | `boolean` | `-` | Позволяет управлять `activated`-состоянием извне. |
+| `activeMode` | `StateModeLiteral` | `-` | Стиль подсветки active-состояния. Если передать произвольную строку, она добавится как css-класс во время active. |
+| `after` | `ReactNode` | `-` | Содержимое справа.<br /> `<UsersStack size="s" />` или `<Avatar size={24} />`. |
+| `before` | `ReactNode` | `-` | Иконка слева.<br /> Рекомендуется использовать иконки размера 20. |
+| `chevron` | `boolean` | `false` | Передавать `true`, если предполагается переход при нажатии на ячейку. |
+| `Component` | `ElementType<any, keyof IntrinsicElements>` | `-` |  |
+| `getRootRef` | `Ref<HTMLDivElement>` | `-` |  |
+| `hasActive` | `boolean` | `-` | Указывает, должен ли компонент реагировать на `active`-состояние. |
+| `hasHover` | `boolean` | `-` | Указывает, должен ли компонент реагировать на `hover`-состояние. |
+| `hovered` | `boolean` | `-` | Позволяет управлять `hovered`-состоянием извне. |
+| `hoverMode` | `StateModeLiteral` | `-` | Стиль подсветки hover-состояния. Если передать произвольную строку, она добавится как css-класс во время hover. |
+| `mode` | `"base" \| "accent" \| "add" \| "more"` | `base` | Тип ячейки:  - `base` – базовая ячейка с серой иконкой и серым текстом.<br /> В компонент можно передать `Link`, чтобы визуально сделать часть текста ссылкой. - `add` – тип ячейки, который показывает, что взаимодействие с ней должно вызывать действие добавления чего-то. - `more` – взаимодействие с такой ячейкой должно открывать какую-то подробную информацию. |
+| `textWrap` | `"full" \| "nowrap" \| "short"` | `nowrap` | Тип отображения текста:  - `nowrap` – в одну строку, текст не переносится и обрезается. - `short` – максимально отображается 3 строки, остальное обрезается. - `full` – текст отображается полностью. В дизайне это свойство `multiline`. |
+

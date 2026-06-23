@@ -1,0 +1,9 @@
+import{a as e,i as t,s as n}from"./preload-helper-xPQekRTU.js";import{t as r}from"./jsx-runtime-BqsN2jGA.js";import{Mt as i,Nt as a,jt as o}from"./iframe-Cn6jcl_x.js";import{n as s,t as c}from"./Group-LwNPJiLD.js";import{n as l,t as u}from"./FormItem-BBILDAKY.js";import{n as d,t as f}from"./Slider-B2GpkIMZ.js";import{i as p,n as m,t as h}from"./constants-cjed6ZWB.js";import{n as g,t as _}from"./createStoryParameters-CMHckkzt.js";var v=e({Playground:()=>C,Tooltip:()=>w,__namedExportsOrder:()=>T,default:()=>S});function y(e){return e===1?`Pineapple Maximum Count`:`Pineapple Minimum Count`}function b(e){return e?.multiple?`multiple`:`single`}var x,S,C,w,T,E=t((()=>{o(),p(),g(),l(),s(),d(),x=n(r(),1),S={title:`Forms/Slider`,component:f,parameters:_(`Slider`,h,m,{liveCodeEditor:{scope:{forceRemountKey:b}}}),args:{getAriaLabel:y},argTypes:{defaultValue:{table:{defaultValue:{summary:`min | [min, max]`}}},multiple:{table:{defaultValue:{summary:`false`}}},getAriaLabel:{table:{defaultValue:{summary:`Для примера используется функция: ${y.toString()}`}}}},tags:[`Формы и поля ввода`],decorators:[i,a]},C=e=>(0,x.jsx)(c,{children:(0,x.jsx)(u,{top:`Pineapple Count`,children:(0,x.jsx)(f,{...e},b(e))})}),w=e=>(0,x.jsx)(c,{children:(0,x.jsx)(u,{top:`Pineapple Count`,children:(0,x.jsx)(f,{...e},b(e))})}),w.args={withTooltip:!0},C.parameters={...C.parameters,docs:{...C.parameters?.docs,source:{originalSource:`(props: SliderProps | SliderMultipleProps) => <Group>
+    <FormItem top="Pineapple Count">
+      <Slider key={forceRemountKey(props)} {...props} />
+    </FormItem>
+  </Group>`,...C.parameters?.docs?.source}}},w.parameters={...w.parameters,docs:{...w.parameters?.docs,source:{originalSource:`(props: SliderProps | SliderMultipleProps) => <Group>
+    <FormItem top="Pineapple Count">
+      <Slider key={forceRemountKey(props)} {...props} />
+    </FormItem>
+  </Group>`,...w.parameters?.docs?.source}}},T=[`Playground`,`Tooltip`]}));export{v as n,E as r,C as t};

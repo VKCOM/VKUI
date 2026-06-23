@@ -1,0 +1,63 @@
+﻿---
+description: Иконка-стрелка для всплывающих окон.
+tags: overlay
+---
+
+<Overview group="utils">
+
+# FloatingArrow [tag:component]
+
+Иконка-стрелка для всплывающих окон.
+
+</Overview>
+
+import { BlockWrapper } from '@/components/wrappers';
+
+<Playground hide>
+  ```jsx
+  <Box position="relative" inlineSize={100} blockSize={100} style={{ border: '1px dashed var(--vkui--color_text_accent)', borderRadius: '4px' }}>
+    <FloatingArrow coords={{ x: 5, y: 10 }} />
+  </Box>
+  ```
+</Playground>
+
+{/* @example-description: Базовый пример `FloatingArrow` с заданными координатами позиционирования. */}
+<Playground Wrapper={BlockWrapper} style={{ width: 1 }}>
+  ```jsx
+  <FloatingArrow coords={{ x: 5, y: 10 }} />
+  ```
+</Playground>
+
+## Использование
+
+Компонент `FloatingArrow` следует использовать в случае реализации своего компонента всплывающей подсказки или
+компонента онбординга.
+
+`FloatingArrow` отвечает только визуальную составляющую, передавайте соответствующие параметры (свойство `coords`) для
+корректного позиционирования компонента рядом с нужным элементом самостоятельно.
+
+## Свойства и методы [#api]
+
+| Свойство | Тип | По умолчанию | Описание |
+| --- | --- | --- | --- |
+| `coords` | `Coords` | `-` | Координаты стрелки. |
+| `getRootRef` | `Ref<HTMLDivElement>` | `-` |  |
+| `Icon` | `ComponentType<SVGAttributes<SVGSVGElement>>` | `(props: React.SVGAttributes<SVGSVGElement>): React.ReactNode => {
+  return (
+    <svg
+      width={DEFAULT_ARROW_WIDTH}
+      height={ARROW_HEIGHT_WITH_WHITE_SPACE}
+      viewBox={`0 0 ${DEFAULT_ARROW_WIDTH} ${ARROW_HEIGHT_WITH_WHITE_SPACE}`}
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path d="M10 0c3 0 6 8 10 8v1H0V8c3.975 0 7-8 10-8Z" fill="currentColor" />
+    </svg>
+  );
+}` | Иконка для отображения стрелки. |
+| `iconClassName` | `string` | `-` | `className` для иконки. |
+| `iconStyle` | `CSSProperties` | `-` | Стили иконки. |
+| `isStaticOffset` | `boolean` | `-` | Включает абсолютное смещение по `offset`. |
+| `offset` | `number` | `-` | Сдвиг стрелки относительно текущих координат. |
+| `placement` | `Placement` | `bottom` | Расположение всплывающего элемента. |
+

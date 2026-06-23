@@ -1,0 +1,340 @@
+﻿---
+description: Компонент для выбора множества значений из выпадающего списка.
+tags: selection, search
+---
+
+<Overview group="forms">
+
+# ChipsSelect [tag:component]
+
+Компонент для выбора множества значений из выпадающего списка.
+Позволяет пользователю выбирать опции из предустановленного списка или создавать новые значения. Каждый выбранный элемент
+представлен в виде отдельного компонента `Chip`.
+
+Связанные компоненты:
+
+- [`Chip`](/components/chip)
+
+</Overview>
+
+{/* @example-description: Базовый `ChipsSelect` с предустановленным списком опций. */}
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <ChipsSelect
+    options={[
+      { value: 'red', label: 'Красный' },
+      { value: 'blue', label: 'Синий' },
+      { value: 'green', label: 'Зеленый' },
+    ]}
+    placeholder="Выберите значение"
+  />
+  ```
+</Playground>
+
+## Режим работы
+
+Компонент поддерживает работу как в неконтролируемом режиме, так и контролируемом. Это стандартное поведение
+React-компонентов, прочитать про это можно в [документации React](https://react.dev/reference/react-dom/components/input#controlling-an-input-with-a-state-variable).
+
+Для использования неконтролируемого режима достаточно просто _не_ передавать `value` или передавать `defaultValue`, если
+требуется задать значение по умолчанию.
+Для контролируемого режима используйте связку свойств `value`/`onChange` для задания значения и его изменения.
+
+```jsx
+// Неконтролируемое состояние
+<ChipsSelect
+  defaultValue={[
+    {
+      value: 'red',
+      label: 'Красный',
+    },
+  ]}
+/>;
+
+// Контролируемое состояние
+const [colors, setColors] = React.useState([]);
+
+<ChipsSelect value={colors} onChange={setColors} />;
+```
+
+## Управление вводом
+
+### Добавление нового значения
+
+Свойство `creatable` позволяет добавлять значения, которых нет в списке.
+
+- `true` - значение добавляется по нажатию клавиши `Enter`;
+- строковое значение - помимо клавиши `Enter`, в списке появляется кнопка, нажатие на которую приводит к добавлению значения.
+
+{/* @example-description: Добавление новых значений в `ChipsSelect` через режим `creatable`. */}
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <ChipsSelect
+    options={[
+      { value: 'red', label: 'Красный' },
+      { value: 'blue', label: 'Синий' },
+      { value: 'green', label: 'Зеленый' },
+    ]}
+    placeholder="Выберите значение"
+    creatable="Добавить новую опцию"
+  />
+  ```
+</Playground>
+
+### Разделитель
+
+> Работает только при заданном свойстве `creatable`
+
+Задаётся свойством `delimiter`. Позволяет добавлять несколько элементов за раз, разделяя их указанным символом.
+
+Представляет собой символ, который будет использоваться как разделитель для автоматического создания опций из текста,
+введенного или вставленного в поле ввода. Например, при `delimiter=","` вставка текста "Красный,Синий" в поле ввода
+создаст два элемента - "Красный" и "Синий".
+
+Пока поддерживаются только строковые символы.
+
+{/* @example-description: Добавление нескольких значений по разделителю `delimiter` в `creatable` режиме. */}
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <ChipsSelect
+    options={[
+      { value: 'red', label: 'Красный' },
+      { value: 'blue', label: 'Синий' },
+      { value: 'green', label: 'Зеленый' },
+    ]}
+    creatable="Добавить новую опцию"
+    placeholder="Используйте запятую"
+    delimiter=","
+  />
+  ```
+</Playground>
+
+### Потеря фокуса
+
+По умолчанию при потере полем фокуса добавления в список опций не происходит.
+С помощью свойства `addOnBlur` можно включить поведение, при котором потеря фокуса будет приводить к добавлению нового элемента.
+
+{/* @example-description: Автосоздание новой опции при потере фокуса через `addOnBlur`. */}
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <ChipsSelect
+    options={[
+      { value: 'red', label: 'Красный' },
+      { value: 'blue', label: 'Синий' },
+      { value: 'green', label: 'Зеленый' },
+    ]}
+    placeholder="Введите значение"
+    creatable
+    addOnBlur
+  />
+  ```
+</Playground>
+
+## Состояния
+
+### `disabled`
+
+Свойство `disabled` блокирует взаимодействие с компонентом и добавляет визуальную индикацию недоступности.
+
+{/* @example-description: `ChipsSelect` в неактивном состоянии с выбранным значением. */}
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <ChipsSelect
+    options={[{ value: 'red', label: 'Красный' }]}
+    defaultValue={[{ value: 'red', label: 'Красный' }]}
+    disabled
+  />
+  ```
+</Playground>
+
+## Валидация
+
+Свойство `status` используется для визуализации валидации компонента - некорректности заполненного поля (значение `"error"`)
+или успешной валидации (значение `"valid"`).
+
+> Если вы используете `ChipsSelect` вместе с [`FormItem`](/components/form-item), вам достаточно указать свойство `status` только у
+> [`FormItem`](/components/form-item).
+
+{/* @example-description: Валидационные состояния `ChipsSelect`: ошибка и успешное заполнение. */}
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <ChipsSelect
+    options={[{ value: 'red', label: 'Красный' }]}
+    defaultValue={[{ value: 'red', label: 'Красный' }]}
+    status="error"
+  />
+  <ChipsSelect
+    options={[{ value: 'green', label: 'Зеленый' }]}
+    defaultValue={[{ value: 'green', label: 'Зеленый' }]}
+    status="valid"
+  />
+  ```
+</Playground>
+
+## Кастомизация
+
+### Визуальное оформление
+
+С помощью свойства `renderChip` можно влиять на отображение конкретного значения. Вы можете изменить
+стандартный компонент `Chip` или использовать свой компонент.
+
+С помощью свойства `renderOption` можно влиять на отображение конкретного элемента выпадающего списка.
+Вы можете изменить стандартный компонент [`CustomSelectOption`](/components/custom-select#customselectoption)
+или использовать свой компонент.
+
+{/* @example-description: Кастомизация выбранных чипов и пунктов списка через `renderChip` и `renderOption`. */}
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <ChipsSelect
+    options={[
+      {
+        value: '1',
+        label: 'Ином',
+        src: 'https://avatars.githubusercontent.com/u/5850354?s=50',
+      },
+      { value: '2', label: 'Даниил', src: 'https://avatars.githubusercontent.com/u/14944123?s=50' },
+    ]}
+    renderChip={({ value, label, ...rest }, { src }) => (
+      <Chip value={value} before={<Avatar src={src} size={20} aria-hidden />} {...rest}>
+        {label}
+      </Chip>
+    )}
+    renderOption={(props, { src }) => {
+      return <CustomSelectOption before={<Avatar src={src} size={20} aria-hidden />} {...props} />;
+    }}
+    placeholder="Выберите пользователя"
+  />
+  ```
+</Playground>
+
+Важно отметить, что первым параметром в обработчика `renderChip`/`renderOption` идёт объект со свойствами, необходимыми для
+корректной работы `a11y`. Если для отображения элемента вы используете свой компонент, убедитесь, что все эти свойства
+компонент получает и корректно обрабатывает. Вторым параметром идёт объект со значением конкретной опции
+(значение, переданное в `value`/`defaultValue`).
+
+## slotProps
+
+Компонент поддерживает свойство `slotProps`, позволяющее переопределять свойства внутренних элементов, таких как корневой контейнер и `input`.
+
+Это удобно для добавления кастомных классов, data-атрибутов, aria-атрибутов, обработчиков событий, доступов к элементам через `getRootRef` и других расширений, не влияя на внешний API компонента.
+
+{/* @example-description: Пример `slotProps` для настройки корневого элемента и поля ввода `ChipsSelect`. */}
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  const inputRef = React.useRef();
+
+  return (
+    <ChipsSelect
+      options={[
+        { value: 'red', label: 'Красный' },
+        { value: 'blue', label: 'Синий' },
+        { value: 'green', label: 'Зеленый' },
+      ]}
+      placeholder="Выберите значение"
+      className="my-root-class"
+      data-testid="chips-select-root"
+      id="colors-input-id"
+      slotProps={{
+        root: {
+          id: 'chips-select-root-id',
+        },
+        input: {
+          className: 'my-input-class',
+          'aria-label': 'Пример slotProps',
+          getRootRef: inputRef,
+        },
+      }}
+    />
+  )
+  ```
+</Playground>
+
+## Доступность (a11y) [#a11y]
+
+Компонент обеспечивает базовую доступность через стандартные `HTML`-атрибуты и `ARIA`-роли.
+
+Для улучшения доступности рекомендуется связывать компонент с текстовым описанием одним из следующих способов:
+
+- обернуть в `<label>`;
+
+  ```jsx
+  <label>
+    Список исполнителей
+    <ChipsSelect options={colors} placeholder="Введите название" />
+  </label>
+  ```
+
+- указать `id` или `aria-describedby` и передать в `<label>` или [`FormItem`](/components/form-item) через `htmlFor`;
+
+  ```jsx
+  <label htmlFor="chips">Список исполнителей</label>
+  <ChipsSelect options={colors} placeholder="Введите название" id="chips"/>
+  ```
+
+  ```jsx
+  <FormItem top="Список исполнителей" htmlFor="chips">
+    <ChipsSelect options={colors} placeholder="Введите название" id="chips" />
+  </FormItem>
+  ```
+
+- указать `aria-label`;
+
+  ```jsx
+  <ChipsSelect options={colors} placeholder="Введите название" aria-label="Список исполнителей" />
+  ```
+
+При необходимости, через свойство `chipsListLabel` можете указать описания списка выбранных опций.
+
+## Свойства и методы [#api]
+
+| Свойство | Тип | По умолчанию | Описание |
+| --- | --- | --- | --- |
+| `addOnBlur` | `boolean` | `-` | Добавляет значение в список на событие `onBlur` (использовать вместе с `creatable`). |
+| `align` | `AlignType` | `-` |  |
+| `allowClearButton` | `boolean` | `-` | Если `true`, то справа будет отображаться кнопка для очистки значения. |
+| `before` | `ReactNode` | `-` | Добавляет иконку слева.  Рекомендации:  - Используйте следующие размеры иконок `12` \| `16` \| `20` \| `24` \| `28`. - Используйте [IconButton](https://vkui.io/components/icon-button), если вам нужна иконка, реагирующая на нажатие. |
+| `chipsListLabel` | `string` | `-` | `aria-label` для списка выбранных опций. |
+| `ClearButton` | `ComponentType<FormFieldClearButtonProps>` | `-` | Кастомная кнопка для очистки значения. Должна принимать обязательное свойство `onClick`. |
+| `clearButtonShown` | `boolean` | `-` | Показывать ли кнопку для очистки значения. |
+| `clearButtonTestId` | `string` | `-` | (e2e) testId кнопки очистки. |
+| `closeAfterSelect` | `boolean` | `true` | Закрытие выпадающего списка после выбора элемента. |
+| `creatable` | `string \| boolean` | `false` | Возможность создавать чипы которых нет в списке: - `true` – добавление по кнопке Enter; - `<текст>` – помимо возможности добавления через Enter, в пункте меню появится кнопка с текстом. Текст для пункта, создающего чипы при нажатии, также отвечает за то, будет ли показан этот пункт (показывается после того как в списке не останется опций). |
+| `defaultInputValue` | `string` | `-` | Значение поля ввода по умолчанию. |
+| `defaultValue` | `Option[]` | `-` | Выбранные опции по умолчанию. |
+| `delimiter` | `string \| RegExp \| string[]` | `-` | Символ или строка, которая будет использоваться как разделитель для автоматического создания опций из текста, введенного в поле ввода. Принимает: - `string` - простая строка - `RegExp` - регулярное выражение - `string[]` - массив строк, по которым нужно разелять ввод.  Работает в двух сценариях: 1. При вводе разделителя - текст до разделителя автоматически преобразуется в новую опцию.    Например, при `delimiter=","` ввод "опция1," создаст опцию "опция1".  2. При вставке из буфера обмена - если вставляемый текст содержит разделители,    он будет автоматически разбит на несколько опций.    Например, при `delimiter=","` вставка "опция1,опция2,опция3" создаст    три отдельные опции: "опция1", "опция2" и "опция3". |
+| `disabled` | `boolean` | `-` | Блокировка взаимодействия с компонентом. |
+| `dropdownAutoWidth` | `boolean` | `-` | Ширина раскрывающегося списка зависит от контента. |
+| `dropdownOffsetDistance` | `number` | `0` | Отступ от выпадающего списка. |
+| `dropdownTestId` | `string` | `-` | Передает атрибут `data-testid` для дропдауна. |
+| `emptyText` | `string` | `Ничего не найдено` | Текст, который показывается если список опций пуст. |
+| `fetching` | `boolean` | `false` | Отрисовка Spinner вместо списка опций в выпадающем списке. |
+| `filterFn` | `false \| FilterFn<Option>` | `-` | Функция для фильтрации опций в списке. |
+| `forceDropdownPortal` | `boolean` | `-` | Принудительно использовать портал. |
+| `getNewOptionData` | `GetNewOptionData<Option>` | `-` | Функция для создания новой опции. |
+| `getOptionLabel` | `GetOptionLabel<Option>` | `-` | Селектор пользовательского представления. |
+| `getOptionValue` | `GetOptionValue<Option>` | `-` | Селектор значения. |
+| `getRef` | `Ref<HTMLInputElement>` | `-` | **Deprecated**: Since 7.9.0. Вместо этого используйте `slotProps={ input: { getRootRef: ... } }`. |
+| `getRootRef` | `Ref<HTMLDivElement>` | `-` |  |
+| `icon` | `ReactNode` | `-` | Иконка раскрывающегося списка. |
+| `inputValue` | `string` | `-` | Значение поля ввода. |
+| `mode` | `"default" \| "plain"` | `-` | Режим отображения.  - `default` — показывает фон, обводку и, при наличии, текст-подсказку. - `plain` — показывает только текст-подсказку. |
+| `noMaxHeight` | `boolean` | `false` | Отключает максимальную высоту по умолчанию. |
+| `onChange` | `OnChange<Option>` | `-` | Обработчик изменения выбранных опций. |
+| `onChangeStart` | `((event: KeyboardEvent<Element> \| MouseEvent<Element, MouseEvent>, option: Option) => void)` | `-` | Событие срабатывающее перед `onChange`. |
+| `onClose` | `VoidFunction` | `-` | Будет вызвано в момент скрытия выпадающего списка. |
+| `onInputChange` | `OnInputChange` | `-` | Обработчик изменения значения в поле ввода. |
+| `onOpen` | `VoidFunction` | `-` | Будет вызвано в момент открытия выпадающего списка. |
+| `options` | `Option[]` | `-` | Список опций в выпадающем списке. |
+| `overscrollBehavior` | `"none" \| "auto" \| "contain"` | `-` | Поведение overscroll, подробнее можно почитать в [документации](https://developer.mozilla.org/en-US/docs/Web/CSS/overscroll-behavior). |
+| `placement` | `"top" \| "bottom"` | `bottom` | Расположение выпадающего списка. |
+| `renderChip` | `RenderChip<Option>` | `Используется [Chip](#/Chip)` | Render prop функция для возврата своего компонента. |
+| `renderDropdown` | `({ defaultDropdownContent, }: { defaultDropdownContent: ReactNode; }) => ReactNode` | `-` | Рендер-проп для кастомного рендера содержимого дропдауна. В `defaultDropdownContent` содержится список опций. |
+| `renderOption` | `((props: CustomSelectOptionProps, option: Option) => ReactNode)` | `(props: CustomSelectOptionProps): React.ReactNode => (
+  <CustomSelectOption {...props} />
+)` | Функция для отрисовки кастомной опции в выпадающем списке. |
+| `selectedBehavior` | `"hide" \| "highlight"` | `highlight` | Показывать или скрывать уже выбранные опции. |
+| `slotProps` | `{ root?: (HTMLAttributes<HTMLDivElement> & HasRootRef<HTMLDivElement> & HasDataAttribute); input?: (InputHTMLAttributes<...> & ... 1 more ... & HasDataAttribute) \| undefined; } \| undefined` | `-` | Свойства, которые можно прокинуть внутрь компонента: - `root`: свойства для прокидывания в корень компонента; - `input`: свойства для прокидывания в поле ввода. |
+| `sortFn` | `false \| SortFn<Option>` | `false` | Функция для сортировки опций в списке. |
+| `status` | `"default" \| "error" \| "valid"` | `default` | Статус отображения поля в форме. |
+| `value` | `Option[]` | `-` | Выбранные опции. |
+

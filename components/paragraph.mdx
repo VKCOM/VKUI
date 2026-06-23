@@ -1,0 +1,52 @@
+﻿---
+description: Компонент для отображения основного текста. В отличие от Text предназначен для более длинных текстовых блоков — абзацев и описаний.
+tags: body
+---
+
+<Overview group="typography" forcedPath="components/Typography/Paragraph/Paragraph.tsx">
+
+# Paragraph [tag:component]
+
+Компонент для отображения основного текста. В отличие от [`Text`](/components/text-typography),
+предназначен для более длинных текстовых блоков — абзацев и описаний.
+
+</Overview>
+
+{/* @example-description: Базовое использование компонента `Paragraph`. */}
+<Playground>
+  ```jsx
+  <Paragraph>
+    Основной текст абзаца. Используйте этот компонент для длинных описаний и многострочного контента.
+  </Paragraph>
+  ```
+</Playground>
+
+## Особенности
+
+### normalize по умолчанию false
+
+В отличие от остальных типографических компонентов, у `Paragraph` свойство `normalize` по умолчанию
+равно `false`. Это означает, что браузерные отступы тега `<p>` сохраняются при использовании
+`Component="p"`. Для сброса отступов передайте `normalize` явно:
+
+{/* @example-description: Явное использование `normalize` в `Paragraph` для сброса браузерных отступов тега `p`. */}
+<Playground>
+  ```jsx
+  <Paragraph Component="p" normalize>
+    Текст без браузерных отступов тега &lt;p&gt;
+  </Paragraph>
+  ```
+</Playground>
+
+## Свойства и методы [#api]
+
+| Свойство | Тип | По умолчанию | Описание |
+| --- | --- | --- | --- |
+| `align` | `"start" \| "center" \| "end"` | `-` | Выравнивание текста. Не имеет эффекта при inline={true}. |
+| `Component` | `ElementType<any, keyof IntrinsicElements>` | `span` |  |
+| `getRootRef` | `Ref<HTMLElement>` | `-` |  |
+| `inline` | `boolean` | `false` | Делает блок инлайновым. |
+| `normalize` | `boolean` | `false` | Убирает внешние отступы. |
+| `useAccentWeight` | `boolean` | `-` | Включает акцентный тип начертания шрифта. Используются токены fontWeightAccent[1, 2, 3] Используется только вместе с `weight`. |
+| `weight` | `"1" \| "2" \| "3"` | `-` | Задаёт начертание шрифта, отличное от стандартного. |
+

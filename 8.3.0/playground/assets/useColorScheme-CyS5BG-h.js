@@ -1,0 +1,1 @@
+import{i as e,s as t}from"./preload-helper-xPQekRTU.js";import{t as n}from"./react-a45N5K9M.js";import{o as r,t as i}from"./ConfigProviderSubContexts-VZPHbL8w.js";import{r as a}from"./colorScheme-DWVzqtzE.js";function o(){return s.useContext(i)??`light`}var s,c=e((()=>{s=t(n(),1),r(),a()}));export{o as n,c as t};

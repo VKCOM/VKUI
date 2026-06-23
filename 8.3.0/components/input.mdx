@@ -1,0 +1,122 @@
+﻿---
+description: Компонент для ввода текстовой информации.
+---
+
+<Overview group="forms">
+
+# Input [tag:component]
+
+Компонент для ввода текстовой информации. Представляет собой однострочное текстовое поле, которое позволяет пользователю вводить и редактировать текст.
+
+</Overview>
+
+{/* @example-description: Базовое текстовое поле `Input` с плейсхолдером. */}
+<Playground style={{ maxWidth: 280 }}>
+  ```jsx
+  <Input name="input" placeholder="Введите текст" />
+  ```
+</Playground>
+
+## Режим работы
+
+Компонент поддерживает работу как в неконтролируемом режиме, так и контролируемом. Это стандартное поведение
+React-компонентов, прочитать про это можно в [документации React](https://react.dev/reference/react-dom/components/input#controlling-an-input-with-a-state-variable).
+
+Для использования неконтролируемого режима достаточно просто _не_ передавать `value` или передавать `defaultValue`, если
+требуется задать значение по умолчанию.
+Для контролируемого режима используйте связку свойств `value`/`onChange` для задания значения и его изменения.
+
+```jsx
+// Неконтролируемое состояние
+<Input name="name" defaultValue="Текст" />;
+
+// Контролируемое состояние
+const [text, setText] = React.useState('Текст');
+
+<Input name="input" value={text} onChange={(event) => setText(event.target.value)} />;
+```
+
+## Состояния
+
+### `disabled`
+
+Свойство `disabled` блокирует взаимодействие с компонентом и добавляет визуальную индикацию недоступности.
+
+> Если вы используете `Input` вместе с `FormItem`, то свойство `disabled` следует указывать и у `Input`, и у `FormItem`.
+
+{/* @example-description: Поле `Input` в неактивном состоянии `disabled`. */}
+<Playground style={{ maxWidth: 280 }}>
+  ```jsx
+  <Input name="input" defaultValue="Недоступно" disabled />
+  ```
+</Playground>
+
+## Валидация
+
+Свойство `status` используется для состояния валидации компонента - некорректности заполненного поля (значение `"error"`)
+или успешной валидации (значение `"valid"`).
+
+> Если вы используете `Input` вместе с [`FormItem`](/components/form-item), вам достаточно указать свойство `status` только у
+> [`FormItem`](/components/form-item).
+
+{/* @example-description: Валидационные состояния `Input` со статусами `valid` и `error`. */}
+<Playground style={{ maxWidth: 280 }}>
+  ```jsx
+  <Input status="valid" name="valid" placeholder="Введите текст" />
+  <Input status="error" name="error" placeholder="Введите текст" />
+  ```
+</Playground>
+
+## Кастомизация
+
+Компонент поддерживает свойство `slotProps`, которое даёт возможность прокинуть свойство в некоторые внутренние элементы.
+Это удобно для добавления кастомных классов, data-атрибутов, aria-атрибутов, обработчиков событий, доступов к элементам через `getRootRef` и других расширений, не влияя на внешний API компонента.
+
+{/* @example-description: Кастомизация внутренних элементов `Input` через `slotProps` и `getRootRef`. */}
+<Playground style={{ maxWidth: 280 }}>
+  ```jsx
+  const inputRef = React.useRef();
+
+  return (
+    <Input
+      defaultValue="Пример со slotProps"
+      className="my-root-class"
+      data-testid="input-root"
+      id="input-id"
+      slotProps={{
+        root: {
+          id: 'input-root-id',
+        },
+        input: {
+          className: 'my-input-class',
+          'aria-label': 'Пример slotProps',
+          getRootRef: inputRef,
+        },
+      }}
+    />
+  )
+  ```
+</Playground>
+
+## Доступность (a11y) [#a11y]
+
+Компонент обеспечивает базовую доступность, поддерживая все стандартные `HTML`-атрибуты для полей ввода.
+
+Для улучшения доступности рекомендуется использовать обёртку `FormItem` для компонента `Input` для
+поддержки заголовка и описания поля.
+
+## Свойства и методы [#api]
+
+| Свойство | Тип | По умолчанию | Описание |
+| --- | --- | --- | --- |
+| `after` | `ReactNode` | `-` | Добавляет иконку справа.  Рекомендации:  - Используйте следующие размеры иконок `12` \| `16` \| `20` \| `24` \| `28`. - Используйте [IconButton](https://vkui.io/components/icon-button), если вам нужна иконка, реагируюущая на нажатие. |
+| `afterAlign` | `FieldIconsAlign` | `-` | Вертикальное выравнивание иконки справа. |
+| `align` | `AlignType` | `left` |  |
+| `before` | `ReactNode` | `-` | Добавляет иконку слева.  Рекомендации:  - Используйте следующие размеры иконок `12` \| `16` \| `20` \| `24` \| `28`. - Используйте [IconButton](https://vkui.io/components/icon-button), если вам нужна иконка, реагирующая на нажатие. |
+| `beforeAlign` | `FieldIconsAlign` | `-` | Вертикальное выравнивание иконки слева. |
+| `getRef` | `Ref<HTMLInputElement>` | `-` | **Deprecated**: Since 7.9.0. Вместо этого используйте `slotProps={ input: { getRootRef: ... } }`. |
+| `getRootRef` | `Ref<HTMLDivElement>` | `-` |  |
+| `mode` | `"default" \| "plain"` | `-` | Режим отображения.  - `default` — показывает фон, обводку и, при наличии, текст-подсказку. - `plain` — показывает только текст-подсказку. |
+| `slotProps` | `{ root?: (HTMLAttributes<HTMLDivElement> & HasRootRef<HTMLDivElement> & HasDataAttribute); input?: (InputHTMLAttributes<...> & ... 1 more ... & HasDataAttribute) \| undefined; } \| undefined` | `-` | Свойства, которые можно прокинуть внутрь компонента: - `root`: свойства для прокидывания в корень компонента; - `input`: свойства для прокидывания в поле ввода. |
+| `status` | `"default" \| "error" \| "valid"` | `-` | Статус отображения поля в форме. |
+

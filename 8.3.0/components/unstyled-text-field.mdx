@@ -1,0 +1,38 @@
+﻿---
+description: Компонент сбрасывает user-agent stylesheets таких полей ввода, как <input> и <textarea>.
+tags: forms
+---
+
+<Overview group="utils">
+
+# UnstyledTextField [tag:component]
+
+Компонент сбрасывает [User-agent stylesheets](https://www.geeksforgeeks.org/what-is-a-user-agent-stylesheet/)
+таких полей ввода, как `<input>` и `<textarea>`.
+
+</Overview>
+
+{/* @example-description: Базовый `UnstyledTextField` как поле ввода без пользовательских и браузерных стилей. */}
+<Playground>
+  ```jsx
+  <UnstyledTextField as="input" placeholder="Стилей нет..." />
+  ```
+</Playground>
+
+Используйте данный компонент, если вы разрабатываете своё поле вода и хотите сбросить все браузерные стили, которые
+применяются по умолчанию к таким компонентам,как `<input>` и `<textarea>`.
+
+## Обязательные свойства
+
+### Тэг компонента
+
+Используйте свойства `as`, которое позволяет задать тип поля ввода (`"textarea"` или `"input"`).
+
+## Свойства и методы [#api]
+
+| Свойство | Тип | По умолчанию | Описание |
+| --- | --- | --- | --- |
+| `**as** \*` | `"input" \| "textarea"` | `-` | Тег используемый в компоненте. |
+| `getRootRef` | `((instance: HTMLInputElement \| null) => void \| (() => VoidOrUndefinedOnly)) \| RefObject<HTMLInputElement \| null> \| ((instance: HTMLTextAreaElement \| null) => void \| (() => VoidOrUndefinedOnly)) \| RefObject<...> \| null` | `-` |  |
+| `noPadding` | `boolean` | `false` | По умолчанию отключено во избежание проблем из-за очередности загрузки стилей. |
+

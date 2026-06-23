@@ -1,0 +1,1 @@
+import{i as e,s as t}from"./preload-helper-xPQekRTU.js";import{t as n}from"./react-a45N5K9M.js";var r,i,a,o=e((()=>{r=t(n(),1),i={appRoot:r.createRef(),mode:`full`,portalRoot:null,safeAreaInsets:void 0,embedded:!1,disablePortal:!1},a=r.createContext(i)}));export{o as n,a as t};

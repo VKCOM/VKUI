@@ -1,0 +1,59 @@
+1:"$Sreact.fragment"
+2:I[23450,["876","static/chunks/876-9dba29d671cd8288.js","236","static/chunks/236-8052d4f712a2c76a.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-4d7fea37bd782b11.js"],"Main"]
+4:I[74517,["876","static/chunks/876-9dba29d671cd8288.js","236","static/chunks/236-8052d4f712a2c76a.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-4d7fea37bd782b11.js"],"Overview",1]
+5:I[80204,["876","static/chunks/876-9dba29d671cd8288.js","236","static/chunks/236-8052d4f712a2c76a.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-4d7fea37bd782b11.js"],"PlaygroundLazy"]
+e:I[18443,["876","static/chunks/876-9dba29d671cd8288.js","236","static/chunks/236-8052d4f712a2c76a.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-4d7fea37bd782b11.js"],"Anchor"]
+10:I[91042,["876","static/chunks/876-9dba29d671cd8288.js","236","static/chunks/236-8052d4f712a2c76a.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-4d7fea37bd782b11.js"],"TOC"]
+11:I[90484,[],"OutletBoundary"]
+12:"$Sreact.suspense"
+3:T6cc,---
+description: Компонент для визуального выделения фрагментов текста.
+---
+
+<Overview group="typography">
+
+# Mark [tag:component]
+
+Компонент для визуального выделения фрагментов текста. Используется в поисковых результатах,
+цитатах и других сценариях, где требуется акцентировать внимание на определённых словах или фразах.
+
+</Overview>
+
+{/* @example-description: Базовое выделение фрагмента текста компонентом `Mark`. */}
+<Playground>
+  ```jsx
+  <Text>
+    Что? <Mark>Где</Mark>? Когда?
+  </Text>
+  ```
+</Playground>
+
+## Особенности
+
+- Наследует все свойства HTML-элемента `<div>`.
+- Стандартное выделение через фон, цвет текста наследуется.
+- Поддерживает многострочное выделение.
+- Совместим с любым текстовым контентом.
+
+## Рекомендации
+
+- Не используйте для интерактивных элементов.
+- Сочетайте с текстовыми компонентами ([`Text`](/components/typography#text), [`Headline`](/components/typography#headline), [`Paragraph`](/components/typography#paragraph)).
+
+## Доступность (a11y) [#a11y]
+
+Используется стандартный тэг `mark` для семантического обозначения выделенного текста.
+
+## Свойства и методы [#api]
+
+<PropsTable name="Mark" />0:{"rsc":["$","$1","c",{"children":[[["$","$L2",null,{"metadata":{"description":"Компонент для визуального выделения фрагментов текста.","title":"Mark","filePath":"content/components/mark.mdx","timestamp":1782228015000},"sourceCode":"$3","children":[["$","$L4",null,{"group":"typography","children":[["$","h1",null,{"className":"mdx_h1__1mgpN","data-pagefind-filter":"tag:component","children":"Mark"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Компонент для визуального выделения фрагментов текста. Используется в поисковых результатах,\nцитатах и других сценариях, где требуется акцентировать внимание на определённых словах или фразах."}]]}],"\n","\n",["$","$L5",null,{"code":"<Text>\n  Что? <Mark>Где</Mark>? Когда?\n</Text>"}],"\n",["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"osobennosti","children":["$","a",null,{"href":"#osobennosti","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Особенности","children":["Особенности",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}],"\n",["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["Наследует все свойства HTML-элемента ",["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"<div>"}],"."]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":"Стандартное выделение через фон, цвет текста наследуется."}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":"Поддерживает многострочное выделение."}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":"Совместим с любым текстовым контентом."}],"\n"]}],"\n",["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"rekomendacii","children":["$","a",null,{"href":"#rekomendacii","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Рекомендации","children":["Рекомендации",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined","$L6"]]}]]}]}],"\n","$L7","\n","$L8","\n","$L9","\n","$La","\n","$Lb"]}],"$Lc"],null,"$Ld"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"wNnF0fHR6sBzNbr9-Inum"}
+6:["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]
+7:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":"Не используйте для интерактивных элементов."}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["Сочетайте с текстовыми компонентами (",["$","$Le",null,{"href":"/components/typography#text","children":["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"Text"}]}],", ",["$","$Le",null,{"href":"/components/typography#headline","children":["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"Headline"}]}],", ",["$","$Le",null,{"href":"/components/typography#paragraph","children":["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"Paragraph"}]}],")."]}],"\n"]}]
+8:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"a11y","children":["$","a",null,{"href":"#a11y","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Доступность (a11y)","children":["Доступность (a11y)",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+9:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Используется стандартный тэг ",["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"mark"}]," для семантического обозначения выделенного текста."]}]
+a:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"api","children":["$","a",null,{"href":"#api","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Свойства и методы","children":["Свойства и методы",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+b:["$","div",null,{"className":"Table_root__0rGvK","children":["$","table",null,{"className":"Table_table__NzLHi PropsTable_root__O959b","children":[["$","thead",null,{"children":["$","tr",null,{"children":[["$","th",null,{"children":"Свойство","className":"Table_th__EHorR"}],["$","th",null,{"children":"Описание","className":"Table_th__EHorR"}]],"className":"Table_tr__SD2Ot"}]}],["$","tbody",null,{"children":["$@f"]}]]}]}]
+c:["$","$L10",null,{"toc":[{"value":"Особенности","id":"osobennosti","depth":2},{"value":"Рекомендации","id":"rekomendacii","depth":2},{"value":"Доступность (a11y)","id":"a11y","depth":2},{"value":"Свойства и методы","id":"api","depth":2}]}]
+d:["$","$L11",null,{"children":["$","$12",null,{"name":"Next.MetadataOutlet","children":"$@13"}]}]
+f:["$","tr","getRootRef",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"getRootRef"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"Ref<HTMLDivElement>"}],"$undefined",["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_f5050e","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+13:null

@@ -1,0 +1,183 @@
+﻿---
+description: Компонент для отображения изображений с поддержкой адаптивных размеров, скруглений и позиционированных элементов.
+tags: media
+---
+
+<Overview group="data-display">
+
+# Image [tag:component]
+
+Компонент для отображения изображений с поддержкой адаптивных размеров, скруглений и позиционированных элементов.
+Наследует все свойства HTML-элемента `<img>`. Главное отличие от `ImageBase` заключается в поддержке
+скруглений, определённых дизайн-системой и позиционирование индикаторов в зависимости от размеров.
+
+</Overview>
+
+{/* @example-description: Базовый компонент `Image` для отображения изображения заданного размера. */}
+<Playground>
+  ```jsx
+  <Image size={96} src="https://sun9-51.userapi.com/c857024/v857024436/f927/rG9fac2cuac.jpg" />
+  ```
+</Playground>
+
+## Адаптивные размеры
+
+Справедливы все рекомендации, что и для [`ImageBase`](/components/image-base#sizes).
+
+## Скругления
+
+Контролируйте радиус скругления углов:
+
+### Единое скругление
+
+{/* @example-description: Скругление всех углов изображения через свойство `borderRadius`. */}
+<Playground>
+  ```jsx
+  <Image
+    size={96}
+    borderRadius="m"
+    src="https://sun9-51.userapi.com/c857024/v857024436/f927/rG9fac2cuac.jpg"
+  />
+  ```
+</Playground>
+
+### Индивидуальные углы
+
+{/* @example-description: Настройка скругления отдельных углов изображения. */}
+<Playground>
+  ```jsx
+  <Image
+    size={64}
+    borderStartStartRadius="l"
+    borderEndEndRadius="l"
+    src="https://sun9-51.userapi.com/c857024/v857024436/f927/rG9fac2cuac.jpg"
+  />
+  ```
+</Playground>
+
+## Дополнительные элементы
+
+Добавляйте дополнительные элементы поверх изображения:
+
+### Иконка-заглушка
+
+На случай, если картинка не смогла загрузиться, будет отображаться иконка-заглушка.
+Размер иконки-заглушки должен зависеть от размеров изображения.
+
+{/* @example-description: `Image` с fallback-иконкой для случая ошибки загрузки картинки. */}
+<Playground>
+  ```jsx
+  <Image fallbackIcon={<Icon3218CircleOutline />} />
+  ```
+</Playground>
+
+> Может быть полезна функция [`getFallbackIconSizeByImageBaseSize`](/components/image-base#getfallbackiconsizebyimagebasesize).
+
+### Индикатор
+
+Индикатор в правом нижнем углу компонента:
+
+{/* @example-description: Индикатор состояния в углу изображения через `Image.Badge`. */}
+<Playground>
+  ```jsx
+  <Image src="https://sun9-51.userapi.com/c857024/v857024436/f927/rG9fac2cuac.jpg">
+    <Image.Badge background="stroke">
+      <Icon20PrivacyCircleFillRed />
+    </Image.Badge>
+  </Image>
+  ```
+</Playground>
+
+> Может быть полезна функция [`getBadgeIconSizeByImageBaseSize`](/components/image-base#getbadgeiconsizebyimagebasesize).
+
+### Наложение
+
+Перекрывающий картинку элемент задаётся через `Image.Overlay`:
+
+{/* @example-description: Оверлей поверх изображения с иконкой действия и постоянной видимостью. */}
+<Playground>
+  ```jsx
+  <Image src="https://sun9-51.userapi.com/c857024/v857024436/f927/rG9fac2cuac.jpg">
+    <Image.Overlay theme="dark" visibility="always">
+      <Icon24AddOutline />
+    </Image.Overlay>
+  </Image>
+  ```
+</Playground>
+
+> Может быть полезна функция [`getOverlayIconSizeByImageBaseSize`](/components/image-base#getoverlayiconsizebyimagebasesize).
+
+> Обратите внимание, что свойство `visibility` подкомпонента `Avatar.Overlay` по умолчанию
+> зависит от наличия указателя на устройстве. Так, на мобильных устройствах наложение будет
+> показано всегда, а например, на десктопах наложение активно только при наведении на аватар.
+
+### Позиционированный компонент
+
+Позиционированный компонент расположенный поверх изображения в произвольном месте задаётся `Image.FloatElement`:
+
+{/* @example-description: Позиционированная кнопка поверх изображения через `Image.FloatElement`. */}
+<Playground>
+  ```jsx
+  <Image size={96} src="https://sun9-51.userapi.com/c857024/v857024436/f927/rG9fac2cuac.jpg">
+    <Image.FloatElement placement="top-end" inlineIndent="xs" blockIndent="xs">
+      <Button size="s" mode="primary" after={<Icon16MoreHorizontal />} />
+    </Image.FloatElement>
+  </Image>
+  ```
+</Playground>
+
+## Свойства и методы [#api]
+
+### Image
+
+| Свойство | Тип | По умолчанию | Описание |
+| --- | --- | --- | --- |
+| `borderEndEndRadius` | `"s" \| "m" \| "l"` | `-` | Размер закругления угла между сторонами конца блока и строки. |
+| `borderEndStartRadius` | `"s" \| "m" \| "l"` | `-` | Размер закругления угла между стороной конца блока и стороной начала строки. |
+| `borderRadius` | `"s" \| "m" \| "l"` | `m` | Размер закругления. |
+| `borderStartEndRadius` | `"s" \| "m" \| "l"` | `-` | Размер закругления угла между стороной начала блока и стороной конца строки. |
+| `borderStartStartRadius` | `"s" \| "m" \| "l"` | `-` | Размер закругления угла между сторонами начала блока и строки. |
+| `elementTiming` | `string` | `-` | Смотри https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/elementtiming. |
+| `fallbackIcon` | `ReactElement<ImageBaseExpectedIconProps, string \| JSXElementConstructor<any>>` | `-` | Фолбек на случай, если картинка не прогрузилась.  > 📝 Нужный для `<ImageBase size={...} />` размер можно узнать из функции `getFallbackIconSizeByImageBaseSize()`.  > Предпочтительней использовать иконки из `@vkontakte/icons`.  > 📊️ Если вы хотите передать кастомную иконку, то следует именовать её по шаблону `Icon<size><name>`. Или же > чтобы в неё был передан параметр `width`. Тогда мы сможем выводить в консоль подсказку правильного ли размера вы > использовали иконку.  > ⚠️ Может перекрывать `children`. |
+| `filter` | `Filter` | `-` | Пользовательское значения стиля filter. Подробнее можно почитать в [документации](https://developer.mozilla.org/ru/docs/Web/CSS/filter).  При передаче этого свойства `<img />` будет обёрнут в дополнительный контейнер. |
+| `getRef` | `Ref<HTMLImageElement>` | `-` | **Deprecated**: Since 7.9.0. Будет удалено в v9. Используйте `slotProps={ img: { getRootRef: ... } }`. |
+| `getRootRef` | `Ref<HTMLDivElement>` | `-` |  |
+| `heightSize` | `string \| number` | `-` | Высота изображения. |
+| `keepAspectRatio` | `boolean` | `-` | Флаг для сохранения пропорций картинки. Для корректной работы необходимо задать размеры хотя бы одной стороны картинки. |
+| `noBorder` | `boolean` | `-` | Отключает обводку. |
+| `objectFit` | `ObjectFit` | `cover` | Пользовательское значения стиля object-fit Подробнее можно почитать в [документации](https://developer.mozilla.org/ru/docs/Web/CSS/object-fit). |
+| `objectPosition` | `ObjectPosition<string \| number>` | `-` | Пользовательское значения стиля object-position Подробнее можно почитать в [документации](https://developer.mozilla.org/ru/docs/Web/CSS/object-position). |
+| `size` | `LiteralUnion<16 \| 20 \| 24 \| 28 \| 32 \| 36 \| 40 \| 44 \| 48 \| 56 \| 64 \| 72 \| 80 \| 88 \| 96, number>` | `48` | Задаёт размер картинки.  Используйте размеры заданные дизайн-системой `16 \| 20 \| 24 \| 28 \| 32 \| 36 \| 40 \| 44 \| 48 \| 56 \| 64 \| 72 \| 80 \| 88 \| 96`.  > ⚠️ Использование кастомного размера – это пограничный кейс. |
+| `slotProps` | `{ img?: (ClassAttributes<HTMLImageElement> & ImgHTMLAttributes<HTMLImageElement> & HasRootRef<HTMLImageElement> & HasDataAttribute); } \| undefined` | `-` | Свойства, которые можно прокинуть внутрь компонента: - `img`: свойства для прокидывания в тег `<img>`;. |
+| `widthSize` | `string \| number` | `-` | Ширина изображения. |
+| `withTransparentBackground` | `boolean` | `-` | Отключает фон, заданный по умолчанию. Полезен для отображения картинок с прозрачностью. |
+
+### Image.Badge
+
+| Свойство | Тип | По умолчанию | Описание |
+| --- | --- | --- | --- |
+| `background` | `"stroke" \| "shadow"` | `-` | Вид подложки под иконку.  - `"stroke"` – имитирует вырез (⚠️ если фон под компонентом динамический, то ожидайте баг). - `"shadow"` – добавляет небольшую тень (⚠️ если фон под компонентом динамический, то ожидайте баг). |
+| `**children** \*` | `ReactElement<ImageBaseExpectedIconProps, string \| JSXElementConstructor<any>>` | `-` | Принимает иконку.  > 📝 Нужный для `<ImageBase size={...} />` размер можно узнать из функции `getBadgeIconSizeByImageBaseSize()`.  > Предпочтительней использовать иконки из `@vkontakte/icons`.  > 📊️ Если вы хотите передать кастомную иконку, то следует именовать её по шаблону `Icon<size><name>`. Или же > чтобы в неё был передан параметр `width`. Тогда мы сможем выводить в консоль подсказку правильного ли размера вы > использовали иконку. |
+| `getRootRef` | `Ref<HTMLDivElement>` | `-` |  |
+
+### Image.Overlay
+
+| Свойство | Тип | По умолчанию | Описание |
+| --- | --- | --- | --- |
+| `**children** \*` | `ReactNode \| ReactElement<ImageBaseExpectedIconProps, string \| JSXElementConstructor<any>>` | `-` | Принимает иконку.   > 📝 Нужный для `<ImageBase size={...} />` размер можно узнать из функции `getOverlayIconSizeByImageBaseSize()`.  > Предпочтительней использовать иконки из `@vkontakte/icons`.  > 📊️ Если вы хотите передать кастомную иконку, то следует именовать её по шаблону `Icon<size><name>`. Или же > чтобы в неё был передан параметр `width`. Тогда мы сможем выводить в консоль подсказку правильного ли размера вы > использовали иконку. Содержимое. |
+| `className` | `string` | `-` | `className` для компонента. |
+| `getRootRef` | `Ref<HTMLDivElement>` | `-` |  |
+| `onClick` | `MouseEventHandler<HTMLElement>` | `-` | Обработчик взаимодействия с элементом. По умолчанию сам компонент является интерактивным элементом. Передав значение равное `'undefined'` или не передав этот параметр вовсе, можно отключить такое поведение, что дает возможность передавать отдельные интерактивные элементы в `children`. |
+| `theme` | `"dark" \| "light"` | `-` | Задаёт тему оформления.  > По умолчанию берётся из параметра `appearance` в `ConfigProvider`. |
+| `visibility` | `"on-hover" \| "always"` | `-` | Определяет каким образом должен показываться оверлей.  - `"on-hover"` – на наведение указателя мыши. - `"always"` – всегда показывать.  > По умолчанию определяется в зависимости от того, есть ли у пользователя мышь или нет. > Определение просиходит с помощью двойного рендера, так что на устройствах без мыши > оверлей покажется не раньше второго рендера. > Если это критично (например при SSR), то старайтесь явно указывать значение `visibility`, либо используйте > [AdaptivityProvider](#/AdaptivityProvider) для того, чтобы явно определить `hasPointer`. |
+
+### Image.FloatElement
+
+| Свойство | Тип | По умолчанию | Описание |
+| --- | --- | --- | --- |
+| `blockIndent` | `FloatElementIndentation` | `-` | Отступ компонента от края контейнера по вертикали. |
+| `getRootRef` | `Ref<HTMLDivElement>` | `-` |  |
+| `inlineIndent` | `FloatElementIndentation` | `-` | Отступ компонента от края контейнера по горизонтали. |
+| `**placement** \*` | `FloatElementPlacement` | `-` | Позиция компонента относительно родителя. |
+| `visibility` | `"on-hover" \| "always"` | `always` | Режим отображения компонента:  - `"always"`: Всегда - `"on-hover"`: При наведении на картинку. |
+

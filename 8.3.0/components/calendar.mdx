@@ -1,0 +1,163 @@
+﻿---
+description: Компонент для выбора даты и времени, поддерживает различные режимы работы, настройку ограничений по датам и локализацию.
+tags: forms
+---
+
+<Overview group="dates">
+
+# Calendar [tag:component]
+
+Компонент для выбора даты и времени, поддерживает различные режимы работы, настройку ограничений по датам и локализацию.
+
+</Overview>
+
+{/* @example-description: Базовый календарь для выбора одной даты. */}
+
+<Playground>
+  ```jsx
+  <Calendar />
+  ```
+</Playground>
+
+## Применение компонента
+
+> Старайтесь использовать на мобильных устройствах уменьшенную версию компонента (свойство `size="s"`).
+
+Данный компонент представляет собой непосредственно календарь, который необходимо встраивать в нужные части вашего приложения.
+
+Если вам нужно поле ввода даты и времени (со всплывающим календарём), то используйте компонент [`DateInput`](/components/date-input).
+
+Если вам нужен компонент для задания диапазона дат и времени, то используйте [`CalendarRange`](/components/calendar-range).
+
+## Режим работы
+
+Компонент поддерживает работу как в неконтролируемом режиме, так и контролируемом. Это стандартное поведение
+React-компонентов, прочитать про это можно в [документации React](https://react.dev/reference/react-dom/components/input#controlling-an-input-with-a-state-variable).
+
+Для использования неконтролируемого режима достаточно просто _не_ передавать `value` или передавать `defaultValue`, если
+требуется задать значение по умолчанию.
+Для контролируемого режима используйте связку свойств `value`/`onChange` для задания значения и его изменения.
+
+```jsx
+// Неконтролируемое состояние
+<Calendar defaultValue={new Date()} />;
+
+// Контролируемое состояние
+const [date, setDate] = React.useState(new Date());
+
+<Calendar value={date} onChange={setDate} />;
+```
+
+## Выбор времени
+
+Для включения выбора времени используйте свойство `enableTime`.
+
+> Обратите внимание, что выбор времени недоступен при `size="s"`.
+
+{/* @example-description: Календарь с включенным выбором времени через `enableTime`. */}
+
+<Playground>
+  ```jsx
+  <Calendar defaultValue={new Date()} enableTime />
+  ```
+</Playground>
+
+## Часовые пояса
+
+Компонент поддерживает работу с часовыми поясами через свойство `timezone`
+(принимает сроку в [IANA](https://data.iana.org/time-zones/tzdb-2021a/zone1970.tab)).
+При указании часового пояса все даты автоматически конвертируются в указанный часовой пояс.
+
+## Локализация
+
+Компонент поддерживает настройку текстов через `changeDayLabel`, `changeHoursLabel` и остальные `*Label` свойства.
+
+> Название месяцев и дней недели определяется исходя из значения `locale` в `ConfigProvider`.
+
+### Поддержка локалей
+
+Названия месяцев и дней недели формируются с помощью [`Intl.DateTimeFormat`](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat).
+В некоторых окружениях (например, в [Chromium](https://issues.chromium.org/issues/40075497)) для локалей `kk` (казахский) и `ka` (грузинский)
+данные отсутствуют, из-за чего даты отображаются на языке по умолчанию.
+
+Чтобы добавить поддержку этих локалей, используйте полифил [`@formatjs/intl-datetimeformat`](https://www.npmjs.com/package/@formatjs/intl-datetimeformat).
+
+
+<PackageManagers
+  npm="npm install @formatjs/intl-datetimeformat"
+  yarn="yarn add @formatjs/intl-datetimeformat"
+  pnpm="pnpm add @formatjs/intl-datetimeformat"
+/>
+
+Импортируйте полифил и данные нужных локалей до рендеринга приложения:
+
+```js
+import "@formatjs/intl-datetimeformat/polyfill.js";
+import "@formatjs/intl-datetimeformat/locale-data/kk.js";
+import "@formatjs/intl-datetimeformat/locale-data/ka.js";
+```
+
+> Подробнее о настройке полифила читайте в [его документации](https://formatjs.github.io/docs/polyfills/intl-datetimeformat/).
+
+## Доступность (a11y) [#a11y]
+
+Компонент обеспечивает базовую доступность через:
+
+- корректную семантическую разметку;
+- поддержку клавиатурной навигации;
+- `aria`-атрибуты для всех интерактивных элементов.
+
+При использовании компонента убедитесь, что все текстовые метки
+(`changeDayLabel`, `changeHoursLabel` и остальные `*Label` свойства) корректно описывают действия для пользователей скринридеров.
+
+## Свойства и методы [#api]
+
+| Свойство | Тип | По умолчанию | Описание |
+| --- | --- | --- | --- |
+| `changeDayLabel` | `string` | `-` | **Deprecated**: Будет удалено в **VKUI v9**. Использовалось для задания aria-label для контейнера дней в календаре. Теперь этот контейнер является таблицей (с помощью role="grid") и в aria-label рендерится текущий открытый в календаре месяц и год. |
+| `changeHoursLabel` | `string` | `Изменить час` | Текст выпадающего списка с выбором часов. Делает его доступным для ассистивных технологий. |
+| `changeMinutesLabel` | `string` | `Изменить минуту` | Текст выпадающего списка с выбором минут. Делает его доступным для ассистивных технологий. |
+| `changeMonthLabel` | `string` | `Изменить месяц` | `aria-label` для селектора месяца. |
+| `changeYearLabel` | `string` | `Изменить год` | `aria-label` для селектора года. |
+| `dayProps` | `CalendarDayElementProps` | `-` | Дополнительные свойства для элементов дней. |
+| `dayTestId` | `string \| ((day: Date) => string)` | `-` | Передает атрибут `data-testid` для дня в календаре. |
+| `defaultValue` | `Date \| null` | `-` | Начальная дата при монтировании. |
+| `disableFuture` | `boolean` | `-` | Запрещает выбор даты в будущем. Применяется, если не задано `shouldDisableDate`. |
+| `disablePast` | `boolean` | `-` | Запрещает выбор даты в прошлом. Применяется, если не заданы `shouldDisableDate` и `disableFuture`. |
+| `disablePickers` | `boolean` | `-` | Отключает селекторы выбора месяца/года. |
+| `DoneButton` | `ComponentType<ButtonProps>` | `-` | Кастомное отображение кнопки `"Done"`. |
+| `doneButtonDisabled` | `boolean` | `-` | Блокировка взаимодействия с кнопкой "Done". |
+| `doneButtonShow` | `boolean` | `-` | Управление отображением кнопки `"Done"`. |
+| `doneButtonTestId` | `string` | `-` | Передает атрибут `data-testid` для кнопки "Готово" в календаре. |
+| `doneButtonText` | `string` | `-` | Текст отображаемый в кнопке `"Done"`. |
+| `enableTime` | `boolean` | `false` | Включает выбор времени. |
+| `getRootRef` | `Ref<HTMLDivElement>` | `-` |  |
+| `hoursTestId` | `string` | `-` | Передает атрибут `data-testid` для дропдауна выбора часа в календаре. |
+| `listenDayChangesForUpdate` | `boolean` | `-` | Следить за изменениями дней для обновления UI. |
+| `maxDateTime` | `Date` | `-` | Максимальные дата и время, которые можно выбрать. Применяется, если не заданы `shouldDisableDate` и `disablePast`/`disableFuture`. |
+| `minDateTime` | `Date` | `-` | Минимальные дата и время, которые можно выбрать. Применяется, если не заданы `shouldDisableDate` и `disablePast`/`disableFuture`. |
+| `minutesTestId` | `string` | `-` | Передает атрибут `data-testid` для дропдауна выбора минут в календаре. |
+| `monthDropdownTestId` | `string \| ((monthIndex: number) => string)` | `-` | Передает атрибут `data-testid` для дропдауна выбора месяца в заголовке календаря. |
+| `nextMonthButtonTestId` | `string` | `-` | Передает атрибут `data-testid` для кнопки перехода к следующему месяцу в заголовке календаря. |
+| `nextMonthIcon` | `ReactNode` | `-` | Кастомная иконка для кнопки следующего месяца. |
+| `nextMonthLabel` | `string` | `Следующий месяц` | `aria-label` для кнопки следующего месяца. |
+| `nextMonthProps` | `ArrowMonthProps` | `-` | Дополнительные свойства для кнопки следующего месяца. |
+| `onChange` | `((value: Date) => void)` | `-` | Обработчик изменения выбранной даты. |
+| `onDoneButtonClick` | `(() => void)` | `-` | Обработки нажатия на кнопку `"Done"`. |
+| `onHeaderChange` | `((value: Date) => void)` | `-` | Обработчик изменения даты в шапке календаря. |
+| `onNextMonth` | `(() => void)` | `-` | Нажатие на кнопку переключения на следующий месяц. |
+| `onPrevMonth` | `(() => void)` | `-` | Нажатие на кнопку переключения на предыдущий месяц. |
+| `prevMonthButtonTestId` | `string` | `-` | Передает атрибут `data-testid` для кнопки перехода к предыдущему месяцу в заголовке календаря. |
+| `prevMonthIcon` | `ReactNode` | `-` | Кастомная иконка для кнопки предыдущего месяца. |
+| `prevMonthLabel` | `string` | `Предыдущий месяц` | `aria-label` для кнопки предыдущего месяца. |
+| `prevMonthProps` | `ArrowMonthProps` | `-` | Дополнительные свойства для кнопки предыдущего месяца. |
+| `renderDayContent` | `((day: Date) => ReactNode)` | `-` | Кастомизация отображения содержимого дня. |
+| `shouldDisableDate` | `((value: Date) => boolean)` | `-` | Функция для проверки запрета выбора даты. |
+| `showNeighboringMonth` | `boolean` | `-` | Показывать дни соседних месяцев. |
+| `size` | `"s" \| "m"` | `m` | Размер календаря. |
+| `timezone` | `string` | `-` | Часовой пояс для отображения даты. |
+| `value` | `Date \| null` | `-` | Текущая выбранная дата. |
+| `viewDate` | `Date` | `-` | Дата отображаемого месяца. При использовании обновление даты должно происходить вне компонента. |
+| `weekStartsOn` | `0 \| 1 \| 2 \| 3 \| 4 \| 5 \| 6` | `1` | День недели, с которого начинается неделя. |
+| `yearDropdownTestId` | `string \| ((year: number) => string)` | `-` | Передает атрибут `data-testid` для дропдауна выбора года в заголовке календаря. |
+

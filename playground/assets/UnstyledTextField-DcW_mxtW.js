@@ -1,0 +1,4 @@
+import{i as e,s as t}from"./preload-helper-xPQekRTU.js";import{t as n}from"./jsx-runtime-BqsN2jGA.js";import{c as r,i,l as a,m as o,n as s,u as c}from"./blocks-DYay3KoW.js";import{t as l}from"./mdx-react-shim-B5s4SPZq.js";import{n as u,t as d}from"./UnstyledTextField-D7aB0uZR.js";function f(e){return(0,m.jsxs)(m.Fragment,{children:[(0,m.jsx)(r,{title:`Utils/UnstyledTextField`,tags:[`Утилиты`]}),`
+`,(0,m.jsx)(a,{children:`UnstyledTextField`}),`
+`,(0,m.jsx)(i,{of:d}),`
+`,(0,m.jsx)(s,{of:d})]})}function p(e={}){let{wrapper:t}={...o(),...e.components};return t?(0,m.jsx)(t,{...e,children:(0,m.jsx)(f,{...e})}):f(e)}var m;e((()=>{m=t(n()),l(),c(),u()}))();export{p as default};

@@ -1,0 +1,181 @@
+﻿# VKUI
+
+VKUI — библиотека адаптивных React-компонентов для создания мобильных и веб-приложений.
+Документация содержит руководства по началу работы, описания компонентов, инструкции по интеграции и миграции.
+
+## Начало работы
+
+- [About](https:/vkui.io/8.3.0/overview/about.mdx): VKUI — это библиотека адаптивных React-компонентов, предназначенных для разработки веб-приложений. Основана на одноименной дизайн-системе ВКонтакте.
+- [Adaptivity](https:/vkui.io/8.3.0/overview/adaptivity.mdx): Адаптивность VKUI позволяет в зависимости от ширины и высоты экрана, а также на основе типа ввода автоматически адаптировать внешний вид компонентов.
+- [Витрина компонентов](https:/vkui.io/8.3.0/overview/components-showcase.mdx): Витрина компонентов VKUI — обзор всех компонентов библиотеки в виде карточек.
+- [DesignTokens](https:/vkui.io/8.3.0/overview/design-tokens.mdx): Дизайн-токены — это набор базовых переменных, задающих отступы, цвета, типографику и анимации. VKUI использует токены вместо конкретных значений, чтобы компоненты было легко подстраивать под конкретные платформы и цветовые режимы.
+- [Install](https:/vkui.io/8.3.0/overview/install.mdx): Пошаговые инструкции по настройке окружения, установке зависимостей и непосредственное подключение VKUI для приложения.
+- [Mcp](https:/vkui.io/8.3.0/overview/mcp.mdx): MCP-сервер VKUI — подключение AI-ассистентов к документации компонентов, хуков, примеров кода и миграций.
+- [Navigation](https:/vkui.io/8.3.0/overview/navigation.mdx): Организация навигации внутри приложений, построенных на основе VKUI.
+- [Ssr](https:/vkui.io/8.3.0/overview/ssr.mdx): Инструкция по организации SSR (Server Side Rendering) для приложений VKUI.
+- [Themes](https:/vkui.io/8.3.0/overview/themes.mdx): VKUI поддерживает три темы - `vkBase`, `vkIOS` и `vkCom` в двух цветовых режимах (светлом и тёмном). Это позволяет компонентам визуально мимикрировать под соответствующую платформу и выглядеть неотличимо от нативных приложений.
+- [Usage](https:/vkui.io/8.3.0/overview/usage.mdx): Инструкция по запуску приложения с базовой структурой и навигацией на VKUI.
+
+## Компоненты
+
+- [Accordion](https:/vkui.io/8.3.0/components/accordion.mdx): Компонент для создания раскрывающихся/сворачивающихся блоков контента.
+- [ActionSheetItem](https:/vkui.io/8.3.0/components/action-sheet-item.mdx): Элемент списка действий для использования внутри ActionSheet.
+- [ActionSheet](https:/vkui.io/8.3.0/components/action-sheet.mdx): Компонент для отображения списка действий в виде всплывающего меню.
+- [AdaptiveIconRenderer](https:/vkui.io/8.3.0/components/adaptive-icon-renderer.mdx): Компонент для автоматического рендера иконок в зависимости от размера интерфейса.
+- [AdaptivityProvider](https:/vkui.io/8.3.0/components/adaptivity-provider.mdx): Переопределяет базовую адаптивность компонента – глобально или локально.
+- [Alert](https:/vkui.io/8.3.0/components/alert.mdx): Компонент окна оповещения, для отображения важных сообщений и подтверждения действий пользователя.
+- [AppRoot](https:/vkui.io/8.3.0/components/app-root.mdx): Обязательный компонент, в который нужно обернуть всё приложение. В нём инкапсулирована логика режимов встраивания, управления прокруткой, безопасными отступами и порталами.
+- [AspectRatio](https:/vkui.io/8.3.0/components/aspect-ratio.mdx): Компонент позволяет поддерживать заданное соотношение сторон для вложенного контента.
+- [Avatar](https:/vkui.io/8.3.0/components/avatar.mdx): Компонент для отображения аватара пользователя — фотографии, инициалов или графики. Наследует все свойства HTML-элемента `<img>`.
+- [Badge](https:/vkui.io/8.3.0/components/badge.mdx): Индикатор для обозначения уведомления или другой важной информации, относящейся к пункту навигации.
+- [Banner](https:/vkui.io/8.3.0/components/banner.mdx): Компонент для отображения важных уведомлений и промо-блоков с возможностью взаимодействия.
+- [Box](https:/vkui.io/8.3.0/components/box.mdx): Универсальный компонент для создания раскладок с поддержкой отступов, размеров, позиционирования и flex-свойств.
+- [ButtonGroup](https:/vkui.io/8.3.0/components/button-group.mdx): Компонент, который позволяет группировать кнопки и управлять их расположением и выравниванием.
+- [Button](https:/vkui.io/8.3.0/components/button.mdx): Компонент, который даёт пользователю возможность выполнить какое‑то действие или перейти на другую страницу.
+- [CalendarRange](https:/vkui.io/8.3.0/components/calendar-range.mdx): Компонент для выбора диапазона дат, позволяет пользователю выбрать начальную и конечную даты в календаре.
+- [Calendar](https:/vkui.io/8.3.0/components/calendar.mdx): Компонент для выбора даты и времени, поддерживает различные режимы работы, настройку ограничений по датам и локализацию.
+- [Caption](https:/vkui.io/8.3.0/components/caption.mdx): Компонент для отображения мелких подписей — аннотаций к изображениям, временных меток, вспомогательных аннотаций и другого вторичного текста минимального размера.
+- [CardGrid](https:/vkui.io/8.3.0/components/card-grid.mdx): Компонент-контейнер для создания адаптивных сеток из Card.
+- [CardScroll](https:/vkui.io/8.3.0/components/card-scroll.mdx): Компонент для создания горизонтально прокручиваемых списков Card.
+- [Card](https:/vkui.io/8.3.0/components/card.mdx): Компонент для создания визуально выделенных контейнеров с содержимым.
+- [CellButtonGroup](https:/vkui.io/8.3.0/components/cell-button-group.mdx): Компонент для группировки CellButton с разделителями.
+- [CellButton](https:/vkui.io/8.3.0/components/cell-button.mdx): Компонент для создания кнопок в виде строк.
+- [Cell](https:/vkui.io/8.3.0/components/cell.mdx): Расширенная версия SimpleCell с поддержкой удаления, перетаскивания и выбора элементов.
+- [Checkbox](https:/vkui.io/8.3.0/components/checkbox.mdx): Компонент, который позволяет пользователю выбрать один или несколько вариантов из списка опций.
+- [Chip](https:/vkui.io/8.3.0/components/chip.mdx): Компонент, который представляет собой элемент, содержащий текстовую информацию, с возможностью удаления.
+- [ChipsInput](https:/vkui.io/8.3.0/components/chips-input.mdx): Компонент для ввода и отображения множества значений.
+- [ChipsSelect](https:/vkui.io/8.3.0/components/chips-select.mdx): Компонент для выбора множества значений из выпадающего списка.
+- [ColorSchemeProvider](https:/vkui.io/8.3.0/components/color-scheme-provider.mdx): Компонент, позволяющий переопределить цветовую схему сайта.
+- [ConfigProvider](https:/vkui.io/8.3.0/components/config-provider.mdx): Обязательный компонент, в который нужно обернуть всё приложение. В нём инкапсулирована логика управления платформой, темой, локализацией и другими глобальными настройками приложения.
+- [ContentBadge](https:/vkui.io/8.3.0/components/content-badge.mdx): Компонент для выделения статусов, категорий и счётчиков рядом с элементами интерфейса.
+- [ContentCard](https:/vkui.io/8.3.0/components/content-card.mdx): Компонент для создания интерактивных карточек с изображением и текстовым содержимым.
+- [Counter](https:/vkui.io/8.3.0/components/counter.mdx): Компонент для отображения числовых индикаторов в ячейках, кнопках и других интерфейсных элементах.
+- [CustomScrollView](https:/vkui.io/8.3.0/components/custom-scroll-view.mdx): Компонент, который унифицирует браузерную полосу прокрутки на всех платформах.
+- [CustomSelect](https:/vkui.io/8.3.0/components/custom-select.mdx): Компонент для выбора значения из выпадающего списка.
+- [DateInput](https:/vkui.io/8.3.0/components/date-input.mdx): Компонент для поля даты и времени.
+- [DateRangeInput](https:/vkui.io/8.3.0/components/date-range-input.mdx): Компонент для поля выбора диапазона дат, позволяет пользователю выбрать начальную и конечную дату как через ручной ввод, так и через календарь.
+- [DirectionProvider](https:/vkui.io/8.3.0/components/direction-provider.mdx): Компонент, позволяющий переопределить направление контента.
+- [DisplayTitle](https:/vkui.io/8.3.0/components/display-title.mdx): Компонент для отображения крупных заголовков. Используется для акцентных надписей на экране — обложек, вводных экранов и других сценариев, где требуется максимально крупный текст.
+- [Div](https:/vkui.io/8.3.0/components/div.mdx): Компонент с установленными отступами, которые отличаются в зависимости от платформы.
+- [DropZone](https:/vkui.io/8.3.0/components/drop-zone.mdx): Компонент, который позволяет пользователям загружать файлы, перетаскивая их в специальную область на странице.
+- [EllipsisText](https:/vkui.io/8.3.0/components/ellipsis-text.mdx): Компонент ограничивает текстовый контент, скрывая его за многоточием.
+- [Epic](https:/vkui.io/8.3.0/components/epic.mdx): Компонент, реализующий интерфейс с централизованной навигацией через закреплённую нижнюю панель.
+- [File](https:/vkui.io/8.3.0/components/file.mdx): Компонент для загрузки файлов.
+- [FixedLayout](https:/vkui.io/8.3.0/components/fixed-layout.mdx): Компонент закрепляет переданный контент сверху или снизу области видимости.
+- [Flex](https:/vkui.io/8.3.0/components/flex.mdx): Компонент для позиционирования элементов, построенный на базе flex layout.
+- [FloatingArrow](https:/vkui.io/8.3.0/components/floating-arrow.mdx): Иконка-стрелка для всплывающих окон.
+- [FocusTrap](https:/vkui.io/8.3.0/components/focus-trap.mdx): Компонент для управления фокусом внутри области, не позволяющий фокусу выходить за её пределы.
+- [Footer](https:/vkui.io/8.3.0/components/footer.mdx): Подвал группы, передаётся в конце children компонента Group.
+- [Footnote](https:/vkui.io/8.3.0/components/footnote.mdx): Компонент для отображения подписей и вспомогательного текста — подсказок, пояснений к форме, мелких аннотаций под основным контентом.
+- [FormField](https:/vkui.io/8.3.0/components/form-field.mdx): Компонент для создания полей ввода с возможностью добавления иконок и статусов.
+- [FormItem](https:/vkui.io/8.3.0/components/form-item.mdx): Компонент для создания элементов форм с поддержкой заголовка, подсказки и статуса валидации.
+- [FormLayoutGroup](https:/vkui.io/8.3.0/components/form-layout-group.mdx): Компонент, помогающий сгруппировать несколько полей формы FormItem, расположив их по вертикали или по горизонтали.
+- [FormStatus](https:/vkui.io/8.3.0/components/form-status.mdx): Компонент для отображения статуса формы или результата действия.
+- [Gallery](https:/vkui.io/8.3.0/components/gallery.mdx): Компонент для создания адаптивного слайдера изображений с поддержкой жестов и автоматической прокрутки.
+- [Gradient](https:/vkui.io/8.3.0/components/gradient.mdx): Компонент для создания градиентных подложек.
+- [GridAvatar](https:/vkui.io/8.3.0/components/grid-avatar.mdx): Компонент для отображения нескольких аватаров в виде сетки. Поддерживает от 1 до 4 элементов.
+- [Group](https:/vkui.io/8.3.0/components/group.mdx): Компонент для визуальной группировки связанных элементов интерфейса.
+- [Header](https:/vkui.io/8.3.0/components/header.mdx): Заголовок группы, передаётся в свойство header компонента Group.
+- [Headline](https:/vkui.io/8.3.0/components/headline.mdx): Компонент для отображения подзаголовков и акцентного текста внутри секций интерфейса.
+- [HorizontalCell](https:/vkui.io/8.3.0/components/horizontal-cell.mdx): Компонент для отображения карточек в горизонтальной прокрутке.
+- [HorizontalScroll](https:/vkui.io/8.3.0/components/horizontal-scroll.mdx): Компонент для показа большого количества элементов с горизонтальной прокруткой.
+- [IconButton](https:/vkui.io/8.3.0/components/icon-button.mdx): Компонент представляет собой обертку-кнопку для интерактивной иконки.
+- [ImageBase](https:/vkui.io/8.3.0/components/image-base.mdx): Базовый компонент по работе с изображениями с добавлением возможности накладывать различные элементы поверх изображения.
+- [Image](https:/vkui.io/8.3.0/components/image.mdx): Компонент для отображения изображений с поддержкой адаптивных размеров, скруглений и позиционированных элементов.
+- [InfoRow](https:/vkui.io/8.3.0/components/info-row.mdx): Компонент для отображения статичной информации в виде пар "заголовок-значение".
+- [Input](https:/vkui.io/8.3.0/components/input.mdx): Компонент для ввода текстовой информации.
+- [Link](https:/vkui.io/8.3.0/components/link.mdx): Компонент для создания интерактивных текстовых ссылок или кнопок-ссылок.
+- [List](https:/vkui.io/8.3.0/components/list.mdx): Специализированный контейнер для работы с перетаскиваемыми и интерактивными Cell.
+- [LocaleProvider](https:/vkui.io/8.3.0/components/locale-provider.mdx): Компонент, позволяющий переопределить локаль.
+- [Mark](https:/vkui.io/8.3.0/components/mark.mdx): Компонент для визуального выделения фрагментов текста.
+- [MiniInfoCell](https:/vkui.io/8.3.0/components/mini-info-cell.mdx): Компонент для отображения компактной информации или быстрых действий.
+- [ModalCardBase](https:/vkui.io/8.3.0/components/modal-card-base.mdx): Базовый компонент для создания модальных карточек с гибким содержимым.
+- [ModalCard](https:/vkui.io/8.3.0/components/modal-card.mdx): Компонент реализующий модальную карточку.
+- [ModalDismissButton](https:/vkui.io/8.3.0/components/modal-dismiss-button.mdx): Кнопка для закрытия модальных окон на широком экране.
+- [ModalOutsideButton](https:/vkui.io/8.3.0/components/modal-outside-button.mdx): Компонент для отрисовки кнопок в правом верхнем углу в compact-версии ModalPage и ModalCard.
+- [ModalPageHeader](https:/vkui.io/8.3.0/components/modal-page-header.mdx): Шапка для модальных страниц.
+- [ModalPage](https:/vkui.io/8.3.0/components/modal-page.mdx): Компонент реализующий модальное окно.
+- [ModalRoot](https:/vkui.io/8.3.0/components/modal-root.mdx): Менеджер модальных окон.
+- [NativeSelect](https:/vkui.io/8.3.0/components/native-select.mdx): Компонент для создания выпадающего списка на основе нативного HTML-элемента select.
+- [OnboardingTooltip](https:/vkui.io/8.3.0/components/onboarding-tooltip.mdx): Компонент для отрисовки подсказки, когда пользователю хочется представить новый функционал.
+- [Pagination](https:/vkui.io/8.3.0/components/pagination.mdx): Компонент для навигации по страницам с поддержкой сложных сценариев отображения.
+- [PanelHeaderButton](https:/vkui.io/8.3.0/components/panel-header-button.mdx): Кнопка для шапки PanelHeader, передаётся в свойства before и after.
+- [PanelHeaderContent](https:/vkui.io/8.3.0/components/panel-header-content.mdx): Подкомпонент PanelHeader для сложного контента с аватаром и подзаголовком.
+- [PanelHeaderContext](https:/vkui.io/8.3.0/components/panel-header-context.mdx): Компонент, позволяющий реализовать всплывающее меню при нажатии на шапку.
+- [PanelHeader](https:/vkui.io/8.3.0/components/panel-header.mdx): Компонент, предназначенный для создания заголовочной секции (шапки) внутри компонента Panel.
+- [PanelSpinner](https:/vkui.io/8.3.0/components/panel-spinner.mdx): Индикатор загрузки внутри Panel с автоматическими отступами и центрированием.
+- [Panel](https:/vkui.io/8.3.0/components/panel.mdx): Компонент, представляющий собой отдельное состояние интерфейса, отображающееся в один момент времени.
+- [Paragraph](https:/vkui.io/8.3.0/components/paragraph.mdx): Компонент для отображения основного текста. В отличие от Text предназначен для более длинных текстовых блоков — абзацев и описаний.
+- [Placeholder](https:/vkui.io/8.3.0/components/placeholder.mdx): Компонент для отображения заглушек при отсутствии контента или ошибках.
+- [PlatformProvider](https:/vkui.io/8.3.0/components/platform-provider.mdx): Компонент, позволяющий переопределить платформу.
+- [PopoutWrapper](https:/vkui.io/8.3.0/components/popout-wrapper.mdx): Компонент-обёртка для создания всплывающих элементов.
+- [Popover](https:/vkui.io/8.3.0/components/popover.mdx): Компонент, предназначенный для отображения части пользовательского интерфейса во всплывающем окне.
+- [Popper](https:/vkui.io/8.3.0/components/popper.mdx): Низкоуровневый компонент для отрисовки выпадающего блока.
+- [Progress](https:/vkui.io/8.3.0/components/progress.mdx): Компонент для визуализации прогресса выполнения задачи.
+- [PullToRefresh](https:/vkui.io/8.3.0/components/pull-to-refresh.mdx): Компонент для обновления контента жестом "потянуть вниз".
+- [RadioGroup](https:/vkui.io/8.3.0/components/radio-group.mdx): Компонент для группировки переключателей Radio с возможностью задания горизонтального или вертикального расположения.
+- [Radio](https:/vkui.io/8.3.0/components/radio.mdx): Компонент для выбора одного значения из списка опций.
+- [RichCell](https:/vkui.io/8.3.0/components/rich-cell.mdx): Расширенный компонент ячейки для отображения комплексной информации.
+- [Root](https:/vkui.io/8.3.0/components/root.mdx): Компонент для создания набора сценариев из View и возможностью переключаться между ними.
+- [ScreenSpinner](https:/vkui.io/8.3.0/components/screen-spinner.mdx): Компонент-обертка над Spinner.
+- [ScrollArrow](https:/vkui.io/8.3.0/components/scroll-arrow.mdx): Компонент стрелки для навигации в компонентах горизонтальных прокруток и галереях.
+- [Search](https:/vkui.io/8.3.0/components/search.mdx): Компонент для реализации поисковых интерфейсов.
+- [SegmentedControl](https:/vkui.io/8.3.0/components/segmented-control.mdx): Компонент, который позволяет пользователю выбрать одно значение из набора опций.
+- [SelectMimicry](https:/vkui.io/8.3.0/components/select-mimicry.mdx): Компонент, который визуально имитирует компонент выбора из списка.
+- [Select](https:/vkui.io/8.3.0/components/select.mdx): Адаптивный компонент для выбора одного значения из списка опций.
+- [SelectionControl](https:/vkui.io/8.3.0/components/selection-control.mdx): Компонент, который представляет собой базовую обертку для переключателей (checkbox, radio, switch).
+- [Separator](https:/vkui.io/8.3.0/components/separator.mdx): Компонент для визуального разделения контента.
+- [SimpleCell](https:/vkui.io/8.3.0/components/simple-cell.mdx): Упрощённый вариант ячейки для отображения базовой информации с минимальным набором элементов.
+- [SimpleGrid](https:/vkui.io/8.3.0/components/simple-grid.mdx): Компонент для позиционирования элементов, построенный на базе grid layout.
+- [Skeleton](https:/vkui.io/8.3.0/components/skeleton.mdx): Компонент для отображения анимированных заглушек во время загрузки контента.
+- [Slider](https:/vkui.io/8.3.0/components/slider.mdx): Компонент, который позволяет пользователю выбрать значение из заданного диапазона, перемещая ползунок по горизонтальной шкале.
+- [Snackbar](https:/vkui.io/8.3.0/components/snackbar.mdx): Компонент для показа кратких сообщений и уведомлений.
+- [Spacing](https:/vkui.io/8.3.0/components/spacing.mdx): Компонент для создания вертикальных отступов между элементами интерфейса.
+- [Spinner](https:/vkui.io/8.3.0/components/spinner.mdx): Компонент для отображения индикатора загрузки.
+- [SplitCol](https:/vkui.io/8.3.0/components/split-col.mdx): Подкомпонент SplitLayout для отрисовки колонки в многоколоночном интерфейсе.
+- [SplitLayout](https:/vkui.io/8.3.0/components/split-layout.mdx): Контейнер для реализации интерфейса многоколоночной структурой.
+- [Subhead](https:/vkui.io/8.3.0/components/subhead.mdx): Компонент для отображения подзаголовков второго уровня. Используется для разделения контента внутри секций, а также как акцентные подписи меньшего размера, чем Headline
+- [SubnavigationBar](https:/vkui.io/8.3.0/components/subnavigation-bar.mdx): Горизонтальная панель с кнопками-ссылками для быстрой навигации между подразделами или управления контентом.
+- [SubnavigationButton](https:/vkui.io/8.3.0/components/subnavigation-button.mdx): Кнопка для использования внутри SubnavigationBar — навигация, фильтры, модальные окна.
+- [Switch](https:/vkui.io/8.3.0/components/switch.mdx): Переключатель, позволяющий пользователям выбрать между парой противоположных состояний, например, включено/выключено.
+- [TabbarItem](https:/vkui.io/8.3.0/components/tabbar-item.mdx): Навигационный элемент для использования внутри Tabbar.
+- [Tabbar](https:/vkui.io/8.3.0/components/tabbar.mdx): Панель навигации, закреплённая в нижней части экрана, для использования в Epic.
+- [TabsItem](https:/vkui.io/8.3.0/components/tabs-item.mdx): Элемент вкладки для использования внутри Tabs.
+- [Tabs](https:/vkui.io/8.3.0/components/tabs.mdx): Компонент для организации контента в виде вкладок.
+- [Tappable](https:/vkui.io/8.3.0/components/tappable.mdx): Базовый компонент для создания интерактивных элементов, который автоматически адаптирует семантику и поведение под контекст.
+- [Text](https:/vkui.io/8.3.0/components/text.mdx): Компонент для отображения основного наборного текста интерфейса. Используется для большинства текстовых элементов - описаний, подписей ячеек, контента карточек и т. д.
+- [Textarea](https:/vkui.io/8.3.0/components/textarea.mdx): Компонент для ввода многострочного текста.
+- [Title](https:/vkui.io/8.3.0/components/title.mdx): Компонент для отображения заголовков страниц и крупных секций интерфейса.
+- [ToolButton](https:/vkui.io/8.3.0/components/tool-button.mdx): Кнопки, которые используются для вызова инструмента, вставки вложений или для форматирования.
+- [Tooltip](https:/vkui.io/8.3.0/components/tooltip.mdx): Компонент всплывающей подсказки.
+- [Touch](https:/vkui.io/8.3.0/components/touch.mdx): Компонент для удобной работы с pointer-событиями.
+- [UnstyledTextField](https:/vkui.io/8.3.0/components/unstyled-text-field.mdx): Компонент сбрасывает user-agent stylesheets таких полей ввода, как <input> и <textarea>.
+- [UseAdaptivityConditionalRender](https:/vkui.io/8.3.0/components/use-adaptivity-conditional-render.mdx): Хук, возвращающий расширенную версию параметров адаптивности.
+- [UseAdaptivityWithJsMediaQueries](https:/vkui.io/8.3.0/components/use-adaptivity-with-js-media-queries.mdx): Хук, возвращающий расширенную версию параметров адаптивности.
+- [UseFocusVisible](https:/vkui.io/8.3.0/components/use-focus-visible.mdx): Хук для управления визуальным отображением фокуса при навигации с клавиатуры.
+- [UseModalManager](https:/vkui.io/8.3.0/components/use-modal-manager.mdx): Хук для управления модальными окнами (ModalPage, ModalCard) в приложении.
+- [UsePatchChildren](https:/vkui.io/8.3.0/components/use-patch-children.mdx): Хук для модификации дочерних элементов с возможностью получения ссылки на DOM-узел и инъекции дополнительных свойств.
+- [UseReducedMotion](https:/vkui.io/8.3.0/components/use-reduced-motion.mdx): Хук для отслеживания предпочтения пользователя в уменьшении анимации.
+- [UseScrollLock](https:/vkui.io/8.3.0/components/use-scroll-lock.mdx): Хук для блокировки прокрутки страницы.
+- [UseScroll](https:/vkui.io/8.3.0/components/use-scroll.mdx): Хук предоставляет единый API для чтения и управления прокруткой из контекста `AppRoot`. Корректно работает с режимами `scroll="contain"` и `scroll="global"`, а также с блокировкой через `useScrollLock`.
+- [UseSnackbarManager](https:/vkui.io/8.3.0/components/use-snackbar-manager.mdx): Хук для управления уведомлениями (снекбарами) в приложении.
+- [UseTodayDate](https:/vkui.io/8.3.0/components/use-today-date.mdx): Хук для работы с текущей датой с возможностью автоматического обновления при смене календарного дня.
+- [UsersStack](https:/vkui.io/8.3.0/components/users-stack.mdx): Компонент для отображения группы аватаров пользователей с возможностью добавления сопроводительного текста.
+- [View](https:/vkui.io/8.3.0/components/view.mdx): Компонент для создания набора экранов из Panel и возможностью переключаться между ними.
+- [VisuallyHidden](https:/vkui.io/8.3.0/components/visually-hidden.mdx): Компонент-обертка, который позволяет скрыть контент визуально, но оставить его доступным для ассистивных технологий.
+- [WriteBar](https:/vkui.io/8.3.0/components/write-bar.mdx): Компонент для создания поля ввода сообщений с поддержкой иконок действий.
+
+## Интеграции
+
+- [VkMiniApps](https:/vkui.io/8.3.0/integrations/vk-mini-apps.mdx): Инструкция по интеграции VKUI с VK Mini Apps (кроссплатформенные мини-приложения в экосистеме социальной сети ВКонтакте).
+
+## Миграции
+
+- [MigrationV7](https:/vkui.io/8.3.0/migrations/migration-v7.mdx): Инструкция миграции VKUI на версию v7.
+- [MigrationV8](https:/vkui.io/8.3.0/migrations/migration-v8.mdx): Инструкция миграции VKUI на версию v8.
+
+## Блог
+
+- [Новая документация VKUI](https:/vkui.io/8.3.0/blog/new-docs-2025.mdx): Обновлённая документация VKUI доступна для всех.
+- [Тестирование VKUI-приложений](https:/vkui.io/8.3.0/blog/testing-vkui-apps.mdx): Разберём основные принципы тестирования приложений на базе VKUI.
+- [Релиз VKUI v7](https:/vkui.io/8.3.0/blog/vkui-v7-release.mdx): Версия VKUI v7 вышла из беты и теперь доступна для широкого использования.

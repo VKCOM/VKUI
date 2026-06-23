@@ -1,0 +1,62 @@
+﻿---
+description: Индикатор для обозначения уведомления или другой важной информации, относящейся к пункту навигации.
+tags: status
+---
+
+<Overview group="data-display">
+
+# Badge [tag:component]
+
+Индикатор для обозначения уведомления или другой важной информации,
+относящейся к пункту навигации.
+
+</Overview>
+
+{/* @example-description: Базовый `Badge` с текстом уведомления. */}
+<Playground>
+  ```jsx
+  <Badge>Есть новые уведомления</Badge>
+  ```
+</Playground>
+
+## Использование
+
+- Старайтесь снабжать компонент _кратким_ текстом или числом.
+- Размещайте компонент в непосредственной близости от целевого элемента.
+- Для важных уведомлений дублируйте информацию в полноценной системе уведомлений.
+
+{/* @example-description: Использование `Badge` в `TabsItem` для индикации состояния разделов. */}
+<Playground>
+  ```jsx
+  <Tabs selectedId="messages" layoutFillMode="shrinked">
+    <TabsItem id="dialogs" after={<Badge mode="prominent">Требуется подтверждение</Badge>}>
+      Настройки
+    </TabsItem>
+    <TabsItem id="messages" after={<Badge>Есть новые</Badge>}>
+      Уведомления
+    </TabsItem>
+  </Tabs>
+  ```
+</Playground>
+
+## Доступность (a11y) [#a11y]
+
+- Всегда передавайте смысловое содержимое в `children`.
+- Избегайте декоративного использования без текста.
+
+```jsx
+// ❌ Плохо: пустой значок
+<Badge mode="prominent" />
+
+// ✅ Хорошо: понятный контент
+<Badge mode="prominent">Новые сообщения</Badge>
+```
+
+## Свойства и методы [#api]
+
+| Свойство | Тип | По умолчанию | Описание |
+| --- | --- | --- | --- |
+| `Component` | `ElementType<any, keyof IntrinsicElements>` | `-` |  |
+| `getRootRef` | `Ref<HTMLSpanElement>` | `-` |  |
+| `mode` | `"new" \| "prominent"` | `new` | Режим отображения компонента. |
+

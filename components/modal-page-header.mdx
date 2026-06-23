@@ -1,0 +1,58 @@
+﻿---
+description: Шапка для модальных страниц.
+tags: navigation
+---
+
+<Overview group="modals">
+
+# ModalPageHeader [tag:component]
+
+Шапка в модальных страницах.
+Имеет очень похожую логику на [`PanelHeader`](/components/panel-header): два свойства `before` и `after` для иконок и
+название модальной страницы, передаваемое как `children`.
+
+</Overview>
+
+import { BlockWrapper } from '@/components/wrappers';
+
+{/* @example-description: Базовый `ModalPageHeader` с кнопками в `before/after` и заголовком страницы. */}
+<Playground Wrapper={BlockWrapper}>
+
+```jsx
+const platform = usePlatform();
+
+return (
+  <ModalPageHeader
+    before={platform !== 'ios' && <PanelHeaderClose />}
+    after={<PanelHeaderSubmit />}
+  >
+    Заголовок модальной страницы
+  </ModalPageHeader>
+);
+```
+
+</Playground>
+
+## Требования по расположению кнопок
+
+- На Android **слева** может быть [`PanelHeaderClose`](/components/panel-header#panel-header-close).
+- На iOS **справа** должна быть кнопка закрытия. Это может быть либо [`PanelHeaderButton`](/components/panel-header#panel-header-button)
+  с иконкой `<Icon24Dismiss />`, либо [`PanelHeaderClose`](/components/panel-header#panel-header-close)
+  или [`PanelHeaderSubmit`](/components/panel-header#panel-header-submit).
+- Если произойдёт навигация вперёд внутри модального окна, то **слева** в шапке останется **только** кнопка назад.
+
+Также на Android могут быть какие-то дополнительные кнопки-иконки справа, а на iOS – слева.
+
+## Свойства и методы [#api]
+
+| Свойство | Тип | По умолчанию | Описание |
+| --- | --- | --- | --- |
+| `after` | `ReactNode` | `-` | Добавляет элемент справа.  При передаче нескольких элементов, расставляет отступы между ними. |
+| `before` | `ReactNode` | `-` | Добавляет элемент слева. |
+| `float` | `boolean` | `-` | Высота шапки будет игнорироваться контентом панели. |
+| `getRef` | `Ref<HTMLDivElement>` | `-` |  |
+| `getRootRef` | `Ref<HTMLDivElement>` | `-` |  |
+| `noSeparator` | `boolean` | `false` | Отключение разделителя. |
+| `transparent` | `boolean` | `-` | Прозрачный фон компонента. |
+| `typographyProps` | `(HasComponent & HTMLAttributes<HTMLElement> & HasDataAttribute)` | `-` | По умолчанию как `Component` используется `span`. |
+

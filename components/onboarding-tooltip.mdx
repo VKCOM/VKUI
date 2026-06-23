@@ -1,0 +1,144 @@
+﻿---
+description: Компонент для отрисовки подсказки, когда пользователю хочется представить новый функционал.
+tags: overlay
+---
+
+<Overview group="utils">
+
+# OnboardingTooltip [tag:component]
+
+Компонент для отрисовки подсказки, как правило в случаях, когда
+пользователю хочется представить новый функционал.
+
+</Overview>
+
+> Для показа всплывающей подсказки по нажатию или наведению воспользуйтесь [`Tooltip`](/components/tooltip).
+
+import { OnboardingTooltipWrapper } from '@/components/wrappers';
+
+<Playground hide Wrapper={OnboardingTooltipWrapper}>
+  ```jsx
+  <OnboardingTooltip shown disableFlipMiddleware disableShiftMiddleware placement="bottom" description="Обновлённый раздел поможет найти друзей">
+    <Icon20UserCheckOutline />
+  </OnboardingTooltip>
+  ```
+</Playground>
+
+{/* @example-description: Базовый `OnboardingTooltip` для одноразового знакомства с новым функционалом. */}
+<Playground Wrapper={OnboardingTooltipWrapper}>
+  ```jsx
+  <OnboardingTooltip shown description="Обновлённый раздел поможет найти друзей">
+    <Icon20UserCheckOutline />
+  </OnboardingTooltip>
+  ```
+</Playground>
+
+## Концепция
+
+Показывать данные подсказки пользователю следует один раз, запоминая факт показа между
+сессиями. Рекомендуется показывать подсказку сразу после того, как нужный элемент появился в зоне видимости.
+Воспользуйтесь [Intersection Observer API](https://developer.mozilla.org/ru/docs/Web/API/Intersection_Observer_API) для реализации
+такого поведения.
+
+> На странице не может быть две одновременно показанных подсказки. Они всегда должны показываться
+> последовательно: следующая показывается при закрытии текущей и так далее.
+
+## Использование
+
+Если хочется снабдить какой-то элемент интерфейса подсказкой,
+достаточно просто обернуть его в компонент `OnboardingTooltip`.
+
+## OnboardingTooltipContainer [tag:component]
+
+Обычно компонент используется в контексте [`Panel`](/components/panel),
+[`PanelHeader`](/components/panel-header) или [`FixedLayout`](/components/fixed-layout), поэтому вам
+не нужно задумываться о позиционировании подсказки.
+
+Если возникла потребность использовать `OnboardingTooltip` вне контекста перечисленных компонентов,
+следуйте следующим инструкциям:
+
+- в контейнере с прокруткой — замените какой-нибудь элемент, внутри которого нет прокрутки,
+  на `<OnboardingTooltipContainer>` и добавьте ему css-свойство `position: relative` (или другую не-`static`);
+- внутри `position: fixed` используйте `<OnboardingTooltipContainer fixed>`.
+
+## Цветовые варианты
+
+{/* @example-description: Демонстрация цветовых вариантов `OnboardingTooltip` через свойство `appearance`. */}
+<Playground Wrapper={OnboardingTooltipWrapper}>
+  ```jsx
+  <OnboardingTooltip placement="bottom" description={`appearance="accent"`} appearance="accent">
+    <div style={{ width: 50, margin: 10 }}>
+      <Avatar />
+    </div>
+  </OnboardingTooltip>
+  <OnboardingTooltip placement="top" description={`appearance="neutral"`} appearance="neutral">
+    <div style={{ width: 50, margin: 10 }}>
+      <Avatar />
+    </div>
+  </OnboardingTooltip>
+  <OnboardingTooltip placement="bottom" description={`appearance="white`} appearance="white">
+    <div style={{ width: 50, margin: 10 }}>
+      <Avatar />
+    </div>
+  </OnboardingTooltip>
+  <OnboardingTooltip placement="top" description={`appearance="black"`} appearance="black">
+    <div style={{ width: 50, margin: 10 }}>
+      <Avatar />
+    </div>
+  </OnboardingTooltip>
+  <OnboardingTooltip
+    placement="bottom"
+    description={`appearance="inversion"`}
+    appearance="inversion"
+  >
+    <div style={{ width: 50, margin: 10 }}>
+      <Avatar />
+    </div>
+  </OnboardingTooltip>
+  ```
+</Playground>
+
+## Доступность (a11y) [#a11y]
+
+`OnboardingTooltip` технически является модальным окном (`role="dialog"`),
+а значит у него обязательно должно быть имя — его краткое название.
+Благодаря этому пользователи вспомогательных технологий знают, что это за элемент и какое у него содержимое.
+
+Задать имя можно с помощью следующих способов:
+
+- используя свойство `title`;
+- используя свойство `aria-label`;
+- используя свойство `aria-labelledby`;
+
+## Свойства и методы [#api]
+
+| Свойство | Тип | По умолчанию | Описание |
+| --- | --- | --- | --- |
+| `appearance` | `"accent" \| "neutral" \| "white" \| "black" \| "inversion"` | `-` | Стиль отображения подсказки. |
+| `arrowHeight` | `number` | `8` | Высота стрелки. Складывается с `mainAxis`, чтобы стрелка не залезала на якорный элемент. |
+| `ArrowIcon` | `ComponentType<SVGAttributes<SVGSVGElement>>` | `-` | Пользовательская SVG иконка.  Требования:  1. Иконка по умолчанию должна быть направлена вверх (a.k.a `IconUp`). 2. Чтобы избежать проблемы с пространством между стрелкой и контентом на некоторых экранах,    растяните кривую по высоте на `1px` и увеличьте на этот размер `height` и `viewBox` SVG.    (смотри https://github.com/VKCOM/VKUI/pull/4496). 3. Убедитесь, что компонент принимает все валидные для SVG параметры. 4. Убедитесь, что SVG и её элементы наследует цвет через `fill="currentColor"`. 5. Если стрелка наезжает на якорный элемент, то увеличьте смещение между целевым и всплывающим элементами. |
+| `arrowOffset` | `number` | `0` | Сдвиг стрелки относительно текущих координат. |
+| `arrowPadding` | `number` | `10` | Безопасная зона вокруг стрелки, чтобы та не выходила за края контента. |
+| `arrowRef` | `Element \| MutableRefObject<Element \| null> \| null` | `-` |  |
+| `children` | `ReactElement<unknown, string \| JSXElementConstructor<any>>` | `-` | Целевой элемент. Всплывающее окно появится возле него.  > ⚠️ Если это пользовательский компонент, то он должен: > 1. предоставлять параметры либо `getRootRef`, либо `ref` (cм. `React.forwardRef()`) для получения ссылки на DOM-узел; > 2. принимать DOM атрибуты и события. |
+| `className` | `string` | `-` | Пользовательские css-классы, будут добавлены на root-элемент. |
+| `description` | `ReactNode` | `-` | Текст тултипа. |
+| `disableArrow` | `boolean` | `false` | Скрывает стрелку, указывающую на якорный элемент. |
+| `disableFlipMiddleware` | `boolean` | `false` | Указанное значение `placement` форсируется, даже если для выпадающего элемента недостаточно места. Не оказывает влияния при `placement` значениях - `'auto' \| 'auto-start' \| 'auto-end'` |
+| `disableFocusTrap` | `boolean` | `-` | Позволяет отключить захват фокуса. |
+| `disableShiftMiddleware` | `boolean` | `false` | Позволяет отключить смещение по главной оси, которое не даёт всплывающему элементу выходить за границы видимой области. |
+| `getRootRef` | `Ref<HTMLDivElement>` | `-` |  |
+| `isStaticArrowOffset` | `boolean` | `false` | Включает абсолютное смещение по `arrowOffset`. |
+| `maxWidth` | `string \| number \| null` | `220` | Перебивает максимальную ширину заданную по умолчанию.  Передача `null` полностью сбрасывает установку `max-width` на элемент. |
+| `offsetByCrossAxis` | `number` | `0` | Отступ по вспомогательной оси. |
+| `offsetByMainAxis` | `number` | `0` | Отступ по главной оси. |
+| `onClose` | `((this: void) => void)` | `-` | Обработчик, который вызывается при нажатии по любому месту в пределах экрана. |
+| `onPlacementChange` | `OnPlacementChange` | `-` | В зависимости от области видимости, позиция может смениться на более оптимальную, чтобы всплывающий элемент вместился в эту область видимости. |
+| `overflowPadding` | `Padding` | `-` | Отступ для смещения. |
+| `overlayLabel` | `string` | `Закрыть` | [a11y] Метка для подложки-кнопки, для описания того, что произойдёт при нажатии. |
+| `placement` | `PlacementWithAuto` | `bottom-start` | По умолчанию компонент выберет наилучшее расположение сам, но приоритетное можно задать с помощью этого свойства. |
+| `restoreFocus` | `boolean \| (() => boolean \| HTMLElement)` | `true` | Управление поведением возврата фокуса при закрытии всплывающего окна. |
+| `shown` | `boolean` | `true` | Если передан, то всплывающий элемент будет показано/скрыто в зависимости от значения свойства. |
+| `title` | `ReactNode` | `-` | Заголовок тултипа. |
+| `titleId` | `string` | `-` | [a11y] Id для заголовка тултипа. Можно использовать для связи элемента с `role="dialog"` и заголовка через `aria-labelledby`. |
+
