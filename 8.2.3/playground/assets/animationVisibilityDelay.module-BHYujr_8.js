@@ -1,0 +1,1 @@
+import{n as e}from"./chunk-BneVvdWh.js";function t(e){if(e!==void 0)return{"--vkui_internal--animation_delay_visibility":`${e}ms`}}var n=e((()=>{})),r,i,a,o=e((()=>{r=`_visibilityDelay_lkw2d_1`,i=`_animationStylesDelayVisibility_lkw2d_1`,a={visibilityDelay:r,animationStylesDelayVisibility:i}}));export{n as i,o as n,t as r,a as t};

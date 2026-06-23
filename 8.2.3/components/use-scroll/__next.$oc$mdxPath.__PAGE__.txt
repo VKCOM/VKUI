@@ -1,0 +1,156 @@
+1:"$Sreact.fragment"
+2:I[23450,["275","static/chunks/275-6f1c92b425334462.js","433","static/chunks/433-bbbd97b22844cc36.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Main"]
+7:I[74517,["275","static/chunks/275-6f1c92b425334462.js","433","static/chunks/433-bbbd97b22844cc36.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Overview",1]
+8:I[18443,["275","static/chunks/275-6f1c92b425334462.js","433","static/chunks/433-bbbd97b22844cc36.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Anchor"]
+11:I[91042,["275","static/chunks/275-6f1c92b425334462.js","433","static/chunks/433-bbbd97b22844cc36.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"TOC"]
+12:I[90484,[],"OutletBoundary"]
+13:"$Sreact.suspense"
+15:I[80204,["275","static/chunks/275-6f1c92b425334462.js","433","static/chunks/433-bbbd97b22844cc36.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"PlaygroundLazy"]
+3:Tffa,---
+description: Хук предоставляет единый API для чтения и управления прокруткой из контекста `AppRoot`. Корректно работает с режимами `scroll="contain"` и `scroll="global"`, а также с блокировкой через `useScrollLock`.
+---
+
+<Overview type="hook" forcedPath="components/AppRoot/ScrollContext.tsx">
+
+# useScroll
+
+Хук предоставляет единый API для чтения и управления прокруткой из контекста `AppRoot`.
+Корректно работает с режимами `scroll="contain"` и `scroll="global"`, а также с блокировкой через `useScrollLock`.
+
+</Overview>
+
+## Обязательные условия
+
+> Убедитесь, что ваше приложение обёрнуто в компонент [`AppRoot`](/components/app-root),
+> так как именно через этот компонент определяет контекст для управления прокруткой.
+
+## API
+
+### Возвращаемое значение
+
+Объект с методами:
+
+| Метод       | Тип                                                        | Описание                                |
+| ----------- | ---------------------------------------------------------- | --------------------------------------- |
+| `getScroll` | `(options?: GetScrollOptions) => { x: number; y: number }` | Возвращает текущие координаты прокрутки |
+| `scrollTo`  | `(x?: number, y?: number) => void`                         | Прокручивает к указанным координатам    |
+
+## Особенности работы
+
+### Параметр `scroll` в `AppRoot`
+
+В зависимости от значения свойства `scroll` компонента `AppRoot` меняется поведение `useScroll`:
+
+| `scroll`    | Поведение                                               |
+| ----------- | ------------------------------------------------------- |
+| `"contain"` | Управляет прокруткой внутреннего контейнера приложения. |
+| `"global"`  | Работает с глобальной полосой прокрутки окна браузера.  |
+
+## Практический пример
+
+{/* @example-description: Программная прокрутка через useScroll. */}
+<Playground direction="column" align="stretch" scroll="global">
+  ```jsx
+  const [opened, setOpened] = React.useState(false);
+  const { getScroll, scrollTo } = useScroll();
+
+  // Блокируем прокрутку, пока открыт popout.
+  useScrollLock(opened);
+
+  const scrollDown = () => {
+    const currentY = getScroll().y;
+    scrollTo(0, currentY + 120);
+  };
+
+  const scrollUp = () => {
+    const currentY = getScroll().y;
+    scrollTo(0, currentY - 120);
+  };
+
+  return (
+    <Box position="relative" inlineSize="100%">
+      <Flex direction="column" align="start" gap="m">
+        <Button onClick={() => setOpened(true)}>Открыть popout</Button>
+      </Flex>
+
+      {opened && (
+        <PopoutWrapper onClick={() => setOpened(false)}>
+          <Card>
+            <Flex direction="column" gap="xl" padding="system">
+              <Title level="3">
+                Popout
+              </Title>
+              <Caption level="1">
+                Во время блокировки можно программно прокручивать контент через useScroll.
+              </Caption>
+              <Flex gap="s">
+                <Button onClick={scrollDown}>Скролл вниз</Button>
+                <Button onClick={scrollUp}>Скролл вверх</Button>
+                <Button mode="secondary" onClick={() => setOpened(false)}>
+                  Закрыть
+                </Button>
+              </Flex>
+            </Box>
+          </Card>
+        </PopoutWrapper>
+      )}
+    </Box>
+  );
+  ```
+</Playground>0:{"rsc":["$","$1","c",{"children":[[["$","$L2",null,{"metadata":{"description":"Хук предоставляет единый API для чтения и управления прокруткой из контекста `AppRoot`. Корректно работает с режимами `scroll=\"contain\"` и `scroll=\"global\"`, а также с блокировкой через `useScrollLock`.","title":"useScroll","filePath":"content/components/use-scroll.mdx","timestamp":1782227364000},"sourceCode":"$3","children":"$L4"}],"$L5"],null,"$L6"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"tbpEUsLB6HrpTmkle-Gta"}
+4:[["$","$L7",null,{"type":"hook","forcedPath":"components/AppRoot/ScrollContext.tsx","children":[["$","h1",null,{"className":"mdx_h1__1mgpN","children":"useScroll"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Хук предоставляет единый API для чтения и управления прокруткой из контекста ",["$","code",null,{"className":"Code_root__TR_dq __className_f5a7b3","dir":"ltr","children":"AppRoot"}],".\nКорректно работает с режимами ",["$","code",null,{"className":"Code_root__TR_dq __className_f5a7b3","dir":"ltr","children":"scroll=\"contain\""}]," и ",["$","code",null,{"className":"Code_root__TR_dq __className_f5a7b3","dir":"ltr","children":"scroll=\"global\""}],", а также с блокировкой через ",["$","code",null,{"className":"Code_root__TR_dq __className_f5a7b3","dir":"ltr","children":"useScrollLock"}],"."]}]]}],"\n",["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"obyazatelnye-usloviya","children":["$","a",null,{"href":"#obyazatelnye-usloviya","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Обязательные условия","children":["Обязательные условия",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}],"\n",["$","aside",null,{"className":"Callout_root__6UBFP","children":["$","div",null,{"className":"Callout_content__MYf_T","children":["\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Убедитесь, что ваше приложение обёрнуто в компонент ",["$","$L8",null,{"href":"/components/app-root","children":["$","code",null,{"className":"Code_root__TR_dq __className_f5a7b3","dir":"ltr","children":"AppRoot"}]}],",\nтак как именно через этот компонент определяет контекст для управления прокруткой."]}],"\n"]}]}],"\n",["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"api","children":["$","a",null,{"href":"#api","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию API","children":["API",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}],"\n",["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"vozvrashaemoe-znachenie","children":["$","a",null,{"href":"#vozvrashaemoe-znachenie","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Возвращаемое значение","children":["Возвращаемое значение",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}],"\n","$L9","\n","$La","\n","$Lb","\n","$Lc","\n","$Ld","\n","$Le","\n","$Lf","\n","\n","$L10"]
+5:["$","$L11",null,{"toc":[{"value":"Обязательные условия","id":"obyazatelnye-usloviya","depth":2},{"value":"API","id":"api","depth":2},{"value":"Возвращаемое значение","id":"vozvrashaemoe-znachenie","depth":3},{"value":"Особенности работы","id":"osobennosti-raboty","depth":2},{"value":["Параметр ",["$","code",null,{"className":"Code_root__TR_dq __className_f5a7b3","dir":"ltr","children":"scroll"}]," в ",["$","code",null,{"className":"Code_root__TR_dq __className_f5a7b3","dir":"ltr","children":"AppRoot"}]],"id":"параметр-scroll-в-approot","depth":3},{"value":"Практический пример","id":"prakticheskij-primer","depth":2}]}]
+6:["$","$L12",null,{"children":["$","$13",null,{"name":"Next.MetadataOutlet","children":"$@14"}]}]
+9:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Объект с методами:"}]
+a:["$","div",null,{"className":"Table_root__0rGvK","children":["$","table",null,{"children":[["$","thead",null,{"children":["$","tr",null,{"children":[["$","th",null,{"children":"Метод","className":"Table_th__EHorR"}],["$","th",null,{"children":"Тип","className":"Table_th__EHorR"}],["$","th",null,{"children":"Описание","className":"Table_th__EHorR"}]],"className":"Table_tr__SD2Ot"}]}],["$","tbody",null,{"children":[["$","tr",null,{"children":[["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_f5a7b3","dir":"ltr","children":"getScroll"}],"className":"Table_td__L3qz5"}],["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_f5a7b3","dir":"ltr","children":"(options?: GetScrollOptions) => { x: number; y: number }"}],"className":"Table_td__L3qz5"}],["$","td",null,{"children":"Возвращает текущие координаты прокрутки","className":"Table_td__L3qz5"}]],"className":"Table_tr__SD2Ot"}],["$","tr",null,{"children":[["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_f5a7b3","dir":"ltr","children":"scrollTo"}],"className":"Table_td__L3qz5"}],["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_f5a7b3","dir":"ltr","children":"(x?: number, y?: number) => void"}],"className":"Table_td__L3qz5"}],["$","td",null,{"children":"Прокручивает к указанным координатам","className":"Table_td__L3qz5"}]],"className":"Table_tr__SD2Ot"}]]}]],"className":"Table_table__NzLHi"}]}]
+b:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"osobennosti-raboty","children":["$","a",null,{"href":"#osobennosti-raboty","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Особенности работы","children":["Особенности работы",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+c:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"параметр-scroll-в-approot","children":["$","a",null,{"href":"#параметр-scroll-в-approot","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию [object Object]","children":["$5:props:toc:4:value",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+d:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["В зависимости от значения свойства ",["$","code",null,{"className":"Code_root__TR_dq __className_f5a7b3","dir":"ltr","children":"scroll"}]," компонента ",["$","code",null,{"className":"Code_root__TR_dq __className_f5a7b3","dir":"ltr","children":"AppRoot"}]," меняется поведение ",["$","code",null,{"className":"Code_root__TR_dq __className_f5a7b3","dir":"ltr","children":"useScroll"}],":"]}]
+e:["$","div",null,{"className":"Table_root__0rGvK","children":["$","table",null,{"children":[["$","thead",null,{"children":["$","tr",null,{"children":[["$","th",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_f5a7b3","dir":"ltr","children":"scroll"}],"className":"Table_th__EHorR"}],["$","th",null,{"children":"Поведение","className":"Table_th__EHorR"}]],"className":"Table_tr__SD2Ot"}]}],["$","tbody",null,{"children":[["$","tr",null,{"children":[["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_f5a7b3","dir":"ltr","children":"\"contain\""}],"className":"Table_td__L3qz5"}],["$","td",null,{"children":"Управляет прокруткой внутреннего контейнера приложения.","className":"Table_td__L3qz5"}]],"className":"Table_tr__SD2Ot"}],["$","tr",null,{"children":[["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_f5a7b3","dir":"ltr","children":"\"global\""}],"className":"Table_td__L3qz5"}],["$","td",null,{"children":"Работает с глобальной полосой прокрутки окна браузера.","className":"Table_td__L3qz5"}]],"className":"Table_tr__SD2Ot"}]]}]],"className":"Table_table__NzLHi"}]}]
+f:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"prakticheskij-primer","children":["$","a",null,{"href":"#prakticheskij-primer","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Практический пример","children":["Практический пример",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+16:T576,const [opened, setOpened] = React.useState(false);
+const { getScroll, scrollTo } = useScroll();
+
+// Блокируем прокрутку, пока открыт popout.
+useScrollLock(opened);
+
+const scrollDown = () => {
+  const currentY = getScroll().y;
+  scrollTo(0, currentY + 120);
+};
+
+const scrollUp = () => {
+  const currentY = getScroll().y;
+  scrollTo(0, currentY - 120);
+};
+
+return (
+  <Box position="relative" inlineSize="100%">
+    <Flex direction="column" align="start" gap="m">
+      <Button onClick={() => setOpened(true)}>Открыть popout</Button>
+    </Flex>
+
+    {opened && (
+      <PopoutWrapper onClick={() => setOpened(false)}>
+        <Card>
+          <Flex direction="column" gap="xl" padding="system">
+            <Title level="3">
+              Popout
+            </Title>
+            <Caption level="1">
+              Во время блокировки можно программно прокручивать контент через useScroll.
+            </Caption>
+            <Flex gap="s">
+              <Button onClick={scrollDown}>Скролл вниз</Button>
+              <Button onClick={scrollUp}>Скролл вверх</Button>
+              <Button mode="secondary" onClick={() => setOpened(false)}>
+                Закрыть
+              </Button>
+            </Flex>
+          </Box>
+        </Card>
+      </PopoutWrapper>
+    )}
+  </Box>
+);10:["$","$L15",null,{"direction":"column","align":"stretch","scroll":"global","code":"$16"}]
+14:null

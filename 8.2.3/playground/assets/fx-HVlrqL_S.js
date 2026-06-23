@@ -1,0 +1,1 @@
+import{n as e}from"./chunk-BneVvdWh.js";import{n as t,t as n}from"./curve-v5qr6CPm.js";function r(e){return .5*(1-Math.cos(Math.PI*e))}function i(e,t,r,i){return function(a){return n(0,0,e,t,r,i,1,1,a)[1]}}var a=e((()=>{t()}));export{r as n,a as r,i as t};

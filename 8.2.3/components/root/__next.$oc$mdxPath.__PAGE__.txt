@@ -1,0 +1,153 @@
+1:"$Sreact.fragment"
+2:I[23450,["275","static/chunks/275-6f1c92b425334462.js","433","static/chunks/433-bbbd97b22844cc36.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Main"]
+4:I[74517,["275","static/chunks/275-6f1c92b425334462.js","433","static/chunks/433-bbbd97b22844cc36.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Overview",1]
+15:I[18443,["275","static/chunks/275-6f1c92b425334462.js","433","static/chunks/433-bbbd97b22844cc36.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Anchor"]
+16:I[80204,["275","static/chunks/275-6f1c92b425334462.js","433","static/chunks/433-bbbd97b22844cc36.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"PlaygroundLazy"]
+17:I[57621,["275","static/chunks/275-6f1c92b425334462.js","433","static/chunks/433-bbbd97b22844cc36.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"FixedLayoutWrapper"]
+18:I[19180,["275","static/chunks/275-6f1c92b425334462.js","433","static/chunks/433-bbbd97b22844cc36.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"Pre"]
+26:I[91042,["275","static/chunks/275-6f1c92b425334462.js","433","static/chunks/433-bbbd97b22844cc36.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-adb32f9830ee3bb1.js"],"TOC"]
+27:I[90484,[],"OutletBoundary"]
+28:"$Sreact.suspense"
+3:Tea3,---
+description: Компонент для создания набора сценариев из View и возможностью переключаться между ними.
+---
+
+<Overview group="navigation">
+
+# Root [tag:component]
+
+Компонент для создания набора сценариев из [`View`](/components/view) и возможностью переключаться между ними.
+
+Связанные страницы:
+
+- [Навигация](/overview/navigation)
+
+</Overview>
+
+import { FixedLayoutWrapper } from '@/components/wrappers';
+
+{/* @example-description: Базовый `Root` с переключением между двумя сценариями (`View`) по кнопке. */}
+<Playground Wrapper={FixedLayoutWrapper} style={{ maxWidth: 320, height: 415, overflow: 'hidden' }}>
+
+```jsx
+const [activeView, setActiveView] = useState('view-1');
+return (
+  <Root activeView={activeView}>
+    <View id="view-1" activePanel="view-1-panel">
+      <Panel id="view-1-panel">
+        <PanelHeader>Сценарий 1</PanelHeader>
+        <Placeholder stretched>
+          <Button appearance="positive" onClick={() => setActiveView('view-2')}>
+            Перейти к Сценарию 2
+          </Button>
+        </Placeholder>
+      </Panel>
+    </View>
+    <View id="view-2" activePanel="view-2-panel">
+      <Panel id="view-2-panel">
+        <PanelHeader>Сценарий 2</PanelHeader>
+        <Placeholder stretched>
+          <Button appearance="negative" onClick={() => setActiveView('view-1')}>
+            Вернуться к Сценарию 1
+          </Button>
+        </Placeholder>
+      </Panel>
+    </View>
+  </Root>
+);
+```
+
+</Playground>
+
+## Применение компонента
+
+Принимает необходимое количество [`View`](/components/view) с уникальным `id`. Далее `id` с нужным сценарием передаётся в свойство
+`activeView`.
+
+```
+Root
+  └─ View N
+    └─ Panel N
+      └─ PanelHeader
+      └─ <content>
+```
+
+> Если вы выносите сценарий с [`View`](/components/view) в отдельный компонент, то `id` должен передаваться непосредственно в
+> компонент-обёртку и уже после проксироваться во [`View`](/components/view).
+>
+> ```jsx showLineNumbers filename="src/router.tsx" {2-4,13-14}
+> const MyView = ({ id }) => {
+>   // проксируем `id` в View */
+>   return (
+>     <View id={id} activePanel="<panel-id>">
+>       ...
+>     </View>
+>   );
+> };
+>
+> export const Router = () => {
+>   return (
+>     <Root activeView="my-view">
+>       {/* передаём `id` в компонент-обёртку */}
+>       <MyView id="my-view" />
+>     </Root>
+>   );
+> };
+> ```
+>
+> Иначе `Root` не сможет найти `id` из `activeView` среди прямых потомков в `children`.
+
+## Обработчики событий
+
+### `onTransition`
+
+Свойство `onTransition` принимает обработчик, который вызывается при завершении анимации смены активной `View`.
+
+```jsx
+function transitionHandler({
+  // Произошел аыа
+  isBack: boolean;
+  // Уникальный идентификатор `View`, откуда произошел переход
+  from: string;
+  // Уникальный идентификатор `View`, куда произошел переход
+  to: string;
+}) {
+    // обработчик
+}
+
+<Root onTransition={transitionHandler}>{/* views */}</Root>;
+```
+
+## Свойства и методы [#api]
+
+<PropsTable name="Root" />0:{"rsc":["$","$1","c",{"children":[[["$","$L2",null,{"metadata":{"description":"Компонент для создания набора сценариев из View и возможностью переключаться между ними.","title":"Root","filePath":"content/components/root.mdx","timestamp":1782227364000},"sourceCode":"$3","children":[["$","$L4",null,{"group":"navigation","children":[["$","h1",null,{"className":"mdx_h1__1mgpN","data-pagefind-filter":"tag:component","children":"Root"}],"$L5","$L6","$L7"]}],"\n","\n","\n","$L8","\n","$L9","\n","$La","\n","$Lb","\n","$Lc","\n","$Ld","\n","$Le","\n","$Lf","\n","$L10","\n","$L11","\n","$L12"]}],"$L13"],null,"$L14"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"tbpEUsLB6HrpTmkle-Gta"}
+5:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Компонент для создания набора сценариев из ",["$","$L15",null,{"href":"/components/view","children":["$","code",null,{"className":"Code_root__TR_dq __className_f5a7b3","dir":"ltr","children":"View"}]}]," и возможностью переключаться между ними."]}]
+6:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Связанные страницы:"}]
+7:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["$","$L15",null,{"href":"/overview/navigation","children":"Навигация"}]}],"\n"]}]
+8:["$","$L16",null,{"Wrapper":"$17","style":{"maxWidth":320,"height":415,"overflow":"hidden"},"code":"const [activeView, setActiveView] = useState('view-1');\nreturn (\n  <Root activeView={activeView}>\n    <View id=\"view-1\" activePanel=\"view-1-panel\">\n      <Panel id=\"view-1-panel\">\n        <PanelHeader>Сценарий 1</PanelHeader>\n        <Placeholder stretched>\n          <Button appearance=\"positive\" onClick={() => setActiveView('view-2')}>\n            Перейти к Сценарию 2\n          </Button>\n        </Placeholder>\n      </Panel>\n    </View>\n    <View id=\"view-2\" activePanel=\"view-2-panel\">\n      <Panel id=\"view-2-panel\">\n        <PanelHeader>Сценарий 2</PanelHeader>\n        <Placeholder stretched>\n          <Button appearance=\"negative\" onClick={() => setActiveView('view-1')}>\n            Вернуться к Сценарию 1\n          </Button>\n        </Placeholder>\n      </Panel>\n    </View>\n  </Root>\n);"}]
+9:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"primenenie-komponenta","children":["$","a",null,{"href":"#primenenie-komponenta","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Применение компонента","children":["Применение компонента",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+a:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Принимает необходимое количество ",["$","$L15",null,{"href":"/components/view","children":["$","code",null,{"className":"Code_root__TR_dq __className_f5a7b3","dir":"ltr","children":"View"}]}]," с уникальным ",["$","code",null,{"className":"Code_root__TR_dq __className_f5a7b3","dir":"ltr","children":"id"}],". Далее ",["$","code",null,{"className":"Code_root__TR_dq __className_f5a7b3","dir":"ltr","children":"id"}]," с нужным сценарием передаётся в свойство\n",["$","code",null,{"className":"Code_root__TR_dq __className_f5a7b3","dir":"ltr","children":"activeView"}],"."]}]
+b:["$","$L18",null,{"tabIndex":"0","data-language":"plaintext","data-word-wrap":"","data-copy":"","data-pagefind-ignore":"all","children":["$","code",null,{"className":"Code_root__TR_dq __className_f5a7b3","dir":"ltr","children":[["$","span",null,{"children":["$","span",null,{"children":"Root"}]}],"\n",["$","span",null,{"children":["$","span",null,{"children":"  └─ View N"}]}],"\n",["$","span",null,{"children":["$","span",null,{"children":"    └─ Panel N"}]}],"\n",["$","span",null,{"children":["$","span",null,{"children":"      └─ PanelHeader"}]}],"\n",["$","span",null,{"children":["$","span",null,{"children":"      └─ <content>"}]}]]}]}]
+c:["$","aside",null,{"className":"Callout_root__6UBFP","children":["$","div",null,{"className":"Callout_content__MYf_T","children":["\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Если вы выносите сценарий с ",["$","$L15",null,{"href":"/components/view","children":["$","code",null,{"className":"Code_root__TR_dq __className_f5a7b3","dir":"ltr","children":"View"}]}]," в отдельный компонент, то ",["$","code",null,{"className":"Code_root__TR_dq __className_f5a7b3","dir":"ltr","children":"id"}]," должен передаваться непосредственно в\nкомпонент-обёртку и уже после проксироваться во ",["$","$L15",null,{"href":"/components/view","children":["$","code",null,{"className":"Code_root__TR_dq __className_f5a7b3","dir":"ltr","children":"View"}]}],"."]}],"\n",["$","$L18",null,{"tabIndex":"0","data-language":"jsx","data-word-wrap":"","data-filename":"src/router.tsx","data-copy":"","data-pagefind-ignore":"all","children":["$","code",null,{"className":"Code_root__TR_dq __className_f5a7b3","dir":"ltr","data-line-numbers":"","data-line-numbers-max-digits":"2","children":[["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"const"}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" MyView"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":" ="}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" ({ "}],["$","span",null,{"style":{"--shiki-light":"#E36209","--shiki-dark":"#FFAB70"},"children":"id"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" }) "}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"=>"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" {"}]]}],"\n",["$","span",null,{"data-highlighted-line":"","children":["$","span",null,{"style":{"--shiki-light":"#6A737D","--shiki-dark":"#6A737D"},"children":"  // проксируем `id` в View */"}]}],"\n",["$","span",null,{"data-highlighted-line":"","children":[["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"  return"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" ("}]]}],"\n",["$","span",null,{"data-highlighted-line":"","children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"    <"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"View"}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" id"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"{id} "}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":"activePanel"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"<panel-id>\""}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"      ..."}]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"    </"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"View"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  );"}]}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"};"}]}],"\n",["$","span",null,{"children":" "}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"export"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":" const"}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" Router"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":" ="}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" () "}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"=>"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" {"}]]}],"\n","$L19","\n","$L1a","\n","$L1b","\n","$L1c","\n","$L1d","\n","$L1e","\n","$L1f"]}]}],"\n","$L20","\n"]}]}]
+d:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"obrabotchiki-sobytij","children":["$","a",null,{"href":"#obrabotchiki-sobytij","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Обработчики событий","children":["Обработчики событий",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+e:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"ontransition","children":["$","a",null,{"href":"#ontransition","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию [object Object]","children":[["$","code",null,{"className":"Code_root__TR_dq __className_f5a7b3","dir":"ltr","children":"onTransition"}],["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+f:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_f5a7b3","dir":"ltr","children":"onTransition"}]," принимает обработчик, который вызывается при завершении анимации смены активной ",["$","code",null,{"className":"Code_root__TR_dq __className_f5a7b3","dir":"ltr","children":"View"}],"."]}]
+10:["$","$L18",null,{"tabIndex":"0","data-language":"jsx","data-word-wrap":"","data-copy":"","data-pagefind-ignore":"all","children":["$","code",null,{"className":"Code_root__TR_dq __className_f5a7b3","dir":"ltr","children":[["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"function"}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" transitionHandler"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"({"}]]}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#6A737D","--shiki-dark":"#6A737D"},"children":"  // Произошел аыа"}]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#E36209","--shiki-dark":"#FFAB70"},"children":"  isBack"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":": "}],["$","span",null,{"style":{"--shiki-light":"#E36209","--shiki-dark":"#FFAB70"},"children":"boolean"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":";"}]]}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#6A737D","--shiki-dark":"#6A737D"},"children":"  // Уникальный идентификатор `View`, откуда произошел переход"}]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#E36209","--shiki-dark":"#FFAB70"},"children":"  from"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":": "}],["$","span",null,{"style":{"--shiki-light":"#E36209","--shiki-dark":"#FFAB70"},"children":"string"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":";"}]]}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#6A737D","--shiki-dark":"#6A737D"},"children":"  // Уникальный идентификатор `View`, куда произошел переход"}]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#E36209","--shiki-dark":"#FFAB70"},"children":"  to"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":": "}],["$","span",null,{"style":{"--shiki-light":"#E36209","--shiki-dark":"#FFAB70"},"children":"string"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":";"}]]}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"}) {"}]}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#6A737D","--shiki-dark":"#6A737D"},"children":"    // обработчик"}]}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"}"}]}],"\n",["$","span",null,{"children":" "}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"<"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Root"}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" onTransition"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"{transitionHandler}>{"}],["$","span",null,{"style":{"--shiki-light":"#6A737D","--shiki-dark":"#6A737D"},"children":"/* views */"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"}</"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Root"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">;"}]]}]]}]}]
+11:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"api","children":["$","a",null,{"href":"#api","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Свойства и методы","children":["Свойства и методы",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+12:["$","div",null,{"className":"Table_root__0rGvK","children":["$","table",null,{"className":"Table_table__NzLHi PropsTable_root__O959b","children":[["$","thead",null,{"children":["$","tr",null,{"children":[["$","th",null,{"children":"Свойство","className":"Table_th__EHorR"}],["$","th",null,{"children":"Описание","className":"Table_th__EHorR"}]],"className":"Table_tr__SD2Ot"}]}],["$","tbody",null,{"children":["$@21","$@22","$@23","$@24","$@25"]}]]}]}]
+13:["$","$L26",null,{"toc":[{"value":"Применение компонента","id":"primenenie-komponenta","depth":2},{"value":"Обработчики событий","id":"obrabotchiki-sobytij","depth":2},{"value":"$e:props:children:props:children:0","id":"ontransition","depth":3},{"value":"Свойства и методы","id":"api","depth":2}]}]
+14:["$","$L27",null,{"children":["$","$28",null,{"name":"Next.MetadataOutlet","children":"$@29"}]}]
+19:["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"  return"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" ("}]]}]
+1a:["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"    <"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Root"}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" activeView"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"my-view\""}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}]
+1b:["$","span",null,{"data-highlighted-line":"","children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"      {"}],["$","span",null,{"style":{"--shiki-light":"#6A737D","--shiki-dark":"#6A737D"},"children":"/* передаём `id` в компонент-обёртку */"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"}"}]]}]
+1c:["$","span",null,{"data-highlighted-line":"","children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"      <"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"MyView"}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" id"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"my-view\""}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" />"}]]}]
+1d:["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"    </"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Root"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}]
+1e:["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  );"}]}]
+1f:["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"};"}]}]
+20:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Иначе ",["$","code",null,{"className":"Code_root__TR_dq __className_f5a7b3","dir":"ltr","children":"Root"}]," не сможет найти ",["$","code",null,{"className":"Code_root__TR_dq __className_f5a7b3","dir":"ltr","children":"id"}]," из ",["$","code",null,{"className":"Code_root__TR_dq __className_f5a7b3","dir":"ltr","children":"activeView"}]," среди прямых потомков в ",["$","code",null,{"className":"Code_root__TR_dq __className_f5a7b3","dir":"ltr","children":"children"}],"."]}]
+21:["$","tr","activeView",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ PropsTable_propRequired__6g8iy","children":["$","code",null,{"className":"Code_root__TR_dq __className_f5a7b3","dir":"ltr","children":"activeView"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_f5a7b3","dir":"ltr","children":"string"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_f5a7b3","dir":"ltr","children":"id"}]," активной ",["$","code",null,{"className":"Code_root__TR_dq __className_f5a7b3","dir":"ltr","children":"View"}],"."]}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_f5a7b3","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+22:["$","tr","children",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ PropsTable_propRequired__6g8iy","children":["$","code",null,{"className":"Code_root__TR_dq __className_f5a7b3","dir":"ltr","children":"children"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_f5a7b3","dir":"ltr","children":"ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactElement<unknown, string | JSXElementConstructor<any>>>"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Коллекция ",["$","code",null,{"className":"Code_root__TR_dq __className_f5a7b3","dir":"ltr","children":"View"}],". У каждой ",["$","code",null,{"className":"Code_root__TR_dq __className_f5a7b3","dir":"ltr","children":"View"}]," должен быть ",["$","code",null,{"className":"Code_root__TR_dq __className_f5a7b3","dir":"ltr","children":"id"}],"."]}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_f5a7b3","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+23:["$","tr","getRootRef",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_f5a7b3","dir":"ltr","children":"getRootRef"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_f5a7b3","dir":"ltr","children":"Ref<HTMLDivElement>"}],"$undefined",["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_f5a7b3","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+24:["$","tr","nav",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_f5a7b3","dir":"ltr","children":"nav"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_f5a7b3","dir":"ltr","children":"string"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Уникальный идентификатор навигационного элемента (вместо id)"}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_f5a7b3","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+25:["$","tr","onTransition",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_f5a7b3","dir":"ltr","children":"onTransition"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_f5a7b3","dir":"ltr","children":"((params: { isBack: boolean; from: string; to: string; }) => void)"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Обработчик, который вызывается при завершении анимации смены активной ",["$","code",null,{"className":"Code_root__TR_dq __className_f5a7b3","dir":"ltr","children":"View"}],"."]}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_f5a7b3","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+29:null

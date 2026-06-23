@@ -1,0 +1,1 @@
+import{n as e}from"./chunk-BneVvdWh.js";var t,n,r=e((()=>{t=`light`,n={DARK:`dark`,LIGHT:`light`}}));export{t as n,r,n as t};

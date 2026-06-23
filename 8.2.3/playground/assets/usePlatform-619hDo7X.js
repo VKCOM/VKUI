@@ -1,0 +1,1 @@
+import{a as e,n as t}from"./chunk-BneVvdWh.js";import{t as n}from"./react-XedgCGTy.js";import{a as r,o as i}from"./ConfigProviderSubContexts-BJ-JjhN5.js";function a(){return o.useContext(r)}var o,s=t((()=>{o=e(n(),1),i()}));export{a as n,s as t};
