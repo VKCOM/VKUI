@@ -40,6 +40,8 @@ interface StorybookThemeConfig {
   darkTheme: ThemeVars;
   /** Имя параметра. По умолчанию: 'storybookTheme' */
   parameterName: string;
+  /** Значение при первом запуске. По умолчанию: 'system' */
+  defaultValue?: 'light' | 'dark' | 'system'
 }
 ```
 

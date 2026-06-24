@@ -4,7 +4,7 @@
 
 ## Установка
 
-### 1. Подключение пресета
+### Вариант 1: Через пресет (авторегистрация)
 
 Добавьте пресет аддона в `.storybook/main.ts`:
 
@@ -17,7 +17,45 @@ const addons = [
 ];
 ```
 
-### 2. Настройка статических файлов
+Аддон зарегистрируется автоматически с форматированием по умолчанию (встроенный форматтер Monaco).
+
+### Вариант 2: Программная регистрация
+
+Зарегистрируйте аддон в `.storybook/manager.ts` с кастомной конфигурацией:
+
+```ts
+import { registerLiveCodeEditorAddon } from '@vkontakte/storybook-addons';
+
+registerLiveCodeEditorAddon({
+  format: async (code) => {
+    const prettier = await import('prettier/standalone');
+    const prettierPluginTS = await import('prettier/plugins/typescript');
+    const prettierPluginEstree = await import('prettier/plugins/estree');
+    return prettier.format(code, {
+      parser: 'typescript',
+      plugins: [prettierPluginTS, prettierPluginEstree],
+      singleQuote: true,
+      trailingComma: 'all',
+      printWidth: 110,
+      bracketSpacing: true,
+      semi: true,
+    });
+  },
+});
+```
+
+> При использовании программной регистрации не нужно добавлять пресет в `main.ts`.
+
+## Конфигурация
+
+```ts
+interface LiveCodeEditorConfig {
+  /** Кастомная функция форматирования кода. Если не указана — используется встроенный форматтер Monaco */
+  format?: (code: string) => Promise<string>;
+}
+```
+
+## Настройка статических файлов
 
 Monaco Editor и типы React нужно раздавать как статику. Добавьте в `.storybook/main.ts`:
 
@@ -33,12 +71,12 @@ staticDirs: [
 ];
 ```
 
-### 3. Подключение декоратора
+## Подключение декоратора
 
 Добавьте `withLiveCodeEditor` в глобальные декораторы в `.storybook/preview.ts`:
 
 ```ts
-import { withLiveCodeEditor } from '@<company>/storybook-addons';
+import { withLiveCodeEditor } from '@vkontakte/storybook-addons';
 
 export const decorators = [
   withLiveCodeEditor,
@@ -48,7 +86,7 @@ export const decorators = [
 
 > Важно, чтобы декоратор `withLiveCodeEditor` был первым в списке
 
-### 4. Настройка глобальных параметров
+## Настройка глобальных параметров
 
 Определите `getGlobals` в глобальных параметрах, чтобы указать, какие модули будут доступны в редакторе по умолчанию для всех сторисов:
 
@@ -82,8 +120,6 @@ interface LiveCodeEditorParameters {
   extraLibs?: ExtraLibs;
   /** Отключить живое редактирование для конкретного сториса */
   disabled?: boolean;
-  /** Кастомная функция форматирования кода. Если не указана — используется встроенный форматтер Monaco */
-  format?: (code: string) => Promise<string>;
 }
 ```
 
@@ -162,29 +198,6 @@ parameters: {
 },
 ```
 
-### Кастомная функция форматирования
-
-По умолчанию код форматируется встроенным форматтером Monaco. Чтобы использовать Prettier или другой форматтер, передайте функцию `format`:
-
-```tsx
-import * as prettier from 'prettier/standalone';
-import * as prettierPluginTS from 'prettier/plugins/typescript';
-import * as prettierPluginEstree from 'prettier/plugins/estree';
-
-export const parameters = {
-  liveCodeEditor: {
-    format: async (code) =>
-      prettier.format(code, {
-        parser: 'typescript',
-        plugins: [prettierPluginTS, prettierPluginEstree],
-        singleQuote: true,
-        trailingComma: 'all',
-        printWidth: 110,
-      }),
-  },
-};
-```
-
 ### Отключение для конкретного сториса
 
 ```tsx
@@ -213,8 +226,24 @@ export const CustomCode: StoryFn = {
 
 - **Monaco Editor** — полноценный редактор кода с подсветкой синтаксиса TypeScript/JSX
 - **Автодополнение** — типы React подгружаются автоматически; дополнительные типы можно добавить через `extraLibs`
-- **Форматирование** — код автоматически форматируется при загрузке и смене стори; по умолчанию используется встроенный форматтер Monaco, также можно указать кастомную функцию через параметр `format`; ручное форматирование доступно через контекстное меню
+- **Форматирование** — код автоматически форматируется при загрузке и смене стори; по умолчанию используется встроенный форматтер Monaco, кастомную функцию (например, Prettier) можно задать через `registerLiveCodeEditorAddon({ format })`; ручное форматирование доступно через контекстное меню
 - **Живой предпросмотр** — изменения в редакторе компилируются на лету через Babel и отображаются в области превью
 - **Экспорт по ссылке** — можно скопировать ссылку с закодированным кодом (через контекстное меню → «Export By Link» или URL-параметр `live_code_editor`)
 - **Сброс изменений** — через контекстное меню → «Reset all changes»
 - **Адаптивная тема** — редактор следует теме Storybook (тёмная/светлая)
+
+## Экспорты
+
+```ts
+import {
+  registerLiveCodeEditorAddon,
+  withLiveCodeEditor,
+} from '@vkontakte/storybook-addons';
+
+import type {
+  LiveCodeEditorConfig,
+  LiveCodeEditorParameters,
+  ExtraLibs,
+  NamedImports,
+} from '@vkontakte/storybook-addons';
+```

@@ -8,14 +8,16 @@ export const registerStorybookThemeAddon = (themeConfig?: Partial<StorybookTheme
   if (themeConfig) {
     setThemeConfig(themeConfig);
   }
+  const { lightTheme, darkTheme, defaultValue } = getThemeConfig();
 
-  const currentTheme =
-    getLocalStorageValue() ||
-    (window.matchMedia?.('(prefers-color-scheme: dark)').matches && 'dark') ||
-    'light';
-  const { lightTheme, darkTheme } = getThemeConfig();
+  const systemTheme =
+    defaultValue === 'system' &&
+    ((window.matchMedia?.('(prefers-color-scheme: dark)').matches && 'dark') || 'light');
+  const specificTheme = defaultValue === 'dark' ? 'dark' : 'light';
 
-  addons.setConfig({ theme: currentTheme === 'dark' ? darkTheme : lightTheme });
+  const initialTheme = getLocalStorageValue() || systemTheme || specificTheme || 'light';
+
+  addons.setConfig({ theme: initialTheme === 'dark' ? darkTheme : lightTheme });
 
   addons.register(ADDON_ID, () => {
     addons.add(ADDON_ID, {
