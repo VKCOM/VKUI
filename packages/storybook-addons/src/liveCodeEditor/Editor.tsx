@@ -96,6 +96,7 @@ interface EditorProps {
   onInput: (value: string) => void;
   onReset: () => void;
   onExportByLink: () => void;
+  storyId: string;
 }
 
 let fileId = 0;
@@ -108,12 +109,14 @@ export const Editor = ({
   onInput,
   onReset,
   onExportByLink,
+  storyId,
 }: EditorProps) => {
   const editorRef = React.useRef<monaco.editor.IStandaloneCodeEditor | null>(null);
   const containerRef = React.useRef<HTMLDivElement | null>(null);
   const onInputRef = React.useRef(onInput);
   const onResetRef = React.useRef(onReset);
   const onExportByLinkRef = React.useRef(onExportByLink);
+  const ignoreNextInputRef = React.useRef(false);
 
   React.useEffect(() => {
     onInputRef.current = onInput;
@@ -135,6 +138,18 @@ export const Editor = ({
 
     return () => disposable.dispose();
   }, [format]);
+
+  const callFormatCode = React.useCallback(() => {
+    if (!editorRef.current) {
+      return;
+    }
+
+    const formatAction = editorRef.current.getAction('editor.action.formatDocument');
+    if (formatAction) {
+      ignoreNextInputRef.current = true;
+      void formatAction.run();
+    }
+  }, []);
 
   React.useEffect(() => {
     if (!containerRef.current) {
@@ -158,6 +173,10 @@ export const Editor = ({
     });
 
     editor.onDidChangeModelContent((event) => {
+      if (ignoreNextInputRef.current) {
+        ignoreNextInputRef.current = false;
+        return;
+      }
       if (event.isFlush) {
         return;
       }
@@ -180,11 +199,6 @@ export const Editor = ({
     });
 
     editorRef.current = editor;
-
-    const formatAction = editor.getAction('editor.action.formatDocument');
-    if (formatAction) {
-      void formatAction.run();
-    }
 
     // When the document doesn't have focus (e.g. the preview iframe captured it),
     // Monaco can't receive keyboard input after a click. This handler waits for
@@ -222,11 +236,14 @@ export const Editor = ({
   React.useEffect(() => {
     if (editorRef.current && editorRef.current.getValue() !== value) {
       editorRef.current.setValue(value);
-      const formatAction = editorRef.current.getAction('editor.action.formatDocument');
-      if (formatAction) {
-        void formatAction.run();
-      }
     }
   }, [value]);
+
+  React.useEffect(() => {
+    // при смене стори нужно отформатировать изначальный код
+    const id = requestAnimationFrame(() => callFormatCode());
+    return () => cancelAnimationFrame(id);
+  }, [storyId]);
+
   return <div ref={containerRef} style={{ height: '100%' }} />;
 };

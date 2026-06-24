@@ -17,3 +17,5 @@ export {
   ADDON_ID as liveCodeEditorId,
 } from './liveCodeEditor';
 export type { LiveCodeEditorParameters, ExtraLibs, NamedImports } from './liveCodeEditor';
+export type { LiveCodeEditorConfig } from './addons/live-code-editor/config';
+export { registerLiveCodeEditorAddon } from './addons/live-code-editor/register';

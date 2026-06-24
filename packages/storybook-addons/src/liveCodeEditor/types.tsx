@@ -13,5 +13,4 @@ export interface LiveCodeEditorParameters {
   scope?: NamedImports;
   extraLibs?: ExtraLibs;
   disabled?: boolean;
-  format?: (code: string) => Promise<string>;
 }

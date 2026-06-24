@@ -113,6 +113,7 @@ export const LiveEditor = ({
 
   return (
     <Editor
+      storyId={storyId}
       value={storyState?.code ?? initialCodeWithInlineProps}
       extraLibs={extraLibs}
       theme={theme}

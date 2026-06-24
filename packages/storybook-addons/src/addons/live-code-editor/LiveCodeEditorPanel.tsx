@@ -4,10 +4,7 @@ import { type API, useParameter } from 'storybook/manager-api';
 import { useTheme } from 'storybook/theming';
 import { type LiveCodeEditorParameters, LiveEditor, PARAM_ID } from '../../liveCodeEditor';
 import { normalizeStoryName } from '../../liveCodeEditor/utils';
-
-interface DocsParams {
-  source?: { originalSource?: string };
-}
+import { getLiveCodeEditorConfig } from './config';
 
 interface LiveCodeEditorPanelProps {
   api: API;
@@ -35,8 +32,9 @@ const resolveArgs = (args: any, argTypes: any) => {
 const LiveCodeEditorPanel = ({ api }: LiveCodeEditorPanelProps) => {
   const story = api.getCurrentStoryData();
   const theme = useTheme();
-  const { code, disabled, format } = useParameter<LiveCodeEditorParameters>(PARAM_ID, {});
-  const { source: { originalSource } = {} } = useParameter<DocsParams>('docs', {});
+  const { code, disabled } = useParameter<LiveCodeEditorParameters>(PARAM_ID, {});
+  const { format } = getLiveCodeEditorConfig();
+  const originalSource = story.parameters?.docs.source.originalSource;
   const source = code || originalSource;
   if (disabled || !story) {
     return null;
