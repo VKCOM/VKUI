@@ -71,16 +71,16 @@ jobs:
         uses: ./.github/actions/setup
 
       - name: Build vkui package
-        run: yarn run build:vkui
+        run: node --run build:vkui
 
       - name: Build storybook
-        run: yarn docs:storybook:build -o ../../website/tmp/playground
+        run: node --run docs:storybook:build -- -o ../../website/tmp/playground
 
       - name: Creating docs for release (default basePath)
         if: ${{ fromJSON(needs.payload.outputs.is_for_prerelease) != true }}
         # [Latest doc] В S3 будет выгружать с префиксом latest (cм. 86 строчку)
         run: |
-          yarn run docs:website:build
+          node --run docs:website:build
           yarn workspace @project-docs/website run next-sitemap
 
           cp -R website/out/* website/tmp/
@@ -91,7 +91,7 @@ jobs:
       - name: Creating docs for pre-release OR release (version basePath)
         # [Version doc] В S3 будет выгружать с префиксом <version>
         run: |
-          yarn run docs:website:build
+          node --run docs:website:build
           mkdir -p website/out/${{ needs.payload.outputs.next_version }}/playground
           cp -R website/tmp/playground/* website/out/${{ needs.payload.outputs.next_version }}/playground/
         env:
@@ -156,7 +156,7 @@ jobs:
         uses: ./.github/actions/setup
 
       - name: Build vkui package
-        run: yarn run build:vkui
+        run: node --run build:vkui
 
       - name: Generate docgen
         run: yarn workspace @project-docs/website run generate

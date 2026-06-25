@@ -34,13 +34,13 @@ yarn install
 В режиме разработки:
 
 ```bash
-yarn dev
+node --run dev
 ```
 
 Сборка для production:
 
 ```bash
-yarn build
+node --run build
 ```
 
 ## О шаблоне

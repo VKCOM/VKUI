@@ -9,6 +9,6 @@
   "scripts": {
     "build": "echo no build",
     "test": "yarn run -T vitest run",
-    "test:ci": "yarn test"
+    "test:ci": "node --run test"
   }
 }

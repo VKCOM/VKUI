@@ -47,19 +47,19 @@ jobs:
         uses: ./.github/actions/node-setup
 
       - name: Run Biome format
-        run: yarn run lint:format
+        run: node --run lint:format
 
       - name: Run Stylelint
-        run: yarn run lint:style
+        run: node --run lint:style
 
       - name: Run types checking
-        run: yarn run lint:types
+        run: node --run lint:types
 
       - name: Run ESLint
-        run: yarn run lint:es:ci
+        run: node --run lint:es:ci
 
       - name: Check if the generated files have been updated
-        run: yarn run lint:generated-files
+        run: node --run lint:generated-files
 
       - name: Report lint results
         if: ${{ !cancelled() }}
@@ -119,7 +119,7 @@ jobs:
         shell: bash
 
       - name: Merge Playwright blob reports into HTML Report
-        run: yarn run playwright:cmd:merge-reports --reporter html ./all-blob-reports
+        run: node --run playwright:cmd:merge-reports -- --reporter html ./all-blob-reports
 
       - name: Upload Playwright HTML report to GitHub Actions Artifacts
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
@@ -192,7 +192,7 @@ jobs:
       - name: Build vkui PR (pr)
         working-directory: packages/vkui
         run: |
-          yarn run build
+          node --run build
           yarn exec biome format --write --config-path=diff.biome.json
 
       - name: Checkout target
@@ -211,7 +211,7 @@ jobs:
       - name: Build vkui (target)
         working-directory: packages/vkui
         run: |
-          yarn run build
+          node --run build
           yarn exec biome format --write --config-path=diff.biome.json
 
       - name: Generate diff
@@ -228,7 +228,7 @@ jobs:
         if: steps.generate-diff.outputs.has_diff == 'true'
         run: |
           mkdir diff
-          yarn run diff2html -i file -F diff/diff-report.html --summary open  --title "VKUI Bundle Diff" --style side -- code_diff.dif
+          node --run diff2html -- -i file -F diff/diff-report.html --summary open  --title "VKUI Bundle Diff" --style side -- code_diff.dif
 
       - name: Upload report
         if: steps.generate-diff.outputs.has_diff == 'true'
@@ -250,7 +250,7 @@ jobs:
         uses: ./.github/actions/node-setup
 
       - name: Build
-        run: yarn docs:storybook:build
+        run: node --run docs:storybook:build
 
       - name: Upload dist
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
@@ -271,10 +271,10 @@ jobs:
         uses: ./.github/actions/node-setup
 
       - name: Build VKUI
-        run: yarn build:vkui
+        run: node --run build:vkui
 
       - name: Build
-        run: yarn docs:website:build
+        run: node --run docs:website:build
         env:
           NEXT_PUBLIC_VKUI_DOCS_BASE_PATH: /pull/${{ github.event.pull_request.number }}/${{ github.event.pull_request.head.sha }}
 

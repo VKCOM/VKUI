@@ -27,7 +27,7 @@ jobs:
 
       - name: Run tests for all workspaces
         if: ${{ !inputs.workspace }}
-        run: yarn run test:ci
+        run: node --run test:ci
 
       - name: Run tests for the specified workspace
         if: ${{ inputs.workspace }}

@@ -60,7 +60,7 @@ jobs:
 
       - name: Update screenshots
         # Почему HOME=/root см. https://github.com/microsoft/playwright/issues/6500
-        run: HOME=/root yarn run test:e2e-update:ci --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
+        run: HOME=/root node --run test:e2e-update:ci -- --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
 
       - name: Zip changed screenshots
         id: zip-screenshots

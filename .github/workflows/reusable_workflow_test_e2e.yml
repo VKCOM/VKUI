@@ -59,7 +59,7 @@ jobs:
 
       - name: Run e2e tests for @vkontakte/vkui workspace
         # Почему HOME=/root см. https://github.com/microsoft/playwright/issues/6500
-        run: HOME=/root yarn run test:e2e:ci --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
+        run: HOME=/root node --run test:e2e:ci -- --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
 
       - name: Upload Playwright blob report to GitHub Actions Artifacts
         if: always()
