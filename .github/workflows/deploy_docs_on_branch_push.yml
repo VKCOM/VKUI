@@ -59,7 +59,7 @@ jobs:
         uses: ./.github/actions/node-setup
 
       - name: Build
-        run: yarn docs:storybook:build
+        run: node --run docs:storybook:build
 
       - name: Upload to S3
         id: deploy
@@ -91,10 +91,10 @@ jobs:
         uses: ./.github/actions/node-setup
 
       - name: Build VKUI
-        run: yarn build:vkui
+        run: node --run build:vkui
 
       - name: Build
-        run: yarn docs:website:build
+        run: node --run docs:website:build
         env:
           NEXT_PUBLIC_VKUI_DOCS_BASE_PATH: /next
 

@@ -16,11 +16,11 @@ jobs:
         uses: ./.github/actions/node-setup
 
       - name: Build VKUI
-        run: yarn build:vkui
+        run: node --run build:vkui
 
       - name: Build docs
         run: |
-          yarn docs:website:build
+          node --run docs:website:build
           yarn workspace @project-docs/website next-sitemap
 
       - name: Publishing docs

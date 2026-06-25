@@ -29,11 +29,11 @@
     "@types/prompts": "^2.4.9"
   },
   "scripts": {
-    "prepack": "yarn run build",
+    "prepack": "node --run build",
     "build": "tsc",
     "test": "yarn run -T vitest run --pool=vmThreads",
-    "test:update": "yarn test -u",
-    "test:ci": "yarn test",
+    "test:update": "node --run test -- -u",
+    "test:ci": "node --run test",
     "migrate": "jscodeshift",
     "lint:types": "tsc"
   },

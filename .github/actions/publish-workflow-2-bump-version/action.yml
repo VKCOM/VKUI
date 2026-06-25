@@ -49,7 +49,7 @@ runs:
     - name: Detect release type
       id: internal_id_is_stable_release
       run: |
-        if yarn run semver ${{ steps.internal_id_next_version.outputs.value }} --range '>=0.0.0'; then
+        if node --run semver -- ${{ steps.internal_id_next_version.outputs.value }} --range '>=0.0.0'; then
           echo "value=true" >> $GITHUB_OUTPUT
         else
           echo "value=false" >> $GITHUB_OUTPUT

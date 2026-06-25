@@ -3,8 +3,8 @@
   "name": "@project-docs/website",
   "version": "1.0.0",
   "scripts": {
-    "dev": "yarn generate && next dev --webpack",
-    "build": "yarn generate && next build --webpack && yarn pagefind",
+    "dev": "node --run generate && next dev --webpack",
+    "build": "node --run generate && next build --webpack && node --run pagefind",
     "start": "next start",
     "pagefind": "pagefind --site out/ --output-path ./public/_pagefind && cp -r ./public/_pagefind ./out",
     "next-sitemap": "next-sitemap",

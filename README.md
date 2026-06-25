@@ -42,8 +42,8 @@ pnpm add @vkontakte/vkui
 ## Hello World
 
 ```jsx static
-import * as React from 'react';
-import { createRoot } from 'react-dom/client';
+import * as React from "react";
+import { createRoot } from "react-dom/client";
 import {
   AdaptivityProvider,
   ConfigProvider,
@@ -56,16 +56,18 @@ import {
   Header,
   Group,
   SimpleCell,
-  usePlatform
-} from '@vkontakte/vkui';
-import '@vkontakte/vkui/dist/vkui.css';
+  usePlatform,
+} from "@vkontakte/vkui";
+import "@vkontakte/vkui/dist/vkui.css";
 
 const Example = () => {
   const platform = usePlatform();
 
   return (
     <AppRoot>
-      <SplitLayout header={platform !== 'vkcom' && <PanelHeader delimiter="none" />}>
+      <SplitLayout
+        header={platform !== "vkcom" && <PanelHeader delimiter="none" />}
+      >
         <SplitCol autoSpaced>
           <View activePanel="main">
             <Panel id="main">
@@ -82,7 +84,7 @@ const Example = () => {
   );
 };
 
-const container = document.getElementById('root');
+const container = document.getElementById("root");
 const root = createRoot(container); // createRoot(container!) if you use TypeScript
 root.render(
   <ConfigProvider>
@@ -99,7 +101,7 @@ root.render(
 
 ## Тестирование
 
-Мы работаем над качеством библиотеки и подвозим тесты. `yarn test` запускает юниты, типы и линтит. Также мы поддерживаем скриншотные тесты (e2e) и проверяем базовую доступность (a11y) компонентов — смотрите наш [гайд по тестированию](https://github.com/VKCOM/VKUI/blob/master/docs/TESTING.md).
+Мы работаем над качеством библиотеки и подвозим тесты. `node --run test` запускает юниты, типы и линтит. Также мы поддерживаем скриншотные тесты (e2e) и проверяем базовую доступность (a11y) компонентов — смотрите наш [гайд по тестированию](https://github.com/VKCOM/VKUI/blob/master/docs/TESTING.md).
 
 ## Документация
 

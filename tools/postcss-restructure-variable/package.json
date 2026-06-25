@@ -7,6 +7,6 @@
     "build": "echo no build",
     "test": "node --test '**/*.test.*'",
     "test:update-snapshots": "node --test-update-snapshots --test '**/*.test.*'",
-    "test:ci": "yarn test"
+    "test:ci": "node --run test"
   }
 }

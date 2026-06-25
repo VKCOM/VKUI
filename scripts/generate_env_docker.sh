@@ -25,7 +25,7 @@ while getopts "ur:" option; do
         echo "UPDATE_SNAPSHOTS_FLAG=-u" >> .env.docker
         ;;
        r)
-        # позволяет переопределить аргумент для команды yarn run
+        # позволяет переопределить аргумент для команды node --run
         echo "RUN_SCRIPT_COMMAND=${OPTARG}" >> .env.docker
         ;;
    esac
