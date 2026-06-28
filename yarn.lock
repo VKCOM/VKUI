@@ -3032,7 +3032,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@project-tools/storybook-addon-cartesian@workspace:tools/storybook-addon-cartesian"
   dependencies:
-    "@storybook/icons": "npm:^2.0.2"
+    "@storybook/icons": "npm:^2.1.0"
     "@storybook/react": "npm:10.4.6"
     "@types/react": "npm:^19.0.1"
     "@types/react-dom": "npm:^19.0.1"
@@ -3934,6 +3934,15 @@ __metadata:
     react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
     react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
   checksum: 10/e470c2e1a59211f9f0da7e39cf1cee6c4f62b72b3c2489d75e869840dabffb7ca84227e17f5d3657f459cc082a01b76482c111792ab5586ba9235be5c6199e29
+  languageName: node
+  linkType: hard
+
+"@storybook/icons@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "@storybook/icons@npm:2.1.0"
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+  checksum: 10/c2f093f3d117671f2c25e3fa498e066a0624e0d9ee9e60e38253a30d7e9120115d608d675da5c8a133f669f61309b6209f909fac3b687e667894463754f8ccfc
   languageName: node
   linkType: hard
 
