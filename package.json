@@ -42,7 +42,7 @@
     "@vkontakte/eslint-plugin": "^2.0.0",
     "@vkontakte/stylelint-config": "^4.1.0",
     "@vkontakte/vkui-tokens": "4.81.2",
-    "autoprefixer": "^10.5.0",
+    "autoprefixer": "^10.5.2",
     "concurrently": "^10.0.3",
     "cross-env": "^10.1.0",
     "css-loader": "^7.1.2",
