@@ -39,9 +39,9 @@ runs:
   steps:
     - name: Commit
       env:
-        NEXT_VERSION: ${{ inputs.next_version }}
         PACKAGE_NAME: ${{ inputs.package_name }}
         PREV_VERSION: ${{ inputs.prev_version }}
+        NEXT_VERSION: ${{ inputs.next_version }}
       run: |
         git add -A
         git commit -m "bump(${PACKAGE_NAME}): from ${PREV_VERSION} to ${NEXT_VERSION}"

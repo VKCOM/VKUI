@@ -20,8 +20,6 @@ on:
 
 run-name: Deprecate version ${{ inputs.version }}
 
-permissions: {}
-
 jobs:
   deprecate:
     runs-on: ubuntu-slim
@@ -42,7 +40,9 @@ jobs:
           REASON: ${{ inputs.reason }}
           VERSION: ${{ inputs.version }}
         run: |
-          if [[ ! "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+([-.+][0-9A-Za-z.-]+)?$ ]]; then
+          SEMVER_RE='^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)(-((0|[1-9][0-9]*|[0-9]*[A-Za-z-][0-9A-Za-z-]*)(\.(0|[1-9][0-9]*|[0-9]*[A-Za-z-][0-9A-Za-z-]*))*))?$'
+
+          if [[ ! "$VERSION" =~ $SEMVER_RE ]]; then
             echo "::error::Invalid semver version"
             exit 1
           fi

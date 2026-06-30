@@ -11,11 +11,23 @@ inputs:
 runs:
   using: composite
   steps:
+    - name: Validate sudo_cmd
+      shell: bash
+      env:
+        SUDO_CMD: ${{ inputs.sudo_cmd }}
+      run: |
+        case "$SUDO_CMD" in
+          ""|"sudo") ;;
+          *)
+            echo "::error::Unsupported sudo_cmd value"
+            exit 1
+            ;;
+        esac
+
     # см. https://github.com/actions/checkout/issues/1169
     - name: Set safe directory
       shell: bash
       run: git config --global --add safe.directory /__w/VKUI/VKUI
-
 
     - name: Configure apt mirror
       if: ${{ inputs.apt_mirror }}
@@ -24,41 +36,21 @@ runs:
         APT_MIRROR: ${{ inputs.apt_mirror }}
         SUDO_CMD: ${{ inputs.sudo_cmd }}
       run: |
-        case "$SUDO_CMD" in
-          ""|"sudo") ;;
-          *)
-            echo "::error::Unsupported sudo_cmd value"
-            exit 1
-            ;;
-        esac
-
-        if [[ ! "$APT_MIRROR" =~ ^https?://[A-Za-z0-9._:/-]+$ ]]; then
-          echo "::error::Unsupported apt_mirror value"
-          exit 1
-        fi
-
         $SUDO_CMD sed -i "s|http://archive.ubuntu.com|$APT_MIRROR|g" /etc/apt/sources.list
         $SUDO_CMD sed -i "s|http://security.ubuntu.com|$APT_MIRROR|g" /etc/apt/sources.list
         $SUDO_CMD apt-get update
 
+    # Скачивание git-lfs через curl это ожидаемое решение.
     # см. https://github.com/microsoft/playwright/issues/21920
     - name: Install git lfs
       shell: bash
       env:
         SUDO_CMD: ${{ inputs.sudo_cmd }}
       run: |
-        case "$SUDO_CMD" in
-          ""|"sudo") ;;
-          *)
-            echo "::error::Unsupported sudo_cmd value"
-            exit 1
-            ;;
-        esac
-
-        if git lfs version > /dev/null 2>&1 ; then
+        if command -v git-lfs > /dev/null 2>&1 ; then
           echo "git-lfs installed"
         else
-          $SUDO_CMD apt-get update
+          curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | $SUDO_CMD bash
           $SUDO_CMD apt-get install -y git-lfs
         fi
 
@@ -68,18 +60,9 @@ runs:
       env:
         SUDO_CMD: ${{ inputs.sudo_cmd }}
       run: |
-        case "$SUDO_CMD" in
-          ""|"sudo") ;;
-          *)
-            echo "::error::Unsupported sudo_cmd value"
-            exit 1
-            ;;
-        esac
-
-        if zstd --version > /dev/null 2>&1 ; then
+        if command -v zstd > /dev/null 2>&1 ; then
           echo "zstd installed"
         else
-          $SUDO_CMD apt-get update
           $SUDO_CMD apt-get install -y zstd
         fi
 

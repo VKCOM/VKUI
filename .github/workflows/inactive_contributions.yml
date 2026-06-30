@@ -3,12 +3,13 @@ on:
   schedule:
     - cron: '0 10 * * *' # every day at 10:00
 
-permissions: {}
-
 jobs:
   close-issues:
     runs-on: ubuntu-slim
-    permissions: {}
+    # Note: для работы actions/stale нужны права на write
+    permissions:
+      issues: write
+      pull-requests: write
     steps:
       - uses: actions/stale@eb5cf3af3ac0a1aa4c9c45633dd1ae542a27a899 # v10.3.0
         with:

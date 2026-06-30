@@ -44,7 +44,7 @@ jobs:
         id: payload
         shell: bash
         run: |
-          PR_NUMBER="$(tr -d '[:space:]' < pr_workflow_payload/pr_number.txt)"
+          PR_NUMBER="$(tr -d '\r\n' < pr_workflow_payload/pr_number.txt)"
 
           if [[ ! "$PR_NUMBER" =~ ^[0-9]+$ ]]; then
             echo "::error::Invalid PR number payload"
@@ -76,7 +76,7 @@ jobs:
             exit 1
           fi
 
-          mkdir pr_workflow_payload
+          mkdir -p pr_workflow_payload
           printf '%s\n' "$PR_NUMBER" > pr_workflow_payload/pr_number.txt
 
       - name: Upload

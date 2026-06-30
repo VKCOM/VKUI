@@ -47,8 +47,8 @@ runs:
       if: ${{ inputs.prerelease_id }}
       env:
         PACKAGE_NAME: ${{ inputs.package_name }}
-        PRERELEASE_ID: ${{ inputs.prerelease_id }}
         VERSION_TYPE: ${{ inputs.version_type }}
+        PRERELEASE_ID: ${{ inputs.prerelease_id }}
       run: yarn workspace "$PACKAGE_NAME" run g:npm:version "$VERSION_TYPE" --preid "$PRERELEASE_ID"
       shell: bash
 
@@ -67,8 +67,8 @@ runs:
         NEXT_VERSION: ${{ steps.internal_id_next_version.outputs.value }}
       run: |
         if node --run semver -- "$NEXT_VERSION" --range '>=0.0.0'; then
-          echo "value=true" >> $GITHUB_OUTPUT
+          echo "value=true" >> "$GITHUB_OUTPUT"
         else
-          echo "value=false" >> $GITHUB_OUTPUT
+          echo "value=false" >> "$GITHUB_OUTPUT"
         fi
       shell: bash

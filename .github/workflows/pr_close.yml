@@ -229,11 +229,12 @@ jobs:
           current_version: ${{ steps.get_version.outputs.floating_ui_version }}
 
       - name: Define branch name for new version release
+        id: release_branch
         env:
           NEW_VERSION: ${{ steps.calc_new_version_vkui_floating_ui.outputs.new_version }}
         run: |
           BRANCH_NAME_PREFIX="release/vkui-floating-ui-"
-          printf 'RELEASE_BRANCH_NAME=%s%s\n' "$BRANCH_NAME_PREFIX" "$NEW_VERSION" >> "$GITHUB_ENV"
+          printf 'name=%s%s\n' "$BRANCH_NAME_PREFIX" "$NEW_VERSION" >> "$GITHUB_OUTPUT"
 
       - name: Set Git credentials
         run: |
@@ -244,7 +245,7 @@ jobs:
         uses: ad-m/github-push-action@881a6320fdb16eb5318c5054f31c218aec2b324c # v1.3.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ env.RELEASE_BRANCH_NAME }}
+          branch: ${{ steps.release_branch.outputs.name }}
 
       # Запускаем форкфлоу скрипта публикации
       # В `publish.yml` поле `version_type` помечено как `required` и, чтобы избежать ошибок, стоит проставить.
@@ -253,7 +254,7 @@ jobs:
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
         env:
           NEW_VERSION: ${{ steps.calc_new_version_vkui_floating_ui.outputs.new_version }}
-          RELEASE_BRANCH_NAME: ${{ env.RELEASE_BRANCH_NAME }}
+          RELEASE_BRANCH_NAME: ${{ steps.release_branch.outputs.name }}
         with:
           script: |
             github.rest.actions.createWorkflowDispatch({
@@ -292,5 +293,4 @@ jobs:
         uses: VKCOM/gh-actions/VKUI/auto-update-release-notes@main
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          current_vkui_version: ${{ steps.get_version.outputs.vkui_version }}
           pull_request_number: ${{ github.event.pull_request.number }}
