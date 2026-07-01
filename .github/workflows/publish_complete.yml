@@ -76,8 +76,6 @@ jobs:
             exit 1
           fi
 
-          SEMVER_RE='^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)(-((0|[1-9][0-9]*|[0-9]*[A-Za-z-][0-9A-Za-z-]*)(\.(0|[1-9][0-9]*|[0-9]*[A-Za-z-][0-9A-Za-z-]*))*))?$'
-
           if [[ "$PACKAGE_NAME" == "@vkontakte/vkui" ]]; then
             if [[ "$GIT_RELEASE_TAG" != v* ]]; then
               echo "::error::Invalid git_release_tag payload"
@@ -92,6 +90,8 @@ jobs:
             fi
             TAG_VERSION="${GIT_RELEASE_TAG#"$TAG_PREFIX"}"
           fi
+
+          SEMVER_RE='^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)(-((0|[1-9][0-9]*|[0-9]*[A-Za-z-][0-9A-Za-z-]*)(\.(0|[1-9][0-9]*|[0-9]*[A-Za-z-][0-9A-Za-z-]*))*))?$'
 
           if [[ ! "$TAG_VERSION" =~ $SEMVER_RE ]]; then
             echo "::error::Invalid git_release_tag payload"
@@ -127,8 +127,6 @@ jobs:
           PACKAGE_NAME: ${{ inputs.package_name }}
         # Пропускаем проверки BRANCH, NPM_TAG и PACKAGE_NAME, т.к. они ограничены через inputs.
         run: |
-          SEMVER_RE='^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)(-((0|[1-9][0-9]*|[0-9]*[A-Za-z-][0-9A-Za-z-]*)(\.(0|[1-9][0-9]*|[0-9]*[A-Za-z-][0-9A-Za-z-]*))*))?$'
-
           if [[ "$PACKAGE_NAME" == "@vkontakte/vkui" ]]; then
             if [[ "$GIT_RELEASE_TAG" != v* ]]; then
               echo "::error::Invalid git_release_tag input"
@@ -143,6 +141,8 @@ jobs:
             fi
             TAG_VERSION="${GIT_RELEASE_TAG#"$TAG_PREFIX"}"
           fi
+
+          SEMVER_RE='^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)(-((0|[1-9][0-9]*|[0-9]*[A-Za-z-][0-9A-Za-z-]*)(\.(0|[1-9][0-9]*|[0-9]*[A-Za-z-][0-9A-Za-z-]*))*))?$'
 
           if [[ ! "$TAG_VERSION" =~ $SEMVER_RE ]]; then
             echo "::error::Invalid git_release_tag input"
