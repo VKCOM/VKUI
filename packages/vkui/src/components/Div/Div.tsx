@@ -7,7 +7,7 @@ import styles from './Div.module.css';
 export type DivProps = HTMLAttributesWithRootRef<HTMLDivElement>;
 
 const warn = warnOnce('Div');
-
+ 
 /**
  * @see https://vkui.io/components/div
  *
