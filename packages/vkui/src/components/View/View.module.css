@@ -1,16 +1,8 @@
 .host {
-  --vkui_internal--view_animation_translateY_initial: 80px;
-
   position: relative;
   inline-size: 100%;
   block-size: 100%;
   overflow-wrap: break-word;
-}
-
-@media (--reduce-motion) {
-  .host {
-    --vkui_internal--view_animation_translateY_initial: 0;
-  }
 }
 
 .animated,
