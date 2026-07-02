@@ -6,7 +6,7 @@ import { useModalContext } from '../../context/ModalContext';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { type SizeTypeValues, ViewWidth, type ViewWidthType } from '../../lib/adaptivity';
 import { warnOnce } from '../../lib/warnOnce';
-import type { HasComponent, HTMLAttributesWithRootRef } from '../../types';
+import type { HasComponent, HasRender, HTMLAttributesWithRootRef } from '../../types';
 import { AppRootContext } from '../AppRoot/AppRootContext';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './Group.module.css';
@@ -78,7 +78,8 @@ function useGroupMode(
 }
 
 export type GroupContainerProps = HTMLAttributesWithRootRef<HTMLElement> &
-  HasComponent & {
+  HasComponent &
+  HasRender<HTMLElement> & {
     /**
     `show` (только для `mode="plain"`) - разделитель всегда показывается
     `hide` - разделитель всегда спрятан,
