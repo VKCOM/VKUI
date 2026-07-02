@@ -75,10 +75,6 @@
 .animated .panel,
 .swipingBack .panel {
   pointer-events: none;
-}
-
-.animated .panel,
-.swipingBack .panel {
   position: fixed;
   inset-block-start: 0;
   inset-inline-start: 0;
