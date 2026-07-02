@@ -19,6 +19,9 @@ jobs:
     # см. https://github.com/orgs/community/discussions/26303
     if: ${{ !cancelled() }}
     name: Call reusable workflow
+    permissions:
+      actions: read
+      contents: read
     uses: ./.github/workflows/reusable_workflow_pr_worfklow_payload.yml
     with:
       action: upload
@@ -121,8 +124,8 @@ jobs:
         id: get_minor_version
         run: |
           MINOR_VERSION=$(git show origin/v7:packages/vkui/package.json | jq -r '.version|split(".")[1]')
-          echo "minor=${MINOR_VERSION}" >> $GITHUB_OUTPUT
-          echo "target_branch=7.${MINOR_VERSION}-stable" >> $GITHUB_OUTPUT
+          echo "minor=${MINOR_VERSION}" >> "$GITHUB_OUTPUT"
+          echo "target_branch=7.${MINOR_VERSION}-stable" >> "$GITHUB_OUTPUT"
 
       - name: Enable Corepack
         run: corepack enable
@@ -190,12 +193,14 @@ jobs:
         run: |
           UPDATED_DEPS="${DEPENDENCY_NAMES//,/ }"
 
-          if [[ $UPDATED_DEPS =~ "@floating-ui/react-dom" ]]; then
-            echo "floating_ui_updated=true" >> $GITHUB_OUTPUT
-            printf 'prev_version=%s\n' "$PREVIOUS_VERSION" >> "$GITHUB_OUTPUT"
-            printf 'new_version=%s\n' "$NEW_VERSION" >> "$GITHUB_OUTPUT"
+          if [[ "$UPDATED_DEPS" == *"@floating-ui/react-dom"* ]]; then
+            {
+              echo "floating_ui_updated=true"
+              printf 'prev_version=%s\n' "$PREVIOUS_VERSION"
+              printf 'new_version=%s\n' "$NEW_VERSION"
+            } >> "$GITHUB_OUTPUT"
           else
-            echo "floating_ui_updated=false" >> $GITHUB_OUTPUT
+            echo "floating_ui_updated=false" >> "$GITHUB_OUTPUT"
           fi
 
   autopublish-vkui-floating-ui:
@@ -217,7 +222,8 @@ jobs:
       - name: Get vkui-floating-ui version
         id: get_version
         run: |
-          echo "floating_ui_version=$(node -p "require('./packages/vkui-floating-ui/package.json').version")" >> $GITHUB_OUTPUT
+          VERSION="$(node -p "require('./packages/vkui-floating-ui/package.json').version")"
+          printf 'floating_ui_version=%s\n' "$VERSION" >> "$GITHUB_OUTPUT"
 
       # Рассчитываем новую версию @vkui-floating-ui
       - name: Calculate new version of vkui-floating-ui
@@ -287,7 +293,8 @@ jobs:
       - name: Get vkui version
         id: get_version
         run: |
-          echo "vkui_version=$(node -p "require('./packages/vkui/package.json').version")" >> $GITHUB_OUTPUT
+          VERSION="$(node -p "require('./packages/vkui/package.json').version")"
+          printf 'vkui_version=%s\n' "$VERSION" >> "$GITHUB_OUTPUT"
 
       - name: Update release notes script
         uses: VKCOM/gh-actions/VKUI/auto-update-release-notes@main

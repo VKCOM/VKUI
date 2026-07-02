@@ -119,7 +119,7 @@ jobs:
           if [ -d packages/vkui/artifacts ]; then
             for i in {1..10}
             do
-              mv packages/vkui/artifacts/all-blob-reports-$i-10/* all-blob-reports/
+              mv "packages/vkui/artifacts/all-blob-reports-${i}-10"/* all-blob-reports/
             done
           fi
           rm -r packages/vkui/artifacts
@@ -229,9 +229,9 @@ jobs:
         run: |
           git diff --no-index packages/vkui/dist/ packages/vkui/pr_dist/ > code_diff.dif || true
           if [ -s code_diff.dif ]; then
-            echo "has_diff=true" >> $GITHUB_OUTPUT
+            echo "has_diff=true" >> "$GITHUB_OUTPUT"
           else
-            echo "has_diff=false" >> $GITHUB_OUTPUT
+            echo "has_diff=false" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Generate HTML report
@@ -301,6 +301,9 @@ jobs:
     # см. https://github.com/orgs/community/discussions/26303
     if: ${{ !cancelled() }}
     name: Call reusable workflow
+    permissions:
+      actions: read
+      contents: read
     uses: ./.github/workflows/reusable_workflow_pr_worfklow_payload.yml
     with:
       action: upload

@@ -76,7 +76,7 @@ jobs:
           VKUI_PACKAGE_CHANGED: ${{ steps.file_changes.outputs.vkui_package }}
         run: |
           if [[ "$ROOT_PACKAGE_CHANGED" == 'true' ]]; then
-            echo "value=@vkontakte/vkui-tokens" >> $GITHUB_OUTPUT
+            echo "value=@vkontakte/vkui-tokens" >> "$GITHUB_OUTPUT"
             exit 0
           fi
 
@@ -108,7 +108,7 @@ jobs:
 
           for UPDATED_DEP in $UPDATED_DEPS; do
             if [[ "$RELEVANT_DEPS" == *"$UPDATED_DEP"* ]]; then
-              echo "update_needed=true" >> $GITHUB_OUTPUT
+              echo "update_needed=true" >> "$GITHUB_OUTPUT"
               exit 0
             fi
           done

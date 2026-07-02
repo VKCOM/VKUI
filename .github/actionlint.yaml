@@ -1,0 +1,11 @@
+paths:
+  .github/workflows/**/*.{yml,yaml}:
+    ignore:
+      # actions/upload-code-coverage requires this permission, but actionlint 1.7.12
+      # does not know the code-quality scope yet.
+      - 'unknown permission scope "code-quality"'
+  .github/workflows/pull_request_packages.yml:
+    ignore:
+      # GitHub Actions supports jobs.<job_id>.steps[*].parallel, but actionlint
+      # 1.7.12 does not know this syntax yet.
+      - 'step must run script with "run" section or run action with "uses" section'
