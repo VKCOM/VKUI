@@ -9,7 +9,9 @@ import { type SizeTypeValues, ViewWidth, type ViewWidthType } from '../../lib/ad
 import { useCSSKeyframesAnimationController } from '../../lib/animation';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { useScrollLock } from '../AppRoot/ScrollContext';
-import { FixedLayout } from '../FixedLayout/FixedLayout';
+import { Box } from '../Box/Box';
+import { SplitColWidthWrapper } from '../FixedLayout/SplitColWidthWrapper';
+import { OnboardingTooltipFixedContainer } from '../OnboardingTooltip/OnboardingTooltipFixedContainer';
 import styles from './PanelHeaderContext.module.css';
 
 function getViewWidthClassName(
@@ -42,6 +44,8 @@ export interface PanelHeaderContextProps extends HTMLAttributesWithRootRef<HTMLD
    */
   onClose: VoidFunction;
 }
+
+const ComponentDecorators = [SplitColWidthWrapper, OnboardingTooltipFixedContainer];
 
 /**
  * @see https://vkui.io/components/panel-header-context
@@ -82,8 +86,8 @@ export const PanelHeaderContext = ({
   }
 
   return (
-    <FixedLayout
-      {...restProps}
+    <Box
+      Component={ComponentDecorators}
       className={classNames(
         styles.host,
         platform === 'ios' && styles.ios,
@@ -91,7 +95,10 @@ export const PanelHeaderContext = ({
         getViewWidthClassName(viewWidth, legacySizeX),
         className,
       )}
-      vertical="top"
+      position="fixed"
+      inlineSize="100%"
+      insetBlockStart={0}
+      {...restProps}
     >
       <div
         onClick={(event) => {
@@ -108,6 +115,6 @@ export const PanelHeaderContext = ({
       >
         <div className={styles.content}>{children}</div>
       </div>
-    </FixedLayout>
+    </Box>
   );
 };

@@ -1,3 +1,6 @@
+'use client';
+
+import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { resolveLayoutProps } from '../../lib/layouts';
 import type { LayoutProps } from '../../lib/layouts/types';
@@ -12,7 +15,45 @@ const displayClassNames = {
   'contents': styles.displayContents,
 };
 
-export interface BoxProps extends RootComponentProps<HTMLElement>, LayoutProps {
+type BoxComponent = RootComponentProps<HTMLElement>['Component'] | React.ElementType[];
+
+function composeComponents(
+  component: BoxComponent | undefined,
+): RootComponentProps<HTMLElement>['Component'] {
+  if (!Array.isArray(component)) {
+    return component;
+  }
+
+  if (component.length === 0) {
+    return undefined;
+  }
+
+  return component.reduceRight<React.ElementType>(
+    (InnerComponent, WrapperComponent) =>
+      // eslint-disable-next-line react/display-name -- динамическая композиция обёрток
+      React.forwardRef<HTMLElement, RootComponentProps<HTMLElement>>((props, ref) => (
+        <WrapperComponent {...props} ref={ref} Component={InnerComponent} />
+      )),
+    'div',
+  );
+}
+
+export interface BoxProps extends Omit<RootComponentProps<HTMLElement>, 'Component'>, LayoutProps {
+  /**
+   * Компонент для рендера или массив компонентов для композиции.
+   *
+   * Можно передать один компонент или массив компонентов. При передаче массива
+   * компоненты будут вложены друг в друга справа налево, начиная с `div`.
+   *
+   * @example
+   * // Один компонент
+   * <Box Component="section" />
+   *
+   * @example
+   * // Массив компонентов — рендер: Wrapper → Link → div
+   * <Box Component={[Wrapper, Link]} />
+   */
+  Component?: BoxComponent | undefined;
   /**
    * Возможность задать css-свойство `display`.
    */
@@ -24,12 +65,21 @@ export interface BoxProps extends RootComponentProps<HTMLElement>, LayoutProps {
  *
  * @since 7.9.0
  */
-export const Box = ({ className, style, display, ...restProps }: BoxProps) => {
+export const Box = ({
+  className,
+  style,
+  display,
+  Component: ComponentProp,
+  ...restProps
+}: BoxProps) => {
   const resolvedProps = resolveLayoutProps(restProps);
+
+  const Component = React.useMemo(() => composeComponents(ComponentProp), [ComponentProp]);
 
   return (
     <RootComponent
       {...resolvedProps}
+      Component={Component}
       baseClassName={resolvedProps.className}
       baseStyle={resolvedProps.style}
       className={classNames(className, display && displayClassNames[display])}
