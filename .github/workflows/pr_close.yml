@@ -19,6 +19,9 @@ jobs:
     # см. https://github.com/orgs/community/discussions/26303
     if: ${{ !cancelled() }}
     name: Call reusable workflow
+    permissions:
+      actions: read
+      contents: read
     uses: ./.github/workflows/reusable_workflow_pr_worfklow_payload.yml
     with:
       action: upload
