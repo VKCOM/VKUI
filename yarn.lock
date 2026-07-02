@@ -5552,7 +5552,7 @@ __metadata:
     postcss-import: "npm:^16.1.1"
     postcss-loader: "npm:^8.2.1"
     postcss-logical: "npm:^9.0.0"
-    postcss-modules: "npm:^6.0.1"
+    postcss-modules: "npm:^9.0.0"
     postcss-value-parser: "npm:^4.2.0"
     process: "npm:^0.11.10"
     react: "npm:^18.3.1"
@@ -14842,7 +14842,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss-modules-local-by-default@npm:^4.0.5":
+"postcss-modules-local-by-default@npm:^4.0.5, postcss-modules-local-by-default@npm:^4.2.0":
   version: 4.2.0
   resolution: "postcss-modules-local-by-default@npm:4.2.0"
   dependencies:
@@ -14855,7 +14855,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss-modules-scope@npm:^3.2.0":
+"postcss-modules-scope@npm:^3.2.0, postcss-modules-scope@npm:^3.2.1":
   version: 3.2.1
   resolution: "postcss-modules-scope@npm:3.2.1"
   dependencies:
@@ -14892,6 +14892,24 @@ __metadata:
   peerDependencies:
     postcss: ^8.0.0
   checksum: 10/d53bfc67bd8351ebca81505f53ea917bdb46bbb962b9a7c10ba0dfb123a61af88b9bee16ed7085a660de9557a379a3d9a0e72184148d14523c8602d23618e796
+  languageName: node
+  linkType: hard
+
+"postcss-modules@npm:^9.0.0":
+  version: 9.0.0
+  resolution: "postcss-modules@npm:9.0.0"
+  dependencies:
+    generic-names: "npm:^4.0.0"
+    icss-utils: "npm:^5.1.0"
+    lodash.camelcase: "npm:^4.3.0"
+    postcss-modules-extract-imports: "npm:^3.1.0"
+    postcss-modules-local-by-default: "npm:^4.2.0"
+    postcss-modules-scope: "npm:^3.2.1"
+    postcss-modules-values: "npm:^4.0.0"
+    string-hash: "npm:^1.1.3"
+  peerDependencies:
+    postcss: ^8.0.0
+  checksum: 10/09713b5d75eb2387b17da0128d7bda5cca2c3efbd50c9264f4d0986e78a09aeb6fa50ca6768bd63f74a7bd552cd83f7031bf1113168118b8c4b51ef808bb7e2e
   languageName: node
   linkType: hard
 
