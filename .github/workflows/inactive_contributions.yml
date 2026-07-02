@@ -6,6 +6,7 @@ on:
 jobs:
   close-issues:
     runs-on: ubuntu-slim
+    # Note: для работы actions/stale нужны права на write
     permissions:
       issues: write
       pull-requests: write

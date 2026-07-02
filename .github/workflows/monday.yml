@@ -7,6 +7,7 @@ jobs:
   tools-update:
     name: Tools update
     runs-on: ubuntu-slim
+    # Note: для работы corepack-up-pr и nvmrc-up-pr нужны права на write
     permissions:
       contents: write
       pull-requests: write

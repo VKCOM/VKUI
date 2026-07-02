@@ -7,9 +7,16 @@ on:
     workflows: ['Close Pull Request']
     types: [completed]
 
+permissions:
+  contents: read
+
 jobs:
   pr_workflow_payload:
+    if: ${{ github.event.workflow_run.head_repository.full_name == github.repository }}
     name: Call reusable workflow
+    permissions:
+      actions: read
+      contents: read
     uses: ./.github/workflows/reusable_workflow_pr_worfklow_payload.yml
     with:
       action: download

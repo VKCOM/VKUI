@@ -13,6 +13,9 @@ on:
         required: false
         type: string
 
+permissions:
+  contents: read
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -31,7 +34,9 @@ jobs:
 
       - name: Run tests for the specified workspace
         if: ${{ inputs.workspace }}
-        run: yarn workspace ${{ inputs.workspace }} run test:ci
+        env:
+          WORKSPACE: ${{ inputs.workspace }}
+        run: yarn workspace "$WORKSPACE" run test:ci
 
       - name: Upload test artifact
         if: always()
