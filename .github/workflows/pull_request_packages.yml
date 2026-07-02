@@ -52,20 +52,21 @@ jobs:
       - name: Node setup
         uses: ./.github/actions/node-setup
 
-      - name: Run Biome format
-        run: node --run lint:format
+      - parallel:
+          - name: Run Biome format
+            run: node --run lint:format
 
-      - name: Run Stylelint
-        run: node --run lint:style
+          - name: Run Stylelint
+            run: node --run lint:style
 
-      - name: Run types checking
-        run: node --run lint:types
+          - name: Run types checking
+            run: node --run lint:types
 
-      - name: Run ESLint
-        run: node --run lint:es:ci
+          - name: Run ESLint
+            run: node --run lint:es:ci
 
-      - name: Check if the generated files have been updated
-        run: node --run lint:generated-files
+          - name: Check if the generated files have been updated
+            run: node --run lint:generated-files
 
       - name: Report lint results
         if: ${{ !cancelled() }}
