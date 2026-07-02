@@ -59,7 +59,7 @@ jobs:
       - name: NO ARTEFACT
         if: ${{ steps.artifact.outputs.found_artifact != 'true' }}
         id: payload_fallback
-        run: echo "status=canceled" >> $GITHUB_OUTPUT
+        run: echo "status=canceled" >> "$GITHUB_OUTPUT"
 
   upload:
     if: ${{ inputs.action == 'upload' }}

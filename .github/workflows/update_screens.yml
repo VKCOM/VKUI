@@ -70,9 +70,18 @@ jobs:
         run: |
           git add ./**/*.png
           mkdir screenshots
-          rsync -R $(git diff --name-only --cached --relative) screenshots
+
+          CHANGED_SCREENSHOTS=()
+          while IFS= read -r -d '' SCREENSHOT; do
+            CHANGED_SCREENSHOTS+=("$SCREENSHOT")
+          done < <(git diff --name-only --cached --relative -z)
+
+          if (( ${#CHANGED_SCREENSHOTS[@]} > 0 )); then
+            rsync -R "${CHANGED_SCREENSHOTS[@]}" screenshots
+          fi
+
           if [ -d screenshots/components ]; then
-            echo "needUpload=true" >> $GITHUB_OUTPUT
+            echo "needUpload=true" >> "$GITHUB_OUTPUT"
             cd screenshots
             zip -q -r ../../screenshots-${{ matrix.shardIndex }}-${{ matrix.shardTotal }}.zip components
           fi
@@ -107,7 +116,7 @@ jobs:
         id: unzip
         run: |
           if [ -d artifacts ]; then
-             echo "found=true" >> $GITHUB_OUTPUT
+             echo "found=true" >> "$GITHUB_OUTPUT"
              cd artifacts
              find . -type f -name 'screenshots-*.zip' -exec unzip -q -o -d ../src {} \;
            fi
