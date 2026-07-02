@@ -172,9 +172,12 @@
 /* [end] */
 
 .disabled {
-  pointer-events: none;
   cursor: not-allowed;
   opacity: var(--vkui--opacity_disable);
+}
+
+.disabled > .scrollContainer {
+  pointer-events: none;
 }
 
 /**
