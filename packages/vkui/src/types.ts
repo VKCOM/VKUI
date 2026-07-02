@@ -26,6 +26,17 @@ export interface HasComponent {
   Component?: React.ElementType | undefined;
 }
 
+export type HasRender<T> = {
+  /**
+   * Позволяет переопределить рендер компонента, получая собранные свойства
+   * (включая вычисленные `className` и `style`). Используется вместо `Component`.
+   *
+   * Позволяет гибко объединять несколько компонентов без создания
+   * промежуточных DOM-узлов и без ремаунта поддерева на каждый рендер.
+   */
+  render?: ((props: React.AllHTMLAttributes<T> & HasRootRef<T>) => React.ReactNode) | undefined;
+};
+
 export interface HasAlign {
   align?: AlignType | undefined;
 }

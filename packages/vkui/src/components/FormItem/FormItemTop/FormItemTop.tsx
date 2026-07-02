@@ -1,8 +1,11 @@
-import type { HasComponent, HTMLAttributesWithRootRef } from '../../../types';
+import type { HasComponent, HasRender, HTMLAttributesWithRootRef } from '../../../types';
 import { RootComponent } from '../../RootComponent/RootComponent';
 import styles from '../FormItem.module.css';
 
-export interface FormItemTopProps extends HTMLAttributesWithRootRef<HTMLDivElement>, HasComponent {}
+export interface FormItemTopProps
+  extends HTMLAttributesWithRootRef<HTMLDivElement>,
+    HasComponent,
+    HasRender<HTMLDivElement> {}
 
 /**
  * Служит оберткой для составной шапки поля, отвечая за выравнивание контента и расстановку отступов.

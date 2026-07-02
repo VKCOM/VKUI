@@ -1,10 +1,12 @@
 import type * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import type { HasComponent } from '../../types';
+import type { HasComponent, HasRender } from '../../types';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import styles from './Footer.module.css';
 
-export type FooterProps = React.AllHTMLAttributes<HTMLElement> & HasComponent;
+export type FooterProps = React.AllHTMLAttributes<HTMLElement> &
+  HasComponent &
+  HasRender<HTMLElement>;
 
 /**
  * @see https://vkui.io/components/group#footer
