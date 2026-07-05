@@ -5541,7 +5541,7 @@ __metadata:
     eslint-plugin-react-hooks: "npm:^7.1.1"
     eslint-plugin-react-server-components: "npm:^1.2.0"
     eslint-plugin-unicorn: "npm:^55.0.0"
-    happy-css-modules: "npm:^5.0.1"
+    happy-css-modules: "npm:^5.0.2"
     husky: "npm:^9.1.6"
     jsdom: "npm:^29.1.1"
     lint-staged: "npm:^17.0.8"
@@ -10199,9 +10199,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"happy-css-modules@npm:^5.0.1":
-  version: 5.0.1
-  resolution: "happy-css-modules@npm:5.0.1"
+"happy-css-modules@npm:^5.0.2":
+  version: 5.0.2
+  resolution: "happy-css-modules@npm:5.0.2"
   dependencies:
     "@file-cache/core": "npm:^2.0.0"
     "@file-cache/npm": "npm:^2.0.0"
@@ -10209,7 +10209,7 @@ __metadata:
     chokidar: "npm:^5.0.0"
     enhanced-resolve: "npm:^5.22.2"
     import-meta-resolve: "npm:^4.2.0"
-    postcss: "npm:^8.5.15"
+    postcss: "npm:^8.5.16"
     postcss-load-config: "npm:^6.0.1"
     postcss-modules: "npm:^6.0.1"
     postcss-selector-parser: "npm:^7.1.1"
@@ -10226,7 +10226,7 @@ __metadata:
       optional: true
   bin:
     hcm: bin/hcm.js
-  checksum: 10/2873245bba98998cac7c0a95ce8ded6b77dcc6050c13eda580db6d789acb1eda0c396798c1ad0ad6c5a1e4230bce219909a52513c7621f3d3ea40163ecb607e5
+  checksum: 10/dc5c558f0501b189e8bd5f6702662190ad02ba8a202ae13ef0943e9f86ca2acc00294bcca4fa507bad61314137310be9ad88471b7e143b009f693f99d3d90de0
   languageName: node
   linkType: hard
 
