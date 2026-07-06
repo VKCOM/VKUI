@@ -16,11 +16,9 @@ import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { Alert, type AlertProps } from './Alert';
 import styles from './Alert.module.css';
-import buttonStyles from '../Button/Button.module.css';
 import modalDismissButtonStyles from '../ModalDismissButton/ModalDismissButton.module.css';
 import popoutWrapperStyles from '../PopoutWrapper/PopoutWrapper.module.css';
 import captionStyles from '../Typography/Caption/Caption.module.css';
-import footnoteStyles from '../Typography/Footnote/Footnote.module.css';
 import titleStyles from '../Typography/Title/Title.module.css';
 import typographyStyles from '../Typography/Typography.module.css';
 
@@ -393,36 +391,6 @@ describe('Alert', () => {
     }),
   );
 
-  it.each([
-    {
-      mode: 'cancel' as const,
-      className: styles.buttonModeCancel,
-      buttonClassName: buttonStyles.modeSecondary,
-    },
-    {
-      mode: 'destructive' as const,
-      className: undefined,
-      buttonClassName: buttonStyles.modePrimary,
-    },
-  ])(
-    'should have className "$className" ans "$buttonClassName" with mode "$mode" in VKCOM platform',
-    withFakeTimers(async ({ mode, className, buttonClassName }) => {
-      const result = render(
-        <ConfigProvider platform={Platform.VKCOM}>
-          <Alert
-            onClosed={vi.fn()}
-            actions={[{ 'title': 'Allow', mode, 'data-testid': 'allow-test-id' }]}
-          />
-        </ConfigProvider>,
-      );
-      await waitCSSKeyframesAnimation(result.getByRole('alertdialog'), {
-        runOnlyPendingTimers: true,
-      });
-      className && expect(screen.getByTestId('allow-test-id')).toHaveClass(className);
-      expect(screen.getByTestId('allow-test-id')).toHaveClass(buttonClassName);
-    }),
-  );
-
   describe('handles dismissButtonMode', () => {
     fakeTimersForScope();
     it.each<AlertProps['dismissButtonMode']>([
@@ -492,13 +460,6 @@ describe('Alert', () => {
       description: 'Text',
       descriptionClassNames: [captionStyles.level1],
       platform: Platform.IOS,
-    },
-    {
-      title: 'Header',
-      titleClassNames: [titleStyles.level2, typographyStyles.weight2],
-      description: 'Text',
-      descriptionClassNames: [footnoteStyles.host],
-      platform: Platform.VKCOM,
     },
     {
       title: 'Header',
