@@ -4,9 +4,13 @@ export interface ColorSchemeConfig {
   parameterName: string;
 }
 
-const config: ColorSchemeConfig = {
+const GLOBAL_KEY = '__VKUI_COLOR_SCHEME_CONFIG__';
+
+const getDefaultConfig = (): ColorSchemeConfig => ({
   parameterName: DEFAULT_PARAM_KEY,
-};
+});
+
+const config: ColorSchemeConfig = ((window as any)[GLOBAL_KEY] ??= getDefaultConfig());
 
 export const getColorSchemeConfig = () => config;
 

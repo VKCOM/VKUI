@@ -7,6 +7,7 @@ import { styled } from 'storybook/theming';
 import { getColorSchemeConfig } from '../color-scheme/config';
 import { getThemeConfig } from './config';
 import { SET_STORYBOOK_THEME } from './constants';
+import { updateLocalStorageValue } from './storage';
 
 const SidebarSelect = styled(Select)(({ theme }) => ({
   position: 'relative',
@@ -16,19 +17,9 @@ const SidebarSelect = styled(Select)(({ theme }) => ({
   zIndex: 1,
 }));
 
-const STORAGE_KEY = 'sb-dark-theme';
-
 const channel = addons.getChannel();
 
 type Theme = 'light' | 'dark';
-
-export const updateLocalStorageValue = (theme: Theme) => {
-  window.localStorage.setItem(STORAGE_KEY, theme);
-};
-
-export const getLocalStorageValue = (): Theme => {
-  return window.localStorage.getItem(STORAGE_KEY) as Theme;
-};
 
 export const StorybookTheme = () => {
   const [globals, updateGlobals] = useGlobals();
@@ -49,7 +40,7 @@ export const StorybookTheme = () => {
       );
       updateLocalStorageValue(globalTheme);
     },
-    [updateGlobals],
+    [updateGlobals, parameterName],
   );
 
   const handleChange: React.ComponentProps<typeof Select>['onChange'] = React.useCallback(
@@ -58,7 +49,7 @@ export const StorybookTheme = () => {
       addons.setConfig({ theme: selectedOption === 'dark' ? darkTheme : lightTheme });
       updateTheme(selectedOption, selectedOption);
     },
-    [updateTheme],
+    [updateTheme, lightTheme, darkTheme],
   );
 
   React.useEffect(() => {

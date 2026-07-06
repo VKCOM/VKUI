@@ -44,7 +44,38 @@ registerLiveCodeEditorAddon({
 });
 ```
 
-> При использовании программной регистрации не нужно добавлять пресет в `main.ts`.
+### Вариант 3: Комбинированный (пресет + кастомизация)
+
+Добавьте пресет в `.storybook/main.ts` для авторегистрации, а конфигурацию задайте в `.storybook/manager.ts`:
+
+**.storybook/main.ts:**
+```ts
+const addons = [
+  '@vkontakte/storybook-addons/live-code-editor',
+];
+```
+
+**.storybook/manager.ts:**
+```ts
+import { setLiveCodeEditorConfig } from '@vkontakte/storybook-addons';
+
+setLiveCodeEditorConfig({
+  format: async (code) => {
+    const prettier = await import('prettier/standalone');
+    const prettierPluginTS = await import('prettier/plugins/typescript');
+    const prettierPluginEstree = await import('prettier/plugins/estree');
+    return prettier.format(code, {
+      parser: 'typescript',
+      plugins: [prettierPluginTS, prettierPluginEstree],
+      singleQuote: true,
+      trailingComma: 'all',
+      printWidth: 110,
+      bracketSpacing: true,
+      semi: true,
+    });
+  },
+});
+```
 
 ## Конфигурация
 
