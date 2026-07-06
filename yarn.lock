@@ -2890,7 +2890,7 @@ __metadata:
   dependencies:
     "@next/bundle-analyzer": "npm:^16.2.10"
     "@shikijs/transformers": "npm:^4.3.1"
-    "@stackblitz/sdk": "npm:^1.11.0"
+    "@stackblitz/sdk": "npm:^1.11.1"
     "@vkontakte/vkui": "workspace:^"
     "@vkontakte/vkui-docs-theme": "workspace:^"
     browserslist-vscode: "github:browserslist/browserslist-vscode"
@@ -3717,10 +3717,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@stackblitz/sdk@npm:^1.11.0":
-  version: 1.11.0
-  resolution: "@stackblitz/sdk@npm:1.11.0"
-  checksum: 10/351647b818f2e40135ff92d3de61f94a925635acb769862014f4a0eb252011f1c42ede2c6952ab4848ed7512777f3f6d3944914f5750499f35069b54231d6cb2
+"@stackblitz/sdk@npm:^1.11.1":
+  version: 1.11.1
+  resolution: "@stackblitz/sdk@npm:1.11.1"
+  checksum: 10/9ddf11882cfc7bf6980289321c343b3adc2c251712977773261382e50aafe3dba0d4ef7e2a0509da27f660c8b6f9006c9730ef3f021521be35c34dfdc60d34d9
   languageName: node
   linkType: hard
 
