@@ -294,6 +294,40 @@ describe('DateInput', () => {
   });
 
   it(
+    'should keep calendar open when selecting time in dropdown',
+    withFakeTimers(async () => {
+      const onCalendarOpenChanged = vi.fn();
+      render(
+        <DateInput
+          value={date}
+          enableTime={true}
+          onCalendarOpenChanged={onCalendarOpenChanged}
+          {...testIds}
+          calendarTestsProps={{
+            dayTestId,
+            hoursTestId: 'hours-picker',
+            minutesTestId: 'minutes-picker',
+          }}
+        />,
+      );
+
+      const [dates] = getInputsLike();
+      await userEvent.click(dates);
+      expect(onCalendarOpenChanged).toHaveBeenCalledExactlyOnceWith(true);
+      expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeTruthy();
+
+      const hoursInput = screen.getByTestId('hours-picker');
+      fireEvent.click(hoursInput);
+
+      const hoursOption = screen.getByRole('option', { selected: false, name: '15' });
+      fireEvent.click(hoursOption);
+
+      expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeTruthy();
+      expect(onCalendarOpenChanged).toHaveBeenCalledTimes(1);
+    }),
+  );
+
+  it(
     'should not call onChange when selecting date in calendar with enableTime',
     withFakeTimers(async () => {
       const onChange = vi.fn();
