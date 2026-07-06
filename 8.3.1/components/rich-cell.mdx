@@ -1,0 +1,162 @@
+﻿---
+description: Расширенный компонент ячейки для отображения комплексной информации.
+tags: list
+---
+
+<Overview group="data-display">
+
+# RichCell [tag:component]
+
+Расширенный компонент ячейки для отображения комплексной информации. Идеален для карточек пользователей, списков транзакций и элементов с мета-информацией.
+
+</Overview>
+
+{/* @example-description: Базовый `RichCell` с аватаром, описанием и кнопками действий. */}
+<Playground>
+  ```jsx
+  <RichCell
+    before={<Avatar size={72} />}
+    overTitle="Команда ВКонтакте"
+    subtitle="Санкт-Петербург"
+    actions={
+      <ButtonGroup mode="horizontal" gap="s" stretched>
+        <Button mode="primary" size="s">
+          Принять
+        </Button>
+        <Button mode="secondary" size="s">
+          Отклонить
+        </Button>
+      </ButtonGroup>
+    }
+  >
+    Илья Гришин
+  </RichCell>
+  ```
+</Playground>
+
+## Основные возможности
+
+### Визуальные блоки
+
+#### Контент в начале/в конце
+
+В компоненте доступна возможность добавления дополнительного контента слева и/или справа от основной информации,
+задаётся свойством `before` и `after` соответственно.
+
+В `before` рекомендуется размещать следующий контент:
+
+- аватары `Avatar` размером `40px`, `48px` и `72px`;
+
+В `after` рекомендуется размещать следующий контент:
+
+- иконки размером `28px` (используйте `RichCell.Icon`);
+- текст для кратких значений (суммы, проценты).
+
+> **Важно:** `after` рендерится справа от основного контента. Для размещения мета-информации внутри основного контента используйте `meta` и `submeta`.
+
+### Текстовые элементы
+
+Компонент поддерживает следующие текстовые элементы:
+
+- `overTitle` — надзаголовок;
+- `subtitle` — основной подзаголовок;
+- `extraSubtitle` — дополнительное описание;
+- `meta` — текст после основного контента (внутри центрального блока);
+- `submeta` — текст под `meta`.
+
+### Интерактивные элементы
+
+Для группы кнопок (`actions`) рекомендуется:
+
+- использовать кнопки размера `s`;
+- применять режимы `primary` и `secondary`.
+
+## Выравнивание элементов
+
+Управляет вертикальным выравниванием частей компонента. Особенно полезно для нестандартных сценариев.
+
+### Свойства выравнивания
+
+Компонент поддерживает следующие свойства:
+
+- `beforeAlign` — позиция левого блока;
+- `contentAlign` — позиция основного текстового контента;
+- `afterAlign` — позиция правого блока.
+
+{/* @example-description: Настройка вертикального выравнивания блоков `before/content/after` в `RichCell`. */}
+<Playground>
+  ```jsx
+  <RichCell
+    beforeAlign="center"
+    contentAlign="center"
+    afterAlign="center"
+    before={<Icon56WalletOutline />}
+    after="+5%"
+  >
+    <Text weight="2">Премиум статус</Text>
+    <Text>Активен до 12.12.2024</Text>
+  </RichCell>
+  ```
+</Playground>
+
+## Многострочный режим
+
+Задаётся свойством `multiline`. Позволяет тексту занимать несколько строк при переполнении.
+
+### Особенности
+
+Компонент в многострочном режиме:
+
+- включает перенос текста для всех текстовые элементов;
+- сохраняет вертикальные отступы;
+- автоматически определяет высоту.
+
+{/* @example-description: Многострочный `RichCell` с длинным текстом и мета-информацией. */}
+<Playground>
+  ```jsx
+  <RichCell
+    multiline
+    subtitle="Длинное описание новости, которое не должно обрезаться и требует переноса на несколько строк для полного отображения информации пользователю"
+    meta="15:30"
+    submeta="Время публикации"
+  >
+    Важное обновление правил платформы
+  </RichCell>
+  ```
+</Playground>
+
+## Свойства и методы [#api]
+
+| Свойство | Тип | По умолчанию | Описание |
+| --- | --- | --- | --- |
+| `actions` | `ReactNode` | `-` | Кнопки-действия. Принимает [`Button`](https://vkui.io/components/button) с параметрами:  - `mode="primary" size="s"` - `mode="secondary" size="s"`.  Для набора кнопок используйте [`ButtonGroup`](https://vkui.io/components/button-group) с параметрами:  - `mode="horizontal" gap="s" stretched`. |
+| `activated` | `boolean` | `-` | Позволяет управлять `activated`-состоянием извне. |
+| `activeClassName` | `string` | `-` | **Deprecated**: Since 7.3.0. Будет удалено в **VKUI v9**.  Используйте свойство `activeMode`. |
+| `activeEffectDelay` | `number` | `-` | Длительность показа `active`-состояния. |
+| `activeMode` | `StateModeLiteral` | `-` | Стиль подсветки active-состояния. Если передать произвольную строку, она добавится как css-класс во время active. |
+| `after` | `ReactNode` | `-` | Иконка 28 или текст после центрального контента. |
+| `afterAlign` | `Align` | `start` | Выравнивание after компонента по вертикали.  > Работает только для `after` и `afterCaption`. |
+| `afterCaption` | `ReactNode` | `-` | **Deprecated**: Since 8.0.0. Будет удален в **VKUI v10**. Используйте вместо этого свойство `submeta`. |
+| `before` | `ReactNode` | `-` | `<Avatar size={40\|48\|72} />`. |
+| `beforeAlign` | `Align` | `start` | Выравнивание before компонента по вертикали. |
+| `borderRadiusMode` | `"auto" \| "inherit"` | `-` | Задает border-radius элементу В режиме `auto` на маленьких экранах `border-radius: 0`, иначе определяется токеном `--vkui--size_border_radius--regular`. |
+| `bottom` | `ReactNode` | `-` | Контейнер для контента под `caption`. Например `<UsersStack size="m" />`. |
+| `Component` | `ElementType<any, keyof IntrinsicElements>` | `-` |  |
+| `contentAlign` | `Align` | `start` | Выравнивание центрального контента по вертикали. |
+| `disabled` | `boolean` | `-` | Блокировка взаимодействия с компонентом. Убирает анимацию нажатия. |
+| `extraSubtitle` | `ReactNode` | `-` | Контейнер для текста под `subtitle`. |
+| `focusVisibleMode` | `FocusVisibleMode` | `-` | Стиль аутлайна focus visible. Если передать произвольную строку, она добавится как css-класс при :focus-visible |
+| `getRootRef` | `Ref<HTMLElement>` | `-` |  |
+| `hasActive` | `boolean` | `-` | Указывает, должен ли компонент реагировать на `active`-состояние. |
+| `hasHover` | `boolean` | `-` | Указывает, должен ли компонент реагировать на `hover`-состояние. |
+| `hasHoverWithChildren` | `boolean` | `-` | Позволяет родительскому компоненту иметь `hovered`-cостояние при наведении на любой дочерний элемент. По умолчанию состояние hovered у родителя сбрасывается.  Присваивается родителькому компоненту. |
+| `hoverClassName` | `string` | `-` | **Deprecated**: Since 7.3.0. Будет удалено в **VKUI v9**.  Используйте свойство `hoverMode`. |
+| `hovered` | `boolean` | `-` | Позволяет управлять `hovered`-состоянием извне. |
+| `hoverMode` | `StateModeLiteral` | `-` | Стиль подсветки hover-состояния. Если передать произвольную строку, она добавится как css-класс во время hover. |
+| `meta` | `ReactNode` | `-` | Текст после основного контента. |
+| `multiline` | `boolean` | `-` | Включает многострочный режим для `subhead`, `children`, `text` и `caption`. |
+| `overTitle` | `ReactNode` | `-` | Контейнер для текста над `children`. |
+| `submeta` | `ReactNode` | `-` | Текст под `meta`. |
+| `subtitle` | `ReactNode` | `-` | Контейнер для текста под `children`. |
+| `unlockParentHover` | `boolean` | `-` | Позволяет родительскому компоненту показывать hovered-состояние при наведении на текущий дочерний компонент.  Присваивается дочернему компоненту. |
+

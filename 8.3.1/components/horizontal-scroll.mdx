@@ -1,0 +1,272 @@
+﻿---
+description: Компонент для показа большого количества элементов с горизонтальной прокруткой.
+tags: layout
+---
+
+<Overview group="data-display">
+
+# HorizontalScroll [tag:component]
+
+Компонент для показа большого количества элементов с горизонтальной прокруткой.
+Поддерживается навигация жестами и с клавиатуры. Лучше всего подходит для отображения множества компонентов `HorizontalCell`.
+
+Связанные компоненты:
+
+- [`HorizontalCell`](/components/horizontal-cell)
+
+</Overview>
+
+<Playground hide>
+  ```jsx
+  <Box maxInlineSize={400}>
+    <HorizontalScroll showArrows="always" getScrollToLeft={(i) => i - 120} getScrollToRight={(i) => i + 120}>
+      {Array.from({ length: 20 }).map((_, index) => {
+        return (
+          <HorizontalCell onClick={() => {}} key={index} title={index}>
+            <Avatar size={56} />
+          </HorizontalCell>
+        );
+      })}
+    </HorizontalScroll>
+  </Box>
+  ```
+</Playground>
+
+{/* @example-description: Базовый `HorizontalScroll` со списком `HorizontalCell` и шагом прокрутки по стрелкам. */}
+<Playground>
+  ```jsx
+  <HorizontalScroll getScrollToLeft={(i) => i - 120} getScrollToRight={(i) => i + 120}>
+    {Array.from({ length: 20 }).map((_, index) => {
+      return (
+        <HorizontalCell onClick={() => {}} key={index} title={index}>
+          <Avatar size={56} />
+        </HorizontalCell>
+      );
+    })}
+  </HorizontalScroll>
+  ```
+</Playground>
+
+## Параметры прокрутки
+
+### Величина прокрутки
+
+С помощью свойств `getScrollToLeft` и `getScrollToRight` можно определять величину сдвига прокрутки при нажатии
+на левую и правую стрелки навигации соответственно.
+
+```jsx
+function handleScrollToLeft(currentPosition) {
+  // сдвигаем текущее положение прокрутки на 120px назад
+  return currentPosition - 120;
+}
+
+function handleScrollToRight(currentPosition) {
+  // сдвигаем текущее положение прокрутки на 120px вперёд
+  return currentPosition + 120;
+}
+
+<HorizontalScroll getScrollToLeft={handleScrollToLeft} getScrollToRight={handleScrollToRight}>
+  {/* контент для прокрутки */}
+</HorizontalScroll>;
+```
+
+По умолчанию сдвиг происходит на всю ширину видимого контента.
+
+### Длительность анимации прокрутки
+
+Свойство `scrollAnimationDuration` позволяет управлять длительностью (в миллисекундах)
+анимации прокрутки при нажатии на одну из стрелок навигации.
+
+По умолчанию значение равно `250`.
+
+### Прокрутка колесом мыши
+
+По умолчанию горизонтальная прокрутка компонента с помощью мыши возможна при зажатие клавиши `shift` (это стандартное поведение,
+позволяющее разграничить вертикальную и горизонтальную прокрутку).
+
+Добавить возможность прокручивать контент безусловно колесом мыши можно с помощью свойства `scrollOnAnyWheel`.
+В таком случае, если мышь находится над компонентом `HorizontalScroll` и его потомками, то активируется прокрутка по
+горизонтали.
+
+> Единственное ограничение — горизонтальная прокрутка не работает при условии нахождения в области стрелок навигации,
+> в таком случае сработает нативная прокрутка страницы по вертикали.
+
+## Стрелки навигации
+
+Элементы позволяют осуществлять прокрутку по горизонтали.
+
+### Видимость стрелок
+
+Задаётся свойством `showArrows`.
+
+- `true` — стрелки показываются при наведении на компонент (по умолчанию);
+- `false` — стрелки скрыты;
+- `"always"` — стрелки всегда видны.
+
+Стрелки автоматически скрываются, когда достигнут край прокрутки.
+
+### Размер стрелок
+
+Задаётся свойством `arrowSize`.
+
+- `"s"` — уменьшенный размер;
+- `"m"` — стандартный размер (по умолчанию).
+
+### Смещение стрелок по вертикали
+
+Свойство `arrowOffsetY` позволяет задать сдвиг по вертикали.
+Принимает либо числовое значение (в пикселях) или строковое (для возможности задать значение токеном).
+Положительное значение сдвигает стрелку вниз, отрицательное — вверх.
+
+## Обёртка для контента
+
+Если вам требуется изменить тэг компонента (по умолчанию `div`), который оборачивает ваш контент, например, для
+реализации нативного списка (тэги `ul`/`li`), используйте свойство `ContentWrapperComponent`.
+
+Также с помощью свойства `contentWrapperClassName` можно передать свой `CSS`-класс на эту обёртку,
+а с помощью свойства `contentWrapperRef` получить ссылку на `DOM`-элемент этой обёртки ([`ref`-объект](https://react.dev/learn/manipulating-the-dom-with-refs))
+
+```jsx
+const refContainer = React.useRef(null);
+
+<HorizontalScroll
+  ContentWrapperComponent="ul"
+  contentWrapperRef={refContainer}
+  contentWrapperClassName="custom-class"
+>
+  <li>Первый</li>
+  <li>Второй</li>
+  <li>Третий</li>
+</HorizontalScroll>;
+```
+
+## Поддержка RTL
+
+Компонент автоматически поддерживает `RTL`-режим, в котором стрелки меняют своё направление,
+а прокрутка работает в обратном направлении.
+
+## Тестирование (e2e) [#e2e]
+
+Для возможности тестирования доступны свойства с постфиксом `*TestId`, которые вы можете использовать,
+чтобы находить необходимые части компонента:
+
+- `nextButtonTestId` — `id` стрелки навигации в направлении следующего элемента;
+- `prevButtonTestId` — `id` стрелки навигации в направлении предыдущего элемента.
+
+## HorizontalCellShowMore [#horizontal-cell-show-more]
+
+Компонент для отображения кнопки "Показать все", используется в `HorizontalScroll` в конце списка.
+
+{/* @example-description: Использование `HorizontalCellShowMore` как завершающего элемента горизонтального списка. */}
+<Playground>
+  ```jsx
+  <HorizontalScroll getScrollToLeft={(i) => i - 120} getScrollToRight={(i) => i + 120}>
+    <HorizontalCell size="m" onClick={() => {}} title="Первый">
+      <Image size={88} borderRadius="l" />
+    </HorizontalCell>
+    <HorizontalCell size="m" onClick={() => {}} title="Второй">
+      <Image size={88} borderRadius="l" />
+    </HorizontalCell>
+    <HorizontalCellShowMore onClick={() => {}} size="m" height={56} centered />
+  </HorizontalScroll>
+  ```
+</Playground>
+
+### Размеры
+
+Задаётся свойством `size`.
+
+- `"s"` — уменьшенный размер (по умолчанию);
+- `"m"` — стандартный размер.
+
+Если вы используется в качестве контента `HorizontalScroll` элементы `<HorizontalCell size="s"`,
+то рекомендуется задавать размер `size="s"` для `HorizontalCellShowMore`, во всех остальных случаях подойдет `size="m"`.
+
+### Высота
+
+Задаётся свойством `height`. Должна соответствовать высоте соседних элементов.
+
+```jsx
+<HorizontalScroll>
+  <HorizontalCell size="xl" title="Команда" subtitle="4 фотографии">
+    <img />
+  </HorizontalCell>
+  <HorizontalCell size="xl" title="Медиагалерея Вконтакте" subtitle="64 фотографии">
+    <img />
+  </HorizontalCell>
+  <HorizontalCellShowMore size="m" height={124} />
+</HorizontalScroll>
+```
+
+> Свойство не имеет эффекта при `size="s"`.
+
+### Текст
+
+Задаётся через `children`.
+
+- для `size="s"` по умолчанию отображается "Все";
+- для `size="m"` по умолчанию отображается "Показать все".
+
+```jsx
+<HorizontalCellShowMore size="m">Ещё</HorizontalCellShowMore>
+```
+
+### Выравнивание
+
+Задаётся свойством `centered`.
+
+- `false` — стандартное выравнивание (по умолчанию);
+- `true` — выравнивание по центру относительно родителя.
+
+```jsx
+<HorizontalCellShowMore centered />
+```
+
+## Свойства и методы [#api]
+
+### HorizontalScroll
+
+| Свойство | Тип | По умолчанию | Описание |
+| --- | --- | --- | --- |
+| `arrowOffsetX` | `string \| number` | `-` | Смещает иконки кнопок навигации по горизонтали. |
+| `arrowOffsetY` | `string \| number` | `-` | Смещает иконки кнопок навигации по вертикали. |
+| `arrowSize` | `"s" \| "m"` | `m` | Размер стрелок. |
+| `contentWrapperClassName` | `string` | `-` | Специфичный `className` для обертки над контентом, прокинутым в `children`. |
+| `ContentWrapperComponent` | `ElementType<any, keyof IntrinsicElements>` | `div` | Позволяет поменять тег используемый для обертки над контентом, прокинутым в `children`. |
+| `contentWrapperRef` | `Ref<HTMLElement>` | `-` | `ref` для обертки над контентом, прокинутым в `children`. |
+| `getRef` | `Ref<HTMLDivElement>` | `-` |  |
+| `getRootRef` | `Ref<HTMLDivElement>` | `-` |  |
+| `getScrollToLeft` | `ScrollPositionHandler` | `-` | Функция для расчета величины прокрутки при нажатии на левую стрелку. |
+| `getScrollToRight` | `ScrollPositionHandler` | `-` | Функция для расчета величины прокрутки при нажатии на правую стрелку. |
+| `nextButtonTestId` | `string` | `-` | **Deprecated**: Since 8.0.0. Вместо этого используйте `slotProps={ nextArrow: { 'data-testid': ... } }`. Передает атрибут `data-testid` для кнопки прокрутки горизонтального скролла в направлении следующего элемента. |
+| `prevButtonTestId` | `string` | `-` | **Deprecated**: Since 8.0.0. Вместо этого используйте `slotProps={ prevArrow: { 'data-testid': ... } }`. Передает атрибут `data-testid` для кнопки прокрутки горизонтального скролла в направлении предыдущего элемента. |
+| `scrollAnimationDuration` | `number` | `250` | Длительность анимации скролла. |
+| `scrollOnAnyWheel` | `boolean` | `false` | Добавляет возможность прокручивать контент на любое колесо мыши. По умолчанию прокручивается как любой горизонтальный контент через shift. |
+| `showArrows` | `boolean \| "always"` | `true` | Показывать ли стрелки. |
+| `slotProps` | `{ prevArrow?: Partial<ScrollArrowProps> & HasDataAttribute; nextArrow?: Partial<ScrollArrowProps> & HasDataAttribute; }` | `-` | Свойства, которые можно прокинуть внутрь компонента: - `prevArrow`: свойства для прокидывания в стрелку "назад"; - `nextArrow`: свойства для прокидывания в стрелку "вперед". |
+| `withPadding` | `boolean` | `-` | Добавляет отступы для контента внутри. |
+
+### HorizontalCellShowMore
+
+| Свойство | Тип | По умолчанию | Описание |
+| --- | --- | --- | --- |
+| `activated` | `boolean` | `-` | Позволяет управлять `activated`-состоянием извне. |
+| `activeClassName` | `string` | `-` | **Deprecated**: Since 7.3.0. Будет удалено в **VKUI v9**.  Используйте свойство `activeMode`. |
+| `activeEffectDelay` | `number` | `-` | Длительность показа `active`-состояния. |
+| `activeMode` | `StateModeLiteral` | `-` | Стиль подсветки active-состояния. Если передать произвольную строку, она добавится как css-класс во время active. |
+| `centered` | `boolean` | `false` | Выравнивание по центру относительно родителя. |
+| `children` | `ReactNode` | `size === 's' ? 'Все' : 'Показать все'` | Предназначен для отрисовки текста. По умолчанию для `size='s'` содержит текст `Все`, для `size='m'` - `Показать все`. |
+| `Component` | `ElementType<any, keyof IntrinsicElements>` | `-` |  |
+| `focusVisibleMode` | `FocusVisibleMode` | `-` | Стиль аутлайна focus visible. Если передать произвольную строку, она добавится как css-класс при :focus-visible |
+| `getRef` | `Ref<HTMLElement>` | `-` |  |
+| `getRootRef` | `Ref<HTMLDivElement>` | `-` |  |
+| `hasActive` | `boolean` | `-` | Указывает, должен ли компонент реагировать на `active`-состояние. |
+| `hasHover` | `boolean` | `-` | Указывает, должен ли компонент реагировать на `hover`-состояние. |
+| `hasHoverWithChildren` | `boolean` | `-` | Позволяет родительскому компоненту иметь `hovered`-cостояние при наведении на любой дочерний элемент. По умолчанию состояние hovered у родителя сбрасывается.  Присваивается родителькому компоненту. |
+| `height` | `LiteralUnion<16 \| 20 \| 24 \| 28 \| 32 \| 36 \| 40 \| 44 \| 48 \| 56 \| 64 \| 72 \| 80 \| 88 \| 96, number>` | `-` | Задаёт высоту компонента. Должeн соответствовать размеру картинок внутри соседних `HorizontalCell` компонентов.  Используйте размеры, заданные дизайн-системой (смотри типы).  > ⚠️ Использование кастомного размера – это пограничный кейс.  Игнорируется, если `size='s'`. |
+| `hoverClassName` | `string` | `-` | **Deprecated**: Since 7.3.0. Будет удалено в **VKUI v9**.  Используйте свойство `hoverMode`. |
+| `hovered` | `boolean` | `-` | Позволяет управлять `hovered`-состоянием извне. |
+| `hoverMode` | `StateModeLiteral` | `-` | Стиль подсветки hover-состояния. Если передать произвольную строку, она добавится как css-класс во время hover. |
+| `size` | `"s" \| "m"` | `s` | Задаёт размер компонента.  Значение `s` применяется для `<HorizontalCell size="s"`, в остальных случаях рекомендуется `m`. |
+| `unlockParentHover` | `boolean` | `-` | Позволяет родительскому компоненту показывать hovered-состояние при наведении на текущий дочерний компонент.  Присваивается дочернему компоненту. |
+

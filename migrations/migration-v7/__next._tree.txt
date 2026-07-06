@@ -3,7 +3,7 @@
 :HL["/_next/static/css/f808438e96c3650f.css","style"]
 :HL["/_next/static/css/a0f6883cb4e177cb.css","style"]
 :HL["/_next/static/css/a80c0b5705787237.css","style"]
-:HL["/_next/static/css/6c3ebacc556a3252.css","style"]
+:HL["/_next/static/css/8931c7ade2593ee0.css","style"]
 :HL["/_next/static/css/b226565d6035268a.css","style"]
 :HL["/_next/static/css/9aae83aaf70d0f29.css","style"]
 :HL["/_next/static/css/7925068b2b092e69.css","style"]
@@ -12,4 +12,4 @@
 :HL["/_next/static/css/db3f811f0e4052c5.css","style"]
 :HL["https://github.com/user-attachments/assets/8af4ce92-98e2-4492-8b29-c5a828b52089","image"]
 :HL["https://github.com/user-attachments/assets/9bb3cfb5-7f5a-40bc-9e2b-f6b736861da7","image"]
-0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"mdxPath","param":{"type":"oc","key":"migrations/migration-v7","siblings":null},"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"B-O3PQw0B8dPYjMimZYcE"}
+0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"mdxPath","param":{"type":"oc","key":"migrations/migration-v7","siblings":null},"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"xgMIgN1GrvO0k42kamE7F"}

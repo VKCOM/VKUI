@@ -1,0 +1,127 @@
+1:"$Sreact.fragment"
+2:I[23450,["876","static/chunks/876-09cd53f1a40921e6.js","236","static/chunks/236-8c0345bb0abc4507.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-4d7fea37bd782b11.js"],"Main"]
+4:I[74517,["876","static/chunks/876-09cd53f1a40921e6.js","236","static/chunks/236-8c0345bb0abc4507.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-4d7fea37bd782b11.js"],"Overview",1]
+5:I[18443,["876","static/chunks/876-09cd53f1a40921e6.js","236","static/chunks/236-8c0345bb0abc4507.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-4d7fea37bd782b11.js"],"Anchor"]
+6:I[80204,["876","static/chunks/876-09cd53f1a40921e6.js","236","static/chunks/236-8c0345bb0abc4507.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-4d7fea37bd782b11.js"],"PlaygroundLazy"]
+16:I[19180,["876","static/chunks/876-09cd53f1a40921e6.js","236","static/chunks/236-8c0345bb0abc4507.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-4d7fea37bd782b11.js"],"Pre"]
+1a:I[91042,["876","static/chunks/876-09cd53f1a40921e6.js","236","static/chunks/236-8c0345bb0abc4507.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-4d7fea37bd782b11.js"],"TOC"]
+1b:I[90484,[],"OutletBoundary"]
+1c:"$Sreact.suspense"
+3:Tbf1,---
+description: Компонент для создания визуально выделенных контейнеров с содержимым.
+tags: card
+---
+
+<Overview group="data-display">
+
+# Card [tag:component]
+
+Компонент для создания визуально выделенных контейнеров с содержимым. Обеспечивает семантически правильную
+разметку по умолчанию и различные варианты стилевого оформления.
+
+Связанные компоненты:
+
+- [CardGrid](/components/card-grid)
+- [CardScroll](/components/card-scroll)
+
+</Overview>
+
+{/* @example-description: Базовая карточка с текстовым содержимым внутри `Div`. */}
+<Playground>
+  ```jsx
+  <Card>
+    <Div>
+      <Text>Содержимое карточки</Text>
+    </Div>
+  </Card>
+  ```
+</Playground>
+
+## Основные возможности
+
+### Семантическая разметка
+
+Компонент поддерживает следующие возможности:
+
+- использование семантически правильного тега `<li>` по умолчанию;
+- возможность изменения тега через свойство `Component` для одиночных карточек вне списков;
+- поддержка `ARIA`-ролей для улучшения доступности.
+
+```jsx
+// Карточка в списке
+<Card>
+  <Text>Элемент списка</Text>
+</Card>
+
+// Одиночная карточка
+<Card Component="div">
+  <Text>Отдельная карточка</Text>
+</Card>
+```
+
+## Режимы отображения
+
+Задаётся свойством `mode`.
+
+{/* @example-description: Демонстрация всех вариантов `mode` для визуального оформления карточки. */}
+<Playground>
+  ```jsx
+  <Card mode="tint">
+    <Div>
+      <Text>mode="tint"</Text>
+    </Div>
+  </Card>
+  <Card mode="shadow">
+    <Div>
+      <Text>mode="shadow"</Text>
+    </Div>
+  </Card>
+  <Card mode="outline">
+    <Div>
+      <Text>mode="outline"</Text>
+    </Div>
+  </Card>
+  <Card mode="outline-tint">
+    <Div>
+      <Text>mode="outline-tint"</Text>
+    </Div>
+  </Card>
+  <Card mode="plain">
+    <Div>
+      <Text>mode="plain"</Text>
+    </Div>
+  </Card>
+  ```
+</Playground>
+
+## Доступность (a11y) [#a11y]
+
+Компонент обеспечивает базовую доступность через семантически правильную разметку.
+При необходимости можно:
+
+- изменить тег через свойство `Component`;
+- добавить ARIA-роли для улучшения доступности;
+- настроить дополнительные атрибуты для конкретных сценариев использования.
+
+## Свойства и методы [#api]
+
+<PropsTable name="Card" />0:{"rsc":["$","$1","c",{"children":[[["$","$L2",null,{"metadata":{"description":"Компонент для создания визуально выделенных контейнеров с содержимым.","tags":"card","title":"Card","filePath":"content/components/card.mdx","timestamp":1783328459000},"sourceCode":"$3","children":[["$","$L4",null,{"group":"data-display","children":[["$","h1",null,{"className":"mdx_h1__1mgpN","data-pagefind-filter":"tag:component","children":"Card"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Компонент для создания визуально выделенных контейнеров с содержимым. Обеспечивает семантически правильную\nразметку по умолчанию и различные варианты стилевого оформления."}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Связанные компоненты:"}],["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["$","$L5",null,{"href":"/components/card-grid","children":"CardGrid"}]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["$","$L5",null,{"href":"/components/card-scroll","children":"CardScroll"}]}],"\n"]}]]}],"\n","\n",["$","$L6",null,{"code":"<Card>\n  <Div>\n    <Text>Содержимое карточки</Text>\n  </Div>\n</Card>"}],"\n",["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"osnovnye-vozmozhnosti","children":["$","a",null,{"href":"#osnovnye-vozmozhnosti","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Основные возможности","children":["Основные возможности","$L7"]}]}],"\n","$L8","\n","$L9","\n","$La","\n","$Lb","\n","$Lc","\n","$Ld","\n","\n","$Le","\n","$Lf","\n","$L10","\n","$L11","\n","$L12","\n","$L13"]}],"$L14"],null,"$L15"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"GlCvKw3HXD4rTXTxw8EOu"}
+7:["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]
+8:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"semanticheskaya-razmetka","children":["$","a",null,{"href":"#semanticheskaya-razmetka","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Семантическая разметка","children":["Семантическая разметка",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+9:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Компонент поддерживает следующие возможности:"}]
+a:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["использование семантически правильного тега ",["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"<li>"}]," по умолчанию;"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["возможность изменения тега через свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"Component"}]," для одиночных карточек вне списков;"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["поддержка ",["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"ARIA"}],"-ролей для улучшения доступности."]}],"\n"]}]
+b:["$","$L16",null,{"tabIndex":"0","data-language":"jsx","data-word-wrap":"","data-copy":"","data-pagefind-ignore":"all","children":["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":[["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#6A737D","--shiki-dark":"#6A737D"},"children":"// Карточка в списке"}]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"<"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Card"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  <"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Text"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">Элемент списка</"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Text"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"</"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Card"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}],"\n",["$","span",null,{"children":" "}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#6A737D","--shiki-dark":"#6A737D"},"children":"// Одиночная карточка"}]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"<"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Card"}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" Component"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"div\""}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  <"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Text"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">Отдельная карточка</"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Text"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"</"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Card"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}]]}]}]
+c:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"rezhimy-otobrazheniya","children":["$","a",null,{"href":"#rezhimy-otobrazheniya","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Режимы отображения","children":["Режимы отображения",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+d:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Задаётся свойством ",["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"mode"}],"."]}]
+e:["$","$L6",null,{"code":"<Card mode=\"tint\">\n  <Div>\n    <Text>mode=\"tint\"</Text>\n  </Div>\n</Card>\n<Card mode=\"shadow\">\n  <Div>\n    <Text>mode=\"shadow\"</Text>\n  </Div>\n</Card>\n<Card mode=\"outline\">\n  <Div>\n    <Text>mode=\"outline\"</Text>\n  </Div>\n</Card>\n<Card mode=\"outline-tint\">\n  <Div>\n    <Text>mode=\"outline-tint\"</Text>\n  </Div>\n</Card>\n<Card mode=\"plain\">\n  <Div>\n    <Text>mode=\"plain\"</Text>\n  </Div>\n</Card>"}]
+f:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"a11y","children":["$","a",null,{"href":"#a11y","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Доступность (a11y)","children":["Доступность (a11y)",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+10:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Компонент обеспечивает базовую доступность через семантически правильную разметку.\nПри необходимости можно:"}]
+11:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["изменить тег через свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"Component"}],";"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":"добавить ARIA-роли для улучшения доступности;"}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":"настроить дополнительные атрибуты для конкретных сценариев использования."}],"\n"]}]
+12:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"api","children":["$","a",null,{"href":"#api","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Свойства и методы","children":["Свойства и методы",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+13:["$","div",null,{"className":"Table_root__0rGvK","children":["$","table",null,{"className":"Table_table__NzLHi PropsTable_root__O959b","children":[["$","thead",null,{"children":["$","tr",null,{"children":[["$","th",null,{"children":"Свойство","className":"Table_th__EHorR"}],["$","th",null,{"children":"Описание","className":"Table_th__EHorR"}]],"className":"Table_tr__SD2Ot"}]}],["$","tbody",null,{"children":["$@17","$@18","$@19"]}]]}]}]
+14:["$","$L1a",null,{"toc":[{"value":"Основные возможности","id":"osnovnye-vozmozhnosti","depth":2},{"value":"Семантическая разметка","id":"semanticheskaya-razmetka","depth":3},{"value":"Режимы отображения","id":"rezhimy-otobrazheniya","depth":2},{"value":"Доступность (a11y)","id":"a11y","depth":2},{"value":"Свойства и методы","id":"api","depth":2}]}]
+15:["$","$L1b",null,{"children":["$","$1c",null,{"name":"Next.MetadataOutlet","children":"$@1d"}]}]
+17:["$","tr","Component",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"Component"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"ElementType<any, keyof IntrinsicElements>"}],"$undefined",["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"li"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+18:["$","tr","getRootRef",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"getRootRef"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"Ref<HTMLDivElement>"}],"$undefined",["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+19:["$","tr","mode",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"mode"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"\"plain\" | \"shadow\" | \"tint\" | \"outline\" | \"outline-tint\""}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Внешний вид карточки."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"tint"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+1d:null

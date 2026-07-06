@@ -1,0 +1,7 @@
+import{a as e,i as t,s as n}from"./preload-helper-xPQekRTU.js";import{t as r}from"./jsx-runtime-BqsN2jGA.js";import{Mt as i,Nt as a,jt as o}from"./iframe-CgMGh-8q.js";import{n as s,t as c}from"./VisuallyHidden-GaCP6QeD.js";import{n as l,t as u}from"./Card-0RSdUeaq.js";import{i as d,n as f,t as p}from"./constants-cjed6ZWB.js";import{n as m,t as h}from"./createStoryParameters-CMHckkzt.js";var g=e({Playground:()=>y,__namedExportsOrder:()=>b,default:()=>v}),_,v,y,b,x=t((()=>{o(),d(),m(),s(),l(),_=n(r(),1),v={title:`Data Display/Card`,component:u,parameters:h(`Card`,p,f),decorators:[i,a],excludeStories:[`playgroundArgs`],tags:[`Отображение данных`]},y=e=>(0,_.jsx)(u,{...e,children:(0,_.jsx)(`div`,{style:{height:96},children:(0,_.jsx)(c,{children:`Контент для вашей карточки (визуальный компонент-обертка)`})})}),y.args={Component:`div`},y.parameters={...y.parameters,docs:{...y.parameters?.docs,source:{originalSource:`(props: CardProps) => <Card {...props}>
+    <div style={{
+    height: 96
+  }}>
+      <VisuallyHidden>Контент для вашей карточки (визуальный компонент-обертка)</VisuallyHidden>
+    </div>
+  </Card>`,...y.parameters?.docs?.source}}},b=[`Playground`]}));export{y as n,x as r,g as t};

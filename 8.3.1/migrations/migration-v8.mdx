@@ -1,0 +1,813 @@
+﻿---
+description: Инструкция миграции VKUI на версию v8.
+---
+
+<Overview type="doc">
+# Миграция с v7 на v8
+
+</Overview>
+
+> Документацию по миграции с **v6** на **v7** можно найти [здесь](/migrations/migration-v7).
+
+> **Автоматическая миграция**
+>
+> Воспользуйтесь инструментом по автоматической миграции для TypeScript файлов:
+>
+> 1. Обновите `@vkontakte/vkui` до **v8**
+> 2. В директории с исходным кодом (обычно это `src/`) запустите команду `npx @vkontakte/vkui-codemods`.
+> 3. Простые изменения сделает codemod, о сложных будет выведено в консоли
+>
+> Информацию по доступным параметрам можно узнать через опцию `--help`
+>
+> ```shell
+> npx @vkontakte/vkui-codemods --help
+> ```
+>
+> Более подробная инструкция расположена на странице пакета [@vkontakte/vkui-codemods](https://www.npmjs.com/package/@vkontakte/vkui-codemods).
+
+## 🤖 Промпты для миграции через MCP
+
+Чтобы AI не пропускал компоненты и правильно сопоставлял примеры с кодом, в системный промпт или в задание пользователя можно добавить следующие формулировки.
+
+### Системный промпт (общая стратегия)
+
+Скопируйте в системный промпт или в инструкции для ассистента:
+
+```text
+При миграции кода на VKUI v8:
+
+1. **Сначала** вызови list_migration_targets и получи полный список целей миграции.
+2. **Для каждой цели** из списка проверь: встречается ли в коде пользователя этот компонент/хук или связанные с ним паттерны (имена компонентов, пропсы из примеров).
+3. **Для каждой найденной цели** вызови get_migration_target с точным именем из списка (например Alert, ActionSheet, Snackbar — регистр и формулировка как в списке).
+4. **Применяй замены по смыслу**: в ответе приходит before и after. Твоя задача — найти в коде пользователя фрагменты, которые соответствуют сути примера (тот же компонент, те же пропсы/паттерны), и заменить их на вариант из after. Не ищи точное совпадение строки — ищи логическое соответствие (например, везде, где у Alert, Snackbar или ActionSheet есть onClose, заменить на onClosed).
+5. **Не пропускай** компоненты только потому, что пример в before выглядит иначе (другая переменная, другой колбэк). Если суть совпадает — примени миграцию.
+```
+
+### Задание пользователя (краткое)
+
+Вариант формулировки запроса к ассистенту:
+
+```text
+Проверь этот код на миграцию VKUI v8. Действуй так: вызови list_migration_targets, затем для каждого компонента из списка, который есть в моём коде, вызови get_migration_target и примени все рекомендации (замени фрагменты по полям before → after). Не пропускай компоненты: сверяй по именам и пропсам, а не по точному тексту примера.
+```
+
+### Задание для одного файла
+
+Более детальный запрос с акцентом на конкретные компоненты:
+
+```text
+В этом файле найди все использования компонентов и хуков из списка миграции v8 (получи список через list_migration_targets). Для каждого такого использования запроси get_migration_target и примени замены: сопоставь код с примером «до» по смыслу (компонент, пропсы) и замени на вариант «после». Особенно проверь: Alert, Snackbar, ActionSheet (onClose → onClosed), Input, Search, Textarea, Checkbox, Switch, Radio (getRef → slotProps), ModalRoot, PopoutWrapper, RichCell, DateInput и остальные из списка.
+```
+
+### Напоминание про сопоставление
+
+Если ассистент слишком строго сравнивает код с примером, добавьте в контекст:
+
+```text
+Примеры миграции показывают типичный код «до» и «после». В реальном коде может быть другая переменная (например onClose={handleClose} вместо onClose={() => setPopout(null)}), другой формат — это нормально. Заменяй по смыслу: тот же проп, тот же компонент → применить изменение из after (например везде onClose → onClosed у Alert/Snackbar/ActionSheet).
+```
+
+---
+
+## 🌐 Поддерживаемые браузеры
+
+Изменения минимальных версий браузеров:
+
+```diff
+// .browserslistrc
+- Chrome >= 63
++ Chrome >= 84
+- Safari >= 12
++ Safari >= 15
+- Firefox >= 55
++ Firefox >= 115
+- Edge >= 79
++ Edge >= 109
+- Opera >= 50
++ Opera >= 90
+- iOS >= 12
++ iOS >= 15
+- ChromeAndroid >= 63
++ ChromeAndroid >= 84
+- Samsung >= 8.2
++ Samsung >= 14
++ FirefoxAndroid >= 115
++ Android >= 84
+```
+
+---
+
+## 🗑️ Удалённые типы и функции
+
+### withModalRootContext
+
+Удалена функция `withModalRootContext` из `ModalRoot`.
+
+---
+
+### VisuallyHidden: baseClassName
+
+Удалено свойство `baseClassName` у компонента `VisuallyHidden`. Используйте стандартное свойство `className`.
+
+---
+
+## 🧩 Компоненты
+
+### ActionSheet
+
+- Свойство `onClose` переименовано в `onClosed`.
+- Добавлена поддержка `slotProps.iosCloseItem` для упрощения локализации кнопки "Отмена" на iOS.
+
+Кнопка отмены на iOS рендерится отдельно от списка действий (вне `ActionSheetItem`). Теперь можно передавать свойства напрямую в `ActionSheetDefaultIosCloseItem` через `slotProps.iosCloseItem` без необходимости создавать обёртку.
+
+<details>
+<summary>Миграция</summary>
+
+```diff
+<ActionSheet
+- onClose={() => {}}
++ onClosed={() => {}}
+  title="Заголовок"
+>
+  <ActionSheetItem>Действие</ActionSheetItem>
+</ActionSheet>
+```
+
+Пример использования `slotProps.iosCloseItem` для локализации:
+
+```jsx
+<ActionSheet
+  onClosed={() => setPopout(null)}
+  slotProps={{
+    iosCloseItem: {
+      children: i18n("cancel"),
+    },
+  }}
+>
+  <ActionSheetItem onClick={handleAction}>Действие</ActionSheetItem>
+</ActionSheet>
+```
+
+</details>
+
+---
+
+### Alert
+
+Свойство `onClose` переименовано в `onClosed`.
+
+<details>
+<summary>Миграция</summary>
+
+```diff
+<Alert
+  title="Подтвердите действие"
+  description="Вы уверены?"
+- onClose={() => setPopout(null)}
++ onClosed={() => setPopout(null)}
+/>
+```
+
+</details>
+
+---
+
+### Snackbar
+
+Свойство `onClose` переименовано в `onClosed`.
+
+<details>
+<summary>Миграция</summary>
+
+```diff
+<Snackbar
+- onClose={() => setSnackbar(null)}
++ onClosed={() => setSnackbar(null)}
+>
+  Сообщение
+</Snackbar>
+```
+
+</details>
+
+---
+
+### PopoutWrapper
+
+Свойство `fixed` удалено. Вместо него используйте свойство `strategy`.
+
+<details>
+<summary>Миграция</summary>
+
+```diff
+<PopoutWrapper
+- fixed
+/>
+
+<PopoutWrapper
+- fixed={true}
+/>
+
+<PopoutWrapper
+- fixed={false}
++ strategy="none"
+/>
+```
+
+</details>
+
+---
+
+### Textarea
+
+Внутренние отступы синхронизированы с другими элементами форм. Компонент стал компактнее.
+
+---
+
+### RichCell
+
+Изменена структура компонента и уменьшена минимальная высота.
+
+**Структурные изменения:**
+
+- Свойство `after` теперь всегда рендерится справа от компонента (вне основного контента), независимо от значения `afterAlign`.
+- Добавлены новые свойства `meta` и `submeta` для отображения текста справа от основного контента внутри блока.
+- Если вы использовали `after` с `afterAlign="start"`, замените его на `meta` и `submeta`.
+
+**Изменение минимальной высоты:**
+
+| **Режим** | **v7** | **v8** |
+| --------- | ------ | ------ |
+| regular   | 64px   | 48px   |
+| compact   | 60px   | 44px   |
+
+<details>
+<summary>Миграция</summary>
+
+Если вы использовали `after` с `afterAlign="start"` (или не указывали `afterAlign`), замените на `meta` и `submeta`:
+
+```diff
+<RichCell
+  before={<Avatar size={48} />}
+  overTitle="онлайн"
+  subtitle="Санкт-Петербург"
+- after="Текст"
+- afterCaption="Подтекст"
+- afterAlign="start"
++ meta="Текст"
++ submeta="Подтекст"
+>
+  Имя пользователя
+</RichCell>
+```
+
+Если вы использовали `after` с `afterAlign="center"` или `afterAlign="end"`, поведение остаётся прежним:
+
+```diff
+<RichCell
+  before={<Avatar size={48} />}
+  subtitle="Санкт-Петербург"
+  after={<Icon28Like />}
+  afterAlign="center"
+>
+  Имя пользователя
+</RichCell>
+```
+
+</details>
+
+---
+
+### Banner
+
+Свойство `imageTheme` теперь по умолчанию имеет значение `"auto"` вместо `"dark"`.
+При значении `"auto"` тема изображения определяется автоматически на основе цветовой схемы приложения.
+
+<details>
+<summary>Миграция</summary>
+
+Если вам нужно сохранить прежнее поведение, укажите `imageTheme="dark"`:
+
+```diff
+<Banner
+  mode="image"
++ imageTheme="dark"
+  background={<div style={{ backgroundImage: 'url(...)' }} />}
+>
+  Контент
+</Banner>
+```
+
+</details>
+
+---
+
+### ContentBadge
+
+Изменены цвета при `appearance="neutral"`:
+
+**mode="primary"**:
+
+- Было: текст `--color_text_primary`, фон `--color_background_secondary`
+- Стало: текст `--color_text_contrast`, фон `--color_icon_secondary`
+
+**mode="secondary"**:
+
+- Было: текст `--color_text_subhead`, фон `--color_background_secondary`
+- Стало: текст `--color_text_primary`, фон `--color_background_secondary_alpha`
+
+---
+
+### DateInput, DateRangeInput, CustomSelect
+
+Свойство `accessible` теперь по умолчанию имеет значение `true`.
+
+---
+
+### Calendar, CalendarRange
+
+Изменён тип свойства `onChange`:
+
+```diff
+- onChange?: (value?: Date) => void
++ onChange?: (value: Date) => void
+```
+
+Проверка значения на `undefined` больше не требуется.
+
+<details>
+<summary>Миграция</summary>
+
+```diff
+<Calendar
+- onChange={(value: Date | undefined) => {
+-   if (value) {
+-     setValue(value);
+-   }
+- }}
++ onChange={(value: Date) => setValue(value)}
+/>
+```
+
+</details>
+
+---
+
+### DateInput, DateRangeInput
+
+Изменён тип свойства `onChange`:
+
+```diff
+- onChange?: (value?: Date) => void
++ onChange?: (value: Date | null) => void
+```
+
+Значение `null` означает, что поле очищено. Значение `undefined` не используется,
+так как оно зарезервировано для неконтролируемого состояния компонента.
+
+---
+
+## 📦 Изменение передачи свойств (restProps)
+
+В ряде компонентов изменено поведение передачи дополнительных свойств (`restProps`). Теперь `restProps`
+применяются к корневому элементу, а для передачи свойств во внутренние элементы используется `slotProps`.
+
+> ⚠️ Свойство `getRef` в компонентах ниже помечено как `@deprecated`. Используйте `slotProps` с полем `getRootRef` для получения ссылки на внутренний элемент.
+
+### Изменения в обработке событий
+
+Ранее `onClick` и другие события обрабатывались на внутренних элементах — `event.currentTarget` указывал на них.
+В v8 обработчики из `restProps` применяются к корневому элементу. События всплывают от внутренних элементов.
+
+> ⚠️ Если вы использовали `event.currentTarget` как внутренний элемент, теперь он указывает на корневой:
+> `<label>` у `Switch`/`Checkbox`/`Radio` или обёртку у `CustomSelect`.
+
+Это также влияет на **типизацию колбэков** в TypeScript: тип события теперь выводится из того элемента,
+куда реально навешан обработчик. Например, если `onClick` вешается на корневой `<label>`, то его тип будет
+`React.MouseEvent<HTMLLabelElement>`, а не `React.MouseEvent<HTMLInputElement>`, как раньше.
+
+Чтобы сохранить прежнее поведение (и ожидаемые типы событий) и получать события непосредственно с внутреннего
+элемента, перенесите обработчики в соответствующий `slotProps`:
+
+```jsx
+// Обработчик вешается на корневой элемент
+<Switch onClick={(event) => {
+  // event.currentTarget — корневой <label>
+}} />
+
+// Обработчик вешается на скрытый <input>
+<Switch
+  slotProps={{
+    input: {
+      onClick: (event) => {
+        // event.currentTarget — внутренний <input>, как в v7
+      },
+    },
+  }}
+/>
+```
+
+Аналогично для других компонентов: используйте `slotProps.input`, `slotProps.textarea`, `slotProps.content` и другие слоты
+для работы с внутренними элементами.
+
+### Input, Search
+
+Свойства `getRef`, `data-*` и `aria-*` атрибуты теперь нужно передавать через `slotProps.input`.
+
+<details>
+<summary>Миграция</summary>
+
+```diff
+<Input
+- getRef={inputRef}
+- data-testid="my-input"
+- aria-label="Введите текст"
++ slotProps={{
++   input: {
++     getRootRef: inputRef,
++     "data-testid": "my-input",
++     "aria-label": "Введите текст"
++   }
++ }}
+/>
+```
+
+</details>
+
+---
+
+### Textarea, WriteBar
+
+Свойства `getRef`, `data-*` и `aria-*` атрибуты теперь нужно передавать через `slotProps.textarea`.
+
+<details>
+<summary>Миграция</summary>
+
+```diff
+<Textarea
+- getRef={textareaRef}
+- data-testid="my-textarea"
++ slotProps={{
++   textarea: {
++     getRootRef: textareaRef,
++     "data-testid": "my-textarea"
++   }
++ }}
+/>
+```
+
+</details>
+
+---
+
+### Switch, Checkbox, Radio
+
+Свойства `getRef`, `data-*`, `aria-*` атрибуты и специфичные для input свойства
+(кроме `checked`, `disabled`, `readOnly`, `required`, `name`, `value`) теперь нужно
+передавать через `slotProps.input`.
+
+<details>
+<summary>Миграция</summary>
+
+```diff
+<Checkbox
+- getRef={checkboxRef}
+- data-testid="my-checkbox"
+- aria-describedby="hint"
++ slotProps={{
++   input: {
++     getRootRef: checkboxRef,
++     "data-testid": "my-checkbox",
++     "aria-describedby": "hint"
++   }
++ }}
+>
+  Согласен
+</Checkbox>
+
+<Switch
+- getRef={switchRef}
+- data-testid="my-switch"
++ slotProps={{
++   input: {
++     getRootRef: switchRef,
++     "data-testid": "my-switch"
++   }
++ }}
+/>
+
+<Radio
+- getRef={radioRef}
++ slotProps={{
++   input: {
++     getRootRef: radioRef
++   }
++ }}
+>
+  Вариант
+</Radio>
+```
+
+</details>
+
+---
+
+### File
+
+Свойства `getRef`, `data-*` и `aria-*` атрибуты теперь нужно передавать через `slotProps.input`.
+
+<details>
+<summary>Миграция</summary>
+
+```diff
+<File
+- getRef={fileRef}
+- data-testid="file-input"
++ slotProps={{
++   input: {
++     getRootRef: fileRef,
++     "data-testid": "file-input"
++   }
++ }}
+>
+  Выбрать файл
+</File>
+```
+
+</details>
+
+---
+
+### CustomSelect, NativeSelect
+
+Свойства `restProps` теперь применяются к корневому элементу, а не к внутреннему input.
+Для передачи свойств во внутренний input используйте `slotProps.input`.
+
+<details>
+<summary>Миграция</summary>
+
+```diff
+<CustomSelect
+- data-testid="select"
+- aria-label="Выберите значение"
++ slotProps={{
++   input: {
++     "data-testid": "select",
++     "aria-label": "Выберите значение"
++   }
++ }}
+  options={options}
+  value={value}
+  onChange={onChange}
+/>
+```
+
+</details>
+
+---
+
+### ChipsSelect, ChipsInput
+
+Свойства для внутреннего input теперь передаются через `slotProps.input`.
+
+<details>
+<summary>Миграция</summary>
+
+```diff
+<ChipsSelect
+- getRef={inputRef}
+- data-testid="chips-select"
+- aria-describedby="hint"
++ slotProps={{
++   input: {
++     getRootRef: inputRef,
++     "data-testid": "chips-select",
++     "aria-describedby": "hint"
++   }
++ }}
+  value={value}
+  onChange={onChange}
+/>
+```
+
+</details>
+
+---
+
+### SplitLayout
+
+Свойства `restProps` теперь применяются к корневому элементу, а не к внутреннему контейнеру `content`.
+Для передачи свойств в контейнер используйте `slotProps.content`.
+
+<details>
+<summary>Миграция</summary>
+
+```diff
+<SplitLayout
+- className="my-layout"
+- data-testid="layout"
++ slotProps={{
++   content: {
++     className: "my-layout",
++     "data-testid": "layout"
++   }
++ }}
+  header={<PanelHeader />}
+>
+  <SplitCol>Контент</SplitCol>
+</SplitLayout>
+```
+
+</details>
+
+---
+
+## ⚠️ Устаревшие API (deprecated)
+
+Следующие API помечены как устаревшие и будут удалены в будущих версиях.
+
+### AdaptivityProvider
+
+Свойства `sizeX` и `sizeY` теперь `@deprecated`, используйте `density` вместо `sizeY`, `viewWidth={ViewWidth.MOBILE}`
+вместо `sizeX="compact"` и `viewWidth={ViewWidth.SMALL_TABLET}` вместо `sizeX="regular"`
+
+<details>
+<summary>Пример миграции</summary>
+
+```diff
+- <AdaptivityProvider sizeX="compact">
++ <AdaptivityProvider viewWidth={ViewWidth.MOBILE}>
+
+- <AdaptivityProvider sizeX="regular">
++ <AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET}>
+
+- <AdaptivityProvider sizeY="compact">
++ <AdaptivityProvider density="compact">
+
+- <AdaptivityProvider sizeY="regular">
++ <AdaptivityProvider density="regular">
+
+- <AdaptivityProvider sizeX="compact" sizeY="compact">
++ <AdaptivityProvider viewWidth={ViewWidth.MOBILE} density="compact">
+
+- <AdaptivityProvider sizeX="regular" sizeY="regular">
++ <AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET} density="regular">
+
+- <AppRootProvider sizeX="regular" sizeY="compact">
++ <AppRootProvider viewWidth={ViewWidth.SMALL_TABLET} density="compact">
+
+- <AppRootProvider sizeX="compact" sizeY="regular">
++ <AppRootProvider viewWidth={ViewWidth.MOBILE} density="regular">
+```
+</details>
+
+### ModalRoot
+
+Компонент `ModalRoot` помечен как `@deprecated`. Используйте хук [useModalManager](/components/use-modal-manager)
+для императивного управления модальными окнами.
+
+<details>
+<summary>Миграция</summary>
+
+```diff
+- const [activeModal, setActiveModal] = useState(null);
+-
+- <ModalRoot activeModal={activeModal} onClose={() => setActiveModal(null)}>
+-   <ModalPage id="modal" onClose={() => setActiveModal(null)}>
+-     Контент
+-   </ModalPage>
+- </ModalRoot>
+
++ const [modalApi, modalHolder] = useModalManager();
++
++ // Открытие модального окна
++ modalApi.openModalPage({
++   children: <div>Контент</div>,
++ });
++
++ // В JSX
++ {modalHolder}
+```
+
+</details>
+
+---
+
+### FixedLayout
+
+Компонент `FixedLayout` помечен как `@deprecated` и будет удалён в **v10**. Используйте вместо него
+[Box](/components/box) со свойствами `position="sticky"` и `insetBlockStart`/`insetBlockEnd`.
+
+<details>
+<summary>Миграция</summary>
+
+```diff
+- <FixedLayout vertical="top">
++ <Box position="sticky" insetBlockStart={0}>
+    Content
+- </FixedLayout>
++ </Box>
+
+- <FixedLayout vertical="bottom">
++ <Box position="sticky" insetBlockEnd={0}>
+    Content
+- </FixedLayout>
++ </Box>
+```
+
+> Так как элемент с `position: sticky` находится в основном потоке документа, при замене
+> `<FixedLayout vertical="bottom" />` важно также соблюсти порядок элемента в документе.
+
+</details>
+
+---
+
+### Flex.Item
+
+Подкомпонент `Flex.Item` помечен как `@deprecated`. Используйте стандартные CSS свойства
+или свойства компонента `Box` для управления дочерними элементами.
+
+---
+
+### RichCell: afterCaption
+
+Свойство `afterCaption` помечено как `@deprecated`. Используйте вместо него свойство `submeta`.
+
+<details>
+<summary>Миграция</summary>
+
+```diff
+<RichCell
+- afterCaption="Подтекст"
++ submeta="Подтекст"
+>
+  Контент
+</RichCell>
+```
+
+</details>
+
+---
+
+### ActionSheetItem: mode="cancel" и isCancelItem
+
+Свойства `mode="cancel"` и `isCancelItem` отмечены как устаревшие.
+
+> ⚠️ Важно: `ActionSheetItem` с `mode="cancel"` или `isCancelItem` раньше передавался как `iosCloseItem` (отдельная кнопка отмены на iOS), а не был элементом внутри списка действий.
+
+Вместо использования `ActionSheetItem` с `mode="cancel"` или `isCancelItem` в качестве `iosCloseItem`, используйте:
+
+- `slotProps.iosCloseItem` в `ActionSheet` для передачи свойств в кнопку отмены
+- или свойство `iosCloseItem` с компонентом `ActionSheetDefaultIosCloseItem` для полной кастомизации
+
+<details>
+<summary>Миграция</summary>
+
+```diff
+<ActionSheet
+  onClosed={() => setPopout(null)}
+  title="Выберите действие"
+- iosCloseItem={
+-   <ActionSheetItem mode="cancel" onClick={() => setPopout(null)}>
+-     Отмена
+-   </ActionSheetItem>
+- }
++ slotProps={{
++    iosCloseItem: {
++      children: "Отмена",
++      onClick: () => setPopout(null)
++    }
++  }}
++>
++  <ActionSheetItem onClick={handleAction}>Действие</ActionSheetItem>
+</ActionSheet>
+```
+
+Альтернативный вариант с использованием `ActionSheetDefaultIosCloseItem` напрямую:
+
+```diff
+<ActionSheet
+  onClosed={() => setPopout(null)}
+  title="Выберите действие"
+- iosCloseItem={
+-   <ActionSheetItem mode="cancel" onClick={() => setPopout(null)}>
+-     Отмена
+-   </ActionSheetItem>
+- }
++ iosCloseItem={
++   <ActionSheetDefaultIosCloseItem onClick={() => setPopout(null)}>
++     Отмена
++   </ActionSheetDefaultIosCloseItem>
++ }
+>
+  <ActionSheetItem onClick={handleAction}>Действие</ActionSheetItem>
+</ActionSheet>
+```
+
+</details>
+
+---
+
+### DateInput, DateRangeInput, CustomSelect: accessible
+
+Свойство `accessible` помечено как `@deprecated`, так как теперь оно имеет значение `true` по умолчанию.

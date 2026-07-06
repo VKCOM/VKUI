@@ -1,0 +1,72 @@
+1:"$Sreact.fragment"
+2:I[23450,["876","static/chunks/876-09cd53f1a40921e6.js","236","static/chunks/236-8c0345bb0abc4507.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-4d7fea37bd782b11.js"],"Main"]
+4:I[74517,["876","static/chunks/876-09cd53f1a40921e6.js","236","static/chunks/236-8c0345bb0abc4507.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-4d7fea37bd782b11.js"],"Overview",1]
+5:I[80204,["876","static/chunks/876-09cd53f1a40921e6.js","236","static/chunks/236-8c0345bb0abc4507.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-4d7fea37bd782b11.js"],"PlaygroundLazy"]
+15:I[91042,["876","static/chunks/876-09cd53f1a40921e6.js","236","static/chunks/236-8c0345bb0abc4507.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-4d7fea37bd782b11.js"],"TOC"]
+16:I[90484,[],"OutletBoundary"]
+17:"$Sreact.suspense"
+3:Tcbf,---
+description: Компонент для отображения статуса формы или результата действия.
+---
+
+<Overview group="forms">
+
+# FormStatus [tag:component]
+
+Компонент для отображения статуса формы или результата действия.
+Используется для информирования пользователя о текущем состоянии формы, успешном выполнении действия или возникшей ошибке.
+
+</Overview>
+
+{/* @example-description: Сообщение об ошибке формы с заголовком и поясняющим текстом. */}
+<Playground>
+  ```jsx
+  <FormStatus title="Некорректный мобильный номер" mode="error">
+    Необходимо корректно ввести номер в международном формате
+  </FormStatus>
+  ```
+</Playground>
+
+## Применение компонента
+
+Используйте компонент для отображения важных информационных сообщений, успешных результатов действий пользователя или подсказок
+по заполнению формы. Старайтесь делать сообщения краткими и понятными.
+
+При отображении ошибок используйте свойство `mode="error"` для привлечения внимания пользователя.
+
+В заголовке (свойство `title`) указывайте основную суть сообщения, а в дополнительном контенте (свойство `children`)
+предоставляйте более подробную информацию или инструкции.
+
+Не используйте компонент для отображения обычного текста или контента, не связанного со статусом формы.
+Избегайте использования данного компонента для описания всех ошибок формы (используйте отображение ошибок рядом с конкретным полем формы).
+
+## Доступность (a11y) [#a11y]
+
+Компонент автоматически устанавливает правильную роль (`role`) в зависимости от режима отображения:
+
+- `role="status"` для режима `mode="default"` — используется для отображения статуса, который не требует
+  немедленного внимания пользователя;
+- `role="alert"` для режима `mode="error"` — используется для отображения важных сообщений об ошибках,
+  которые требуют внимания пользователя.
+
+При необходимости вы можете переопределить роль, передав своё значение через свойство `role`.
+
+## Свойства и методы [#api]
+
+<PropsTable name="FormStatus" />0:{"rsc":["$","$1","c",{"children":[[["$","$L2",null,{"metadata":{"description":"Компонент для отображения статуса формы или результата действия.","title":"FormStatus","filePath":"content/components/form-status.mdx","timestamp":1783328459000},"sourceCode":"$3","children":[["$","$L4",null,{"group":"forms","children":[["$","h1",null,{"className":"mdx_h1__1mgpN","data-pagefind-filter":"tag:component","children":"FormStatus"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Компонент для отображения статуса формы или результата действия.\nИспользуется для информирования пользователя о текущем состоянии формы, успешном выполнении действия или возникшей ошибке."}]]}],"\n","\n",["$","$L5",null,{"code":"<FormStatus title=\"Некорректный мобильный номер\" mode=\"error\">\n  Необходимо корректно ввести номер в международном формате\n</FormStatus>"}],"\n",["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"primenenie-komponenta","children":["$","a",null,{"href":"#primenenie-komponenta","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Применение компонента","children":["Применение компонента",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}],"\n","$L6","\n","$L7","\n","$L8","\n","$L9","\n","$La","\n","$Lb","\n","$Lc","\n","$Ld","\n","$Le","\n","$Lf"]}],"$L10"],null,"$L11"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"GlCvKw3HXD4rTXTxw8EOu"}
+6:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Используйте компонент для отображения важных информационных сообщений, успешных результатов действий пользователя или подсказок\nпо заполнению формы. Старайтесь делать сообщения краткими и понятными."}]
+7:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["При отображении ошибок используйте свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"mode=\"error\""}]," для привлечения внимания пользователя."]}]
+8:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["В заголовке (свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"title"}],") указывайте основную суть сообщения, а в дополнительном контенте (свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"children"}],")\nпредоставляйте более подробную информацию или инструкции."]}]
+9:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Не используйте компонент для отображения обычного текста или контента, не связанного со статусом формы.\nИзбегайте использования данного компонента для описания всех ошибок формы (используйте отображение ошибок рядом с конкретным полем формы)."}]
+a:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"a11y","children":["$","a",null,{"href":"#a11y","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Доступность (a11y)","children":["Доступность (a11y)",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+b:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Компонент автоматически устанавливает правильную роль (",["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"role"}],") в зависимости от режима отображения:"]}]
+c:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"role=\"status\""}]," для режима ",["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"mode=\"default\""}]," — используется для отображения статуса, который не требует\nнемедленного внимания пользователя;"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"role=\"alert\""}]," для режима ",["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"mode=\"error\""}]," — используется для отображения важных сообщений об ошибках,\nкоторые требуют внимания пользователя."]}],"\n"]}]
+d:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["При необходимости вы можете переопределить роль, передав своё значение через свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"role"}],"."]}]
+e:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"api","children":["$","a",null,{"href":"#api","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Свойства и методы","children":["Свойства и методы",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+f:["$","div",null,{"className":"Table_root__0rGvK","children":["$","table",null,{"className":"Table_table__NzLHi PropsTable_root__O959b","children":[["$","thead",null,{"children":["$","tr",null,{"children":[["$","th",null,{"children":"Свойство","className":"Table_th__EHorR"}],["$","th",null,{"children":"Описание","className":"Table_th__EHorR"}]],"className":"Table_tr__SD2Ot"}]}],["$","tbody",null,{"children":["$@12","$@13","$@14"]}]]}]}]
+10:["$","$L15",null,{"toc":[{"value":"Применение компонента","id":"primenenie-komponenta","depth":2},{"value":"Доступность (a11y)","id":"a11y","depth":2},{"value":"Свойства и методы","id":"api","depth":2}]}]
+11:["$","$L16",null,{"children":["$","$17",null,{"name":"Next.MetadataOutlet","children":"$@18"}]}]
+12:["$","tr","getRootRef",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"getRootRef"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"Ref<HTMLDivElement>"}],"$undefined",["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+13:["$","tr","mode",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"mode"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"\"default\" | \"error\""}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Режим отображения компонента."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+14:["$","tr","title",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"title"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"ReactNode"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Основной текст."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+18:null

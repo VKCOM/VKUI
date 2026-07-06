@@ -1,0 +1,254 @@
+﻿---
+description: Базовый компонент по работе с изображениями с добавлением возможности накладывать различные элементы поверх изображения.
+tags: media
+---
+
+<Overview group="data-display">
+
+# ImageBase [tag:component]
+
+Базовый компонент по работе с изображениями, лежит в основе [`Avatar`](/components/avatar) и [`Image`](/components/image).
+Наследует все свойства HTML-элемента `<img>` и добавляет возможность накладывать различные элементы поверх изображения.
+
+</Overview>
+
+{/* @example-description: Базовый `ImageBase` для отображения изображения фиксированного размера. */}
+<Playground>
+  ```jsx
+  <ImageBase
+    size={96}
+    src="https://sun9-26.userapi.com/YZ5-1A6cVgL7g1opJGQIWg1Bl5ynfPi8p41SkQ/IYIUDqGkkBE.jpg"
+  />
+  ```
+</Playground>
+
+## Адаптивные размеры [#sizes]
+
+Задать размеры изображения можно через свойства `size` (если ширина и высота равны) или `widthSize` и `heightSize`
+(если ширина и высота отличаются).
+
+> Обратите внимание, что нативные свойства `width`/`height` позволяют задавать размеры непосредственно
+> самого изображения.
+> Чаще всего вам нужны именно `size` или `widthSize`/`heightSize` для задания размеров всего контейнера с изображением.
+
+Используйте предопределённые размеры (`16 | 20 | 24 | 28 | 32 | 36 | 40 | 44 | 48 | 56 | 64 | 72 | 80 | 88 | 96`).
+
+Пользовательские значения свойствам `size` или `widthSize`/`heightSize` задаются только числами,
+либо строками с указанием пикселей (`33px`), другие единицы измерения не допускаются дизайн-системой
+для сохранения возможности рассчитывать радиус скругления.
+
+### Сохранение пропорций
+
+С заданным свойством `keepAspectRatio` можно не указывать либо ширину, либо высоту картинки - оригинальные
+соотношения сторон сохраняются.
+
+Если вам необходимо растянуть изображение на всю ширину или высоту контейнера, то допускается `widthSize` или `heightSize`
+указать `100%`.
+
+{/* @example-description: Сохранение исходных пропорций изображения через `keepAspectRatio`. */}
+<Playground>
+  ```jsx
+  <ImageBase
+    keepAspectRatio
+    widthSize="200px"
+    src="https://sun9-26.userapi.com/YZ5-1A6cVgL7g1opJGQIWg1Bl5ynfPi8p41SkQ/IYIUDqGkkBE.jpg"
+  />
+  ```
+</Playground>
+
+## Дополнительные элементы
+
+Добавляйте дополнительные элементы поверх изображения:
+
+### Иконка-заглушка
+
+На случай, если картинка не смогла загрузиться, будет отображаться иконка-заглушка.
+Размер иконки-заглушки должен зависеть от размеров изображения.
+
+{/* @example-description: `ImageBase` с кастомной иконкой-заглушкой для отсутствующего изображения. */}
+<Playground>
+  ```jsx
+  <ImageBase size={96} fallbackIcon={<Icon3218CircleOutline />} />
+  ```
+</Playground>
+
+> Может быть полезна функция [`getFallbackIconSizeByImageBaseSize`](#getfallbackiconsizebyimagebasesize).
+
+### Индикатор
+
+Индикатор в правом нижнем углу компонента:
+
+{/* @example-description: Добавление бейджа в `ImageBase` через подкомпонент `ImageBase.Badge`. */}
+<Playground>
+  ```jsx
+  <ImageBase
+    size={96}
+    src="https://sun9-26.userapi.com/YZ5-1A6cVgL7g1opJGQIWg1Bl5ynfPi8p41SkQ/IYIUDqGkkBE.jpg"
+  >
+    <ImageBase.Badge background="stroke">
+      <Icon24StarCircleFillGreen />
+    </ImageBase.Badge>
+  </ImageBase>
+  ```
+</Playground>
+
+> Может быть полезна функция [`getBadgeIconSizeByImageBaseSize`](#getbadgeiconsizebyimagebasesize).
+
+### Наложение
+
+Перекрывающий картинку элемент задаётся через `Image.Overlay`:
+
+{/* @example-description: Наложение действия поверх изображения через `ImageBase.Overlay`. */}
+<Playground>
+  ```jsx
+  <ImageBase
+    size={96}
+    src="https://sun9-26.userapi.com/YZ5-1A6cVgL7g1opJGQIWg1Bl5ynfPi8p41SkQ/IYIUDqGkkBE.jpg"
+  >
+    <ImageBase.Overlay visibility="always">
+      <Icon24AddOutline />
+    </ImageBase.Overlay>
+  </ImageBase>
+  ```
+</Playground>
+
+Особенность компонента заключается в способе его отображения через свойство `visibility`.
+Если оно явно не задано, то по умолчанию на устройствах с указателем (например, мышь) применяется `on-hover`,
+позволяющее показывать наложение при наведении на картинку, на остальных устройствах (например, мобильные)
+наложение показывается всегда.
+
+С помощью свойства `theme` можно задать цвет наложения, по умолчанию наследуется тема приложения.
+
+> Может быть полезна функция [`getOverlayIconSizeByImageBaseSize`](#getoverlayiconsizebyimagebasesize).
+
+### Позиционированный компонент
+
+Позиционированный компонент расположенный поверх изображения в произвольном месте задаётся `ImageBase.FloatElement`:
+
+{/* @example-description: Произвольный плавающий элемент поверх изображения через `ImageBase.FloatElement`. */}
+<Playground>
+  ```jsx
+  <ImageBase
+    size={96}
+    src="https://sun9-26.userapi.com/YZ5-1A6cVgL7g1opJGQIWg1Bl5ynfPi8p41SkQ/IYIUDqGkkBE.jpg"
+  >
+    <ImageBase.FloatElement placement="top-end" inlineIndent="xs" blockIndent="xs">
+      <Button size="s" mode="primary" after={<Icon16MoreHorizontal />} />
+    </ImageBase.FloatElement>
+  </ImageBase>
+  ```
+</Playground>
+
+## Вспомогательные функции
+
+### getBadgeIconSizeByImageBaseSize
+
+Размер иконки для бейджа необходимо подстраивать под разные значения свойства `size` компонента.
+Например, для изображений размером `28x28` лучше смотрятся иконки бейджа размером `12x12`.
+Дизайн-система уже определяет наилучшие размеры иконок, поэтому вместо
+ручного подбора вы можете использовать функцию `getBadgeIconSizeByImageBaseSize` и на её основе реализовать
+рендер иконки:
+
+```jsx
+import { ImageBaseContext, getBadgeIconSizeByImageBaseSize } from '@vkontakte/vkui';
+
+// Убедитесь, что используете контекст в компоненте или хуке, который расположен ниже `ImageBase`.
+const { size } = React.useContext(ImageBaseContext);
+const iconSize = getBadgeIconSizeByImageBaseSize(size);
+// ИЛИ если размер изображения статичный и всегда равен одному значению
+const iconSize = getFallbackIconSizeByImageBaseSize(56);
+
+// Теперь используйте iconSize для выбора иконки в нужном размере
+```
+
+### getOverlayIconSizeByImageBaseSize
+
+Размер иконки для наложения необходимо подстраивать под разные значения свойства `size` компонента.
+Например, для изображений размером `28x28` лучше смотрятся иконки наложения размером `20x20`.
+Дизайн-система уже определяет наилучшие размеры иконок, поэтому вместо
+ручного подбора вы можете использовать функцию `getOverlayIconSizeByImageBaseSize` и на её основе реализовать
+рендер иконки:
+
+```jsx
+import { ImageBaseContext, getOverlayIconSizeByImageBaseSize } from '@vkontakte/vkui';
+
+// Убедитесь, что используете контекст в компоненте или хуке, который расположен ниже `ImageBase`.
+const { size } = React.useContext(ImageBaseContext);
+const iconSize = getOverlayIconSizeByImageBaseSize(size);
+// ИЛИ если размер изображения статичный и всегда равен одному значению
+const iconSize = getFallbackIconSizeByImageBaseSize(56);
+
+// Теперь используйте iconSize для выбора иконки в нужном размере
+```
+
+### getFallbackIconSizeByImageBaseSize
+
+Размер иконки, которая будет отрисована, если изображение не удалось загрузить,
+необходимо подстраивать под разные значения свойства `size` компонента.
+Например, для изображений размером `28x28` лучше смотрятся иконки размером `20x20`.
+Дизайн-система уже определяет наилучшие размеры иконок, поэтому вместо
+ручного подбора вы можете использовать функцию `getFallbackIconSizeByImageBaseSize` и на её основе реализовать
+рендер иконки:
+
+```jsx
+import { ImageBaseContext, getFallbackIconSizeByImageBaseSize } from '@vkontakte/vkui';
+
+// Убедитесь, что используете контекст в компоненте или хуке, который расположен ниже `ImageBase`.
+const { size } = React.useContext(ImageBaseContext);
+const iconSize = getFallbackIconSizeByImageBaseSize(size);
+// ИЛИ если размер изображения статичный и всегда равен одному значению
+const iconSize = getFallbackIconSizeByImageBaseSize(56);
+
+// Теперь используйте iconSize для выбора иконки в нужном размере
+```
+
+## Свойства и методы [#api]
+
+### ImageBase
+
+| Свойство | Тип | По умолчанию | Описание |
+| --- | --- | --- | --- |
+| `elementTiming` | `string` | `-` | Смотри https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/elementtiming. |
+| `fallbackIcon` | `ReactElement<ImageBaseExpectedIconProps, string \| JSXElementConstructor<any>>` | `-` | Фолбек на случай, если картинка не прогрузилась.  > 📝 Нужный для `<ImageBase size={...} />` размер можно узнать из функции `getFallbackIconSizeByImageBaseSize()`.  > Предпочтительней использовать иконки из `@vkontakte/icons`.  > 📊️ Если вы хотите передать кастомную иконку, то следует именовать её по шаблону `Icon<size><name>`. Или же > чтобы в неё был передан параметр `width`. Тогда мы сможем выводить в консоль подсказку правильного ли размера вы > использовали иконку.  > ⚠️ Может перекрывать `children`. |
+| `filter` | `Filter` | `-` | Пользовательское значения стиля filter. Подробнее можно почитать в [документации](https://developer.mozilla.org/ru/docs/Web/CSS/filter).  При передаче этого свойства `<img />` будет обёрнут в дополнительный контейнер. |
+| `getRef` | `Ref<HTMLImageElement>` | `-` | **Deprecated**: Since 7.9.0. Будет удалено в v9. Используйте `slotProps={ img: { getRootRef: ... } }`. |
+| `getRootRef` | `Ref<HTMLDivElement>` | `-` |  |
+| `heightSize` | `string \| number` | `-` | Высота изображения. |
+| `keepAspectRatio` | `boolean` | `false` | Флаг для сохранения пропорций картинки. Для корректной работы необходимо задать размеры хотя бы одной стороны картинки. |
+| `noBorder` | `boolean` | `false` | Отключает обводку. |
+| `objectFit` | `ObjectFit` | `cover` | Пользовательское значения стиля object-fit Подробнее можно почитать в [документации](https://developer.mozilla.org/ru/docs/Web/CSS/object-fit). |
+| `objectPosition` | `ObjectPosition<string \| number>` | `-` | Пользовательское значения стиля object-position Подробнее можно почитать в [документации](https://developer.mozilla.org/ru/docs/Web/CSS/object-position). |
+| `size` | `LiteralUnion<16 \| 20 \| 24 \| 28 \| 32 \| 36 \| 40 \| 44 \| 48 \| 56 \| 64 \| 72 \| 80 \| 88 \| 96, number>` | `-` | Задаёт размер картинки.  Используйте размеры заданные дизайн-системой `16 \| 20 \| 24 \| 28 \| 32 \| 36 \| 40 \| 44 \| 48 \| 56 \| 64 \| 72 \| 80 \| 88 \| 96`.  > ⚠️ Использование кастомного размера – это пограничный кейс. |
+| `slotProps` | `{ img?: (ClassAttributes<HTMLImageElement> & ImgHTMLAttributes<HTMLImageElement> & HasRootRef<HTMLImageElement> & HasDataAttribute); } \| undefined` | `-` | Свойства, которые можно прокинуть внутрь компонента: - `img`: свойства для прокидывания в тег `<img>`;. |
+| `widthSize` | `string \| number` | `-` | Ширина изображения. |
+| `withTransparentBackground` | `boolean` | `-` | Отключает фон, заданный по умолчанию. Полезен для отображения картинок с прозрачностью. |
+
+### ImageBase.Badge
+
+| Свойство | Тип | По умолчанию | Описание |
+| --- | --- | --- | --- |
+| `background` | `"stroke" \| "shadow"` | `shadow` | Вид подложки под иконку.  - `"stroke"` – имитирует вырез (⚠️ если фон под компонентом динамический, то ожидайте баг). - `"shadow"` – добавляет небольшую тень (⚠️ если фон под компонентом динамический, то ожидайте баг). |
+| `**children** \*` | `ReactElement<ImageBaseExpectedIconProps, string \| JSXElementConstructor<any>>` | `-` | Принимает иконку.  > 📝 Нужный для `<ImageBase size={...} />` размер можно узнать из функции `getBadgeIconSizeByImageBaseSize()`.  > Предпочтительней использовать иконки из `@vkontakte/icons`.  > 📊️ Если вы хотите передать кастомную иконку, то следует именовать её по шаблону `Icon<size><name>`. Или же > чтобы в неё был передан параметр `width`. Тогда мы сможем выводить в консоль подсказку правильного ли размера вы > использовали иконку. |
+| `getRootRef` | `Ref<HTMLDivElement>` | `-` |  |
+
+### ImageBase.Overlay
+
+| Свойство | Тип | По умолчанию | Описание |
+| --- | --- | --- | --- |
+| `**children** \*` | `ReactNode \| ReactElement<ImageBaseExpectedIconProps, string \| JSXElementConstructor<any>>` | `-` | Принимает иконку.   > 📝 Нужный для `<ImageBase size={...} />` размер можно узнать из функции `getOverlayIconSizeByImageBaseSize()`.  > Предпочтительней использовать иконки из `@vkontakte/icons`.  > 📊️ Если вы хотите передать кастомную иконку, то следует именовать её по шаблону `Icon<size><name>`. Или же > чтобы в неё был передан параметр `width`. Тогда мы сможем выводить в консоль подсказку правильного ли размера вы > использовали иконку. Содержимое. |
+| `className` | `string` | `-` | `className` для компонента. |
+| `getRootRef` | `Ref<HTMLDivElement>` | `-` |  |
+| `onClick` | `MouseEventHandler<HTMLElement>` | `-` | Обработчик взаимодействия с элементом. По умолчанию сам компонент является интерактивным элементом. Передав значение равное `'undefined'` или не передав этот параметр вовсе, можно отключить такое поведение, что дает возможность передавать отдельные интерактивные элементы в `children`. |
+| `theme` | `"dark" \| "light"` | `-` | Задаёт тему оформления.  > По умолчанию берётся из параметра `appearance` в `ConfigProvider`. |
+| `visibility` | `"on-hover" \| "always"` | `-` | Определяет каким образом должен показываться оверлей.  - `"on-hover"` – на наведение указателя мыши. - `"always"` – всегда показывать.  > По умолчанию определяется в зависимости от того, есть ли у пользователя мышь или нет. > Определение просиходит с помощью двойного рендера, так что на устройствах без мыши > оверлей покажется не раньше второго рендера. > Если это критично (например при SSR), то старайтесь явно указывать значение `visibility`, либо используйте > [AdaptivityProvider](#/AdaptivityProvider) для того, чтобы явно определить `hasPointer`. |
+
+### ImageBase.FloatElement
+
+| Свойство | Тип | По умолчанию | Описание |
+| --- | --- | --- | --- |
+| `blockIndent` | `FloatElementIndentation` | `-` | Отступ компонента от края контейнера по вертикали. |
+| `getRootRef` | `Ref<HTMLDivElement>` | `-` |  |
+| `inlineIndent` | `FloatElementIndentation` | `-` | Отступ компонента от края контейнера по горизонтали. |
+| `**placement** \*` | `FloatElementPlacement` | `-` | Позиция компонента относительно родителя. |
+| `visibility` | `"on-hover" \| "always"` | `always` | Режим отображения компонента:  - `"always"`: Всегда - `"on-hover"`: При наведении на картинку. |
+

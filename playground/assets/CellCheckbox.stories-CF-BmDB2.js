@@ -1,0 +1,5 @@
+import{i as e,s as t}from"./preload-helper-xPQekRTU.js";import{t as n}from"./jsx-runtime-BqsN2jGA.js";import{Mt as r,Nt as i,jt as a}from"./iframe-CgMGh-8q.js";import{n as o,t as s}from"./Group-LwNPJiLD.js";import{i as c,n as l,r as u,t as d}from"./Cell-Co3d1Bhe.js";import{n as f,t as p}from"./Avatar-BddMLYzH.js";import{i as m,n as h,t as g}from"./constants-cjed6ZWB.js";import{n as _,o as v}from"./mock-K9LjXOLX.js";var y,b,x,S;e((()=>{a(),m(),v(),f(),o(),l(),c(),y=t(n(),1),b={title:`Buttons/Cell/Checkbox`,component:u,parameters:{...g,...h},decorators:[r,i]},x=e=>(0,y.jsx)(s,{children:(0,y.jsx)(d,{Component:`label`,before:(0,y.jsx)(p,{src:_(`user_xyz`)}),after:(0,y.jsx)(d.Checkbox,{...e}),children:`Игорь Федоров`})}),x.args={defaultChecked:!0},x.parameters={...x.parameters,docs:{...x.parameters?.docs,source:{originalSource:`(props: CellCheckboxProps) => <Group>
+    <Cell Component="label" before={<Avatar src={getAvatarUrl('user_xyz')} />} after={<Cell.Checkbox {...props} />}>
+      Игорь Федоров
+    </Cell>
+  </Group>`,...x.parameters?.docs?.source}}},S=[`Playground`]}))();export{x as Playground,S as __namedExportsOrder,b as default};

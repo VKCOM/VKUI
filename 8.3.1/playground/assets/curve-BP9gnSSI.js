@@ -1,0 +1,1 @@
+import{i as e}from"./preload-helper-xPQekRTU.js";function t(e,t,n,r,i){let a=3*(t-e),o=3*(n-t)-a;return(r-e-a-o)*i**3+o*i**2+a*i+e}function n(e,n,r,i,a,o,s,c,l){return[t(e,r,a,s,l),t(n,i,o,c,l)]}var r=e((()=>{}));export{r as n,n as t};

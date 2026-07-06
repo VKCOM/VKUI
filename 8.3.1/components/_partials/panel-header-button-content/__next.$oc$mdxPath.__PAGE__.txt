@@ -1,0 +1,111 @@
+1:"$Sreact.fragment"
+2:I[23450,["876","static/chunks/876-09cd53f1a40921e6.js","236","static/chunks/236-8c0345bb0abc4507.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-4d7fea37bd782b11.js"],"Main"]
+7:I[18443,["876","static/chunks/876-09cd53f1a40921e6.js","236","static/chunks/236-8c0345bb0abc4507.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-4d7fea37bd782b11.js"],"Anchor"]
+8:I[80204,["876","static/chunks/876-09cd53f1a40921e6.js","236","static/chunks/236-8c0345bb0abc4507.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-4d7fea37bd782b11.js"],"PlaygroundLazy"]
+15:I[91042,["876","static/chunks/876-09cd53f1a40921e6.js","236","static/chunks/236-8c0345bb0abc4507.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-4d7fea37bd782b11.js"],"TOC"]
+16:I[90484,[],"OutletBoundary"]
+17:"$Sreact.suspense"
+3:T142d,Подкомпонент для отрисовки кнопки в шапке – передаётся в свойство `before` и/или `after` компонента [`PanelHeader`](/components/panel-header).
+
+{/* @example-description: Базовый `PanelHeaderButton` с иконкой действия в шапке. */}
+<Playground>
+  ```jsx
+  <PanelHeaderButton aria-label="Уведомления">
+    <Icon28Notifications />
+  </PanelHeaderButton>
+  ```
+</Playground>
+
+### Контент
+
+В качестве содержимого компонента передавайте в свойство `children` либо [иконку](https://vkcom.github.io/icons/),
+либо текст. Текстовые кнопки чаще всего используются в iOS, но есть исключения для android.
+
+Обратите внимание, что для планшетов и десктопов рекомендуется использовать кнопки размером `24px`,
+а для мобильных устройств - размером `28px` (возможно, будет полезен [AdaptiveIconRenderer](/components/adaptive-icon-renderer)).
+
+Если нужно несколько кнопок в ряд, то используйте `React.Fragment`:
+
+{/* @example-description: Несколько кнопок в шапке с группировкой через `React.Fragment`. */}
+<Playground>
+  ```jsx
+  <React.Fragment>
+    <PanelHeaderButton aria-label="Настройки">
+      <Icon28SettingsOutline />
+    </PanelHeaderButton>
+    <PanelHeaderButton aria-label="Уведомления">
+      <Icon28Notifications />
+    </PanelHeaderButton>
+  </React.Fragment>
+  ```
+</Playground>
+
+### Пресеты
+
+#### PanelHeaderBack [#panel-header-back]
+
+Кнопка назад в экранах в рамках одного сценария ([`View`](/components/view)). Внутри инкапсулирована логика показа нужной иконки для платформы.
+Также можно передать свойство `label`, для отображения текста, который будет виден на платформах vkcom и iOS, но будет скрыт на Android.
+С помощью свойств `hideLabelOnVKCom` и `hideLabelOnIOS` можно также визуально скрыть `label` на соответствующих платформах, он будет виден только для скринридеров.
+
+{/* @example-description: Кнопка возврата `PanelHeaderBack` с платформенной иконкой. */}
+<Playground>
+  ```jsx
+  <PanelHeaderBack />
+  ```
+</Playground>
+
+#### PanelHeaderClose [#panel-header-close]
+
+Кнопка "Отмена" в модальных окнах для закрытия текущего [`View`](/components/view) в рамках [`View`](/components/root). На iOS будет
+показан текст, передаваемый как `label`, на Android и Desktop - `<Icon28CancelOutline />` или `<Icon24CancelOutline />`. Если
+передать свойство `label`, то на Android и Desktop он будет скрыт, но виден для скринридеров.
+
+{/* @example-description: Кнопка закрытия `PanelHeaderClose` для модальных и навигационных сценариев. */}
+<Playground>
+  ```jsx
+  <PanelHeaderClose />
+  ```
+</Playground>
+
+#### PanelHeaderEdit [#panel-header-edit]
+
+Кнопка "Редактировать". Принимает свойство `isActive`, которое определяет состояние кнопки (включен ли режим редактирования).
+Для указания кастомных текстов для состояний можно использовать соответствующие свойства `doneLabel` и `editLabel`. Данные тексты
+будут видны на iOS, а на Android и Desktop они будет скрыты, но видны для скринридеров.
+
+{/* @example-description: Кнопка редактирования `PanelHeaderEdit` с переключаемым состоянием. */}
+<Playground>
+  ```jsx
+  <PanelHeaderEdit />
+  ```
+</Playground>
+
+#### PanelHeaderSubmit [#panel-header-submit]
+
+Кнопка "Готово" в модальных окнах для закрытия текущего [`View`](/components/view) в рамках [`View`](/components/root) и сохранения
+какого-либо результата. На iOS будет показан текст, передаваемый как `label`, на Android и Desktop - `<Icon28DoneOutline />`
+или `<Icon24DoneOutline />`. Если передать свойство `label`, то на Android и Desktop текст будет скрыт, но виден для скринридеров.
+
+{/* @example-description: Кнопка подтверждения `PanelHeaderSubmit` для завершения действия. */}
+<Playground>
+  ```jsx
+  <PanelHeaderSubmit />
+  ```
+</Playground>0:{"rsc":["$","$1","c",{"children":[[["$","$L2",null,{"metadata":{"title":"Panel Header Button Content","filePath":"content/components/_partials/panel-header-button-content.mdx","timestamp":1783328459000},"sourceCode":"$3","children":"$L4"}],"$L5"],null,"$L6"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"GlCvKw3HXD4rTXTxw8EOu"}
+4:[["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Подкомпонент для отрисовки кнопки в шапке – передаётся в свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"before"}]," и/или ",["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"after"}]," компонента ",["$","$L7",null,{"href":"/components/panel-header","children":["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"PanelHeader"}]}],"."]}],"\n","\n",["$","$L8",null,{"code":"<PanelHeaderButton aria-label=\"Уведомления\">\n  <Icon28Notifications />\n</PanelHeaderButton>"}],"\n",["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"kontent","children":["$","a",null,{"href":"#kontent","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Контент","children":["Контент",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}],"\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["В качестве содержимого компонента передавайте в свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"children"}]," либо ",["$","$L7",null,{"href":"https://vkcom.github.io/icons/","children":"иконку"}],",\nлибо текст. Текстовые кнопки чаще всего используются в iOS, но есть исключения для android."]}],"\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Обратите внимание, что для планшетов и десктопов рекомендуется использовать кнопки размером ",["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"24px"}],",\nа для мобильных устройств - размером ",["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"28px"}]," (возможно, будет полезен ",["$","$L7",null,{"href":"/components/adaptive-icon-renderer","children":"AdaptiveIconRenderer"}],")."]}],"\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Если нужно несколько кнопок в ряд, то используйте ",["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"React.Fragment"}],":"]}],"\n","\n",["$","$L8",null,{"code":"<React.Fragment>\n  <PanelHeaderButton aria-label=\"Настройки\">\n    <Icon28SettingsOutline />\n  </PanelHeaderButton>\n  <PanelHeaderButton aria-label=\"Уведомления\">\n    <Icon28Notifications />\n  </PanelHeaderButton>\n</React.Fragment>"}],"\n",["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"presety","children":["$","a",null,{"href":"#presety","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Пресеты","children":["Пресеты",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}],"\n",["$","h4",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading4__c9VtX","id":"panel-header-back","children":"$L9"}],"\n","$La","\n","\n","$Lb","\n","$Lc","\n","$Ld","\n","\n","$Le","\n","$Lf","\n","$L10","\n","\n","$L11","\n","$L12","\n","$L13","\n","\n","$L14"]
+5:["$","$L15",null,{"toc":[{"value":"Контент","id":"kontent","depth":3},{"value":"Пресеты","id":"presety","depth":3},{"value":"PanelHeaderBack","id":"panel-header-back","depth":4},{"value":"PanelHeaderClose","id":"panel-header-close","depth":4},{"value":"PanelHeaderEdit","id":"panel-header-edit","depth":4},{"value":"PanelHeaderSubmit","id":"panel-header-submit","depth":4}]}]
+6:["$","$L16",null,{"children":["$","$17",null,{"name":"Next.MetadataOutlet","children":"$@18"}]}]
+9:["$","a",null,{"href":"#panel-header-back","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию PanelHeaderBack","children":["PanelHeaderBack",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]
+a:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Кнопка назад в экранах в рамках одного сценария (",["$","$L7",null,{"href":"/components/view","children":["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"View"}]}],"). Внутри инкапсулирована логика показа нужной иконки для платформы.\nТакже можно передать свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"label"}],", для отображения текста, который будет виден на платформах vkcom и iOS, но будет скрыт на Android.\nС помощью свойств ",["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"hideLabelOnVKCom"}]," и ",["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"hideLabelOnIOS"}]," можно также визуально скрыть ",["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"label"}]," на соответствующих платформах, он будет виден только для скринридеров."]}]
+b:["$","$L8",null,{"code":"<PanelHeaderBack />"}]
+c:["$","h4",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading4__c9VtX","id":"panel-header-close","children":["$","a",null,{"href":"#panel-header-close","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию PanelHeaderClose","children":["PanelHeaderClose",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+d:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Кнопка “Отмена” в модальных окнах для закрытия текущего ",["$","$L7",null,{"href":"/components/view","children":["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"View"}]}]," в рамках ",["$","$L7",null,{"href":"/components/root","children":["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"View"}]}],". На iOS будет\nпоказан текст, передаваемый как ",["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"label"}],", на Android и Desktop - ",["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"<Icon28CancelOutline />"}]," или ",["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"<Icon24CancelOutline />"}],". Если\nпередать свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"label"}],", то на Android и Desktop он будет скрыт, но виден для скринридеров."]}]
+e:["$","$L8",null,{"code":"<PanelHeaderClose />"}]
+f:["$","h4",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading4__c9VtX","id":"panel-header-edit","children":["$","a",null,{"href":"#panel-header-edit","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию PanelHeaderEdit","children":["PanelHeaderEdit",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+10:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Кнопка “Редактировать”. Принимает свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"isActive"}],", которое определяет состояние кнопки (включен ли режим редактирования).\nДля указания кастомных текстов для состояний можно использовать соответствующие свойства ",["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"doneLabel"}]," и ",["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"editLabel"}],". Данные тексты\nбудут видны на iOS, а на Android и Desktop они будет скрыты, но видны для скринридеров."]}]
+11:["$","$L8",null,{"code":"<PanelHeaderEdit />"}]
+12:["$","h4",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading4__c9VtX","id":"panel-header-submit","children":["$","a",null,{"href":"#panel-header-submit","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию PanelHeaderSubmit","children":["PanelHeaderSubmit",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+13:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Кнопка “Готово” в модальных окнах для закрытия текущего ",["$","$L7",null,{"href":"/components/view","children":["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"View"}]}]," в рамках ",["$","$L7",null,{"href":"/components/root","children":["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"View"}]}]," и сохранения\nкакого-либо результата. На iOS будет показан текст, передаваемый как ",["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"label"}],", на Android и Desktop - ",["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"<Icon28DoneOutline />"}],"\nили ",["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"<Icon24DoneOutline />"}],". Если передать свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"label"}],", то на Android и Desktop текст будет скрыт, но виден для скринридеров."]}]
+14:["$","$L8",null,{"code":"<PanelHeaderSubmit />"}]
+18:null

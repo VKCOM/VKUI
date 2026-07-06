@@ -1,0 +1,1 @@
+import{i as e,s as t}from"./preload-helper-xPQekRTU.js";import{t as n}from"./react-a45N5K9M.js";function r(e){return e instanceof Function?e():e}function i(e){return[r(e),void 0]}function a(e,t){return t instanceof Function?t(e):t}function o([e],t){return[a(e,t),e]}function s(e){return c.useReducer(o,void 0,()=>i(e))}var c,l=e((()=>{c=t(n(),1)}));export{s as n,l as t};

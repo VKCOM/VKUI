@@ -1,0 +1,197 @@
+1:"$Sreact.fragment"
+2:I[23450,["876","static/chunks/876-09cd53f1a40921e6.js","236","static/chunks/236-8c0345bb0abc4507.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-4d7fea37bd782b11.js"],"Main"]
+7:I[74517,["876","static/chunks/876-09cd53f1a40921e6.js","236","static/chunks/236-8c0345bb0abc4507.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-4d7fea37bd782b11.js"],"Overview",1]
+8:I[18443,["876","static/chunks/876-09cd53f1a40921e6.js","236","static/chunks/236-8c0345bb0abc4507.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-4d7fea37bd782b11.js"],"Anchor"]
+9:I[80204,["876","static/chunks/876-09cd53f1a40921e6.js","236","static/chunks/236-8c0345bb0abc4507.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-4d7fea37bd782b11.js"],"PlaygroundLazy"]
+20:I[91042,["876","static/chunks/876-09cd53f1a40921e6.js","236","static/chunks/236-8c0345bb0abc4507.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-4d7fea37bd782b11.js"],"TOC"]
+21:I[90484,[],"OutletBoundary"]
+22:"$Sreact.suspense"
+24:I[19180,["876","static/chunks/876-09cd53f1a40921e6.js","236","static/chunks/236-8c0345bb0abc4507.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-4d7fea37bd782b11.js"],"Pre"]
+3:T1ba8,---
+description: Компонент для создания выпадающего списка на основе нативного HTML-элемента select.
+tags: selection
+---
+
+<Overview group="forms">
+
+# NativeSelect [tag:component]
+
+Компонент для создания выпадающего списка на основе нативного HTML-элемента `select`.
+Используется для выбора одного значения из списка опций.
+
+Связанные компоненты:
+
+- [`Select`](/components/select)
+
+</Overview>
+
+> Важно: для отображения невыбранного состояния нужно использовать `value=null` вместо `undefined`.
+>
+> `undefined` ипользуется только для неконтролируемого компонента.
+
+{/* @example-description: Базовый `NativeSelect` с набором нативных опций выбора. */}
+<Playground style={{ maxWidth: 280 }}>
+  ```jsx
+  <NativeSelect>
+    <option value="1">Опция 1</option>
+    <option value="2">Опция 2</option>
+    <option value="3">Опция 3</option>
+  </NativeSelect>
+  ```
+</Playground>
+
+> Используйте данный компонент на мобильных устройствах или отдайте предпочтение [`Select`](/components/select),
+> который автоматически выберет наилучший для отображения компонент.
+> Используйте компонент [`CustomSelect`](/components/custom-select), чтобы вид компонента был всегда кастомный.
+
+## Режим работы
+
+Компонент поддерживает работу как в неконтролируемом режиме, так и контролируемом. Это стандартное поведение
+React-компонентов, прочитать про это можно в [документации React](https://react.dev/reference/react-dom/components/input#controlling-an-input-with-a-state-variable).
+
+Для использования неконтролируемого режима достаточно просто _не_ передавать `value` или передавать `defaultValue`, если
+требуется задать значение по умолчанию.
+Для контролируемого режима используйте связку свойств `value`/`onChange` для задания значения и его изменения.
+
+```jsx
+// Неконтролируемое состояние
+<NativeSelect defaultValue="f">
+  <option value="f">Женский</option>
+  <option value="m">Мужской</option>
+</NativeSelect>;
+
+// Контролируемое состояние
+const [gender, setGender] = React.useState('f');
+
+<NativeSelect value={gender} onChange={(_, newGender) => setGender(newGender)}>
+  <option value="f">Женский</option>
+  <option value="m">Мужской</option>
+</NativeSelect>;
+```
+
+## Состояния
+
+### `disabled`
+
+Свойство `disabled` блокирует взаимодействие с компонентом и добавляет визуальную индикацию недоступности.
+
+> Если вы используете `NativeSelect` вместе с `FormItem`, то свойство `disabled` следует указывать и у `Input`, и у `FormItem`.
+
+{/* @example-description: `NativeSelect` в неактивном состоянии `disabled`. */}
+<Playground style={{ maxWidth: 280 }}>
+  ```jsx
+  <NativeSelect disabled>
+    <option value="1">Опция 1</option>
+  </NativeSelect>
+  ```
+</Playground>
+
+## Валидация
+
+Свойство `status` используется для визуализации валидации компонента - некорректности заполненного поля (значение `"error"`)
+или успешной валидации (значение `"valid"`).
+
+> Если вы используете `FormField` вместе с [`FormItem`](/components/form-item), вам достаточно указать свойство `status` только у
+> [`FormItem`](/components/form-item).
+
+{/* @example-description: Валидационные статусы `NativeSelect`: ошибка и успешное состояние. */}
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <NativeSelect status="error">
+    <option value="1">Опция 1</option>
+  </NativeSelect>
+  <NativeSelect status="valid">
+    <option value="1">Опция 1</option>
+  </NativeSelect>
+  ```
+</Playground>
+
+## Кастомизация
+
+Компонент поддерживает свойство `slotProps`, которое даёт возможность прокинуть свойство в некоторые внутренние элементы.
+Это удобно для добавления кастомных классов, data-атрибутов, aria-атрибутов, обработчиков событий, доступов к элементам через `getRootRef` и других расширений, не влияя на внешний API компонента.
+
+{/* @example-description: Кастомизация `NativeSelect` через `slotProps` и доступ к внутреннему `select` по `ref`. */}
+<Playground style={{ maxWidth: 280 }}>
+  ```jsx
+  const selectRef = React.useRef();
+
+  return (
+    <NativeSelect
+      className="my-root-class"
+      data-testid="native-select-root"
+      id="native-select-id"
+      slotProps={{
+        root: {
+          id: 'select-root-id',
+        },
+        select: {
+          className: 'my-select-class',
+          'data-test-id': 'select',
+          getRootRef: selectRef,
+          'aria-label': 'Пример slotProps'
+        }
+      }}
+    >
+      <option value="1">Опция 1</option>
+      <option value="2">Опция 2</option>
+      <option value="3">Опция 3</option>
+    </NativeSelect>
+  )
+  ```
+</Playground>
+
+## Доступность (a11y) [#a11y]
+
+Компонент построен на основе нативного HTML-элемента `select`, что обеспечивает базовую доступность. Для улучшения доступности рекомендуется:
+
+- всегда добавлять `label` для селекта;
+- использовать `aria-label` или `aria-labelledby`, если визуальный заголовок отсутствует;
+- добавлять `aria-describedby` для дополнительного описания, если оно есть.
+
+Для улучшения доступности рекомендуется использовать обёртку `FormItem` для компонента `NativeSelect` для
+поддержки заголовка и описания поля.
+
+## Свойства и методы [#api]
+
+<PropsTable name="NativeSelect" />0:{"rsc":["$","$1","c",{"children":[[["$","$L2",null,{"metadata":{"description":"Компонент для создания выпадающего списка на основе нативного HTML-элемента select.","tags":"selection","title":"NativeSelect","filePath":"content/components/native-select.mdx","timestamp":1783328459000},"sourceCode":"$3","children":"$L4"}],"$L5"],null,"$L6"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"GlCvKw3HXD4rTXTxw8EOu"}
+4:[["$","$L7",null,{"group":"forms","children":[["$","h1",null,{"className":"mdx_h1__1mgpN","data-pagefind-filter":"tag:component","children":"NativeSelect"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Компонент для создания выпадающего списка на основе нативного HTML-элемента ",["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"select"}],".\nИспользуется для выбора одного значения из списка опций."]}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Связанные компоненты:"}],["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["$","$L8",null,{"href":"/components/select","children":["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"Select"}]}]}],"\n"]}]]}],"\n",["$","aside",null,{"className":"Callout_root__6UBFP","children":["$","div",null,{"className":"Callout_content__MYf_T","children":["\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Важно: для отображения невыбранного состояния нужно использовать ",["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"value=null"}]," вместо ",["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"undefined"}],"."]}],"\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"undefined"}]," ипользуется только для неконтролируемого компонента."]}],"\n"]}]}],"\n","\n",["$","$L9",null,{"style":{"maxWidth":280},"code":"<NativeSelect>\n  <option value=\"1\">Опция 1</option>\n  <option value=\"2\">Опция 2</option>\n  <option value=\"3\">Опция 3</option>\n</NativeSelect>"}],"\n",["$","aside",null,{"className":"Callout_root__6UBFP","children":["$","div",null,{"className":"Callout_content__MYf_T","children":["\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Используйте данный компонент на мобильных устройствах или отдайте предпочтение ",["$","$L8",null,{"href":"/components/select","children":["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"Select"}]}],",\nкоторый автоматически выберет наилучший для отображения компонент.\nИспользуйте компонент ",["$","$L8",null,{"href":"/components/custom-select","children":["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"CustomSelect"}]}],", чтобы вид компонента был всегда кастомный."]}],"\n"]}]}],"\n",["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"rezhim-raboty","children":["$","a",null,{"href":"#rezhim-raboty","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Режим работы","children":["Режим работы",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}],"\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Компонент поддерживает работу как в неконтролируемом режиме, так и контролируемом. Это стандартное поведение\nReact-компонентов, прочитать про это можно в ",["$","$L8",null,{"href":"https://react.dev/reference/react-dom/components/input#controlling-an-input-with-a-state-variable","children":"документации React"}],"."]}],"\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Для использования неконтролируемого режима достаточно просто ",["$","em",null,{"children":"не"}]," передавать ",["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"value"}]," или передавать ","$La",", если\nтребуется задать значение по умолчанию.\nДля контролируемого режима используйте связку свойств ","$Lb","/","$Lc"," для задания значения и его изменения."]}],"\n","$Ld","\n","$Le","\n","$Lf","\n","$L10","\n","$L11","\n","\n","$L12","\n","$L13","\n","$L14","\n","$L15","\n","\n","$L16","\n","$L17","\n","$L18","\n","\n","$L19","\n","$L1a","\n","$L1b","\n","$L1c","\n","$L1d","\n","$L1e","\n","$L1f"]
+5:["$","$L20",null,{"toc":[{"value":"Режим работы","id":"rezhim-raboty","depth":2},{"value":"Состояния","id":"sostoyaniya","depth":2},{"value":["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"disabled"}],"id":"disabled","depth":3},{"value":"Валидация","id":"validaciya","depth":2},{"value":"Кастомизация","id":"kastomizaciya","depth":2},{"value":"Доступность (a11y)","id":"a11y","depth":2},{"value":"Свойства и методы","id":"api","depth":2}]}]
+6:["$","$L21",null,{"children":["$","$22",null,{"name":"Next.MetadataOutlet","children":"$@23"}]}]
+a:["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"defaultValue"}]
+b:["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"value"}]
+c:["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"onChange"}]
+d:["$","$L24",null,{"tabIndex":"0","data-language":"jsx","data-word-wrap":"","data-copy":"","data-pagefind-ignore":"all","children":["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":[["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#6A737D","--shiki-dark":"#6A737D"},"children":"// Неконтролируемое состояние"}]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"<"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"NativeSelect"}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" defaultValue"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"f\""}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  <"}],["$","span",null,{"style":{"--shiki-light":"#22863A","--shiki-dark":"#85E89D"},"children":"option"}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" value"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"f\""}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">Женский</"}],["$","span",null,{"style":{"--shiki-light":"#22863A","--shiki-dark":"#85E89D"},"children":"option"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  <"}],["$","span",null,{"style":{"--shiki-light":"#22863A","--shiki-dark":"#85E89D"},"children":"option"}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" value"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"m\""}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">Мужской</"}],["$","span",null,{"style":{"--shiki-light":"#22863A","--shiki-dark":"#85E89D"},"children":"option"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"</"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"NativeSelect"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">;"}]]}],"\n",["$","span",null,{"children":" "}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#6A737D","--shiki-dark":"#6A737D"},"children":"// Контролируемое состояние"}]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"const"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" ["}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"gender"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":", "}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"setGender"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"] "}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" React."}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":"useState"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"("}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"'f'"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":");"}]]}],"\n",["$","span",null,{"children":" "}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"<"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"NativeSelect"}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" value"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],"$L25","$L26","$L27","$L28","$L29","$L2a","$L2b","$L2c","$L2d","$L2e","$L2f"]}],"\n","$L30","\n","$L31","\n","$L32"]}]}]
+e:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"sostoyaniya","children":["$","a",null,{"href":"#sostoyaniya","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Состояния","children":["Состояния",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+f:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"disabled","children":["$","a",null,{"href":"#disabled","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию [object Object]","children":["$5:props:toc:2:value",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+10:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"disabled"}]," блокирует взаимодействие с компонентом и добавляет визуальную индикацию недоступности."]}]
+11:["$","aside",null,{"className":"Callout_root__6UBFP","children":["$","div",null,{"className":"Callout_content__MYf_T","children":["\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Если вы используете ",["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"NativeSelect"}]," вместе с ",["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"FormItem"}],", то свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"disabled"}]," следует указывать и у ",["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"Input"}],", и у ",["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"FormItem"}],"."]}],"\n"]}]}]
+12:["$","$L9",null,{"style":{"maxWidth":280},"code":"<NativeSelect disabled>\n  <option value=\"1\">Опция 1</option>\n</NativeSelect>"}]
+13:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"validaciya","children":["$","a",null,{"href":"#validaciya","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Валидация","children":["Валидация",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+14:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"status"}]," используется для визуализации валидации компонента - некорректности заполненного поля (значение ",["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"\"error\""}],")\nили успешной валидации (значение ",["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"\"valid\""}],")."]}]
+15:["$","aside",null,{"className":"Callout_root__6UBFP","children":["$","div",null,{"className":"Callout_content__MYf_T","children":["\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Если вы используете ",["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"FormField"}]," вместе с ",["$","$L8",null,{"href":"/components/form-item","children":["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"FormItem"}]}],", вам достаточно указать свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"status"}]," только у\n",["$","$L8",null,{"href":"/components/form-item","children":["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"FormItem"}]}],"."]}],"\n"]}]}]
+16:["$","$L9",null,{"style":{"maxWidth":270},"code":"<NativeSelect status=\"error\">\n  <option value=\"1\">Опция 1</option>\n</NativeSelect>\n<NativeSelect status=\"valid\">\n  <option value=\"1\">Опция 1</option>\n</NativeSelect>"}]
+17:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"kastomizaciya","children":["$","a",null,{"href":"#kastomizaciya","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Кастомизация","children":["Кастомизация",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+18:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Компонент поддерживает свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"slotProps"}],", которое даёт возможность прокинуть свойство в некоторые внутренние элементы.\nЭто удобно для добавления кастомных классов, data-атрибутов, aria-атрибутов, обработчиков событий, доступов к элементам через ",["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"getRootRef"}]," и других расширений, не влияя на внешний API компонента."]}]
+19:["$","$L9",null,{"style":{"maxWidth":280},"code":"const selectRef = React.useRef();\n\nreturn (\n  <NativeSelect\n    className=\"my-root-class\"\n    data-testid=\"native-select-root\"\n    id=\"native-select-id\"\n    slotProps={{\n      root: {\n        id: 'select-root-id',\n      },\n      select: {\n        className: 'my-select-class',\n        'data-test-id': 'select',\n        getRootRef: selectRef,\n        'aria-label': 'Пример slotProps'\n      }\n    }}\n  >\n    <option value=\"1\">Опция 1</option>\n    <option value=\"2\">Опция 2</option>\n    <option value=\"3\">Опция 3</option>\n  </NativeSelect>\n)"}]
+1a:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"a11y","children":["$","a",null,{"href":"#a11y","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Доступность (a11y)","children":["Доступность (a11y)",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+1b:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Компонент построен на основе нативного HTML-элемента ",["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"select"}],", что обеспечивает базовую доступность. Для улучшения доступности рекомендуется:"]}]
+1c:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["всегда добавлять ",["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"label"}]," для селекта;"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["использовать ",["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"aria-label"}]," или ",["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"aria-labelledby"}],", если визуальный заголовок отсутствует;"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["добавлять ",["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"aria-describedby"}]," для дополнительного описания, если оно есть."]}],"\n"]}]
+1d:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Для улучшения доступности рекомендуется использовать обёртку ",["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"FormItem"}]," для компонента ",["$","code",null,{"className":"Code_root__TR_dq __className_e8c0c6","dir":"ltr","children":"NativeSelect"}]," для\nподдержки заголовка и описания поля."]}]
+1e:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"api","children":["$","a",null,{"href":"#api","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Свойства и методы","children":["Свойства и методы",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+1f:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Не принимает свойств"}]
+23:null
+25:["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"{gender} "}]
+26:["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":"onChange"}]
+27:["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}]
+28:["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"{("}]
+29:["$","span",null,{"style":{"--shiki-light":"#E36209","--shiki-dark":"#FFAB70"},"children":"_"}]
+2a:["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":", "}]
+2b:["$","span",null,{"style":{"--shiki-light":"#E36209","--shiki-dark":"#FFAB70"},"children":"newGender"}]
+2c:["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":") "}]
+2d:["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"=>"}]
+2e:["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" setGender"}]
+2f:["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"(newGender)}>"}]
+30:["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  <"}],["$","span",null,{"style":{"--shiki-light":"#22863A","--shiki-dark":"#85E89D"},"children":"option"}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" value"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"f\""}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">Женский</"}],["$","span",null,{"style":{"--shiki-light":"#22863A","--shiki-dark":"#85E89D"},"children":"option"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}]
+31:["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  <"}],["$","span",null,{"style":{"--shiki-light":"#22863A","--shiki-dark":"#85E89D"},"children":"option"}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" value"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"m\""}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">Мужской</"}],["$","span",null,{"style":{"--shiki-light":"#22863A","--shiki-dark":"#85E89D"},"children":"option"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}]
+32:["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"</"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"NativeSelect"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">;"}]]}]
