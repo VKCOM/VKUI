@@ -45,7 +45,14 @@ export interface PanelHeaderContextProps extends HTMLAttributesWithRootRef<HTMLD
   onClose: VoidFunction;
 }
 
-const ComponentDecorators = [SplitColWidthWrapper, OnboardingTooltipFixedContainer];
+const PanelHeaderContextComponent = (props: React.AllHTMLAttributes<HTMLElement>) => (
+  <SplitColWidthWrapper
+    {...props}
+    Component={(innerProps: React.AllHTMLAttributes<HTMLElement>) => (
+      <OnboardingTooltipFixedContainer {...innerProps} />
+    )}
+  />
+);
 
 /**
  * @see https://vkui.io/components/panel-header-context
@@ -87,7 +94,7 @@ export const PanelHeaderContext = ({
 
   return (
     <Box
-      Component={ComponentDecorators}
+      Component={PanelHeaderContextComponent}
       className={classNames(
         styles.host,
         platform === 'ios' && styles.ios,
