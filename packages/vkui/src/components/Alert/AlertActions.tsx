@@ -1,8 +1,5 @@
-'use client';
-
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { usePlatform } from '../../hooks/usePlatform';
 import type { AlertActionInterface, AlertProps } from './Alert';
 import { AlertAction } from './AlertAction';
 import styles from './Alert.module.css';
@@ -33,17 +30,12 @@ export const AlertActions = ({
   actionsAlign,
   actionsLayout,
 }: AlertActionsProps): React.ReactNode => {
-  const platform = usePlatform();
-
-  const direction: AlertProps['actionsLayout'] =
-    platform === 'vkcom' ? 'horizontal' : actionsLayout;
-
   return (
     <div
       className={classNames(
         styles.actions,
         actionsAlign && alignStyles[actionsAlign],
-        direction && directionStyles[direction],
+        actionsLayout && directionStyles[actionsLayout],
       )}
     >
       {actions.map((action, i) => {
