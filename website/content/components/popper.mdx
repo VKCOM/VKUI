@@ -1,5 +1,6 @@
 ---
 description: Низкоуровневый компонент для отрисовки выпадающего блока.
+tags: overlay
 ---
 
 <Overview group="modals">
@@ -10,6 +11,25 @@ description: Низкоуровневый компонент для отрисо
 Единственная его задача — корректно позиционироваться рядом с целевым элементом.
 
 </Overview>
+
+<Playground hide>
+
+```jsx
+const buttonRef = React.useRef(null);
+
+return (
+  <React.Fragment>
+    <Button getRootRef={buttonRef}>
+      Закрыть
+    </Button>
+    <Popper usePortal={false} targetRef={buttonRef} disableFlipMiddleware>
+      Привет
+    </Popper>
+  </React.Fragment>
+);
+```
+
+</Playground>
 
 {/* @example-description: Базовый `Popper`, позиционируемый относительно кнопки-якоря через `targetRef`. */}
 <Playground>

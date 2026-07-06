@@ -13,12 +13,15 @@ on:
         required: false
         type: string
 
+permissions:
+  contents: read
+
 jobs:
   test:
     runs-on: ubuntu-latest
     name: Run unit tests
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           ref: ${{ inputs.ref }}
 
@@ -27,11 +30,13 @@ jobs:
 
       - name: Run tests for all workspaces
         if: ${{ !inputs.workspace }}
-        run: yarn run test:ci
+        run: node --run test:ci
 
       - name: Run tests for the specified workspace
         if: ${{ inputs.workspace }}
-        run: yarn workspace ${{ inputs.workspace }} run test:ci
+        env:
+          WORKSPACE: ${{ inputs.workspace }}
+        run: yarn workspace "$WORKSPACE" run test:ci
 
       - name: Upload test artifact
         if: always()
@@ -41,3 +46,4 @@ jobs:
           path: |
             test-results.json
             .nyc_output/coverage-final.json
+            .nyc_output/cobertura-coverage.xml

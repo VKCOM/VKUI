@@ -1,5 +1,6 @@
 ---
 description: Контейнер для реализации интерфейса многоколоночной структурой.
+tags: navigation
 ---
 
 <Overview group="layout">
@@ -20,6 +21,47 @@ description: Контейнер для реализации интерфейса
 </Overview>
 
 import { FixedLayoutWrapper } from '@/components/wrappers';
+
+<Playground hide>
+
+```jsx
+const { viewWidth } = useAdaptivityConditionalRender();
+
+return (
+  <SplitLayout>
+    {viewWidth.tabletPlus && (
+      <SplitCol className={viewWidth.tabletPlus.className}>
+        <div
+          style={{
+            padding: 12,
+            color: 'white',
+            backgroundColor: 'tomato',
+          }}
+        >
+          Фиксированная колонка слева
+        </div>
+      </SplitCol>
+    )}
+    <SplitCol>
+      <div
+        style={{
+          padding: 12,
+          color: 'white',
+          backgroundColor: 'steelblue',
+        }}
+      >
+        Колонка справа
+        {viewWidth.tabletMinus && (
+          <p className={viewWidth.tabletMinus.className}>
+            ⚠️ колонка слева спрятана по условию адаптивности
+          </p>
+        )}
+      </div>
+    </SplitCol>
+  </SplitLayout>
+);
+```
+</Playground>
 
 {/* @example-description: Базовый пример `SplitLayout` с двумя колонками и адаптивным скрытием боковой колонки на узких экранах. */}
 <Playground Wrapper={FixedLayoutWrapper}>
@@ -197,37 +239,9 @@ return (
 
 ## SplitCol [#split-col] [tag:component]
 
-Подкомпонент для отрисовки колонки в многоколоночном интерфейсе.
+import SplitColContent from './_partials/split-col-content.mdx';
 
-### Позиционирование
-
-Свойство `fixed` даёт возможность задать стиль `position: fixed` для колонки.
-Обычно используется для боковых колонок, не позволяя им прокручиваться с основным контентом и всегда оставаться в области видимости.
-
-- `true` — стиль применяется;
-- `false` — стиль не применяется.
-
-### Размеры
-
-С помощью свойств `width`, `minWidth` и `maxWidth` можно управлять шириной колонки. Принимаются либо числовое (в пикселях), либо
-строковое (токены или другие единицы измерения) значения.
-
-```jsx
-<SplitCol width="100%" maxWidth={560}>
-  {/* контент */}
-</SplitCol>
-```
-
-Свойство `stretchedOnMobile` позволит колонке растягиваться на всю доступную ширину на устройствах шириной меньше `tablet`.
-
-### Отступы
-
-Свойство `autoSpaced` добавляет фиксированные боковые отступы колонке на устройствах с шириной больше `smallTablet`.
-
-### Анимации [#animation]
-
-Через свойство `animate` можно управлять включением/отключением анимаций при переходах во [`View`](/components/view). По умолчанию
-анимации при переходах включены только для мобильных устройств.
+<SplitColContent />
 
 ## Свойства и методы [#api]
 

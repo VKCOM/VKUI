@@ -1,8 +1,8 @@
 ## Быстрый старт
 
-- `yarn test` — запускает все unit-тесты;
-- `yarn test:e2e` — запускает в Docker-контейнере скриншотные тесты;
-- `yarn test:e2e-update` — запускает в Docker-контейнере обновление скриншотных тестов.
+- `node --run test` — запускает все unit-тесты;
+- `node --run test:e2e` — запускает в Docker-контейнере скриншотные тесты;
+- `node --run test:e2e-update` — запускает в Docker-контейнере обновление скриншотных тестов.
 
 ## Виды тестов
 
@@ -47,7 +47,7 @@
     > Напрямую её использовать не придётся. Она используется в `expectScreenshotClippedToContent()`, которая доступна через аргументы `test`.
     >
     > ```ts
-    > test('base', ({ expectScreenshotClippedToContent }) => {
+    > test("base", ({ expectScreenshotClippedToContent }) => {
     >   // ...
     >   await expectScreenshotClippedToContent();
     > });
@@ -67,14 +67,16 @@
 - colorScheme: 'light'
 
 ```tsx
-test('Example', async ({ expectScreenshotClippedToContent }) => {
+test("Example", async ({ expectScreenshotClippedToContent }) => {
   // ...
   await expectScreenshotClippedToContent(); // => мы получим скриншот с названием 'example-android-chromium-light-1-snap.png'
   await expectScreenshotClippedToContent(); // => мы получим скриншот с названием 'example-android-chromium-light-2-snap.png'
 });
 
-test.describe('Example', () => {
-  test('My AWESOME case description', async ({ expectScreenshotClippedToContent }) => {
+test.describe("Example", () => {
+  test("My AWESOME case description", async ({
+    expectScreenshotClippedToContent,
+  }) => {
     // ...
     await expectScreenshotClippedToContent(); // => мы получим скриншот с названием 'example-android-chromium-light-my-awesome-case-description-1-snap.png'
   });
@@ -143,7 +145,7 @@ test.describe(() => {
 Для начала надо будет скачать браузеры, делаем это следующей командой:
 
 ```
-yarn run playwright:install
+node --run playwright:install
 ```
 
 Далее копируем `.env.development.local` файл:
@@ -160,7 +162,7 @@ cp packages/vkui/.env.development.local packages/vkui/.env
 2. Запускаем команду
 
    ```
-   yarn test:e2e:ci --debug
+   node --run test:e2e:ci -- --debug
    ```
 
 3. Запустится Playwright DevTools и указанный браузер.
@@ -202,5 +204,5 @@ yarn workspace @vkontakte/vkui run docker:clear-playwright-cache
 > Note: карта покрытия будет создана только для пакета `@vkontakte/vkui`
 
 ```sh
-yarn test:ci && yarn test:coverage
+node --run test:ci && node --run test:coverage
 ```

@@ -10,12 +10,15 @@ on:
 
 run-name: Deduplicate dependencies on ${{ github.ref_name }}
 
+permissions:
+  contents: read
+
 jobs:
   dedupe_deps:
     runs-on: ubuntu-slim
     steps:
       - name: Checkout
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
 
       - name: Node setup
         uses: ./.github/actions/node-setup
@@ -46,7 +49,7 @@ jobs:
 
       - name: Push changes to the branch directly
         if: ${{ inputs.push_directly == true }}
-        uses: ad-m/github-push-action@4cc74773234f74829a8c21bc4d69dd4be9cfa599 # v1.1.0
+        uses: ad-m/github-push-action@881a6320fdb16eb5318c5054f31c218aec2b324c # v1.3.0
         with:
           github_token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
           branch: ${{ github.ref_name }}

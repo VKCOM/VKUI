@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam, StringArg } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Checkbox, type CheckboxProps } from './Checkbox';
@@ -15,26 +15,24 @@ const story: Meta<CheckboxProps> = {
 
 export default story;
 
-type Story = StoryObj<CheckboxProps>;
+type Story = StoryFn<CheckboxProps>;
 
-export const Playground: Story = {
-  args: {
-    'aria-label': 'Я учавствую в сборе',
-  },
+export const Playground: Story = (props: CheckboxProps) => <Checkbox {...props} />;
+
+Playground.args = {
+  'aria-label': 'Я учавствую в сборе',
 };
 
-export const WithText: Story = {
-  ...Playground,
-  args: {
-    ...Playground.args,
-    children: 'Закрепить сообщение',
-  },
+export const WithText: Story = (props: CheckboxProps) => <Checkbox {...props} />;
+
+WithText.args = {
+  ...Playground.args,
+  children: 'Закрепить сообщение',
 };
 
-export const WithDescription: Story = {
-  ...Playground,
-  args: {
-    ...WithText.args,
-    description: 'Все пользователи получат уведомление',
-  },
+export const WithDescription: Story = (props: CheckboxProps) => <Checkbox {...props} />;
+
+WithDescription.args = {
+  ...WithText.args,
+  description: 'Все пользователи получат уведомление',
 };

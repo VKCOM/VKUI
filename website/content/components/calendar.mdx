@@ -1,5 +1,6 @@
 ---
 description: Компонент для выбора даты и времени, поддерживает различные режимы работы, настройку ограничений по датам и локализацию.
+tags: forms
 ---
 
 <Overview group="dates">
@@ -11,6 +12,7 @@ description: Компонент для выбора даты и времени, 
 </Overview>
 
 {/* @example-description: Базовый календарь для выбора одной даты. */}
+
 <Playground>
   ```jsx
   <Calendar />
@@ -53,6 +55,7 @@ const [date, setDate] = React.useState(new Date());
 > Обратите внимание, что выбор времени недоступен при `size="s"`.
 
 {/* @example-description: Календарь с включенным выбором времени через `enableTime`. */}
+
 <Playground>
   ```jsx
   <Calendar defaultValue={new Date()} enableTime />
@@ -62,7 +65,7 @@ const [date, setDate] = React.useState(new Date());
 ## Часовые пояса
 
 Компонент поддерживает работу с часовыми поясами через свойство `timezone`
-(принимает сроку в [IANA](https://data.iana.org/time-zones/tzdb-2021a/zone1970.tab)).
+(принимает строку в [IANA](https://data.iana.org/time-zones/tzdb-2021a/zone1970.tab)).
 При указании часового пояса все даты автоматически конвертируются в указанный часовой пояс.
 
 ## Локализация
@@ -70,6 +73,31 @@ const [date, setDate] = React.useState(new Date());
 Компонент поддерживает настройку текстов через `changeDayLabel`, `changeHoursLabel` и остальные `*Label` свойства.
 
 > Название месяцев и дней недели определяется исходя из значения `locale` в `ConfigProvider`.
+
+### Поддержка локалей
+
+Названия месяцев и дней недели формируются с помощью [`Intl.DateTimeFormat`](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat).
+В некоторых окружениях (например, в [Chromium](https://issues.chromium.org/issues/40075497)) для локалей `kk` (казахский) и `ka` (грузинский)
+данные отсутствуют, из-за чего даты отображаются на языке по умолчанию.
+
+Чтобы добавить поддержку этих локалей, используйте полифил [`@formatjs/intl-datetimeformat`](https://www.npmjs.com/package/@formatjs/intl-datetimeformat).
+
+
+<PackageManagers
+  npm="npm install @formatjs/intl-datetimeformat"
+  yarn="yarn add @formatjs/intl-datetimeformat"
+  pnpm="pnpm add @formatjs/intl-datetimeformat"
+/>
+
+Импортируйте полифил и данные нужных локалей до рендеринга приложения:
+
+```js
+import "@formatjs/intl-datetimeformat/polyfill.js";
+import "@formatjs/intl-datetimeformat/locale-data/kk.js";
+import "@formatjs/intl-datetimeformat/locale-data/ka.js";
+```
+
+> Подробнее о настройке полифила читайте в [его документации](https://formatjs.github.io/docs/polyfills/intl-datetimeformat/).
 
 ## Доступность (a11y) [#a11y]
 

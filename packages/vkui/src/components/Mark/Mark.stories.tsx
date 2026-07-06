@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Group } from '../Group/Group';
@@ -13,19 +13,10 @@ const story: Meta<MarkProps> = {
 
 export default story;
 
-type Story = StoryObj<MarkProps>;
-
-export const Playground: Story = {
-  render: (args) => (
+export const Playground: StoryFn<MarkProps> = (args: MarkProps) => (
+  <Group>
     <p>
       Это <Mark {...args}>выделенный</Mark> текст
     </p>
-  ),
-  decorators: [
-    (Component) => (
-      <Group>
-        <Component />
-      </Group>
-    ),
-  ],
-};
+  </Group>
+);

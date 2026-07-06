@@ -1,10 +1,10 @@
 import { NativeSelect } from '@vkontakte/vkui';
 import React from 'react';
 
-const App = () => {
+export const App = () => {
   const selectRef = React.createRef<HTMLSelectElement>();
 
-  const onInputChange = () => {};
+  const _onInputChange = () => {};
 
   return (
     <React.Fragment>

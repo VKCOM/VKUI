@@ -23,6 +23,9 @@ on:
 env:
   AWS_S3_URL: https://${{ vars.AWS_BUCKET }}.${{ vars.AWS_ENDPOINT }}
 
+permissions:
+  contents: read
+
 concurrency:
   group: deploy-next-version-docs-${{ github.ref_name }}
   cancel-in-progress: true
@@ -34,7 +37,7 @@ jobs:
     name: Cleanup
     steps:
       - name: Checkout
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
 
       - name: Delete old artifacts for the next documentation version
         uses: VKCOM/gh-actions/VKUI/s3@main
@@ -53,13 +56,13 @@ jobs:
     needs: cleanup
     steps:
       - name: Checkout
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
 
       - name: Node setup
         uses: ./.github/actions/node-setup
 
       - name: Build
-        run: yarn docs:storybook:build
+        run: node --run docs:storybook:build
 
       - name: Upload to S3
         id: deploy
@@ -76,7 +79,9 @@ jobs:
       - name: Create doc url
         if: ${{ steps.deploy.outcome == 'success' }}
         id: url
-        run: echo "${{ env.AWS_S3_URL }}/next/playground/index.html"
+        env:
+          AWS_S3_URL: ${{ env.AWS_S3_URL }}
+        run: echo "${AWS_S3_URL}/next/playground/index.html"
 
   build_and_deploy_docs_website:
     if: ${{ !cancelled() }}
@@ -85,16 +90,16 @@ jobs:
     needs: cleanup
     steps:
       - name: Checkout
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
 
       - name: Node setup
         uses: ./.github/actions/node-setup
 
       - name: Build VKUI
-        run: yarn build:vkui
+        run: node --run build:vkui
 
       - name: Build
-        run: yarn docs:website:build
+        run: node --run docs:website:build
         env:
           NEXT_PUBLIC_VKUI_DOCS_BASE_PATH: /next
 
@@ -113,4 +118,6 @@ jobs:
       - name: Create doc url
         if: ${{ steps.deploy.outcome == 'success' }}
         id: url
-        run: echo "${{ env.AWS_S3_URL }}/next/overview/about/index.html"
+        env:
+          AWS_S3_URL: ${{ env.AWS_S3_URL }}
+        run: echo "${AWS_S3_URL}/next/overview/about/index.html"

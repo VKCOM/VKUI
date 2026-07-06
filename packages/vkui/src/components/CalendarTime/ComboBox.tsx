@@ -178,6 +178,7 @@ export function ComboBox({
           autoUpdateOnTargetResize
           flipMiddlewareFallbackAxisSideDirection="none"
           offsetByMainAxis={0}
+          usePortal={false}
         >
           <CustomScrollView tabIndex={-1} className={styles.customScroll}>
             {labelsElements}

@@ -1,0 +1,17 @@
+{
+  "extends": "./tsconfig.web.json",
+  "include": [
+    "types/env.d.ts",
+    "types/css.d.ts",
+    "global.vitest.ts",
+    "src",
+    "docs",
+    "../storybook-addons/src"
+  ],
+  "exclude": ["src/**/*.test.ts*", "src/**/*.e2e*.ts*"],
+  "compilerOptions": {
+    "exactOptionalPropertyTypes": false,
+    "lib": ["es2021", "dom", "dom.Iterable"],
+    "noUnusedLocals": false
+  }
+}

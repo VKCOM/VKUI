@@ -1,17 +1,23 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { resolvePartials } from './common/resolvePartials.mjs';
+import { replacePropsTable } from './common/replacePropsTable.mjs';
+import { collectMdxFiles } from './common/collectMdxFiles.mjs';
+import { loadDocgen } from './common/loadDocgen.mjs';
+import { parseFrontmatter } from './common/parseFrontmatter.mjs';
+import { componentNameFromSlug } from './common/componentNameFromSlug.mjs';
 
 const SCRIPT_FILE = fileURLToPath(import.meta.url);
 const SCRIPT_DIR = path.dirname(SCRIPT_FILE);
 const WEBSITE_DIR = path.resolve(SCRIPT_DIR, '..');
 const REPO_ROOT = path.resolve(WEBSITE_DIR, '..');
 const COMPONENTS_DIR = path.join(WEBSITE_DIR, 'content', 'components');
-const DOCGEN_PATH = path.join(WEBSITE_DIR, '.docgen', 'docgen.json');
 const OUT_DIR = path.join(REPO_ROOT, 'mcp-data');
 const OUT_COMPONENTS_DIR = path.join(OUT_DIR, 'components');
 const OUT_HOOKS_DIR = path.join(OUT_DIR, 'hooks');
 const OUT_EXAMPLES_DIR = path.join(OUT_DIR, 'examples');
+const OUT_DOCS_DIR = path.join(OUT_DIR, 'docs');
 
 function isHook(slug) {
   const base = slug.split('/').pop() || slug;
@@ -22,62 +28,14 @@ function ensureDir(dirPath) {
   fs.mkdirSync(dirPath, { recursive: true });
 }
 
-function readDocgen() {
-  if (!fs.existsSync(DOCGEN_PATH)) {
-    return {};
-  }
-  const raw = fs.readFileSync(DOCGEN_PATH, 'utf8');
-  return JSON.parse(raw);
-}
-
-function collectMdxFiles(dirPath) {
-  const results = [];
-  const entries = fs.readdirSync(dirPath, { withFileTypes: true });
-  for (const entry of entries) {
-    const fullPath = path.join(dirPath, entry.name);
-    if (entry.isDirectory()) {
-      results.push(...collectMdxFiles(fullPath));
-      continue;
-    }
-    if (entry.isFile() && entry.name.endsWith('.mdx')) {
-      results.push(fullPath);
-    }
-  }
-  return results;
-}
-
-function parseFrontmatter(content) {
-  const match = content.match(/^---\s*\n([\s\S]*?)\n---\s*\n?/);
-  if (!match) {
-    return { data: {}, body: content };
-  }
-  const block = match[1];
-  const data = {};
-  for (const line of block.split('\n')) {
-    const lineMatch = line.match(/^([A-Za-z0-9_-]+)\s*:\s*(.+)$/);
-    if (!lineMatch) {
-      continue;
-    }
-    const key = lineMatch[1];
-    let value = lineMatch[2].trim();
-    value = value.replace(/^['"]|['"]$/g, '');
-    data[key] = value;
-  }
-  const body = content.slice(match[0].length);
-  return { data, body };
-}
-
 function slugFromPath(filePath) {
   const relative = path.relative(COMPONENTS_DIR, filePath);
   return relative.replace(/\\/g, '/').replace(/\.mdx$/, '');
 }
 
-function componentNameFromSlug(slug) {
-  const base = slug.split('/').pop() || slug;
-  return base
-    .split('-')
-    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-    .join('');
+function getComponentName(fileName) {
+  const base = fileName.split('/').pop() || fileName;
+  return componentNameFromSlug(base);
 }
 
 const SPECIFIC_HOOKS_SLUG_TO_NAME_MAP = {
@@ -141,6 +99,11 @@ function extractPlaygroundExamples(body) {
   return examples;
 }
 
+function extractCategory(body) {
+  const match = body.match(/<Overview\s+[^>]*group=["']([^"']+)["']/);
+  return match ? match[1] : null;
+}
+
 const ENUM_VALUES_THRESHOLD = 10;
 
 function hasStringLiteralValues(values) {
@@ -177,48 +140,66 @@ function formatExamplesText(examples) {
     .join(SEPARATOR);
 }
 
-export function generateMcpData() {
+function generateMcpData() {
   // eslint-disable-next-line no-console
   console.log('🔄 Генерация MCP данных...');
   ensureDir(OUT_COMPONENTS_DIR);
   ensureDir(OUT_HOOKS_DIR);
   ensureDir(OUT_EXAMPLES_DIR);
+  ensureDir(OUT_DOCS_DIR);
 
-  const docgen = readDocgen();
+  const docgen = loadDocgen();
   const mdxFiles = collectMdxFiles(COMPONENTS_DIR);
 
   const components = [];
   const hooks = [];
+  const allTagsSet = new Set();
 
   for (const filePath of mdxFiles) {
     const raw = fs.readFileSync(filePath, 'utf8');
     const { data, body } = parseFrontmatter(raw);
     const slug = slugFromPath(filePath);
-    const itemName = isHook(slug) ? hookKeyFromSlug(slug) : componentNameFromSlug(slug);
+    const hook = isHook(slug);
+    const itemName = hook ? hookKeyFromSlug(slug) : getComponentName(slug);
     const description = data.description || '';
     const props = docgen[itemName] || [];
-    const playgroundExamples = extractPlaygroundExamples(body);
+    const resolvedBody = resolvePartials(body, filePath);
+    const playgroundExamples = extractPlaygroundExamples(resolvedBody);
+    const category = hook ? null : extractCategory(body);
+
+    const tags = hook
+      ? []
+      : [
+          category,
+          ...(data.tags || '')
+            .split(',')
+            .map((t) => t.trim())
+            .filter(Boolean),
+        ].filter(Boolean);
 
     const listItem = {
       name: itemName,
       slug,
       description,
       examplesCount: playgroundExamples.length,
+      ...(hook ? {} : { tags }),
     };
     const detailPayload = {
       name: itemName,
       slug,
       description,
+      ...(hook ? {} : { tags }),
       props: sanitizeProps(props),
     };
 
-    if (isHook(slug)) {
+    if (hook) {
       hooks.push(listItem);
       const hookOutPath = path.join(OUT_HOOKS_DIR, `${slug}.json`);
       ensureDir(path.dirname(hookOutPath));
       fs.writeFileSync(hookOutPath, JSON.stringify(detailPayload, null, 2));
     } else {
       components.push(listItem);
+      tags.forEach((tag) => allTagsSet.add(tag));
       const componentOutPath = path.join(OUT_COMPONENTS_DIR, `${slug}.json`);
       ensureDir(path.dirname(componentOutPath));
       fs.writeFileSync(componentOutPath, JSON.stringify(detailPayload, null, 2));
@@ -230,15 +211,20 @@ export function generateMcpData() {
       ensureDir(path.dirname(examplesOutPath));
       fs.writeFileSync(examplesOutPath, examplesText);
     }
+
+    const docsOutPath = path.join(OUT_DOCS_DIR, `${slug}.txt`);
+    ensureDir(path.dirname(docsOutPath));
+    fs.writeFileSync(docsOutPath, replacePropsTable(resolvedBody, docgen));
   }
+
+  const allTags = [...allTagsSet].sort();
 
   fs.writeFileSync(path.join(OUT_DIR, 'components.json'), JSON.stringify(components, null, 2));
   fs.writeFileSync(path.join(OUT_DIR, 'hooks.json'), JSON.stringify(hooks, null, 2));
+  fs.writeFileSync(path.join(OUT_DIR, 'tags.json'), JSON.stringify(allTags, null, 2));
 
   // eslint-disable-next-line no-console
   console.log('✅ MCP данные сгенерированы.');
 }
 
-if (process.argv[1] === SCRIPT_FILE) {
-  generateMcpData();
-}
+generateMcpData();

@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { ScrollArrow, type ScrollArrowProps } from './ScrollArrow';
@@ -12,6 +12,6 @@ const story: Meta<ScrollArrowProps> = {
 
 export default story;
 
-type Story = StoryObj<ScrollArrowProps>;
-
-export const Playground: Story = {};
+export const Playground: StoryFn<ScrollArrowProps> = (props: ScrollArrowProps) => (
+  <ScrollArrow {...props} />
+);

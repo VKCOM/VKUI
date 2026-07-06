@@ -1,7 +1,7 @@
 import { unstable_TextTooltip as TextTooltip } from '@vkontakte/vkui';
 import React from 'react';
 
-const App = () => {
+export const App = () => {
   return (
     <React.Fragment>
       <TextTooltip

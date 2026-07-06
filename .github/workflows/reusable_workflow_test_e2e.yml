@@ -9,6 +9,9 @@ on:
         required: false
         type: string
 
+permissions:
+  contents: read
+
 jobs:
   get_playwright_docker_image:
     runs-on: ubuntu-slim
@@ -16,7 +19,7 @@ jobs:
       image: ${{ steps.result.outputs.value }}
     steps:
       - name: Checkout
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           ref: ${{ inputs.ref }}
 
@@ -44,7 +47,7 @@ jobs:
     name: 'Run e2e tests for (shard ${{ matrix.shardIndex }}/${{ matrix.shardTotal }})'
     steps:
       - name: Checkout
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           ref: ${{ inputs.ref }}
 
@@ -59,7 +62,7 @@ jobs:
 
       - name: Run e2e tests for @vkontakte/vkui workspace
         # Почему HOME=/root см. https://github.com/microsoft/playwright/issues/6500
-        run: HOME=/root yarn run test:e2e:ci --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
+        run: HOME=/root node --run test:e2e:ci -- --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
 
       - name: Upload Playwright blob report to GitHub Actions Artifacts
         if: always()

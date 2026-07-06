@@ -40,7 +40,7 @@ export const SnackbarHolder: React.FC<SnackbarHolderProps> = ({
         continue;
       }
 
-      if (placement !== undefined && !map[placement]) {
+      if (!map[placement]) {
         map[placement] = [];
         openedSnackbarsCountersByPlacement[placement] = 0;
         placements.push(placement);

@@ -2,7 +2,7 @@ import { Alert } from '@vkontakte/vkui';
 import React from 'react';
 import '@vkontakte/vkui/dist/vkui.css';
 
-const App = () => {
+export const App = () => {
   const action = [
     {
       title: 'Лишить права',

@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { noop } from '@vkontakte/vkjs';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
@@ -13,14 +13,18 @@ const story: Meta<ModalDismissButtonProps> = {
 
 export default story;
 
-type Story = StoryObj<ModalDismissButtonProps>;
+export const Playground: StoryFn<ModalDismissButtonProps> = (props: ModalDismissButtonProps) => (
+  <ModalDismissButton {...props} />
+);
 
-export const Playground: Story = {
-  decorators: [
-    (Component) => (
-      <div style={{ position: 'relative' }}>
-        <Component onClick={noop} />
-      </div>
-    ),
-  ],
-};
+Playground.decorators = [
+  (Component) => (
+    <div
+      style={{
+        position: 'relative',
+      }}
+    >
+      <Component onClick={noop} />
+    </div>
+  ),
+];

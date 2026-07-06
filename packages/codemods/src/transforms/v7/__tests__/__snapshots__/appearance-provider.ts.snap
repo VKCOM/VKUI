@@ -8,7 +8,7 @@ type Props = ColorSchemeProviderProps & {
   additionalProp: string;
 };
 
-const App = () => {
+export const App = () => {
   const props: ColorSchemeProviderProps = {
     value: 'dark',
     children: <Snackbar action="Поделиться">Поделиться</Snackbar>,
@@ -37,7 +37,7 @@ exports[`appearance-provider > transforms correctly 2`] = `
 } from '@vkontakte/vkui';
 import React from 'react';
 
-const App = () => {
+export const App = () => {
   const props: AppearanceProviderPropsAlias = {
     value: 'dark',
     children: <Snackbar action="Поделиться">Поделиться</Snackbar>,

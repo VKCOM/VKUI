@@ -1,13 +1,21 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam, StringArg } from '../../storybook/constants';
 import { createFieldWithPresets } from '../../testing/presets';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { ActionSheetItem, type ActionSheetItemProps } from './ActionSheetItem';
 
+const commonStyles = {
+  border: '1px dashed red',
+};
+
 const story: Meta<ActionSheetItemProps> = {
   title: 'Modals/ActionSheet/ActionSheetItem',
   component: ActionSheetItem,
-  parameters: createStoryParameters('ActionSheetItem', CanvasFullLayout, DisableCartesianParam),
+  parameters: createStoryParameters('ActionSheetItem', CanvasFullLayout, DisableCartesianParam, {
+    liveCodeEditor: {
+      scope: { commonStyles },
+    },
+  }),
   argTypes: {
     before: createFieldWithPresets({
       iconSizes: ['16', '20', '24', '28'],
@@ -27,38 +35,40 @@ const story: Meta<ActionSheetItemProps> = {
 
 export default story;
 
-type Story = StoryObj<ActionSheetItemProps>;
+type Story = StoryFn<ActionSheetItemProps>;
 
-export const Playground: Story = {
-  render: function Render({ ...args }) {
-    return <ActionSheetItem style={{ border: '1px dashed red' }} {...args} />;
-  },
-  args: {
-    children: 'Сохранить в закладках',
-  },
+export const Playground: Story = (args: ActionSheetItemProps) => {
+  return <ActionSheetItem style={commonStyles} {...args} />;
 };
 
-export const WithIcon: Story = {
-  ...Playground,
-  args: {
-    children: 'Редактировать профиль',
-    before: 'Icon28EditOutline',
-  },
+Playground.args = {
+  children: 'Сохранить в закладках',
 };
 
-export const WithSubtitle: Story = {
-  ...Playground,
-  args: {
-    children: 'Качество',
-    subtitle: 'Авто',
-  },
+export const WithIcon: Story = (args: ActionSheetItemProps) => {
+  return <ActionSheetItem style={commonStyles} {...args} />;
 };
 
-export const WithChecked: Story = {
-  ...Playground,
-  args: {
-    children: 'Друзья по школе',
-    selectable: true,
-    defaultChecked: true,
-  },
+WithIcon.args = {
+  children: 'Редактировать профиль',
+  before: 'Icon28EditOutline',
+};
+
+export const WithSubtitle: Story = (args: ActionSheetItemProps) => {
+  return <ActionSheetItem style={commonStyles} {...args} />;
+};
+
+WithSubtitle.args = {
+  children: 'Качество',
+  subtitle: 'Авто',
+};
+
+export const WithChecked: Story = (args: ActionSheetItemProps) => {
+  return <ActionSheetItem style={commonStyles} {...args} />;
+};
+
+WithChecked.args = {
+  children: 'Друзья по школе',
+  selectable: true,
+  defaultChecked: true,
 };

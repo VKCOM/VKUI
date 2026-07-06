@@ -7,6 +7,14 @@
   min-block-size: 150px;
   padding-block: var(--vkui--spacing_size_m);
   padding-inline: var(--vkui--spacing_size_m);
+}
+
+.previewBackground {
+  /* stylelint-disable-next-line declaration-property-value-disallowed-list */
+  --vkui_docs--playground_color_background: #f7f7f7;
+  /* stylelint-disable-next-line declaration-property-value-disallowed-list */
+  --vkui_docs--playground_pattern_color: rgb(0, 0, 0, 0.08);
+
   background-color: var(--vkui_docs--playground_color_background);
   background-image:
     linear-gradient(120deg, transparent 32px, var(--vkui_docs--playground_pattern_color) 32px),
@@ -15,14 +23,9 @@
     10px 10px,
     10px 10px;
   background-size: 23px 28px;
-
-  /* stylelint-disable-next-line declaration-property-value-disallowed-list */
-  --vkui_docs--playground_color_background: #f7f7f7;
-  /* stylelint-disable-next-line declaration-property-value-disallowed-list */
-  --vkui_docs--playground_pattern_color: rgb(0, 0, 0, 0.08);
 }
 
-.rootDark {
+.previewBackgroundDark {
   /* stylelint-disable-next-line declaration-property-value-disallowed-list */
   --vkui_docs--playground_color_background: #0e0e0f;
   /* stylelint-disable-next-line declaration-property-value-disallowed-list */

@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
+import { usePlatform } from '../../hooks/usePlatform';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
 import { PlatformProvider, type PlatformProviderProps } from './PlatformProvider';
 
 const story: Meta<PlatformProviderProps> = {
@@ -20,23 +20,38 @@ const story: Meta<PlatformProviderProps> = {
 
 export default story;
 
-type Story = StoryObj<PlatformProviderProps>;
-
 const DisplayPlatformProvider = () => {
-  const { platform } = useConfigProvider();
-
-  return <div style={{ padding: 5 }}>Inner LocaleProvider: {platform}</div>;
+  const platform = usePlatform();
+  return (
+    <div
+      style={{
+        padding: 5,
+      }}
+    >
+      Inner LocaleProvider: {platform}
+    </div>
+  );
 };
 
-export const Playground: Story = {
-  render: function Render({ value }) {
-    const { platform } = useConfigProvider();
+export const Playground: StoryFn<PlatformProviderProps> = (props: PlatformProviderProps) => {
+  const outerPlatform = usePlatform();
 
-    return (
-      <PlatformProvider value={value ?? platform}>
-        <div style={{ padding: 5 }}>Outer LocaleProvider: {platform}</div>
-        <DisplayPlatformProvider />
-      </PlatformProvider>
-    );
+  return (
+    <PlatformProvider {...props}>
+      <div
+        style={{
+          padding: 5,
+        }}
+      >
+        Outer LocaleProvider: {outerPlatform}
+      </div>
+      <DisplayPlatformProvider />
+    </PlatformProvider>
+  );
+};
+
+Playground.parameters = {
+  liveCodeEditor: {
+    scope: { DisplayPlatformProvider },
   },
 };

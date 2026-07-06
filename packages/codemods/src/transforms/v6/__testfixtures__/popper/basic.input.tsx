@@ -1,7 +1,7 @@
 import { unstable_Popper as Popper } from '@vkontakte/vkui';
 import React from 'react';
 
-const App = () => {
+export const App = () => {
   return (
     <React.Fragment>
       <Popper offsetDistance={0}>content</Popper>

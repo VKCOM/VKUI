@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../../storybook/constants';
 import { getAvatarUrl } from '../../../testing/mock';
 import { createFieldWithPresets } from '../../../testing/presets';
@@ -26,14 +26,11 @@ const story: Meta<ChipProps> = {
 
 export default story;
 
-type Story = StoryObj<ChipProps>;
+type Story = StoryFn<ChipProps>;
 
-export const Playground: Story = {
-  render: ({ ...args }) => {
-    return <Chip {...args} />;
-  },
-  args: {
-    value: 'chip',
-    children: 'Chip Value',
-  },
+export const Playground: Story = (args: ChipProps) => <Chip {...args} />;
+
+Playground.args = {
+  value: 'chip',
+  children: 'Chip Value',
 };

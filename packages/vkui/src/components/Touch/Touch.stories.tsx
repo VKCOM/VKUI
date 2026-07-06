@@ -1,32 +1,9 @@
 import * as React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { fn } from 'storybook/test';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { type CustomTouchEvent, Touch, type TouchProps } from './Touch';
-
-const story: Meta<TouchProps> = {
-  title: 'Utils/Touch',
-  component: Touch,
-  args: {
-    onClick: fn(),
-    onStart: fn(),
-    onMove: fn(),
-    onEnd: fn(),
-    onEndX: fn(),
-    onEndY: fn(),
-  },
-  parameters: createStoryParameters('Touch', {
-    ...CanvasFullLayout,
-    cantered: false,
-    ...DisableCartesianParam,
-  }),
-  tags: ['Утилиты'],
-};
-
-export default story;
-
-type Story = StoryObj<TouchProps>;
 
 const circleStyle = {
   width: 40,
@@ -47,67 +24,84 @@ const containerStyle = {
   position: 'relative',
 } as React.CSSProperties;
 
-export const Playground: Story = {
-  render: function Render(args) {
-    const [shiftX, setShiftX] = React.useState(0);
-    const [shiftY, setShiftY] = React.useState(0);
-    const [limitX, setLimitX] = React.useState(0);
-    const [limitY, setLimitY] = React.useState(0);
-
-    const circleRef = React.useRef<HTMLDivElement | null>(null);
-    const startX = React.useRef(0);
-    const startY = React.useRef(0);
-
-    // eslint-disable-next-line no-restricted-properties,react-hooks/exhaustive-deps,no-restricted-properties
-    React.useLayoutEffect(() => {
-      if (circleRef.current) {
-        setLimitX(circleRef.current.offsetLeft);
-        setLimitY(circleRef.current.offsetTop);
-      }
-    });
-
-    const getValueWithLimit = (value: number, limit: number) => {
-      return value > limit ? limit : value < -limit ? -limit : value;
-    };
-
-    const onMove = (e: CustomTouchEvent) => {
-      const shiftX = startX.current + e.shiftX;
-      const shiftY = startY.current + e.shiftY;
-
-      setShiftX(getValueWithLimit(shiftX, limitX));
-      setShiftY(getValueWithLimit(shiftY, limitY));
-    };
-
-    const onEnd = (e: CustomTouchEvent) => {
-      const shiftX = startX.current + e.shiftX;
-      const shiftY = startY.current + e.shiftY;
-
-      startX.current = getValueWithLimit(shiftX, limitX);
-      startY.current = getValueWithLimit(shiftY, limitY);
-    };
-
-    const limitExceeded = Math.abs(shiftX) >= limitX || Math.abs(shiftY) >= limitY;
-
-    return (
-      <div
-        style={{
-          ...containerStyle,
-          borderColor: limitExceeded
-            ? 'var(--vkui--color_icon_negative)'
-            : 'var(--vkui--color_icon_secondary)',
-        }}
-      >
-        <Touch
-          {...args}
-          getRootRef={circleRef}
-          onMove={onMove}
-          onEnd={onEnd}
-          style={{
-            ...circleStyle,
-            transform: `translate(${shiftX}px, ${shiftY}px)`,
-          }}
-        />
-      </div>
-    );
+const story: Meta<TouchProps> = {
+  title: 'Utils/Touch',
+  component: Touch,
+  args: {
+    onClick: fn(),
+    onStart: fn(),
+    onMove: fn(),
+    onEnd: fn(),
+    onEndX: fn(),
+    onEndY: fn(),
   },
+  parameters: createStoryParameters('Touch', {
+    ...CanvasFullLayout,
+    cantered: false,
+    ...DisableCartesianParam,
+    liveCodeEditor: { scope: { circleStyle, containerStyle } },
+  }),
+  tags: ['Утилиты'],
+};
+
+export default story;
+
+export const Playground: StoryFn<TouchProps> = (args: TouchProps) => {
+  const [shiftX, setShiftX] = React.useState(0);
+  const [shiftY, setShiftY] = React.useState(0);
+  const [limitX, setLimitX] = React.useState(0);
+  const [limitY, setLimitY] = React.useState(0);
+  const circleRef = React.useRef<HTMLDivElement | null>(null);
+  const startX = React.useRef(0);
+  const startY = React.useRef(0);
+
+  // eslint-disable-next-line no-restricted-properties,react-hooks/exhaustive-deps,no-restricted-properties
+  React.useLayoutEffect(() => {
+    if (circleRef.current) {
+      setLimitX(circleRef.current.offsetLeft);
+      setLimitY(circleRef.current.offsetTop);
+    }
+  });
+
+  const getValueWithLimit = (value: number, limit: number) => {
+    return value > limit ? limit : value < -limit ? -limit : value;
+  };
+
+  const onMove = (e: CustomTouchEvent) => {
+    const shiftX = startX.current + e.shiftX;
+    const shiftY = startY.current + e.shiftY;
+
+    setShiftX(getValueWithLimit(shiftX, limitX));
+    setShiftY(getValueWithLimit(shiftY, limitY));
+  };
+
+  const onEnd = (e: CustomTouchEvent) => {
+    const shiftX = startX.current + e.shiftX;
+    const shiftY = startY.current + e.shiftY;
+
+    startX.current = getValueWithLimit(shiftX, limitX);
+    startY.current = getValueWithLimit(shiftY, limitY);
+  };
+  const limitExceeded = Math.abs(shiftX) >= limitX || Math.abs(shiftY) >= limitY;
+  return (
+    <div
+      style={{
+        ...containerStyle,
+        borderColor: limitExceeded
+          ? 'var(--vkui--color_icon_negative)'
+          : 'var(--vkui--color_icon_secondary)',
+      }}
+    >
+      <Touch
+        {...args}
+        getRootRef={circleRef}
+        onMove={onMove}
+        onEnd={onEnd}
+        style={{
+          ...circleStyle,
+          transform: `translate(${shiftX}px, ${shiftY}px)`,
+        }}
+      />
+    </div>
+  );
 };

@@ -1,8 +1,8 @@
 /* eslint-disable no-console */
-import type * as React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import * as React from 'react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { Icon20More, Icon24Dismiss, Icon56MoneyTransferOutline } from '@vkontakte/icons';
-import { useArgs, useCallback, useState } from 'storybook/preview-api';
+import { useCallback, useState } from 'storybook/preview-api';
 import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditionalRender';
 import { usePlatform } from '../../hooks/usePlatform';
 import { stopPropagation } from '../../lib/utils';
@@ -40,61 +40,64 @@ import { Textarea } from '../Textarea/Textarea';
 import { ModalPage } from './ModalPage';
 import type { ModalPageCloseReason, ModalPageProps } from './types';
 
+const randomUser = getRandomUser();
+const users = getRandomUsers(25);
+
 const story: Meta<ModalPageProps> = {
   title: 'Modals/ModalPage',
   component: ModalPage,
-  parameters: createStoryParameters('ModalPage', CanvasFullLayout, DisableCartesianParam),
-  decorators: function UIController(Component) {
-    const [, updateArg] = useArgs();
-    return (
-      <>
-        <Button appearance="overlay" onClick={() => updateArg({ open: true })}>
-          Открыть
-        </Button>
-        <Component />
-      </>
-    );
-  },
+  parameters: createStoryParameters('ModalPage', CanvasFullLayout, DisableCartesianParam, {
+    liveCodeEditor: {
+      scope: {
+        randomUser,
+        users,
+        DoneButton,
+        AndroidCloseButton,
+        IosCloseButton,
+        ModalPageFooter,
+        stopPropagation,
+      },
+    },
+  }),
   tags: ['Модальные окна'],
 };
 
 export default story;
 
-type Story = StoryObj<ModalPageProps>;
+type Story = StoryFn<ModalPageProps>;
 
-const randomUser = getRandomUser();
-const users = getRandomUsers(25);
-
-const DoneButton = ({ onClick }: React.ComponentProps<'div'>) => {
+function DoneButton({ onClick }: React.ComponentProps<'div'>) {
   return <PanelHeaderSubmit onClick={onClick} />;
-};
+}
 
-const AndroidCloseButton = ({ className, onClick }: React.ComponentProps<'div'>) => {
+function AndroidCloseButton({ className, onClick }: React.ComponentProps<'div'>) {
   return <PanelHeaderClose className={className} onClick={onClick} />;
-};
+}
 
-const IosCloseButton = ({ className, onClick }: React.ComponentProps<'div'>) => {
+function IosCloseButton({ className, onClick }: React.ComponentProps<'div'>) {
   return (
     <PanelHeaderButton onClick={onClick} className={className}>
       <Icon24Dismiss />
     </PanelHeaderButton>
   );
-};
+}
 
-export const Playground: Story = {
-  args: { id: 'modal-page', open: true },
-  render: function Render(props) {
-    const [, updateArgs] = useArgs();
-    const close = () => updateArgs({ open: false });
+export const Playground: Story = (props: ModalPageProps) => {
+  const [open, setOpen] = React.useState(true);
+  const close = () => setOpen(false);
+  const platform = usePlatform();
+  const { viewWidth } = useAdaptivityConditionalRender();
+  const [expanded, setExpanded] = useState(false);
+  const toggle = useCallback(() => setExpanded(!expanded), [expanded]);
+  return (
+    <>
+      <Button appearance="overlay" onClick={() => setOpen(true)}>
+        Открыть
+      </Button>
 
-    const platform = usePlatform();
-    const { viewWidth } = useAdaptivityConditionalRender();
-    const [expanded, setExpanded] = useState(false);
-    const toggle = useCallback(() => setExpanded(!expanded), [expanded]);
-
-    return (
       <ModalPage
         {...props}
+        open={open}
         dynamicContentHeight
         header={
           <ModalPageHeader
@@ -117,29 +120,35 @@ export const Playground: Story = {
             Dynamic modal
           </ModalPageHeader>
         }
-        onClose={() => updateArgs({ open: false })}
+        onClose={() => setOpen(false)}
       >
         <Group>
           <CellButton onClick={toggle}>{expanded ? 'collapse' : 'expand'}</CellButton>
           {expanded && <Placeholder icon={<Icon56MoneyTransferOutline />} />}
         </Group>
       </ModalPage>
-    );
-  },
+    </>
+  );
+};
+Playground.args = {
+  id: 'modal-page',
+  open: true,
 };
 
-export const FullscreenModalPage: Story = {
-  args: { id: 'modal-page', open: true },
-  render: function Render(props) {
-    const [, updateArgs] = useArgs();
-    const close = () => updateArgs({ open: false });
+export const FullscreenModalPage: Story = (props: ModalPageProps) => {
+  const [open, setOpen] = React.useState(true);
+  const close = () => setOpen(false);
+  const platform = usePlatform();
+  const { viewWidth } = useAdaptivityConditionalRender();
+  return (
+    <>
+      <Button appearance="overlay" onClick={() => setOpen(true)}>
+        Открыть
+      </Button>
 
-    const platform = usePlatform();
-    const { viewWidth } = useAdaptivityConditionalRender();
-
-    return (
       <ModalPage
         {...props}
+        open={open}
         settlingHeight={100}
         hideCloseButton={platform === 'ios'}
         header={
@@ -158,7 +167,7 @@ export const FullscreenModalPage: Story = {
             @{randomUser.screen_name}
           </ModalPageHeader>
         }
-        onClose={() => updateArgs({ open: false })}
+        onClose={() => setOpen(false)}
       >
         <Gradient mode="tint">
           <Placeholder
@@ -176,22 +185,28 @@ export const FullscreenModalPage: Story = {
           })}
         </Group>
       </ModalPage>
-    );
-  },
+    </>
+  );
 };
 
-export const ModalPageWithFilters: Story = {
-  args: { id: 'modal-page', open: true },
-  render: function Render(props) {
-    const [, updateArgs] = useArgs();
-    const close = () => updateArgs({ open: false });
+FullscreenModalPage.args = {
+  id: 'modal-page',
+  open: true,
+};
 
-    const [dateOfBirth, setDateOfBirth] = useState<Date | null>(new Date(1901, 0, 1));
-    const { viewWidth } = useAdaptivityConditionalRender();
-
-    return (
+export const ModalPageWithFilters: Story = (props: ModalPageProps) => {
+  const [open, setOpen] = React.useState(true);
+  const close = () => setOpen(false);
+  const [dateOfBirth, setDateOfBirth] = useState<Date | null>(new Date(1901, 0, 1));
+  const { viewWidth } = useAdaptivityConditionalRender();
+  return (
+    <>
+      <Button appearance="overlay" onClick={() => setOpen(true)}>
+        Открыть
+      </Button>
       <ModalPage
         {...props}
+        open={open}
         header={
           <ModalPageHeader
             before={
@@ -207,7 +222,7 @@ export const ModalPageWithFilters: Story = {
             Фильтры
           </ModalPageHeader>
         }
-        onClose={() => updateArgs({ open: false })}
+        onClose={() => setOpen(false)}
       >
         <Group>
           <FormItem top="Страна">
@@ -261,28 +276,33 @@ export const ModalPageWithFilters: Story = {
           </FormItem>
         </Group>
       </ModalPage>
-    );
-  },
+    </>
+  );
+};
+
+ModalPageWithFilters.args = {
+  id: 'modal-page',
 };
 
 const mockData = getRandomUsers(30);
 
-export const Sandbox: Story = {
-  args: { id: 'modal-page', open: true },
-  render: function Render(props) {
-    const platform = usePlatform();
-    const { viewWidth } = useAdaptivityConditionalRender();
-    const [, updateArgs] = useArgs();
-
-    const handleModalClose = (reason: 'close-custom' | ModalPageCloseReason) => {
-      console.log('reason', reason);
-      updateArgs({ open: false });
-    };
-
-    return (
+export const Sandbox: Story = (props: ModalPageProps) => {
+  const platform = usePlatform();
+  const { viewWidth } = useAdaptivityConditionalRender();
+  const [open, setOpen] = React.useState(true);
+  const handleModalClose = (reason: 'close-custom' | ModalPageCloseReason) => {
+    console.log('reason', reason);
+    setOpen(false);
+  };
+  return (
+    <>
+      <Button appearance="overlay" onClick={() => setOpen(true)}>
+        Открыть
+      </Button>
       <ModalPage
         id="test"
         {...props}
+        open={open}
         header={
           <ModalPageHeader
             before={
@@ -317,7 +337,6 @@ export const Sandbox: Story = {
             <Icon20More />
           </ModalOutsideButton>
         }
-        {...props}
         onClose={handleModalClose}
       >
         <FormItem label="top" top="Вертикальный скролл не должен блокироваться">
@@ -330,7 +349,11 @@ export const Sandbox: Story = {
         </FormItem>
         <Div>
           <Div
-            style={{ paddingBlock: 24, borderRadius: 12, border: '1px dashed tomato' }}
+            style={{
+              paddingBlock: 24,
+              borderRadius: 12,
+              border: '1px dashed tomato',
+            }}
             onTouchStart={stopPropagation}
             onMouseDown={stopPropagation}
           >
@@ -347,7 +370,11 @@ export const Sandbox: Story = {
           }
         >
           <HorizontalScroll>
-            <div style={{ display: 'flex' }}>
+            <div
+              style={{
+                display: 'flex',
+              }}
+            >
               {mockData.map((item) => {
                 return (
                   <HorizontalCell key={item.id} title={item.first_name}>
@@ -361,7 +388,11 @@ export const Sandbox: Story = {
           <CardScroll padding>
             {mockData.map((_, index) => (
               <Card key={index}>
-                <div style={{ height: 96 }} />
+                <div
+                  style={{
+                    height: 96,
+                  }}
+                />
               </Card>
             ))}
           </CardScroll>
@@ -403,6 +434,16 @@ export const Sandbox: Story = {
           <Input name="bottom" placeholder="Lorem ipsum..." />
         </FormItem>
       </ModalPage>
-    );
+    </>
+  );
+};
+Sandbox.args = {
+  id: 'modal-page',
+};
+Sandbox.parameters = {
+  liveCodeEditor: {
+    scope: {
+      mockData,
+    },
   },
 };

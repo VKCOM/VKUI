@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { SimpleCell } from '../../components/SimpleCell/SimpleCell';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
@@ -21,20 +21,19 @@ const story: Meta<SwitchProps> = {
 
 export default story;
 
-type Story = StoryObj<SwitchProps>;
+type Story = StoryFn<SwitchProps>;
 
-export const Playground: Story = {
-  args: {
-    'aria-label': 'Комментарии к записям',
-  },
+export const Playground: Story = (props: SwitchProps) => <Switch {...props} />;
+
+Playground.args = {
+  'aria-label': 'Комментарии к записям',
 };
 
-export const WithSimpleCellLabel: Story = {
-  render: function Render(args) {
-    return (
-      <SimpleCell Component="label" after={<Switch {...args} />}>
-        Комментарии к записям
-      </SimpleCell>
-    );
-  },
+export const WithSimpleCellLabel: Story = (args: SwitchProps) => {
+  return (
+    <SimpleCell Component="label" after={<Switch {...args} />}>
+      Комментарии к записям
+    </SimpleCell>
+  );
 };
+WithSimpleCellLabel.args = Playground.args;

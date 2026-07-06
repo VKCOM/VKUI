@@ -1,8 +1,8 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { Icon28Notifications, Icon28SlidersOutline } from '@vkontakte/icons';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
-import { Div } from '../Div/Div';
+import { Box } from '../Box/Box';
 import { Group } from '../Group/Group';
 import { Link } from '../Link/Link';
 import { SimpleCell } from '../SimpleCell/SimpleCell';
@@ -17,57 +17,58 @@ const story: Meta<SeparatorProps> = {
 
 export default story;
 
-type Story = StoryObj<SeparatorProps>;
+type Story = StoryFn<SeparatorProps>;
 
-export const Playground: Story = {
-  args: {
-    size: 'xl',
-  },
-  decorators: [
-    (Component, props) => (
-      <div
-        style={
-          props.args.direction === 'vertical'
-            ? { display: 'flex', alignItems: 'center', height: 50 }
-            : undefined
-        }
-      >
-        Before Separator
-        <Component {...props} />
-        After Separator
-      </div>
-    ),
-  ],
+export const Playground: Story = (props: SeparatorProps) => (
+  <div
+    style={
+      props.direction === 'vertical'
+        ? {
+            display: 'flex',
+            alignItems: 'center',
+            height: 50,
+          }
+        : undefined
+    }
+  >
+    Before Separator
+    <Separator {...props} />
+    After Separator
+  </div>
+);
+
+Playground.args = {
+  size: 'xl',
 };
 
-export const DefaultDirectionExample: Story = {
-  ...Playground,
-  decorators: [
-    (Component) => (
-      <Group>
-        <SimpleCell before={<Icon28Notifications />}>Уведомления</SimpleCell>
-        <Component />
-        <SimpleCell before={<Icon28SlidersOutline />}>Основные</SimpleCell>
-      </Group>
-    ),
-  ],
+export const DefaultDirectionExample: Story = (props: SeparatorProps) => (
+  <Group>
+    <SimpleCell before={<Icon28Notifications />}>Уведомления</SimpleCell>
+    <Separator {...props} />
+    <SimpleCell before={<Icon28SlidersOutline />}>Основные</SimpleCell>
+  </Group>
+);
+
+DefaultDirectionExample.args = {
+  size: 'xl',
 };
 
-export const BlockDirectionExample: Story = {
-  ...Playground,
-  args: {
-    direction: 'vertical',
-    size: '2xl',
-  },
-  decorators: [
-    (Component, props) => (
-      <Div style={{ display: 'flex' }}>
-        <Link>Новости</Link>
-        <Component {...props} />
-        <Link>Звонки</Link>
-        <Component {...props} />
-        <Link>Друзья</Link>
-      </Div>
-    ),
-  ],
+export const BlockDirectionExample: Story = (props: SeparatorProps) => (
+  <Box
+    padding="system"
+    style={{
+      display: 'flex',
+    }}
+  >
+    <Link>Новости</Link>
+    <Separator {...props} />
+    <Link>Звонки</Link>
+    <Separator {...props} />
+    <Link>Друзья</Link>
+  </Box>
+);
+
+BlockDirectionExample.args = {
+  direction: 'vertical',
+  size: '2xl',
 };

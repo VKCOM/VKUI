@@ -3,6 +3,7 @@ export interface ComponentListItem {
   slug: string;
   description: string;
   examplesCount: number;
+  tags: string[];
 }
 
 export interface ComponentMetadata {
@@ -53,6 +54,9 @@ export interface DataProvider {
   listHooks: () => Promise<HookListItem[]>;
   getHookMetadata: (slug: string) => Promise<HookMetadata | null>;
   getExamples: (slug: string) => Promise<string | null>;
+  getDocs: (slug: string) => Promise<string | null>;
   listMigrationTargets: () => Promise<MigrationTarget[]>;
   getMigrationTarget: (component: string) => Promise<MigrationComponentExample | null>;
+  listTags: () => Promise<string[]>;
+  listComponentsByTag: (tag: string) => Promise<ComponentListItem[]>;
 }

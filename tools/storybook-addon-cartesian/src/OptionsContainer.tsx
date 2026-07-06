@@ -1,4 +1,4 @@
-import type * as React from 'react';
+import * as React from 'react';
 import type { OptionNamesProp, OptionsProp } from './types';
 
 const ContainerStyle: React.CSSProperties = {

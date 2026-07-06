@@ -1,5 +1,5 @@
 import * as React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Button } from '../Button/Button';
@@ -15,24 +15,20 @@ const story: Meta<PopperProps> = {
 
 export default story;
 
-type Story = StoryObj<PopperProps>;
+export const Playground: StoryFn<PopperProps> = (args: PopperProps) => {
+  const [shown, setShown] = React.useState(args.shown || false);
 
-export const Playground: Story = {
-  render: function Render(args) {
-    const [shown, setShown] = React.useState(args.shown || false);
-    const buttonRef = React.useRef(null);
-
-    return (
-      <React.Fragment>
-        <Button getRootRef={buttonRef} onClick={() => setShown(!shown)}>
-          {shown ? 'Закрыть' : 'Открыть'}
-        </Button>
-        {shown && (
-          <Popper usePortal={false} offsetByMainAxis={8} {...args} targetRef={buttonRef}>
-            <Div>Привет</Div>
-          </Popper>
-        )}
-      </React.Fragment>
-    );
-  },
+  const buttonRef = React.useRef(null);
+  return (
+    <React.Fragment>
+      <Button getRootRef={buttonRef} onClick={() => setShown(!shown)}>
+        {shown ? 'Закрыть' : 'Открыть'}
+      </Button>
+      {shown && (
+        <Popper usePortal={false} offsetByMainAxis={8} {...args} targetRef={buttonRef}>
+          <Div>Привет</Div>
+        </Popper>
+      )}
+    </React.Fragment>
+  );
 };

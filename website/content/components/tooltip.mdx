@@ -1,5 +1,6 @@
 ---
 description: Компонент всплывающей подсказки.
+tags: overlay
 ---
 
 <Overview group="modals">
@@ -10,6 +11,14 @@ description: Компонент всплывающей подсказки.
 В качестве содержимого рекомендуется использовать только текст.
 
 </Overview>
+
+<Playground hide>
+  ```jsx
+  <Tooltip hideWhenReferenceHidden strategy="absolute" disableFlipMiddleware placement="bottom" description="Привет" shown>
+    <Button>Наведи</Button>
+  </Tooltip>
+  ```
+</Playground>
 
 {/* @example-description: Базовый `Tooltip` с текстовой подсказкой справа от якорного элемента. */}
 <Playground>

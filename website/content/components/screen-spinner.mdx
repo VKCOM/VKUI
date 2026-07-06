@@ -1,5 +1,6 @@
 ---
 description: Компонент-обертка над Spinner.
+tags: loading
 ---
 
 <Overview group="feedback">
@@ -8,6 +9,15 @@ description: Компонент-обертка над Spinner.
 Компонент-обертка над [`Spinner`](/components/spinner). Используется в случаях, когда требуется заблокировать весь интерфейс до завершения асинхронного процесса.
 
 </Overview>
+
+<Playground hide>
+  ```jsx
+  <ScreenSpinner.Container>
+    <ScreenSpinner.Loader />
+    <ScreenSpinner.SwapIcon />
+  </ScreenSpinner.Container>
+  ```
+</Playground>
 
 {/* @example-description: Базовый `ScreenSpinner` с оверлеем и закрытием в состоянии `cancelable`. */}
 <Playground>

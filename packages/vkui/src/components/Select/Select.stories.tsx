@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { fn } from 'storybook/test';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getFormFieldIconsPresets } from '../../testing/presets/getFormFieldIconsPresets';
@@ -22,11 +22,11 @@ const story: Meta<SelectProps> = {
 
 export default story;
 
-type Story = StoryObj<SelectProps>;
+export const Playground: StoryFn<SelectProps> = (props: SelectProps) => <Select {...props} />;
 
-export const Playground: Story = {
-  args: {
-    style: { width: 300 },
-    options: [],
+Playground.args = {
+  style: {
+    width: 300,
   },
+  options: [],
 };

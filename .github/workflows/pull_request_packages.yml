@@ -15,10 +15,16 @@ concurrency:
   group: pr-packages-${{ github.event.pull_request.number }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 jobs:
   changed_files:
     runs-on: ubuntu-slim
     name: Detect what files changed
+    permissions:
+      contents: read
+      pull-requests: read
     outputs:
       package_vkui: ${{ steps.changes.outputs.package_vkui }}
       docs_storybook: ${{ steps.changes.outputs.docs_storybook }}
@@ -27,7 +33,7 @@ jobs:
       dot_github: ${{ steps.changes.outputs.dot_github }}
     steps:
       - name: Checkout
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
 
       - name: Find changes
         uses: dorny/paths-filter@fbd0ab8f3e69293af611ebaee6363fc25e6d187d # v4.0.1
@@ -41,25 +47,26 @@ jobs:
     name: Run linters
     steps:
       - name: Checkout
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
 
       - name: Node setup
         uses: ./.github/actions/node-setup
 
-      - name: Run Biome format
-        run: yarn run lint:format
+      - parallel:
+          - name: Run Biome format
+            run: node --run lint:format
 
-      - name: Run Stylelint
-        run: yarn run lint:style
+          - name: Run Stylelint
+            run: node --run lint:style
 
-      - name: Run types checking
-        run: yarn run lint:types
+          - name: Run types checking
+            run: node --run lint:types
 
-      - name: Run ESLint
-        run: yarn run lint:es:ci
+          - name: Run ESLint
+            run: node --run lint:es:ci
 
-      - name: Check if the generated files have been updated
-        run: yarn run lint:generated-files
+          - name: Check if the generated files have been updated
+            run: node --run lint:generated-files
 
       - name: Report lint results
         if: ${{ !cancelled() }}
@@ -96,7 +103,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
 
       - name: Node setup
         uses: ./.github/actions/node-setup
@@ -112,14 +119,14 @@ jobs:
           if [ -d packages/vkui/artifacts ]; then
             for i in {1..10}
             do
-              mv packages/vkui/artifacts/all-blob-reports-$i-10/* all-blob-reports/
+              mv "packages/vkui/artifacts/all-blob-reports-${i}-10"/* all-blob-reports/
             done
           fi
           rm -r packages/vkui/artifacts
         shell: bash
 
       - name: Merge Playwright blob reports into HTML Report
-        run: yarn run playwright:cmd:merge-reports --reporter html ./all-blob-reports
+        run: node --run playwright:cmd:merge-reports -- --reporter html ./all-blob-reports
 
       - name: Upload Playwright HTML report to GitHub Actions Artifacts
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
@@ -135,7 +142,7 @@ jobs:
     name: Build package
     steps:
       - name: Checkout
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
 
       - name: Node setup
         uses: ./.github/actions/node-setup
@@ -159,10 +166,11 @@ jobs:
       CI_JOB_NUMBER: 1
     # Для Dependabot
     permissions:
+      contents: read
       pull-requests: write
     steps:
       - name: Checkout
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
 
       - name: Node setup
         uses: ./.github/actions/node-setup
@@ -184,7 +192,7 @@ jobs:
     name: Generate Diff
     steps:
       - name: Checkout PR branch
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
 
       - name: Node setup (pr)
         uses: ./.github/actions/node-setup
@@ -192,13 +200,15 @@ jobs:
       - name: Build vkui PR (pr)
         working-directory: packages/vkui
         run: |
-          yarn run build
+          node --run build
           yarn exec biome format --write --config-path=diff.biome.json
 
       - name: Checkout target
+        env:
+          BASE_REF: ${{ github.base_ref }}
         run: |
-          git fetch origin ${{ github.base_ref }} --depth=1
-          git checkout -f ${{ github.base_ref }}
+          git fetch origin "$BASE_REF" --depth=1
+          git checkout -f "$BASE_REF"
 
       - name: Node setup (target)
         uses: ./.github/actions/node-setup
@@ -211,7 +221,7 @@ jobs:
       - name: Build vkui (target)
         working-directory: packages/vkui
         run: |
-          yarn run build
+          node --run build
           yarn exec biome format --write --config-path=diff.biome.json
 
       - name: Generate diff
@@ -219,9 +229,9 @@ jobs:
         run: |
           git diff --no-index packages/vkui/dist/ packages/vkui/pr_dist/ > code_diff.dif || true
           if [ -s code_diff.dif ]; then
-            echo "has_diff=true" >> $GITHUB_OUTPUT
+            echo "has_diff=true" >> "$GITHUB_OUTPUT"
           else
-            echo "has_diff=false" >> $GITHUB_OUTPUT
+            echo "has_diff=false" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Generate HTML report
@@ -244,13 +254,13 @@ jobs:
     name: Upload docs dist artifact (storybook)
     steps:
       - name: Checkout
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
 
       - name: Node setup
         uses: ./.github/actions/node-setup
 
       - name: Build
-        run: yarn docs:storybook:build
+        run: node --run docs:storybook:build
 
       - name: Upload dist
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
@@ -265,16 +275,16 @@ jobs:
     name: Upload docs dist artifact
     steps:
       - name: Checkout
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
 
       - name: Node setup
         uses: ./.github/actions/node-setup
 
       - name: Build VKUI
-        run: yarn build:vkui
+        run: node --run build:vkui
 
       - name: Build
-        run: yarn docs:website:build
+        run: node --run docs:website:build
         env:
           NEXT_PUBLIC_VKUI_DOCS_BASE_PATH: /pull/${{ github.event.pull_request.number }}/${{ github.event.pull_request.head.sha }}
 
@@ -291,6 +301,9 @@ jobs:
     # см. https://github.com/orgs/community/discussions/26303
     if: ${{ !cancelled() }}
     name: Call reusable workflow
+    permissions:
+      actions: read
+      contents: read
     uses: ./.github/workflows/reusable_workflow_pr_worfklow_payload.yml
     with:
       action: upload
@@ -302,7 +315,7 @@ jobs:
     name: Check dependencies
     steps:
       - name: Checkout
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
 
       - name: Enable Corepack
         run: corepack enable
@@ -316,7 +329,7 @@ jobs:
 
       - name: Install dependencies
         run: YARN_ENABLE_SCRIPTS=false yarn install --immutable --check-cache --check-resolutions
- 
+
   pinact:
     if: ${{ needs.changed_files.outputs.dot_github == 'true' }}
     needs: changed_files
@@ -327,12 +340,12 @@ jobs:
       pull-requests: write
     steps:
       - name: Checkout
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           persist-credentials: false
 
       - name: Pin actions
-        uses: suzuki-shunsuke/pinact-action@cf51507d80d4d6522a07348e3d58790290eaf0b6 # v2.0.0
+        uses: suzuki-shunsuke/pinact-action@896d595f299e71d65b9d28349d6956abe144390a # v3.0.0
         with:
           review: "true"
           skip_push: "true"

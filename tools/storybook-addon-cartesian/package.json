@@ -9,14 +9,15 @@
     "test:ci": "echo no test:ci"
   },
   "dependencies": {
-    "@storybook/icons": "^2.0.2",
-    "@storybook/react": "10.4.0",
-    "storybook": "10.4.0"
+    "@storybook/icons": "^2.1.0",
+    "@storybook/react": "10.4.6",
+    "storybook": "10.4.6"
   },
   "devDependencies": {
     "@types/react": "^19.0.1",
     "@types/react-dom": "^19.0.1",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "typescript": "^6.0.3"
   }
 }

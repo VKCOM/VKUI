@@ -20,6 +20,7 @@ const jetBrainsMono = JetBrains_Mono({
 });
 
 export interface PlaygroundProps extends PlaygroundPreviewProps {
+  hide?: boolean;
   code: string;
   defaultExpanded?: boolean | undefined;
 }

@@ -5,7 +5,7 @@ exports[`users-stack > transforms correctly 1`] = `
 import React from 'react';
 import '@vkontakte/vkui/dist/vkui.css';
 
-const App = () => {
+export const App = () => {
   return (
     <React.Fragment>
       <UsersStack direction="column">...</UsersStack>

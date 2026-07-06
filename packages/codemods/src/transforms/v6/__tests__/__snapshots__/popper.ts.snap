@@ -4,7 +4,7 @@ exports[`popper > transforms correctly 1`] = `
 "import { Popper } from '@vkontakte/vkui';
 import React from 'react';
 
-const App = () => {
+export const App = () => {
   return (
     <React.Fragment>
       <Popper offsetByMainAxis={0}>content</Popper>
@@ -27,7 +27,7 @@ exports[`popper > transforms correctly 2`] = `
 "import { Popper as VKUIPopper } from '@vkontakte/vkui';
 import React from 'react';
 
-const App = () => {
+export const App = () => {
   return (
     <React.Fragment>
       <VKUIPopper>content</VKUIPopper>

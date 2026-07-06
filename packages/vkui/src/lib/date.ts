@@ -304,7 +304,7 @@ export function eachDayOfInterval(
 
   while (+date <= endTime) {
     dates.push(new Date(date));
-    date.setDate(date.getDate() + 1);
+    date.setDate(date.getDate() + step);
     date.setHours(0, 0, 0, 0);
   }
 

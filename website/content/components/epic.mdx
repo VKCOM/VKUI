@@ -15,6 +15,8 @@ description: Компонент, реализующий интерфейс с ц
 
 </Overview>
 
+import { FixedLayoutWrapper } from '@/components/wrappers';
+
 {/* @example-description: Базовая навигация через `Epic` с двумя историями и нижним `Tabbar`. */}
 <Playground Wrapper={FixedLayoutWrapper} style={{ maxWidth: 320, height: 415 }}>
 
@@ -89,134 +91,15 @@ Epic
 
 ## Tabbar
 
-Подкомпонент прибивает элементы навигации ([`TabbarItem`](#tabbar-item)) к низу экрана. Передаётся в свойство `tabbar` компонента `Epic`.
+import TabbarContent from './_partials/tabbar-content.mdx';
 
-import { FixedLayoutWrapper } from '@/components/wrappers';
-
-{/* @example-description: Базовый `Tabbar` с двумя пунктами и активным разделом. */}
-<Playground Wrapper={FixedLayoutWrapper} style={{ height: 60 }}>
-  ```jsx
-  <Tabbar>
-    <TabbarItem label="Новости">
-      <Icon28NewsfeedOutline />
-    </TabbarItem>
-    <TabbarItem label="Профиль" selected>
-      <Icon28UserCircleOutline />
-    </TabbarItem>
-  </Tabbar>
-  ```
-</Playground>
-
-### Выравнивание [#tabbar-align]
-
-В случае, если в `Tabbar` передан один или два элемента [`TabbarItem`](#tabbar-item), контент внутри этих элементов располагается
-по горизонтали, в остальных случаях контент располагается вертикально.
-
-С помощью свойства `mode` у `Tabbar` можно переопределить это поведение.
-
-- `"vertical"` — задаёт всегда вертикальное расположение;
-- `"horizontal"` — задаёт всегда горизонтальное расположение.
-
-{/* @example-description: Принудительное вертикальное выравнивание элементов `Tabbar` через `mode="vertical"`. */}
-<Playground Wrapper={FixedLayoutWrapper} style={{ height: 60 }}>
-  ```jsx
-  <Tabbar mode="vertical">
-    <TabbarItem label="Новости">
-      <Icon28NewsfeedOutline />
-    </TabbarItem>
-    <TabbarItem label="Профиль" selected>
-      <Icon28UserCircleOutline />
-    </TabbarItem>
-  </Tabbar>
-  ```
-</Playground>
+<TabbarContent />
 
 ## TabbarItem [#tabbar-item]
 
-Подкомпонент позволяет создать навигационный элемент. Чаще всего представлен иконкой размером `28px`. Допускается использовать текст
-рядом с иконкой. Иконку необходимо передавать в свойство `children`, текст — в свойство `label`.
+import TabbarItemContent from './_partials/tabbar-item-content.mdx';
 
-{/* @example-description: Пример `TabbarItem` с иконкой и текстовой подписью. */}
-<Playground>
-  ```jsx
-  <TabbarItem label="Профиль">
-    <Icon28UserCircleOutline />
-  </TabbarItem>
-  ```
-</Playground>
-
-Иконка и текст могут располагаться либо горизонтально, либо вертикально. Управлять этим поведением можно с помощью свойства `mode` у
-[`Tabbar`](#tabbar-align).
-
-### Выбранное состояние
-
-Используйте свойство `selected`, чтобы показать текущий активный раздел.
-
-{/* @example-description: Выбранный `TabbarItem` с текстом для скринридера через `VisuallyHidden`. */}
-<Playground>
-  ```jsx
-  <TabbarItem selected>
-    {/* Данный текст будет озвучен скринридером */}
-    <VisuallyHidden>Профиль</VisuallyHidden>
-    <Icon28UserCircleOutline />
-  </TabbarItem>
-  ```
-</Playground>
-
-### Индикатор
-
-С помощью свойства `indicator` можно задать для компонента счётчик или индикатор уведомления.
-Передавайте компоненты `Counter` с `size="s"` или `Badge`.
-
-{/* @example-description: `TabbarItem` с индикатором уведомления, переданным в свойство `indicator`. */}
-<Playground>
-  ```jsx
-  <TabbarItem indicator={<Badge />}>
-    {/* Данный текст будет озвучен скринридером */}
-    <VisuallyHidden>Профиль</VisuallyHidden>
-    <Icon28UserCircleOutline />
-  </TabbarItem>
-  ```
-</Playground>
-
-### Тэг компонента
-
-Через свойство `Component` можно переопределить тэг, который будет отрендерен компонентом (по умолчанию при
-передаче свойства `href` компонент использует тэг `a`, в иных случаях `button`);
-
-### Доступность (a11y) [#a11y]
-
-Если вы не передаете свойство `label`, то ассистивные технологии не смогут однозначно озвучить ваш элемент.
-В таком случае рекомендуется вместе с иконкой передавать в свойство `children` компонент `VisuallyHidden`
-с поясняющим текстом.
-
-```jsx
-import { Icon28UserCircleOutline } from '@vkontakte/icons';
-import { TabbarItem, VisuallyHidden } from '@vkontakte/vkui';
-
-<TabbarItem>
-  {/* Данный текст будет озвучен скринридером */}
-  <VisuallyHidden>Профиль</VisuallyHidden>
-  <Icon28UserCircleOutline />
-</TabbarItem>;
-```
-
-В качестве альтернативного решение можно передать текст для скринридера в свойство `aria-label` или создать
-отдельный элемент с текстом и передать его `id` в свойство `aria-labelledby`.
-
-```jsx
-<TabbarItem aria-label="Профиль">
-  <Icon28UserCircleOutline />
-</TabbarItem>
-```
-
-```jsx
-<span id="my-label">Профиль</span>
-
-<TabbarItem aria-labelledby="my-label">
-  <Icon28UserCircleOutline />
-</TabbarItem>
-```
+<TabbarItemContent />
 
 ## Адаптивность
 

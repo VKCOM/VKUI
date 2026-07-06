@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam, StringArg } from '../../../storybook/constants';
 import { getAvatarUrl } from '../../../testing/mock';
@@ -15,11 +15,10 @@ const story: Meta<HorizontalCellShowMoreProps> = {
   argTypes: {
     children: StringArg,
   },
+  decorators: [withSinglePanel, withVKUILayout],
 };
 
 export default story;
-
-type Story = StoryObj<HorizontalCellShowMoreProps & { imgSize: number }>;
 
 const CELL_ITEMS = [
   {
@@ -59,67 +58,71 @@ function getNotTooBigHeightBySize({
   return height ?? 96;
 }
 
-export const Playground: Story = {
-  render: function Render({ ...args }) {
-    return (
-      <>
-        <HorizontalCellShowMore {...args} height={getNotTooBigHeightBySize(args)}>
-          {args.children}
-        </HorizontalCellShowMore>
-      </>
-    );
-  },
-  args: {
-    size: 'm',
-    height: 96,
-  },
-  decorators: [
-    (Component, { args }) => {
-      const cellImageSize = getNotTooBigHeightBySize(args);
-      return (
-        <Group>
-          <HorizontalScroll>
-            {CELL_ITEMS.map((element) => (
-              <HorizontalCell key={element.id} size={args.size} title={element.title}>
-                <Avatar size={cellImageSize} src={element.icon} alt={`avatar: ${element.title}`} />
-              </HorizontalCell>
-            ))}
-            <Component {...args} />
-          </HorizontalScroll>
-        </Group>
-      );
-    },
-    withSinglePanel,
-    withVKUILayout,
-  ],
+type Story = StoryFn<HorizontalCellShowMoreProps>;
+
+export const Playground: Story = (args: HorizontalCellShowMoreProps) => {
+  const cellImageSize = getNotTooBigHeightBySize(args);
+  return (
+    <Group>
+      <HorizontalScroll>
+        {CELL_ITEMS.map((element) => (
+          <HorizontalCell key={element.id} size={args.size} title={element.title}>
+            <Avatar size={cellImageSize} src={element.icon} alt={`avatar: ${element.title}`} />
+          </HorizontalCell>
+        ))}
+        <HorizontalCellShowMore {...args} height={cellImageSize} />
+      </HorizontalScroll>
+    </Group>
+  );
 };
 
-export const Small: Story = {
-  ...Playground,
-  args: {
-    ...Playground.args,
-    size: 's',
-    height: 56,
+Playground.args = {
+  size: 'm',
+  height: 96,
+};
+
+Playground.parameters = {
+  liveCodeEditor: {
+    scope: { CELL_ITEMS, getNotTooBigHeightBySize },
   },
 };
 
-export const Middle: Story = {
-  ...Playground,
-  args: {
-    ...Playground.args,
-    size: 'm',
-    height: 88,
+export const Small: Story = Playground.bind({});
+
+Small.args = {
+  size: 's',
+  height: 56,
+};
+
+Small.parameters = {
+  liveCodeEditor: {
+    disabled: true,
   },
 };
 
-export const Large: Story = Playground;
+export const Middle: Story = Playground.bind({});
 
-export const WithCustomText: Story = {
-  ...Playground,
-  args: {
-    ...Playground.args,
-    size: 'm',
-    height: 88,
-    children: 'Show More',
+Middle.args = {
+  size: 'm',
+  height: 88,
+};
+
+Middle.parameters = {
+  liveCodeEditor: {
+    disabled: true,
+  },
+};
+
+export const WithCustomText: Story = Playground.bind({});
+
+WithCustomText.args = {
+  size: 'm',
+  height: 88,
+  children: 'Show More',
+};
+
+WithCustomText.parameters = {
+  liveCodeEditor: {
+    disabled: true,
   },
 };

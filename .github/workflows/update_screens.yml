@@ -10,6 +10,9 @@ on:
 
 run-name: Update screenshots for ${{ github.ref_name }}
 
+permissions:
+  contents: read
+
 jobs:
   get_playwright_docker_image:
     runs-on: ubuntu-slim
@@ -17,7 +20,7 @@ jobs:
       image: ${{ steps.result.outputs.value }}
     steps:
       - name: Checkout
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
 
       # Создаем кэш для ветки один раз
       - name: Checkout LFS objects
@@ -43,7 +46,7 @@ jobs:
     name: 'Run e2e tests for (shard ${{ matrix.shardIndex }}/${{ matrix.shardTotal }})'
     steps:
       - name: Checkout
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
 
       - name: Checkout LFS objects
         uses: ./.github/actions/lfs
@@ -60,16 +63,25 @@ jobs:
 
       - name: Update screenshots
         # Почему HOME=/root см. https://github.com/microsoft/playwright/issues/6500
-        run: HOME=/root yarn run test:e2e-update:ci --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
+        run: HOME=/root node --run test:e2e-update:ci -- --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
 
       - name: Zip changed screenshots
         id: zip-screenshots
         run: |
           git add ./**/*.png
           mkdir screenshots
-          rsync -R $(git diff --name-only --cached --relative) screenshots
+
+          CHANGED_SCREENSHOTS=()
+          while IFS= read -r -d '' SCREENSHOT; do
+            CHANGED_SCREENSHOTS+=("$SCREENSHOT")
+          done < <(git diff --name-only --cached --relative -z)
+
+          if (( ${#CHANGED_SCREENSHOTS[@]} > 0 )); then
+            rsync -R "${CHANGED_SCREENSHOTS[@]}" screenshots
+          fi
+
           if [ -d screenshots/components ]; then
-            echo "needUpload=true" >> $GITHUB_OUTPUT
+            echo "needUpload=true" >> "$GITHUB_OUTPUT"
             cd screenshots
             zip -q -r ../../screenshots-${{ matrix.shardIndex }}-${{ matrix.shardTotal }}.zip components
           fi
@@ -92,7 +104,7 @@ jobs:
     name: 'Collect updated screenshots and push changes'
     steps:
       - name: Checkout
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
 
       - name: Download artifacts
         id: artifacts
@@ -104,7 +116,7 @@ jobs:
         id: unzip
         run: |
           if [ -d artifacts ]; then
-             echo "found=true" >> $GITHUB_OUTPUT
+             echo "found=true" >> "$GITHUB_OUTPUT"
              cd artifacts
              find . -type f -name 'screenshots-*.zip' -exec unzip -q -o -d ../src {} \;
            fi

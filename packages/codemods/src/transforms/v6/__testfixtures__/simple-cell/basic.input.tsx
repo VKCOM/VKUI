@@ -2,7 +2,7 @@ import { SimpleCell } from '@vkontakte/vkui';
 import React from 'react';
 import '@vkontakte/vkui/dist/vkui.css';
 
-const App = () => {
+export const App = () => {
   return (
     <React.Fragment>
       <SimpleCell expandable={true}>...</SimpleCell>

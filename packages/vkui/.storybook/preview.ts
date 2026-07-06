@@ -2,6 +2,7 @@ import { spyOn } from 'storybook/test';
 import type { Preview } from '@storybook/react';
 import { BREAKPOINTS } from '../src/lib/adaptivity';
 import { withVKUIWrapper } from '../src/storybook/VKUIDecorators';
+import { withLiveCodeEditor } from '@vkontakte/storybook-addons';
 // Выносим отдельно, чтобы файл обрабатывался postcss плагином
 import '../src/styles/layout.css';
 import './preview.css';
@@ -62,6 +63,7 @@ const preview: Preview = {
       source: {
         type: 'dynamic',
       },
+      codePanel: true,
     },
     controls: {
       expanded: true,
@@ -75,13 +77,21 @@ const preview: Preview = {
     },
     backgrounds: { disable: true },
     cartesian: { disabled: true },
+    liveCodeEditor: {
+      getGlobals: () => [
+        import('@vkontakte/vkjs'),
+        import('@vkontakte/icons'),
+        import('react'),
+        import('../src/index'),
+        import('../src/testing/mock'),
+      ],
+    },
   },
   initialGlobals: {
     docsBaseUrl: __DOCS_BASE_URL__,
-    componentsSourceBaseUrl: __COMPONENTS_SOURCE_BASE_URL__,
     colorScheme: 'light',
-    hasPointer: true,
     storybookTheme: 'light',
+    hasPointer: true,
     hasCustomPanelHeaderAfter: false,
     direction: 'ltr',
     writingMode: 'horizontal-tb',
@@ -125,7 +135,7 @@ const preview: Preview = {
     getRef: { control: false },
     getRootRef: { control: false },
   },
-  decorators: [withVKUIWrapper],
+  decorators: [withLiveCodeEditor, withVKUIWrapper],
 };
 
 export default preview;

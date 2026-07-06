@@ -1,7 +1,7 @@
 import { noop, PanelHeaderClose } from '@vkontakte/vkui';
 import React from 'react';
 
-const App = () => {
+export const App = () => {
   return (
     <React.Fragment>
       <PanelHeaderClose onClick={noop}>Закрыть</PanelHeaderClose>

@@ -44,10 +44,11 @@ export function TOC({ toc }: TOCProps) {
   const {
     normalizePagesResult: { activeThemeContext: themeContext },
     isBlog,
+    isComponentsShowCase,
   } = useConfig();
   const { toc: tocVisible } = themeContext;
 
-  if (isBlog) {
+  if (isBlog || isComponentsShowCase) {
     return null;
   }
 

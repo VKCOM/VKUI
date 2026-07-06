@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import { type Meta, type StoryFn } from '@storybook/react';
 import { useConfigDirection } from '../../hooks/useConfigDirection';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { Div } from '../Div/Div';
@@ -26,10 +26,16 @@ const Fixture = () => {
   );
 };
 
-export const Playground: StoryObj<DirectionProviderProps> = {
-  render: (args) => (
+export const Playground: StoryFn<DirectionProviderProps> = (args: DirectionProviderProps) => {
+  return (
     <DirectionProvider {...args}>
       <Fixture />
     </DirectionProvider>
-  ),
+  );
+};
+
+Playground.parameters = {
+  liveCodeEditor: {
+    scope: { Fixture },
+  },
 };

@@ -5,6 +5,7 @@ import { readFileSync } from 'node:fs';
 import type { StorybookConfig } from '@storybook/react-vite';
 
 const require = createRequire(import.meta.url);
+const DIRNAME = path.dirname(fileURLToPath(import.meta.url));
 
 const getGlobalAddonPath = (addonName: string, presetDir?: string) => {
   const resolvedPath = path.dirname(require.resolve(path.join(addonName, 'package.json')));
@@ -15,19 +16,26 @@ const getLocalAddonPath = (addonName: string) => fileURLToPath(import.meta.resol
 
 const config: StorybookConfig = {
   stories: ['../docs/**/*.mdx', '../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
+  staticDirs: [
+    // нужно для подключения воркеров monaco-editor (live-code-editor addon)
+    {
+      from: path.resolve(DIRNAME, '../../../node_modules/monaco-editor/esm'),
+      to: 'monaco-editor/esm',
+    },
+    // нужно для добавления типов react в monaco-editor (live-code-editor addon)
+    { from: path.resolve(DIRNAME, '../../../node_modules/@types/react'), to: '@types/react' },
+  ],
   addons: [
-    getLocalAddonPath('./addons/source-tab'),
+    getLocalAddonPath('@vkontakte/storybook-addons/live-code-editor'),
     getGlobalAddonPath('@storybook/addon-links'),
     getGlobalAddonPath('@storybook/addon-a11y'),
     getGlobalAddonPath('@storybook/addon-designs', 'dist'),
     getGlobalAddonPath('@storybook/addon-docs'),
     getGlobalAddonPath('@project-tools/storybook-addon-cartesian'),
-    getLocalAddonPath('./addons/colorScheme'),
+    getLocalAddonPath('@vkontakte/storybook-addons/color-scheme'),
     getLocalAddonPath('./addons/pointer'),
     getLocalAddonPath('./addons/customPanelHeaderAfter'),
-    getLocalAddonPath('./addons/source-button'),
     getLocalAddonPath('./addons/documentation-button'),
-    getLocalAddonPath('./addons/storybook-theme'),
   ],
   framework: getGlobalAddonPath('@storybook/react-vite'),
   viteFinal: async (config) => {
@@ -46,7 +54,8 @@ const config: StorybookConfig = {
   typescript: {
     reactDocgen: 'react-docgen-typescript',
     reactDocgenTypescriptOptions: {
-      tsconfigPath: fileURLToPath(new URL('../tsconfig.storybook.json', import.meta.url)),
+      tsconfigPath: fileURLToPath(new URL('../tsconfig.docgen.json', import.meta.url)),
+      include: ['src/**/*.tsx', 'docs/**/*.tsx', '../storybook-addons/src/**/*.tsx'],
       shouldExtractLiteralValuesFromEnum: true,
       shouldRemoveUndefinedFromOptional: true,
     },

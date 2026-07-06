@@ -80,13 +80,14 @@
   "scripts": {
     "build": "node build.ts",
     "test": "node --test '**/*.test.*'",
-    "test:ci": "yarn run test",
+    "test:ci": "node --run test",
     "lint:types": "tsc",
-    "prepack": "yarn run build"
+    "prepack": "node --run build"
   },
   "devDependencies": {
-    "@date-fns/tz": "1.4.1",
-    "@swc/core": "^1.15.33",
+    "@date-fns/tz": "1.5.0",
+    "@swc/core": "^1.15.43",
+    "@types/node": "^26.1.0",
     "typescript": "^6.0.3"
   }
 }

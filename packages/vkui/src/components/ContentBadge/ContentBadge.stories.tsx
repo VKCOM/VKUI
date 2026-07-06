@@ -1,118 +1,121 @@
-import type { Meta, ReactRenderer, StoryObj } from '@storybook/react';
+import * as React from 'react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { Icon12Services, Icon16Services, Icon20ServicesFilled } from '@vkontakte/icons';
-import type { PartialStoryFn } from 'storybook/internal/types';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Flex } from '../Flex/Flex';
 import { Group } from '../Group/Group';
-import { ContentBadge, type ContentBadgeProps } from './ContentBadge';
+import { ContentBadge, type ContentBadgeAppearance, type ContentBadgeProps } from './ContentBadge';
+import type { ContentBadgeModeType } from './types.ts';
+
+const commonStyles: React.CSSProperties = {
+  display: 'flex',
+  alignItems: 'center',
+  gap: 24,
+  flexWrap: 'wrap',
+  outline: '1px dashed',
+  padding: 24,
+};
 
 const meta: Meta<ContentBadgeProps> = {
   title: 'Data Display/ContentBadge',
   component: ContentBadge,
-  parameters: createStoryParameters('ContentBadge', CanvasFullLayout, DisableCartesianParam),
+  parameters: createStoryParameters('ContentBadge', CanvasFullLayout, DisableCartesianParam, {
+    liveCodeEditor: {
+      scope: { commonStyles },
+    },
+  }),
   tags: ['Отображение данных'],
 };
 
 export default meta;
 
-const Container = (Story: PartialStoryFn<ReactRenderer>) => (
-  <Group
-    style={{
-      display: 'flex',
-      alignItems: 'center',
-      gap: 24,
-      flexWrap: 'wrap',
-      outline: '1px dashed',
-      padding: 24,
-    }}
-  >
-    <Story />
-  </Group>
-);
+type Story = StoryFn<ContentBadgeProps>;
 
-type DefaultStory = StoryObj<ContentBadgeProps>;
-
-export const Playground: DefaultStory = {
-  decorators: [Container],
-  render({ children = 'Text', size, ...restProps }) {
-    return (
+export const Playground: Story = (props: ContentBadgeProps) => {
+  return (
+    <Group style={commonStyles}>
       <Flex align="center" gap={24}>
-        <ContentBadge {...restProps} size={size}>
-          {children}
-        </ContentBadge>
+        <ContentBadge {...props}>{props.children}</ContentBadge>
 
-        <ContentBadge {...restProps} size={size}>
+        <ContentBadge {...props}>
           <ContentBadge.IconSlot>
-            {size === 'l' ? <Icon16Services /> : <Icon12Services />}
+            {props.size === 'l' ? <Icon16Services /> : <Icon12Services />}
           </ContentBadge.IconSlot>
-          {children}
+          {props.children}
         </ContentBadge>
 
-        <ContentBadge {...restProps} size={size}>
-          {children}
+        <ContentBadge {...props}>
+          {props.children}
           <ContentBadge.IconSlot>
-            {size === 'l' ? <Icon16Services /> : <Icon12Services />}
+            {props.size === 'l' ? <Icon16Services /> : <Icon12Services />}
           </ContentBadge.IconSlot>
         </ContentBadge>
 
-        <ContentBadge {...restProps} size={size}>
+        <ContentBadge {...props}>
           <ContentBadge.IconSlot>
-            {size === 'l' ? <Icon16Services /> : <Icon12Services />}
+            {props.size === 'l' ? <Icon16Services /> : <Icon12Services />}
           </ContentBadge.IconSlot>
-          {children}
+          {props.children}
           <ContentBadge.IconSlot>
-            {size === 'l' ? <Icon16Services /> : <Icon12Services />}
+            {props.size === 'l' ? <Icon16Services /> : <Icon12Services />}
           </ContentBadge.IconSlot>
         </ContentBadge>
       </Flex>
-    );
-  },
+    </Group>
+  );
 };
 
-const CUSTOM_APPEARANCES = ['#FF6699', 'var(--vkui--color_icon_tertiary)'] as const;
-const MODES = ['primary', 'secondary', 'outline'] as const;
+Playground.args = {
+  children: 'Text',
+};
 
-export const CustomAppearance: DefaultStory = {
-  decorators: [Container],
-  render({ children = 'Text', size }) {
-    return (
+export const CustomAppearance: Story = (props: ContentBadgeProps) => {
+  const CUSTOM_APPEARANCES: ContentBadgeAppearance[] = [
+    '#FF6699',
+    'var(--vkui--color_icon_tertiary)',
+  ];
+  const MODES: ContentBadgeModeType[] = ['primary', 'secondary', 'outline'];
+
+  return (
+    <Group style={commonStyles}>
       <Flex direction="column" gap={16}>
         {CUSTOM_APPEARANCES.map((appearance) => (
           <Flex key={appearance} align="center" gap={24}>
             {MODES.map((mode) => (
-              <ContentBadge key={mode} appearance={appearance} mode={mode} size={size}>
+              <ContentBadge key={mode} appearance={appearance} mode={mode} {...props}>
                 <ContentBadge.IconSlot>
-                  {size === 'l' ? <Icon16Services /> : <Icon12Services />}
+                  {props.size === 'l' ? <Icon16Services /> : <Icon12Services />}
                 </ContentBadge.IconSlot>
-                {children}
+                {props.children}
               </ContentBadge>
             ))}
           </Flex>
         ))}
       </Flex>
-    );
-  },
+    </Group>
+  );
 };
 
-type SingleIconStory = StoryObj<ContentBadgeProps>;
+CustomAppearance.args = {
+  children: 'Text',
+};
 
-export const SingleIcon: SingleIconStory = {
-  args: {
-    capsule: true,
-  },
-  decorators: [Container],
-  render({ size, ...restProps }) {
-    if (size === 's') {
-      return <div>size=&quot;s&quot; не поддерживает иконки</div>;
-    }
-
-    return (
-      <ContentBadge {...restProps} size={size}>
+export const SingleIcon: Story = (props: ContentBadgeProps) => {
+  if (props.size === 's') {
+    return <div>size=&quot;s&quot; не поддерживает иконки</div>;
+  }
+  return (
+    <Group style={commonStyles}>
+      <ContentBadge {...props}>
         <ContentBadge.IconSlot>
-          {size === 'l' ? <Icon20ServicesFilled /> : <Icon16Services />}
+          {props.size === 'l' ? <Icon20ServicesFilled /> : <Icon16Services />}
         </ContentBadge.IconSlot>
       </ContentBadge>
-    );
-  },
+    </Group>
+  );
+};
+
+SingleIcon.args = {
+  capsule: true,
 };

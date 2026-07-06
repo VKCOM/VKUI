@@ -1,4 +1,4 @@
-import type { Meta, StoryContext, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
@@ -13,7 +13,11 @@ function getAriaLabel(index: number) {
 const story: Meta<SliderProps> = {
   title: 'Forms/Slider',
   component: Slider,
-  parameters: createStoryParameters('Slider', CanvasFullLayout, DisableCartesianParam),
+  parameters: createStoryParameters('Slider', CanvasFullLayout, DisableCartesianParam, {
+    liveCodeEditor: {
+      scope: { forceRemountKey },
+    },
+  }),
   args: {
     getAriaLabel,
   },
@@ -33,31 +37,33 @@ const story: Meta<SliderProps> = {
     },
   },
   tags: ['Формы и поля ввода'],
+  decorators: [withSinglePanel, withVKUILayout],
 };
 
 export default story;
 
-type Story = StoryObj<SliderProps | SliderMultipleProps>;
+type Story = StoryFn<SliderProps>;
 
-const forceRemountKey = (args: Story['args']) => (args?.multiple ? 'multiple' : 'single');
+function forceRemountKey(args: SliderProps | SliderMultipleProps): 'multiple' | 'single' {
+  return args?.multiple ? 'multiple' : 'single';
+}
 
-export const Playground: Story = {
-  decorators: [
-    (Component: typeof Slider, context: StoryContext<SliderProps | SliderMultipleProps>) => (
-      <Group>
-        <FormItem top="Pineapple Count">
-          <Component key={forceRemountKey(context.args)} {...context.args} />
-        </FormItem>
-      </Group>
-    ),
-    withSinglePanel,
-    withVKUILayout,
-  ],
-};
+export const Playground: Story = (props: SliderProps | SliderMultipleProps) => (
+  <Group>
+    <FormItem top="Pineapple Count">
+      <Slider key={forceRemountKey(props)} {...props} />
+    </FormItem>
+  </Group>
+);
 
-export const Tooltip: Story = {
-  ...Playground,
-  args: {
-    withTooltip: true,
-  },
+export const Tooltip: Story = (props: SliderProps | SliderMultipleProps) => (
+  <Group>
+    <FormItem top="Pineapple Count">
+      <Slider key={forceRemountKey(props)} {...props} />
+    </FormItem>
+  </Group>
+);
+
+Tooltip.args = {
+  withTooltip: true,
 };

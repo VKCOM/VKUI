@@ -1,9 +1,10 @@
 'use client';
 
-import type * as React from 'react';
+import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../../../hooks/useAdaptivity';
 import type { HTMLAttributesWithRootRef } from '../../../../types';
+import { ColorSchemeProvider } from '../../../ColorSchemeProvider/ColorSchemeProvider';
 import { RootComponent } from '../../../RootComponent/RootComponent';
 import { Paragraph } from '../../../Typography/Paragraph/Paragraph';
 import { Subhead } from '../../../Typography/Subhead/Subhead';
@@ -74,14 +75,13 @@ export function Basic({
   const { density = 'none' } = useAdaptivity();
   const layout = after || subtitle ? 'vertical' : 'none';
 
-  return (
+  const snackbar = (
     <RootComponent
       {...restProps}
       baseClassName={classNames(
         styles.body,
         stylesLayout[layoutProps || layout],
         density !== 'compact' && densityClassNames[density],
-        mode === 'dark' && styles.modeDark,
       )}
     >
       {before && <div className={styles.before}>{before}</div>}
@@ -96,4 +96,10 @@ export function Basic({
       {after && <div className={styles.after}>{after}</div>}
     </RootComponent>
   );
+
+  if (mode === 'dark') {
+    return <ColorSchemeProvider value="dark">{snackbar}</ColorSchemeProvider>;
+  }
+
+  return snackbar;
 }

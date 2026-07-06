@@ -3,7 +3,7 @@ import React, { createContext } from 'react';
 
 const OtherContext = createContext({});
 
-const App = () => {
+export const App = () => {
   const contextValue = {};
   return (
     <>

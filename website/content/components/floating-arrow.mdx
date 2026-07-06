@@ -1,5 +1,6 @@
 ---
 description: Иконка-стрелка для всплывающих окон.
+tags: overlay
 ---
 
 <Overview group="utils">
@@ -11,6 +12,14 @@ description: Иконка-стрелка для всплывающих окон.
 </Overview>
 
 import { BlockWrapper } from '@/components/wrappers';
+
+<Playground hide>
+  ```jsx
+  <Box position="relative" inlineSize={100} blockSize={100} style={{ border: '1px dashed var(--vkui--color_text_accent)', borderRadius: '4px' }}>
+    <FloatingArrow coords={{ x: 5, y: 10 }} />
+  </Box>
+  ```
+</Playground>
 
 {/* @example-description: Базовый пример `FloatingArrow` с заданными координатами позиционирования. */}
 <Playground Wrapper={BlockWrapper} style={{ width: 1 }}>

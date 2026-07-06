@@ -9,7 +9,7 @@ services:
     command: sh -c "
       corepack enable &&
       YARN_ENABLE_SCRIPTS=false yarn install --immutable &&
-      yarn run ${RUN_SCRIPT_COMMAND:-test:e2e:ci} ${UPDATE_SNAPSHOTS_FLAG:-}
+      node --run ${RUN_SCRIPT_COMMAND:-test:e2e:ci} ${UPDATE_SNAPSHOTS_FLAG:+-- }${UPDATE_SNAPSHOTS_FLAG:-}
       "
     volumes:
       - ../../:/repo

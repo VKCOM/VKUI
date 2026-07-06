@@ -1,5 +1,6 @@
 ---
 description: Компонент для отрисовки подсказки, когда пользователю хочется представить новый функционал.
+tags: overlay
 ---
 
 <Overview group="utils">
@@ -14,6 +15,14 @@ description: Компонент для отрисовки подсказки, к
 > Для показа всплывающей подсказки по нажатию или наведению воспользуйтесь [`Tooltip`](/components/tooltip).
 
 import { OnboardingTooltipWrapper } from '@/components/wrappers';
+
+<Playground hide Wrapper={OnboardingTooltipWrapper}>
+  ```jsx
+  <OnboardingTooltip shown disableFlipMiddleware disableShiftMiddleware placement="bottom" description="Обновлённый раздел поможет найти друзей">
+    <Icon20UserCheckOutline />
+  </OnboardingTooltip>
+  ```
+</Playground>
 
 {/* @example-description: Базовый `OnboardingTooltip` для одноразового знакомства с новым функционалом. */}
 <Playground Wrapper={OnboardingTooltipWrapper}>

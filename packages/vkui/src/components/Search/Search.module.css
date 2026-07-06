@@ -17,6 +17,10 @@
   padding-inline: var(--vkui--size_base_padding_horizontal--regular);
 }
 
+.hasAfter.withPadding {
+  padding-inline-end: 0;
+}
+
 /*
   density-compact
  */
@@ -182,6 +186,10 @@
   transition: flex-grow 0.3s var(--vkui--animation_easing_platform);
 }
 
+.hasAfter.withPadding .after {
+  min-inline-size: var(--vkui--size_base_padding_horizontal--regular);
+}
+
 .focused .after,
 .hasValue .after {
   flex-grow: 1;
@@ -195,17 +203,6 @@
   inline-size: 4px;
   block-size: 100%;
   content: '';
-}
-
-.withPadding .after::after {
-  margin-inline-end: calc(-1 * var(--vkui--size_base_padding_horizontal--regular));
-}
-
-.afterTextClip {
-  display: block;
-  overflow: hidden;
-  text-overflow: clip;
-  white-space: nowrap;
 }
 
 .findButton {

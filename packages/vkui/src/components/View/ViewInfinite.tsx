@@ -195,14 +195,14 @@ class ViewInfiniteComponent extends React.Component<
       if (this.shouldDisableTransitionMotion()) {
         this.flushTransition(prevProps.activePanel, isBack);
       } else {
-        this.setState({
+        this.setState(() => ({
           visiblePanels: [prevProps.activePanel, this.props.activePanel],
           prevPanel: prevProps.activePanel,
           nextPanel: this.props.activePanel,
           activePanel: null,
           animated: true,
           isBack,
-        });
+        }));
       }
     }
 
@@ -268,14 +268,14 @@ class ViewInfiniteComponent extends React.Component<
 
     // Закончился Safari свайп
     if (prevProps.activePanel !== this.props.activePanel && this.state.browserSwipe) {
-      this.setState({
+      this.setState(() => ({
         browserSwipe: false,
         nextPanel: null,
         prevPanel: null,
         animated: false,
         visiblePanels: [this.props.activePanel],
         activePanel: this.props.activePanel,
-      });
+      }));
     }
   }
 
@@ -462,12 +462,12 @@ class ViewInfiniteComponent extends React.Component<
         ]);
       }
 
-      this.setState({
+      this.setState((prevState) => ({
         swipingBack: true,
         swipeBackStartX: event.startX,
-        swipeBackPrevPanel: this.state.activePanel,
-        swipeBackNextPanel: this.props.history.slice(-2)[0],
-      });
+        swipeBackPrevPanel: prevState.activePanel,
+        swipeBackNextPanel: this.props.history?.slice(-2)[0] ?? null,
+      }));
     }
 
     if (this.state.swipingBack) {

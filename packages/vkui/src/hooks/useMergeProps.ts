@@ -26,7 +26,7 @@ export const useMergeProps = <T extends BaseProps = BaseProps>(
     return filterProps(originalProps);
   }
 
-  const { className: rootSlotClassName, style: rootSlotStyle, ...rootSlotProps } = slotProps || {};
+  const { className: rootSlotClassName, style: rootSlotStyle, ...rootSlotProps } = slotProps;
 
   const {
     className: originalClassName,

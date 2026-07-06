@@ -4,7 +4,7 @@ exports[`tooltip-container > transforms correctly 1`] = `
 "import { OnboardingTooltipContainer } from '@vkontakte/vkui';
 import React from 'react';
 
-const App = () => {
+export const App = () => {
   return (
     <React.Fragment>
       <OnboardingTooltipContainer>Tooltip</OnboardingTooltipContainer>

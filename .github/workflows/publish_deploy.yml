@@ -30,13 +30,16 @@ on:
 env:
   CHECKOUT_BRANCH: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_branch || github.ref }}
 
+permissions:
+  contents: read
+
 jobs:
   payload:
     name: Prepare payload data
     runs-on: ubuntu-slim
     outputs:
-      package_name: ${{ steps.publish_workflow_payload.outputs.package_name || inputs.package_name }}
-      next_version: ${{ steps.publish_workflow_payload.outputs.next_version || inputs.next_version }}
+      package_name: ${{ steps.publish_workflow_payload.outputs.package_name || steps.manual_payload.outputs.package_name }}
+      next_version: ${{ steps.publish_workflow_payload.outputs.next_version || steps.manual_payload.outputs.next_version }}
       is_for_prerelease: ${{ contains(github.event.workflow_run.name, 'Publish pre-release') || contains(inputs.publish_type, 'pre-release') }}
     steps:
       - name: Download artifact (if it is 'workflow_run')
@@ -52,46 +55,104 @@ jobs:
       - name: Parse artifact
         if: ${{ steps.artifact.conclusion == 'success' }}
         id: publish_workflow_payload
+        shell: bash
         run: |
-          echo "package_name=$(cat publish_workflow_payload/package_name.txt)" >> $GITHUB_OUTPUT
-          echo "next_version=$(cat publish_workflow_payload/next_version.txt)" >> $GITHUB_OUTPUT
+          PACKAGE_NAME="$(tr -d '\r\n' < publish_workflow_payload/package_name.txt)"
+          NEXT_VERSION="$(tr -d '\r\n' < publish_workflow_payload/next_version.txt)"
+
+          case "$PACKAGE_NAME" in
+            "@vkontakte/vkui"|"@vkontakte/vkui-floating-ui"|"@vkontakte/vkui-date-fns-tz"|"@vkontakte/vkui-codemods"|"@vkontakte/vkui-mcp"|"@vkontakte/storybook-addons") ;;
+            *)
+              echo "::error::Invalid package_name payload"
+              exit 1
+              ;;
+          esac
+
+          SEMVER_RE='^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)(-((0|[1-9][0-9]*|[0-9]*[A-Za-z-][0-9A-Za-z-]*)(\.(0|[1-9][0-9]*|[0-9]*[A-Za-z-][0-9A-Za-z-]*))*))?$'
+
+          if [[ ! "$NEXT_VERSION" =~ $SEMVER_RE ]]; then
+            echo "::error::Invalid next_version payload"
+            exit 1
+          fi
+
+          {
+            printf 'package_name=%s\n' "$PACKAGE_NAME"
+            printf 'next_version=%s\n' "$NEXT_VERSION"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Validate manual payload
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        id: manual_payload
+        shell: bash
+        env:
+          NEXT_VERSION: ${{ inputs.next_version }}
+          PACKAGE_NAME: ${{ inputs.package_name }}
+        run: |
+          case "$PACKAGE_NAME" in
+            "@vkontakte/vkui") ;;
+            *)
+              echo "::error::Invalid package_name input"
+              exit 1
+              ;;
+          esac
+
+          SEMVER_RE='^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)(-((0|[1-9][0-9]*|[0-9]*[A-Za-z-][0-9A-Za-z-]*)(\.(0|[1-9][0-9]*|[0-9]*[A-Za-z-][0-9A-Za-z-]*))*))?$'
+
+          if [[ ! "$NEXT_VERSION" =~ $SEMVER_RE ]]; then
+            echo "::error::Invalid next_version input"
+            exit 1
+          fi
+
+          {
+            printf 'package_name=%s\n' "$PACKAGE_NAME"
+            printf 'next_version=%s\n' "$NEXT_VERSION"
+          } >> "$GITHUB_OUTPUT"
 
   deploy_vkui_docs:
     needs: [payload]
     if: ${{ success() && needs.payload.outputs.package_name == '@vkontakte/vkui' && needs.payload.outputs.next_version }}
     runs-on: ubuntu-latest
     name: Deploy @vkontakte/vkui docs
+    permissions:
+      contents: write
     steps:
       - name: Checkout
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           ref: ${{ env.CHECKOUT_BRANCH }}
+          persist-credentials: false
 
       - name: Setting up the repository environment
         uses: ./.github/actions/setup
 
       - name: Build vkui package
-        run: yarn run build:vkui
+        run: node --run build:vkui
 
       - name: Build storybook
-        run: yarn docs:storybook:build -o ../../website/tmp/playground
+        run: node --run docs:storybook:build -- -o ../../website/tmp/playground
 
       - name: Creating docs for release (default basePath)
         if: ${{ fromJSON(needs.payload.outputs.is_for_prerelease) != true }}
+        # [Latest doc] В S3 будет выгружать с префиксом latest (cм. 86 строчку)
         run: |
-          yarn run docs:website:build
+          node --run docs:website:build
           yarn workspace @project-docs/website run next-sitemap
+
+          cp -R website/out/* website/tmp/
+
           mkdir -p website/out/playground
           cp -R website/tmp/playground/* website/out/playground/
 
       - name: Creating docs for pre-release OR release (version basePath)
-        run: |
-          yarn run docs:website:build
-          mkdir -p website/out/${{ needs.payload.outputs.next_version }}/playground
-          cp -R website/tmp/playground/* website/out/${{ needs.payload.outputs.next_version }}/playground/
+        # [Version doc] В S3 будет выгружать с префиксом <version>
         env:
+          DOCS_VERSION: ${{ needs.payload.outputs.next_version }}
           NEXT_PUBLIC_VKUI_DOCS_BASE_PATH: /${{ needs.payload.outputs.next_version }}
           NEXT_PUBLIC_VKUI_DOCS_DIST_DIR: out/${{ needs.payload.outputs.next_version }}
+        run: |
+          node --run docs:website:build
+          mkdir -p "website/out/${DOCS_VERSION}/playground"
+          cp -R website/tmp/playground/* "website/out/${DOCS_VERSION}/playground/"
 
       - name: Publishing doc
         uses: JamesIves/github-pages-deploy-action@d92aa235d04922e8f08b40ce78cc5442fcfbfa2f # v4.8.0
@@ -102,6 +163,40 @@ jobs:
           clean: false
           force: false
 
+      - name: Latest doc • Delete old data
+        if: ${{ fromJSON(needs.payload.outputs.is_for_prerelease) != true }}
+        uses: VKCOM/gh-actions/VKUI/s3@main
+        with:
+          awsAccessKeyId: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          awsSecretAccessKey: ${{ secrets.AWS_SECRET_KEY }}
+          awsBucket: ${{ vars.AWS_BUCKET_WEBSITE }}
+          awsEndpoint: https://${{ vars.AWS_ENDPOINT }}
+          command: delete
+          commandDeletePrefix: latest/
+
+      - name: Latest doc • Upload new data
+        if: ${{ fromJSON(needs.payload.outputs.is_for_prerelease) != true }}
+        uses: VKCOM/gh-actions/VKUI/s3@main
+        with:
+          awsAccessKeyId: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          awsSecretAccessKey: ${{ secrets.AWS_SECRET_KEY }}
+          awsBucket: ${{ vars.AWS_BUCKET_WEBSITE }}
+          awsEndpoint: https://${{ vars.AWS_ENDPOINT }}
+          command: upload
+          commandUploadSrc: website/tmp/
+          commandUploadDist: latest
+
+      - name: Version doc • Upload
+        uses: VKCOM/gh-actions/VKUI/s3@main
+        with:
+          awsAccessKeyId: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          awsSecretAccessKey: ${{ secrets.AWS_SECRET_KEY }}
+          awsBucket: ${{ vars.AWS_BUCKET_WEBSITE }}
+          awsEndpoint: https://${{ vars.AWS_ENDPOINT }}
+          command: upload
+          commandUploadSrc: website/out/${{ needs.payload.outputs.next_version }}/
+          commandUploadDist: ${{ needs.payload.outputs.next_version }}
+
   deploy_mcp_data:
     needs: [payload]
     if: ${{ success() && needs.payload.outputs.package_name == '@vkontakte/vkui' && needs.payload.outputs.next_version }}
@@ -109,7 +204,7 @@ jobs:
     name: Deploy MCP data
     steps:
       - name: Checkout
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           ref: ${{ env.CHECKOUT_BRANCH }}
 
@@ -117,7 +212,7 @@ jobs:
         uses: ./.github/actions/setup
 
       - name: Build vkui package
-        run: yarn run build:vkui
+        run: node --run build:vkui
 
       - name: Generate docgen
         run: yarn workspace @project-docs/website run generate

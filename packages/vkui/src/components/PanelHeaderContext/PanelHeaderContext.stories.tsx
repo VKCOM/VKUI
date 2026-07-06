@@ -1,5 +1,5 @@
 import * as React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import {
   Icon16Dropdown,
   Icon24Done,
@@ -31,70 +31,64 @@ const story: Meta<PanelHeaderContextProps> = {
 
 export default story;
 
-type Story = StoryObj<PanelHeaderContextProps>;
+export const Playground: StoryFn<PanelHeaderContextProps> = () => {
+  const [contextOpened, setContextOpened] = React.useState(true);
+  const [mode, setMode] = React.useState<string | undefined>('all');
 
-export const Playground: Story = {
-  render: function Render() {
-    const [contextOpened, setContextOpened] = React.useState(true);
-    const [mode, setMode] = React.useState<string | undefined>('all');
+  const toggleContext = () => {
+    setContextOpened((prev) => !prev);
+  };
 
-    const toggleContext = () => {
-      setContextOpened((prev) => !prev);
-    };
+  const select = (e: React.MouseEvent<HTMLElement>) => {
+    const mode = e.currentTarget.dataset.mode;
+    setMode(mode);
+    requestAnimationFrame(toggleContext);
+  };
 
-    const select = (e: React.MouseEvent<HTMLElement>) => {
-      const mode = e.currentTarget.dataset.mode;
-      setMode(mode);
-      requestAnimationFrame(toggleContext);
-    };
-
-    return (
-      <View id="main" activePanel="panel1">
-        <Panel id="panel1">
-          <PanelHeader
-            before={<PanelHeaderBack onClick={noop} />}
-            after={
-              <PanelHeaderButton onClick={noop}>
-                <Icon28AddOutline />
-              </PanelHeaderButton>
+  return (
+    <View id="main" activePanel="panel1">
+      <Panel id="panel1">
+        <PanelHeader
+          before={<PanelHeaderBack onClick={noop} />}
+          after={
+            <PanelHeaderButton onClick={noop}>
+              <Icon28AddOutline />
+            </PanelHeaderButton>
+          }
+        >
+          <PanelHeaderContent
+            aside={
+              <Icon16Dropdown
+                style={{
+                  transform: `rotate(${contextOpened ? '180deg' : '0'})`,
+                }}
+              />
             }
+            onClick={toggleContext}
           >
-            <PanelHeaderContent
-              aside={
-                <Icon16Dropdown
-                  style={{
-                    transform: `rotate(${contextOpened ? '180deg' : '0'})`,
-                  }}
-                />
-              }
-              onClick={toggleContext}
-            >
-              Communities
-            </PanelHeaderContent>
-          </PanelHeader>
-          <PanelHeaderContext opened={contextOpened} onClose={toggleContext}>
-            <Cell
-              before={<Icon28UsersOutline />}
-              after={mode === 'all' ? <Icon24Done fill="var(--vkui--color_icon_accent)" /> : null}
-              onClick={select}
-              data-mode="all"
-            >
-              Communities
-            </Cell>
-            <Cell
-              before={<Icon28SettingsOutline />}
-              after={
-                mode === 'managed' ? <Icon24Done fill="var(--vkui--color_icon_accent)" /> : null
-              }
-              onClick={select}
-              data-mode="managed"
-            >
-              Managed Communities
-            </Cell>
-          </PanelHeaderContext>
-          <Div>PanelHeaderContext</Div>
-        </Panel>
-      </View>
-    );
-  },
+            Communities
+          </PanelHeaderContent>
+        </PanelHeader>
+        <PanelHeaderContext opened={contextOpened} onClose={toggleContext}>
+          <Cell
+            before={<Icon28UsersOutline />}
+            after={mode === 'all' ? <Icon24Done fill="var(--vkui--color_icon_accent)" /> : null}
+            onClick={select}
+            data-mode="all"
+          >
+            Communities
+          </Cell>
+          <Cell
+            before={<Icon28SettingsOutline />}
+            after={mode === 'managed' ? <Icon24Done fill="var(--vkui--color_icon_accent)" /> : null}
+            onClick={select}
+            data-mode="managed"
+          >
+            Managed Communities
+          </Cell>
+        </PanelHeaderContext>
+        <Div>PanelHeaderContext</Div>
+      </Panel>
+    </View>
+  );
 };

@@ -75,7 +75,8 @@
   --vkui--font_title2--font_family--regular: 'Roboto' !important;
   --vkui--font_title3--font_family--regular: 'Roboto' !important;
 
-  font-family: var(--vkui--font_family_base);
+  /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
+  font-family: Roboto !important;
 }
 
 .vkuiTestAppRoot * {
@@ -101,7 +102,8 @@
 *,
 *::before,
 *::after {
-  font-family: var(--vkui--font_family_base);
+  /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
+  font-family: Roboto !important;
   caret-color: transparent !important;
   transition: none !important;
   animation: none !important;

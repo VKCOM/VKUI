@@ -1,10 +1,10 @@
 /* eslint-disable no-console, import/no-default-export */
 'use client';
 
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { classNames } from '@vkontakte/vkjs';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import type { CSSCustomProperties } from '../../types';
+import { type CSSCustomProperties } from '../../types';
 import {
   useCSSTransition,
   type UseCSSTransitionOptions,
@@ -17,11 +17,34 @@ interface DemoProps extends UseCSSTransitionOptions {
   duration: number;
 }
 
+const transitionClassNames = {
+  appear: styles.appear,
+  appearing: styles.appearing,
+  appeared: styles.appeared,
+  enter: styles.enter,
+  entering: styles.entering,
+  entered: styles.entered,
+  exit: styles.exit,
+  exiting: styles.exiting,
+  exited: styles.exited,
+};
+
 const story: Meta<DemoProps> = {
   title: 'DevTools/useCSSTransition',
   tags: ['test'], // скрываем из публичной документации, т.к. хук внутренний
   component: () => <div />,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: {
+    ...CanvasFullLayout,
+    ...DisableCartesianParam,
+    liveCodeEditor: {
+      scope: {
+        // eslint-disable-next-line @vkontakte/no-computed-hit-css-modules
+        styles,
+        useCSSTransition,
+        transitionClassNames,
+      },
+    },
+  },
   argTypes: {
     in: { control: { type: 'boolean' } },
     enableAppear: { control: { type: 'boolean' } },
@@ -67,39 +90,27 @@ const story: Meta<DemoProps> = {
 
 export default story;
 
-const transitionClassNames = {
-  appear: styles.appear,
-  appearing: styles.appearing,
-  appeared: styles.appeared,
-  enter: styles.enter,
-  entering: styles.entering,
-  entered: styles.entered,
-  exit: styles.exit,
-  exiting: styles.exiting,
-  exited: styles.exited,
-};
-
-export const WithClassNameAttribute: StoryObj<DemoProps> = {
-  render: function Render({ in: inProp, duration, ...restProps }) {
-    const [state, { ref, onTransitionEnd }] = useCSSTransition<HTMLDivElement>(inProp, restProps);
-
-    if (state === 'exited') {
-      return <div />;
-    }
-
-    return (
-      <div
-        ref={ref}
-        className={classNames(styles.host, transitionClassNames[state])}
-        style={
-          duration
-            ? ({ '--css-transition-duration': `${duration}s` } as unknown as CSSCustomProperties)
-            : undefined
-        }
-        onTransitionEnd={onTransitionEnd}
-      />
-    );
-  },
+export const WithClassNameAttribute: StoryFn<DemoProps> = ({
+  in: inProp,
+  duration,
+  ...restProps
+}: DemoProps) => {
+  const [state, { ref, onTransitionEnd }] = useCSSTransition<HTMLDivElement>(inProp, restProps);
+  if (state === 'exited') {
+    return <div />;
+  }
+  return (
+    <div
+      ref={ref}
+      className={classNames(styles.host, transitionClassNames[state])}
+      style={
+        duration
+          ? ({ '--css-transition-duration': `${duration}s` } as unknown as CSSCustomProperties)
+          : undefined
+      }
+      onTransitionEnd={onTransitionEnd}
+    />
+  );
 };
 
 const getTransition = (state: UseCSSTransitionState, duration = 1) =>
@@ -152,21 +163,27 @@ const getTransition = (state: UseCSSTransitionState, duration = 1) =>
     },
   })[state];
 
-export const WithStyleAttribute: StoryObj<DemoProps> = {
-  render: function Render({ in: inProp, duration, ...restProps }) {
-    const [state, { ref, onTransitionEnd }] = useCSSTransition<HTMLDivElement>(inProp, restProps);
+export const WithStyleAttribute: StoryFn<DemoProps> = ({
+  in: inProp,
+  duration,
+  ...restProps
+}: DemoProps) => {
+  const [state, { ref, onTransitionEnd }] = useCSSTransition<HTMLDivElement>(inProp, restProps);
+  if (state === 'exited') {
+    return <div />;
+  }
+  return (
+    <div
+      ref={ref}
+      className={styles.host}
+      style={getTransition(state, duration)}
+      onTransitionEnd={onTransitionEnd}
+    />
+  );
+};
 
-    if (state === 'exited') {
-      return <div />;
-    }
-
-    return (
-      <div
-        ref={ref}
-        className={styles.host}
-        style={getTransition(state, duration)}
-        onTransitionEnd={onTransitionEnd}
-      />
-    );
+WithStyleAttribute.parameters = {
+  liveCodeEditor: {
+    scope: { getTransition },
   },
 };

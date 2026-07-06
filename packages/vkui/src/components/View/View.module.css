@@ -1,16 +1,8 @@
 .host {
-  --vkui_internal--view_animation_translateY_initial: 80px;
-
   position: relative;
   inline-size: 100%;
   block-size: 100%;
   overflow-wrap: break-word;
-}
-
-@media (--reduce-motion) {
-  .host {
-    --vkui_internal--view_animation_translateY_initial: 0;
-  }
 }
 
 .animated,
@@ -174,23 +166,23 @@
 @keyframes animationViewPrevBack {
   from {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate3d(0, 0, 0);
   }
 
   to {
     opacity: 0;
-    transform: translateY(var(--vkui_internal--view_animation_translateY_initial));
+    transform: translate3d(100%, 0, 0);
   }
 }
 @keyframes animationViewNextForward {
   from {
     opacity: 0;
-    transform: translateY(var(--vkui_internal--view_animation_translateY_initial));
+    transform: translate3d(100%, 0, 0);
   }
 
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate3d(0, 0, 0);
   }
 }
 @keyframes animationIosNextForward {

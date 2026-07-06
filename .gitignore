@@ -8,6 +8,9 @@ out/
 _pagefind/
 .docgen/
 mcp-data/
+website/generated/
+website/public/**/*.mdx
+website/public/llms.txt
 
 # Next
 .next/
@@ -71,4 +74,5 @@ __diff_output__
 *.css.d.ts
 *.d.ts.map
 
-.claude
+.claude/*
+!.claude/commands

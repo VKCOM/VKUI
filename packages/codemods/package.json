@@ -15,25 +15,25 @@
   },
   "dependencies": {
     "chalk": "^4.1.2",
-    "commander": "^14.0.3",
+    "commander": "^15.0.0",
     "cross-spawn": "^7.0.5",
     "jscodeshift": "^17.3.0",
     "prompts": "^2.4.2",
     "typescript": "^6.0.3"
   },
   "devDependencies": {
-    "@swc/core": "^1.15.33",
+    "@swc/core": "^1.15.43",
     "@types/cross-spawn": "^6.0.6",
     "@types/jscodeshift": "^17.3.0",
-    "@types/node": "^25.8.0",
+    "@types/node": "^26.1.0",
     "@types/prompts": "^2.4.9"
   },
   "scripts": {
-    "prepack": "yarn run build",
+    "prepack": "node --run build",
     "build": "tsc",
     "test": "yarn run -T vitest run --pool=vmThreads",
-    "test:update": "yarn test -u",
-    "test:ci": "yarn test",
+    "test:update": "node --run test -- -u",
+    "test:ci": "node --run test",
     "migrate": "jscodeshift",
     "lint:types": "tsc"
   },

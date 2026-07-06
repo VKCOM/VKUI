@@ -1,5 +1,5 @@
 import { withCartesian } from '@project-tools/storybook-addon-cartesian';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { Icon16Delete } from '@vkontakte/icons';
 import { noop } from '@vkontakte/vkjs';
 import { CanvasFullLayout } from '../../storybook/constants';
@@ -33,6 +33,4 @@ const story: Meta<FileProps> = {
 
 export default story;
 
-type Story = StoryObj<FileProps>;
-
-export const Playground: Story = {};
+export const Playground: StoryFn<FileProps> = (props: FileProps) => <File {...props} />;
