@@ -45,14 +45,13 @@ export interface PanelHeaderContextProps extends HTMLAttributesWithRootRef<HTMLD
   onClose: VoidFunction;
 }
 
-const PanelHeaderContextComponent = (props: React.AllHTMLAttributes<HTMLElement>) => (
-  <SplitColWidthWrapper
-    {...props}
-    Component={(innerProps: React.AllHTMLAttributes<HTMLElement>) => (
-      <OnboardingTooltipFixedContainer {...innerProps} />
-    )}
-  />
-);
+// eslint-disable-next-line react/display-name
+const PanelHeaderContextComponent = React.forwardRef<
+  HTMLElement,
+  React.AllHTMLAttributes<HTMLElement>
+>((props, ref) => (
+  <SplitColWidthWrapper {...props} ref={ref} Component={OnboardingTooltipFixedContainer} />
+));
 
 /**
  * @see https://vkui.io/components/panel-header-context
