@@ -91,6 +91,7 @@ const preview: Preview = {
     docsBaseUrl: __DOCS_BASE_URL__,
     colorScheme: 'light',
     storybookTheme: 'light',
+    density: 'auto',
     hasPointer: true,
     hasCustomPanelHeaderAfter: false,
     direction: 'ltr',

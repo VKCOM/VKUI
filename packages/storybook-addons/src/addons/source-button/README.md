@@ -77,6 +77,7 @@ interface SourceButtonConfig {
 ```ts
 import {
   registerSourceButtonAddon,
+  setSourceButtonConfig,
   sourceButtonAddonId,
   type SourceButtonConfig,
 } from '@vkontakte/storybook-addons';

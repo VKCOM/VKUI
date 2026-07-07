@@ -18,6 +18,9 @@
     "./color-scheme": {
       "import": "./src/addons/color-scheme/preset.js"
     },
+    "./density-switcher": {
+      "import": "./src/addons/density-switcher/preset.js"
+    },
     "./storybook-theme": {
       "import": "./src/addons/storybook-theme/preset.js"
     },

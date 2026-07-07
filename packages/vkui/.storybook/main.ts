@@ -33,6 +33,7 @@ const config: StorybookConfig = {
     getGlobalAddonPath('@storybook/addon-docs'),
     getGlobalAddonPath('@project-tools/storybook-addon-cartesian'),
     getLocalAddonPath('@vkontakte/storybook-addons/color-scheme'),
+    getLocalAddonPath('@vkontakte/storybook-addons/density-switcher'),
     getLocalAddonPath('./addons/pointer'),
     getLocalAddonPath('./addons/customPanelHeaderAfter'),
     getLocalAddonPath('@vkontakte/storybook-addons/source-button'),

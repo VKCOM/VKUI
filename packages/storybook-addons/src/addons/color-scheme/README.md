@@ -86,6 +86,8 @@ export const DarkOnly: StoryFn = {
 ```ts
 import {
   registerColorSchemeAddon,
+  setColorSchemeConfig,
   colorSchemeAddonId,
+  type ColorSchemeConfig,
 } from '@vkontakte/storybook-addons';
 ```

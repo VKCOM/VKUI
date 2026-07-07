@@ -23,6 +23,7 @@ export const withVKUIWrapper: Decorator = (Component, context) => {
   const {
     platform,
     colorScheme: colorSchemeGlobal,
+    density,
     hasPointer = false,
     hasCustomPanelHeaderAfter,
     direction,
@@ -46,7 +47,10 @@ export const withVKUIWrapper: Decorator = (Component, context) => {
       direction={direction}
       hasCustomPanelHeaderAfter={hasCustomPanelHeaderAfter}
     >
-      <AdaptivityProvider hasPointer={hasPointer}>
+      <AdaptivityProvider
+        hasPointer={hasPointer}
+        density={density === 'auto' ? undefined : density}
+      >
         <AppRoot style={style} dir={direction}>
           <Component />
         </AppRoot>

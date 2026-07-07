@@ -268,6 +268,7 @@ export const CustomCode: StoryFn = {
 ```ts
 import {
   registerLiveCodeEditorAddon,
+  setLiveCodeEditorConfig,
   withLiveCodeEditor,
 } from '@vkontakte/storybook-addons';
 
