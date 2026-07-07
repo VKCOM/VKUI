@@ -30,6 +30,28 @@ registerStorybookThemeAddon({
 });
 ```
 
+### Вариант 3: Комбинированный (пресет + кастомизация)
+
+Добавьте пресет в `.storybook/main.ts` для авторегистрации, а конфигурацию задайте в `.storybook/manager.ts`:
+
+**.storybook/main.ts:**
+```ts
+addons: [
+  '@vkontakte/storybook-addons/storybook-theme',
+];
+```
+
+**.storybook/manager.ts:**
+```ts
+import { setStorybookThemeConfig } from '@vkontakte/storybook-addons';
+import { vkuiDarkTheme, vkuiLightTheme } from './vkuiThemes';
+
+setStorybookThemeConfig({
+  lightTheme: vkuiLightTheme,
+  darkTheme: vkuiDarkTheme,
+});
+```
+
 ## Конфигурация
 
 ```ts

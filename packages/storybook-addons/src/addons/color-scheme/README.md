@@ -28,6 +28,26 @@ registerColorSchemeAddon({
 });
 ```
 
+### Вариант 3: Комбинированный (пресет + кастомизация)
+
+Добавьте пресет в `.storybook/main.ts` для авторегистрации, а конфигурацию задайте в `.storybook/manager.ts`:
+
+**.storybook/main.ts:**
+```ts
+addons: [
+  '@vkontakte/storybook-addons/color-scheme',
+];
+```
+
+**.storybook/manager.ts:**
+```ts
+import { setColorSchemeConfig } from '@vkontakte/storybook-addons';
+
+setColorSchemeConfig({
+  parameterName: 'myColorScheme',
+});
+```
+
 ## Конфигурация
 
 ```ts

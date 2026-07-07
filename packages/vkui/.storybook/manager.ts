@@ -1,16 +1,13 @@
-import {
-  registerStorybookThemeAddon,
-  registerSourceButtonAddon,
-} from '@vkontakte/storybook-addons';
+import { setStorybookThemeConfig, setSourceButtonConfig } from '@vkontakte/storybook-addons';
 import { GithubIcon } from '@storybook/icons';
 import { vkuiDarkTheme, vkuiLightTheme } from './vkuiThemes';
 
-registerStorybookThemeAddon({
+setStorybookThemeConfig({
   lightTheme: vkuiLightTheme,
   darkTheme: vkuiDarkTheme,
 });
 
-registerSourceButtonAddon({
+setSourceButtonConfig({
   baseUrl: 'https://github.com/VKCOM/VKUI/tree/master/packages/vkui',
   getUrl: (baseUrl, importPath) => {
     const pathWithoutFile = importPath.replace(/\/[^/]+\.stories\.tsx$/, '');

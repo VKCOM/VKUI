@@ -4,6 +4,20 @@
 
 ## Установка
 
+### Вариант 1: Через пресет (авторегистрация)
+
+Добавьте пресет в `.storybook/main.ts`:
+
+```ts
+addons: [
+  '@vkontakte/storybook-addons/source-button',
+];
+```
+
+Аддон зарегистрируется автоматически со стандартными значениями. Кнопка не отображается, пока не задан `baseUrl`.
+
+### Вариант 2: Программная регистрация
+
 Зарегистрируйте аддон в `.storybook/manager.ts` с конфигурацией:
 
 ```ts
@@ -16,6 +30,28 @@ registerSourceButtonAddon({
   label: 'Исходный код',
   title: 'Открыть исходный код на GitHub',
   icon: GithubIcon,
+});
+```
+
+### Вариант 3: Комбинированный (пресет + кастомизация)
+
+Добавьте пресет в `.storybook/main.ts` для авторегистрации, а конфигурацию задайте в `.storybook/manager.ts`:
+
+**.storybook/main.ts:**
+```ts
+addons: [
+  '@vkontakte/storybook-addons/source-button',
+];
+```
+
+**.storybook/manager.ts:**
+```ts
+import { setSourceButtonConfig } from '@vkontakte/storybook-addons';
+
+setSourceButtonConfig({
+  baseUrl: 'https://github.com/VKCOM/VKUI',
+  label: 'Исходный код',
+  title: 'Открыть исходный код на GitHub',
 });
 ```
 
