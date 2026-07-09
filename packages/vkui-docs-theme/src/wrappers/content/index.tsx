@@ -18,6 +18,7 @@ export function ContentWrapper({ children }: React.PropsWithChildren) {
 
   return (
     <Component
+      id={isBlog ? 'vkui-docs-main' : undefined}
       className={classNames(styles.root, isBlog && styles.blog, !isFullLayout && styles.maxWidth)}
     >
       {themeContext.sidebar && <Sidebar />}

@@ -1,0 +1,17 @@
+.host {
+  position: fixed;
+  inset-block-start: 16px;
+  inset-inline-start: 16px;
+  z-index: 1000;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .host {
+    transform: translateY(-300%);
+    transition: transform 0.2s ease-in-out;
+  }
+
+  .host:focus {
+    transform: translateY(0);
+  }
+}

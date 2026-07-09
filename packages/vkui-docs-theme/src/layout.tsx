@@ -1,5 +1,6 @@
 import type * as React from 'react';
 import type { PageMapItem } from 'nextra';
+import { SkipLink } from './components/SkipLink/SkipLink';
 import { ColorSchemeProvider, ConfigProvider, MenuProvider, ThemeConfigProvider } from './contexts';
 import type { DocsThemeConfig } from './types';
 import { ContentWrapper, VKUIWrapper } from './wrappers';
@@ -23,6 +24,7 @@ export function Layout({
         <MenuProvider>
           <ColorSchemeProvider {...colorScheme}>
             <VKUIWrapper>
+              <SkipLink />
               {/* TODO [docs] (@BlackySoul): добавить компонент <Banner /> */}
               {navbar}
               <ContentWrapper>{children}</ContentWrapper>
