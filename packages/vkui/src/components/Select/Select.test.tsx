@@ -1,3 +1,4 @@
+import { describe } from 'vitest';
 import { baselineComponent } from '../../testing/utils';
 import { PlatformProvider } from '../PlatformProvider/PlatformProvider';
 import { Select } from './Select';

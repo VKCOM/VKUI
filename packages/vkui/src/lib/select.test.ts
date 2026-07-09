@@ -1,3 +1,4 @@
+import { describe, expect, it } from 'vitest';
 import { defaultFilterFn } from './select';
 
 describe(defaultFilterFn, () => {

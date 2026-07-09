@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { render } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
+import { describe, expect, it, vi } from 'vitest';
 import { useIsomorphicLayoutEffect } from '../lib/useIsomorphicLayoutEffect';
 import type { HasRef } from '../types';
 import { useExternRef } from './useExternRef';

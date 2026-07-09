@@ -1,5 +1,6 @@
 import { act, type RefObject } from 'react';
 import { render } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
 import { baselineComponent } from '../../testing/utils';
 import { SplitCol } from '../SplitCol/SplitCol';
 import { FixedLayout, type FixedLayoutProps } from './FixedLayout';

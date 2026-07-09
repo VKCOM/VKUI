@@ -1,6 +1,7 @@
 import { act } from 'react';
 import { fireEvent, renderHook } from '@testing-library/react';
 import { type AnyFunction, noop } from '@vkontakte/vkjs';
+import { describe, expect, it, vi } from 'vitest';
 import { fakeTimersForScope } from '../testing/utils';
 import { useVirtualKeyboardState } from './useVirtualKeyboardState';
 

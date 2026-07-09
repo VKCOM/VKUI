@@ -1,3 +1,4 @@
+import { expect, it } from 'vitest';
 import { svgPathToString } from '../../svg/path/path';
 import * as shapes from './shapes';
 

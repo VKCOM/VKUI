@@ -1,4 +1,5 @@
 import { renderHook } from '@testing-library/react';
+import { describe, expect, it } from 'vitest';
 import { useCalendar } from './useCalendar';
 
 describe('useCalendar', () => {

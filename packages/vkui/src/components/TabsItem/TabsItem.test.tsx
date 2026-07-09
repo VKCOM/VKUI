@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { baselineComponent, setNodeEnv } from '../../testing/utils';
 import { Tabs } from '../Tabs/Tabs';
 import { TabsItem } from './TabsItem';

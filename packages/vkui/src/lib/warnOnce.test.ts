@@ -1,3 +1,4 @@
+import { afterAll, describe, expect, it, vi } from 'vitest';
 import { warnOnce } from './warnOnce';
 
 describe(warnOnce, () => {

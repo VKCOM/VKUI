@@ -1,4 +1,5 @@
 import { renderHook } from '@testing-library/react';
+import { expect, it } from 'vitest';
 import { ConfigProvider } from '../../components/ConfigProvider/ConfigProvider';
 import { ColorScheme } from '../colorScheme';
 import { Platform } from '../platform';

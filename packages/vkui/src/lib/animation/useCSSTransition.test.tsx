@@ -1,4 +1,5 @@
 import { act, fireEvent, render, renderHook } from '@testing-library/react';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { withFakeTimers } from '../../testing/utils';
 import { useCSSTransition } from './useCSSTransition';
 

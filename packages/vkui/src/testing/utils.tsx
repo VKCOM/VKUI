@@ -10,6 +10,7 @@ import {
 // eslint-disable-next-line no-restricted-imports -- используем здесь setup
 import userEventLib from '@testing-library/user-event';
 import { noop } from '@vkontakte/vkjs';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { configureAxe } from 'vitest-axe';
 import * as matchers from 'vitest-axe/matchers';
 import type { AdaptivityProps } from '../components/AdaptivityProvider/AdaptivityContext';

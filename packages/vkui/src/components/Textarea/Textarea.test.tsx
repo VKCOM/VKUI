@@ -1,6 +1,7 @@
 import { createRef } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
+import { describe, expect, it, vi } from 'vitest';
 import { Platform } from '../../lib/platform';
 import { baselineComponent, fakeTimersForScope, userEvent } from '../../testing/utils';
 import type { AlignType } from '../../types';

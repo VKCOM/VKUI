@@ -5,7 +5,8 @@
     "src/storybook",
     "src/**/*.test.ts*",
     "src/**/*.e2e*.ts*",
-    "src/**/*.stories.ts*"
+    "src/**/*.stories.ts*",
+    "./vitest-setup.ts"
   ],
   "exclude": [
     "**/node_modules",

@@ -1,4 +1,5 @@
 import { fireEvent, render, screen } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
 import { addDays, dateFormatter, endOfDay, startOfDay } from '../../lib/date';
 import { getDocumentBody } from '../../lib/dom';
 import { baselineComponent, userEvent, withFakeTimers } from '../../testing/utils';

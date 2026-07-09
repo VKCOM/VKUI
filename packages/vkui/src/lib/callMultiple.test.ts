@@ -1,3 +1,4 @@
+import { describe, expect, it, vi } from 'vitest';
 import { callMultiple } from './callMultiple';
 
 describe('callMultiple', () => {

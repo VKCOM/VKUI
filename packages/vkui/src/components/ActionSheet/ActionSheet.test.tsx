@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { act } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { ViewWidth } from '../../lib/adaptivity';
 import {
   baselineComponent,

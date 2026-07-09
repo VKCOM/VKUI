@@ -1,4 +1,5 @@
 import { noop } from '@vkontakte/vkjs';
+import { afterAll, beforeAll, describe, vi } from 'vitest';
 import { baselineComponent } from '../../testing/utils';
 import { Epic } from './Epic';
 

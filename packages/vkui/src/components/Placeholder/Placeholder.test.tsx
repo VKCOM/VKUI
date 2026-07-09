@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { classNames } from '@vkontakte/vkjs';
+import { describe, expect, it } from 'vitest';
 import { baselineComponent } from '../../testing/utils';
 import { Placeholder } from './Placeholder';
 import styles from './Placeholder.module.css';

@@ -1,3 +1,4 @@
+import { describe, expect, test } from 'vitest';
 import { calcInitialsAvatarColor } from './avatar';
 
 describe.each([

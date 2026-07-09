@@ -2,6 +2,7 @@ import * as React from 'react';
 import { act } from 'react';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
+import { describe, expect, it, vi } from 'vitest';
 import { baselineComponent, userEvent, withFakeTimers } from '../../testing/utils';
 import { DirectionProvider } from '../DirectionProvider/DirectionProvider';
 import { HorizontalScroll } from './HorizontalScroll';

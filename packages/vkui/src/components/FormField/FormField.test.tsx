@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { Icon20User, Icon24WalletOutline } from '@vkontakte/icons';
+import { describe, expect, it } from 'vitest';
 import { baselineComponent } from '../../testing/utils';
 import { IconButton } from '../IconButton/IconButton';
 import { FormField } from './FormField';

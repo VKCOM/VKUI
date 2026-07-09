@@ -1,3 +1,4 @@
+import { describe, expect, it, vi } from 'vitest';
 import { touchEventMock, withFakeTimers } from '../../testing/utils';
 import { UIPanGestureRecognizer } from './UIPanGestureRecognizer';
 

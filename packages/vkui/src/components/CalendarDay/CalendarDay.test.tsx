@@ -1,4 +1,5 @@
 import { fireEvent, render, screen } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
 import { ENABLE_KEYBOARD_INPUT_EVENT_NAME } from '../../hooks/useKeyboardInputTracker';
 import { userEvent, withFakeTimers } from '../../testing/utils';
 import { CalendarDay, type CalendarDayProps } from './CalendarDay';

@@ -1,5 +1,6 @@
 import { act, createRef } from 'react';
 import { renderHook } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
 import { useMergeProps } from './useMergeProps';
 
 describe('useMergeProps', () => {

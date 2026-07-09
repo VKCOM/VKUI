@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { render, renderHook } from '@testing-library/react';
+import { describe, expect, it } from 'vitest';
 import { DEFAULT_TOKENS_CLASS_NAMES } from '../../lib/tokens/constants';
 import { baselineComponent } from '../../testing/utils';
 import { ConfigProvider } from './ConfigProvider';

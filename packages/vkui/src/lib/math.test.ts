@@ -1,3 +1,4 @@
+import { expect, it } from 'vitest';
 import { distance, distancePoint } from './math';
 
 it('distance', () => {

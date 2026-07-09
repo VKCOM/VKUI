@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
 import { baselineComponent, imgOnlyAttributes } from '../../testing/utils';
 import { CardGrid } from '../CardGrid/CardGrid';
 import { ContentCard, type ContentCardProps } from './ContentCard';

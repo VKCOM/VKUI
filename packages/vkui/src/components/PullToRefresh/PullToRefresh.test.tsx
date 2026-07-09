@@ -2,6 +2,7 @@ import * as React from 'react';
 import { act } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { Platform, type PlatformType } from '../../lib/platform';
 import { baselineComponent, fakeTimersForScope, withFakeTimers } from '../../testing/utils';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';

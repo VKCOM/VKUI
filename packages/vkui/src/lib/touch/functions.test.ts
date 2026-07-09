@@ -1,3 +1,4 @@
+import { describe, expect, it } from 'vitest';
 import { coordX, coordY, type VKUITouchEvent } from './functions';
 
 // Настоящего Touch нет в jsdom: https://github.com/jsdom/jsdom/issues/1508

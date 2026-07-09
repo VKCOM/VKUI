@@ -1,5 +1,6 @@
 import { act } from 'react';
 import { renderHook } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
 import { useFocusVisible } from './useFocusVisible';
 import {
   DISABLE_KEYBOARD_INPUT_EVENT_NAME,

@@ -1,4 +1,5 @@
 import { render } from '@testing-library/react';
+import { describe, expect, it } from 'vitest';
 import { baselineComponent } from '../../testing/utils';
 import { PopoutWrapper, type PopoutWrapperProps } from './PopoutWrapper';
 import styles from './PopoutWrapper.module.css';

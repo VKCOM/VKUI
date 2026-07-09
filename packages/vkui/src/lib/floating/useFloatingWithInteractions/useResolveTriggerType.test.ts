@@ -1,3 +1,4 @@
+import { describe, expect, it } from 'vitest';
 import { useResolveTriggerType } from './useResolveTriggerType';
 
 describe(useResolveTriggerType, () => {

@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react';
+import { describe, expect, it } from 'vitest';
 import { baselineComponent } from '../../testing/utils';
 import { appearanceClassNames, CellButton } from './CellButton';
 import styles from './CellButton.module.css';

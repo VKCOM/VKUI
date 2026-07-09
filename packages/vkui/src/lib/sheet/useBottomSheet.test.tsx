@@ -1,5 +1,6 @@
 import { act } from 'react';
 import { fireEvent, render, renderHook } from '@testing-library/react';
+import { afterEach, beforeEach, describe, expect, it, test, vi } from 'vitest';
 import { clamp } from '../../helpers/math';
 import { requestAnimationFrameMock, touchEventMock } from '../../testing/utils';
 import { rubberbandIfOutOfBounds } from '../animation';

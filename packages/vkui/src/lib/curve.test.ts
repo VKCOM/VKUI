@@ -1,3 +1,4 @@
+import { expect, it } from 'vitest';
 import { cubicBezierOneDimensional, cubicBezierTwoDimensional } from './curve';
 
 it('cubicBezierOneDimensional', () => {

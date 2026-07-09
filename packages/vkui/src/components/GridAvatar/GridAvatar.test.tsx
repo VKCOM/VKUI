@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { IconExampleForBadgeBasedOnImageBaseSize } from '../../testing/icons';
 import { baselineComponent, setNodeEnv } from '../../testing/utils';
 import { GridAvatar, type GridAvatarProps, MAX_GRID_LENGTH } from './GridAvatar';

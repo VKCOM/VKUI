@@ -1,3 +1,4 @@
+import { describe, expect, it } from 'vitest';
 import { calculateGap } from './gaps';
 
 describe(calculateGap, () => {

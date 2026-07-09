@@ -1,3 +1,4 @@
+import { describe, expect, it, vi } from 'vitest';
 import { filterObject, mapObject } from './object';
 
 describe('mapObject', () => {

@@ -20,8 +20,8 @@ description: Запуск unit-тестов и E2E-тестов VKUI
 
 1. **Все тесты:** `node --run test`
 2. **Тесты компонента:** если передано имя компонента (например, `Button`):
-   - Запустить: `yarn run -T vitest run <ComponentName> --pool=vmThreads`
-3. **Тесты по пути:** `yarn run -T vitest run <путь> --pool=vmThreads`
+   - Запустить: `yarn run -T vitest run <ComponentName>`
+3. **Тесты по пути:** `yarn run -T vitest run <путь>`
 
 ### E2E-тесты
 

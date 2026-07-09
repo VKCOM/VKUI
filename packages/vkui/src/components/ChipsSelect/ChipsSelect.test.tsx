@@ -1,5 +1,6 @@
 import { act, createRef } from 'react';
 import { fireEvent, render, screen, within } from '@testing-library/react';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import type { Placement, useFloating } from '../../lib/floating';
 import {
   baselineComponent,

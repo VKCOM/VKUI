@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { act, fireEvent, render, screen } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
 import { addDays, dateFormatter } from '../../lib/date';
 import {
   baselineComponent,

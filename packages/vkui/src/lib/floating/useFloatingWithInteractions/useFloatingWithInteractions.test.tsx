@@ -1,5 +1,6 @@
 import { act, type ComponentType, useRef, useState } from 'react';
 import { render, renderHook, waitFor } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
 import { FocusTrap } from '../../../components/FocusTrap/FocusTrap';
 import { useGlobalEscKeyDown } from '../../../hooks/useGlobalEscKeyDown';
 import { fireEventPatch, userEvent } from '../../../testing/utils';

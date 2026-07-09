@@ -1,3 +1,4 @@
+import { describe, expect, it } from 'vitest';
 import { ViewHeight, ViewWidth } from './constants';
 import { tryToCheckIsDesktop, viewWidthToClassName } from './functions';
 

@@ -2,6 +2,7 @@ import { createRef } from 'react';
 import * as React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
+import { describe, expect, it, vi } from 'vitest';
 import { baselineComponent, userEvent, withFakeTimers } from '../../testing/utils';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import { Switch } from './Switch';

@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { Icon20Add, Icon24Add } from '@vkontakte/icons';
+import { describe, expect, it } from 'vitest';
 import { baselineComponent } from '../../testing/utils';
 import { getRoundedClassName, ToolButton, type ToolButtonProps } from './ToolButton';
 

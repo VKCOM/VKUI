@@ -1,4 +1,5 @@
 import { fireEvent } from '@testing-library/react';
+import { beforeEach, describe, expect, it, test, vi } from 'vitest';
 import { mouseEventMock, touchEventMock } from '../testing/utils';
 import {
   contains,

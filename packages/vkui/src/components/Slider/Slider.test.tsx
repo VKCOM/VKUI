@@ -1,5 +1,6 @@
 import { act } from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
 import { AppRoot } from '../../components/AppRoot/AppRoot';
 import { setRef } from '../../lib/utils';
 import {

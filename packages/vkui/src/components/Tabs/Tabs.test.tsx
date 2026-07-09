@@ -1,6 +1,7 @@
 import { act, type ComponentProps, useState } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { classNames, noop } from '@vkontakte/vkjs';
+import { describe, expect, it } from 'vitest';
 import { Platform, type PlatformType } from '../../lib/platform';
 import { baselineComponent } from '../../testing/utils';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';

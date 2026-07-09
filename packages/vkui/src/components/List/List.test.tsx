@@ -1,6 +1,7 @@
 import { act } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
+import { describe, expect, it, vi } from 'vitest';
 import type { SwappedItemRange } from '../../hooks/useDraggableWithDomApi';
 import {
   ADOPTED_TOUCH_EVENTS_HANDLERS,

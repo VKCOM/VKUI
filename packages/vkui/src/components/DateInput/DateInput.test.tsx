@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
+import { describe, expect, it, vi } from 'vitest';
 import { dateFormatter, isToday, isYesterday, subDays } from '../../lib/date';
 import {
   baselineComponent,

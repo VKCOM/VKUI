@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { renderHook } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
 import { useStableCallback } from './useStableCallback';
 
 describe(useStableCallback, () => {

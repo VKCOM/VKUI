@@ -2,6 +2,7 @@ import { act } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { Icon12Add } from '@vkontakte/icons';
 import { noop } from '@vkontakte/vkjs';
+import { describe, expect, it, vi } from 'vitest';
 import { Button } from '../../../components/Button/Button';
 import { baselineComponent, userEvent, withFakeTimers } from '../../../testing/utils';
 import { ImageBaseOverlay, type ImageBaseOverlayProps } from './ImageBaseOverlay';

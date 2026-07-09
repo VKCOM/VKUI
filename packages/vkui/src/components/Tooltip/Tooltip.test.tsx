@@ -1,4 +1,5 @@
 import { fireEvent, render, screen } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
 import { baselineComponent, waitForFloatingPosition } from '../../testing/utils';
 import { Button } from '../Button/Button';
 import { Tooltip, type TooltipProps } from './Tooltip';

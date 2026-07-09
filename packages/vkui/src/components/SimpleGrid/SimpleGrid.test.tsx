@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { classNames } from '@vkontakte/vkjs';
+import { describe, expect, it } from 'vitest';
 import { baselineComponent } from '../../testing/utils';
 import { SimpleGrid, type SimpleGridProps } from './SimpleGrid';
 import styles from './SimpleGrid.module.css';

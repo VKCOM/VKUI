@@ -1,5 +1,6 @@
 import { act } from 'react';
 import { fireEvent, renderHook } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
 import { fakeTimersForScope } from '../../testing/utils.tsx';
 import { useAutoPlay } from './hooks';
 

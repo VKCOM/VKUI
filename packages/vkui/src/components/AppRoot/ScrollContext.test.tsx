@@ -1,6 +1,7 @@
 import { createRef, type RefObject, useContext, useEffect } from 'react';
 import { render, renderHook } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
+import { describe, expect, test, vi } from 'vitest';
 import { setRef } from '../../lib/utils';
 import {
   ElementScrollController,

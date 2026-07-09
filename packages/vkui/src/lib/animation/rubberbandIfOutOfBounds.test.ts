@@ -1,3 +1,4 @@
+import { describe, expect, it } from 'vitest';
 import { rubberbandIfOutOfBounds } from './rubberbandIfOutOfBounds';
 
 describe(rubberbandIfOutOfBounds, () => {
