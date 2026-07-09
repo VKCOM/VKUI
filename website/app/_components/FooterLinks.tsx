@@ -12,7 +12,7 @@ function FooterLink({ children, href }: React.PropsWithChildren<{ href: string }
   const ownProps = isExternal
     ? {
         target: '_blank',
-        rel: 'noreferrer',
+        rel: 'noopener noreferrer',
         after: <Icon16LinkOutline width={14} height={14} />,
       }
     : { Component: NextLink };

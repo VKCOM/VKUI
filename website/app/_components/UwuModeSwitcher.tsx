@@ -19,7 +19,13 @@ export function UwuModeSwitcher() {
   };
 
   return (
-    <Button size="l" mode="link" appearance="neutral" onClick={toggleUmuMode}>
+    <Button
+      size="l"
+      mode="link"
+      appearance="neutral"
+      aria-pressed={enabled}
+      onClick={toggleUmuMode}
+    >
       {enabled ? 'no uwu plz' : 'uwu?'}
     </Button>
   );
