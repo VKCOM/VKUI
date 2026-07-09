@@ -23,5 +23,9 @@ export function Main({ children }: { children: React.ReactNode }) {
     return content;
   }
 
-  return <main className={styles.content}>{content}</main>;
+  return (
+    <main id="vkui-docs-main" className={styles.content}>
+      {content}
+    </main>
+  );
 }
