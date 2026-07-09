@@ -1,8 +1,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { collectMdxFiles } from './common/collectMdxFiles.mjs';
-import { parseFrontmatter } from './common/parseFrontmatter.mjs';
 import { componentNameFromSlug } from './common/componentNameFromSlug.mjs';
+import { parseFrontmatter } from './common/parseFrontmatter.mjs';
 
 const CONTENT_DIRECTORY = path.resolve('content');
 const PUBLIC_DIRECTORY = path.resolve('public');
@@ -50,12 +50,15 @@ function generateLlmsTxt() {
     const title = frontmatter.title || getPageTitle(fileName);
 
     const basePath = process.env.NEXT_PUBLIC_VKUI_DOCS_BASE_PATH || '';
-    const url = path.join(SITE_URL, basePath, relativePath);
+
+    const url = new URL(SITE_URL);
+    // Используем posix-слэши для совместимости с Windows
+    url.pathname = path.posix.join(basePath, relativePath.split(path.sep).join('/'));
 
     sections[dirName].push({
       title,
       description: frontmatter.description || '',
-      url,
+      url: url.toString(),
     });
   }
 
