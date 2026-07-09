@@ -1,4 +1,5 @@
 import { render } from '@testing-library/react';
+import { describe, expect, it } from 'vitest';
 import { baselineComponent } from '../../testing/utils';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import { UnstyledTextField } from './UnstyledTextField';

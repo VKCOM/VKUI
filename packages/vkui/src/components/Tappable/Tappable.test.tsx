@@ -1,6 +1,7 @@
 import { act } from 'react';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import {
   baselineComponent,
   fakeTimersForScope,

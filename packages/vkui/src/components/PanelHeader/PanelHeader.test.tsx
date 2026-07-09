@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react';
+import { describe, expect, it } from 'vitest';
 import { baselineComponent } from '../../testing/utils';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { PanelHeader, type PanelHeaderProps } from './PanelHeader';

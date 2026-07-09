@@ -1,5 +1,6 @@
 import { act } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { Button } from '../../components/Button/Button';
 import { ModalCard } from '../../components/ModalCard/ModalCard';
 import { ModalPage } from '../../components/ModalPage/ModalPage';

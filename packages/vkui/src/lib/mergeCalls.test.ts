@@ -1,3 +1,4 @@
+import { describe, expect, it, vi } from 'vitest';
 import { mergeCalls } from './mergeCalls';
 
 describe('mergeCalls', () => {

@@ -1,6 +1,7 @@
 import { act } from 'react';
 import { renderHook } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
+import { describe, expect, it, vi } from 'vitest';
 import { ColorScheme } from '../lib/colorScheme';
 import * as LibDOM from '../lib/dom';
 import { useAutoDetectColorScheme } from './useAutoDetectColorScheme';

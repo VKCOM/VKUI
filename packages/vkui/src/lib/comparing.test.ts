@@ -1,3 +1,4 @@
+import { expect, it } from 'vitest';
 import { minOr } from './comparing';
 
 it('minOr', () => {

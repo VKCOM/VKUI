@@ -1,3 +1,4 @@
+import { describe, expect, it } from 'vitest';
 import * as shapes from '../../material/shapes/shapes';
 import * as interpolate from './interpolate';
 

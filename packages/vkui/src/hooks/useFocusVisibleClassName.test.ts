@@ -1,6 +1,7 @@
 import { act } from 'react';
 import { renderHook } from '@testing-library/react';
 import { classNames } from '@vkontakte/vkjs';
+import { describe, expect, it } from 'vitest';
 import {
   focusVisiblePresetModeClassNames as modeClassNames,
   useFocusVisibleClassName,

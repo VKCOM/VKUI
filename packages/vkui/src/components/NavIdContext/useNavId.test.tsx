@@ -1,4 +1,5 @@
 import { renderHook } from '@testing-library/react';
+import { describe, expect, it } from 'vitest';
 import { createWrapper } from '../../testing/createWrapper';
 import { Panel } from '../Panel/Panel';
 import { View } from '../View/View';

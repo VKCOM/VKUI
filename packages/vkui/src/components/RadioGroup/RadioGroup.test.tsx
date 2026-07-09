@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react';
+import { describe, expect, it } from 'vitest';
 import { getDocumentBody } from '../../lib/dom';
 import { baselineComponent, userEvent, withFakeTimers } from '../../testing/utils';
 import { Radio } from '../Radio/Radio';

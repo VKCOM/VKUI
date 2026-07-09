@@ -1,4 +1,5 @@
 import { render } from '@testing-library/react';
+import { describe, expect, test } from 'vitest';
 import type { Placement } from '../../lib/floating';
 import { baselineComponent } from '../../testing/utils';
 import { FloatingArrow, placementClassNames } from './FloatingArrow';

@@ -1,4 +1,5 @@
 import { render } from '@testing-library/react';
+import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { REDUCE_MOTION_MEDIA_QUERY } from '../../lib/animation';
 import { baselineComponent, matchMediaMock } from '../../testing/utils';
 import { Spinner } from './Spinner';

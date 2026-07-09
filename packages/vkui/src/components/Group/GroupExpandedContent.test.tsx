@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react';
+import { describe, expect, it } from 'vitest';
 import { GroupExpandedContent, type GroupExpandedContentProps } from './GroupExpandedContent';
 import styles from './Group.module.css';
 

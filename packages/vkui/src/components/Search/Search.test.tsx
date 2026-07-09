@@ -2,6 +2,7 @@ import { act, createRef } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { Icon24Done } from '@vkontakte/icons';
 import { noop } from '@vkontakte/vkjs';
+import { describe, expect, it, vi } from 'vitest';
 import {
   baselineComponent,
   fakeTimersForScope,

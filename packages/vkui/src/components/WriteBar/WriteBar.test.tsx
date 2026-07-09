@@ -1,6 +1,7 @@
 import { createRef } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
+import { afterAll, afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { baselineComponent, fakeTimersForScope, userEvent } from '../../testing/utils';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import { WriteBar, type WriteBarProps } from './WriteBar';

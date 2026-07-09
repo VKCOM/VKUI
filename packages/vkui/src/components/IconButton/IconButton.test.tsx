@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { Icon28VoiceOutline } from '@vkontakte/icons';
+import { describe, expect, it } from 'vitest';
 import { baselineComponent } from '../../testing/utils';
 import { IconButton, type IconButtonProps } from './IconButton';
 

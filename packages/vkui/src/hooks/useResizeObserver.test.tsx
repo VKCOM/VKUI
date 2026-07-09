@@ -1,5 +1,6 @@
 import { act, useRef } from 'react';
 import { render } from '@testing-library/react';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { useResizeObserver } from './useResizeObserver';
 
 // Глобальный мок ResizeObserver для всех тестов

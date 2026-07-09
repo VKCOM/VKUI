@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { render } from '@testing-library/react';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
 import { ViewHeight, ViewWidth } from '../../lib/adaptivity';
 import { baselineComponent } from '../../testing/utils';

@@ -1,4 +1,5 @@
 import { renderHook } from '@testing-library/react';
+import { describe, expect, it } from 'vitest';
 import type { AdaptivityProps } from '../../components/AdaptivityProvider/AdaptivityContext';
 import { AdaptivityProvider } from '../../components/AdaptivityProvider/AdaptivityProvider';
 import { ViewHeight, ViewWidth } from '../../lib/adaptivity';

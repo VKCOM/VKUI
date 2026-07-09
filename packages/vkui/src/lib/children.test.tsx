@@ -3,6 +3,7 @@
 
 import type * as React from 'react';
 import { render, screen } from '@testing-library/react';
+import { describe, expect, it } from 'vitest';
 import { childToString, getTextFromChildren } from './children';
 
 const OnlyText: React.FC<React.PropsWithChildren> = ({ children }) => (

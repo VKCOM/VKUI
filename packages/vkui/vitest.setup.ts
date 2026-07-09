@@ -1,6 +1,17 @@
-import '@testing-library/jest-dom';
+import '@testing-library/jest-dom/vitest';
+import 'vitest-axe/extend-expect';
+import { cleanup } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
+import { afterEach, vi } from 'vitest';
 import failOnConsole from 'vitest-fail-on-console';
+
+// Без `globals: true` @testing-library/react не регистрирует автоочистку DOM
+// (она рассчитывает на глобальный `afterEach`), поэтому чистим вручную.
+afterEach(cleanup);
+
+// Без `globals: true` vitest не выставляет этот флаг, и React ругается на
+// отсутствие act-окружения (что ломает `vitest-fail-on-console`).
+vi.stubGlobal('IS_REACT_ACT_ENVIRONMENT', true);
 
 const ignoreList = [/.*usePatchChildren.test.tsx/, /.*warnOnce.test.ts/];
 

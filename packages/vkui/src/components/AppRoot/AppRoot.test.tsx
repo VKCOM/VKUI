@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
+import { describe, expect, it, vi } from 'vitest';
 import { ColorScheme } from '../../lib/colorScheme';
 import { Platform } from '../../lib/platform';
 import { DEFAULT_TOKENS_CLASS_NAMES } from '../../lib/tokens/constants';

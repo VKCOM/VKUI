@@ -1,4 +1,5 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
 import { baselineComponent } from '../../testing/utils';
 import { DirectionProvider } from '../DirectionProvider/DirectionProvider';
 import { CardScroll } from './CardScroll';

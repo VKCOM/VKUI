@@ -1,4 +1,5 @@
 import { renderHook } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
 import { usePlacementChangeCallback } from './usePlacementChangeCallback';
 
 type HookArguments = Parameters<typeof usePlacementChangeCallback>;

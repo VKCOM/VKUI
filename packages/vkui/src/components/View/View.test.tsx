@@ -1,6 +1,6 @@
 import { act, type ComponentType, Fragment, type ReactNode } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
-import type { Mock } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, type Mock, vi } from 'vitest';
 import { getRandomUsers } from '../../testing/mock';
 import {
   baselineComponent,

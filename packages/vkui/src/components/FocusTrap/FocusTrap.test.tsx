@@ -1,5 +1,6 @@
 import { act, createRef, Fragment, useRef, useState } from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
 import { ViewWidth } from '../../lib/adaptivity';
 import {
   fakeTimersForScope,

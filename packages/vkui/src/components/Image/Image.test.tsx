@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react';
+import { describe, expect, it } from 'vitest';
 import { IconExampleForBadgeBasedOnImageBaseSize } from '../../testing/icons';
 import { getAvatarUrl } from '../../testing/mock';
 import { baselineComponent } from '../../testing/utils';

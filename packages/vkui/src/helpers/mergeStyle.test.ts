@@ -1,3 +1,4 @@
+import { describe, expect, it } from 'vitest';
 import { mergeStyle } from './mergeStyle';
 
 describe(mergeStyle, () => {

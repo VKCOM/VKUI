@@ -1,4 +1,5 @@
 import { renderHook } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
 import { DEFAULT_ANIMATION_DURATION } from './constants';
 import { useSlideAnimation } from './hooks';
 

@@ -1,5 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
+import { describe, expect, it, vi } from 'vitest';
 import { baselineComponent } from '../../testing/utils';
 import { CalendarHeader } from './CalendarHeader';
 import styles from './CalendarHeader.module.css';

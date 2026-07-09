@@ -1,5 +1,6 @@
 import { noop } from '@vkontakte/vkjs';
 import type { autoUpdate } from '@vkontakte/vkui-floating-ui/react-dom';
+import { beforeEach, describe, expect, test, vi } from 'vitest';
 import { autoUpdateFloatingElement } from './adapters';
 
 const autoUpdateLibDisposerStub = vi.fn();

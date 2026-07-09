@@ -1,6 +1,7 @@
 import { Fragment, type HtmlHTMLAttributes, type ReactElement } from 'react';
 import { render, screen } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
+import { describe, expect, it, vi } from 'vitest';
 import { baselineComponent, setNodeEnv, waitForFloatingPosition } from '../../testing/utils';
 import type { HasRootRef } from '../../types';
 import { OnboardingTooltip, type OnboardingTooltipProps } from './OnboardingTooltip';

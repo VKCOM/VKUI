@@ -1,4 +1,5 @@
 import { renderHook } from '@testing-library/react';
+import { describe, expect, it } from 'vitest';
 import { baselineComponent } from '../../testing/utils';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';

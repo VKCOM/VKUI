@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react';
+import { describe, expect, it } from 'vitest';
 import { baselineComponent } from '../../testing/utils';
 import { RichCell, type RichCellProps } from './RichCell';
 import styles from './RichCell.module.css';

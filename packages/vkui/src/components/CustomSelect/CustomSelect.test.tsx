@@ -2,6 +2,7 @@ import type * as React from 'react';
 import { act, createRef, useState } from 'react';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import type { Placement, useFloating } from '../../lib/floating';
 import {
   baselineComponent,

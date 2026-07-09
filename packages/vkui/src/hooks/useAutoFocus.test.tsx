@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { render, screen } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
 import { useAutoFocus } from './useAutoFocus';
 
 const Playground = ({ autoFocus, ...props }: React.HTMLAttributes<HTMLDivElement>) => {

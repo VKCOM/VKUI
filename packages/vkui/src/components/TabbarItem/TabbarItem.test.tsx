@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { Icon28NewsfeedOutline } from '@vkontakte/icons';
+import { describe, expect, it, vi } from 'vitest';
 import {
   DISABLE_KEYBOARD_INPUT_EVENT_NAME,
   ENABLE_KEYBOARD_INPUT_EVENT_NAME,

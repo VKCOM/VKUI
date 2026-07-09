@@ -1,4 +1,5 @@
 // import '../../testing/utils';
+import { describe, expect, it, test } from 'vitest';
 import { waitRAF } from '../../testing/utils';
 import {
   getTargetIsOverOrUnderElData,

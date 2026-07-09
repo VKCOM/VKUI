@@ -1,3 +1,4 @@
+import { beforeEach, describe, expect, it, test, vi } from 'vitest';
 import { requestAnimationFrameMock } from '../../testing/utils';
 import { createAutoScrollController, EDGE_SIZE, getAutoScrollingData } from './autoScroll';
 

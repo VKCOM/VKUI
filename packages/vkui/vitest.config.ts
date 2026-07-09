@@ -3,7 +3,6 @@ import { defineConfig } from 'vitest/config';
 
 const config = defineConfig({
   test: {
-    globals: true,
     name: 'unit',
     include: ['**/*.test.tsx', '**/*.test.ts'],
     environment: 'jsdom',

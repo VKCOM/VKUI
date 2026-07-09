@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
 import { baselineComponent, waitForFloatingPosition } from '../../testing/utils';
 import { Button } from '../Button/Button';
 import { Popover, type PopoverProps } from './Popover';

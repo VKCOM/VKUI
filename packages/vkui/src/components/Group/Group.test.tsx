@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { classNames, noop } from '@vkontakte/vkjs';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { ModalContext } from '../../context/ModalContext';
 import { ViewWidth, type ViewWidthType } from '../../lib/adaptivity';
 import { baselineComponent, setNodeEnv } from '../../testing/utils';

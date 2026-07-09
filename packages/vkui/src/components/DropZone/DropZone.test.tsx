@@ -1,4 +1,5 @@
 import { fireEvent, render, screen } from '@testing-library/react';
+import { describe, expect, it } from 'vitest';
 import { stopPropagation } from '../../lib/utils';
 import { baselineComponent } from '../../testing/utils';
 import { DropZone } from './DropZone';

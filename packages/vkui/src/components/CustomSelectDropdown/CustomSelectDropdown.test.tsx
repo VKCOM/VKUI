@@ -1,5 +1,6 @@
 import { act, createRef, useRef, useState } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
 import type { Placement, useFloating } from '../../lib/floating';
 import { withFakeTimers } from '../../testing/utils';
 import { Button } from '../Button/Button';

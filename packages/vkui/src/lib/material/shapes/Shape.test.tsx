@@ -1,3 +1,4 @@
+import { describe } from 'vitest';
 import { baselineComponent } from '../../../testing/utils';
 import { Shape } from './Shape';
 import * as shapes from './shapes';

@@ -1,5 +1,6 @@
 import { act } from 'react';
 import { fireEvent, render } from '@testing-library/react';
+import { describe, expect, test, vi } from 'vitest';
 import { fakeTimersForScope, waitCSSTransitionEnd } from '../../testing/utils';
 import { ModalCard } from '../ModalCard/ModalCard';
 import type { ModalCardProps } from '../ModalCard/types';

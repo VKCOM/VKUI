@@ -1,4 +1,5 @@
 import { renderHook } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
 import * as UseAdaptivityService from '../../../hooks/useAdaptivity';
 import * as UseIsClientService from '../../../hooks/useIsClient';
 import { useCalculatedDefaultVisibility } from './hooks';

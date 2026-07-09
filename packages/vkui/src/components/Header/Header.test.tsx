@@ -1,5 +1,6 @@
 import { Fragment } from 'react';
 import { render, screen } from '@testing-library/react';
+import { describe, expect, it } from 'vitest';
 import { baselineComponent } from '../../testing/utils';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { Header } from './Header';

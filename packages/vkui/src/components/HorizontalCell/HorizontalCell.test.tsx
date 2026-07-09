@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react';
+import { describe, expect, it, test } from 'vitest';
 import { baselineComponent } from '../../testing/utils';
 import { CUSTOM_CSS_TOKEN_FOR_CELL_WIDTH, HorizontalCell } from './HorizontalCell';
 import styles from './HorizontalCell.module.css';

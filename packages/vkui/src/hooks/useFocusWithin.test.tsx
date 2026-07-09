@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { act } from 'react';
 import { render, screen } from '@testing-library/react';
+import { describe, expect, it } from 'vitest';
 import { useFocusWithin } from './useFocusWithin';
 
 describe(useFocusWithin, () => {

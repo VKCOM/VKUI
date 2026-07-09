@@ -1,6 +1,7 @@
 import { act } from 'react';
 import { render, screen } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
+import { describe, expect, it, vi } from 'vitest';
 import { ViewWidth } from '../../lib/adaptivity';
 import { getDocumentBody } from '../../lib/dom';
 import { Platform } from '../../lib/platform';

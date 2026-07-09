@@ -1,4 +1,5 @@
 import { render } from '@testing-library/react';
+import { describe, expect, it } from 'vitest';
 import { Platform } from '../../../lib/platform';
 import { baselineComponent } from '../../../testing/utils';
 import { ConfigProvider } from '../../ConfigProvider/ConfigProvider';

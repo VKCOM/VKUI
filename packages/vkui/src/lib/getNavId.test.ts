@@ -1,3 +1,4 @@
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { setNodeEnv } from '../testing/utils';
 import { getNavId } from './getNavId';
 

@@ -1,6 +1,7 @@
 import { act, createRef, useState } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { getDocumentBody } from '../../lib/dom';
 import { Platform } from '../../lib/platform';
 import { baselineComponent, setNodeEnv, userEvent, withFakeTimers } from '../../testing/utils';

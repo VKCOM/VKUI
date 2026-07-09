@@ -1,4 +1,5 @@
 import { render } from '@testing-library/react';
+import { describe, expect, it } from 'vitest';
 import { baselineComponent } from '../../testing/utils';
 import { ScreenSpinner } from './ScreenSpinner';
 import stylesDelay from '../../styles/animationVisibilityDelay.module.css';
