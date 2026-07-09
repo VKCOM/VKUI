@@ -1,0 +1,6 @@
+Contact: https://bugbounty.vk.company.ru
+Contact: mailto:bugbounty@vk.team
+Hiring: https://team.vk.company/vacancy/
+Preferred-Languages: ru, en
+Canonical: https://vkui.io/.well-known/security.txt
+Expires: 2027-01-31T00:00:00.000Z
