@@ -5854,28 +5854,28 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@xhmikosr/decompress-unzip@npm:^8.1.0":
-  version: 8.1.0
-  resolution: "@xhmikosr/decompress-unzip@npm:8.1.0"
+"@xhmikosr/decompress-unzip@npm:^8.1.1":
+  version: 8.2.1
+  resolution: "@xhmikosr/decompress-unzip@npm:8.2.1"
   dependencies:
-    file-type: "npm:^21.3.0"
+    file-type: "npm:^21.3.4"
     get-stream: "npm:^9.0.1"
-    yauzl: "npm:^3.2.0"
-  checksum: 10/f8ce4581e6b95eaaabbc265fe9447932bf07914d43dcbf07b3b006dc09c6ed52e68f0ff786dd279953ae7343c93836813137655dccf1a87d60e408cf2bb0e4f6
+    yauzl: "npm:^3.4.0"
+  checksum: 10/3aa5a922889adf3f777e2e4db96d32b9888905293b74cfeb30193ffedc876266433e2e4b4ad3fa3016c34f774513011b9aa9e0236269f28abf6092ff695d664c
   languageName: node
   linkType: hard
 
 "@xhmikosr/decompress@npm:^11.1.1":
-  version: 11.1.1
-  resolution: "@xhmikosr/decompress@npm:11.1.1"
+  version: 11.1.3
+  resolution: "@xhmikosr/decompress@npm:11.1.3"
   dependencies:
     "@xhmikosr/decompress-tar": "npm:^9.0.1"
     "@xhmikosr/decompress-tarbz2": "npm:^9.0.1"
     "@xhmikosr/decompress-targz": "npm:^9.0.1"
-    "@xhmikosr/decompress-unzip": "npm:^8.1.0"
+    "@xhmikosr/decompress-unzip": "npm:^8.1.1"
     graceful-fs: "npm:^4.2.11"
     strip-dirs: "npm:^3.0.0"
-  checksum: 10/1379c8f8f0e8dca264d01185d288e65e939fd295cb6c2b96844b1f6145ab40beb1449fde9b264cbbe82758f65ed70ffaf8774d24f871b3b8d53e98bebab43fa9
+  checksum: 10/0035a59040fe292361884db2d78ef746fac44fef8992a3e4d7b9029b6dcc0ddfb7ebf124f41e921de0eaa969c87736daddef9e4a6f7121bf696cdf3ea7dc301c
   languageName: node
   linkType: hard
 
@@ -6572,13 +6572,6 @@ __metadata:
   bin:
     browserslist: cli.js
   checksum: 10/beb030f5b301b6af3fc7df3291d56f9edb34b7e4bd3cdc50d379c84c3410ad1ba013602952bcec1d98af940cf6596609fc81ef09d200f7f2e25e9f84d9d38201
-  languageName: node
-  linkType: hard
-
-"buffer-crc32@npm:~0.2.3":
-  version: 0.2.13
-  resolution: "buffer-crc32@npm:0.2.13"
-  checksum: 10/06252347ae6daca3453b94e4b2f1d3754a3b146a111d81c68924c22d91889a40623264e95e67955b1cb4a68cbedf317abeabb5140a9766ed248973096db5ce1c
   languageName: node
   linkType: hard
 
@@ -9596,7 +9589,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"file-type@npm:^21.3.0":
+"file-type@npm:^21.3.0, file-type@npm:^21.3.4":
   version: 21.3.4
   resolution: "file-type@npm:21.3.4"
   dependencies:
@@ -19344,13 +19337,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yauzl@npm:^3.2.0":
-  version: 3.3.0
-  resolution: "yauzl@npm:3.3.0"
+"yauzl@npm:^3.4.0":
+  version: 3.4.0
+  resolution: "yauzl@npm:3.4.0"
   dependencies:
-    buffer-crc32: "npm:~0.2.3"
     pend: "npm:~1.2.0"
-  checksum: 10/ac8ae5276a3fb89b80464fc828aadcb5f888af7306a7920e699b9de05aead0490ac6698bc71952ea867c3f2a2c73ed8df91f18f5b6a67ce3231065327817c08f
+  checksum: 10/76c1ca208478135dcd0b9f8baaa2e40a761652e0ec793c5a6bdeb973118f9720adc487f388e8394b4cfb73ae1976083ff58be4ea0ec60e060ffc9cf232db2c0a
   languageName: node
   linkType: hard
 
