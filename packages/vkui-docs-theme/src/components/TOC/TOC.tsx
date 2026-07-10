@@ -61,7 +61,7 @@ export function TOC({ toc }: TOCProps) {
       <Headline level="2" Component="p" className={styles.title}>
         <Icon24ChevronDown /> СОДЕРЖАНИЕ
       </Headline>
-      <nav className={styles.nav}>
+      <nav className={styles.nav} aria-label="Содержание страницы">
         <ul>
           {toc.map(({ id, value, depth }) => (
             <TOCItem
