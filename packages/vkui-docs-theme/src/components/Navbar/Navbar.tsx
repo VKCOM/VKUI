@@ -45,8 +45,8 @@ export function Navbar({ logo, fakeNavbarItem }: NavbarProps): React.ReactElemen
 
   return (
     <AdaptivityProvider density="compact">
-      <div className={styles.root}>
-        <nav className={styles.navbar}>
+      <header className={styles.root}>
+        <nav className={styles.navbar} aria-label="Главная навигация">
           <Flex align="center">
             <Button
               size="l"
@@ -108,7 +108,7 @@ export function Navbar({ logo, fakeNavbarItem }: NavbarProps): React.ReactElemen
             <ColorSchemeSwitch />
           </Flex>
         </nav>
-      </div>
+      </header>
     </AdaptivityProvider>
   );
 }
@@ -123,7 +123,7 @@ function NavBarLink({ title, href, ...restProps }: NavBarLinkProps) {
   const ownProps = isExternal
     ? {
         target: '_blank',
-        rel: 'noreferrer',
+        rel: 'noopener noreferrer',
         after: <Icon16LinkOutline width={14} height={14} />,
       }
     : { Component: NextLink };
