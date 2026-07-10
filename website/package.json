@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "node --run generate && next dev --webpack",
     "build": "node --run generate && next build --webpack && node --run pagefind",
-    "start": "next start",
+    "start": "serve out",
     "pagefind": "pagefind --site out/ --output-path ./public/_pagefind && cp -r ./public/_pagefind ./out",
     "next-sitemap": "next-sitemap",
     "generate": "node ./scripts/generate-website-data.mjs",
@@ -24,6 +24,7 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-live": "^4.1.8",
+    "serve": "^14.2.6",
     "slug": "^11.0.1",
     "swr": "^2.4.2",
     "typescript": "*",

@@ -9,11 +9,12 @@ import styles from './index.module.css';
 export function ContentWrapper({ children }: React.PropsWithChildren) {
   const config = useConfig();
   const {
-    normalizePagesResult: { activeThemeContext: themeContext },
+    normalizePagesResult: { activeThemeContext: themeContext, activePath },
   } = config;
 
   const isFullLayout = themeContext.layout === 'full';
   const isBlog = config.isBlog;
+  const isNotFound = activePath.length === 0;
   const Component = isBlog ? 'main' : 'div';
 
   return (
@@ -21,7 +22,7 @@ export function ContentWrapper({ children }: React.PropsWithChildren) {
       id={isBlog ? 'vkui-docs-main' : undefined}
       className={classNames(styles.root, isBlog && styles.blog, !isFullLayout && styles.maxWidth)}
     >
-      {themeContext.sidebar && <Sidebar />}
+      {themeContext.sidebar && !isNotFound && <Sidebar />}
       {/* TODO [docs] (@BlackySoul): <SkipNavContent /> */}
       {children}
     </Component>
