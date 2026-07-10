@@ -22,9 +22,25 @@ export const metadata: Metadata = {
     default: 'VKUI – React UI Kit',
     template: '%s | VKUI',
   },
+  description:
+    'VKUI — библиотека адаптивных React-компонентов для создания мобильных и веб-приложений.',
   metadataBase: new URL('https://vkui.io'),
   alternates: {
     canonical: './',
+  },
+  openGraph: {
+    type: 'website',
+    url: 'https://vkui.io/',
+    title: 'VKUI – React UI Kit',
+    description:
+      'VKUI — библиотека адаптивных React-компонентов для создания мобильных и веб-приложений.',
+    siteName: 'VKUI',
+  },
+  twitter: {
+    card: 'summary',
+    title: 'VKUI – React UI Kit',
+    description:
+      'VKUI — библиотека адаптивных React-компонентов для создания мобильных и веб-приложений.',
   },
 };
 
