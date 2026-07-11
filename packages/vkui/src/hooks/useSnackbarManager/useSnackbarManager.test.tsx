@@ -74,11 +74,11 @@ describe('useSnackbarManager', () => {
         apiRef.current?.closeAll();
       });
 
-      await Promise.all([
+      await Promise.all(
         screen
           .getAllByRole('alert')
           .map((alert) => waitCSSKeyframesAnimation(alert, { runOnlyPendingTimers: true })),
-      ]);
+      );
 
       expect(screen.queryByText('Test Snackbar 1')).not.toBeInTheDocument();
       expect(screen.queryByText('Test Snackbar 2')).not.toBeInTheDocument();

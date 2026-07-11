@@ -15,7 +15,7 @@ export function getColorScheme(
   let colorScheme;
   try {
     colorScheme = localStorage.getItem(key) || undefined;
-  } catch (e) {
+  } catch {
     // Unsupported
   }
 

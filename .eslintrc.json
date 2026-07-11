@@ -9,7 +9,30 @@
   "parser": "@typescript-eslint/parser",
   "plugins": ["import", "unicorn"],
   "parserOptions": {
-    "project": "./tsconfig.json",
+    "projectService": {
+      "allowDefaultProject": [
+        "webpack.common.config.js",
+        "website/uwu.js",
+        "website/next-sitemap.config.js",
+        "tools/eslint-plugin-vkui/index.js",
+        "tools/postcss-layout-classes/index.js",
+        "tools/postcss-layout-classes/postcss-layout-classes.test.js",
+        "tools/postcss-restructure-variable/index.js",
+        "tools/postcss-restructure-variable/postcss-restructure-variable.test.js",
+        "tools/scripts/link-tsc7.js",
+        "tools/stylelint-plugin-vkui/index.js",
+        "tools/stylelint-plugin-vkui/rules/index.js",
+        "tools/stylelint-plugin-vkui/rules/bad-multiplication/index.js",
+        "tools/stylelint-plugin-vkui/rules/bad-multiplication/index.test.js",
+        "tools/stylelint-plugin-vkui/vitest.config.js",
+        "tools/stylelint-plugin-vkui/vitest.setup.js",
+        "packages/storybook-addons/src/addons/color-scheme/preset.js",
+        "packages/storybook-addons/src/addons/live-code-editor/preset.js",
+        "packages/storybook-addons/src/addons/source-button/preset.js",
+        "packages/storybook-addons/src/addons/storybook-theme/preset.js"
+      ],
+      "maximumDefaultProjectFileMatchCount_THIS_WILL_SLOW_DOWN_LINTING": 25
+    },
     "ecmaVersion": 2018, // Allows for the parsing of modern ECMAScript features
     "sourceType": "module", // Allows for the use of imports
     "ecmaFeatures": {
@@ -20,6 +43,13 @@
   },
   "extends": ["plugin:@vkontakte/eslint-plugin/react-typescript"],
   "rules": {
+    "@typescript-eslint/ban-types": "off",
+    "@typescript-eslint/brace-style": "off",
+    "@typescript-eslint/func-call-spacing": "off",
+    "@typescript-eslint/member-delimiter-style": "off",
+    "@typescript-eslint/no-extra-semi": "off",
+    "@typescript-eslint/semi": "off",
+    "@typescript-eslint/type-annotation-spacing": "off",
     "@typescript-eslint/method-signature-style": "error",
     "@typescript-eslint/explicit-member-accessibility": "off", // [Reason] overrides "Preset 1"
     "@typescript-eslint/no-unnecessary-condition": "off", // [Reason] overrides "Preset 1"

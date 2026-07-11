@@ -27,7 +27,7 @@
     "serve": "^14.2.6",
     "slug": "^11.0.1",
     "swr": "^2.4.2",
-    "typescript": "*",
+    "typescript": "^6.0.3",
     "zustand": "^5.0.14"
   },
   "dependencies": {

@@ -424,7 +424,7 @@ describe(ActionSheet, () => {
     it('can be customized via slotProps.iosCloseItem', async () => {
       renderIosActionSheet({
         slotProps: {
-          // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+          // eslint-disable-next-line @typescript-eslint/consistent-type-assertions, @typescript-eslint/no-unnecessary-type-assertion
           iosCloseItem: {
             children: 'Закрыть',
           } as React.ComponentProps<typeof ActionSheetDefaultIosCloseItem>,

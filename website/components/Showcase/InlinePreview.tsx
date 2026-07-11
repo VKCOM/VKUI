@@ -28,7 +28,7 @@ export interface InlinePreviewContentProps {
 export function InlinePreviewContent({ contentRef, code, Wrapper }: InlinePreviewContentProps) {
   return (
     <Flex
-      getRootRef={contentRef as React.RefObject<HTMLDivElement>}
+      getRootRef={contentRef}
       direction="column"
       justify="center"
       minBlockSize={160}
