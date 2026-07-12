@@ -481,10 +481,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/standalone@npm:^8.0.3":
-  version: 8.0.3
-  resolution: "@babel/standalone@npm:8.0.3"
-  checksum: 10/fe66fa2179a91e9ed0a0a82222613a7ce1a17ca3fb2a64552419bd319a9e098c07fe90e7a42f69b7d1bae7e62151f111350be0532ec38bfbac13dfdad50c6c74
+"@babel/standalone@npm:^8.0.4":
+  version: 8.0.4
+  resolution: "@babel/standalone@npm:8.0.4"
+  checksum: 10/5414cdfc1ee37aa3106c4b4cd8248b53966539a422c4a8705d4c43221a4cd8be7f230966a422a231becee9084ad997e79b5a9f24733b23d4f9328a35bac09df4
   languageName: node
   linkType: hard
 
@@ -5357,7 +5357,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@vkontakte/storybook-addons@workspace:packages/storybook-addons"
   dependencies:
-    "@babel/standalone": "npm:^8.0.3"
+    "@babel/standalone": "npm:^8.0.4"
     monaco-editor: "npm:^0.55.1"
     react: "npm:^18.3.1"
     typescript: "npm:^6.0.3"
