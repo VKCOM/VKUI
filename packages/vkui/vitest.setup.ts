@@ -5,6 +5,37 @@ import { noop } from '@vkontakte/vkjs';
 import { afterEach, vi } from 'vitest';
 import failOnConsole from 'vitest-fail-on-console';
 
+// В этом окружении jsdom не предоставляет `localStorage`, а Node отдаёт
+// экспериментальный геттер, который при каждом доступе печатает
+// `ExperimentalWarning: localStorage is not available ...`. Подменим его
+// рабочей in-memory реализацией — это убирает предупреждение (в т.ч. когда
+// chai инспектирует `window` при форматировании сообщений утверждений) и даёт
+// тестам реальный `localStorage`.
+class MemoryStorage implements Storage {
+  private readonly store = new Map<string, string>();
+
+  get length(): number {
+    return this.store.size;
+  }
+  clear(): void {
+    this.store.clear();
+  }
+  getItem(key: string): string | null {
+    return this.store.has(key) ? (this.store.get(key) as string) : null;
+  }
+  key(index: number): string | null {
+    return [...this.store.keys()][index] ?? null;
+  }
+  removeItem(key: string): void {
+    this.store.delete(key);
+  }
+  setItem(key: string, value: string): void {
+    this.store.set(key, String(value));
+  }
+}
+vi.stubGlobal('localStorage', new MemoryStorage());
+vi.stubGlobal('sessionStorage', new MemoryStorage());
+
 // Без `globals: true` @testing-library/react не регистрирует автоочистку DOM
 // (она рассчитывает на глобальный `afterEach`), поэтому чистим вручную.
 afterEach(cleanup);
