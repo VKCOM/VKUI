@@ -96,14 +96,14 @@
   "devDependencies": {
     "@biomejs/biome": "^2.5.2",
     "@storybook/icons": "^2.1.0",
-    "@storybook/react-vite": "10.4.6",
+    "@storybook/react-vite": "10.5.0",
     "@types/node": "*",
     "@types/postcss-import": "^14.0.3",
     "@vkontakte/storybook-addons": "workspace:^",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "size-limit": "^12.1.0",
-    "storybook": "10.4.6",
+    "storybook": "10.5.0",
     "typescript": "^6.0.3",
     "vite": "^8.0.0"
   },
