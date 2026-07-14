@@ -480,7 +480,7 @@ describe('Touch', () => {
                 </Card>
                 <Card data-testid="card">
                   <div style={{ paddingBottom: '66%' }}>
-                    <Button data-testid="button" href="vk.com" />
+                    <Button data-testid="button" href="#" />
                   </div>
                 </Card>
                 <Card>
