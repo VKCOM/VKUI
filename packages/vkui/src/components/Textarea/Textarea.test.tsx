@@ -252,5 +252,90 @@ describe(Textarea, () => {
       );
       expect(onResize).not.toHaveBeenCalled();
     });
+
+    it('keeps scroll pinned to bottom on resize (Android/Chrome regression, #8273)', async () => {
+      render(<Textarea defaultValue={'line\n'.repeat(20)} />);
+      const textArea = getInput() as HTMLTextAreaElement;
+
+      // Прокрутка при переполнении Textarea находится не на самом `<textarea>`,
+      // а на контейнере `FormField` (`overflow-y: auto`). На Android (Chrome)
+      // сброс `height` во время ресайза сбрасывает `scrollTop` этого контейнера,
+      // из-за чего вводимый в конце текст скрывается.
+      // Структура: textarea → .content → .scrollContainer.
+      const scrollContainer = textArea.parentElement?.parentElement as HTMLElement;
+      expect(scrollContainer).toBeTruthy();
+
+      const SCROLL_HEIGHT = 400;
+      let scrollTop = 0;
+      vi.spyOn(scrollContainer, 'scrollHeight', 'get').mockImplementation(() => SCROLL_HEIGHT);
+      vi.spyOn(scrollContainer, 'clientHeight', 'get').mockImplementation(() => 200);
+      const heightDesc = Object.getOwnPropertyDescriptor(CSSStyleDeclaration.prototype, 'height');
+      Object.defineProperty(scrollContainer, 'scrollTop', {
+        configurable: true,
+        get: () => scrollTop,
+        set: (v: number) => {
+          scrollTop = v;
+        },
+      });
+      Object.defineProperty(textArea.style, 'height', {
+        configurable: true,
+        get: () => heightDesc?.get?.call(textArea.style) ?? '',
+        set: (value: string) => {
+          if (value === '') {
+            scrollTop = 0; // браузер сбрасывает прокрутку при пересчёте layout
+          }
+          heightDesc?.set?.call(textArea.style, value);
+        },
+      });
+
+      // Курсор в конце текста — вводим слово (с пробелом, как в issue).
+      await userEvent.type(textArea, ' word');
+
+      // После ресайза прокрутка контейнера должна быть прижата к низу
+      // (курсор виден), а не сброшена в 0.
+      expect(scrollTop).toBe(SCROLL_HEIGHT);
+      expect(scrollTop).not.toBe(0);
+    });
+
+    it.each([
+      ['long defaultValue (cursor at start)', 'line\n'.repeat(20)],
+      ['empty value (cursor at end)', ''],
+    ])('keeps scroll at top on first appearance: %s (#8273)', (_name, defaultValue) => {
+      // Смокаем геометрию контейнера прокрутки ДО монтирования, чтобы первичный
+      // ресайз (запускается из `useEffect` при появлении Textarea) видел переполнение.
+      const SCROLL_HEIGHT = 400;
+      const containerScrollTop = { value: 0 };
+      const scrollHeightSpy = vi
+        .spyOn(HTMLElement.prototype, 'scrollHeight', 'get')
+        .mockImplementation(function (this: HTMLElement) {
+          return SCROLL_HEIGHT;
+        });
+      const clientHeightSpy = vi
+        .spyOn(HTMLElement.prototype, 'clientHeight', 'get')
+        .mockImplementation(function (this: HTMLElement) {
+          return 200;
+        });
+      const scrollTopDesc = Object.getOwnPropertyDescriptor(Element.prototype, 'scrollTop')!;
+      Object.defineProperty(Element.prototype, 'scrollTop', {
+        configurable: true,
+        get(this: HTMLElement) {
+          return containerScrollTop.value;
+        },
+        set(this: HTMLElement, v: number) {
+          containerScrollTop.value = v;
+        },
+      });
+
+      render(<Textarea defaultValue={defaultValue} />);
+
+      scrollHeightSpy.mockRestore();
+      clientHeightSpy.mockRestore();
+      Object.defineProperty(Element.prototype, 'scrollTop', scrollTopDesc);
+
+      // При первичном появлении Textarea с переполняющим контентом прокрутка
+      // должна оставаться вверху, а не уходить в самый низ — независимо от того,
+      // где находится курсор (в начале или в конце).
+      expect(containerScrollTop.value).toBe(0);
+    });
   });
 });

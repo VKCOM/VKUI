@@ -6,6 +6,7 @@ import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useFocusVisibleClassName } from '../../hooks/useFocusVisibleClassName';
 import { useFocusWithin } from '../../hooks/useFocusWithin';
+import { useMergeProps } from '../../hooks/useMergeProps';
 import type { HasComponent, HasRootRef } from '../../types';
 import styles from './FormField.module.css';
 
@@ -88,6 +89,17 @@ export interface FormFieldOwnProps
    * Блокировка взаимодействия с компонентом.
    */
   disabled?: boolean | undefined;
+  /**
+   * Свойства, которые можно прокинуть внутрь компонента:
+   * - `scrollContainer`: свойства для прокидывания во внутренний контейнер с прокруткой.
+   */
+  slotProps?:
+    | {
+        scrollContainer?:
+          | (React.AllHTMLAttributes<HTMLDivElement> & HasRootRef<HTMLDivElement>)
+          | undefined;
+      }
+    | undefined;
 }
 
 /**
@@ -109,9 +121,14 @@ export const FormField = ({
   style,
   onMouseEnter,
   onMouseLeave,
+  slotProps,
   ...restProps
 }: FormFieldOwnProps): React.ReactNode => {
   const elRef = useExternRef(getRootRef);
+  const { getRootRef: scrollContainerSlotRef, ...scrollContainerRestProps } = useMergeProps(
+    {},
+    slotProps?.scrollContainer,
+  );
   const { density = 'none' } = useAdaptivity();
   const [hover, setHover] = React.useState(false);
 
@@ -154,7 +171,11 @@ export const FormField = ({
         className,
       )}
     >
-      <div className={styles.scrollContainer}>
+      <div
+        {...scrollContainerRestProps}
+        ref={scrollContainerSlotRef}
+        className={classNames(styles.scrollContainer, scrollContainerRestProps.className)}
+      >
         {before && renderIcon(before, beforeAlign, styles.before)}
         <div className={styles.content}>{children}</div>
         {after &&
