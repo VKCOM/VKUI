@@ -567,6 +567,7 @@ export const CarouselBase = ({
         styles.host,
         slideWidth === 'custom' && styles.customWidth,
         isHovered && styles.hover,
+        showArrows === 'always' && styles.showArrows,
         isDraggable && styles.draggable,
       )}
       getRootRef={rootRef}
