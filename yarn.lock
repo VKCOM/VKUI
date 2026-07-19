@@ -5387,7 +5387,7 @@ __metadata:
     chalk: "npm:^4.1.2"
     commander: "npm:^15.0.0"
     cross-spawn: "npm:^7.0.5"
-    jscodeshift: "npm:^17.3.0"
+    jscodeshift: "npm:^17.4.0"
     prompts: "npm:^2.4.2"
     typescript: "npm:^6.0.3"
   bin:
@@ -11653,9 +11653,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jscodeshift@npm:^17.3.0":
-  version: 17.3.0
-  resolution: "jscodeshift@npm:17.3.0"
+"jscodeshift@npm:^17.4.0":
+  version: 17.4.0
+  resolution: "jscodeshift@npm:17.4.0"
   dependencies:
     "@babel/core": "npm:^7.24.7"
     "@babel/parser": "npm:^7.24.7"
@@ -11669,9 +11669,9 @@ __metadata:
     "@babel/register": "npm:^7.24.6"
     flow-parser: "npm:0.*"
     graceful-fs: "npm:^4.2.4"
-    micromatch: "npm:^4.0.7"
     neo-async: "npm:^2.5.0"
     picocolors: "npm:^1.0.1"
+    picomatch: "npm:^4.0.2"
     recast: "npm:^0.23.11"
     tmp: "npm:^0.2.3"
     write-file-atomic: "npm:^5.0.1"
@@ -11682,7 +11682,7 @@ __metadata:
       optional: true
   bin:
     jscodeshift: bin/jscodeshift.js
-  checksum: 10/bafd2b296d545ce363b594499d18a2165532463ebf16d5be2ea65206c0a486da3dc07ab410f0fefc32f232c2a51ade790b9f28f52916db690a9edf1fd4b34966
+  checksum: 10/098d733003f54e66e93ab4ae92dd29f5d3212e82285a60a17c1398aaaa1cbb38651f19b4587328c9ba42919fc87357aec0f59d084dd5115c9a01789661986c2b
   languageName: node
   linkType: hard
 
@@ -13169,7 +13169,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"micromatch@npm:^4.0.5, micromatch@npm:^4.0.7, micromatch@npm:^4.0.8":
+"micromatch@npm:^4.0.5, micromatch@npm:^4.0.8":
   version: 4.0.8
   resolution: "micromatch@npm:4.0.8"
   dependencies:
