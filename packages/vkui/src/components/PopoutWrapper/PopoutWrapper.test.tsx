@@ -43,15 +43,15 @@ describe(PopoutWrapper, () => {
       {
         className: styles.fixed,
       },
-    ])('should have className $className when use strategy $strategy, fixed $fixed', ({
-      strategy,
-      className,
-    }) => {
-      const result = render(<PopoutWrapper strategy={strategy} data-testid="popout-wrapper" />);
-      const locator = result.getByTestId('popout-wrapper');
-      className && expect(locator).toHaveClass(className);
-      const filteredClassNames = strategyClassNames.filter((cn) => cn !== className).join(' ');
-      expect(locator).not.toHaveClass(filteredClassNames);
-    });
+    ])(
+      'should have className $className when use strategy $strategy, fixed $fixed',
+      ({ strategy, className }) => {
+        const result = render(<PopoutWrapper strategy={strategy} data-testid="popout-wrapper" />);
+        const locator = result.getByTestId('popout-wrapper');
+        className && expect(locator).toHaveClass(className);
+        const filteredClassNames = strategyClassNames.filter((cn) => cn !== className).join(' ');
+        expect(locator).not.toHaveClass(filteredClassNames);
+      },
+    );
   });
 });

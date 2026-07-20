@@ -318,14 +318,13 @@ describe(validateFallbackIcon, () => {
       icon: <Icon96GoodsCollection />,
       expectError: false,
     },
-  ])('should error $expectError with imageSize $imageSize and $icon', ({
-    imageSize,
-    icon,
-    expectError,
-  }) => {
-    validateFallbackIcon(imageSize, { name: 'fallbackIcon', value: icon });
-    expect(logStub).toHaveBeenCalledTimes(expectError ? 1 : 0);
-  });
+  ])(
+    'should error $expectError with imageSize $imageSize and $icon',
+    ({ imageSize, icon, expectError }) => {
+      validateFallbackIcon(imageSize, { name: 'fallbackIcon', value: icon });
+      expect(logStub).toHaveBeenCalledTimes(expectError ? 1 : 0);
+    },
+  );
 });
 
 describe(validateSize, () => {
@@ -358,14 +357,13 @@ describe(validateBadgeIcon, () => {
       icon: <Icon12Add />,
       expectError: true,
     },
-  ])(`should expect error $expectError with imageSize $imageSize`, ({
-    imageSize,
-    icon,
-    expectError,
-  }) => {
-    validateBadgeIcon(imageSize, { name: 'badgeIcon', value: icon });
-    expect(logStub).toHaveBeenCalledTimes(expectError ? 1 : 0);
-  });
+  ])(
+    `should expect error $expectError with imageSize $imageSize`,
+    ({ imageSize, icon, expectError }) => {
+      validateBadgeIcon(imageSize, { name: 'badgeIcon', value: icon });
+      expect(logStub).toHaveBeenCalledTimes(expectError ? 1 : 0);
+    },
+  );
 });
 
 describe(validateOverlayIcon, () => {
@@ -380,14 +378,13 @@ describe(validateOverlayIcon, () => {
       icon: <Icon12Add />,
       expectError: true,
     },
-  ])(`should expect error $expectError with imageSize $imageSize`, ({
-    imageSize,
-    icon,
-    expectError,
-  }) => {
-    validateOverlayIcon(imageSize, { name: 'badgeIcon', value: icon });
-    expect(logStub).toHaveBeenCalledTimes(expectError ? 1 : 0);
-  });
+  ])(
+    `should expect error $expectError with imageSize $imageSize`,
+    ({ imageSize, icon, expectError }) => {
+      validateOverlayIcon(imageSize, { name: 'badgeIcon', value: icon });
+      expect(logStub).toHaveBeenCalledTimes(expectError ? 1 : 0);
+    },
+  );
 });
 
 describe(ImageBase.Badge, () => {

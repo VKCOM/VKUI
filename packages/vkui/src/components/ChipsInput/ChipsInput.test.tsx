@@ -265,16 +265,36 @@ describe(ChipsInput, () => {
       str: 'Зеленый,Фиолетовый.Красный',
       expectedInputValue: 'Зеленый,Фиолетовый.Красный',
     },
-  ])('should correct use delimiter $delimiter', ({
-    delimiter,
-    str,
-    expectedValues,
-    expectedInputValue,
-  }) => {
-    const onChange = vi.fn();
-    render(
-      <ChipsInput
-        value={[
+  ])(
+    'should correct use delimiter $delimiter',
+    ({ delimiter, str, expectedValues, expectedInputValue }) => {
+      const onChange = vi.fn();
+      render(
+        <ChipsInput
+          value={[
+            {
+              value: 'navarin',
+              label: 'Наваринского пламени с дымом',
+            },
+            {
+              value: 'red',
+              label: 'Красный',
+            },
+          ]}
+          onChange={onChange}
+          delimiter={delimiter}
+          slotProps={{
+            input: {
+              'data-testid': 'input',
+            },
+          }}
+        />,
+      );
+      fireEvent.input(screen.getByTestId('input'), {
+        target: { value: str },
+      });
+      if (expectedValues) {
+        expect(onChange).toHaveBeenCalledExactlyOnceWith([
           {
             value: 'navarin',
             label: 'Наваринского пламени с дымом',
@@ -283,37 +303,15 @@ describe(ChipsInput, () => {
             value: 'red',
             label: 'Красный',
           },
-        ]}
-        onChange={onChange}
-        delimiter={delimiter}
-        slotProps={{
-          input: {
-            'data-testid': 'input',
-          },
-        }}
-      />,
-    );
-    fireEvent.input(screen.getByTestId('input'), {
-      target: { value: str },
-    });
-    if (expectedValues) {
-      expect(onChange).toHaveBeenCalledExactlyOnceWith([
-        {
-          value: 'navarin',
-          label: 'Наваринского пламени с дымом',
-        },
-        {
-          value: 'red',
-          label: 'Красный',
-        },
-        ...expectedValues.map((value) => ({
-          value,
-          label: value,
-        })),
-      ]);
-    } else {
-      expect(onChange).not.toHaveBeenCalled();
-    }
-    expect(screen.getByTestId<HTMLInputElement>('input').value).toBe(expectedInputValue || '');
-  });
+          ...expectedValues.map((value) => ({
+            value,
+            label: value,
+          })),
+        ]);
+      } else {
+        expect(onChange).not.toHaveBeenCalled();
+      }
+      expect(screen.getByTestId<HTMLInputElement>('input').value).toBe(expectedInputValue || '');
+    },
+  );
 });

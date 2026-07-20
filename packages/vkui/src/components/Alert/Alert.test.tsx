@@ -426,25 +426,25 @@ describe('Alert', () => {
 
   describe('handles dismissButtonMode', () => {
     fakeTimersForScope();
-    it.each<AlertProps['dismissButtonMode']>([
-      'outside',
-      'inside',
-    ])('passes data-testid to dismiss button in %s dismissButtonMode', async (dismissButtonMode) => {
-      render(
-        <AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET}>
-          <Alert
-            onClosed={vi.fn()}
-            dismissLabel="Закрыть предупреждение"
-            dismissButtonTestId="dismiss-button-test-id"
-            dismissButtonMode={dismissButtonMode}
-          />
-        </AdaptivityProvider>,
-      );
-      await act(vi.runAllTimers);
-      expect(screen.getByTestId('dismiss-button-test-id')).toHaveTextContent(
-        'Закрыть предупреждение',
-      );
-    });
+    it.each<AlertProps['dismissButtonMode']>(['outside', 'inside'])(
+      'passes data-testid to dismiss button in %s dismissButtonMode',
+      async (dismissButtonMode) => {
+        render(
+          <AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET}>
+            <Alert
+              onClosed={vi.fn()}
+              dismissLabel="Закрыть предупреждение"
+              dismissButtonTestId="dismiss-button-test-id"
+              dismissButtonMode={dismissButtonMode}
+            />
+          </AdaptivityProvider>,
+        );
+        await act(vi.runAllTimers);
+        expect(screen.getByTestId('dismiss-button-test-id')).toHaveTextContent(
+          'Закрыть предупреждение',
+        );
+      },
+    );
 
     it('should hide button in dismissButtonMode="none"', async () => {
       const result = render(

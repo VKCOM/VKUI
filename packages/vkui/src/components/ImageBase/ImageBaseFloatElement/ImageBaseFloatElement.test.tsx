@@ -83,13 +83,15 @@ describe(ImageBaseFloatElement, () => {
     className,
   }));
 
-  it.each(horizontalIndentationFixtures)('should have horizontal indentation className %j', ({
-    indent,
-    className,
-  }) => {
-    render(<ImageBaseFloatElement data-testid="component" placement="top" inlineIndent={indent} />);
-    expect(screen.getByTestId('component')).toHaveClass(className);
-  });
+  it.each(horizontalIndentationFixtures)(
+    'should have horizontal indentation className %j',
+    ({ indent, className }) => {
+      render(
+        <ImageBaseFloatElement data-testid="component" placement="top" inlineIndent={indent} />,
+      );
+      expect(screen.getByTestId('component')).toHaveClass(className);
+    },
+  );
 
   const verticalIndentationFixtures = Object.entries({
     '2xs': styles.blockIndent2xs,
@@ -106,13 +108,15 @@ describe(ImageBaseFloatElement, () => {
     className,
   }));
 
-  it.each(verticalIndentationFixtures)('should have vertical indentation className %j', ({
-    indent,
-    className,
-  }) => {
-    render(<ImageBaseFloatElement data-testid="component" placement="top" blockIndent={indent} />);
-    expect(screen.getByTestId('component')).toHaveClass(className);
-  });
+  it.each(verticalIndentationFixtures)(
+    'should have vertical indentation className %j',
+    ({ indent, className }) => {
+      render(
+        <ImageBaseFloatElement data-testid="component" placement="top" blockIndent={indent} />,
+      );
+      expect(screen.getByTestId('component')).toHaveClass(className);
+    },
+  );
 
   it('check number indentation', () => {
     render(

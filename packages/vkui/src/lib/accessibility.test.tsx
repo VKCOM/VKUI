@@ -5,18 +5,13 @@ import { hasAccessibleName, injectAriaExpandedPropByRole } from './accessibility
 
 describe('accessibility utils', () => {
   describe('injectAriaExpandedPropByRole()', () => {
-    it.each([
-      'dialog',
-      'menu',
-      'application',
-      'tab',
-      'menuitem',
-      'treeitem',
-      'gridcell',
-    ])('should injects aria-expanded attribute to provided props when role="%s"', (role) => {
-      expect(injectAriaExpandedPropByRole({}, true, role)).toEqual({ 'aria-expanded': true });
-      expect(injectAriaExpandedPropByRole({}, false, role)).toEqual({ 'aria-expanded': false });
-    });
+    it.each(['dialog', 'menu', 'application', 'tab', 'menuitem', 'treeitem', 'gridcell'])(
+      'should injects aria-expanded attribute to provided props when role="%s"',
+      (role) => {
+        expect(injectAriaExpandedPropByRole({}, true, role)).toEqual({ 'aria-expanded': true });
+        expect(injectAriaExpandedPropByRole({}, false, role)).toEqual({ 'aria-expanded': false });
+      },
+    );
 
     it('should not injects aria-expanded attribute to props', () => {
       expect(injectAriaExpandedPropByRole({}, true)).toEqual({});

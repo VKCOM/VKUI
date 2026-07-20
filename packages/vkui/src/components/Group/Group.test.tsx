@@ -65,32 +65,29 @@ describe('Group', () => {
       viewWidth: undefined,
       className: styles.modeNone,
     },
-  ])('should have className $className with mode $mode isInsideModal $isInsideModal viewWidth $viewWidth', ({
-    mode,
-    isInsideModal,
-    viewWidth,
-    layout,
-    className,
-  }) => {
-    render(
-      <AppRootContext.Provider
-        value={{
-          ...DEFAULT_APP_ROOT_CONTEXT_VALUE,
-          layout,
-        }}
-      >
-        <AdaptivityContext.Provider value={{ viewWidth }}>
-          <ModalContext.Provider value={isInsideModal ? 'test' : null}>
-            <Group mode={mode} data-testid="group">
-              <div />
-            </Group>
-          </ModalContext.Provider>
-        </AdaptivityContext.Provider>
-      </AppRootContext.Provider>,
-    );
+  ])(
+    'should have className $className with mode $mode isInsideModal $isInsideModal viewWidth $viewWidth',
+    ({ mode, isInsideModal, viewWidth, layout, className }) => {
+      render(
+        <AppRootContext.Provider
+          value={{
+            ...DEFAULT_APP_ROOT_CONTEXT_VALUE,
+            layout,
+          }}
+        >
+          <AdaptivityContext.Provider value={{ viewWidth }}>
+            <ModalContext.Provider value={isInsideModal ? 'test' : null}>
+              <Group mode={mode} data-testid="group">
+                <div />
+              </Group>
+            </ModalContext.Provider>
+          </AdaptivityContext.Provider>
+        </AppRootContext.Provider>,
+      );
 
-    expect(screen.getByTestId('group')).toHaveClass(className);
-  });
+      expect(screen.getByTestId('group')).toHaveClass(className);
+    },
+  );
 
   it.each(['show', 'hide', 'auto'] as const)('should force show separator', (separator) => {
     const getSeparatorEl = (container: HTMLElement) =>
