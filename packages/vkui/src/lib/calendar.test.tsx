@@ -124,16 +124,13 @@ describe('calendar utils', () => {
       { targetDate: sameDayMaxDate, min: undefined, max: maxDate, withTime: true, expected: true },
       { targetDate: beforeMinDate, min: minDate, max: maxDate, withTime: true, expected: true },
       { targetDate: afterMaxDate, min: minDate, max: maxDate, withTime: true, expected: true },
-    ])('returns $expected when [min=$min, max=$max] for $targetDate (withTime: $withTime)', ({
-      targetDate,
-      min,
-      max,
-      withTime,
-      expected,
-    }) => {
-      const result = isDayMinMaxRestricted(targetDate, { max, min, withTime });
-      expect(result).toBe(expected);
-    });
+    ])(
+      'returns $expected when [min=$min, max=$max] for $targetDate (withTime: $withTime)',
+      ({ targetDate, min, max, withTime, expected }) => {
+        const result = isDayMinMaxRestricted(targetDate, { max, min, withTime });
+        expect(result).toBe(expected);
+      },
+    );
   });
 
   describe(clamp, () => {
@@ -163,15 +160,13 @@ describe('calendar utils', () => {
         max: maxDate,
         expected: '2023-09-29T17:20:00.000Z',
       },
-    ])('returns $expected when [$min < $targetDate < $max]', ({
-      targetDate,
-      min,
-      max,
-      expected,
-    }) => {
-      const result = clamp(targetDate, { max, min });
-      expect(result.toISOString()).toBe(expected);
-    });
+    ])(
+      'returns $expected when [$min < $targetDate < $max]',
+      ({ targetDate, min, max, expected }) => {
+        const result = clamp(targetDate, { max, min });
+        expect(result.toISOString()).toBe(expected);
+      },
+    );
   });
 
   describe(navigateDate, () => {
