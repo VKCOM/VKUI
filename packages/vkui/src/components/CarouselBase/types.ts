@@ -112,7 +112,7 @@ export interface BaseGalleryProps
    * Позволяет отключить реагирование на тач-события.
    */
   dragDisabled?: boolean | undefined;
-  showArrows?: boolean | undefined;
+  showArrows?: boolean | 'always' | undefined;
   /**
    * Размер активной зоны стрелок (в пикселях).
    * Определяет область вокруг стрелок, реагирующую на взаимодействие пользователя. В дизайне свойство называется `arrowArea`.

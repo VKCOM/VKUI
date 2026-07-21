@@ -73,6 +73,7 @@ const setup = ({
   onDragEnd,
   numberOfSlides = 5,
   isRtl = false,
+  showArrows = true,
 }: {
   defaultSlideIndex: number;
   looped: boolean;
@@ -89,6 +90,7 @@ const setup = ({
   onDragStart?: VoidFunction | undefined;
   onDragEnd?: VoidFunction | undefined;
   isRtl?: boolean | undefined;
+  showArrows?: BaseGalleryProps['showArrows'] | undefined;
 }) => {
   let slideDataByIndexMap: Record<number, any> = {};
   let layerTransform = '';
@@ -149,7 +151,7 @@ const setup = ({
     <DirectionProvider value={isRtl ? 'rtl' : 'ltr'}>
       <Gallery
         looped={looped}
-        showArrows
+        showArrows={showArrows}
         align={align}
         slideIndex={slideIndex}
         onChange={onChange}
@@ -1033,6 +1035,34 @@ describe('Gallery', () => {
         checkTransformX(mockedData.layerTransform, 890);
         checkTransformX(mockedData.getSlideMockData(0).transform, -900);
         checkActiveSlide(0);
+      }),
+    );
+  });
+
+  describe('showArrows="always"', () => {
+    fakeTimersForScope(false);
+    it(
+      'renders both arrows even when slides are fully visible',
+      withFakeTimers(() => {
+        const mockedData = setup({
+          numberOfSlides: 2,
+          defaultSlideIndex: 0,
+          slideWidth: 200,
+          containerWidth: 540,
+          viewPortWidth: 540,
+          align: 'center',
+          looped: false,
+          showArrows: 'always',
+        });
+        vi.runAllTimers();
+
+        // Слайды полностью помещаются в контейнер, но при `showArrows="always"`
+        // обе стрелки должны отображаться.
+        expect(getArrows()).toHaveLength(2);
+        expect(screen.queryByTestId('prev-arrow')).toBeTruthy();
+        expect(screen.queryByTestId('next-arrow')).toBeTruthy();
+
+        mockedData.component.unmount();
       }),
     );
   });

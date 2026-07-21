@@ -105,6 +105,10 @@
   opacity: var(--vkui--opacity_disable);
 }
 
+.showArrows .arrow {
+  opacity: var(--vkui--opacity_disable);
+}
+
 .arrowFocusVisible,
 .host .arrow:hover {
   opacity: 1;

@@ -67,9 +67,14 @@ export const ScrollArrows = ({
   const { focusVisible: prevArrowFocusVisible, ...prevArrowFocusHandlers } = useFocusVisible();
   const { focusVisible: nextArrowFocusVisible, ...nextArrowFocusHandlers } = useFocusVisible();
 
+  const isAlwaysVisible = showArrows === 'always';
+  // При `showArrows === "always"` показываем стрелки всегда, игнорируя границы слайдов.
+  const showLeftArrow = isAlwaysVisible || canSlideLeft;
+  const showRightArrow = isAlwaysVisible || canSlideRight;
+
   return showArrows ? (
     <>
-      {canSlideLeft && (
+      {showLeftArrow && (
         <ScrollArrow
           className={getArrowClassName('start', arrowAreaHeight, prevArrowFocusVisible)}
           direction="left"
@@ -81,7 +86,7 @@ export const ScrollArrows = ({
           {...prevArrowFocusHandlers}
         />
       )}
-      {canSlideRight && (
+      {showRightArrow && (
         <ScrollArrow
           className={getArrowClassName('end', arrowAreaHeight, nextArrowFocusVisible)}
           direction="right"
