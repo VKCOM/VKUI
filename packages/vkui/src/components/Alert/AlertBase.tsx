@@ -129,7 +129,6 @@ export const AlertBase = ({
         className={classNames(
           styles.host,
           platform === 'ios' && styles.ios,
-          platform === 'vkcom' && styles.vkcom,
           closing ? styles.closing : styles.opening,
           isDesktop && styles.desktop,
         )}
