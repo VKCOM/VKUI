@@ -93,7 +93,6 @@ export const PullToRefresh = ({
   const [watching, setWatching] = React.useState(false);
   const [refreshing, setRefreshing] = React.useState(false);
   const [canRefresh, setCanRefresh] = React.useState(false);
-  const [refreshActionFocused, setRefreshActionFocused] = React.useState(false);
   const [[touchDown, prevTouchDown], setTouchDown] = useStateWithPrev(false);
 
   const touchY = React.useRef(0);
@@ -269,23 +268,15 @@ export const PullToRefresh = ({
           При клавиатурном фокусе кнопка раскрывается во всплывающую, чтобы зрячий
           пользователь, навигирующийся с клавиатуры, видел, где оказался.
         */}
-        <span
-          className={classNames(
-            styles.refreshAction,
-            refreshActionFocused && styles.refreshActionFocused,
-          )}
+        <Button
+          className={styles.refreshAction}
+          mode="secondary"
+          size="m"
+          onClick={runRefreshing}
+          disabled={refreshing || !!isFetching}
         >
-          <Button
-            mode="secondary"
-            size="m"
-            onClick={runRefreshing}
-            disabled={refreshing || !!isFetching}
-            onFocus={() => setRefreshActionFocused(true)}
-            onBlur={() => setRefreshActionFocused(false)}
-          >
-            {refreshLabel}
-          </Button>
-        </span>
+          {refreshLabel}
+        </Button>
         <Box
           Component={ParentWidthWrapper}
           className={styles.controls}

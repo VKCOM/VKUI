@@ -187,32 +187,27 @@ describe(PullToRefresh, () => {
       expect(onRefresh).toHaveBeenCalledTimes(1);
     });
 
-    it('disables the hidden button while refreshing', () => {
-      const { setFetching } = renderRefresher();
-      firePull(screen.getByTestId('xxx'));
+    it('disables the hidden button while refreshing and re-enables after isFetching=false', () => {
+      const onRefresh = vi.fn();
+      const Tree = ({ isFetching }: { isFetching: boolean }) => (
+        <PullToRefresh onRefresh={onRefresh} isFetching={isFetching} data-testid="xxx" />
+      );
+      const { rerender } = render(<Tree isFetching={false} />);
+
       const refreshButton = screen.getByRole('button', { name: 'Обновить' });
-      expect(refreshButton).toHaveAttribute('disabled');
-      // клик по заблокированной кнопке не вызывает onRefresh повторно
       fireEvent.click(refreshButton);
-      setFetching(false);
-      expect(refreshButton).not.toHaveAttribute('disabled');
-    });
+      expect(onRefresh).toHaveBeenCalledTimes(1);
 
-    it('reveals the refresh button on keyboard focus for sighted users', () => {
-      render(<PullToRefresh onRefresh={noop} data-testid="xxx" />);
-      const refreshButton = screen.getByRole('button', { name: 'Обновить' });
-      const actionWrapper = refreshButton.parentElement!;
+      // пока идёт обновление, кнопка заблокирована
+      rerender(<Tree isFetching />);
+      expect(refreshButton).toBeDisabled();
 
-      // по умолчанию кнопка визуально скрыта
-      expect(actionWrapper).not.toHaveClass(pullToRefreshStyles.refreshActionFocused);
+      // клик по заблокированной кнопке не запускает onRefresh повторно
+      fireEvent.click(refreshButton);
+      expect(onRefresh).toHaveBeenCalledTimes(1);
 
-      // при фокусе раскрывается во всплывающую кнопку
-      fireEvent.focus(refreshButton);
-      expect(actionWrapper).toHaveClass(pullToRefreshStyles.refreshActionFocused);
-
-      // при потере фокуса снова скрывается
-      fireEvent.blur(refreshButton);
-      expect(actionWrapper).not.toHaveClass(pullToRefreshStyles.refreshActionFocused);
+      rerender(<Tree isFetching={false} />);
+      expect(refreshButton).not.toBeDisabled();
     });
   });
 
