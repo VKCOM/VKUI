@@ -60,20 +60,3 @@
 .directionVertical.padded .in {
   margin-block: var(--vkui--size_base_padding_horizontal--regular);
 }
-
-/*
- * CMP:
- * ModalPage
- */
-/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalModalPage--viewWidth-smallTabletPlus) .padded {
-  padding-inline: 8px;
-}
-
-/* FIXME: Мертвый код */
-@media (--viewWidth-smallTabletPlus) {
-  /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-  :global(.vkuiInternalModalPage--viewWidth-none) .padded {
-    padding-inline: 8px;
-  }
-}
