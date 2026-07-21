@@ -35,24 +35,6 @@ export const isSizeXCompactFallback = (
 ) =>
   legacySizeXContext === undefined ? viewWidth < ViewWidth.SMALL_TABLET : legacySizeX !== 'regular';
 
-/**
- * @private
- *
- * @param legacySizeX Значение из хука `useAdaptivityWithJSMediaQueries`
- * @param viewWidth Значение из хука `useAdaptivityWithJSMediaQueries`
- * @param legacySizeXContext Значение из хука `useAdaptivity`
- *
- * TODO [>=10]: #9015 удалить функцию и перенести проверку `viewWidth` на место вызова данной функции.
- */
-export const isSizeXRegularFallback = (
-  viewWidth: ViewWidthType,
-  legacySizeX: SizeTypeValues,
-  legacySizeXContext: SizeTypeValues | undefined,
-) =>
-  legacySizeXContext === undefined
-    ? viewWidth >= ViewWidth.SMALL_TABLET
-    : legacySizeX === 'regular';
-
 type RequiredNonNullable<T> = { [P in keyof T]-?: NonNullable<T[P]> };
 
 export interface UseAdaptivityWithJSMediaQueries extends RequiredNonNullable<BaseAdaptivityProps> {
