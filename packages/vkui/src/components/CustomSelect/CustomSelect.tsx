@@ -677,6 +677,12 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     disabled: inputRest.disabled,
     readOnly,
     icon: iconProp,
+    searchable,
+    inputValue,
+    onInputClear: () => {
+      resetInputValue();
+      selectInputRef.current && selectInputRef.current.focus();
+    },
   });
 
   const passClickAndFocusToInputOnClick = React.useCallback(
