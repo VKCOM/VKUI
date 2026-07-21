@@ -92,24 +92,14 @@
   position: absolute;
   inset-block-start: 8px;
   inset-inline: 0;
-  inline-size: 1px;
-  block-size: 1px;
-  margin: -1px;
-  overflow: hidden;
-  white-space: nowrap;
+  z-index: var(--vkui_internal--z_index_pull_to_refresh);
+  inline-size: fit-content;
+  margin: auto;
   pointer-events: none;
   clip-path: inset(50%);
 }
 
-.refreshActionFocused {
-  z-index: var(--vkui_internal--z_index_pull_to_refresh);
-  display: flex;
-  justify-content: center;
-  inline-size: 100%;
-  block-size: auto;
-  margin: 0;
-  overflow: visible;
-  white-space: normal;
+.refreshAction:focus {
   pointer-events: auto;
   clip-path: none;
 }

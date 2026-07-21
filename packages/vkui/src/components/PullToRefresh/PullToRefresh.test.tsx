@@ -187,32 +187,17 @@ describe(PullToRefresh, () => {
       expect(onRefresh).toHaveBeenCalledTimes(1);
     });
 
-    it('disables the hidden button while refreshing', () => {
+    it('disables the hidden button while refreshing and re-enables after isFetching=false', () => {
       const { setFetching } = renderRefresher();
       firePull(screen.getByTestId('xxx'));
       const refreshButton = screen.getByRole('button', { name: 'Обновить' });
-      expect(refreshButton).toHaveAttribute('disabled');
-      // клик по заблокированной кнопке не вызывает onRefresh повторно
+      expect(refreshButton).toBeDisabled();
+
+      // клик по заблокированной кнопке не запускает onRefresh повторно
       fireEvent.click(refreshButton);
+
       setFetching(false);
-      expect(refreshButton).not.toHaveAttribute('disabled');
-    });
-
-    it('reveals the refresh button on keyboard focus for sighted users', () => {
-      render(<PullToRefresh onRefresh={noop} data-testid="xxx" />);
-      const refreshButton = screen.getByRole('button', { name: 'Обновить' });
-      const actionWrapper = refreshButton.parentElement!;
-
-      // по умолчанию кнопка визуально скрыта
-      expect(actionWrapper).not.toHaveClass(pullToRefreshStyles.refreshActionFocused);
-
-      // при фокусе раскрывается во всплывающую кнопку
-      fireEvent.focus(refreshButton);
-      expect(actionWrapper).toHaveClass(pullToRefreshStyles.refreshActionFocused);
-
-      // при потере фокуса снова скрывается
-      fireEvent.blur(refreshButton);
-      expect(actionWrapper).not.toHaveClass(pullToRefreshStyles.refreshActionFocused);
+      expect(refreshButton).not.toBeDisabled();
     });
   });
 
