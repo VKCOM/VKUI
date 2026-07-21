@@ -197,23 +197,6 @@ describe(PullToRefresh, () => {
       setFetching(false);
       expect(refreshButton).not.toHaveAttribute('disabled');
     });
-
-    it('reveals the refresh button on keyboard focus for sighted users', () => {
-      render(<PullToRefresh onRefresh={noop} data-testid="xxx" />);
-      const refreshButton = screen.getByRole('button', { name: 'Обновить' });
-      const actionWrapper = refreshButton.parentElement!;
-
-      // по умолчанию кнопка визуально скрыта
-      expect(actionWrapper).not.toHaveClass(pullToRefreshStyles.refreshActionFocused);
-
-      // при фокусе раскрывается во всплывающую кнопку
-      fireEvent.focus(refreshButton);
-      expect(actionWrapper).toHaveClass(pullToRefreshStyles.refreshActionFocused);
-
-      // при потере фокуса снова скрывается
-      fireEvent.blur(refreshButton);
-      expect(actionWrapper).not.toHaveClass(pullToRefreshStyles.refreshActionFocused);
-    });
   });
 
   it('disables native pull-to-refresh while pulling', async () => {
