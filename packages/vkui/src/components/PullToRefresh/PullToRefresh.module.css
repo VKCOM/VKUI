@@ -1,4 +1,5 @@
 .host {
+  position: relative;
   display: flex;
   flex-grow: 1;
   flex-direction: column;
@@ -82,6 +83,25 @@
 
 .watching .content {
   transition: none;
+}
+
+/* Скрытая кнопка «Обновить»: невидима зрячим, доступна скринридеру.
+   При клавиатурном фокусе раскрывается во всплывающую кнопку, чтобы зрячий
+   пользователь, навигирующийся с клавиатуры, видел, где оказался. */
+.refreshAction {
+  position: absolute;
+  inset-block-start: 8px;
+  inset-inline: 0;
+  z-index: var(--vkui_internal--z_index_pull_to_refresh);
+  inline-size: fit-content;
+  margin: auto;
+  pointer-events: none;
+  clip-path: inset(50%);
+}
+
+.refreshAction:focus {
+  pointer-events: auto;
+  clip-path: none;
 }
 
 @keyframes animationPullToRefreshToRefreshing {

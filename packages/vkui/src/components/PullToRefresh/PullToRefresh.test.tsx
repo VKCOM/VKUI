@@ -151,6 +151,54 @@ describe(PullToRefresh, () => {
     });
   });
 
+  describe('a11y', () => {
+    it('renders a hidden refresh button accessible by role', () => {
+      render(<PullToRefresh onRefresh={noop} data-testid="xxx" />);
+      const refreshButton = screen.getByRole('button', { name: 'Обновить' });
+      expect(refreshButton).not.toBeNull();
+      expect(refreshButton).toHaveAttribute('type', 'button');
+    });
+
+    it('region has aria-label and announces busy state', () => {
+      render(<PullToRefresh onRefresh={noop} isFetching data-testid="xxx" />);
+      const host = screen.getByTestId('xxx');
+      expect(host).toHaveAttribute('role', 'region');
+      expect(host).toHaveAttribute('aria-label', 'Обновление контента');
+      expect(host).toHaveAttribute('aria-busy', 'true');
+    });
+
+    it('allows overriding accessibility texts', () => {
+      render(
+        <PullToRefresh
+          onRefresh={noop}
+          accessibilityLabel="Лента"
+          refreshLabel="Обновить ленту"
+          data-testid="xxx"
+        />,
+      );
+      expect(screen.getByRole('button', { name: 'Обновить ленту' })).not.toBeNull();
+      expect(screen.getByTestId('xxx')).toHaveAttribute('aria-label', 'Лента');
+    });
+
+    it('calls onRefresh when the hidden button is clicked', () => {
+      const onRefresh = vi.fn();
+      render(<PullToRefresh onRefresh={onRefresh} data-testid="xxx" />);
+      fireEvent.click(screen.getByRole('button', { name: 'Обновить' }));
+      expect(onRefresh).toHaveBeenCalledTimes(1);
+    });
+
+    it('disables the hidden button while refreshing', () => {
+      const { setFetching } = renderRefresher();
+      firePull(screen.getByTestId('xxx'));
+      const refreshButton = screen.getByRole('button', { name: 'Обновить' });
+      expect(refreshButton).toHaveAttribute('disabled');
+      // клик по заблокированной кнопке не вызывает onRefresh повторно
+      fireEvent.click(refreshButton);
+      setFetching(false);
+      expect(refreshButton).not.toHaveAttribute('disabled');
+    });
+  });
+
   it('disables native pull-to-refresh while pulling', async () => {
     const component = render(
       <ConfigProvider platform="ios">
