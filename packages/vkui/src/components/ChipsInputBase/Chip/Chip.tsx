@@ -6,7 +6,12 @@ import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../../hooks/useAdaptivity';
 import { useFocusVisible } from '../../../hooks/useFocusVisible';
 import { useFocusVisibleClassName } from '../../../hooks/useFocusVisibleClassName';
-import type { HasComponent, HasDataAttribute, HTMLAttributesWithRootRef } from '../../../types';
+import type {
+  HasComponent,
+  HasDataAttribute,
+  HasRender,
+  HTMLAttributesWithRootRef,
+} from '../../../types';
 import { RootComponent } from '../../RootComponent/RootComponent';
 import { Footnote } from '../../Typography/Footnote/Footnote';
 import { VisuallyHidden } from '../../VisuallyHidden/VisuallyHidden';
@@ -26,7 +31,8 @@ const modeClassNames = {
 export interface ChipProps
   extends HasComponent,
     HasDataAttribute,
-    HTMLAttributesWithRootRef<HTMLElement> {
+    HTMLAttributesWithRootRef<HTMLElement>,
+    HasRender<HTMLElement> {
   /**
    * Режим отображения компонента.
    */

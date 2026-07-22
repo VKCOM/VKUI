@@ -7,7 +7,7 @@ import { useFocusVisibleClassName } from '../../hooks/useFocusVisibleClassName';
 import { usePlatform } from '../../hooks/usePlatform';
 import { callMultiple } from '../../lib/callMultiple';
 import { COMMON_WARNINGS, warnOnce } from '../../lib/warnOnce';
-import type { HasComponent, HasRootRef } from '../../types';
+import type { HasComponent, HasRender, HasRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Tappable } from '../Tappable/Tappable';
 import { Footnote } from '../Typography/Footnote/Footnote';
@@ -16,7 +16,8 @@ import styles from './TabbarItem.module.css';
 export interface TabbarItemProps
   extends Omit<React.AllHTMLAttributes<HTMLElement>, 'label'>,
     HasRootRef<HTMLElement>,
-    HasComponent {
+    HasComponent,
+    HasRender<HTMLElement> {
   /**
    * Выбранное состояние компонента.
    */

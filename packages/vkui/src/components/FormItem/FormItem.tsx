@@ -5,7 +5,7 @@ import { classNames, hasReactNode, isPrimitiveReactNode } from '@vkontakte/vkjs'
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
 import { defineComponentDisplayNames } from '../../lib/react/defineComponentDisplayNames';
-import type { HasComponent, HasRootRef } from '../../types';
+import type { HasComponent, HasRender, HasRootRef } from '../../types';
 import { Removable, type RemovableProps } from '../Removable/Removable';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Footnote } from '../Typography/Footnote/Footnote';
@@ -29,6 +29,7 @@ export interface FormItemProps
   extends React.AllHTMLAttributes<HTMLElement>,
     HasRootRef<HTMLElement>,
     HasComponent,
+    HasRender<HTMLElement>,
     RemovableProps {
   /**
    * Дополнительный элемент, отображаемый над содержимым.

@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import type { HasComponent, HasRootRef } from '../../../types';
+import type { HasComponent, HasRender, HasRootRef } from '../../../types';
 import { Subhead } from '../../Typography/Subhead/Subhead';
 import { FormItemContext } from '../context';
 import styles from '../FormItem.module.css';
@@ -10,7 +10,8 @@ import styles from '../FormItem.module.css';
 export interface FormItemTopLabelProps
   extends React.AllHTMLAttributes<HTMLElement>,
     HasRootRef<HTMLElement>,
-    HasComponent {}
+    HasComponent,
+    HasRender<HTMLElement> {}
 
 /**
  * Отвечает за отрисовку заголовка поля. По умолчанию компонент представлен тегом `label`, если передано свойство `htmlFor`.
