@@ -134,7 +134,6 @@
    *
    * - см. `ModalPageHeader`
    * - см. `ModalPageContent`
-   * - см. `ModalPageFooter`
    */
   display: flex;
   flex-shrink: 1;

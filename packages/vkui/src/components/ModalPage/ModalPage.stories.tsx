@@ -10,6 +10,7 @@ import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constan
 import { cities, getRandomUser, getRandomUsers, multiplyText } from '../../testing/mock';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Avatar } from '../Avatar/Avatar';
+import { Box } from '../Box/Box';
 import { Button } from '../Button/Button';
 import { Card } from '../Card/Card';
 import { CardScroll } from '../CardScroll/CardScroll';
@@ -26,7 +27,6 @@ import { HorizontalCell } from '../HorizontalCell/HorizontalCell';
 import { HorizontalScroll } from '../HorizontalScroll/HorizontalScroll';
 import { Input } from '../Input/Input';
 import { ModalOutsideButton } from '../ModalOutsideButton/ModalOutsideButton';
-import { ModalPageFooter } from '../ModalPageFooter/ModalPageFooter';
 import { ModalPageHeader } from '../ModalPageHeader/ModalPageHeader';
 import { PanelHeaderButton } from '../PanelHeaderButton/PanelHeaderButton';
 import { PanelHeaderClose } from '../PanelHeaderClose/PanelHeaderClose';
@@ -34,6 +34,7 @@ import { PanelHeaderSubmit } from '../PanelHeaderSubmit/PanelHeaderSubmit';
 import { Placeholder } from '../Placeholder/Placeholder';
 import { Radio } from '../Radio/Radio';
 import { SelectMimicry } from '../SelectMimicry/SelectMimicry';
+import { Separator } from '../Separator/Separator';
 import { SimpleCell } from '../SimpleCell/SimpleCell';
 import { Spacing } from '../Spacing/Spacing';
 import { Textarea } from '../Textarea/Textarea';
@@ -54,7 +55,6 @@ const story: Meta<ModalPageProps> = {
         DoneButton,
         AndroidCloseButton,
         IosCloseButton,
-        ModalPageFooter,
         stopPropagation,
       },
     },
@@ -328,9 +328,12 @@ export const Sandbox: Story = (props: ModalPageProps) => {
           </ModalPageHeader>
         }
         footer={
-          <ModalPageFooter>
-            <Input name="footer" type="text" placeholder="Lorem ipsum..." />
-          </ModalPageFooter>
+          <>
+            <Separator />
+            <Box padding="system">
+              <Input name="footer" type="text" placeholder="Lorem ipsum..." />
+            </Box>
+          </>
         }
         outsideButtons={
           <ModalOutsideButton aria-label="More" onClick={() => console.log('outside button click')}>

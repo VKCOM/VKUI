@@ -36,7 +36,16 @@ export interface ModalPageProps
    */
   header?: ReactNode | undefined;
   /**
-   * Подвал модальной страницы, `<ModalPageFooter />`.
+   * Подвал модальной страницы.
+   *
+   * ```tsx
+   * <>
+   *   <Separator />
+   *   <Box padding="system">
+   *     <Button>Кнопка</Button>
+   *   </Box>
+   * </>
+   * ```
    */
   footer?: ReactNode | undefined;
   /**
