@@ -1,4 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/ban-types
 export function mapObject<T extends Object, R extends Record<keyof T, any>>(
   object: T,
   map: (value: T[keyof T], key: keyof T) => R[keyof T],
@@ -13,7 +12,6 @@ export function mapObject<T extends Object, R extends Record<keyof T, any>>(
   );
 }
 
-// eslint-disable-next-line @typescript-eslint/ban-types
 export function filterObject<T extends Object, R extends Record<keyof T, any>>(
   object: T,
   filter: (value: T[keyof T], key: keyof T) => boolean,

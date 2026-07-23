@@ -18,10 +18,6 @@ module.exports = {
   root: false,
   extends: ['plugin:react-hooks/recommended', 'plugin:react-server-components/recommended'],
   plugins: ['import', '@project-tools/vkui', 'unicorn', 'eslint-plugin-jsdoc'],
-  parserOptions: {
-    project: './tsconfig.eslint.json',
-    tsconfigRootDir: __dirname,
-  },
   settings: {
     'import/resolver': {
       alias: {

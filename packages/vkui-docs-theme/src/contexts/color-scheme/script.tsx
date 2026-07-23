@@ -43,7 +43,7 @@ function script(storageKey: string, defaultColorScheme: 'light' | 'dark') {
     document.documentElement.classList.add(colorSchemeClassName);
 
     document.documentElement.style.colorScheme = resolved;
-  } catch (e) {
+  } catch {
     //
   }
 }

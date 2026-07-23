@@ -30,7 +30,7 @@ export const PlaygroundStoreProvider = ({ children }: PlaygroundStoreProviderPro
     async function processTheme() {
       try {
         await loadTheme(themeName, colorSchemeOptions);
-      } catch (error) {
+      } catch {
         const { themeName: defaultThemeName, colorSchemeOptions: defaultColorSchemeOptions } =
           getDefaultByThemesPresets('vkBase');
         updateThemeData(defaultThemeName, defaultColorSchemeOptions);

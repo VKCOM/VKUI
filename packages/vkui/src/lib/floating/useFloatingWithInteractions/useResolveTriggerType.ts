@@ -24,8 +24,11 @@ export const useResolveTriggerType = (
       }
     },
     {
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
       triggerOnFocus: false as boolean,
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
       triggerOnClick: false as boolean,
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
       triggerOnHover: false as boolean,
     },
   );

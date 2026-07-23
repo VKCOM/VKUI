@@ -44,5 +44,5 @@
       attributes: true,
       attributeFilter: ['class'],
     });
-  } catch (err) {}
+  } catch {}
 })();
