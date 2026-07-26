@@ -898,16 +898,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@es-joy/jsdoccomment@npm:~0.88.0":
-  version: 0.88.0
-  resolution: "@es-joy/jsdoccomment@npm:0.88.0"
+"@es-joy/jsdoccomment@npm:~0.90.0":
+  version: 0.90.0
+  resolution: "@es-joy/jsdoccomment@npm:0.90.0"
   dependencies:
     "@types/estree": "npm:^1.0.9"
-    "@typescript-eslint/types": "npm:^8.59.4"
+    "@typescript-eslint/types": "npm:^8.65.0"
     comment-parser: "npm:1.4.7"
     esquery: "npm:^1.7.0"
-    jsdoc-type-pratt-parser: "npm:~7.2.0"
-  checksum: 10/d74a765d90f3782f8da3ace6c15094ebc627a167ef30eece6513436f07f08c7eacfb0cad3f41923ba4548e4e4ca1f7788616796c16362fafd7c3fa4e03b5e1d8
+    jsdoc-type-pratt-parser: "npm:~7.3.0"
+  checksum: 10/19d26676b46f1543d707b11b621f886c766c19ccbdc37419f243217e558cab054d51e931e8886eecceb33f361e27849b76f018da3cae8ff737b7b4bf76882139
   languageName: node
   linkType: hard
 
@@ -4996,10 +4996,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/types@npm:^8.58.0, @typescript-eslint/types@npm:^8.59.4":
+"@typescript-eslint/types@npm:^8.58.0":
   version: 8.60.1
   resolution: "@typescript-eslint/types@npm:8.60.1"
   checksum: 10/c603417e621b5b1263c2f60fad9e202d560fd07fce7f40e9a356c0530e5eaf0ff1a9af865237bf93aa18a5a4e2f034ee0cce0fe6c070f08df33e35a099bdea47
+  languageName: node
+  linkType: hard
+
+"@typescript-eslint/types@npm:^8.65.0":
+  version: 8.65.0
+  resolution: "@typescript-eslint/types@npm:8.65.0"
+  checksum: 10/a6fc10a733adbb98bbb9c312c8d99791e1a2fd3efef5c2a5b51da1c166aac3db4427c30bf32059808abe305a289f820bf610683914e897baeb18315af6a1d16c
   languageName: node
   linkType: hard
 
@@ -5548,7 +5555,7 @@ __metadata:
     eslint-import-resolver-alias: "npm:^1.1.2"
     eslint-plugin-compat: "npm:^7.0.2"
     eslint-plugin-import: "npm:^2.32.0"
-    eslint-plugin-jsdoc: "npm:^63.1.0"
+    eslint-plugin-jsdoc: "npm:^63.2.2"
     eslint-plugin-react: "npm:^7.33.2"
     eslint-plugin-react-hooks: "npm:^7.1.1"
     eslint-plugin-react-server-components: "npm:^1.2.0"
@@ -9030,11 +9037,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-jsdoc@npm:^63.1.0":
-  version: 63.1.0
-  resolution: "eslint-plugin-jsdoc@npm:63.1.0"
+"eslint-plugin-jsdoc@npm:^63.2.2":
+  version: 63.2.2
+  resolution: "eslint-plugin-jsdoc@npm:63.2.2"
   dependencies:
-    "@es-joy/jsdoccomment": "npm:~0.88.0"
+    "@es-joy/jsdoccomment": "npm:~0.90.0"
     "@es-joy/resolve.exports": "npm:1.2.0"
     are-docs-informative: "npm:^0.0.2"
     comment-parser: "npm:1.4.7"
@@ -9046,11 +9053,11 @@ __metadata:
     object-deep-merge: "npm:^2.0.1"
     parse-imports-exports: "npm:^0.2.4"
     semver: "npm:^7.8.5"
-    spdx-expression-parse: "npm:^4.0.0"
+    spdx-expression-parse: "npm:^5.0.0"
     to-valid-identifier: "npm:^1.0.0"
   peerDependencies:
     eslint: ^7.0.0 || ^8.0.0 || ^9.0.0 || ^10.0.0
-  checksum: 10/0468e336f61095d24ee3847fc62ed988424176f41a60018a5331e065f70b952b3c672b1f1266603e79ffd72d1600b12517df551d4c6ce13566a2e10a8698d9b0
+  checksum: 10/469b32b1479b1604281cf9eba81c1f16f6680983d0bbc8ea0d0a010d53e60e64346fc3effd66578c78f6bdc654ef68fcd0ed3179658706a6d3edac055d654d2d
   languageName: node
   linkType: hard
 
@@ -11670,10 +11677,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jsdoc-type-pratt-parser@npm:~7.2.0":
-  version: 7.2.0
-  resolution: "jsdoc-type-pratt-parser@npm:7.2.0"
-  checksum: 10/a09d7b1f535a77f2ebbe0a3ffb54ec72034d6f6d8de3fb498f77287d4ac97fc70540ed2689a89f2160b2b3918600e5576acfc1eaca496bfb1b9f9b27eae1c4cf
+"jsdoc-type-pratt-parser@npm:~7.3.0":
+  version: 7.3.0
+  resolution: "jsdoc-type-pratt-parser@npm:7.3.0"
+  checksum: 10/64b6cf7c088bab0f5af49287be5e470d8b01f17fbf23f5adcd5ee78ad059fbe4d86e4e37a2f621766d7bea7c78d1bcdb10a09a1919dc01b85b4286d1b2bd3de3
   languageName: node
   linkType: hard
 
@@ -17355,13 +17362,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"spdx-expression-parse@npm:^4.0.0":
-  version: 4.0.0
-  resolution: "spdx-expression-parse@npm:4.0.0"
+"spdx-expression-parse@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "spdx-expression-parse@npm:5.0.0"
   dependencies:
     spdx-exceptions: "npm:^2.1.0"
     spdx-license-ids: "npm:^3.0.0"
-  checksum: 10/936be681fbf5edeec3a79c023136479f70d6edb3fd3875089ac86cd324c6c8c81add47399edead296d1d0af17ae5ce88c7f88885eb150b62c2ff6e535841ca6a
+  checksum: 10/90813faf3e37303af96f1c13a9eb0e4667b84a546e58034eb789bae1700c54cc43b236c81ea912babc4010994f59a8d343eb0d7dff404a481bd45f32970a7246
   languageName: node
   linkType: hard
 
