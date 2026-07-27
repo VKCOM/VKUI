@@ -15,7 +15,7 @@ on:
       - '!packages/vkui/playwright/**'
       - '!packages/vkui/docker-compose.yml'
       - '!packages/vkui/playwright-ct.config.*'
-      - '!packages/vkui/**/__image_snapshots__/*.png'
+      - '!packages/vkui/**/__image_snapshots__/*.webp'
       # eslint
       - '!packages/vkui/.eslintrc.*'
       - '!packages/vkui/tsconfig.eslint.json'

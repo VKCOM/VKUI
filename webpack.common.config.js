@@ -38,7 +38,7 @@ const rules = [
     },
   },
   {
-    test: /\.(jpeg|jpg|png|woff|woff2|svg|otf)$/,
+    test: /\.(jpeg|jpg|png|webp|woff|woff2|svg|otf)$/,
     type: 'asset/resource',
     generator: {
       filename: 'static/[name].[hash:8].[ext]',

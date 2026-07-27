@@ -69,8 +69,8 @@
 ```tsx
 test("Example", async ({ expectScreenshotClippedToContent }) => {
   // ...
-  await expectScreenshotClippedToContent(); // => мы получим скриншот с названием 'example-android-chromium-light-1-snap.png'
-  await expectScreenshotClippedToContent(); // => мы получим скриншот с названием 'example-android-chromium-light-2-snap.png'
+  await expectScreenshotClippedToContent(); // => мы получим скриншот с названием 'example-android-chromium-light-1-snap.webp'
+  await expectScreenshotClippedToContent(); // => мы получим скриншот с названием 'example-android-chromium-light-2-snap.webp'
 });
 
 test.describe("Example", () => {
@@ -78,7 +78,7 @@ test.describe("Example", () => {
     expectScreenshotClippedToContent,
   }) => {
     // ...
-    await expectScreenshotClippedToContent(); // => мы получим скриншот с названием 'example-android-chromium-light-my-awesome-case-description-1-snap.png'
+    await expectScreenshotClippedToContent(); // => мы получим скриншот с названием 'example-android-chromium-light-my-awesome-case-description-1-snap.webp'
   });
 });
 ```

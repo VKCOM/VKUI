@@ -24,7 +24,7 @@
   "files": [
     "./dist",
     "./src",
-    "!./src/**/*.png",
+    "!./src/**/*.webp",
     "!./src/**/*.md",
     "!./src/**/*.*.ts",
     "!./src/**/*.*.tsx",
