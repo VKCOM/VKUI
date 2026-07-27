@@ -185,7 +185,7 @@
 @media (--viewWidth-smallTabletMinus) {
   /* stylelint-disable selector-pseudo-class-disallowed-list */
   :global(.vkuiInternalGroup--viewWidth-none.vkuiInternalGroup--mode-none):not(:first-of-type)
-    > .host:first-child,
+  > .host:first-child,
   :global(.vkuiInternalGroup--viewWidth-none.vkuiInternalGroup--mode-none):not(:first-of-type)
     > :global(.vkuiInternalTappable):first-child
     > .host {
@@ -206,7 +206,7 @@
 @media (--viewWidth-smallTabletPlus) {
   /* stylelint-disable selector-pseudo-class-disallowed-list */
   :global(.vkuiInternalGroup--viewWidth-none.vkuiInternalGroup--mode-none)
-    > .host:not(.sizeM):first-child,
+  > .host:not(.sizeM):first-child,
   :global(.vkuiInternalGroup--viewWidth-none.vkuiInternalGroup--mode-none)
     > :global(.vkuiInternalTappable):first-child
     > .host:not(.sizeM) {

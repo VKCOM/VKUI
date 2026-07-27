@@ -45,7 +45,7 @@
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list -- Нужно для закрашивания прозрачной области нижнего инсета на iphone x */
 :global(.vkuiInternalFixedLayout--ios):global(.vkuiInternalFixedLayout--vertical-bottom)
-  .host::after {
+.host::after {
   position: absolute;
   inset-block-start: 0;
   inset-inline-start: 0;

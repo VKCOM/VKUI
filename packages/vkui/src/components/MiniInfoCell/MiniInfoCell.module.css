@@ -75,9 +75,8 @@
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 .modeAdd .middle :global(.vkuiIcon),
-.modeMore
-  .middle
-  /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-  :global(.vkuiIcon) {
+.modeMore .middle
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
+:global(.vkuiIcon) {
   color: var(--vkui--color_icon_accent_themed);
 }

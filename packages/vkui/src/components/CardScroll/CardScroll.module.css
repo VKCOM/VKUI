@@ -31,14 +31,14 @@
  */
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalSplitCol--viewWidth-tabletPlus):global(.vkuiInternalSplitCol--spaced-auto)
-  .withPaddings {
+.withPaddings {
   --vkui_internal--CardScroll_horizontal_padding: 16px;
 }
 
 @media (--viewWidth-smallTabletPlus) {
   /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
   :global(.vkuiInternalSplitCol--viewWidth-none):global(.vkuiInternalSplitCol--spaced-auto)
-    .withPaddings {
+  .withPaddings {
     --vkui_internal--CardScroll_horizontal_padding: 16px;
   }
 }
