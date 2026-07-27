@@ -5,13 +5,12 @@ import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constan
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Avatar } from '../Avatar/Avatar';
 import { Cell } from '../Cell/Cell';
-import { Group } from '../Group/Group';
 import { List } from '../List/List';
 import { PanelHeader } from '../PanelHeader/PanelHeader';
 import { Footer, type FooterProps } from './Footer';
 
 const story: Meta<FooterProps> = {
-  title: 'Layout/Group/Footer',
+  title: 'Layout/Footer',
   component: Footer,
   parameters: createStoryParameters('Footer', CanvasFullLayout, DisableCartesianParam),
   tags: ['Раскладка'],
@@ -30,7 +29,7 @@ Playground.args = {
 export const Example: Story = (props: FooterProps) => (
   <>
     <PanelHeader>Footer</PanelHeader>
-    <Group>
+    <section>
       <List>
         <Cell before={<Avatar />} subtitle="Веб-сайт" onClick={noop}>
           Команда ВКонтакте
@@ -42,8 +41,8 @@ export const Example: Story = (props: FooterProps) => (
           ПостНаука
         </Cell>
       </List>
-    </Group>
-    <Footer {...props} />
+      <Footer {...props} />
+    </section>
   </>
 );
 
