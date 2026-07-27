@@ -128,8 +128,7 @@
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalFormItem--removable) .content,
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-  :global(.vkuiInternalFormLayoutGroup--removable)
-  .content {
+:global(.vkuiInternalFormLayoutGroup--removable) .content {
   flex-wrap: wrap;
   align-items: flex-start;
 }
@@ -142,9 +141,8 @@
 :global(.vkuiInternalFormItem--withTop) :global(.vkuiInternalFormItem__removable) ~ .offset,
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
   :global(.vkuiInternalFormLayoutGroup--removable)
-  /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-  :global(.vkuiInternalFormItem--withTop)
-  ~ .offset {
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
+:global(.vkuiInternalFormItem--withTop) ~ .offset {
   display: block;
   order: -1;
   inline-size: 100%;

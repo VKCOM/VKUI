@@ -131,7 +131,7 @@
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalFormLayoutGroup--mode-vertical.vkuiInternalFormLayoutGroup--segmented)
-  .host:not(:last-of-type) {
+.host:not(:last-of-type) {
   padding-block-end: 0;
 }
 
