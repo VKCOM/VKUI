@@ -68,7 +68,7 @@ jobs:
       - name: Zip changed screenshots
         id: zip-screenshots
         run: |
-          git add ./**/*.png
+          git add ./**/*.webp
           mkdir screenshots
 
           CHANGED_SCREENSHOTS=()
@@ -142,4 +142,4 @@ jobs:
           commit-message: 'chore(e2e): update screenshots'
           body: Automated screenshots updates
           add-paths: |
-            **/*.png
+            **/*.webp

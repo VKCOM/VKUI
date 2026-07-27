@@ -57,5 +57,6 @@ export async function screenshotWithClipToContent(
     clip,
     fullPage,
     animations: 'disabled',
+    type: 'webp',
   });
 }
