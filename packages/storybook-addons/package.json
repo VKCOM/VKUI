@@ -33,7 +33,7 @@
   ],
   "dependencies": {
     "@babel/standalone": "^8.0.4",
-    "monaco-editor": "^0.55.1"
+    "monaco-editor": "^0.56.0"
   },
   "peerDependencies": {
     "@storybook/icons": ">=2.0.0",
