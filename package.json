@@ -99,7 +99,7 @@
     "webpack": "^5.108.4",
     "webpack-cli": "^7.2.1",
     "webpack-merge": "^6.0.1",
-    "yargs": "^18.0.0"
+    "yargs": "^18.1.0"
   },
   "resolutions": {
     "@types/mdx@npm:^2.0.0": "patch:@types/mdx@npm%3A2.0.13#~/.yarn/patches/@types-mdx-npm-2.0.13-52981f86f6.patch",
