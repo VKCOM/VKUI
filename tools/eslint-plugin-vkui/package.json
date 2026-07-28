@@ -2,7 +2,7 @@
   "private": true,
   "name": "@project-tools/eslint-plugin-vkui",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "index.mjs",
   "scripts": {
     "build": "echo no build",
     "test": "echo no test",

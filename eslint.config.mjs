@@ -14,7 +14,7 @@ import reactHooks from 'eslint-plugin-react-hooks';
 import unicorn from 'eslint-plugin-unicorn';
 import globals from 'globals';
 
-import vkuiPlugin from './tools/eslint-plugin-vkui/index.js';
+import vkuiPlugin from './tools/eslint-plugin-vkui/index.mjs';
 import vkuiTestTsconfig from './packages/vkui/tsconfig.test.json' with { type: 'json' };
 
 const rootDir = path.dirname(fileURLToPath(import.meta.url));
