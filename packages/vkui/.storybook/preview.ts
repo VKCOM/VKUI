@@ -45,7 +45,7 @@ const preview: Preview = {
         order: [
           'Introduction',
           'Layout',
-          ['Group', ['*', 'Header', 'Footer']],
+          ['Group', ['*', 'Header']],
           'Forms',
           'Dates',
           'Buttons',
