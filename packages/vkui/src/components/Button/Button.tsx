@@ -175,6 +175,22 @@ export const Button = ({
     }
   }, [disabled, hasHref, href, isDisabled]);
 
+  const buttonClassName = classNames(
+    styles.host,
+    stylesSize[size],
+    stylesMode[mode],
+    stylesAppearance[appearance],
+    align !== 'center' && stylesAlign[align],
+    density !== 'compact' && densityClassNames[density],
+    platform === 'ios' && styles.ios,
+    stretched && styles.stretched,
+    hasIconOnly && !stretched && styles.singleIcon,
+    loading && styles.loading,
+    rounded && styles.rounded,
+    disabled && styles.disabled,
+    elevation && stylesElevation[elevation],
+  );
+
   return (
     <Tappable
       hoverMode={styles.hover}
@@ -187,21 +203,7 @@ export const Button = ({
       {...restProps}
       aria-label={ariaLabel}
       onClick={isDisabled ? undefined : onClick}
-      baseClassName={classNames(
-        styles.host,
-        stylesSize[size],
-        stylesMode[mode],
-        stylesAppearance[appearance],
-        align !== 'center' && stylesAlign[align],
-        density !== 'compact' && densityClassNames[density],
-        platform === 'ios' && styles.ios,
-        stretched && styles.stretched,
-        hasIconOnly && !stretched && styles.singleIcon,
-        loading && styles.loading,
-        rounded && styles.rounded,
-        disabled && styles.disabled,
-        elevation && stylesElevation[elevation],
-      )}
+      baseClassName={buttonClassName}
       getRootRef={getRootRef}
     >
       {loading && (
