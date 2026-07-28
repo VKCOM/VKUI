@@ -1,4 +1,5 @@
 import * as path from 'node:path';
+import { RsdoctorRspackPlugin } from '@rsdoctor/rspack-plugin';
 import * as rspack from '@rspack/core';
 import browserslist from 'browserslist';
 import { CleanOnDoneRspackPlugin } from './scripts/CleanOnDoneRspackPlugin.ts';
@@ -6,6 +7,7 @@ import { makePostcssPlugins } from './scripts/postcss.ts';
 
 const rootDirectory = path.join(import.meta.dirname, '../../');
 const browser = browserslist.readConfig(path.join(rootDirectory, '.browserslistrc'));
+const rsdoctorReportDirectory = process.env.RSDOCTOR_REPORT_DIR;
 /**
  * Конфигурация для css
  */
@@ -85,10 +87,36 @@ const config: rspack.Configuration = {
   },
   devtool: 'source-map',
   plugins: [
-    new CleanOnDoneRspackPlugin(['dist/*.tmp', 'dist/*.tmp.*']),
+    ...(!rsdoctorReportDirectory
+      ? [new CleanOnDoneRspackPlugin(['dist/*.tmp', 'dist/*.tmp.*'])]
+      : []),
     new rspack.CircularDependencyRspackPlugin({
       failOnError: true,
     }),
+    ...(rsdoctorReportDirectory
+      ? [
+          new RsdoctorRspackPlugin({
+            disableClientServer: true,
+            features: ['bundle'],
+            linter: {
+              rules: {
+                'cross-chunks-package': 'off',
+                'default-import-check': 'off',
+                'duplicate-package': 'off',
+                'ecma-version-check': 'off',
+                'loader-performance-optimization': 'off',
+                'module-mixed-chunks': 'off',
+                'tree-shaking-side-effects-only': 'off',
+              },
+            },
+            output: {
+              mode: 'normal',
+              reportCodeType: 'noModuleSource',
+              reportDir: rsdoctorReportDirectory,
+            },
+          }),
+        ]
+      : []),
   ],
   stats: {
     all: false,

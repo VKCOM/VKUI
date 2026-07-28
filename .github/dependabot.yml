@@ -76,6 +76,9 @@ updates:
       rspack:
         patterns:
           - '@rspack/*'
+      rsdoctor:
+        patterns:
+          - '@rsdoctor/*'
       next:
         patterns:
           - 'next'

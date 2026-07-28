@@ -189,7 +189,7 @@ jobs:
     if: ${{ needs.changed_files.outputs.package_vkui == 'true' }}
     needs: changed_files
     runs-on: ubuntu-latest
-    name: Generate Diff
+    name: Generate bundle diff
     steps:
       - name: Checkout PR branch
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -197,11 +197,14 @@ jobs:
       - name: Node setup (pr)
         uses: ./.github/actions/node-setup
 
-      - name: Build vkui PR (pr)
+      - name: Save Rsdoctor config
+        run: cp packages/vkui/rspack.styles.config.ts "$RUNNER_TEMP/rspack.styles.config.ts"
+
+      - name: Build vkui PR with Rsdoctor
         working-directory: packages/vkui
-        run: |
-          node --run build
-          yarn exec biome format --write --config-path=diff.biome.json
+        env:
+          RSDOCTOR_REPORT_DIR: ${{ runner.temp }}/rsdoctor/current
+        run: node --run build
 
       - name: Checkout target
         env:
@@ -213,32 +216,52 @@ jobs:
       - name: Node setup (target)
         uses: ./.github/actions/node-setup
 
-      - name: Rename dist folder from pr
-        working-directory: packages/vkui
+      - name: Add Rsdoctor to target
         run: |
-          mv dist pr_dist
+          yarn add --dev @rsdoctor/cli@1.6.1 @rsdoctor/client@1.6.1 @rsdoctor/rspack-plugin@1.6.1
+          cp "$RUNNER_TEMP/rspack.styles.config.ts" packages/vkui/rspack.styles.config.ts
 
-      - name: Build vkui (target)
+      - name: Build vkui target with Rsdoctor
         working-directory: packages/vkui
-        run: |
-          node --run build
-          yarn exec biome format --write --config-path=diff.biome.json
+        env:
+          RSDOCTOR_REPORT_DIR: ${{ runner.temp }}/rsdoctor/baseline
+        run: node --run build
 
-      - name: Generate diff
+      - name: Generate Rsdoctor diff data
         id: generate-diff
         run: |
-          git diff --no-index packages/vkui/dist/ packages/vkui/pr_dist/ > code_diff.dif || true
-          if [ -s code_diff.dif ]; then
-            echo "has_diff=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "has_diff=false" >> "$GITHUB_OUTPUT"
-          fi
-
-      - name: Generate HTML report
-        if: steps.generate-diff.outputs.has_diff == 'true'
-        run: |
           mkdir diff
-          yarn run diff2html -i file -F diff/diff-report.html --summary open  --title "VKUI Bundle Diff" --style side -- code_diff.dif
+          yarn run -T rsdoctor bundle-diff \
+            --baseline="$RUNNER_TEMP/rsdoctor/baseline/.rsdoctor/manifest.json" \
+            --current="$RUNNER_TEMP/rsdoctor/current/.rsdoctor/manifest.json" \
+            --json="diff/rsdoctor-diff.json"
+          node --input-type=module -e '
+            import fs from "node:fs";
+            const diff = JSON.parse(fs.readFileSync("diff/rsdoctor-diff.json", "utf8"));
+            const hasChangedSize = (value) => {
+              if (!value || typeof value !== "object") return false;
+              if (typeof value.baseline === "number" && typeof value.current === "number") {
+                return value.baseline !== value.current;
+              }
+              return Object.values(value).some(hasChangedSize);
+            };
+            const hasListChanges = ["modules", "packages"].some((section) =>
+              ["added", "removed", "changed"].some((type) => diff[section][type].length > 0),
+            );
+            fs.appendFileSync(
+              process.env.GITHUB_OUTPUT,
+              `has_diff=${hasChangedSize(diff.assets) || hasListChanges}\n`,
+            );
+          '
+
+      - name: Generate Rsdoctor HTML report
+        if: steps.generate-diff.outputs.has_diff == 'true'
+        run: >
+          yarn run -T rsdoctor bundle-diff
+          --baseline="$RUNNER_TEMP/rsdoctor/baseline/.rsdoctor/manifest.json"
+          --current="$RUNNER_TEMP/rsdoctor/current/.rsdoctor/manifest.json"
+          --html
+          --output="diff/diff-report.html"
 
       - name: Upload report
         if: steps.generate-diff.outputs.has_diff == 'true'

@@ -236,7 +236,7 @@ jobs:
     needs: pr_workflow_payload
     if: ${{ needs.pr_workflow_payload.outputs.status == 'success' }}
     runs-on: ubuntu-slim
-    name: Deploy diff
+    name: Deploy bundle diff
     permissions:
       actions: read
       contents: read
@@ -244,7 +244,7 @@ jobs:
       has_diff: ${{ steps.artifact.outputs.found_artifact }}
       url: ${{ steps.url.outputs.value }}
     steps:
-      - name: Download package artifact
+      - name: Download bundle diff artifact
         id: artifact
         uses: VKCOM/gh-actions/shared/download-workflow-artifact@main
         with:
@@ -278,13 +278,13 @@ jobs:
       - deploy_diff
       - pr_workflow_payload
     runs-on: ubuntu-slim
-    name: Diff comment
+    name: Bundle diff comment
     permissions:
       contents: read
       issues: write
       pull-requests: write
     steps:
-      - name: Find diff URL comment
+      - name: Find bundle diff URL comment
         uses: peter-evans/find-comment@b30e6a3c0ed37e7c023ccd3f1db5c6c0b0c23aad # v4.0.0
         id: find_url_comment
         with:
@@ -292,7 +292,7 @@ jobs:
           comment-author: 'github-actions[bot]'
           body-includes: <!-- diff_report_url -->
 
-      - name: Create or update comment with not empty diff
+      - name: Create or update comment with bundle changes
         if: ${{ needs.deploy_diff.outputs.has_diff == 'true' }}
         uses: peter-evans/create-or-update-comment@e8674b075228eee787fea43ef493e45ece1004c9 # v5.0.0
         with:
@@ -300,12 +300,12 @@ jobs:
           issue-number: ${{ needs.pr_workflow_payload.outputs.pr_number }}
           body: |
             <!-- diff_report_url -->
-            📊 Найдены изменения в собранных файлах: [Отчет](${{ needs.deploy_diff.outputs.url }})
+            📊 Rsdoctor обнаружил изменения в бандле: [отчёт](${{ needs.deploy_diff.outputs.url }})
 
             Commit ${{ env.PR_HEAD_SHA }}
           edit-mode: replace
 
-      - name: Create or update comment with empty diff
+      - name: Create or update comment without bundle changes
         if: ${{ needs.deploy_diff.outputs.has_diff == 'false' }}
         uses: peter-evans/create-or-update-comment@e8674b075228eee787fea43ef493e45ece1004c9 # v5.0.0
         with:
@@ -313,7 +313,7 @@ jobs:
           issue-number: ${{ needs.pr_workflow_payload.outputs.pr_number }}
           body: |
             <!-- diff_report_url -->
-            ✅ Изменений в собранных файлах нет
+            ✅ Rsdoctor не обнаружил изменений в бандле
 
             Commit ${{ env.PR_HEAD_SHA }}
           edit-mode: replace
