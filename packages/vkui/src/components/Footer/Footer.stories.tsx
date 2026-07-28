@@ -5,7 +5,8 @@ import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constan
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Avatar } from '../Avatar/Avatar';
 import { Cell } from '../Cell/Cell';
-import { List } from '../List/List';
+import { Group } from '../Group/Group';
+import { Panel } from '../Panel/Panel';
 import { PanelHeader } from '../PanelHeader/PanelHeader';
 import { Footer, type FooterProps } from './Footer';
 
@@ -23,27 +24,25 @@ type Story = StoryFn<FooterProps>;
 export const Playground: Story = (props: FooterProps) => <Footer {...props} />;
 
 Playground.args = {
-  children: '3 сообщества',
+  children: 'Copyright VK LLC',
 };
 
 export const Example: Story = (props: FooterProps) => (
-  <>
+  <Panel>
     <PanelHeader>Footer</PanelHeader>
-    <section>
-      <List>
-        <Cell before={<Avatar />} subtitle="Веб-сайт" onClick={noop}>
-          Команда ВКонтакте
-        </Cell>
-        <Cell before={<Avatar />} subtitle="Музыкант" onClick={noop}>
-          Robbie Williams
-        </Cell>
-        <Cell before={<Avatar />} subtitle="Издательский дом" onClick={noop}>
-          ПостНаука
-        </Cell>
-      </List>
-      <Footer {...props} />
-    </section>
-  </>
+    <Group>
+      <Cell before={<Avatar />} subtitle="Веб-сайт" onClick={noop}>
+        Команда ВКонтакте
+      </Cell>
+      <Cell before={<Avatar />} subtitle="Музыкант" onClick={noop}>
+        Robbie Williams
+      </Cell>
+      <Cell before={<Avatar />} subtitle="Издательский дом" onClick={noop}>
+        ПостНаука
+      </Cell>
+    </Group>
+    <Footer {...props} />
+  </Panel>
 );
 
 Example.args = Playground.args;

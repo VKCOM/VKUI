@@ -1,20 +1,20 @@
 ---
-description: Подвал списка.
+description: Подвал все страницы или текущего экрана.
 ---
 
 <Overview group="layout">
 
 # Footer [tag:component]
 
-Подвал списка.
+Подвал все страницы или текущего экрана.
 
 </Overview>
 
-{/* @example-description: Базовый подвал `Footer` для мета-информации группы. */}
+{/* @example-description: Базовый подвал `Footer`. */}
 <Playground>
   ```jsx
-  <section>
-    <List>
+  <Panel>
+    <Group>
       <Cell before={<Avatar />} subtitle="Веб-сайт" onClick={() => void 0}>
         Команда ВКонтакте
       </Cell>
@@ -24,9 +24,9 @@ description: Подвал списка.
       <Cell before={<Avatar />} subtitle="Издательский дом" onClick={() => void 0}>
         ПостНаука
       </Cell>
-    </List>
+    </Group>
     <Footer>Copyright VK LLC</Footer>
-  </section>
+  </Panel>
   ```
 </Playground>
 
