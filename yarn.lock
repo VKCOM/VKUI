@@ -3652,22 +3652,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@stylistic/eslint-plugin@npm:^5.10.0":
-  version: 5.10.0
-  resolution: "@stylistic/eslint-plugin@npm:5.10.0"
-  dependencies:
-    "@eslint-community/eslint-utils": "npm:^4.9.1"
-    "@typescript-eslint/types": "npm:^8.56.0"
-    eslint-visitor-keys: "npm:^4.2.1"
-    espree: "npm:^10.4.0"
-    estraverse: "npm:^5.3.0"
-    picomatch: "npm:^4.0.3"
-  peerDependencies:
-    eslint: ^9.0.0 || ^10.0.0
-  checksum: 10/d55706b09a55defbc5afbfc251c4ecc0acfcbc3e741c34bec461365b399d2c9d89a6cafac069356ea03e231f3b12d5cc9550e66603ac343c29e07f2b2cd30464
-  languageName: node
-  linkType: hard
-
 "@swc/cli@npm:^0.8.1":
   version: 0.8.1
   resolution: "@swc/cli@npm:0.8.1"
@@ -5380,7 +5364,6 @@ __metadata:
     "@storybook/addon-docs": "npm:10.5.5"
     "@storybook/addon-links": "npm:10.5.5"
     "@storybook/react-vite": "npm:10.5.5"
-    "@stylistic/eslint-plugin": "npm:^5.10.0"
     "@swc/cli": "npm:^0.8.1"
     "@swc/core": "npm:^1.15.46"
     "@testing-library/dom": "npm:^10.4.1"
@@ -5406,7 +5389,6 @@ __metadata:
     diff2html-cli: "npm:^5.2.15"
     dotenv: "npm:^17.4.2"
     eslint: "npm:^9.39.5"
-    eslint-config-google: "npm:0.9.1"
     eslint-plugin-compat: "npm:^7.0.2"
     eslint-plugin-import-x: "npm:^4.17.1"
     eslint-plugin-jsdoc: "npm:^63.2.2"
@@ -8686,15 +8668,6 @@ __metadata:
   version: 5.0.0
   resolution: "escape-string-regexp@npm:5.0.0"
   checksum: 10/20daabe197f3cb198ec28546deebcf24b3dbb1a5a269184381b3116d12f0532e06007f4bc8da25669d6a7f8efb68db0758df4cd981f57bc5b57f521a3e12c59e
-  languageName: node
-  linkType: hard
-
-"eslint-config-google@npm:0.9.1":
-  version: 0.9.1
-  resolution: "eslint-config-google@npm:0.9.1"
-  peerDependencies:
-    eslint: ">=4.1.1"
-  checksum: 10/f4e2772c42844b145a6c931c1b5a7d8ddfaa169644a070eaf34e88e75c44d4914369c7fd478eeacb955ad77bf2c94851a386d7f420abe67a59ebfe5c6f7a85d1
   languageName: node
   linkType: hard
 

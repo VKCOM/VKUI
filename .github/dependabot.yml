@@ -42,7 +42,6 @@ updates:
         patterns:
           - 'eslint*'
           - '@eslint/*'
-          - '@stylistic/*'
           - '@typescript-eslint/*'
       stylelint:
         patterns:

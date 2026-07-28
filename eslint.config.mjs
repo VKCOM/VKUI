@@ -3,12 +3,10 @@ import { fileURLToPath } from 'node:url';
 
 import { fixupPluginRules } from '@eslint/compat';
 import { globalIgnores } from 'eslint/config';
-import stylistic from '@stylistic/eslint-plugin';
 import tsPlugin from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
 import vitest from '@vitest/eslint-plugin';
 import compat from 'eslint-plugin-compat';
-import google from 'eslint-config-google';
 import importPlugin from 'eslint-plugin-import-x';
 import jsdoc from 'eslint-plugin-jsdoc';
 import react from 'eslint-plugin-react';
@@ -28,12 +26,6 @@ const standalonePackages = [
   'packages/vkui-floating-ui/**',
   'packages/vkui-mcp/**',
 ];
-
-const withoutRemovedCoreRules = Object.fromEntries(
-  Object.entries(google.rules).filter(
-    ([ruleName]) => !['require-jsdoc', 'valid-jsdoc'].includes(ruleName),
-  ),
-);
 
 const namingConventionOptions = [
   { selector: 'default', format: ['camelCase'] },
@@ -107,33 +99,35 @@ const namingConventionOptions = [
 ];
 
 const vkontakteBaseRules = {
-  ...withoutRemovedCoreRules,
-  'comma-dangle': ['warn', 'always-multiline'],
+  'no-irregular-whitespace': 'error',
+  'no-unexpected-multiline': 'error',
+  'guard-for-in': 'error',
+  'no-caller': 'error',
+  'no-extend-native': 'error',
+  'no-extra-bind': 'error',
+  'no-multi-str': 'error',
+  'no-new-wrappers': 'error',
+  '@typescript-eslint/only-throw-error': 'error',
+  'no-with': 'error',
+  'new-cap': 'error',
+  'no-object-constructor': 'error',
+  'constructor-super': 'error',
+  'no-new-native-nonconstructor': 'error',
+  'no-this-before-super': 'error',
+  'no-var': 'error',
   'no-undef': 'error',
-  'space-infix-ops': ['error', { int32Hint: false }],
-  'object-curly-spacing': ['error', 'always'],
-  'max-len': ['error', 180, 2, { ignoreTemplateLiterals: true }],
   curly: ['error', 'all'],
   'no-octal': 'error',
   'no-eval': 'error',
   'no-invalid-this': 'off',
   'prefer-rest-params': 'off',
   'prefer-spread': 'off',
-  'no-multi-spaces': ['error', { ignoreEOLComments: true }],
-  'no-multiple-empty-lines': ['error', { max: 1 }],
   'no-global-assign': 'error',
-  'brace-style': ['error', '1tbs', { allowSingleLine: true }],
   camelcase: ['error', { properties: 'never', ignoreDestructuring: true }],
-  'func-call-spacing': ['error', 'never'],
   'no-array-constructor': 'error',
   'no-unused-vars': ['error', { ignoreRestSiblings: true, args: 'none' }],
-  semi: ['error', 'always'],
-  'semi-spacing': ['error', { before: false, after: true }],
-  'semi-style': ['error', 'last'],
-  'no-extra-semi': 'error',
   'import/no-duplicates': 'error',
   eqeqeq: ['error', 'always', { null: 'ignore' }],
-  'block-spacing': ['error', 'always'],
   'no-shadow': 'error',
   'no-unreachable': 'error',
   'no-unsafe-negation': 'error',
@@ -147,20 +141,7 @@ const vkontakteReactRules = {
   'react/jsx-uses-vars': 'error',
   'react/react-in-jsx-scope': 'error',
   'react/prop-types': 'off',
-  'react/jsx-indent': ['error', 2],
-  'react/jsx-indent-props': ['error', 2],
   'react/jsx-curly-brace-presence': 'error',
-  'react/jsx-tag-spacing': [
-    'error',
-    {
-      closingSlash: 'never',
-      beforeSelfClosing: 'always',
-      afterOpening: 'never',
-      beforeClosing: 'never',
-    },
-  ],
-  'jsx-quotes': ['error', 'prefer-double'],
-  'react/jsx-curly-spacing': ['error', { when: 'never', children: true, allowMultiline: true }],
   'vkui/no-object-expression-in-arguments': [
     'error',
     { onlyForFunctionsWithNames: ['classNames'] },
@@ -183,26 +164,17 @@ const vkontakteTypescriptRules = {
       },
     },
   ],
-  'brace-style': 'off',
-  '@stylistic/brace-style': ['error', '1tbs', { allowSingleLine: true }],
   '@typescript-eslint/consistent-type-assertions': [
     'error',
     { assertionStyle: 'as', objectLiteralTypeAssertions: 'never' },
   ],
   '@typescript-eslint/explicit-member-accessibility': 'error',
-  'func-call-spacing': 'off',
-  '@stylistic/function-call-spacing': ['error', 'never'],
-  indent: 'off',
-  '@stylistic/indent': ['error', 2],
-  '@stylistic/member-delimiter-style': 'error',
   'no-array-constructor': 'off',
   '@typescript-eslint/no-array-constructor': 'error',
   'no-empty-function': 'off',
   '@typescript-eslint/no-empty-function': 'error',
   '@typescript-eslint/no-empty-object-type': 'off',
   '@typescript-eslint/no-empty-interface': 'error',
-  'no-extra-parens': 'off',
-  '@stylistic/no-extra-parens': ['error', 'all', { ignoreJSX: 'all' }],
   '@typescript-eslint/no-extraneous-class': 'error',
   '@typescript-eslint/no-floating-promises': 'error',
   '@typescript-eslint/no-for-in-array': 'error',
@@ -234,13 +206,8 @@ const vkontakteTypescriptRules = {
   '@typescript-eslint/prefer-namespace-keyword': 'error',
   '@typescript-eslint/prefer-readonly': 'error',
   '@typescript-eslint/prefer-string-starts-ends-with': 'error',
-  quotes: 'off',
-  '@stylistic/quotes': ['error', 'single'],
   '@typescript-eslint/require-array-sort-compare': 'error',
   '@typescript-eslint/restrict-plus-operands': 'error',
-  semi: 'off',
-  '@stylistic/semi': ['error', 'always'],
-  '@stylistic/type-annotation-spacing': 'error',
   '@typescript-eslint/unbound-method': 'error',
   '@typescript-eslint/unified-signatures': 'error',
   '@typescript-eslint/prefer-reduce-type-parameter': 'error',
@@ -254,8 +221,6 @@ const vkontakteTypescriptRules = {
       'ts-expect-error': { descriptionFormat: '^ TS\\d+: .+$' },
     },
   ],
-  'no-extra-semi': 'off',
-  '@stylistic/no-extra-semi': 'error',
   'no-undef': 'off',
   camelcase: 'off',
 };
@@ -266,13 +231,6 @@ const rootRules = {
   '@typescript-eslint/no-unnecessary-condition': 'off',
   '@typescript-eslint/no-magic-numbers': 'off',
   '@typescript-eslint/no-non-null-assertion': 'off',
-  '@stylistic/indent': 'off',
-  '@stylistic/no-extra-parens': 'off',
-  '@stylistic/quotes': 'off',
-  'react/jsx-indent': 'off',
-  'space-before-function-paren': 'off',
-  'comma-spacing': 'off',
-  'max-len': 'off',
   '@typescript-eslint/ban-ts-comment': [
     'error',
     {
@@ -421,7 +379,6 @@ export default [
       },
     },
     plugins: {
-      '@stylistic': stylistic,
       '@typescript-eslint': tsPlugin,
       import: importPlugin,
       jsdoc,
