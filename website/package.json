@@ -1,5 +1,6 @@
 {
   "private": true,
+  "type": "module",
   "name": "@project-docs/website",
   "version": "1.0.0",
   "scripts": {
@@ -8,7 +9,7 @@
     "start": "serve out",
     "pagefind": "pagefind --site out/ --output-path ./public/_pagefind && cp -r ./public/_pagefind ./out",
     "next-sitemap": "next-sitemap",
-    "generate": "node ./scripts/generate-website-data.mjs",
+    "generate": "node ./scripts/index.ts",
     "lint:types": "tsc"
   },
   "devDependencies": {

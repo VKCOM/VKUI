@@ -1,8 +1,9 @@
-import fs from 'node:fs';
-import { getPaths } from './get-paths.mjs';
-import { getProps } from './get-props.mjs';
+import * as fs from 'node:fs';
+import { runIfMain } from '../common/runIfMain.ts';
+import { getPaths } from './get-paths.ts';
+import { getProps } from './get-props.ts';
 
-function generate() {
+export function generateProps(): void {
   // eslint-disable-next-line no-console
   console.log('🔄 Генерация свойств компонентов...');
   const componentPaths = getPaths();
@@ -16,4 +17,4 @@ function generate() {
   console.log(`✅ Свойства сгенерированы.`);
 }
 
-generate();
+void runIfMain(import.meta.url, generateProps);

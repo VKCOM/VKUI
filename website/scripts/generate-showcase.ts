@@ -1,8 +1,9 @@
-import fs from 'node:fs';
-import path from 'node:path';
+import * as fs from 'node:fs';
+import * as path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { resolvePartials } from './common/resolvePartials.mjs';
-import { collectMdxFiles } from './common/collectMdxFiles.mjs';
+import { collectMdxFiles } from './common/collectMdxFiles.ts';
+import { resolvePartials } from './common/resolvePartials.ts';
+import { runIfMain } from './common/runIfMain.ts';
 
 const SCRIPT_FILE = fileURLToPath(import.meta.url);
 const SCRIPT_DIR = path.dirname(SCRIPT_FILE);
@@ -13,18 +14,18 @@ const OUT_FILE = path.join(OUT_DIR, 'showcase-data.json');
 
 const IGNORED_COMPONENTS = new Set(['fixed-layout', 'modal-root', 'focus-trap']);
 
-const GROUP_TITLES = {
-  layout: 'Раскладка',
-  forms: 'Формы и поля ввода',
-  dates: 'Работа с датами',
-  buttons: 'Кнопки',
-  navigation: 'Навигация',
-  feedback: 'Обратная связь',
-  modals: 'Модальные окна',
+const GROUP_TITLES: Record<string, string> = {
+  'layout': 'Раскладка',
+  'forms': 'Формы и поля ввода',
+  'dates': 'Работа с датами',
+  'buttons': 'Кнопки',
+  'navigation': 'Навигация',
+  'feedback': 'Обратная связь',
+  'modals': 'Модальные окна',
   'data-display': 'Отображение данных',
-  typography: 'Типографика',
-  configuration: 'Конфигурация',
-  utils: 'Утилиты',
+  'typography': 'Типографика',
+  'configuration': 'Конфигурация',
+  'utils': 'Утилиты',
 };
 
 const GROUP_ORDER = [
@@ -41,25 +42,53 @@ const GROUP_ORDER = [
   'utils',
 ];
 
-function ensureDir(dirPath) {
+interface ShowcaseFrontmatterValue {
+  [key: string]: string | boolean | undefined;
+}
+
+type ShowcaseFrontmatter = Record<string, string | ShowcaseFrontmatterValue>;
+
+interface Playground {
+  code: string;
+  direction: string | undefined;
+  wrapper: string | undefined;
+}
+
+interface ShowcaseItem {
+  name: string;
+  slug: string;
+  group: string;
+  direction: string | undefined;
+  wrapper: string | undefined;
+  description: string;
+  code: string;
+  docsUrl: string;
+}
+
+interface SkippedItem {
+  slug: string;
+  reason: string;
+}
+
+function ensureDir(dirPath: string) {
   fs.mkdirSync(dirPath, { recursive: true });
 }
 
-function parseFrontmatter(content) {
+function parseFrontmatter(content: string): { data: ShowcaseFrontmatter; body: string } {
   const match = content.match(/^---\s*\n([\s\S]*?)\n---\s*\n?/);
   if (!match) {
     return { data: {}, body: content };
   }
   const block = match[1];
-  const data = {};
-  let currentParent = null;
+  const data: ShowcaseFrontmatter = {};
+  let currentParent: string | null = null;
   for (const line of block.split('\n')) {
     const nestedMatch = line.match(/^  ([A-Za-z0-9_-]+)\s*:\s*(.*)$/);
     if (nestedMatch && currentParent) {
-      const key = nestedMatch[1];
-      let value = nestedMatch[2].trim();
+      const [, key, rawValue] = nestedMatch;
+      let value = rawValue.trim();
       value = value.replace(/^['"]|['"]$/g, '');
-      data[currentParent][key] = value === '' ? true : value;
+      (data[currentParent] as ShowcaseFrontmatterValue)[key] = value === '' ? true : value;
       continue;
     }
     const lineMatch = line.match(/^([A-Za-z0-9_-]+)\s*:\s*(.*)$/);
@@ -67,13 +96,13 @@ function parseFrontmatter(content) {
       currentParent = null;
       continue;
     }
-    const key = lineMatch[1];
-    const rawValue = lineMatch[2].trim();
-    if (rawValue === '') {
+    const [, key, rawValue] = lineMatch;
+    const trimmed = rawValue.trim();
+    if (trimmed === '') {
       data[key] = {};
       currentParent = key;
     } else {
-      let value = rawValue.replace(/^['"]|['"]$/g, '');
+      const value = trimmed.replace(/^['"]|['"]$/g, '');
       data[key] = value;
       currentParent = null;
     }
@@ -82,7 +111,10 @@ function parseFrontmatter(content) {
   return { data, body };
 }
 
-function extractOverviewMeta(body) {
+function extractOverviewMeta(body: string): {
+  group: string | undefined;
+  type: string | undefined;
+} {
   // Ищем: <Overview group="..." type="..." ...>
   const match = body.match(/<Overview\b([^>]*)>/);
   if (!match) {
@@ -97,12 +129,12 @@ function extractOverviewMeta(body) {
   };
 }
 
-function slugFromPath(filePath) {
+function slugFromPath(filePath: string): string {
   const relative = path.relative(COMPONENTS_DIR, filePath);
   return relative.replace(/\\/g, '/').replace(/\.mdx$/, '');
 }
 
-function extractFirstPlayground(body) {
+function extractFirstPlayground(body: string): Playground | null {
   const regex =
     /<Playground\b([\s\S]*?)>\s*```jsx[^\n]*\r?\n([\s\S]*?)\r?\n\s*```\s*<\/Playground>/;
 
@@ -124,11 +156,11 @@ function extractFirstPlayground(body) {
   };
 }
 
-function isHookSlug(slug) {
+function isHookSlug(slug: string): boolean {
   return (slug.split('/').pop() || slug).startsWith('use-');
 }
 
-function componentNameFromSlug(slug) {
+function componentNameFromSlug(slug: string): string {
   const base = slug.split('/').pop() || slug;
   return base
     .split('-')
@@ -136,29 +168,29 @@ function componentNameFromSlug(slug) {
     .join('');
 }
 
-function toKebabCase(componentName) {
+function toKebabCase(componentName: string): string {
   return componentName
     .replace(/([A-Z]+)([A-Z][a-z])/g, '$1-$2')
     .replace(/([a-z\d])([A-Z])/g, '$1-$2')
     .toLowerCase();
 }
 
-function buildDocsUrl(name, parent) {
+function buildDocsUrl(name: string, parent?: string): string {
   if (parent) {
     return `/components/${toKebabCase(parent)}#${toKebabCase(name)}`;
   }
   return `/components/${toKebabCase(name)}`;
 }
 
-function generateShowcaseData() {
+export function generateShowcaseData() {
   // eslint-disable-next-line no-console
   console.log('🔄 Генерация данных витрины компонентов...');
 
   ensureDir(OUT_DIR);
 
   const mdxFiles = collectMdxFiles(COMPONENTS_DIR);
-  const items = [];
-  const skipped = [];
+  const items: ShowcaseItem[] = [];
+  const skipped: SkippedItem[] = [];
 
   for (const filePath of mdxFiles) {
     const raw = fs.readFileSync(filePath, 'utf8');
@@ -193,8 +225,10 @@ function generateShowcaseData() {
       continue;
     }
 
-    const description = (data.description || '').replace(/\s+/g, ' ').trim();
-    const docsUrl = buildDocsUrl(name, other.parent || undefined);
+    const description = (typeof data.description === 'string' ? data.description : '')
+      .replace(/\s+/g, ' ')
+      .trim();
+    const docsUrl = buildDocsUrl(name, typeof other.parent === 'string' ? other.parent : undefined);
 
     items.push({
       name,
@@ -236,4 +270,4 @@ function generateShowcaseData() {
   }
 }
 
-generateShowcaseData();
+void runIfMain(import.meta.url, generateShowcaseData);

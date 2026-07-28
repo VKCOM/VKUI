@@ -1,8 +1,8 @@
-const path = require('node:path');
+import path from 'node:path';
 
-const rootDirectory = path.join(__dirname, '..');
+const rootDirectory = path.join(import.meta.dirname, '..');
 
-module.exports = {
+export default {
   plugins: [
     'postcss-import',
     [

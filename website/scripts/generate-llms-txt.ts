@@ -1,8 +1,9 @@
-import fs from 'node:fs';
-import path from 'node:path';
-import { collectMdxFiles } from './common/collectMdxFiles.mjs';
-import { componentNameFromSlug } from './common/componentNameFromSlug.mjs';
-import { parseFrontmatter } from './common/parseFrontmatter.mjs';
+import * as fs from 'node:fs';
+import * as path from 'node:path';
+import { collectMdxFiles } from './common/collectMdxFiles.ts';
+import { componentNameFromSlug } from './common/componentNameFromSlug.ts';
+import { parseFrontmatter } from './common/parseFrontmatter.ts';
+import { runIfMain } from './common/runIfMain.ts';
 
 const CONTENT_DIRECTORY = path.resolve('content');
 const PUBLIC_DIRECTORY = path.resolve('public');
@@ -10,7 +11,7 @@ const SITE_URL = 'https://vkui.io';
 
 const SECTION_ORDER = ['overview', 'components', 'integrations', 'migrations', 'blog'];
 
-const SECTION_TITLES = {
+const SECTION_TITLES: Record<string, string> = {
   overview: 'Начало работы',
   components: 'Компоненты',
   integrations: 'Интеграции',
@@ -18,13 +19,20 @@ const SECTION_TITLES = {
   blog: 'Блог',
 };
 
-function getPageTitle(fileName) {
+interface PageMeta {
+  title: string;
+  description: string;
+  url: string;
+}
+
+function getPageTitle(fileName: string): string {
   const slug = fileName.replace(/\.mdx$/, '');
   return componentNameFromSlug(slug);
 }
 
-function generateLlmsTxt() {
+export function generateLlmsTxt() {
   if (!fs.existsSync(CONTENT_DIRECTORY)) {
+    // eslint-disable-next-line no-console
     console.warn('⚠️ Директория content не найдена, пропускаем генерацию llms.txt');
     return;
   }
@@ -32,9 +40,11 @@ function generateLlmsTxt() {
   const mdxFiles = collectMdxFiles(CONTENT_DIRECTORY);
 
   // Group files by directory
-  const sections = {};
+  const sections: Record<string, PageMeta[]> = {};
   for (const filePath of mdxFiles) {
-    if (filePath.endsWith('index.mdx')) continue;
+    if (filePath.endsWith('index.mdx')) {
+      continue;
+    }
 
     const relativePath = path.relative(CONTENT_DIRECTORY, filePath);
     const parts = relativePath.split(path.sep);
@@ -79,7 +89,9 @@ function generateLlmsTxt() {
 
   for (const sectionKey of orderedSections) {
     const pages = sections[sectionKey];
-    if (!pages || pages.length === 0) continue;
+    if (!pages || pages.length === 0) {
+      continue;
+    }
 
     const sectionTitle = SECTION_TITLES[sectionKey] || sectionKey;
     lines.push(`## ${sectionTitle}`);
@@ -102,4 +114,4 @@ function generateLlmsTxt() {
   console.log(`✅ Сгенерирован llms.txt (${totalPages} страниц)`);
 }
 
-generateLlmsTxt();
+void runIfMain(import.meta.url, generateLlmsTxt);
