@@ -28,9 +28,9 @@ export const CopyToClipboard = ({ getValue, className, ...props }: CopyToClipboa
 
   const handleClick = React.useCallback<
     NonNullable<React.ComponentProps<'button'>['onClick']>
-  >(async () => {
+  >(() => {
     setCopied(true);
-    await copyTextToClipboard(getValue());
+    void copyTextToClipboard(getValue());
   }, [getValue]);
 
   return (

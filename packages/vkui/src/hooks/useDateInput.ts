@@ -160,7 +160,7 @@ export function useDateInput<T extends HTMLElement, D>({
       if (!accessible) {
         _onCalendarOpen();
       }
-      range.selectNodeContents(element as Node);
+      range.selectNodeContents(element);
 
       // Fix для Firefox: setTimeout нужен чтобы отложить range selection на
       // какое-то время, иначе, при фокусе на InputLike
