@@ -427,7 +427,7 @@ describe(ActionSheet, () => {
           // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
           iosCloseItem: {
             children: 'Закрыть',
-          } as React.ComponentProps<typeof ActionSheetDefaultIosCloseItem>,
+          },
         },
       });
       await waitForFloatingPosition();

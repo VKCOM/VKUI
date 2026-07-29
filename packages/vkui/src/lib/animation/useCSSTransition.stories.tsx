@@ -38,7 +38,7 @@ const story: Meta<DemoProps> = {
     ...DisableCartesianParam,
     liveCodeEditor: {
       scope: {
-        // eslint-disable-next-line @vkontakte/no-computed-hit-css-modules
+        // eslint-disable-next-line vkui/no-computed-hit-css-modules
         styles,
         useCSSTransition,
         transitionClassNames,

@@ -1,5 +1,5 @@
 {
-  "include": ["src/**/*.ts*", "src/**/*.js", "preset.js", ".eslintrc.js"],
+  "include": ["src/**/*.ts*", "src/**/*.js", "preset.js"],
   "exclude": [
     "**/node_modules",
     "**/dist",

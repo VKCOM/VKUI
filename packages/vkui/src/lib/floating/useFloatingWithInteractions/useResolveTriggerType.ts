@@ -1,13 +1,13 @@
 import type { TriggerType } from './types';
 
-export const useResolveTriggerType = (
-  triggerProp: TriggerType,
-): {
+interface ResolvedTriggerType {
   triggerOnFocus: boolean;
   triggerOnClick: boolean;
   triggerOnHover: boolean;
-} =>
-  (typeof triggerProp === 'string' ? [triggerProp] : triggerProp).reduce(
+}
+
+export const useResolveTriggerType = (triggerProp: TriggerType): ResolvedTriggerType =>
+  (typeof triggerProp === 'string' ? [triggerProp] : triggerProp).reduce<ResolvedTriggerType>(
     (result, trigger) => {
       switch (trigger) {
         case 'click':
@@ -24,8 +24,8 @@ export const useResolveTriggerType = (
       }
     },
     {
-      triggerOnFocus: false as boolean,
-      triggerOnClick: false as boolean,
-      triggerOnHover: false as boolean,
+      triggerOnFocus: false,
+      triggerOnClick: false,
+      triggerOnHover: false,
     },
   );
