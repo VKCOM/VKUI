@@ -3,7 +3,9 @@ updates:
   # NPM
 
   - package-ecosystem: 'npm'
-    directory: '/'
+    directories:
+      - '/'
+      - '/.github/actions/*'
     schedule:
       interval: 'weekly'
     allow:
