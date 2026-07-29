@@ -61,7 +61,7 @@
     "globals": "^17.8.0",
     "happy-css-modules": "^5.0.2",
     "husky": "^9.1.6",
-    "jsdom": "^29.1.1",
+    "jsdom": "^30.0.1",
     "lint-staged": "^17.2.0",
     "mini-css-extract-plugin": "^2.10.2",
     "postcss": "^8.5.23",
