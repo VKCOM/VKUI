@@ -5127,7 +5127,7 @@ __metadata:
     "@types/jscodeshift": "npm:^17.3.0"
     "@types/node": "npm:^26.1.2"
     "@types/prompts": "npm:^2.4.9"
-    chalk: "npm:^4.1.2"
+    chalk: "npm:^6.0.0"
     commander: "npm:^15.0.0"
     cross-spawn: "npm:^7.0.5"
     jscodeshift: "npm:^17.4.0"
@@ -6554,6 +6554,13 @@ __metadata:
     ansi-styles: "npm:^4.1.0"
     supports-color: "npm:^7.1.0"
   checksum: 10/cb3f3e594913d63b1814d7ca7c9bafbf895f75fbf93b92991980610dfd7b48500af4e3a5d4e3a8f337990a96b168d7eb84ee55efdce965e2ee8efc20f8c8f139
+  languageName: node
+  linkType: hard
+
+"chalk@npm:^6.0.0":
+  version: 6.0.0
+  resolution: "chalk@npm:6.0.0"
+  checksum: 10/bdcb895b9c848ddbce38f38df5a10a3e272d6c04d759161789c4a2fa5a1fa78bf9eecf4eef73433a2a3be7324d6da96c3c9baf5c80862f37683cc0b890597831
   languageName: node
   linkType: hard
 
