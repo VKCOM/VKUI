@@ -5,16 +5,15 @@ description: Инструкция по запуску приложения с б
 <Overview type="doc">
 # Использование
 
-После выполнения шагов из предыдущей страницы [Установка](/overview/install), у вас уже должно запускаться минимально работающее
-приложение. На данной странице рассмотрим простой пример использования и рекомендации по дальнейшим шагам.
+После шагов из [Установки](/overview/install) у вас должно запускаться минимально работающее приложение. Здесь разберём простой пример использования и рекомендации по дальнейшим шагам.
 
-Примеры продолжим создавать в контексте шаблона [React + TypeScript + Vite](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts).
+Примеры продолжим на шаблоне [React + TypeScript + Vite](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts).
 
 </Overview>
 
 ## Быстрый старт [#quick-start]
 
-Предлагаем начать с импортирования компонента [`Button`](/components/button):
+Начнём с компонента [`Button`](/components/button):
 
 ```jsx filename="src/App.tsx"
 import { Button } from '@vkontakte/vkui';
@@ -42,9 +41,7 @@ import { BlockWrapper } from '@/components/wrappers';
 
 ## Навигационные слои [#navigation]
 
-Каждое приложение состоит из набора экранов, отображающих информацию. В VKUI предусмотрены специальные компоненты для реализации
-экранов и организации навигации между ними. Подробное описание этих компонентов представлено в разделе [Навигация](/overview/navigation).
-Ниже приведён базовый пример их использования.
+Приложение состоит из набора экранов с информацией. В VKUI есть специальные компоненты для экранов и навигации между ними. Подробно — в разделе [Навигация](/overview/navigation). Ниже — базовый пример.
 
 <Playground Wrapper={FixedLayoutWrapper} style={{ maxWidth: 320, height: 415, overflow: 'hidden' }}>
 
@@ -98,12 +95,9 @@ return (
 
 ## Многоколоночный интерфейс [#multiple-columns]
 
-Если на мобильных устройствах приходится ограничивать количество элементов в одной области, то на настольных, напротив, можно
-размещать их значительно больше. Для этого интерфейс, как правило, делится на колонки. Для этого в библиотеке есть компонент
-[`SplitLayout`](/components/split-layout) с подкомпонентом [`SplitCol`](/components/split-layout#split-col). Детали будут также
-на странице [Навигация](/overview/navigation).
+На мобильных элементы приходится ограничивать, на настольных — можно размещать больше, разделяя интерфейс на колонки. Для этого есть [`SplitLayout`](/components/split-layout) с подкомпонентом [`SplitCol`](/components/split-layout#split-col). Подробнее — на странице [Навигация](/overview/navigation).
 
-Приведём адаптивный пример работы `SplitLayout`:
+Адаптивный пример работы `SplitLayout`:
 
 import { FixedLayoutWrapper } from '@/components/wrappers';
 
