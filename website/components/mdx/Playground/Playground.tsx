@@ -4,7 +4,6 @@ import * as React from 'react';
 import { classNames, useColorScheme } from '@vkontakte/vkui';
 import { JetBrains_Mono } from 'next/font/google';
 import { LiveEditor, LiveProvider } from 'react-live';
-import { Activity } from '../../Activity/Activity';
 import {
   PlaygroundPreview,
   type PlaygroundPreviewProps,
@@ -48,11 +47,11 @@ export function Playground({
           codeVisible={codeVisible}
           code={currentCode}
         />
-        <Activity mode={codeVisible ? 'visible' : 'hidden'}>
+        <React.Activity mode={codeVisible ? 'visible' : 'hidden'}>
           <div className={styles.codeBlock}>
             <LiveEditor className={styles.code} onChange={setCurrentCode} />
           </div>
-        </Activity>
+        </React.Activity>
       </LiveProvider>
     </div>
   );
