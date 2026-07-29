@@ -83,7 +83,7 @@ describe(usePatchChildren, () => {
       call.some((arg) => arg.startsWith('custom-error')),
     );
 
-  it('returns React and custom errors if children is not expected', () => {
+  it('returns custom errors if children is not expected', () => {
     const Component = (props: React.DOMAttributes<HTMLDivElement>) => <div {...props} />;
     render(
       <WrapperWithUsePatchChildrenRef>
@@ -91,7 +91,7 @@ describe(usePatchChildren, () => {
       </WrapperWithUsePatchChildrenRef>,
     );
     expect(consoleErrorMock).toHaveBeenCalledTimes(2);
-    expect(isReactErrorFound()).toBeTruthy();
+    expect(isReactErrorFound()).toBeFalsy();
     expect(isCustomErrorFound()).toBeTruthy();
   });
 

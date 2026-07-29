@@ -79,16 +79,24 @@ describe('AppRoot', () => {
         <AppRootContext.Consumer>{contextCallback}</AppRootContext.Consumer>
       </AppRoot>,
     );
-    expect(contextCallback).toHaveBeenCalledExactlyOnceWith({
-      safeAreaInsets: {},
-      userSelectMode: undefined,
-      appRoot: { current: result.getByTestId('app-root') },
-      portalRoot: portalRoot,
-      embedded: false,
-      mode: 'full',
-      disablePortal: false,
-      layout: undefined,
-    });
+    expect(contextCallback).toHaveBeenCalledExactlyOnceWith(
+      {
+        safeAreaInsets: {
+          top: undefined,
+          right: undefined,
+          bottom: undefined,
+          left: undefined,
+        },
+        userSelectMode: undefined,
+        appRoot: { current: result.getByTestId('app-root') },
+        portalRoot: portalRoot,
+        embedded: false,
+        mode: 'full',
+        disablePortal: false,
+        layout: undefined,
+      },
+      undefined,
+    );
   });
 
   it('should toggle scroll container', () => {
