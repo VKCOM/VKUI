@@ -65,7 +65,6 @@ function getRedirectUrlForIndexPage(location: Location) {
 function getRedirectUrlForLegacyRoutes(location: Location) {
   const COMPONENTS_DOCS_PARENT_PAGE_MAP: Record<string, string> = {
     Header: 'Group',
-    Footer: 'Group',
     SplitCol: 'SplitLayout',
     WriteBarIcon: 'WriteBar',
     List: 'Cell',

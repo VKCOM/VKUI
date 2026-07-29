@@ -6,12 +6,12 @@ import { createStoryParameters } from '../../testing/storybook/createStoryParame
 import { Avatar } from '../Avatar/Avatar';
 import { Cell } from '../Cell/Cell';
 import { Group } from '../Group/Group';
-import { List } from '../List/List';
+import { Panel } from '../Panel/Panel';
 import { PanelHeader } from '../PanelHeader/PanelHeader';
 import { Footer, type FooterProps } from './Footer';
 
 const story: Meta<FooterProps> = {
-  title: 'Layout/Group/Footer',
+  title: 'Layout/Footer',
   component: Footer,
   parameters: createStoryParameters('Footer', CanvasFullLayout, DisableCartesianParam),
   tags: ['Раскладка'],
@@ -24,27 +24,25 @@ type Story = StoryFn<FooterProps>;
 export const Playground: Story = (props: FooterProps) => <Footer {...props} />;
 
 Playground.args = {
-  children: '3 сообщества',
+  children: 'Copyright VK LLC',
 };
 
 export const Example: Story = (props: FooterProps) => (
-  <>
+  <Panel>
     <PanelHeader>Footer</PanelHeader>
     <Group>
-      <List>
-        <Cell before={<Avatar />} subtitle="Веб-сайт" onClick={noop}>
-          Команда ВКонтакте
-        </Cell>
-        <Cell before={<Avatar />} subtitle="Музыкант" onClick={noop}>
-          Robbie Williams
-        </Cell>
-        <Cell before={<Avatar />} subtitle="Издательский дом" onClick={noop}>
-          ПостНаука
-        </Cell>
-      </List>
+      <Cell before={<Avatar />} subtitle="Веб-сайт" onClick={noop}>
+        Команда ВКонтакте
+      </Cell>
+      <Cell before={<Avatar />} subtitle="Музыкант" onClick={noop}>
+        Robbie Williams
+      </Cell>
+      <Cell before={<Avatar />} subtitle="Издательский дом" onClick={noop}>
+        ПостНаука
+      </Cell>
     </Group>
     <Footer {...props} />
-  </>
+  </Panel>
 );
 
 Example.args = Playground.args;

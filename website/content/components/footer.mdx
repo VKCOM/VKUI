@@ -1,26 +1,56 @@
 ---
-other:
-  hidden: true
-  parent: Group
-description: Подвал группы, передаётся в конце children компонента Group.
+description: Подвал всей страницы или текущего экрана.
 ---
 
 <Overview group="layout">
 
 # Footer [tag:component]
 
-Подвал для компонента [`Group`](/components/group). Передаётся в конце `children`.
+Подвал всей страницы или текущего экрана.
 
 </Overview>
 
-import FooterContent from './_partials/footer-content.mdx';
+{/* @example-description: Базовый подвал `Footer`. */}
+<Playground>
+  ```jsx
+  <Panel>
+    <Group>
+      <Cell before={<Avatar />} subtitle="Веб-сайт" onClick={() => void 0}>
+        Команда ВКонтакте
+      </Cell>
+      <Cell before={<Avatar />} subtitle="Музыкант" onClick={() => void 0}>
+        Robbie Williams
+      </Cell>
+      <Cell before={<Avatar />} subtitle="Издательский дом" onClick={() => void 0}>
+        ПостНаука
+      </Cell>
+    </Group>
+    <Footer>Copyright VK LLC</Footer>
+  </Panel>
+  ```
+</Playground>
 
-<FooterContent />
+#### Ключевые правила
+
+| Сценарий                   | Решение                       | Почему важно                       |
+| -------------------------- | ----------------------------- | ---------------------------------- |
+| Глобальный подвал страницы | Только один на страницу       | Соответствие стандартам `WAI-ARIA` |
+| Несколько подвалов         | Добавить `aria-label` каждому | Различение разделов скринридерами  |
+| Декоративный элемент       | `<Footer Component="div">`    | Избежать ложной семантики          |
+
+### Доступность (a11y) [#a11y]
+
+#### Семантическая роль
+
+По умолчанию использует HTML-тег `<footer>`, дополнительно задаётся роль `role="contentinfo"` ([для поддержки Safari\<=13](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/footer#accessibility)).
+
+Предназначен для:
+
+- контактной информации;
+- ссылок на разделы сайта;
+- копирайта и юридических данных;
+- мета-информации о содержимом.
 
 ## Свойства и методы [#api]
 
-<PropsTable name={["Footer"]}>
-
-### Footer [#footer-api]
-
-</PropsTable>
+<PropsTable name="Footer" />

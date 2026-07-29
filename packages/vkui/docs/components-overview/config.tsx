@@ -436,7 +436,6 @@ export const COMPONENTS_DATA: Record<string, ComponentConfigData> = {
     decorator: Group,
   },
   Footer: {
-    customPath: 'Group/Footer',
     component: Footer,
     playgroundRender: FooterPlayground,
     args: FooterPlayground.args,

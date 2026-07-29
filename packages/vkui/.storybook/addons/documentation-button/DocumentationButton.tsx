@@ -5,7 +5,6 @@ import * as React from 'react';
 
 const COMPONENTS_DOCS_PARENT_MAP: Record<string, string> = {
   Header: 'Group',
-  Footer: 'Group',
   SplitCol: 'SplitLayout',
   WriteBarIcon: 'WriteBar',
   List: 'Cell',

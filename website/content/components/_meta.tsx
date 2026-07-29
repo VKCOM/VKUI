@@ -16,6 +16,7 @@ const meta: MetaRecord = {
   'form-layout-group': 'FormLayoutGroup',
   'group': 'Group',
   'radio-group': 'RadioGroup',
+  'footer': 'Footer',
   'separator': 'Separator',
   'simple-grid': 'SimpleGrid',
   'spacing': 'Spacing',
@@ -182,7 +183,6 @@ const meta: MetaRecord = {
   // Эти страницы нужны только для MCP, поэтому скрыты из навигации
   '_partials': { display: 'hidden' },
   'action-sheet-item': { display: 'hidden' },
-  'footer': { display: 'hidden' },
   'header': { display: 'hidden' },
   'list': { display: 'hidden' },
   'panel-header-button': { display: 'hidden' },
