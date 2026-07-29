@@ -77,7 +77,7 @@ describe(PullToRefresh, () => {
     // reset touch detection
     afterEach(() => delete window['ontouchstart']);
     it('after a gesture', () => {
-      const { container } = renderRefresher();
+      const { container } = render(<PullToRefresh onRefresh={noop} isFetching data-testid="xxx" />);
       firePull(screen.getByTestId('xxx'));
       expect(hasSpinner(container)).toBe(true);
     });

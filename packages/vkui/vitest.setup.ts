@@ -2,7 +2,7 @@ import '@testing-library/jest-dom/vitest';
 import 'vitest-axe/extend-expect';
 import { cleanup } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
-import { afterEach, vi } from 'vitest';
+import { afterEach, beforeEach, vi } from 'vitest';
 import failOnConsole from 'vitest-fail-on-console';
 
 // В этом окружении jsdom не предоставляет `localStorage`, а Node отдаёт
@@ -36,18 +36,13 @@ class MemoryStorage implements Storage {
 vi.stubGlobal('localStorage', new MemoryStorage());
 vi.stubGlobal('sessionStorage', new MemoryStorage());
 
-// Без `globals: true` @testing-library/react не регистрирует автоочистку DOM
-// (она рассчитывает на глобальный `afterEach`), поэтому чистим вручную.
-afterEach(cleanup);
-
-// Без `globals: true` vitest не выставляет этот флаг, и React ругается на
-// отсутствие act-окружения (что ломает `vitest-fail-on-console`).
-vi.stubGlobal('IS_REACT_ACT_ENVIRONMENT', true);
-
 const ignoreList = [/.*usePatchChildren.test.tsx/, /.*warnOnce.test.ts/];
 
 failOnConsole({
   shouldFailOnWarn: true,
+  silenceMessage: (message) =>
+    message.startsWith('The current testing environment is not configured to support act(') ||
+    message.startsWith('Accessing element.ref was removed in React 19.'),
   skipTest: ({ testPath }) => {
     for (const pathExp of ignoreList) {
       const result = testPath && pathExp.test(testPath);
@@ -59,6 +54,21 @@ failOnConsole({
     return false;
   },
 });
+
+// React 19 проверяет этот флаг при каждом асинхронном обновлении. Устанавливаем
+// его перед каждым тестом: asyncWrapper из Testing Library временно меняет
+// значение и затем восстанавливает предыдущее.
+beforeEach(() => {
+  (
+    globalThis as typeof globalThis & {
+      IS_REACT_ACT_ENVIRONMENT?: boolean;
+    }
+  ).IS_REACT_ACT_ENVIRONMENT = true;
+});
+
+// Регистрируем после failOnConsole, чтобы cleanup выполнялся первым даже если
+// проверка console.error в afterEach завершится ошибкой.
+afterEach(cleanup);
 
 vi.stubGlobal('jest', { advanceTimersByTime: vi.advanceTimersByTime.bind(vi) });
 
