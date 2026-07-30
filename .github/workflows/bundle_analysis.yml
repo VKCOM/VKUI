@@ -3,7 +3,7 @@ name: 'Bundle Analysis'
 on:
   push:
     branches:
-      - imirdzhamolov/ci/use-rsdoctor
+      - master
   workflow_call:
     inputs:
       package_vkui_changed:
@@ -60,5 +60,5 @@ jobs:
         uses: web-infra-dev/rsdoctor-action@bce0934b887cddb56986d16c34a445bcce9a7d65 # v1.1.3
         with:
           file_path: packages/vkui/rsdoctor-report/rsdoctor-data.json
-          target_branch: ${{ github.event.pull_request.base.ref || github.ref_name }}
+          target_branch: ${{ github.event.pull_request.base.ref || github.event.repository.default_branch }}
           enable_ai_analysis: false
