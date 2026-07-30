@@ -84,6 +84,7 @@ export const ContentCard = ({
   hasHover = false,
   hasActive = false,
   Component = 'li',
+  render,
   ...restProps
 }: ContentCardProps): React.ReactNode => {
   return (
@@ -91,6 +92,7 @@ export const ContentCard = ({
       mode={mode}
       getRootRef={getRootRef}
       Component={Component}
+      render={render}
       style={style}
       className={classNames(restProps.disabled && styles.disabled, className)}
     >

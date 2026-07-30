@@ -1,6 +1,6 @@
 import type * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
-import type { HasComponent, HTMLAttributesWithRootRef } from '../../types';
+import type { HasComponent, HasRender, HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Headline } from '../Typography/Headline/Headline';
 import { Title } from '../Typography/Title/Title';
@@ -39,13 +39,17 @@ const PlaceholderIcon = (props: PlaceholderIconProps): React.ReactNode => (
   <RootComponent baseClassName={styles.icon} {...props} />
 );
 
-export type PlaceholderTitleProps = HTMLAttributesWithRootRef<HTMLElement> & HasComponent;
+export type PlaceholderTitleProps = HTMLAttributesWithRootRef<HTMLElement> &
+  HasComponent &
+  HasRender<HTMLElement>;
 
 const PlaceholderTitle = ({ className, ...restProps }: PlaceholderTitleProps): React.ReactNode => (
   <Title level="2" weight="2" className={classNames(className, styles.title)} {...restProps} />
 );
 
-export type PlaceholderDescriptionProps = HTMLAttributesWithRootRef<HTMLElement> & HasComponent;
+export type PlaceholderDescriptionProps = HTMLAttributesWithRootRef<HTMLElement> &
+  HasComponent &
+  HasRender<HTMLElement>;
 
 const PlaceholderDescription = ({
   className,

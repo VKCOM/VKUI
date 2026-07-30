@@ -2,7 +2,7 @@
 
 import type * as React from 'react';
 import { classNames, hasReactNode, isPrimitiveReactNode } from '@vkontakte/vkjs';
-import type { HasComponent, HTMLAttributesWithRootRef } from '../../types';
+import type { HasComponent, HasRender, HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Caption } from '../Typography/Caption/Caption';
 import { Footnote } from '../Typography/Footnote/Footnote';
@@ -12,7 +12,10 @@ import { Subhead } from '../Typography/Subhead/Subhead';
 import { Title } from '../Typography/Title/Title';
 import styles from './Header.module.css';
 
-export interface HeaderProps extends HTMLAttributesWithRootRef<HTMLElement>, HasComponent {
+export interface HeaderProps
+  extends HTMLAttributesWithRootRef<HTMLElement>,
+    HasComponent,
+    HasRender<HTMLElement> {
   /**
    * Размер компонента.
    */

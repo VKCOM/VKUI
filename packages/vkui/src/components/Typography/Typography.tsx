@@ -1,6 +1,6 @@
 import type * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import type { HasComponent, HasRootRef } from '../../types';
+import type { HasComponent, HasRender, HasRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './Typography.module.css';
 
@@ -34,7 +34,8 @@ export interface HasCaps {
 export interface TypographyProps
   extends React.AllHTMLAttributes<HTMLElement>,
     HasComponent,
-    HasRootRef<HTMLElement> {
+    HasRootRef<HTMLElement>,
+    HasRender<HTMLElement> {
   /**
    * Задаёт начертание шрифта, отличное от стандартного.
    */

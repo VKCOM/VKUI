@@ -11,7 +11,7 @@ import { Headline } from '../../Typography/Headline/Headline';
 import { Title } from '../../Typography/Title/Title';
 import styles from './WriteBarTextarea.module.css';
 
-type WriteBarTextareaProps = RootComponentProps<HTMLTextAreaElement> & {
+type WriteBarTextareaProps = Omit<RootComponentProps<HTMLTextAreaElement>, 'render'> & {
   /**
    * Вызывается при смене высоты поля ввода.
    */

@@ -1,6 +1,6 @@
 import type * as React from 'react';
 import type { PlacementWithAuto } from '../../lib/floating/types/common';
-import type { HasComponent, HasRootRef } from '../../types';
+import type { HasComponent, HasRender, HasRootRef } from '../../types';
 
 export type ToggleRef = Element | null | undefined | React.RefObject<Element | null>;
 
@@ -34,7 +34,8 @@ export interface SharedDropdownProps
   extends UseFocusTrapProps,
     Omit<React.AllHTMLAttributes<HTMLElement>, keyof UseFocusTrapProps>,
     HasRootRef<HTMLElement>,
-    HasComponent {
+    HasComponent,
+    HasRender<HTMLElement> {
   /**
    * Состояние закрытия всплывающего окна.
    */

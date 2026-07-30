@@ -1,9 +1,12 @@
 import { classNames } from '@vkontakte/vkjs';
-import type { HasComponent, HTMLAttributesWithRootRef } from '../../types';
+import type { HasComponent, HasRender, HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './Card.module.css';
 
-export interface CardProps extends HTMLAttributesWithRootRef<HTMLDivElement>, HasComponent {
+export interface CardProps
+  extends HTMLAttributesWithRootRef<HTMLDivElement>,
+    HasComponent,
+    HasRender<HTMLDivElement> {
   /**
    * Внешний вид карточки.
    */

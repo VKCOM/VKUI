@@ -1,13 +1,13 @@
 import type * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { mergeStyle } from '../../helpers/mergeStyle';
-import type { HasComponent, HasRootRef } from '../../types';
+import type { HasComponent, HasRender, HasRootRef } from '../../types';
 import styles from './RootComponent.module.css';
 
-export interface RootComponentProps<T>
-  extends React.AllHTMLAttributes<T>,
-    HasRootRef<T>,
-    HasComponent {}
+export type RootComponentProps<T> = React.AllHTMLAttributes<T> &
+  HasRootRef<T> &
+  HasComponent &
+  HasRender<T>;
 
 export interface RootComponentExtendProps {
   /**
@@ -24,6 +24,19 @@ export interface RootComponentInternalProps<T>
   extends RootComponentProps<T>,
     RootComponentExtendProps {}
 
+interface RenderRootComponentProps<T> extends Omit<RootComponentInternalProps<T>, 'render'> {
+  /**
+   * Функция кастомного рендера. См. `RootComponentProps['render']`.
+   */
+  render: NonNullable<RootComponentProps<T>['render']>;
+}
+
+const RenderRootComponent = <T,>({
+  render,
+  getRootRef,
+  ...restProps
+}: RenderRootComponentProps<T>): React.ReactNode => render({ ...restProps, getRootRef });
+
 /**
  * Базовый корневой компонент.
  */
@@ -34,17 +47,23 @@ export const RootComponent = <T,>({
   baseStyle,
   style,
   getRootRef,
+  render,
   ...restProps
-}: RootComponentInternalProps<T>): React.ReactNode => (
-  <Component
-    ref={getRootRef}
-    className={classNames(
+}: RootComponentInternalProps<T>): React.ReactNode => {
+  const resolvedProps = {
+    className: classNames(
       className,
       baseClassName,
       styles.host,
       restProps.hidden === true && styles.hidden,
-    )}
-    style={mergeStyle(baseStyle, style)}
-    {...restProps}
-  />
-);
+    ),
+    style: mergeStyle(baseStyle, style),
+    ...restProps,
+  };
+
+  if (render) {
+    return <RenderRootComponent render={render} getRootRef={getRootRef} {...resolvedProps} />;
+  }
+
+  return <Component ref={getRootRef} {...resolvedProps} />;
+};

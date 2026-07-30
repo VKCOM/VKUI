@@ -3,7 +3,7 @@
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { type SizeTypeValues, ViewWidth, type ViewWidthType } from '../../lib/adaptivity';
-import type { HasComponent, HTMLAttributesWithRootRef } from '../../types';
+import type { HasComponent, HasRender, HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './CardGrid.module.css';
 
@@ -30,7 +30,10 @@ const stylesSize = {
   l: 'vkuiInternalCardGrid--size-l',
 };
 
-export interface CardGridProps extends HTMLAttributesWithRootRef<HTMLDivElement>, HasComponent {
+export interface CardGridProps
+  extends HTMLAttributesWithRootRef<HTMLDivElement>,
+    HasComponent,
+    HasRender<HTMLDivElement> {
   /**
    * Размер карточек.
    */

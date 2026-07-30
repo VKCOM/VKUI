@@ -1,4 +1,4 @@
-import type { HasComponent, HTMLAttributesWithRootRef } from '../../types';
+import type { HasComponent, HasRender, HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './Group.module.css';
 
@@ -8,7 +8,8 @@ const stylesDirection = {
 };
 
 export type GroupExpandedContentProps = HTMLAttributesWithRootRef<HTMLElement> &
-  HasComponent & {
+  HasComponent &
+  HasRender<HTMLElement> & {
     /**
      * Направление отображения контента.
      */
