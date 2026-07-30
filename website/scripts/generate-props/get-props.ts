@@ -1,7 +1,7 @@
-import path from 'node:path';
-import { withCustomConfig } from 'react-docgen-typescript';
+import * as path from 'node:path';
+import { type ComponentDoc, type FileParser, withCustomConfig } from 'react-docgen-typescript';
 
-function parser(tsconfigPath) {
+function parser(tsconfigPath: string): FileParser {
   return withCustomConfig(tsconfigPath, {
     savePropValueAsString: true,
     shouldExtractValuesFromUnion: true,
@@ -19,10 +19,7 @@ function parser(tsconfigPath) {
   });
 }
 
-/**
- * @param {import('react-docgen-typescript').ComponentDoc} componentDoc
- */
-function transformProps(componentDoc) {
+function transformProps(componentDoc: ComponentDoc): ComponentDoc['props'] {
   const data = { ...componentDoc };
 
   Object.keys(data.props).forEach((prop) => {
@@ -48,7 +45,7 @@ function transformProps(componentDoc) {
 
 const vkuiTSConfigPath = path.resolve('../packages/vkui/tsconfig.dist.json');
 
-export function getProps({ paths }) {
+export function getProps({ paths }: { paths: string[] }): Record<string, unknown[]> {
   const docgenParser = parser(vkuiTSConfigPath);
   const parsedData = docgenParser.parse(paths);
 

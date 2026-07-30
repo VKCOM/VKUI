@@ -1,12 +1,12 @@
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import { resolvePartials } from './common/resolvePartials.mjs';
-import { replacePropsTable } from './common/replacePropsTable.mjs';
-import { collectMdxFiles } from './common/collectMdxFiles.mjs';
-import { loadDocgen } from './common/loadDocgen.mjs';
-import { parseFrontmatter } from './common/parseFrontmatter.mjs';
-import { componentNameFromSlug } from './common/componentNameFromSlug.mjs';
+import * as fs from 'node:fs';
+import * as path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { collectMdxFiles } from './common/collectMdxFiles.ts';
+import { componentNameFromSlug } from './common/componentNameFromSlug.ts';
+import { loadDocgen } from './common/loadDocgen.ts';
+import { parseFrontmatter } from './common/parseFrontmatter.ts';
+import { replacePropsTable } from './common/replacePropsTable.ts';
+import { resolvePartials } from './common/resolvePartials.ts';
 
 const SCRIPT_FILE = fileURLToPath(import.meta.url);
 const SCRIPT_DIR = path.dirname(SCRIPT_FILE);
@@ -19,30 +19,62 @@ const OUT_HOOKS_DIR = path.join(OUT_DIR, 'hooks');
 const OUT_EXAMPLES_DIR = path.join(OUT_DIR, 'examples');
 const OUT_DOCS_DIR = path.join(OUT_DIR, 'docs');
 
-function isHook(slug) {
+interface DocgenProp {
+  name: string;
+  required?: boolean;
+  type: { name: string; raw: string | undefined; value?: Array<{ value: string }> | undefined };
+  defaultValue?: string | null;
+  description?: string;
+  tags?: Record<string, unknown>;
+}
+
+type Docgen = Record<string, DocgenProp[] | undefined>;
+
+interface PlaygroundExample {
+  code: string;
+  description: string;
+  index: number;
+}
+
+interface ComponentListItem {
+  name: string;
+  slug: string;
+  description: string;
+  examplesCount: number;
+  tags?: string[];
+}
+
+interface HookListItem {
+  name: string;
+  slug: string;
+  description: string;
+  examplesCount: number;
+}
+
+function isHook(slug: string): boolean {
   const base = slug.split('/').pop() || slug;
   return base.startsWith('use-');
 }
 
-function ensureDir(dirPath) {
+function ensureDir(dirPath: string) {
   fs.mkdirSync(dirPath, { recursive: true });
 }
 
-function slugFromPath(filePath) {
+function slugFromPath(filePath: string): string {
   const relative = path.relative(COMPONENTS_DIR, filePath);
   return relative.replace(/\\/g, '/').replace(/\.mdx$/, '');
 }
 
-function getComponentName(fileName) {
+function getComponentName(fileName: string): string {
   const base = fileName.split('/').pop() || fileName;
   return componentNameFromSlug(base);
 }
 
-const SPECIFIC_HOOKS_SLUG_TO_NAME_MAP = {
+const SPECIFIC_HOOKS_SLUG_TO_NAME_MAP: Record<string, string> = {
   'use-adaptivity-with-js-media-queries': 'useAdaptivityWithJSMediaQueries',
 };
 
-function hookKeyFromSlug(slug) {
+function hookKeyFromSlug(slug: string): string {
   if (SPECIFIC_HOOKS_SLUG_TO_NAME_MAP[slug]) {
     return SPECIFIC_HOOKS_SLUG_TO_NAME_MAP[slug];
   }
@@ -61,7 +93,7 @@ function hookKeyFromSlug(slug) {
   );
 }
 
-function extractPlaygroundExamples(body) {
+function extractPlaygroundExamples(body: string): PlaygroundExample[] {
   // Ищем блоки вида:
   // 1) (опционально) `{/* @example-description: ... */}`
   // 2) `<Playground ...>`
@@ -80,9 +112,9 @@ function extractPlaygroundExamples(body) {
     `${exampleDescriptionPattern}${playgroundOpenTagPattern}\\s*${jsxCodeBlockPattern}\\s*${playgroundCloseTagPattern}`,
     'g',
   );
-  const examples = [];
+  const examples: PlaygroundExample[] = [];
   const matches = body.matchAll(playgroundRegex);
-  const normalizeDescription = (value) => value.replace(/\s+/g, ' ').trim();
+  const normalizeDescription = (value: string) => value.replace(/\s+/g, ' ').trim();
   let index = 0;
 
   for (const match of matches) {
@@ -99,20 +131,20 @@ function extractPlaygroundExamples(body) {
   return examples;
 }
 
-function extractCategory(body) {
+function extractCategory(body: string): string | null {
   const match = body.match(/<Overview\s+[^>]*group=["']([^"']+)["']/);
   return match ? match[1] : null;
 }
 
 const ENUM_VALUES_THRESHOLD = 10;
 
-function hasStringLiteralValues(values) {
+function hasStringLiteralValues(values: Array<{ value: string }>): boolean {
   return values.some(
     (v) => typeof v.value === 'string' && (v.value.startsWith("'") || v.value.startsWith('"')),
   );
 }
 
-function sanitizeProps(props) {
+function sanitizeProps(props: DocgenProp[]): DocgenProp[] {
   return props.map((prop) => {
     const { type } = prop;
     if (type && type.name === 'enum' && Array.isArray(type.value)) {
@@ -126,11 +158,11 @@ function sanitizeProps(props) {
   });
 }
 
-function formatExamplesText(examples) {
+function formatExamplesText(examples: PlaygroundExample[]): string {
   const SEPARATOR = '\n\n---------------------------------\n\n';
   return examples
     .map((example) => {
-      const parts = [];
+      const parts: string[] = [];
       if (example.description) {
         parts.push(example.description);
       }
@@ -148,12 +180,12 @@ function generateMcpData() {
   ensureDir(OUT_EXAMPLES_DIR);
   ensureDir(OUT_DOCS_DIR);
 
-  const docgen = loadDocgen();
+  const docgen = loadDocgen() as Docgen;
   const mdxFiles = collectMdxFiles(COMPONENTS_DIR);
 
-  const components = [];
-  const hooks = [];
-  const allTagsSet = new Set();
+  const components: ComponentListItem[] = [];
+  const hooks: HookListItem[] = [];
+  const allTagsSet = new Set<string>();
 
   for (const filePath of mdxFiles) {
     const raw = fs.readFileSync(filePath, 'utf8');
@@ -169,13 +201,13 @@ function generateMcpData() {
 
     const tags = hook
       ? []
-      : [
+      : ([
           category,
           ...(data.tags || '')
             .split(',')
             .map((t) => t.trim())
             .filter(Boolean),
-        ].filter(Boolean);
+        ].filter(Boolean) as string[]);
 
     const listItem = {
       name: itemName,
@@ -193,12 +225,12 @@ function generateMcpData() {
     };
 
     if (hook) {
-      hooks.push(listItem);
+      hooks.push(listItem as HookListItem);
       const hookOutPath = path.join(OUT_HOOKS_DIR, `${slug}.json`);
       ensureDir(path.dirname(hookOutPath));
       fs.writeFileSync(hookOutPath, JSON.stringify(detailPayload, null, 2));
     } else {
-      components.push(listItem);
+      components.push(listItem as ComponentListItem);
       tags.forEach((tag) => allTagsSet.add(tag));
       const componentOutPath = path.join(OUT_COMPONENTS_DIR, `${slug}.json`);
       ensureDir(path.dirname(componentOutPath));

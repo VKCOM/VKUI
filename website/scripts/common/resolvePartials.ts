@@ -1,25 +1,25 @@
-import fs from 'fs';
-import path from 'path';
+import * as fs from 'node:fs';
+import * as path from 'node:path';
 
 /**
  * Находит в body все `import Foo from './path.mdx'`, читает содержимое файла
  * и подставляет его вместо `<Foo />`. Работает рекурсивно — партиалы сами
  * могут импортировать другие партиалы.
  *
- * @param {string} body - тело MDX-файла
- * @param {string} filePath - абсолютный путь к исходному MDX-файлу (нужен для резолва относительных импортов)
- * @returns {string} body с раскрытыми партиалами
+ * @param body - тело MDX-файла
+ * @param filePath - абсолютный путь к исходному MDX-файлу (нужен для резолва относительных импортов)
+ * @returns body с раскрытыми партиалами
  */
-export function resolvePartials(body, filePath) {
+export function resolvePartials(body: string, filePath: string): string {
   const dir = path.dirname(filePath);
 
   // import Foo from './something.mdx'  (с кавычками или без точки с запятой)
   const importRegex = /^import\s+(\w+)\s+from\s+['"]([^'"]+\.mdx)['"]\s*;?\s*$/gm;
 
-  const partials = new Map();
-  const importLinesToRemove = new Set();
+  const partials = new Map<string, string>();
+  const importLinesToRemove = new Set<string>();
 
-  let match;
+  let match: RegExpExecArray | null;
   while ((match = importRegex.exec(body)) !== null) {
     const [fullImportLine, componentName, importRelPath] = match;
     const fullPath = path.resolve(dir, importRelPath);

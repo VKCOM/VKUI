@@ -1,11 +1,13 @@
-import fs from 'node:fs';
-import path from 'node:path';
+import * as fs from 'node:fs';
+import * as path from 'node:path';
 
-export function collectMdxFiles(dirPath) {
-  const results = [];
+export function collectMdxFiles(dirPath: string): string[] {
+  const results: string[] = [];
   const entries = fs.readdirSync(dirPath, { withFileTypes: true });
   for (const entry of entries) {
-    if (entry.name === '_partials') continue;
+    if (entry.name === '_partials') {
+      continue;
+    }
     const fullPath = path.join(dirPath, entry.name);
     if (entry.isDirectory()) {
       results.push(...collectMdxFiles(fullPath));
