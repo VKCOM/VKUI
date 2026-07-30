@@ -110,9 +110,12 @@ const config: rspack.Configuration = {
               },
             },
             output: {
-              mode: 'normal',
+              mode: 'brief',
               reportCodeType: 'noModuleSource',
               reportDir: rsdoctorReportDirectory,
+              options: {
+                type: ['json'],
+              },
             },
           }),
         ]
