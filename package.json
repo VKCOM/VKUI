@@ -16,8 +16,6 @@
     "@morev/stylelint-testing-library": "^1.1.0",
     "@playwright/experimental-ct-react": "1.62.0",
     "@playwright/test": "1.62.0",
-    "@rsdoctor/cli": "1.6.1",
-    "@rsdoctor/client": "1.6.1",
     "@rsdoctor/rspack-plugin": "1.6.1",
     "@rspack/cli": "^2.1.5",
     "@rspack/core": "^2.1.5",

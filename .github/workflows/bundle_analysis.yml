@@ -1,0 +1,64 @@
+name: 'Bundle Analysis'
+
+on:
+  push:
+    branches:
+      - master
+  workflow_call:
+    inputs:
+      package_vkui_changed:
+        description: Whether changes affect the VKUI package build
+        required: true
+        type: boolean
+
+concurrency:
+  group: bundle-analysis-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  changed_files:
+    if: ${{ github.event_name == 'push' }}
+    runs-on: ubuntu-slim
+    name: Detect what files changed
+    permissions:
+      contents: read
+    outputs:
+      package_vkui: ${{ steps.changes.outputs.package_vkui }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Find changes
+        uses: dorny/paths-filter@7b450fff21473bca461d4b92ce414b9d0420d706 # v4.0.2
+        id: changes
+        with:
+          filters: .github/file-filters.yml
+
+  analyze:
+    needs: changed_files
+    if: ${{ always() && !cancelled() && (inputs.package_vkui_changed || needs.changed_files.outputs.package_vkui == 'true') }}
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: write
+      issues: write
+      pull-requests: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Node setup
+        uses: ./.github/actions/node-setup
+
+      - name: Build vkui with Rsdoctor
+        working-directory: packages/vkui
+        env:
+          RSDOCTOR_REPORT_DIR: rsdoctor-report
+        run: node --run build
+
+      - name: Analyze bundle
+        uses: web-infra-dev/rsdoctor-action@bce0934b887cddb56986d16c34a445bcce9a7d65 # v1.1.3
+        with:
+          file_path: packages/vkui/rsdoctor-report/rsdoctor-data.json
+          target_branch: ${{ github.event.pull_request.base.ref || github.event.repository.default_branch }}
+          enable_ai_analysis: false
