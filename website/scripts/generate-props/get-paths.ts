@@ -1,5 +1,5 @@
-import fs from 'node:fs';
-import path from 'node:path';
+import * as fs from 'node:fs';
+import * as path from 'node:path';
 
 const EXCLUDED_EXTENSIONS = [
   '.test.tsx',
@@ -14,7 +14,7 @@ const EXCLUDED_EXTENSIONS = [
 ];
 const EXCLUDED_DIRS = ['__image_snapshots__', 'storybook', 'testing', 'styles'];
 
-function shouldIgnoreFile(filename) {
+function shouldIgnoreFile(filename: string): boolean {
   return (
     (filename[0].toLowerCase() === filename[0] && !filename.startsWith('use')) ||
     EXCLUDED_EXTENSIONS.some((ext) => filename.endsWith(ext))
@@ -23,11 +23,11 @@ function shouldIgnoreFile(filename) {
 
 /**
  *
- * @param {string} dirPath
- * @returns {string[]} Массив абсолютных путей
+ * @param dirPath - путь к директории
+ * @returns Массив абсолютных путей
  */
-function scanDirectory(dirPath) {
-  return fs.readdirSync(dirPath).reduce((files, item) => {
+function scanDirectory(dirPath: string): string[] {
+  return fs.readdirSync(dirPath).reduce<string[]>((files, item) => {
     const fullPath = path.join(dirPath, item);
     const stat = fs.statSync(fullPath);
 
@@ -45,6 +45,6 @@ function scanDirectory(dirPath) {
 
 const componentsDirectory = path.resolve('../packages/vkui/src');
 
-export function getPaths() {
+export function getPaths(): string[] {
   return scanDirectory(componentsDirectory);
 }

@@ -165,7 +165,7 @@ jobs:
         run: yarn workspace @project-docs/website run generate
 
       - name: Generate MCP data
-        run: node website/scripts/generate-mcp-data.mjs
+        run: node website/scripts/generate-mcp-data.ts
 
       - name: Upload MCP data to S3 in version folder
         uses: VKCOM/gh-actions/VKUI/s3@main
