@@ -225,12 +225,12 @@ function generateMcpData() {
     };
 
     if (hook) {
-      hooks.push(listItem as HookListItem);
+      hooks.push(listItem);
       const hookOutPath = path.join(OUT_HOOKS_DIR, `${slug}.json`);
       ensureDir(path.dirname(hookOutPath));
       fs.writeFileSync(hookOutPath, JSON.stringify(detailPayload, null, 2));
     } else {
-      components.push(listItem as ComponentListItem);
+      components.push(listItem);
       tags.forEach((tag) => allTagsSet.add(tag));
       const componentOutPath = path.join(OUT_COMPONENTS_DIR, `${slug}.json`);
       ensureDir(path.dirname(componentOutPath));
