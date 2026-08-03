@@ -656,17 +656,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@csstools/css-calc@npm:^3.2.1":
-  version: 3.2.1
-  resolution: "@csstools/css-calc@npm:3.2.1"
-  peerDependencies:
-    "@csstools/css-parser-algorithms": ^4.0.0
-    "@csstools/css-tokenizer": ^4.0.0
-  checksum: 10/39042a9382cbd7c4fa241c1a6c10d64c23fa7653970fc11df532e9bc42a366a8b50c3ac3036bd5f2a77b94144e7f804f19d2b52800ad2f48bd9a3840377165d8
-  languageName: node
-  linkType: hard
-
-"@csstools/css-calc@npm:^3.3.0":
+"@csstools/css-calc@npm:^3.2.1, @csstools/css-calc@npm:^3.3.0":
   version: 3.3.0
   resolution: "@csstools/css-calc@npm:3.3.0"
   peerDependencies:
@@ -1166,19 +1156,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@exodus/bytes@npm:^1.11.0, @exodus/bytes@npm:^1.6.0":
-  version: 1.15.0
-  resolution: "@exodus/bytes@npm:1.15.0"
-  peerDependencies:
-    "@noble/hashes": ^1.8.0 || ^2.0.0
-  peerDependenciesMeta:
-    "@noble/hashes":
-      optional: true
-  checksum: 10/d18519341c354356b65b9ac64b8166880972d122feff4038a92c0e2d2c8579794429117a2bc636bca584e7bf2fdad6d27f0874b2647d4a866c125843497ef193
-  languageName: node
-  linkType: hard
-
-"@exodus/bytes@npm:^1.15.1":
+"@exodus/bytes@npm:^1.11.0, @exodus/bytes@npm:^1.15.1, @exodus/bytes@npm:^1.6.0":
   version: 1.15.1
   resolution: "@exodus/bytes@npm:1.15.1"
   peerDependencies:
@@ -8167,17 +8145,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"enhanced-resolve@npm:^5.22.2, enhanced-resolve@npm:^5.24.2":
-  version: 5.24.3
-  resolution: "enhanced-resolve@npm:5.24.3"
-  dependencies:
-    graceful-fs: "npm:^4.2.4"
-    tapable: "npm:^2.3.3"
-  checksum: 10/687023ac3231e9db322ba8064a3d4717d2a03c2238bd55457c491af4ceb5910b7ada809effc9e809bf15ce6752c83226851887d330a5009536575a4d55ec3baf
-  languageName: node
-  linkType: hard
-
-"enhanced-resolve@npm:^5.24.4":
+"enhanced-resolve@npm:^5.22.2, enhanced-resolve@npm:^5.24.4":
   version: 5.24.4
   resolution: "enhanced-resolve@npm:5.24.4"
   dependencies:
@@ -11647,14 +11615,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lru-cache@npm:^11.0.0, lru-cache@npm:^11.1.0, lru-cache@npm:^11.2.1":
-  version: 11.3.5
-  resolution: "lru-cache@npm:11.3.5"
-  checksum: 10/3701b77e87765a3aea453402a7850bdbf7e02445210f35bd5ba1561f601f605f488bf9932be4a3851a6664073924f671a1ec99c4a1a98c457e0d126872a3e04f
-  languageName: node
-  linkType: hard
-
-"lru-cache@npm:^11.5.2":
+"lru-cache@npm:^11.0.0, lru-cache@npm:^11.1.0, lru-cache@npm:^11.2.1, lru-cache@npm:^11.5.2":
   version: 11.5.2
   resolution: "lru-cache@npm:11.5.2"
   checksum: 10/122789c66605ddf29df58ff279e9e2c9499499d0b80b895ec524496f14bcde045d1582e3e38008f3457226d98067556719573b352119d6be8bdb1f8849f85681
@@ -14941,18 +14902,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:^8.0.0, postcss@npm:^8.4.40, postcss@npm:^8.5.16, postcss@npm:^8.5.17, postcss@npm:^8.5.8":
-  version: 8.5.23
-  resolution: "postcss@npm:8.5.23"
-  dependencies:
-    nanoid: "npm:^3.3.16"
-    picocolors: "npm:^1.1.1"
-    source-map-js: "npm:^1.2.1"
-  checksum: 10/8387f421216696bf62a13e5a270e9fefdafc81e196903c0f8d7653f8bab315367cc2261b3c22cf197e492cb075f31bdfc07fd9c3be1cb165ff3cabe14c5a039a
-  languageName: node
-  linkType: hard
-
-"postcss@npm:^8.5.25":
+"postcss@npm:^8.0.0, postcss@npm:^8.4.40, postcss@npm:^8.5.16, postcss@npm:^8.5.17, postcss@npm:^8.5.25, postcss@npm:^8.5.8":
   version: 8.5.25
   resolution: "postcss@npm:8.5.25"
   dependencies:
@@ -15204,18 +15154,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dom@npm:^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0":
-  version: 19.2.5
-  resolution: "react-dom@npm:19.2.5"
-  dependencies:
-    scheduler: "npm:^0.27.0"
-  peerDependencies:
-    react: ^19.2.5
-  checksum: 10/ba14b022c7191d27b723314b964a1a4d839832e6edd231294097e323973808f97ac647bcf182ab0104e20ae6532dbc36733aec3e8333a1446a7183099c96b255
-  languageName: node
-  linkType: hard
-
-"react-dom@npm:^19.2.8":
+"react-dom@npm:^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0, react-dom@npm:^19.2.8":
   version: 19.2.8
   resolution: "react-dom@npm:19.2.8"
   dependencies:
@@ -15264,14 +15203,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react@npm:^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0":
-  version: 19.2.5
-  resolution: "react@npm:19.2.5"
-  checksum: 10/1c3c7ffecb90b7f89a5c3ef635e6811f3a84600097f203b918150cb7e6b0a52915e858e5b4c82317a520dffccfa46ee4819ccf92c59c5b2d6c25cffe258dd20c
-  languageName: node
-  linkType: hard
-
-"react@npm:^19.2.8":
+"react@npm:^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0, react@npm:^19.2.8":
   version: 19.2.8
   resolution: "react@npm:19.2.8"
   checksum: 10/a3c697798035e295ca9e51591d3a8700824535cb8c070fac1f8abbe69717ceb99108cbc4ba7b31a606806f336b1eba705705f63b9d39ace198fe51e8990ac843
@@ -18509,40 +18441,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"webpack@npm:^5.109.0":
-  version: 5.109.0
-  resolution: "webpack@npm:5.109.0"
-  dependencies:
-    "@types/estree": "npm:^1.0.8"
-    "@types/json-schema": "npm:^7.0.15"
-    "@webassemblyjs/ast": "npm:^1.14.1"
-    "@webassemblyjs/wasm-edit": "npm:^1.14.1"
-    "@webassemblyjs/wasm-parser": "npm:^1.14.1"
-    acorn: "npm:^8.16.0"
-    browserslist: "npm:^4.28.1"
-    chrome-trace-event: "npm:^1.0.2"
-    enhanced-resolve: "npm:^5.24.2"
-    es-module-lexer: "npm:^2.1.0"
-    eslint-scope: "npm:5.1.1"
-    events: "npm:^3.2.0"
-    graceful-fs: "npm:^4.2.11"
-    mime-db: "npm:^1.54.0"
-    minimizer-webpack-plugin: "npm:^5.6.1"
-    neo-async: "npm:^2.6.2"
-    schema-utils: "npm:^4.3.3"
-    tapable: "npm:^2.3.0"
-    watchpack: "npm:^2.5.2"
-    webpack-sources: "npm:^3.5.1"
-  peerDependenciesMeta:
-    webpack-cli:
-      optional: true
-  bin:
-    webpack: bin/webpack.js
-  checksum: 10/926e721ba027e62fcb97ef2455fcf9d0a40ac14805d3f6c5367b5e897c63e06fc2f8e2ac69814d192981cd7d72af4a195028cd8d827095ba78c7946195d7a4d2
-  languageName: node
-  linkType: hard
-
-"webpack@npm:^5.109.2":
+"webpack@npm:^5.109.0, webpack@npm:^5.109.2":
   version: 5.109.2
   resolution: "webpack@npm:5.109.2"
   dependencies:
