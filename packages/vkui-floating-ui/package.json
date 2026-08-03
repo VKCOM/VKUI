@@ -83,7 +83,7 @@
     "@swc/helpers": "^0.5.23"
   },
   "devDependencies": {
-    "@swc/core": "^1.15.46",
+    "@swc/core": "^1.15.47",
     "react": "^19.2.8",
     "react-dom": "^19.2.8"
   },
