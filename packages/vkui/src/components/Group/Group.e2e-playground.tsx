@@ -1,5 +1,5 @@
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
-import { Div } from '../Div/Div';
+import { Box } from '../Box/Box';
 import { Header } from '../Header/Header';
 import { Group, type GroupProps } from './Group';
 
@@ -10,13 +10,41 @@ export const GroupPlayground = (props: ComponentPlaygroundProps) => {
       propSets={[
         {
           header: [undefined, <Header key="header">Header</Header>],
-          children: [<Div key="div">Content</Div>],
+          children: [
+            <Box padding="system" key="Box">
+              Content
+            </Box>,
+          ],
           mode: ['plain', 'card'],
         },
         {
           header: [<Header key="header">Header</Header>],
-          children: [<Div key="div">Content</Div>],
+          children: [
+            <Box padding="system" key="Box">
+              Content
+            </Box>,
+          ],
           description: ['Description'],
+        },
+        {
+          mode: ['card'],
+          children: [
+            <Box padding="system" key="Box">
+              Content
+            </Box>,
+          ],
+          noBlockStartRounding: [true],
+          noBlockEndRounding: [false],
+        },
+        {
+          mode: ['card'],
+          children: [
+            <Box padding="system" key="Box">
+              Content
+            </Box>,
+          ],
+          noBlockStartRounding: [false],
+          noBlockEndRounding: [true],
         },
       ]}
     >
@@ -36,23 +64,29 @@ export const GroupWithExpandedContentPlayground = (props: ComponentPlaygroundPro
           $adaptivity: 'x',
           children: [
             <Group.ExpandedContent key="expanded-inline" direction="inline">
-              <Div style={{ background: 'var(--vkui--color_background_accent_tint)' }}>
+              <Box
+                padding="system"
+                style={{ background: 'var(--vkui--color_background_accent_tint)' }}
+              >
                 Expanded Inline
-              </Div>
+              </Box>
             </Group.ExpandedContent>,
             <Group.ExpandedContent key="expanded-block" direction="block">
-              <Div style={{ background: 'var(--vkui--color_background_accent_tint)' }}>
+              <Box
+                padding="system"
+                style={{ background: 'var(--vkui--color_background_accent_tint)' }}
+              >
                 Expanded Block
-              </Div>
+              </Box>
             </Group.ExpandedContent>,
           ],
         },
       ]}
     >
       {(props: GroupProps) => (
-        <Div style={{ background: 'var(--vkui--color_background_warning)' }}>
+        <Box padding="system" style={{ background: 'var(--vkui--color_background_warning)' }}>
           <Group {...props} />
-        </Div>
+        </Box>
       )}
     </ComponentPlayground>
   );
