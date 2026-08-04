@@ -1,116 +1,171 @@
+'use client';
+
 import * as React from 'react';
-import { classNames, hasMouse as hasPointerLib, noop } from '@vkontakte/vkjs';
-import { usePlatform } from '../../hooks/usePlatform';
+import { classNames, noop } from '@vkontakte/vkjs';
 import { getOffsetRect } from '../../lib/offset';
+import { type CSSCustomProperties } from '../../types';
 import styles from './Tappable.module.css';
 
 /* eslint-disable jsdoc/require-jsdoc */
 
-/**
- * Возможно нужен Ripple эффект. Данный хук нужен для отказа
- * от двойного ререндера.
- */
-export const useMaybeNeedRipple = (
-  activeMode: string,
-  hasPointer: boolean | undefined,
-): boolean => {
-  const platform = usePlatform();
-
-  return platform === 'android' && !hasPointer && activeMode === 'background';
-};
+type WaveState = 'inactive' | 'fadeIn' | 'fadeOut';
 
 interface Wave {
   x: number;
   y: number;
-  id: number;
-  pointerId: number;
+  rippleSize: number;
+  rippleScale: number;
+  state: WaveState;
 }
 
-const DELAY = 70;
-const WAVE_LIVE = 225;
+const TOUCH_DELAY = 150;
+
+const INITIAL_ORIGIN_SCALE = 0.2;
+const SOFT_EDGE_MINIMUM_SIZE = 75;
+const SOFT_EDGE_CONTAINER_RATIO = 0.35;
+const PADDING = 10;
+
+function calcRippleSize(width: number, height: number): number {
+  return Math.floor(Math.max(width, height) * INITIAL_ORIGIN_SCALE);
+}
+
+function calcRippleScale(initialRippleSize: number, width: number, height: number) {
+  const maxDim = Math.max(width, height);
+  const softEdgeSize = Math.max(SOFT_EDGE_CONTAINER_RATIO * maxDim, SOFT_EDGE_MINIMUM_SIZE);
+
+  const diagonal = Math.sqrt(width ** 2 + height ** 2);
+  const maxRadius = diagonal * 2 + PADDING;
+
+  return (maxRadius + softEdgeSize) / initialRippleSize;
+}
 
 /**
  * Хук для создания Ripple эффектов.
  */
 export const useRipple = (
   needRipple: boolean,
-  hasPointerContext: boolean | undefined,
 ): {
-  clicks: Wave[];
+  wave: Wave;
   onPointerDown: React.PointerEventHandler<HTMLSpanElement>;
+  onPointerUp: React.PointerEventHandler<HTMLSpanElement>;
   onPointerCancel: React.PointerEventHandler<HTMLSpanElement>;
+  onWaveAnimationEnd: React.AnimationEventHandler<HTMLSpanElement>;
 } => {
-  const [clicks, setClicks] = React.useState<Wave[]>([]);
+  const pointerDelayTimerRef = React.useRef<ReturnType<typeof setTimeout>>(undefined);
 
-  /**
-   * Коллекция нажатий и таймеров задержки появления волны.
-   */
-  const pointerDelayTimers = React.useRef<Map<number, ReturnType<typeof setTimeout>>>(null);
-  if (pointerDelayTimers.current === null) {
-    pointerDelayTimers.current = new Map();
+  const pointerDownRef = React.useRef(false);
+  const fadeInAnimationInProgressRef = React.useRef(false);
+
+  const [state, setState] = React.useState<WaveState>('inactive');
+
+  const [x, setX] = React.useState(0);
+  const [y, setY] = React.useState(0);
+  const [rippleSize, setRippleSize] = React.useState(0);
+  const [rippleScale, setRippleScale] = React.useState(0);
+
+  const checkEndFadeIn = () => {
+    if (state !== 'fadeIn' || pointerDownRef.current || fadeInAnimationInProgressRef.current) {
+      return;
+    }
+
+    setState('fadeOut');
+  };
+
+  const onAnimationEnd = () => {
+    switch (state) {
+      case 'fadeIn':
+        fadeInAnimationInProgressRef.current = false;
+        checkEndFadeIn();
+        break;
+      case 'fadeOut':
+        setState('inactive');
+        break;
+    }
+  };
+
+  function addClick(x: number, y: number, rippleSize: number, rippleScale: number) {
+    setState('fadeIn');
+    fadeInAnimationInProgressRef.current = true;
+    setX(x);
+    setY(y);
+    setRippleSize(rippleSize);
+    setRippleScale(rippleScale);
   }
 
-  React.useEffect(
-    function setClearClicksTimeout() {
-      const clicksTimeoutId = clicks.length > 0 ? setTimeout(() => setClicks([]), WAVE_LIVE) : null;
-      return function cancelClearClicksTimeout() {
-        if (clicksTimeoutId) {
-          clearTimeout(clicksTimeoutId);
-        }
-      };
-    },
-    [clicks],
-  );
-
-  function addClick(x: number, y: number, pointerId: number) {
-    const dateNow = Date.now();
-    const filteredClicks = clicks.filter((click) => click.id + WAVE_LIVE > dateNow);
-
-    setClicks([...filteredClicks, { x, y, id: dateNow, pointerId }]);
-    pointerDelayTimers.current!.delete(pointerId);
-  }
-
-  /**
-   * Добавляем волну с задержкой. Задержка необходима при отмене волны.
-   */
   const onPointerDown: React.PointerEventHandler<HTMLSpanElement> = (e) => {
-    const { top, left } = getOffsetRect(e.currentTarget);
+    setState('inactive');
+    const { top, left, width, height } = getOffsetRect(e.currentTarget);
+
+    const rippleSize = calcRippleSize(width, height);
+    const rippleScale = calcRippleScale(rippleSize, width, height);
+
     const x = e.clientX - (left ?? 0);
     const y = e.clientY - (top ?? 0);
 
-    pointerDelayTimers.current!.set(
-      e.pointerId,
-      setTimeout(() => addClick(x, y, e.pointerId), DELAY),
-    );
+    const delay = e.pointerType === 'touch' ? TOUCH_DELAY : 0;
+
+    pointerDelayTimerRef.current = setTimeout(() => addClick(x, y, rippleSize, rippleScale), delay);
+    pointerDownRef.current = true;
   };
 
-  const onPointerCancel: React.PointerEventHandler<HTMLSpanElement> = (e) => {
-    const timer = pointerDelayTimers.current!.get(e.pointerId);
-    clearTimeout(timer);
-    pointerDelayTimers.current!.delete(e.pointerId);
+  const onPointerCancel: React.PointerEventHandler<HTMLSpanElement> = () => {
+    clearTimeout(pointerDelayTimerRef.current);
+    pointerDownRef.current = false;
+    checkEndFadeIn();
   };
 
-  // WARNING: не использовать для рендеринга
-  const reallyNeedRipple = (!hasPointerLib || hasPointerContext === false) && needRipple;
+  const onPointerUp: React.PointerEventHandler<HTMLSpanElement> = () => {
+    pointerDownRef.current = false;
+    checkEndFadeIn();
+  };
 
   return {
-    clicks,
-    onPointerDown: reallyNeedRipple ? onPointerDown : noop,
-    onPointerCancel: reallyNeedRipple ? onPointerCancel : noop,
+    wave: {
+      x,
+      y,
+      rippleSize,
+      rippleScale,
+      state,
+    },
+    onWaveAnimationEnd: onAnimationEnd,
+    onPointerDown: needRipple ? onPointerDown : noop,
+    onPointerUp: needRipple ? onPointerUp : noop,
+    onPointerCancel: needRipple ? onPointerCancel : noop,
   };
 };
 
 export interface RippleProps {
   needRipple: boolean;
-  clicks: Wave[];
+  wave: Wave;
+  onWaveAnimationEnd: React.AnimationEventHandler<HTMLSpanElement>;
 }
 
-export const Ripple = ({ needRipple = true, clicks }: RippleProps): React.ReactNode => {
+const stylesState: Record<WaveState, string | undefined> = {
+  inactive: undefined,
+  fadeIn: styles.waveFadeIn,
+  fadeOut: styles.waveFadeOut,
+};
+
+export const Ripple = ({
+  needRipple = true,
+  wave,
+  onWaveAnimationEnd,
+}: RippleProps): React.ReactNode => {
+  const style: React.CSSProperties & CSSCustomProperties = {
+    'top': wave.y - wave.rippleSize / 2,
+    'left': wave.x - wave.rippleSize / 2,
+    'width': wave.rippleSize,
+    'height': wave.rippleSize,
+    '--vkui_internal--Tappable-scale': wave.rippleScale.toString(),
+  };
+
   return (
     <span aria-hidden className={classNames(styles.stateLayer, needRipple && styles.ripple)}>
-      {clicks.map((wave) => (
-        <span key={wave.id} className={styles.wave} style={{ top: wave.y, left: wave.x }} />
-      ))}
+      <span
+        className={classNames(styles.wave, stylesState[wave.state])}
+        style={style}
+        onAnimationEnd={onWaveAnimationEnd}
+      />
     </span>
   );
 };
