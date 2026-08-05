@@ -21,6 +21,7 @@ export function useInputValueController<OptionInterfaceT extends CustomSelectOpt
   onInputChange: onInputChangeProp,
 }: UseInputValueControllerProps<OptionInterfaceT>) {
   const [inputValue, setInputValue] = React.useState('');
+  const [isInputValueChanged, setIsInputValueChanged] = React.useState(false);
   const optionsRef = React.useRef(options);
 
   useIsomorphicLayoutEffect(() => {
@@ -29,6 +30,7 @@ export function useInputValueController<OptionInterfaceT extends CustomSelectOpt
 
   const resetInputValueBySelectedOption = React.useCallback(() => {
     setInputValue(calculateInputValueFromOptions(optionsRef.current, selectedValue));
+    setIsInputValueChanged(false);
   }, [selectedValue]);
 
   useIsomorphicLayoutEffect(() => {
@@ -39,18 +41,21 @@ export function useInputValueController<OptionInterfaceT extends CustomSelectOpt
 
   const resetInputValue = React.useCallback(() => {
     setInputValue('');
+    setIsInputValueChanged(false);
   }, []);
 
   const onInputChange: React.ChangeEventHandler<HTMLInputElement> = React.useCallback(
     (e) => {
       onInputChangeProp && onInputChangeProp(e);
       setInputValue(e.target.value);
+      setIsInputValueChanged(true);
     },
     [onInputChangeProp, setInputValue],
   );
 
   return {
     inputValue,
+    isInputValueChanged,
     resetInputValue,
     resetInputValueBySelectedOption,
     onInputChange,
