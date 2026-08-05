@@ -1987,4 +1987,108 @@ describe('CustomSelect', () => {
     // дропдаун открыт вниз и класс для границ выставлен верно
     expect(document.querySelector(`.${styles.popDown}`)).not.toBeNull();
   });
+
+  describe('searchable + allowClearButton', () => {
+    it('shows clear button when typing in search and hides when search is empty', async () => {
+      render(
+        <CustomSelect
+          searchable
+          allowClearButton
+          labelTextTestId="labelTextTestId"
+          clearButtonTestId="clearButtonTestId"
+          options={[
+            { value: 0, label: 'Mike' },
+            { value: 1, label: 'Josh' },
+          ]}
+          slotProps={{
+            input: {
+              'data-testid': INPUT_TEST_ID,
+            },
+          }}
+        />,
+      );
+
+      // дропдаун закрыт — кнопки очистки нет
+      expect(screen.queryByTestId('clearButtonTestId')).toBeFalsy();
+
+      // открываем дропдаун и вводим текст
+      fireEvent.click(screen.getByTestId('labelTextTestId'));
+      await waitFor(() => expect(screen.getByTestId(INPUT_TEST_ID)).toHaveFocus());
+      expect(screen.queryByTestId('clearButtonTestId')).toBeFalsy();
+
+      fireEvent.change(screen.getByTestId(INPUT_TEST_ID), { target: { value: 'Mi' } });
+      expect(getInputValue()).toBe('Mi');
+      expect(screen.getByTestId('clearButtonTestId')).toBeTruthy();
+
+      // очищаем поле поиска — кнопка снова пропадает
+      fireEvent.change(screen.getByTestId(INPUT_TEST_ID), { target: { value: '' } });
+      expect(screen.queryByTestId('clearButtonTestId')).toBeFalsy();
+    });
+
+    it('clicking clear button clears only search text and keeps selected value', async () => {
+      const onChange = vi.fn();
+
+      render(
+        <CustomSelect
+          searchable
+          allowClearButton
+          labelTextTestId="labelTextTestId"
+          clearButtonTestId="clearButtonTestId"
+          options={[
+            { value: 0, label: 'Mike' },
+            { value: 1, label: 'Josh' },
+          ]}
+          defaultValue={0}
+          onChange={onChange}
+          slotProps={{
+            input: {
+              'data-testid': INPUT_TEST_ID,
+            },
+          }}
+        />,
+      );
+
+      expect(getCustomSelectValue()).toEqual('Mike');
+
+      // открываем дропдаун и вводим текст
+      fireEvent.click(screen.getByTestId('labelTextTestId'));
+      await waitFor(() => expect(screen.getByTestId(INPUT_TEST_ID)).toHaveFocus());
+      fireEvent.change(screen.getByTestId(INPUT_TEST_ID), { target: { value: 'Jo' } });
+      expect(getInputValue()).toBe('Jo');
+
+      // кликаем по кнопке очистки
+      fireEvent.click(screen.getByTestId('clearButtonTestId'));
+
+      // текст поиска сброшен
+      expect(getInputValue()).toBe('');
+      // выбранное значение сохраняется
+      expect(getCustomSelectValue()).toEqual('Mike');
+      // onChange не вызывается — выбранное значение не менялось
+      expect(onChange).not.toHaveBeenCalled();
+    });
+
+    it('does not show clear button without allowClearButton when typing in search', async () => {
+      render(
+        <CustomSelect
+          searchable
+          labelTextTestId="labelTextTestId"
+          options={[
+            { value: 0, label: 'Mike' },
+            { value: 1, label: 'Josh' },
+          ]}
+          slotProps={{
+            input: {
+              'data-testid': INPUT_TEST_ID,
+            },
+          }}
+        />,
+      );
+
+      fireEvent.click(screen.getByTestId('labelTextTestId'));
+      await waitFor(() => expect(screen.getByTestId(INPUT_TEST_ID)).toHaveFocus());
+      fireEvent.change(screen.getByTestId(INPUT_TEST_ID), { target: { value: 'Mi' } });
+
+      expect(screen.queryByRole('button', { hidden: true })).toBeFalsy();
+    });
+  });
 });
