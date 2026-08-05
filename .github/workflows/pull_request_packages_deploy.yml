@@ -65,14 +65,6 @@ jobs:
           fail_ci_if_error: true
           verbose: true
 
-      - name: Upload coverage to GitHub
-        if: ${{ steps.artifact.outputs.found_artifact == 'true' }}
-        uses: actions/upload-code-coverage@1c15be36fc3733ba839b1dd643bd9556e4426dc1 # v1.4.1
-        with:
-          file: .nyc_output/cobertura-coverage.xml
-          language: TypeScript
-          label: code-coverage/vitest
-
   deploy_playwright_report:
     needs: pr_workflow_payload
     if: ${{ needs.pr_workflow_payload.outputs.status == 'success' }}
