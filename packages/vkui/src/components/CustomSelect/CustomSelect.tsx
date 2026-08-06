@@ -443,17 +443,22 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     [options, selectedOptionValue],
   );
 
-  const { inputValue, onInputChange, resetInputValue, resetInputValueBySelectedOption } =
-    useInputValueController({
-      options,
-      accessible,
-      selectedValue: selectedOptionValue,
-      onInputChange: onChangeInput,
-    });
+  const {
+    inputValue,
+    isInputValueChanged,
+    onInputChange,
+    resetInputValue,
+    resetInputValueBySelectedOption,
+  } = useInputValueController({
+    options,
+    accessible,
+    selectedValue: selectedOptionValue,
+    onInputChange: onChangeInput,
+  });
 
   const filteredOptions = React.useMemo(
-    () => filter(options, searchable ? inputValue : '', filterFn),
-    [filterFn, inputValue, options, searchable],
+    () => filter(options, searchable && isInputValueChanged ? inputValue : '', filterFn),
+    [filterFn, inputValue, isInputValueChanged, options, searchable],
   );
 
   const { scrollToElement, optionsWrapperRef, scrollBoxRef } = useScrollListController();

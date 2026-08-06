@@ -507,6 +507,54 @@ describe('CustomSelect', () => {
     }
   });
 
+  it('shows all options after selection until the input value changes', async () => {
+    render(
+      <CustomSelect
+        searchable
+        options={[
+          { value: 0, label: 'Москва' },
+          { value: 1, label: 'Санкт-Петербург' },
+          { value: 2, label: 'Сан-Франциско' },
+        ]}
+        slotProps={{
+          input: {
+            'data-testid': INPUT_TEST_ID,
+          },
+        }}
+      />,
+    );
+
+    const input = screen.getByTestId(INPUT_TEST_ID);
+
+    fireEvent.click(input);
+    fireEvent.change(input, { target: { value: 'Сан' } });
+
+    expect(screen.getAllByRole('option')).toHaveLength(2);
+
+    fireEvent.click(screen.getByRole('option', { name: 'Санкт-Петербург' }));
+
+    expect(input).toHaveValue('Санкт-Петербург');
+
+    fireEvent.click(input);
+
+    await waitForFloatingPosition();
+
+    expect(screen.getAllByRole('option')).toHaveLength(3);
+
+    fireEvent.change(input, { target: { value: 'Санкт-Петербур' } });
+
+    expect(screen.getAllByRole('option')).toHaveLength(1);
+    expect(screen.getByRole('option')).toHaveTextContent('Санкт-Петербург');
+
+    fireEvent.change(input, { target: { value: 'Сан' } });
+
+    expect(screen.getAllByRole('option')).toHaveLength(2);
+
+    fireEvent.change(input, { target: { value: '' } });
+
+    expect(screen.getAllByRole('option')).toHaveLength(3);
+  });
+
   it('is custom searchable', () => {
     render(
       <CustomSelect
