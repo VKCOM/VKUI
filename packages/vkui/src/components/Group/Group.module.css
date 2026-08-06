@@ -32,7 +32,18 @@
 
   position: relative;
   background: var(--vkui--color_background_content);
-  border-radius: var(--vkui--size_border_radius_paper--regular);
+}
+
+.modeCard.noBlockStartRoundingFalseOrUndefined,
+.viewWidthSmallTabletPlus.modeNone.noBlockStartRoundingFalseOrUndefined {
+  border-start-start-radius: var(--vkui--size_border_radius_paper--regular);
+  border-start-end-radius: var(--vkui--size_border_radius_paper--regular);
+}
+
+.modeCard.noBlockEndRoundingFalseOrUndefined,
+.viewWidthSmallTabletPlus.modeNone.noBlockEndRoundingFalseOrUndefined {
+  border-end-start-radius: var(--vkui--size_border_radius_paper--regular);
+  border-end-end-radius: var(--vkui--size_border_radius_paper--regular);
 }
 
 @media (--viewWidth-smallTabletPlus) {
@@ -42,35 +53,68 @@
 
     position: relative;
     background: var(--vkui--color_background_content);
-    border-radius: var(--vkui--size_border_radius_paper--regular);
+  }
+
+  .viewWidthNone.modeNone.noBlockStartRoundingFalseOrUndefined {
+    border-start-start-radius: var(--vkui--size_border_radius_paper--regular);
+    border-start-end-radius: var(--vkui--size_border_radius_paper--regular);
+  }
+
+  .viewWidthNone.modeNone.noBlockEndRoundingFalseOrUndefined {
+    border-end-start-radius: var(--vkui--size_border_radius_paper--regular);
+    border-end-end-radius: var(--vkui--size_border_radius_paper--regular);
   }
 }
 
 .viewWidthSmallTabletMinus.modeCard {
   --vkui_internal--Group_padding_inline: 0;
-
-  border-radius: var(--vkui--size_border_radius_promo--regular);
 }
 
-@media (--viewWidth-smallTabletMinus) {
-  .viewWidthNone.modeCard {
-    --vkui_internal--Group_padding_inline: 0;
-
-    border-radius: var(--vkui--size_border_radius_promo--regular);
-  }
+.viewWidthSmallTabletMinus.modeCard.noBlockStartRoundingFalseOrUndefined {
+  border-start-start-radius: var(--vkui--size_border_radius_promo--regular);
+  border-start-end-radius: var(--vkui--size_border_radius_promo--regular);
 }
 
-.viewWidthSmallTabletMinus.modeCard:first-of-type {
-  border-start-start-radius: 0;
-  border-start-end-radius: 0;
+.viewWidthSmallTabletMinus.modeCard.noBlockEndRoundingFalseOrUndefined {
   border-end-start-radius: var(--vkui--size_border_radius_promo--regular);
   border-end-end-radius: var(--vkui--size_border_radius_promo--regular);
 }
 
 @media (--viewWidth-smallTabletMinus) {
-  .viewWidthNone.modeCard:first-of-type {
+  .viewWidthNone.modeCard {
+    --vkui_internal--Group_padding_inline: 0;
+  }
+
+  .viewWidthNone.modeCard.noBlockStartRoundingFalseOrUndefined {
+    border-start-start-radius: var(--vkui--size_border_radius_promo--regular);
+    border-start-end-radius: var(--vkui--size_border_radius_promo--regular);
+  }
+
+  .viewWidthNone.modeCard.noBlockEndRoundingFalseOrUndefined {
+    border-end-start-radius: var(--vkui--size_border_radius_promo--regular);
+    border-end-end-radius: var(--vkui--size_border_radius_promo--regular);
+  }
+}
+
+/* TODO [>=9]: Избавиться от магии проставления первому элементу закруглений */
+
+.noBlockStartRoundingUndefined.viewWidthSmallTabletMinus.modeCard:first-of-type {
+  border-start-start-radius: 0;
+  border-start-end-radius: 0;
+}
+
+.noBlockEndRoundingUndefined.viewWidthSmallTabletMinus.modeCard:first-of-type {
+  border-end-start-radius: var(--vkui--size_border_radius_promo--regular);
+  border-end-end-radius: var(--vkui--size_border_radius_promo--regular);
+}
+
+@media (--viewWidth-smallTabletMinus) {
+  .noBlockStartRoundingUndefined.viewWidthNone.modeCard:first-of-type {
     border-start-start-radius: 0;
     border-start-end-radius: 0;
+  }
+
+  .noBlockEndRoundingUndefined.viewWidthNone.modeCard:first-of-type {
     border-end-start-radius: var(--vkui--size_border_radius_promo--regular);
     border-end-end-radius: var(--vkui--size_border_radius_promo--regular);
   }
@@ -293,16 +337,18 @@
   margin-inline-start: 0;
 }
 
+/* TODO [>=9]: Избавиться от магии проставления первому элементу закруглений */
+
 /*
  * CMP:
  * PanelHeader
  */
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalPanelHeader--vkcom) ~ .host:first-of-type,
+:global(.vkuiInternalPanelHeader--vkcom) ~ .host:first-of-type.noBlockStartRoundingUndefined,
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
   :global(.vkuiInternalPanelHeader--vkcom)
   + *
-  .host:first-of-type {
+  .host:first-of-type.noBlockStartRoundingUndefined {
   position: relative;
   inset-block-start: -1px;
   border-start-start-radius: 0;
