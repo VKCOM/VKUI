@@ -1,4 +1,4 @@
-import { jsx as _jsx } from 'react/jsx-runtime';
+import * as React from 'react';
 import { addons, types } from 'storybook/manager-api';
 import { Tool } from '../Tool';
 import { ADDON_ID, TOOL_ID } from '../constants';
@@ -13,7 +13,7 @@ addons.register(ADDON_ID, (api) => {
       if (!api.getCurrentStoryData()) {
         return null;
       }
-      return _jsx(Tool, {});
+      return React.createElement(Tool);
     },
   });
 });
