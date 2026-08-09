@@ -5139,7 +5139,7 @@ __metadata:
     "@vkontakte/icons": "npm:^3.64.1"
     "@vkontakte/vkjs": "npm:^2.0.2"
     "@vkontakte/vkui": "workspace:^"
-    "@vkontakte/vkui-tokens": "npm:4.86.0"
+    "@vkontakte/vkui-tokens": "npm:4.87.0"
     next: "npm:^16.2.12"
     nextra: "npm:^4.6.1"
     react: "npm:^19.2.8"
@@ -5235,7 +5235,7 @@ __metadata:
     "@vitest/eslint-plugin": "npm:^1.6.24"
     "@vitest/utils": "npm:^4.1.10"
     "@vkontakte/stylelint-config": "npm:^4.1.0"
-    "@vkontakte/vkui-tokens": "npm:4.86.0"
+    "@vkontakte/vkui-tokens": "npm:4.87.0"
     autoprefixer: "npm:^10.5.4"
     concurrently: "npm:^10.0.4"
     cross-env: "npm:^10.1.0"
@@ -5295,13 +5295,13 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@vkontakte/vkui-tokens@npm:4.86.0":
-  version: 4.86.0
-  resolution: "@vkontakte/vkui-tokens@npm:4.86.0"
+"@vkontakte/vkui-tokens@npm:4.87.0":
+  version: 4.87.0
+  resolution: "@vkontakte/vkui-tokens@npm:4.87.0"
   dependencies:
     "@swc/helpers": "npm:^0.5.19"
     csstype: "npm:^3.1.1"
-  checksum: 10/4dd377b47c17cb819399c39f819348bdb285dc394bf1295ab29b14de17d8b0f9ea7b4e28d049b42db6483b4e2ac0bdcccb8ce0b7b88966b7623aa156b7c33cdd
+  checksum: 10/2ff82ccba4283632ca2d9f328eb92e11c3e6dd4ffaa2abcc5a3485a5e25c96b62e39688e9c5ff277b8e54a5493acd69782ec868190e40425a06c65b5c72af360
   languageName: node
   linkType: hard
 
