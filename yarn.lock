@@ -2757,7 +2757,7 @@ __metadata:
     react-live: "npm:^4.1.8"
     serve: "npm:^14.2.6"
     slug: "npm:^12.0.1"
-    swr: "npm:^2.4.2"
+    swr: "npm:^2.5.0"
     typescript: "npm:*"
     zustand: "npm:^5.0.14"
   languageName: unknown
@@ -17292,15 +17292,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"swr@npm:^2.4.2":
-  version: 2.4.2
-  resolution: "swr@npm:2.4.2"
+"swr@npm:^2.5.0":
+  version: 2.5.0
+  resolution: "swr@npm:2.5.0"
   dependencies:
     dequal: "npm:^2.0.3"
     use-sync-external-store: "npm:^1.6.0"
   peerDependencies:
     react: ^16.11.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
-  checksum: 10/53f5891599af6fdd58fa47727a2931e40ec308e7e0ff5e6ceef9c649b83703e4a2934f05cb5be159c6195b5ff934857144d1bad08129f42ce0a855f338455364
+  checksum: 10/a607f098d13494683c9660d678610a87616d2cc131b969f14b5545b7003d99ef2074d84f0d98c6c679536633eb5b4486829e922de8ee9d81d9491d2bb53b1983
   languageName: node
   linkType: hard
 
