@@ -1,0 +1,167 @@
+﻿---
+description: Упрощённый вариант ячейки для отображения базовой информации с минимальным набором элементов.
+tags: list
+---
+
+<Overview group="buttons">
+
+# SimpleCell [tag:component]
+
+Упрощённый вариант ячейки для отображения базовой информации с минимальным набором элементов.
+Идеален для компактных интерфейсов и сценариев с ограниченным пространством.
+
+</Overview>
+
+import { BlockWrapper } from '@/components/wrappers';
+
+{/* @example-description: Базовый `SimpleCell` с аватаром, подзаголовком и обработчиком клика. */}
+<Playground Wrapper={BlockWrapper} style={{ maxWidth: 320 }}>
+  ```jsx
+  <SimpleCell before={<Avatar size={28} />} subtitle="Должность" onClick={() => {}}>
+    Иван Иванов
+  </SimpleCell>
+  ```
+</Playground>
+
+## Дополнительные элементы
+
+### Иконки и индикаторы
+
+**Рекомендуемые размеры элементов:**
+
+- `before`: `28px` (иконки) / `28`-`72px` (`Avatar`)
+- `badgeBeforeTitle`/`badgeAfterTitle`/`badgeBeforeSubtitle`/`badgeAfterSubtitle`: `12px` (иконки/индикаторы)
+- `after`: `24`-`28px` (иконки) или `<Switch />`
+
+{/* @example-description: `SimpleCell` с бейджами, индикатором и дополнительной мета-информацией. */}
+<Playground Wrapper={BlockWrapper} style={{ maxWidth: 320 }}>
+  ```jsx
+  <SimpleCell
+    badgeBeforeTitle={<Icon12OnlineMobile />}
+    badgeAfterTitle={<Badge>Есть новые</Badge>}
+    indicator="15:30"
+    subtitle="Последнее сообщение"
+    onClick={() => {}}
+  >
+    Чат с поддержкой
+  </SimpleCell>
+  ```
+</Playground>
+
+### Многострочный текст
+
+Для того, чтобы длинный текст мог отображаться в несколько строк, используйте свойство `multiline`.
+По умолчанию текст скрывается многоточием.
+
+{/* @example-description: Сравнение `SimpleCell` с переносом текста (`multiline`) и без него. */}
+<Playground Wrapper={BlockWrapper} style={{ maxWidth: 200 }}>
+  ```jsx
+  <SimpleCell
+    overTitle="Переговорная"
+    subtitle="3 этаж"
+    extraSubtitle="Вместимость: 10 человек"
+    multiline
+  >
+    Конференц-зал «Солнечный»
+  </SimpleCell>
+  <SimpleCell overTitle="Переговорная" subtitle="3 этаж" extraSubtitle="Вместимость: 10 человек">
+    Конференц-зал «Солнечный»
+  </SimpleCell>
+  ```
+</Playground>
+
+## Визуальные настройки
+
+### Шеврон
+
+Для управления видимостью иконки шеврона `›` можно использовать свойство `chevron`.
+Для управления размерами иконки - свойством `chevronSize`.
+По умолчанию шеврон отображается только при заданном свойстве `chevron="auto"` только на `iOS`,
+для отображения шеврона на всех платформах используйте `chevron="always"`.
+
+```jsx
+<SimpleCell chevron="auto" /> // По умолчанию отображение только на iOS
+<SimpleCell chevron="always" chevronSize="m" /> // Принудительное отображение
+```
+
+## Состояния
+
+### Блокировка
+
+Задается свойством `disabled`:
+
+{/* @example-description: Заблокированная `SimpleCell` в состоянии `disabled`. */}
+<Playground Wrapper={BlockWrapper}>
+  ```jsx
+  <SimpleCell disabled subtitle="Недоступно для взаимодействия">
+    Заблокированный элемент
+  </SimpleCell>
+  ```
+</Playground>
+
+## Доступность (a11y) [#a11y]
+
+### Поведение как кнопка
+
+Чтобы компонент `SimpleCell` вёл себя как интерактивная кнопка (с поддержкой состояний наведения и активности), используйте свойство `onClick`. При этом автоматически добавятся необходимые атрибуты:
+
+- `role="button"`
+- `tabindex="0"`
+
+### Интеграция с `Switch`
+
+Для корректной работы переключателя `Switch` внутри `SimpleCell`:
+
+1. Размещайте `Switch` в слоте `after`
+2. Указывайте `Component="label"` для связывания текста и переключателя
+
+```jsx
+<SimpleCell Component="label" after={<Switch defaultChecked />}>
+  Сжимать фотографии
+</SimpleCell>
+```
+
+### Предупреждение о вложенных интерактивных элементах
+
+Хотя технически возможно размещать кнопки/интерактивные элементы в слоте `after`, **это нарушает правила доступности**:
+
+- Скринридеры (NVDA, JAWS) могут некорректно интерпретировать структуру
+- Усложняется управление с клавиатуры (множественные фокусируемые элементы внутри одного компонента)
+- Нарушается семантическая вложенность (кнопка внутри кнопки)
+
+Рекомендация: избегайте вложенных интерактивных элементов.
+
+## Свойства и методы [#api]
+
+| Свойство | Тип | По умолчанию | Описание |
+| --- | --- | --- | --- |
+| `activated` | `boolean` | `-` | Позволяет управлять `activated`-состоянием извне. |
+| `activeClassName` | `string` | `-` | **Deprecated**: Since 7.3.0. Будет удалено в **VKUI v9**.  Используйте свойство `activeMode`. |
+| `activeEffectDelay` | `number` | `-` | Длительность показа `active`-состояния. |
+| `activeMode` | `StateModeLiteral` | `-` | Стиль подсветки active-состояния. Если передать произвольную строку, она добавится как css-класс во время active. |
+| `after` | `ReactNode` | `-` | Иконка 24\|28 или `<Switch />`. Располагается справа от `indicator`. |
+| `badgeAfterSubtitle` | `ReactNode` | `-` | Иконка 12. Добавится справа от текста `subtitle`. |
+| `badgeAfterTitle` | `ReactNode` | `-` | Иконка 12 или `<Badge />`. Добавится справа от текста `children`. |
+| `badgeBeforeSubtitle` | `ReactNode` | `-` | Иконка 12. Добавится слева от текста `subtitle`. |
+| `badgeBeforeTitle` | `ReactNode` | `-` | Иконка 12 или `<Badge />`. Добавится слева от текста `children`. |
+| `before` | `ReactNode` | `-` | Иконка 28 или `<Avatar size={28\|32\|40\|48\|72} />`. |
+| `borderRadiusMode` | `"auto" \| "inherit"` | `-` | Задает border-radius элементу В режиме `auto` на маленьких экранах `border-radius: 0`, иначе определяется токеном `--vkui--size_border_radius--regular`. |
+| `chevron` | `"auto" \| "always"` | `-` | Управляет видимостью иконки шеврона `›`.  - `auto` - добавляет шеврон справа только для платформы `ios`; - `always` - всегда показывает шеврон. |
+| `chevronSize` | `"s" \| "m"` | `m` | Размер chevron. |
+| `Component` | `ElementType<any, keyof IntrinsicElements>` | `-` |  |
+| `disabled` | `boolean` | `-` | Блокировка взаимодействия с компонентом. |
+| `extraSubtitle` | `ReactNode` | `-` | Дополнительная строка текста под `children` и `subtitle`. |
+| `focusVisibleMode` | `FocusVisibleMode` | `-` | Стиль аутлайна focus visible. Если передать произвольную строку, она добавится как css-класс при :focus-visible |
+| `getRootRef` | `Ref<HTMLElement>` | `-` |  |
+| `hasActive` | `boolean` | `-` | Указывает, должен ли компонент реагировать на `active`-состояние. |
+| `hasHover` | `boolean` | `-` | Указывает, должен ли компонент реагировать на `hover`-состояние. |
+| `hasHoverWithChildren` | `boolean` | `-` | Позволяет родительскому компоненту иметь `hovered`-cостояние при наведении на любой дочерний элемент. По умолчанию состояние hovered у родителя сбрасывается.  Присваивается родителькому компоненту. |
+| `hoverClassName` | `string` | `-` | **Deprecated**: Since 7.3.0. Будет удалено в **VKUI v9**.  Используйте свойство `hoverMode`. |
+| `hovered` | `boolean` | `-` | Позволяет управлять `hovered`-состоянием извне. |
+| `hoverMode` | `StateModeLiteral` | `-` | Стиль подсветки hover-состояния. Если передать произвольную строку, она добавится как css-класс во время hover. |
+| `indicator` | `ReactNode` | `-` | Контейнер для текста справа от `children`. |
+| `multiline` | `boolean` | `-` | Включает многострочный режим для отображения текста. |
+| `overTitle` | `ReactNode` | `-` | Дополнительная строка текста над `children`. |
+| `subtitle` | `ReactNode` | `-` | Дополнительная строка текста под `children`. |
+| `unlockParentHover` | `boolean` | `-` | Позволяет родительскому компоненту показывать hovered-состояние при наведении на текущий дочерний компонент.  Присваивается дочернему компоненту. |
+

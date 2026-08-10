@@ -1,0 +1,68 @@
+﻿---
+description: Компонент для отображения карточек в горизонтальной прокрутке.
+tags: list
+---
+
+<Overview group="data-display">
+
+# HorizontalCell [tag:component]
+
+Компонент для отображения карточек в горизонтальной прокрутке.
+Оптимизирован для использования внутри `HorizontalScroll`.
+Автоматически адаптирует отступы под платформу и предоставляет гибкие настройки размеров.
+
+Связанные компоненты:
+
+- [`HorizontalScroll`](/components/horizontal-scroll)
+
+</Overview>
+
+{/* @example-description: Базовый `HorizontalCell` с изображением, заголовком и подзаголовком. */}
+<Playground>
+  ```jsx
+  <HorizontalCell size="l" title="Awesome Mix Vol.2" subtitle="New Tribute Kings">
+    <Image size={128} src="https://sun9-53.userapi.com/c637816/v637816450/4a6d9/lvCvft600Zc.jpg" />
+  </HorizontalCell>
+  ```
+</Playground>
+
+## Контент
+
+Рекомендации по размеру контента в зависимости от переданного `size`:
+
+| Размер (`size`)   | Рекомендуемый контент               | Макс. ширина  |
+| ----------------- | ----------------------------------- | ------------- |
+| `s`               | `<Avatar size={56}/>`               | `56px`        |
+| `m`               | `<Avatar size={88} mode='app'/>`    | `88px`        |
+| `l`               | `<Avatar size={128} mode='image'/>` | `128px`       |
+| `xl`              | Широкие изображения                 | `220px`       |
+| `auto`            | Контент произвольной ширины         | не ограничена |
+| Числовое значение | Любые пользовательские размеры      | задаётся явно |
+
+## Свойства и методы [#api]
+
+| Свойство | Тип | По умолчанию | Описание |
+| --- | --- | --- | --- |
+| `activated` | `boolean` | `-` | Позволяет управлять `activated`-состоянием извне. |
+| `activeClassName` | `string` | `-` | **Deprecated**: Since 7.3.0. Будет удалено в **VKUI v9**.  Используйте свойство `activeMode`. |
+| `activeEffectDelay` | `number` | `-` | Длительность показа `active`-состояния. |
+| `activeMode` | `StateModeLiteral` | `-` | Стиль подсветки active-состояния. Если передать произвольную строку, она добавится как css-класс во время active. |
+| `Component` | `ElementType<any, keyof IntrinsicElements>` | `-` |  |
+| `extraSubtitle` | `ReactNode` | `-` | Дополнительная строка текста под `children` и `subtitle`. |
+| `focusVisibleMode` | `FocusVisibleMode` | `-` | Стиль аутлайна focus visible. Если передать произвольную строку, она добавится как css-класс при :focus-visible |
+| `getRef` | `Ref<HTMLDivElement>` | `-` |  |
+| `getRootRef` | `Ref<HTMLDivElement>` | `-` |  |
+| `hasActive` | `boolean` | `-` | Указывает, должен ли компонент реагировать на `active`-состояние. |
+| `hasHover` | `boolean` | `-` | Указывает, должен ли компонент реагировать на `hover`-состояние. |
+| `hasHoverWithChildren` | `boolean` | `-` | Позволяет родительскому компоненту иметь `hovered`-cостояние при наведении на любой дочерний элемент. По умолчанию состояние hovered у родителя сбрасывается.  Присваивается родителькому компоненту. |
+| `hoverClassName` | `string` | `-` | **Deprecated**: Since 7.3.0. Будет удалено в **VKUI v9**.  Используйте свойство `hoverMode`. |
+| `hovered` | `boolean` | `-` | Позволяет управлять `hovered`-состоянием извне. |
+| `hoverMode` | `StateModeLiteral` | `-` | Стиль подсветки hover-состояния. Если передать произвольную строку, она добавится как css-класс во время hover. |
+| `noPadding` | `boolean` | `false` | Отключает формирование отступов у крайних элементов.  Актуально для использования в многострочных списках. |
+| `size` | `LiteralUnion<HorizontalCellSizes, number>` | `s` | Ширина компонента.  Значения `'s' \| 'm' \| 'l' \| 'xl'` определяются дизайн-системой. Значение `auto` позволяет задать динамическую ширину, определяемую контентом. Пользовательскую ширину можно задать через числовое значение. |
+| `subtitle` | `ReactNode` | `-` | Дополнительная строка текста под `children`. |
+| `textAlign` | `"start" \| "center" \| "end"` | `size === 's' ? 'center' : 'start'` | Задает выравнивание типографики. По умолчанию `center` для `size=s`, иначе `start`. |
+| `title` | `ReactNode` | `-` | Заголовок. |
+| `TitleComponent` | `ElementType<any, keyof IntrinsicElements>` | `size === 's' ? Caption : Subhead` | Позволяет передать типографический компонент, используемый для `title`. По умолчанию `Caption` для `size=s`, иначе `Subhead`. |
+| `unlockParentHover` | `boolean` | `-` | Позволяет родительскому компоненту показывать hovered-состояние при наведении на текущий дочерний компонент.  Присваивается дочернему компоненту. |
+

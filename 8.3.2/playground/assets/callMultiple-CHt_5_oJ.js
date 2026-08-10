@@ -1,0 +1,1 @@
+import{i as e}from"./preload-helper-xPQekRTU.js";var t,n=e((()=>{t=(...e)=>(...t)=>e.filter(e=>typeof e==`function`).forEach(e=>e(...t))}));export{n,t};

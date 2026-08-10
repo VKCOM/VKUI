@@ -1,0 +1,1 @@
+import{i as e,s as t}from"./preload-helper-xPQekRTU.js";import{t as n}from"./react-a45N5K9M.js";import{n as r,t as i}from"./AdaptivityContext-DNr_EHh2.js";var a,o,s=e((()=>{a=t(n(),1),r(),o=()=>a.useContext(i)}));export{o as n,s as t};

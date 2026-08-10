@@ -1,0 +1,89 @@
+﻿---
+description: Компонент для обновления контента жестом "потянуть вниз".
+tags: loading
+---
+
+<Overview group="feedback">
+
+# PullToRefresh [tag:component]
+
+Компонент для обновления контента жестом "потянуть вниз".
+Работает на сенсорных устройствах и поддерживает управление состоянием загрузки.
+
+</Overview>
+
+{/* @example-description: Базовый `PullToRefresh` с жестом обновления и контролем состояния загрузки. */}
+<Playground style={{ userSelect: 'none', alignItems: 'unset', height: 150, overflow: 'auto' }}>
+
+```jsx
+const [users, setUsers] = React.useState([]);
+const [fetching, setFetching] = React.useState(true);
+
+const onRefresh = React.useCallback(() => {
+  setFetching(true);
+
+  setTimeout(() => {
+    setFetching(false);
+    setUsers(Array.from({ length: 20 }));
+  }, 2000);
+}, []);
+
+return (
+  <PullToRefresh onRefresh={onRefresh} isFetching={fetching}>
+    <Div>
+      {!users.length && <Text>Потяните вниз</Text>}
+      {users.map((_, i) => {
+        return (
+          <Cell key={i} before={<Avatar />}>
+            {i}
+          </Cell>
+        );
+      })}
+    </Div>
+  </PullToRefresh>
+);
+```
+
+</Playground>
+
+## Обязательные свойства
+
+### Обработчик `onRefresh`
+
+Функция обновления данных (прим.: функция должна быть мемоизированным обработчиком)
+
+## Особенности работы
+
+### Управление состоянием
+
+- Устанавливайте `isFetching={true}` при начале загрузки.
+- Устанавливайте `isFetching={false}` после завершения загрузки.
+
+## Свойства и методы [#api]
+
+| Свойство | Тип | По умолчанию | Описание |
+| --- | --- | --- | --- |
+| `Component` | `ElementType<any, keyof IntrinsicElements>` | `-` |  |
+| `document` | `Document` | `-` |  |
+| `getRootRef` | `Ref<HTMLElement>` | `-` |  |
+| `isFetching` | `boolean` | `-` | Определяет, выполняется ли обновление. Для скрытия спиннера после получения контента необходимо передать `false`. |
+| `noSlideClick` | `boolean` | `-` | Блокировать click-события после распознавания свайпа. |
+| `onEnd` | `CustomTouchEventHandler` | `-` | Общий обработчик завершения взаимодействия. |
+| `onEndX` | `CustomTouchEventHandler` | `-` | Обработчик завершения горизонтального свайпа. |
+| `onEndY` | `CustomTouchEventHandler` | `-` | Обработчик завершения вертикального свайпа. |
+| `onEnter` | `HoverHandler` | `-` | Обработчик входа курсора в область. |
+| `onLeave` | `HoverHandler` | `-` | Обработчик выхода курсора из области. |
+| `onMove` | `CustomTouchEventHandler` | `-` | Общий обработчик перемещения. |
+| `onMoveX` | `CustomTouchEventHandler` | `-` | Обработчик горизонтального перемещения. |
+| `onMoveY` | `CustomTouchEventHandler` | `-` | Обработчик вертикального перемещения. |
+| `**onRefresh** \*` | `AnyFunction` | `-` | Будет вызвана для обновления контента (прим.: функция должна быть мемоизированным обработчиком). |
+| `onStart` | `CustomTouchEventHandler` | `-` | Общий обработчик начала взаимодействия. |
+| `onStartX` | `CustomTouchEventHandler` | `-` | Обработчик начала горизонтального перемещения. |
+| `onStartY` | `CustomTouchEventHandler` | `-` | Обработчик начала вертикального перемещения. |
+| `scroll` | `ScrollContextInterface` | `-` |  |
+| `slideThreshold` | `number` | `5` | Порог расстояния в пикселях для активации свайпа. |
+| `stopPropagation` | `boolean` | `-` | Останавливать всплытие событий. |
+| `useCapture` | `boolean` | `-` | Использовать фазу capture для событий. |
+| `usePointerHover` | `boolean` | `-` | Использовать pointer-events для hover-состояний. Работает на отключенных элементах (disabled inputs). |
+| `window` | `Window` | `-` |  |
+

@@ -1,0 +1,1 @@
+import{i as e}from"./preload-helper-xPQekRTU.js";var t,n=e((()=>{t=e=>typeof e==`object`&&!!e&&e.hasOwnProperty(`current`)}));export{t as n,n as t};

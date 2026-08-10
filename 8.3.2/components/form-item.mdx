@@ -1,0 +1,262 @@
+﻿---
+description: Компонент для создания элементов форм с поддержкой заголовка, подсказки и статуса валидации.
+---
+
+<Overview group="forms">
+
+# FormItem [tag:component]
+
+Компонент для создания элементов форм с поддержкой заголовка, подсказки и статуса валидации.
+Позволяет создавать структурированные и доступные формы с единым стилем оформления.
+Рекомендуется оборачивать в компонент все поля, кроме [`Radio`](/components/radio) и [`Checkbox`](/components/checkbox), если для
+них в дизайне не предусмотрены заголовки и иные описательные элементы.
+
+</Overview>
+
+{/* @example-description: Базовый `FormItem` с заголовком поля и связью через `htmlFor/id`. */}
+<Playground>
+  ```jsx
+  const id = React.useId();
+
+  return (
+    <FormItem htmlFor={id} top="E-mail">
+      <Input type="email" id={id} name="email" />
+    </FormItem>
+  );
+  ```
+</Playground>
+
+## Структура компонента
+
+`FormItem` состоит из трёх основных частей:
+
+- `top` — заголовок элемента формы;
+- `children` — основной контент (поле ввода);
+- `bottom` — подсказка или сообщение о статусе валидации.
+
+{/* @example-description: Полная структура `FormItem` с заголовком, полем ввода и пояснением в `bottom`. */}
+<Playground>
+  ```jsx
+  const id = React.useId()
+  const bottomId = React.useId()
+
+  return (
+    <FormItem
+      htmlFor={id}
+      top="E-mail"
+      bottom="Мы не передаём вашу почту третьим лицам"
+      bottomId={bottomId}
+    >
+      <Input type="email" id={id} name="email" aria-labelledby={bottomId} />
+    </FormItem>
+  );
+  ```
+</Playground>
+
+### Подкомпоненты
+
+Иногда шапка у поля может быть составной, то есть содержать несколько отдельных компонентов для сегментирования
+представленной информации. В таком случае воспользуйтесь подкомпонентами, которые позволят вам собрать необходимый
+заголовок самостоятельно и более гибко управлять передаваемыми в компоненты свойствами (например, для `a11y`).
+
+- `<FormItem.Top>` служит оберткой для составной шапки поля, отвечая за выравнивание контента и расстановку отступов;
+- `<FormItem.TopLabel>` отвечает за отрисовку заголовка поля. По умолчанию компонент представлен тегом `label`,
+  если передано свойство `htmlFor`. Можно переопределить через свойство `Component`;
+- `<FormItem.TopAside>` отвечает за отрисовку дополнительного контента справа от заголовка поля.
+
+{/* @example-description: Составной заголовок `FormItem` через подкомпоненты `Top`, `TopLabel` и `TopAside`. */}
+<Playground>
+  ```jsx
+  const id = React.useId()
+
+  return (
+    <FormItem
+      top={
+        <FormItem.Top>
+          <FormItem.TopLabel htmlFor={id}>Дополнительная информация</FormItem.TopLabel>
+          <FormItem.TopAside>0/100</FormItem.TopAside>
+        </FormItem.Top>
+      }
+    >
+      <Textarea id={id} name="about" />
+    </FormItem>
+  );
+  ```
+</Playground>
+
+## Состояния
+
+#### `disabled`
+
+Свойство `disabled` блокирует взаимодействие с компонентом и добавляет визуальную индикацию недоступности.
+
+> Свойство `disabled` необходимо передавать и компоненту `FormItem`, и вложенному в него полю, потому что
+> свойство влияет на разные части компонентов. Например, недоступные поля ввода по умолчанию нельзя [удалить](#removable).
+
+{/* @example-description: `FormItem` и вложенное поле в неактивном состоянии `disabled`. */}
+<Playground>
+  ```jsx
+  const id = React.useId()
+
+  return (
+    <FormItem htmlFor={id} top="E-mail" disabled>
+      <Input type="email" id={id} name="email" disabled />
+    </FormItem>
+  );
+  ```
+</Playground>
+
+## Валидация
+
+Задаётся свойством `status`.
+
+- `"default"` - обычное состояние компонента (по умолчанию);
+- `"error"` - состояние ошибки, используйте данное значение, чтобы сообщить пользователю о некорректно введённых данных;
+- `"valid"` - состояние успешной валидации, используйте для индикации прошедшей проверки или при исправлении ошибки.
+
+Если вы используете значения `"error"` (реже `"valid"`), старайтесь сопровождать состояние поясняющим сообщением, например,
+используя свойство `bottom`.
+
+{/* @example-description: Валидационные состояния `FormItem` с сообщением об ошибке и успешным статусом. */}
+<Playground direction="column">
+  ```jsx
+  const emailId = React.useId()
+  const emailBottomId = React.useId()
+  const textId = React.useId()
+
+  return (
+    <>
+      <FormItem
+        htmlFor={emailId}
+        top="E-mail"
+        status="error"
+        bottom="Пожалуйста, введите e-mail"
+        bottomId={emailBottomId}
+        required
+        noPadding
+      >
+        <Input aria-labelledby={emailBottomId} id={emailId} type="email" name="email" required />
+      </FormItem>
+      <FormItem htmlFor={textId} top="Описание" status="valid" noPadding>
+        <Input id={textId} name="text" />
+      </FormItem>
+    </>
+  );
+  ```
+</Playground>
+
+## Обязательность поля
+
+Свойство `required` позволяет пометить поле как обязательное для заполнения.
+
+> Обратите внимание, что данное свойство отвечает только за визуальную составляющую.
+> На само поле, которое обёрнуто в `FormItem`, следует дополнительно передавать свойство `required`.
+
+```jsx
+<FormItem top="Email" required>
+  <Input type="email" name="email" required />
+</FormItem>
+```
+
+## Удаление поля [#removable]
+
+Добавить возможность удалить поле можно с помощью свойства `removable`,
+которое добавит кнопку удаления, стилизованную под используемую платформу.
+Помимо значений `true`/`false`, также принимает значение `"indent"`, которое добавляет визуальный отступ,
+позволяя выравнивать удаляемые поля с полями, которые удалить нельзя.
+
+При `removable={true}` доступны следующие свойства:
+
+- `removePlaceholder` — текст, который будет зачитан скринридером или показан на платформе iOS
+  при взаимодействии с кнопкой удаления (по умолчанию "Удалить");
+- `onRemove` — функция-обработчик, которая будет вызвана при нажатии на кнопку удаления.
+
+{/* @example-description: Удаляемое поле формы `FormItem` с обработчиком `onRemove` и пояснением в `bottom`. */}
+<Playground>
+  ```jsx
+  const id = React.useId()
+  const bottomId = React.useId()
+
+  return (
+    <FormItem
+      htmlFor={id}
+      removable
+      onRemove={() => alert('Обработчик удаления')}
+      top="Отчество"
+      bottom="Если у вас нет отчества — удалите этот пункт"
+      bottomId={bottomId}
+    >
+      <Input id={id} aria-labelledby={bottomId} />
+    </FormItem>
+  );
+  ```
+</Playground>
+
+## Отступы
+
+По умолчанию компонент расставляет внешние отступы, чтобы автоматически выравниваться в соответствии с
+требованиями дизайн-системы (при использовании в `Group`, например). Отключить эти отступы можно с помощью свойства `noPadding`.
+
+## Тестирование (e2e) [#e2e]
+
+Для возможности тестирования доступны свойства с постфиксом `*TestId`, которые вы можете использовать,
+чтобы находить необходимые части компонента:
+
+- `removeButtonTestId` — `id` кнопки удаления при `removable={true}`;
+- `toggleButtonTestId` — `id` кнопки подтверждения удаления (**только для iOS**).
+
+## Доступность (a11y) [#a11y]
+
+Для корректной работы ассистивных технологий необходимо вручную передавать некоторые параметры:
+
+- при передаче в `FormItem` компонента, отвечающего за пользовательский ввод (например, `<input type="text" />`),
+  рекомендуется передавать свойства `top` и `htmlFor`. В компонент пользовательского ввода должно быть передано свойство
+  `id`, которое соответствует значению `htmlFor` в `FormItem`;
+- при использовании свойства `bottom` рекомендуется также передавать в компонент пользовательского ввода (например,
+  `<input type="text" />`) свойство `aria-describedby`, а в сам `FormItem` передать `bottomId`,
+  который соответствует значению `aria-describedby`.
+
+## Свойства и методы [#api]
+
+### FormItem
+
+| Свойство | Тип | По умолчанию | Описание |
+| --- | --- | --- | --- |
+| `bottom` | `ReactNode` | `-` | Дополнительный элемент, отображаемый под содержимым. |
+| `bottomId` | `string` | `-` | Передаётся при использовании `bottom`.  Должен совпадать с `aria-describedby`, который передаётся в компонент, отвечающий за пользовательский ввод. |
+| `Component` | `ElementType<any, keyof IntrinsicElements>` | `-` |  |
+| `getRootRef` | `Ref<HTMLElement>` | `-` |  |
+| `noPadding` | `boolean` | `-` | Удаляет внешние отступы вокруг компонента. |
+| `onRemove` | `((e: MouseEvent<Element, MouseEvent>, rootEl?: HTMLElement \| null) => void) \| undefined` | `-` | Обработчик, срабатывающий при нажатии на контрол удаления. |
+| `removable` | `boolean \| "indent"` | `-` | Дает возможность удалить `FormItem`. Рекомендуется использовать только для `Input` или `Select`.  Режим `indent` предназначен для визуального отступа. |
+| `removeButtonTestId` | `string` | `-` | Передает атрибут `data-testid` для кнопки удаления. |
+| `removePlaceholder` | `ReactNode` | `Удалить` | Текст кнопки удаления ячейки. Визуально скрыт везде, кроме iOS. На iOS появляется в выезжающей кнопке для удаления ячейки. |
+| `required` | `boolean` | `false` | Помечает поле обязательным. |
+| `status` | `"default" \| "error" \| "valid"` | `default` | Статус, влияющий на стиль отображения компонента. |
+| `toggleButtonTestId` | `string` | `-` | Передает атрибут `data-testid` для кнопки, которая активирует кнопку удаления (iOS only). |
+| `top` | `ReactNode` | `-` | Дополнительный элемент, отображаемый над содержимым. |
+| `topComponent` | `ElementType<any, keyof IntrinsicElements>` | `-` | Позволяет поменять тег используемый для top Если оставить пустым, то тег top будет span. Если оставить пустым и использовать htmlFor, то тег top будет label. |
+| `topId` | `string` | `-` | Передаётся при использовании `top`.  `id` для `top`. |
+| `topMultiline` | `boolean` | `false` | Многострочный вывод заголовка. По умолчанию текст не переносится при переполнении. |
+
+### FormItem.Top
+
+| Свойство | Тип | По умолчанию | Описание |
+| --- | --- | --- | --- |
+| `Component` | `ElementType<any, keyof IntrinsicElements>` | `-` |  |
+| `getRootRef` | `Ref<HTMLDivElement>` | `-` |  |
+
+### FormItem.TopLabel
+
+| Свойство | Тип | По умолчанию | Описание |
+| --- | --- | --- | --- |
+| `Component` | `ElementType<any, keyof IntrinsicElements>` | `-` |  |
+| `getRootRef` | `Ref<HTMLElement>` | `-` |  |
+
+### FormItem.TopAside
+
+| Свойство | Тип | По умолчанию | Описание |
+| --- | --- | --- | --- |
+| `Component` | `ElementType<any, keyof IntrinsicElements>` | `-` |  |
+| `getRootRef` | `Ref<HTMLElement>` | `-` |  |
+

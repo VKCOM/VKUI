@@ -1,0 +1,105 @@
+﻿---
+other:
+  hidden: true
+  parent: Group
+description: Заголовок группы, передаётся в свойство header компонента Group.
+---
+
+<Overview group="layout">
+
+# Header [tag:component]
+
+Заголовок для компонента [`Group`](/components/group). Передаётся в свойство `header`, в начале `children`, либо через `Group.Header`.
+
+</Overview>
+
+import { BlockWrapper } from '@/components/wrappers';
+
+Заголовок группы. Передаётся либо в свойство `header`, либо в начале `children`, либо в `Group.Header`.
+
+{/* @example-description: Отдельный `Header` с индикатором и правым управляющим элементом. */}
+<Playground Wrapper={BlockWrapper}>
+  ```jsx
+  <Header indicator={<Badge mode="prominent">12</Badge>} after={<Switch label="Уведомления" />}>Уведомления</Header>
+  ```
+</Playground>
+
+### Рекомендуемые размеры иконок
+
+| Свойство         | Расположение            | Рекомендуемый размер |
+| ---------------- | ----------------------- | -------------------- |
+| `before`         | Слева от всего контента | `28px`               |
+| `beforeTitle`    | Слева от заголовка      | `16px`               |
+| `afterTitle`     | Справа от заголовка     | `16px`               |
+| `beforeSubtitle` | Слева от подзаголовка   | `12px`               |
+| `afterSubtitle`  | Справа от подзаголовка  | `12px`               |
+
+### Дополнительные элементы
+
+- `indicator` — отображает счётчик/статус:
+
+  ```jsx
+  <Header indicator={<Badge mode="prominent">12</Badge>}>Уведомления</Header>
+  ```
+
+- `after` — контент справа от всего заголовка:
+
+  ```jsx
+  <Header after={<Switch label="Настройки" />}>Настройки</Header>
+  ```
+
+### Пример использования
+
+{/* @example-description: Расширенный пример `Header` с иконками, подзаголовком, счетчиком и ссылкой. */}
+<Playground Wrapper={BlockWrapper}>
+  ```jsx
+  <Group
+    mode="card"
+    separator="hide"
+    header={
+      <Header
+        before={<Icon28UserCircleFillBlue />}
+        beforeTitle={<Icon16LockOutline />}
+        afterTitle={<Icon16UnlockOutline />}
+        beforeSubtitle={<Icon12Tag />}
+        afterSubtitle={<Icon12Fire />}
+        subtitle="SOHN — Conrad"
+        subtitleComponent="h3"
+        indicator={
+          <Counter size="s" mode="primary" appearance="accent-red">
+            3
+          </Counter>
+        }
+        after={<Link href="#">Показать все</Link>}
+      >
+        Плейлисты
+      </Header>
+    }
+  >
+    <Div>
+      <Text>Контент</Text>
+    </Div>
+  </Group>
+  ```
+</Playground>
+
+## Свойства и методы [#api]
+
+### Header
+
+| Свойство | Тип | По умолчанию | Описание |
+| --- | --- | --- | --- |
+| `after` | `ReactNode` | `-` | Допускаются иконки, текст, Link. |
+| `afterSubtitle` | `ReactNode` | `-` | Иконка справа от subtitle (рекомендуется использовать размер 12px). |
+| `afterTitle` | `ReactNode` | `-` | Иконка справа от title (рекомендуется использовать размер 16px). |
+| `before` | `ReactNode` | `-` | Иконка слева (рекомендуется использовать размер 28px). |
+| `beforeSubtitle` | `ReactNode` | `-` | Иконка слева от subtitle (рекомендуется использовать размер 12px). |
+| `beforeTitle` | `ReactNode` | `-` | Иконка слева от title (рекомендуется использовать размер 16px). |
+| `Component` | `ElementType<any, keyof IntrinsicElements>` | `h2` |  |
+| `getRootRef` | `Ref<HTMLElement>` | `-` |  |
+| `indicator` | `ReactNode` | `-` | Допускаются текст, Indicator. |
+| `multiline` | `boolean` | `-` | Возможность отображения текста в несколько строк. |
+| `size` | `"s" \| "m" \| "l" \| "xl"` | `m` | Размер компонента. |
+| `subtitle` | `ReactNode` | `-` | Подпись под основным текстом. |
+| `subtitleComponent` | `ElementType<any, keyof IntrinsicElements>` | `span` | Позволяет задать тип элемента в который будет обёрнут subtitle. |
+

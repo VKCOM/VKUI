@@ -1,0 +1,127 @@
+﻿---
+description: Компонент для ввода многострочного текста.
+---
+
+<Overview group="forms">
+
+# Textarea [tag:component]
+
+Компонент для ввода многострочного текста. Поддерживает автоматическое изменение высоты в зависимости от содержимого и предоставляет удобный интерфейс для работы с текстовыми полями.
+
+</Overview>
+
+{/* @example-description: Базовое многострочное поле `Textarea` с плейсхолдером. */}
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <Textarea name="text" placeholder="Введите текст" />
+  ```
+</Playground>
+
+## Режим работы
+
+Компонент поддерживает работу как в неконтролируемом режиме, так и контролируемом. Это стандартное поведение
+React-компонентов, прочитать про это можно в [документации React](https://react.dev/reference/react-dom/components/input#controlling-an-input-with-a-state-variable).
+
+Для использования неконтролируемого режима достаточно просто _не_ передавать `value` или передавать `defaultValue`, если
+требуется задать значение по умолчанию.
+Для контролируемого режима используйте связку свойств `value`/`onChange` для задания значения и его изменения.
+
+```jsx
+// Неконтролируемое состояние
+<Textarea defaultValue="Текст" />;
+
+// Контролируемое состояние
+const [text, setText] = React.useState('Текст');
+
+<Textarea value={text} onChange={(event) => setText(event.target.value)} />;
+```
+
+## Состояния
+
+### `disabled`
+
+Свойство `disabled` позволяет пометить компонент, как недоступный для взаимодействия.
+
+> Если вы используете `Textarea` вместе с `FormItem`, то свойство `disabled` следует указывать и у `Textarea`, и у `FormItem`.
+
+{/* @example-description: Пример `Textarea` в состоянии `disabled`. */}
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <Textarea name="text" defaultValue="Недоступно" disabled />
+  ```
+</Playground>
+
+## Валидация
+
+Свойство `status` используется для состояния валидации компонента - некорректности заполненного поля (значение `"error"`)
+или успешной валидации (значение `"valid"`).
+
+> Если вы используете `Textarea` вместе с [`FormItem`](/components/form-item), вам достаточно указать свойство `status` только у
+> [`FormItem`](/components/form-item).
+
+{/* @example-description: Примеры `Textarea` с валидационными статусами `error` и `valid`. */}
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <Textarea name="text" placeholder="Введите текст" status="error" />
+  <Textarea name="text" placeholder="Введите текст" status="valid" />
+  ```
+</Playground>
+
+## Кастомизация
+
+Компонент поддерживает свойство `slotProps`, которое даёт возможность прокинуть свойство в некоторые внутренние элементы.
+Это удобно для добавления кастомных классов, data-атрибутов, aria-атрибутов, обработчиков событий, доступов к элементам через `getRootRef` и других расширений, не влияя на внешний API компонента.
+
+{/* @example-description: Кастомизация `Textarea` через `slotProps` с доступом к внутреннему элементу ввода. */}
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  const textareaRef = React.useRef();
+
+  return (
+    <Textarea
+      defaultValue="Пример со slotProps"
+      className="my-root-class"
+      data-testid="textarea-root"
+      id="textarea-id"
+      slotProps={{
+        root: {
+          id: 'textarea-root-id',
+        },
+        input: {
+          className: 'my-textarea-class',
+          'aria-label': 'Пример slotProps',
+          getRootRef: textareaRef,
+        },
+      }}
+    />
+  )
+  ```
+</Playground>
+
+## Доступность (a11y) [#a11y]
+
+Компонент обеспечивает базовую доступность, используя нативный элемент `<textarea>`,
+поддерживая все стандартные `HTML`- и `aria`-атрибуты.
+
+Для улучшения доступности рекомендуется использовать обёртку `FormItem` для компонента `Input` для
+поддержки заголовка и описания поля.
+
+## Свойства и методы [#api]
+
+| Свойство | Тип | По умолчанию | Описание |
+| --- | --- | --- | --- |
+| `after` | `ReactNode` | `-` | Добавляет иконку справа.  Рекомендации:  - Используйте следующие размеры иконок `12` \| `16` \| `20` \| `24` \| `28`. - Используйте [IconButton](https://vkui.io/components/icon-button), если вам нужна иконка, реагируюущая на нажатие. |
+| `afterAlign` | `FieldIconsAlign` | `-` | Вертикальное выравнивание иконки справа. |
+| `align` | `AlignType` | `-` |  |
+| `before` | `ReactNode` | `-` | Добавляет иконку слева.  Рекомендации:  - Используйте следующие размеры иконок `12` \| `16` \| `20` \| `24` \| `28`. - Используйте [IconButton](https://vkui.io/components/icon-button), если вам нужна иконка, реагирующая на нажатие. |
+| `beforeAlign` | `FieldIconsAlign` | `-` | Вертикальное выравнивание иконки слева. |
+| `defaultValue` | `string` | `-` | Значение по умолчанию. |
+| `getRef` | `Ref<HTMLTextAreaElement>` | `-` | **Deprecated**: Since 7.9.0. Вместо этого используйте `slotProps={ textArea: { getRootRef: ... } }`. |
+| `getRootRef` | `Ref<HTMLElement>` | `-` |  |
+| `grow` | `boolean` | `true` | Свойство управляющее автоматическим изменением высоты компонента. |
+| `maxHeight` | `number` | `-` | Максимальная высота поля. |
+| `mode` | `"default" \| "plain"` | `-` | Режим отображения.  - `default` — показывает фон, обводку и, при наличии, текст-подсказку. - `plain` — показывает только текст-подсказку. |
+| `onResize` | `((el: HTMLTextAreaElement) => void)` | `-` | Обработчик, срабатывающий при изменении размера компонента. |
+| `slotProps` | `{ root?: (HTMLAttributes<HTMLElement> & HasRootRef<HTMLElement> & HasDataAttribute); textArea?: TextareaHTMLAttributes<...> & ... 1 more ... & HasDataAttribute; } \| undefined` | `-` | Свойства, которые можно прокинуть внутрь компонента: - `root`: свойства для прокидывания в корень компонента; - `textArea`: свойства для прокидывания в поле ввода. |
+| `status` | `"default" \| "error" \| "valid"` | `-` | Статус отображения поля в форме. |
+

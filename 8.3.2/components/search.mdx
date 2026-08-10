@@ -1,0 +1,148 @@
+﻿---
+description: Компонент для реализации поисковых интерфейсов.
+tags: search, forms
+---
+
+<Overview group="utils">
+
+# Search [tag:component]
+
+Компонент для реализации поисковых интерфейсов. Наследует все свойства нативного `<input type="search">`
+с расширенными возможностями кастомизации.
+
+</Overview>
+
+{/* @example-description: Базовое поисковое поле `Search` без дополнительных настроек. */}
+<Playground>
+  ```jsx
+  <Box maxInlineSize={400}>
+    <Search />
+  </Box>
+  ```
+</Playground>
+
+## Режим работы
+
+Компонент поддерживает работу как в неконтролируемом режиме, так и контролируемом. Это стандартное поведение
+React-компонентов, прочитать про это можно в [документации React](https://react.dev/reference/react-dom/components/input#controlling-an-input-with-a-state-variable).
+
+Для использования неконтролируемого режима достаточно просто _не_ передавать `value` или передавать `defaultValue`, если
+требуется задать значение по умолчанию.
+Для контролируемого режима используйте связку свойств `value`/`onChange` для задания значения и его изменения.
+
+```jsx
+// Неконтролируемое состояние
+<Search defaultValue="Поиск" />;
+
+// Контролируемое состояние
+const [value, setValue] = React.useState('Поиск');
+
+<Search value={value} onChange={(event) => setValue(event.target.value)} />;
+```
+
+## Пользовательская иконка поиска
+
+Вы можете использовать любую иконку для кнопки поиска, просто прокинув ее в свойство `icon`.
+Также, в более сложных кейсах, можно использовать функцию в свойстве `icon`.
+В качестве параметра эта функция принимает другую функцию отрисовки иконки
+(тип ее можно посмотреть, импортировав `RenderIconButtonFn`);
+
+{/* @example-description: Кастомная кнопка иконки поиска с фильтрами через `Popover` в свойстве `icon`. */}
+<Playground>
+  ```jsx
+  <Search
+    defaultValue="value"
+    icon={(renderButton) => (
+      <Popover
+        content={({ onClose }) => (
+          <Div>
+            <CellButton before={<Icon28TagOutline />} onClick={onClose}>
+              По тегам
+            </CellButton>
+            <CellButton before={<Icon28CalendarOutline />} onClick={onClose}>
+              По дате
+            </CellButton>
+          </Div>
+        )}
+      >
+        {renderButton(<Icon24Filter />, { 'aria-label': 'Фильтры' })}
+      </Popover>
+    )}
+  />
+  ```
+</Playground>
+
+## Кнопка "Найти"
+
+Кнопка "Найти" отображается, если передать обработчик `onFindButtonClick`:
+
+{/* @example-description: `Search` с кнопкой «Найти» и обработчиком `onFindButtonClick`. */}
+<Playground>
+  ```jsx
+  <Search defaultValue="Поиск" onFindButtonClick={() => alert('Кто ищет, тот всегда найдёт.')} />
+  ```
+</Playground>
+
+## iOS-специфика
+
+Свойство `after` позволяет поменять текст кнопки сброса:
+
+{/* @example-description: Кастомный текст кнопки сброса `Search` через свойство `after`. */}
+<Playground>
+  ```jsx
+  <Search after="Сброс" />
+  ```
+</Playground>
+
+## Кастомизация
+
+Компонент поддерживает свойство `slotProps`, которое даёт возможность прокинуть свойство в некоторые внутренние элементы.
+Это удобно для добавления кастомных классов, data-атрибутов, aria-атрибутов, обработчиков событий, доступов к элементам через `getRootRef` и других расширений, не влияя на внешний API компонента.
+
+{/* @example-description: Кастомизация внутренних слотов `Search` через `slotProps` и `getRootRef`. */}
+<Playground style={{ maxWidth: 280 }}>
+  ```jsx
+  const inputRef = React.useRef();
+
+  return (
+    <Search
+      defaultValue="Пример со slotProps"
+      className="my-root-class"
+      data-testid="search-root"
+      id="search-input-id"
+      slotProps={{
+        root: {
+          id: 'search-root-id',
+        },
+        input: {
+          className: 'my-input-class',
+          'aria-label': 'Пример slotProps',
+          getRootRef: inputRef,
+        },
+      }}
+    />
+  )
+  ```
+</Playground>
+
+## Свойства и методы [#api]
+
+| Свойство | Тип | По умолчанию | Описание |
+| --- | --- | --- | --- |
+| `after` | `ReactNode` | `Отмена` | Only iOS. Текст кнопки "отмена", которая чистит текстовое поле и убирает фокус. |
+| `before` | `ReactNode` | `<Icon16SearchOutline />` | Контент, отображаемый перед полем ввода. |
+| `clearButtonTestId` | `string` | `-` | **Deprecated**: Since 8.1.0. Будет удалено в **VKUI v10**. Вместо этого используйте `slotProps={ clearButton: { 'data-testid': ... } }`.  Передает атрибут `data-testid` для кнопки очистки. |
+| `clearLabel` | `string` | `Очистить` | Текст для скринридеров, описывающий кнопку очистки. |
+| `defaultValue` | `string` | `-` | Значение поля ввода по умолчанию. |
+| `findButtonTestId` | `string` | `-` | Передает атрибут `data-testid` для кнопки поиска. |
+| `findButtonText` | `string` | `Найти` | Текст для кнопки Найти. |
+| `getRef` | `Ref<HTMLInputElement>` | `-` | **Deprecated**: Since 7.9.0. Вместо этого используйте `slotProps={ input: { getRootRef: ... } }`. |
+| `getRootRef` | `Ref<HTMLDivElement>` | `-` |  |
+| `hideClearButton` | `boolean` | `-` | Скрывает кнопку очистки. |
+| `icon` | `ReactNode \| ((renderFn: RenderIconButtonFn) => ReactNode)` | `-` | Иконка поиска. Может быть React-элементом или функцией, возвращающей элемент. |
+| `iconLabel` | `string` | `-` | Текст для скринридеров, описывающий иконку поиска. |
+| `noPadding` | `boolean` | `-` | Удаляет отступы у компонента. |
+| `onFindButtonClick` | `MouseEventHandler<HTMLElement>` | `-` | Обработчик, при нажатии на кнопку "Найти". |
+| `onIconClick` | `PointerEventHandler<HTMLElement>` | `-` | Обработчик нажатия на иконку поиска. |
+| `slotProps` | `{ root?: (HTMLAttributes<HTMLDivElement> & HasRootRef<HTMLDivElement> & HasDataAttribute); input?: InputHTMLAttributes<...> & ... 1 more ... & HasDataAttribute; clearButton?: HTMLAttributes<...> & ... 1 more ... & HasDataAttribute; } \| undefined` | `-` | Свойства, которые можно прокинуть внутрь компонента: - `root`: свойства для прокидывания в корень компонента; - `input`: свойства для прокидывания в поле ввода; - `clearButton`: свойства для прокидывания в кнопку очистки. |
+

@@ -1,0 +1,210 @@
+﻿---
+description: Компонент для отображения аватара пользователя — фотографии, инициалов или графики. Наследует все свойства HTML-элемента `<img>`.
+tags: media
+---
+
+<Overview group="data-display">
+# Avatar [tag:component]
+
+Компонент для отображения аватара пользователя — фотографии, инициалов или графики. Наследует все свойства HTML-элемента `<img>`.
+
+</Overview>
+
+## Основные варианты
+
+### Изображение
+
+Основной вариант, использует стандартный `<img>` под капотом.
+
+{/* @example-description: Аватар с фотографией и альтернативным текстом. */}
+<Playground>
+  ```jsx
+  <Avatar src="https://avatars.githubusercontent.com/u/61377022?s=50" alt="Фото пользователя" />
+  ```
+</Playground>
+
+### Инициалы
+
+Отображаются, если изображение не удалось загрузить или передано пустое свойство `src`.
+
+{/* @example-description: Инициалы в аватаре без фотографии. */}
+<Playground>
+  ```jsx
+  <Avatar initials="ВК" />
+  ```
+</Playground>
+
+Рекомендации по использованию инициалов:
+
+- рекомендуемая длина — не более 2 символов;
+- размер шрифта автоматически адаптируется под размер аватара.
+
+#### Градиентный фон
+
+Помимо стандартного фона инициалы можно размещать на градиентном фоне.
+Всего поддерживается 6 видов разных градиентов.
+
+{/* @example-description: Аватар с инициалами на градиентном фоне. */}
+<Playground>
+  ```jsx
+  <Avatar initials="ВК" gradientColor={6} />
+  ```
+</Playground>
+
+При необходимости можно использовать кастомный градиент (с помощью `className`/`style`):
+
+```jsx
+<Avatar gradientColor="custom" style={{ backgroundImage: 'linear-gradient(...)' }} />
+```
+
+> Может быть полезна функция [`calcInitialsAvatarColor`](#calcinitialsavatarcolor).
+
+## Размеры
+
+{/* @example-description: Сетка аватаров с разными size. */}
+<Playground>
+  ```jsx
+  {return [16, 20, 24, 28, 32, 36, 40, 44, 48, 56, 64, 72, 80, 88, 96].map((size) => (
+    <Avatar key={size} src="https://avatars.githubusercontent.com/u/32414396?s=100" size={size} />
+  ))}
+  ```
+</Playground>
+
+## Дополнительные элементы
+
+### Бейдж
+
+{/* @example-description: Аватар с пользовательским бейджем в углу для дополнительной индикации. */}
+<Playground>
+  ```jsx
+  <Avatar src="https://avatars.githubusercontent.com/u/26322098?s=56" size={56}>
+    <Avatar.Badge background="stroke">
+      <Icon20GiftCircleFillRed />
+    </Avatar.Badge>
+  </Avatar>
+  ```
+</Playground>
+
+> Может быть полезна функция [`getBadgeIconSizeByImageBaseSize`](/components/image-base#getbadgeiconsizebyimagebasesize).
+
+### Готовый пресет бейджа
+
+Подкомпонент `Avatar.BadgeWithPreset` предоставляет готовые пресеты `Avatar.Badge`.
+При передаче в свойство `preset` значения `online` используется иконка `Icon12Circle`,
+а при значении `online-mobile` иконка `Icon12OnlineMobile`.
+
+{/* @example-description: Использование готовых пресетов бейджа для отображения статуса «онлайн». */}
+<Playground>
+  ```jsx
+  <Avatar src="https://avatars.githubusercontent.com/u/14944123?s=50" size={48}>
+    <Avatar.BadgeWithPreset preset="online" />
+  </Avatar>
+  <Avatar src="https://avatars.githubusercontent.com/u/7431217?s=50" size={48}>
+    <Avatar.BadgeWithPreset preset="online-mobile" />
+  </Avatar>
+  ```
+</Playground>
+
+### Иконка-заглушка
+
+На случай, если картинка не смогла загрузиться, будет отображаться иконка-заглушка.
+Размер иконки-заглушки должен зависеть от размеров аватара.
+
+{/* @example-description: Пример передачи кастомной иконки-заглушки для состояния без изображения. */}
+<Playground>
+  ```jsx
+  <Avatar fallbackIcon={<Icon3218CircleOutline />} />
+  ```
+</Playground>
+
+> Может быть полезна функция [`getFallbackIconSizeByImageBaseSize`](/components/image-base#getfallbackiconsizebyimagebasesize).
+
+### Наложение
+
+{/* @example-description: Аватар с постоянным наложением и иконкой действия (например, смена фото). */}
+<Playground>
+  ```jsx
+  <Avatar src="https://avatars.githubusercontent.com/u/91548592?s=50">
+    <Avatar.Overlay theme="dark" visibility="always">
+      <Icon24Camera />
+    </Avatar.Overlay>
+  </Avatar>
+  ```
+</Playground>
+
+> Может быть полезна функция [`getOverlayIconSizeByImageBaseSize`](/components/image-base#getoverlayiconsizebyimagebasesize).
+
+> Обратите внимание, что свойство `visibility` подкомпонента `Avatar.Overlay` по умолчанию
+> зависит от наличия указателя на устройстве. Так, на мобильных устройствах наложение будет
+> показано всегда, а например, на десктопах наложение активно только при наведении на аватар.
+
+## Вспомогательные функции
+
+### calcInitialsAvatarColor
+
+Для динамического определения градиента под пользователя используйте функцию `calcInitialsAvatarColor`.
+Она генерирует значение градиента по формуле `user_id % 6 + 1`.
+Например, у пользователя с `user_id={106}` будет 5-й (`"l-blue"`) цвет градиента.
+
+```jsx
+import { calcInitialsAvatarColor } from '@vkontakte/vkui';
+
+// userId определён где-то выше
+<Avatar initials="ВК" gradientColor={calcInitialsAvatarColor(userId)} />;
+```
+
+## Особенности
+
+Компонент поддерживает следующие возможности:
+
+- автоматическая адаптация размера шрифта для инициалов;
+- поддержка всех стандартных HTML-атрибутов `<img>`;
+- сохранение пропорций изображения при изменении размеров.
+
+## Свойства и методы [#api]
+
+### Avatar
+
+| Свойство | Тип | По умолчанию | Описание |
+| --- | --- | --- | --- |
+| `elementTiming` | `string` | `-` | Смотри https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/elementtiming. |
+| `fallbackIcon` | `ReactElement<ImageBaseExpectedIconProps, string \| JSXElementConstructor<any>>` | `-` | Фолбек на случай, если картинка не прогрузилась.  > 📝 Нужный для `<ImageBase size={...} />` размер можно узнать из функции `getFallbackIconSizeByImageBaseSize()`.  > Предпочтительней использовать иконки из `@vkontakte/icons`.  > 📊️ Если вы хотите передать кастомную иконку, то следует именовать её по шаблону `Icon<size><name>`. Или же > чтобы в неё был передан параметр `width`. Тогда мы сможем выводить в консоль подсказку правильного ли размера вы > использовали иконку.  > ⚠️ Может перекрывать `children`. |
+| `filter` | `Filter` | `-` | Пользовательское значения стиля filter. Подробнее можно почитать в [документации](https://developer.mozilla.org/ru/docs/Web/CSS/filter).  При передаче этого свойства `<img />` будет обёрнут в дополнительный контейнер. |
+| `getRef` | `Ref<HTMLImageElement>` | `-` | **Deprecated**: Since 7.9.0. Будет удалено в v9. Используйте `slotProps={ img: { getRootRef: ... } }`. |
+| `getRootRef` | `Ref<HTMLDivElement>` | `-` |  |
+| `gradientColor` | `1 \| 2 \| 3 \| 4 \| 5 \| 6 \| InitialsAvatarTextGradients \| "custom"` | `-` | Задаёт градиент для фона.  Если передано число, то оно будет сконвертировано в строчное представление цвета по следующей схеме:  1: 'red' 2: 'orange' 3: 'yellow' 4: 'green' 5: 'l-blue' 6: 'violet'.  > Если необходимо задать свой градиент, то используйте значение `"custom"` и определите цвет градиента либо через > свой класс в `className`, либо через `style={{ backgroundImage: "..." }}`. |
+| `initials` | `string` | `-` | Инициалы пользователя.  > Note: Если аватарка не прогрузится, то пользователь увидит инициалы.  > ⚠️ Перебивает `fallbackIcon`. |
+| `keepAspectRatio` | `boolean` | `-` | Флаг для сохранения пропорций картинки. Для корректной работы необходимо задать размеры хотя бы одной стороны картинки. |
+| `noBorder` | `boolean` | `-` | Отключает обводку. |
+| `objectFit` | `ObjectFit` | `-` | Пользовательское значения стиля object-fit Подробнее можно почитать в [документации](https://developer.mozilla.org/ru/docs/Web/CSS/object-fit). |
+| `objectPosition` | `ObjectPosition<string \| number>` | `-` | Пользовательское значения стиля object-position Подробнее можно почитать в [документации](https://developer.mozilla.org/ru/docs/Web/CSS/object-position). |
+| `size` | `LiteralUnion<16 \| 20 \| 24 \| 28 \| 32 \| 36 \| 40 \| 44 \| 48 \| 56 \| 64 \| 72 \| 80 \| 88 \| 96, number>` | `48` | Задаёт размер картинки.  Используйте размеры заданные дизайн-системой `16 \| 20 \| 24 \| 28 \| 32 \| 36 \| 40 \| 44 \| 48 \| 56 \| 64 \| 72 \| 80 \| 88 \| 96`.  > ⚠️ Использование кастомного размера – это пограничный кейс. |
+| `slotProps` | `{ img?: (ClassAttributes<HTMLImageElement> & ImgHTMLAttributes<HTMLImageElement> & HasRootRef<HTMLImageElement> & HasDataAttribute); } \| undefined` | `-` | Свойства, которые можно прокинуть внутрь компонента: - `img`: свойства для прокидывания в тег `<img>`;. |
+| `withTransparentBackground` | `boolean` | `-` | Отключает фон, заданный по умолчанию. Полезен для отображения картинок с прозрачностью. |
+
+### Avatar.Badge
+
+| Свойство | Тип | По умолчанию | Описание |
+| --- | --- | --- | --- |
+| `background` | `"stroke" \| "shadow"` | `-` | Вид подложки под иконку.  - `"stroke"` – имитирует вырез (⚠️ если фон под компонентом динамический, то ожидайте баг). - `"shadow"` – добавляет небольшую тень (⚠️ если фон под компонентом динамический, то ожидайте баг). |
+| `**children** \*` | `ReactElement<ImageBaseExpectedIconProps, string \| JSXElementConstructor<any>>` | `-` | Принимает иконку.  > 📝 Нужный для `<ImageBase size={...} />` размер можно узнать из функции `getBadgeIconSizeByImageBaseSize()`.  > Предпочтительней использовать иконки из `@vkontakte/icons`.  > 📊️ Если вы хотите передать кастомную иконку, то следует именовать её по шаблону `Icon<size><name>`. Или же > чтобы в неё был передан параметр `width`. Тогда мы сможем выводить в консоль подсказку правильного ли размера вы > использовали иконку. |
+| `getRootRef` | `Ref<HTMLDivElement>` | `-` |  |
+
+### Avatar.BadgeWithPreset
+
+| Свойство | Тип | По умолчанию | Описание |
+| --- | --- | --- | --- |
+| `getRootRef` | `Ref<HTMLDivElement>` | `-` |  |
+| `preset` | `"online" \| "online-mobile"` | `online` | Использует предзаданные настройки.  За каждым пресетом закреплена своя иконка и стили. |
+
+### Avatar.Overlay
+
+| Свойство | Тип | По умолчанию | Описание |
+| --- | --- | --- | --- |
+| `**children** \*` | `ReactNode \| ReactElement<ImageBaseExpectedIconProps, string \| JSXElementConstructor<any>>` | `-` | Принимает иконку.   > 📝 Нужный для `<ImageBase size={...} />` размер можно узнать из функции `getOverlayIconSizeByImageBaseSize()`.  > Предпочтительней использовать иконки из `@vkontakte/icons`.  > 📊️ Если вы хотите передать кастомную иконку, то следует именовать её по шаблону `Icon<size><name>`. Или же > чтобы в неё был передан параметр `width`. Тогда мы сможем выводить в консоль подсказку правильного ли размера вы > использовали иконку. Содержимое. |
+| `className` | `string` | `-` | `className` для компонента. |
+| `getRootRef` | `Ref<HTMLDivElement>` | `-` |  |
+| `onClick` | `MouseEventHandler<HTMLElement>` | `-` | Обработчик взаимодействия с элементом. По умолчанию сам компонент является интерактивным элементом. Передав значение равное `'undefined'` или не передав этот параметр вовсе, можно отключить такое поведение, что дает возможность передавать отдельные интерактивные элементы в `children`. |
+| `theme` | `"dark" \| "light"` | `-` | Задаёт тему оформления.  > По умолчанию берётся из параметра `appearance` в `ConfigProvider`. |
+| `visibility` | `"on-hover" \| "always"` | `-` | Определяет каким образом должен показываться оверлей.  - `"on-hover"` – на наведение указателя мыши. - `"always"` – всегда показывать.  > По умолчанию определяется в зависимости от того, есть ли у пользователя мышь или нет. > Определение просиходит с помощью двойного рендера, так что на устройствах без мыши > оверлей покажется не раньше второго рендера. > Если это критично (например при SSR), то старайтесь явно указывать значение `visibility`, либо используйте > [AdaptivityProvider](#/AdaptivityProvider) для того, чтобы явно определить `hasPointer`. |
+

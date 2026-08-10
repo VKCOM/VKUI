@@ -1,0 +1,158 @@
+﻿---
+description: Компонент для создания кнопок в виде строк.
+tags: list
+---
+
+<Overview group="buttons">
+
+# CellButton [tag:component]
+
+Компонент для создания кнопок в виде строк. Используется для списков действий, меню настроек и других сценариев,
+где требуется компактное отображение интерактивных элементов.
+
+Связанные компоненты:
+
+- [`CellButtonGroup`](/components/cell-button-group)
+
+</Overview>
+
+{/* @example-description: Базовый пример `CellButton` для действия в списке. */}
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <CellButton onClick={() => {}}>Добавить родственника</CellButton>
+  ```
+</Playground>
+
+## Визуальное оформление
+
+### Цвет
+
+Задаётся свойством `appearance`.
+
+#### `"neutral"`
+
+Значение задаёт кнопке нейтральный цвет, который также может являться альтернативным акцентным цветом кнопки.
+
+{/* @example-description: `CellButton` с нейтральным оформлением `appearance="neutral"`. */}
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <CellButton onClick={() => {}} appearance="neutral">
+    Скрыть раздел
+  </CellButton>
+  ```
+</Playground>
+
+#### `"accent"`
+
+Значение задаёт кнопке акцентный цвет, который может меняться в зависимости от светлой или тёмной схемы.
+
+{/* @example-description: `CellButton` с акцентным оформлением `appearance="accent"`. */}
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <CellButton onClick={() => {}} appearance="accent">
+    Добавить родственника
+  </CellButton>
+  ```
+</Playground>
+
+#### `"negative"`
+
+Значение задаёт кнопке цвет критических действий (чаще всего красный).
+
+{/* @example-description: `CellButton` с критическим оформлением `appearance="negative"`. */}
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <CellButton onClick={() => {}} appearance="negative">
+    Удалить беседу
+  </CellButton>
+  ```
+</Playground>
+
+### Выравнивание
+
+Задается свойством `centered`.
+
+{/* @example-description: Центрированное содержимое кнопки с иконкой через `centered`. */}
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <CellButton onClick={() => {}} centered before={<Icon24Add />}>
+    Центрированная кнопка
+  </CellButton>
+  ```
+</Playground>
+
+### Дополнительный контент
+
+Пример с дополнительным контентом:
+
+{/* @example-description: Кнопка с расширенным контентом: иконка, подзаголовок и счетчик. */}
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <CellButton
+    before={<Icon28WalletOutline />}
+    subtitle="Баланс: 500 ₽"
+    after={<Counter>3</Counter>}
+    onClick={() => {}}
+  >
+    Кошелёк
+  </CellButton>
+  ```
+</Playground>
+## Доступность (a11y) [#a11y]
+
+- Для иконок без текста используйте `aria-label`.
+- Сочетайте с семантическими тегами:
+
+  ```jsx
+  <CellButton Component="a" href="/settings">
+    Настройки
+  </CellButton>
+  ```
+
+- Для скринридеров:
+
+  ```jsx
+  <CellButton>
+    Создать документ
+    <VisuallyHidden>Нажмите Enter для активации</VisuallyHidden>
+  </CellButton>
+  ```
+
+- Также стоит ознакомиться с рекомендациями по доступности компонента [`SimpleCell`](/components/simple-cell#a11y)
+
+## Свойства и методы [#api]
+
+| Свойство | Тип | По умолчанию | Описание |
+| --- | --- | --- | --- |
+| `activated` | `boolean` | `-` | Позволяет управлять `activated`-состоянием извне. |
+| `activeClassName` | `string` | `-` | **Deprecated**: Since 7.3.0. Будет удалено в **VKUI v9**.  Используйте свойство `activeMode`. |
+| `activeEffectDelay` | `number` | `-` | Длительность показа `active`-состояния. |
+| `activeMode` | `StateModeLiteral` | `-` | Стиль подсветки active-состояния. Если передать произвольную строку, она добавится как css-класс во время active. |
+| `after` | `ReactNode` | `-` | Иконка 24\|28 или `<Switch />`. Располагается справа от `indicator`. |
+| `appearance` | `"accent" \| "negative" \| "neutral"` | `accent` | > Режим `centered` переопределяет токен для темы `"accent"`. |
+| `badgeAfterSubtitle` | `ReactNode` | `-` | Иконка 12. Добавится справа от текста `subtitle`. |
+| `badgeAfterTitle` | `ReactNode` | `-` | Иконка 12 или `<Badge />`. Добавится справа от текста `children`. |
+| `badgeBeforeSubtitle` | `ReactNode` | `-` | Иконка 12. Добавится слева от текста `subtitle`. |
+| `badgeBeforeTitle` | `ReactNode` | `-` | Иконка 12 или `<Badge />`. Добавится слева от текста `children`. |
+| `before` | `ReactNode` | `-` | Иконка 28 или `<Avatar size={28\|32\|40\|48\|72} />`. |
+| `borderRadiusMode` | `"auto" \| "inherit"` | `-` | Задает border-radius элементу В режиме `auto` на маленьких экранах `border-radius: 0`, иначе определяется токеном `--vkui--size_border_radius--regular`. |
+| `centered` | `boolean` | `false` | Возможность центрирования содержимого компонента. |
+| `chevron` | `"auto" \| "always"` | `-` | Управляет видимостью иконки шеврона `›`.  - `auto` - добавляет шеврон справа только для платформы `ios`; - `always` - всегда показывает шеврон. |
+| `chevronSize` | `"s" \| "m"` | `m` | Размер chevron. |
+| `Component` | `ElementType<any, keyof IntrinsicElements>` | `-` |  |
+| `disabled` | `boolean` | `-` | Блокировка взаимодействия с компонентом. |
+| `extraSubtitle` | `ReactNode` | `-` | Дополнительная строка текста под `children` и `subtitle`. |
+| `focusVisibleMode` | `FocusVisibleMode` | `-` | Стиль аутлайна focus visible. Если передать произвольную строку, она добавится как css-класс при :focus-visible |
+| `getRootRef` | `Ref<HTMLElement>` | `-` |  |
+| `hasActive` | `boolean` | `-` | Указывает, должен ли компонент реагировать на `active`-состояние. |
+| `hasHover` | `boolean` | `-` | Указывает, должен ли компонент реагировать на `hover`-состояние. |
+| `hasHoverWithChildren` | `boolean` | `-` | Позволяет родительскому компоненту иметь `hovered`-cостояние при наведении на любой дочерний элемент. По умолчанию состояние hovered у родителя сбрасывается.  Присваивается родителькому компоненту. |
+| `hoverClassName` | `string` | `-` | **Deprecated**: Since 7.3.0. Будет удалено в **VKUI v9**.  Используйте свойство `hoverMode`. |
+| `hovered` | `boolean` | `-` | Позволяет управлять `hovered`-состоянием извне. |
+| `hoverMode` | `StateModeLiteral` | `-` | Стиль подсветки hover-состояния. Если передать произвольную строку, она добавится как css-класс во время hover. |
+| `indicator` | `ReactNode` | `-` | Контейнер для текста справа от `children`. |
+| `multiline` | `boolean` | `-` | Включает многострочный режим для отображения текста. |
+| `overTitle` | `ReactNode` | `-` | Дополнительная строка текста над `children`. |
+| `subtitle` | `ReactNode` | `-` | Дополнительная строка текста под `children`. |
+| `unlockParentHover` | `boolean` | `-` | Позволяет родительскому компоненту показывать hovered-состояние при наведении на текущий дочерний компонент.  Присваивается дочернему компоненту. |
+
