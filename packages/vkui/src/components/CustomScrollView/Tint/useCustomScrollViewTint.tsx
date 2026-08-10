@@ -4,32 +4,23 @@ import * as React from 'react';
 import { throttle } from '@vkontakte/vkjs';
 import { useResizeObserverElement } from '../../../hooks/useResizeObserver';
 import { type HasRootRef } from '../../../types';
-import { RootComponent } from '../../RootComponent/RootComponent';
-import styles from './CustomScrollViewTint.module.css';
-
-export interface CustomScrollViewTintProps
-  extends Omit<React.ComponentProps<'div'>, 'children'>,
-    HasRootRef<HTMLDivElement> {
-  /**
-   * Компонент-обертка для реализации прокрутки с тенями.
-   */
-  children: (
-    props: Pick<React.ComponentProps<'div'>, 'onScroll'> & HasRootRef<HTMLDivElement>,
-  ) => React.ReactNode;
-}
 
 function linearGradient(direction: 0 | 90 | 180 | 270): string {
   return `linear-gradient(${direction}deg, transparent, black 40px)`;
 }
 
+type UseCustomScrollViewTintResult<T = HTMLDivElement> = {
+  // eslint-disable-next-line jsdoc/require-jsdoc
+  onScroll: React.UIEventHandler<T> | undefined;
+  // eslint-disable-next-line jsdoc/require-jsdoc
+  style: React.CSSProperties | undefined;
+} & HasRootRef<T>;
+
 /**
  * @see https://vkui.io/components/custom-scroll-view
  * @since 8.1.0
  */
-export function CustomScrollViewTint({
-  children,
-  ...restProps
-}: CustomScrollViewTintProps): React.ReactElement {
+export function useCustomScrollViewTint(): UseCustomScrollViewTintResult {
   const [hasTintTop, setHasTintTop] = React.useState(false);
   const [hasTintBottom, setHasTintBottom] = React.useState(false);
   const [hasTintLeft, setHasTintLeft] = React.useState(false);
@@ -55,28 +46,27 @@ export function CustomScrollViewTint({
 
   const updateTintThrottle = React.useMemo(() => throttle(updateTint, 50), [updateTint]);
 
-  const scrollRef = useResizeObserverElement<HTMLDivElement>(updateTintThrottle);
+  const getRootRef = useResizeObserverElement<HTMLDivElement>(updateTintThrottle);
 
   React.useEffect(() => {
-    if (!scrollRef.current) {
+    if (!getRootRef.current) {
       return;
     }
 
-    updateTint(scrollRef.current);
-  }, [scrollRef, updateTint]);
+    updateTint(getRootRef.current);
+  }, [getRootRef, updateTint]);
 
   const onScroll = (e: React.UIEvent<HTMLDivElement>) => {
     const target = e.currentTarget;
     updateTintThrottle(target);
   };
 
-  return (
-    <RootComponent
-      baseClassName={styles.host}
-      baseStyle={{ maskImage: tint.join(', ') || 'none' }}
-      {...restProps}
-    >
-      {children({ getRootRef: scrollRef, onScroll })}
-    </RootComponent>
-  );
+  return {
+    onScroll,
+    getRootRef,
+    style: {
+      maskComposite: 'intersect',
+      maskImage: tint.join(', ') || 'none',
+    },
+  };
 }

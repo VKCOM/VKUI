@@ -73,23 +73,32 @@ tags: layout
 
 Компонент позволяет обрабатывать событие `scroll`, возникающее при прокрутке контента, через свойство `onScroll`.
 
-## CustomScrollView.Tint
+## useCustomScrollViewTint
 
-Подкомпонент, который добавляет тени к краям прокручиваемой области.
+Хук, который добавляет тени к краям прокручиваемой области через CSS-маску (`maskImage`).
+Маска реагирует на положение прокрутки: тень появляется только у тех краёв, за которыми
+есть ещё контент.
 
+Хук возвращает объект с тремя свойствами, которые нужно передать прокручиваемому элементу:
+
+- `getRootRef` — референс на прокручиваемый элемент;
+- `onScroll` — обработчик события `scroll`;
+- `style` — объект стилей с `maskImage` и `maskComposite` (необходимо применить к прокручиваемому элементу).
+
+{/* @example-description: Подсветка краёв прокручиваемой области через useCustomScrollViewTint. */}
 <Playground style={{ height: 150 }}>
   ```jsx
-  <CustomScrollView.Tint tintColor="var(--vkui--color_background)">
-    {(props) => (
-      <CustomScrollView {...props}>
-        {["Say", "Hello", "To", "My", "Little", "Friend"].map((item) => (
-          <Cell key={item} before={<Avatar />}>
-            {item}
-          </Cell>
-        ))}
-      </CustomScrollView>
-    )}
-  </CustomScrollView.Tint>
+  const { getRootRef, onScroll, style } = useCustomScrollViewTint();
+
+  return (
+    <CustomScrollView getRootRef={getRootRef} onScroll={onScroll} style={style}>
+      {['Say', 'Hello', 'To', 'My', 'Little', 'Friend'].map((item) => (
+        <Cell key={item} before={<Avatar />}>
+          {item}
+        </Cell>
+      ))}
+    </CustomScrollView>
+  );
   ```
 </Playground>
 

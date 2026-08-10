@@ -2,10 +2,8 @@
 
 import type * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { defineComponentDisplayNames } from '../../lib/react/defineComponentDisplayNames';
 import type { HasRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
-import { CustomScrollViewTint } from './Tint/CustomScrollViewTint';
 import styles from './CustomScrollView.module.css';
 
 const overscrollBehaviorClassNames = {
@@ -65,9 +63,3 @@ export const CustomScrollView = ({
     />
   );
 };
-
-CustomScrollView.Tint = CustomScrollViewTint;
-
-if (process.env.NODE_ENV !== 'production') {
-  defineComponentDisplayNames(CustomScrollView.Tint, 'CustomScrollView.Tint');
-}

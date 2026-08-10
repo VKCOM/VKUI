@@ -143,6 +143,7 @@ import {
   UnstyledTextField,
   useAdaptivityConditionalRender,
   useAdaptivityWithJSMediaQueries,
+  useCustomScrollViewTint,
   useFocusVisible,
   useModalManager,
   usePagination,
@@ -322,6 +323,7 @@ export const vkuiScope: Record<string, unknown> = {
   useTodayDate,
   useTooltip,
   useReducedMotion,
+  useCustomScrollViewTint,
 };
 
 export const scope: Record<string, unknown> = {

@@ -519,6 +519,7 @@ export type { TransitionDirection } from './components/NavTransitionDirectionCon
 export { useCSSKeyframesAnimationController as unstable_useCSSKeyframesAnimationController } from './lib/animation';
 export { useFocusVisible } from './hooks/useFocusVisible';
 export { useReducedMotion } from './lib/animation';
+export { useCustomScrollViewTint } from './components/CustomScrollView/Tint/useCustomScrollViewTint';
 
 /**
  * Utils
