@@ -434,7 +434,14 @@ export const fireEventPatch = async <E extends EventType>(
     case 'mouseLeave':
       fireEvent[eventType](el);
       if (options === undefined || options === true) {
-        await act(async () => await waitRAF());
+        await act(async () => {
+          await waitRAF();
+          // В happy-dom `requestAnimationFrame` отрабатывает раньше `setTimeout(0)`,
+          // которым пользуется `debounce` (hover-show/hide). Без macrotask-wait
+          // отложенный `commitShownLocalState` срабатывает вне `act`, и React не
+          // применяет обновление состояния.
+          await new Promise((resolve) => setTimeout(resolve, 0));
+        });
       }
       break;
     case 'animationStart':

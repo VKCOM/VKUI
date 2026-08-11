@@ -396,8 +396,12 @@ function vitestWorkaroundGetOverscrollBehaviorPropertyValue(el: HTMLElement) {
 function getStyleAttributeObject(el: HTMLElement | null) {
   const style = el ? el.getAttribute('style') : null;
 
+  // В happy-dom очистка всех инлайн-стилей удаляет атрибут `style`, поэтому
+  // `getAttribute('style')` возвращает `null`. jsdom в этом случае оставляет
+  // пустой атрибут (`''`). Возвращаем `{}` для очищенного стиля, чтобы совпадать
+  // с поведением jsdom, на которое рассчитаны ожидания тестов.
   if (style === null) {
-    return null;
+    return el && el.style.cssText === '' ? {} : null;
   }
 
   return Object.fromEntries(
