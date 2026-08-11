@@ -5,9 +5,9 @@ const config = defineConfig({
   test: {
     name: 'unit',
     include: ['**/*.test.tsx', '**/*.test.ts'],
-    environment: 'jsdom',
-    setupFiles: [resolve(__dirname, 'vitest.setup.ts')],
-    globalSetup: [resolve(__dirname, 'vitest.global-setup.ts')],
+    environment: 'happy-dom',
+    setupFiles: [resolve(import.meta.dirname, 'vitest.setup.ts')],
+    globalSetup: [resolve(import.meta.dirname, 'vitest.global-setup.ts')],
     coverage: {
       provider: 'v8',
       reporter: ['json', 'cobertura'],

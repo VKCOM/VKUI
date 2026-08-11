@@ -5,9 +5,9 @@ import { noop } from '@vkontakte/vkjs';
 import { afterEach, beforeEach, vi } from 'vitest';
 import failOnConsole from 'vitest-fail-on-console';
 
-// В этом окружении jsdom не предоставляет `localStorage`, а Node отдаёт
-// экспериментальный геттер, который при каждом доступе печатает
-// `ExperimentalWarning: localStorage is not available ...`. Подменим его
+// В этом окружении `localStorage` может быть недоступен или вести себя
+// нестабильно (экспериментальный геттер Node печатает
+// `ExperimentalWarning: localStorage is not available ...`). Подменим его
 // рабочей in-memory реализацией — это убирает предупреждение (в т.ч. когда
 // chai инспектирует `window` при форматировании сообщений утверждений) и даёт
 // тестам реальный `localStorage`.
@@ -66,6 +66,21 @@ beforeEach(() => {
   ).IS_REACT_ACT_ENVIRONMENT = true;
 });
 
+// Между тестами сбрасываем отложенные real-`setTimeout(0)` от
+// `useRestoreFocus`/`useAutoFocus`. Без этого pending-колбэки срабатывают во
+// время следующего теста (real-таймеры не отменяются `vi.useFakeTimers`) и
+// ломают фокус в happy-dom. Регистрируем ДО `cleanup`: vitest выполняет
+// `afterEach` в LIFO-порядке, поэтому этот flush отработает ПОСЛЕ unmount —
+// `useAutoFocus` уже отменил свой таймер (`clearTimeout`), а колбэк
+// `useRestoreFocus` сработает на удалённом элементе как no-op.
+// Пропускаем, если активны fake-таймеры: `setTimeout(0)` под fake никогда не
+// разрешится без `vi.runAllTimers()` и подвесит `afterEach`.
+afterEach(async () => {
+  if (!vi.isFakeTimers()) {
+    await new Promise((resolve) => setTimeout(resolve, 0));
+  }
+});
+
 // Регистрируем после failOnConsole, чтобы cleanup выполнялся первым даже если
 // проверка console.error в afterEach завершится ошибкой.
 afterEach(cleanup);
@@ -100,7 +115,53 @@ globalThis.getComputedStyle = function (el: Element, pseudoElt?: string | null) 
   }
 
   // иначе — дефолтное поведение
-  return _origGetComputedStyle.call(globalThis, el);
+  const computed = _origGetComputedStyle.call(globalThis, el);
+  const inlineStyle = el instanceof HTMLElement ? el.style : null;
+
+  // У happy-dom есть два отличия от jsdom, влияющих на тесты:
+  //
+  // 1. `getComputedStyle` вычисляется только для элементов, подключённых к
+  //    `document` в момент вызова; для detached-элементов возвращается пустой
+  //    `CSSStyleDeclaration` (без инлайн-стилей и дефолтных значений). jsdom
+  //    возвращал инлайн-стили независимо от подключения.
+  //
+  // 2. happy-dom резолвит `var()`-ссылки в значениях custom properties: если
+  //    целевая переменная не определена, `getPropertyValue('--x')` возвращает
+  //    пустую строку, хотя инлайн-стиль хранил литерал `var(--y)`. jsdom
+  //    возвращал литерал неразрешённым — на это рассчитаны тесты, проверяющие,
+  //    что компонент прокинул `var(...)` в инлайн-стиль.
+  //
+  // Проксируем результат, восстанавливая поведение jsdom: при чтении свойства
+  // сначала отдаём подходящий инлайн-стиль, затем — значение из `computed`.
+  return new Proxy<CSSStyleDeclaration>(computed, {
+    get(target, prop, receiver) {
+      if (prop === 'getPropertyValue') {
+        return (property: string) => {
+          const inline = inlineStyle?.getPropertyValue(property) ?? '';
+          // Для custom property с `var()` отдаём сырой литерал, как jsdom.
+          if (property.startsWith('--') && inline.includes('var(')) {
+            return inline;
+          }
+          // Для detached-элементов инлайн — единственный источник значений.
+          if (!el.isConnected && inline) {
+            return inline;
+          }
+          return target.getPropertyValue(property);
+        };
+      }
+      if (prop === 'length' || prop === 'item' || prop === Symbol.toPrimitive) {
+        return Reflect.get(target, prop, receiver);
+      }
+      // Прямой доступ к свойству (например `cs.transform`) для detached-элементов.
+      if (!el.isConnected) {
+        const inline = inlineStyle?.getPropertyValue(String(prop)) ?? '';
+        if (inline) {
+          return inline;
+        }
+      }
+      return Reflect.get(target, prop, receiver);
+    },
+  });
 };
 
 Object.defineProperty(HTMLCanvasElement.prototype, 'getContext', {
@@ -132,7 +193,7 @@ Object.defineProperty(HTMLCanvasElement.prototype, 'getContext', {
   }),
 });
 
-// Не реализован в JSDOM.
+// Не реализован в тестовом окружении.
 // https://jestjs.io/docs/manual-mocks
 class DOMRectPolyfill {
   x = 0;
@@ -163,7 +224,7 @@ class DOMRectPolyfill {
 }
 vi.stubGlobal('DOMRect', DOMRectPolyfill);
 
-// Не реализован в JSDOM.
+// Не реализован в тестовом окружении.
 vi.stubGlobal(
   'matchMedia',
   vi.fn().mockImplementation((query: string) => ({
@@ -181,7 +242,7 @@ vi.stubGlobal(
 vi.stubGlobal('scrollTo', vi.fn());
 Element.prototype.scrollTo = vi.fn();
 
-// Mock ResizeObserver for JSDOM
+// Mock ResizeObserver for testing environment
 class MockResizeObserver {
   observe = vi.fn();
   unobserve = vi.fn();
@@ -204,6 +265,108 @@ class FakeTransitionEvent extends Event {
 
 // Подменяем глобально
 vi.stubGlobal('TransitionEvent', FakeTransitionEvent);
+
+// happy-dom не полностью реализует ARIA IDL-отражение (`ARIAMixin`): свойства
+// вида `element.ariaDisabled` не синхронизированы с одноимёнными атрибутами
+// `aria-disabled`, а `element.role` без атрибута возвращает `''` вместо `null`.
+// jsdom это поддерживает, и тесты полагаются на `el.ariaDisabled === 'true'`
+// и `el.role === null`. Восстанавливаем поведение через геттеры/сеттеры.
+const ARIA_PROPS: ReadonlyArray<readonly [string, string]> = [
+  ['ariaAtomic', 'aria-atomic'],
+  ['ariaAutoComplete', 'aria-autocomplete'],
+  ['ariaBrailleLabel', 'aria-braillelabel'],
+  ['ariaBrailleRoleDescription', 'aria-brailleroledescription'],
+  ['ariaBusy', 'aria-busy'],
+  ['ariaChecked', 'aria-checked'],
+  ['ariaColCount', 'aria-colcount'],
+  ['ariaColIndex', 'aria-colindex'],
+  ['ariaColSpan', 'aria-colspan'],
+  ['ariaCurrent', 'aria-current'],
+  ['ariaDescription', 'aria-description'],
+  ['ariaDisabled', 'aria-disabled'],
+  ['ariaExpanded', 'aria-expanded'],
+  ['ariaHasPopup', 'aria-haspopup'],
+  ['ariaHidden', 'aria-hidden'],
+  ['ariaInvalid', 'aria-invalid'],
+  ['ariaKeyShortcuts', 'aria-keyshortcuts'],
+  ['ariaLabel', 'aria-label'],
+  ['ariaLevel', 'aria-level'],
+  ['ariaLive', 'aria-live'],
+  ['ariaModal', 'aria-modal'],
+  ['ariaMultiLine', 'aria-multiline'],
+  ['ariaMultiSelectable', 'aria-multiselectable'],
+  ['ariaOrientation', 'aria-orientation'],
+  ['ariaPlaceholder', 'aria-placeholder'],
+  ['ariaPosInSet', 'aria-posinset'],
+  ['ariaPressed', 'aria-pressed'],
+  ['ariaReadOnly', 'aria-readonly'],
+  ['ariaRelevant', 'aria-relevant'],
+  ['ariaRequired', 'aria-required'],
+  ['ariaRoleDescription', 'aria-roledescription'],
+  ['ariaRowCount', 'aria-rowcount'],
+  ['ariaRowIndex', 'aria-rowindex'],
+  ['ariaRowSpan', 'aria-rowspan'],
+  ['ariaSelected', 'aria-selected'],
+  ['ariaSetSize', 'aria-setsize'],
+  ['ariaSort', 'aria-sort'],
+  ['ariaValueMax', 'aria-valuemax'],
+  ['ariaValueMin', 'aria-valuemin'],
+  ['ariaValueNow', 'aria-valuenow'],
+  ['ariaValueText', 'aria-valuetext'],
+] as const;
+
+const defineReflectedAttr = (proto: object, idlName: string, attrName: string): void => {
+  Object.defineProperty(proto, idlName, {
+    configurable: true,
+    enumerable: true,
+    get(this: Element): string | null {
+      return this.getAttribute(attrName);
+    },
+    set(this: Element, value: string | null): void {
+      if (value === null) {
+        this.removeAttribute(attrName);
+      } else {
+        this.setAttribute(attrName, value);
+      }
+    },
+  });
+};
+
+for (const [idlName, attrName] of ARIA_PROPS) {
+  defineReflectedAttr(Element.prototype, idlName, attrName);
+}
+// `role` отражается как `element.role` (null при отсутствии атрибута).
+defineReflectedAttr(Element.prototype, 'role', 'role');
+
+// happy-dom `HTMLFormElement.reset()` восстанавливает `defaultValue` для `<input>`,
+// но не возвращает `<select>` к option'у с `defaultSelected`. jsdom это делает.
+// Восстанавливаем вручную после нативного `reset`.
+// eslint-disable-next-line @typescript-eslint/unbound-method
+const _origFormReset = HTMLFormElement.prototype.reset;
+HTMLFormElement.prototype.reset = function (this: HTMLFormElement): void {
+  _origFormReset.call(this);
+  // eslint-disable-next-line no-restricted-properties
+  for (const sel of Array.from(this.querySelectorAll('select'))) {
+    const defaultOption = Array.from(sel.options).find((opt) => opt.defaultSelected);
+    if (defaultOption) {
+      sel.value = defaultOption.value;
+    } else if (sel.options.length > 0) {
+      sel.selectedIndex = 0;
+    }
+  }
+};
+
+// happy-dom 20 помечает `HTMLImageElement.complete = true` сразу после рендера
+// `<img src>` (без реальной загрузки), из-за чего `ImageBase` считает картинку
+// уже загруженной и диспатчит `load` автоматически. jsdom и happy-dom 18
+// возвращали `false` для незагруженной картинки. Возвращаем `false` по умолчанию
+// (тесты, которым нужно `complete=true`, мокают его через `defineProperty`).
+Object.defineProperty(HTMLImageElement.prototype, 'complete', {
+  configurable: true,
+  get(this: HTMLImageElement): boolean {
+    return false;
+  },
+});
 
 // Замена vitest.global-setup.ts
 vi.stubEnv('TZ', 'UTC');

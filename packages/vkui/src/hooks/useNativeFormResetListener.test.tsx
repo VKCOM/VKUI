@@ -53,9 +53,11 @@ describe(useNativeFormResetListener, () => {
     fireEvent.click(result.getByTestId('reset'));
 
     expect(customFormItemLocator).toHaveTextContent('');
+    // В happy-dom нативные события не помечаются `isTrusted: true` (как в jsdom),
+    // поэтому проверяем только тип события, а не его "нативность".
     expect(hookCallback).toHaveBeenCalledExactlyOnceWith(
       expect.objectContaining({
-        isTrusted: true,
+        type: 'reset',
       }),
     );
   });
