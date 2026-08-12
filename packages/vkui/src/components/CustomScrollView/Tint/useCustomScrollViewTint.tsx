@@ -17,8 +17,8 @@ type UseCustomScrollViewTintResult<T = HTMLDivElement> = {
 } & HasRootRef<T>;
 
 /**
- * @see https://vkui.io/components/custom-scroll-view
- * @since 8.1.0
+ * @see https://vkui.io/components/custom-scroll-view/#usecustomscrollviewtint
+ * @since 8.4.0
  */
 export function useCustomScrollViewTint(): UseCustomScrollViewTintResult {
   const [hasTintTop, setHasTintTop] = React.useState(false);
