@@ -56,6 +56,14 @@ export interface SplitLayoutProps extends HTMLAttributesWithRootRef<HTMLDivEleme
    * Центрирует контент.
    */
   center?: boolean | undefined;
+  /**
+   * Визуально меняет порядок колонок на обратный.
+   *
+   * Используется для доступности: позволяет разместить в DOM первой колонку,
+   * важную для скринридеров, но визуально отрисовать её последней. DOM-порядок
+   * при этом не меняется, поэтому порядок чтения скринридерами сохраняется.
+   */
+  reverseColumns?: boolean | undefined;
 }
 
 /**
@@ -66,6 +74,7 @@ export const SplitLayout = ({
   modal,
   header,
   center,
+  reverseColumns,
   getRef,
   children,
 
@@ -107,6 +116,7 @@ export const SplitLayout = ({
           styles.inner,
           !!header && styles.innerHeader,
           center && styles.innerCenter,
+          reverseColumns && styles.innerRowReverse,
         )}
         {...contentRest}
       >

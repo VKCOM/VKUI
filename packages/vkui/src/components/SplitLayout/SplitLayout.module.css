@@ -31,3 +31,7 @@
 .innerCenter {
   justify-content: center;
 }
+
+.innerRowReverse {
+  flex-direction: row-reverse;
+}
