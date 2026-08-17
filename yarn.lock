@@ -4468,7 +4468,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:^26.1.2":
+"@types/node@npm:*":
   version: 26.1.2
   resolution: "@types/node@npm:26.1.2"
   dependencies:
@@ -4477,7 +4477,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:>=20.0.0":
+"@types/node@npm:>=20.0.0, @types/node@npm:^26.2.0":
   version: 26.2.0
   resolution: "@types/node@npm:26.2.0"
   dependencies:
@@ -5263,7 +5263,7 @@ __metadata:
     "@swc/core": "npm:^1.15.47"
     "@types/cross-spawn": "npm:^6.0.6"
     "@types/jscodeshift": "npm:^17.3.0"
-    "@types/node": "npm:^26.1.2"
+    "@types/node": "npm:^26.2.0"
     "@types/prompts": "npm:^2.4.9"
     chalk: "npm:^6.0.0"
     commander: "npm:^15.0.0"
@@ -5289,7 +5289,7 @@ __metadata:
   dependencies:
     "@date-fns/tz": "npm:1.5.0"
     "@swc/core": "npm:^1.15.47"
-    "@types/node": "npm:^26.1.2"
+    "@types/node": "npm:^26.2.0"
     typescript: "npm:^6.0.3"
   languageName: unknown
   linkType: soft
@@ -5387,7 +5387,7 @@ __metadata:
     "@testing-library/dom": "npm:^10.4.1"
     "@testing-library/react": "npm:^16.3.2"
     "@testing-library/user-event": "npm:^14.6.4"
-    "@types/node": "npm:^26.1.2"
+    "@types/node": "npm:^26.2.0"
     "@types/react": "npm:^19.2.18"
     "@types/react-dom": "npm:^19.2.4"
     "@types/semver": "npm:^7.8.0"
