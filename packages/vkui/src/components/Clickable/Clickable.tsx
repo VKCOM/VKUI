@@ -64,6 +64,7 @@ function useClickableProps<T>({
   onFocus,
   onKeyDown,
   DefaultComponent,
+  disabled,
   ...restProps
 }: ClickableProps<T>) {
   const { focusVisible, ...focusEvents } = useFocusVisible();
@@ -82,6 +83,7 @@ function useClickableProps<T>({
     hasActive,
     hovered,
     activated,
+    disabled,
     unlockParentHover,
   });
 
@@ -145,7 +147,7 @@ function useProps<T>(props: ClickableProps<T>): RootComponentProps<T> &
     ...restProps,
   };
 
-  const clickableProps = useClickableProps(nextProps);
+  const clickableProps = useClickableProps({ ...nextProps, disabled });
 
   return isClickable ? clickableProps : nonClickableProps(nextProps);
 }
