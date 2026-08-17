@@ -29,7 +29,7 @@
     "slug": "^12.0.1",
     "swr": "^2.5.0",
     "typescript": "*",
-    "zustand": "^5.0.14"
+    "zustand": "^5.0.15"
   },
   "dependencies": {
     "@stackblitz/sdk": "^1.11.1",
