@@ -211,6 +211,16 @@ describe(PullToRefresh, () => {
     });
   });
 
+  it('allows to set controls z-index through slotProps', () => {
+    const { container } = render(
+      <PullToRefresh onRefresh={noop} slotProps={{ controls: { zIndex: 15 } }} />,
+    );
+
+    expect(container.getElementsByClassName(pullToRefreshStyles.controls)[0]).toHaveStyle({
+      zIndex: '15',
+    });
+  });
+
   it('disables native pull-to-refresh while pulling', async () => {
     const component = render(
       <ConfigProvider platform="ios">

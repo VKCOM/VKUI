@@ -53,6 +53,15 @@ export interface PullToRefreshProps extends DOMProps, TouchProps, HasChildren {
    * Текст скрытой кнопки, запускающей обновление для пользователей ассистивных технологий.
    */
   refreshLabel?: string | undefined;
+  /**
+   * Свойства, которые можно прокинуть внутрь компонента:
+   * - `controls`: свойства контейнера спиннера.
+   */
+  slotProps?:
+    | {
+        controls?: Pick<React.CSSProperties, 'zIndex'> | undefined;
+      }
+    | undefined;
   /** @ignore */
   scroll?: ScrollContextInterface | undefined;
 }
@@ -67,6 +76,7 @@ export const PullToRefresh = ({
   accessibilityLabel = 'Обновление контента',
   refreshLabel = 'Обновить',
   className,
+  slotProps,
   ...restProps
 }: PullToRefreshProps): React.ReactNode => {
   const platform = usePlatform();
@@ -282,6 +292,7 @@ export const PullToRefresh = ({
           className={styles.controls}
           inlineSize="100%"
           position="fixed"
+          style={{ zIndex: slotProps?.controls?.zIndex }}
         >
           <PullToRefreshSpinner
             style={{
