@@ -1,3 +1,4 @@
+import './challenge';
 import { spyOn } from 'storybook/test';
 import type { Preview } from '@storybook/react';
 import { BREAKPOINTS } from '../src/lib/adaptivity';

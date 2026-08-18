@@ -1,0 +1,40 @@
+declare global {
+  interface Window {
+    __challengeGuardInstalled?: boolean;
+  }
+}
+
+function install() {
+  if (window.__challengeGuardInstalled) {
+    return;
+  }
+  window.__challengeGuardInstalled = true;
+
+  const observer = new PerformanceObserver((list) => {
+    list.getEntries().forEach((entry) => {
+      if (!(entry instanceof PerformanceResourceTiming)) {
+        return;
+      }
+
+      entry.serverTiming.forEach((serverEntry) => {
+        if (serverEntry.name !== 'challenge') {
+          return;
+        }
+
+        const urlEntry = new URL(entry.name);
+
+        const redirect = window.location.pathname + window.location.search;
+        const challenge =
+          urlEntry.origin + serverEntry.description + '?redirect=' + encodeURIComponent(redirect);
+
+        window.location.href = challenge;
+      });
+    });
+  });
+
+  ['navigation', 'resource'].forEach((type) => observer.observe({ type, buffered: true }));
+}
+
+install();
+
+export {};
