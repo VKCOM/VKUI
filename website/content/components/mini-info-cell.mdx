@@ -127,6 +127,19 @@ tags: list
 - Избегайте длинных текстов в `nowrap` режиме;
 - Для групп элементов используйте общий `Group` с отступами;
 
+## Состояние загрузки
+
+Сохраняйте место для иконки и ожидаемую ширину текста.
+
+{/* @example-description: Заглушка `MiniInfoCell` с иконкой и текстовой строкой. */}
+<Playground>
+  ```jsx
+  <MiniInfoCell before={<Skeleton width={20} height={20} borderRadius="50%" />} aria-busy>
+    <Skeleton width={220} />
+  </MiniInfoCell>
+  ```
+</Playground>
+
 ## Доступность (a11y) [#a11y]
 
 - Для кликабельных элементов добавляйте `aria-label`.

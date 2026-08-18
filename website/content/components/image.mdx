@@ -124,6 +124,22 @@ tags: media
   ```
 </Playground>
 
+## Состояние загрузки
+
+Размер и радиус заглушки должны совпадать с ожидаемым изображением.
+
+{/* @example-description: Заглушка для квадратного изображения размером 96px. */}
+<Playground>
+  ```jsx
+  <Skeleton
+    width={96}
+    height={96}
+    borderRadius="var(--vkui--size_border_radius--regular)"
+    aria-label="Изображение загружается"
+  />
+  ```
+</Playground>
+
 ## Свойства и методы [#api]
 
 <PropsTable name="Image">

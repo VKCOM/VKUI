@@ -132,6 +132,19 @@ const [gender, setGender] = React.useState('f');
   ```
 </Playground>
 
+## Состояние загрузки
+
+До получения опций используйте `SelectMimicry`: он сохраняет внешний вид и адаптивную высоту поля.
+
+{/* @example-description: Заглушка `NativeSelect` на основе адаптивного `SelectMimicry`. */}
+<Playground style={{ maxWidth: 280 }}>
+  ```jsx
+  <SelectMimicry disabled aria-busy>
+    <Skeleton width={120} />
+  </SelectMimicry>
+  ```
+</Playground>
+
 ## Доступность (a11y) [#a11y]
 
 Компонент построен на основе нативного HTML-элемента `select`, что обеспечивает базовую доступность. Для улучшения доступности рекомендуется:

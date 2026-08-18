@@ -97,6 +97,22 @@ import ListContent from './_partials/list-content.mdx';
 
 <ListContent />
 
+## Состояние загрузки
+
+До получения данных используйте те же размеры аватара и текстовых слотов, что и в итоговой ячейке.
+
+{/* @example-description: Заглушка `Cell` с аватаром и двумя строками текста. */}
+<Playground>
+  ```jsx
+  <Cell
+    before={<Skeleton width={48} height={48} borderRadius="50%" />}
+    subtitle={<Skeleton width={90} />}
+  >
+    <Skeleton width={140} />
+  </Cell>
+  ```
+</Playground>
+
 ## Свойства и методы [#api]
 
 <PropsTable name={["Cell", "List"]}>

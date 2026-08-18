@@ -9,6 +9,7 @@ import {
 import { getAvatarUrl } from '../../testing/mock';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { imageBaseSizes } from '../ImageBase/types';
+import { Skeleton } from '../Skeleton/Skeleton';
 import { Avatar, type AvatarProps } from './Avatar';
 
 type AvatarStoryProps = AvatarProps & { badge: React.ReactNode; overlay: React.ReactNode };
@@ -109,3 +110,7 @@ WithOverlay.args = {
     </Avatar.Overlay>
   ),
 };
+
+export const SkeletonExample: StoryFn = () => (
+  <Skeleton width={48} height={48} borderRadius="50%" aria-label="Аватар загружается" />
+);

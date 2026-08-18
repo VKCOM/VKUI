@@ -9,6 +9,7 @@ import { Avatar } from '../Avatar/Avatar';
 import { Badge } from '../Badge/Badge';
 import { Group } from '../Group/Group';
 import { IconButton } from '../IconButton/IconButton';
+import { Skeleton } from '../Skeleton/Skeleton';
 import { Switch } from '../Switch/Switch';
 import { SimpleCell, type SimpleCellProps } from './SimpleCell';
 
@@ -94,3 +95,16 @@ Playground.args = {
 };
 
 Playground.decorators = [withSinglePanel, withVKUILayout];
+
+export const SkeletonExample: StoryFn = () => (
+  <Group aria-busy>
+    <SimpleCell
+      before={<Skeleton width={48} height={48} borderRadius="50%" />}
+      subtitle={<Skeleton width={90} />}
+    >
+      <Skeleton width={140} />
+    </SimpleCell>
+  </Group>
+);
+
+SkeletonExample.decorators = [withSinglePanel, withVKUILayout];

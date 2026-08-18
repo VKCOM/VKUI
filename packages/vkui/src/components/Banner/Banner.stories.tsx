@@ -6,11 +6,12 @@ import { getAvatarUrl } from '../../testing/mock';
 import { createFieldWithPresets } from '../../testing/presets';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Avatar } from '../Avatar/Avatar';
+import { Box } from '../Box/Box';
 import { Button } from '../Button/Button';
 import { ButtonGroup } from '../ButtonGroup/ButtonGroup';
-import { Div } from '../Div/Div';
 import { Group } from '../Group/Group';
 import { Image } from '../Image/Image';
+import { Skeleton } from '../Skeleton/Skeleton';
 import { Banner, type BannerProps } from './Banner';
 
 const story: Meta<BannerProps> = {
@@ -103,9 +104,9 @@ type Story = StoryFn<BannerProps>;
 
 export const Playground: Story = (props: BannerProps) => (
   <Group>
-    <Div>
+    <Box padding="system">
       <Banner {...props} />
-    </Div>
+    </Box>
   </Group>
 );
 
@@ -118,3 +119,18 @@ Playground.args = {
 };
 
 Playground.decorators = [withCartesian, withSinglePanel, withVKUILayout];
+
+export const SkeletonExample: Story = () => (
+  <Group aria-busy>
+    <Box padding="system">
+      <Banner
+        before={<Skeleton width={48} height={48} borderRadius="50%" />}
+        title={<Skeleton width={140} />}
+        subtitle={<Skeleton width={200} />}
+        actions={<Skeleton width={96} height={28} />}
+      />
+    </Box>
+  </Group>
+);
+
+SkeletonExample.decorators = [withCartesian, withSinglePanel, withVKUILayout];

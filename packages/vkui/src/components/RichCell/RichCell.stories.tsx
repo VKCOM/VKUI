@@ -8,6 +8,7 @@ import { Avatar } from '../Avatar/Avatar';
 import { Button } from '../Button/Button';
 import { ButtonGroup } from '../ButtonGroup/ButtonGroup';
 import { Group } from '../Group/Group';
+import { Skeleton } from '../Skeleton/Skeleton';
 import { UsersStack } from '../UsersStack/UsersStack';
 import { RichCell, type RichCellProps } from './RichCell';
 
@@ -131,3 +132,18 @@ Playground.args = {
 };
 
 Playground.decorators = [withSinglePanel, withVKUILayout];
+
+export const SkeletonExample: Story = () => (
+  <Group aria-busy>
+    <RichCell
+      before={<Skeleton width={72} height={72} borderRadius="50%" />}
+      overTitle={<Skeleton width={80} />}
+      subtitle={<Skeleton width={160} />}
+      extraSubtitle={<Skeleton width={120} />}
+    >
+      <Skeleton width={140} />
+    </RichCell>
+  </Group>
+);
+
+SkeletonExample.decorators = [withSinglePanel, withVKUILayout];

@@ -4,6 +4,8 @@ import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constan
 import { getFormFieldIconsPresets } from '../../testing/presets/getFormFieldIconsPresets';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import type { SelectProps } from '../CustomSelect/CustomSelect';
+import { SelectMimicry } from '../SelectMimicry/SelectMimicry';
+import { Skeleton } from '../Skeleton/Skeleton';
 import { Select } from './Select';
 
 const iconsPresets = getFormFieldIconsPresets();
@@ -30,3 +32,9 @@ Playground.args = {
   },
   options: [],
 };
+
+export const SkeletonExample: StoryFn = () => (
+  <SelectMimicry style={{ width: 300 }} disabled aria-busy>
+    <Skeleton width={120} />
+  </SelectMimicry>
+);

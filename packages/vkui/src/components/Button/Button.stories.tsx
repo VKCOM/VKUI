@@ -4,6 +4,7 @@ import { CanvasFullLayout } from '../../storybook/constants';
 import { createFieldWithPresets } from '../../testing/presets';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Counter } from '../Counter/Counter';
+import { Skeleton } from '../Skeleton/Skeleton';
 import { Button, type ButtonProps } from './Button';
 
 const iconsPresets = createFieldWithPresets({
@@ -33,3 +34,9 @@ Playground.args = {
   children: 'Button',
   size: 's',
 };
+
+export const SkeletonExample: StoryFn = () => (
+  <Button size="m" disabled aria-busy>
+    <Skeleton width={64} />
+  </Button>
+);

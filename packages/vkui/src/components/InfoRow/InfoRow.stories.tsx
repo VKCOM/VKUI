@@ -5,6 +5,7 @@ import { createStoryParameters } from '../../testing/storybook/createStoryParame
 import { Group } from '../Group/Group';
 import { Header } from '../Header/Header';
 import { SimpleCell } from '../SimpleCell/SimpleCell';
+import { Skeleton } from '../Skeleton/Skeleton';
 import { InfoRow, type InfoRowProps } from './InfoRow';
 
 const story: Meta<InfoRowProps> = {
@@ -46,3 +47,9 @@ export const Example: Story = (props: InfoRowProps) => (
 );
 
 Example.decorators = [withSinglePanel, withVKUILayout];
+
+export const SkeletonExample: Story = () => (
+  <InfoRow header={<Skeleton width={80} />} aria-busy>
+    <Skeleton width={120} />
+  </InfoRow>
+);

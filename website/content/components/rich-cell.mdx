@@ -125,6 +125,24 @@ tags: list
   ```
 </Playground>
 
+## Состояние загрузки
+
+Для заглушки сохраняйте размер медиаблока и количество ожидаемых текстовых строк.
+
+{/* @example-description: Заглушка `RichCell` с аватаром и несколькими уровнями текста. */}
+<Playground>
+  ```jsx
+  <RichCell
+    before={<Skeleton width={72} height={72} borderRadius="50%" />}
+    overTitle={<Skeleton width={80} />}
+    subtitle={<Skeleton width={160} />}
+    extraSubtitle={<Skeleton width={120} />}
+  >
+    <Skeleton width={140} />
+  </RichCell>
+  ```
+</Playground>
+
 ## Свойства и методы [#api]
 
 <PropsTable name="RichCell" />

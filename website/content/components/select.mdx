@@ -131,6 +131,19 @@ const [color, setColor] = React.useState('red');
 </View>
 ```
 
+## Состояние загрузки
+
+До получения опций используйте `SelectMimicry`: он сохраняет внешний вид и адаптивную высоту поля.
+
+{/* @example-description: Заглушка `Select` на основе адаптивного `SelectMimicry`. */}
+<Playground style={{ width: 270 }}>
+  ```jsx
+  <SelectMimicry disabled aria-busy>
+    <Skeleton width={120} />
+  </SelectMimicry>
+  ```
+</Playground>
+
 ## Доступность (a11y) [#a11y]
 
 Старайтесь сопровождать элемент текстовым описанием, для корректной работы скринридеров.

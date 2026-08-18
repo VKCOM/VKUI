@@ -49,6 +49,19 @@ tags: selection
   ```
 </Playground>
 
+## Состояние загрузки
+
+Используйте `Skeleton` как содержимое `SelectMimicry`: компонент сам сохранит внешний вид и адаптивную высоту поля.
+
+{/* @example-description: Адаптивный `SelectMimicry` с заглушкой вместо значения. */}
+<Playground style={{ width: 270 }}>
+  ```jsx
+  <SelectMimicry disabled aria-busy>
+    <Skeleton width={120} />
+  </SelectMimicry>
+  ```
+</Playground>
+
 ## Доступность (a11y) [#a11y]
 
 Компонент поддерживает все стандартные `aria`-атрибуты, если вам необходимо переопределить

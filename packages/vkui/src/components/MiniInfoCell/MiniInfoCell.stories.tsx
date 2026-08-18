@@ -5,6 +5,7 @@ import { getAvatarUrl } from '../../testing/mock';
 import { createFieldWithPresets } from '../../testing/presets';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Avatar } from '../Avatar/Avatar';
+import { Skeleton } from '../Skeleton/Skeleton';
 import { UsersStack } from '../UsersStack/UsersStack';
 import { MiniInfoCell, type MiniInfoCellProps } from './MiniInfoCell';
 
@@ -46,3 +47,9 @@ Playground.args = {
   children:
     'ВКонтакте начинался как сайт для выпускников вузов, а сейчас это огромная экосистема с безграничными возможностями и миллионами пользователей.',
 };
+
+export const SkeletonExample: Story = () => (
+  <MiniInfoCell before={<Skeleton width={20} height={20} borderRadius="50%" />} aria-busy>
+    <Skeleton width={220} />
+  </MiniInfoCell>
+);

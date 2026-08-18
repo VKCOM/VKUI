@@ -7,6 +7,7 @@ import { createFieldWithPresets } from '../../testing/presets';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Avatar } from '../Avatar/Avatar';
 import { Group } from '../Group/Group';
+import { Skeleton } from '../Skeleton/Skeleton';
 import { Switch } from '../Switch/Switch';
 import { Cell, type CellProps } from './Cell';
 
@@ -75,3 +76,14 @@ export const Multiple: Story = (props: CellProps) => (
 Multiple.args = {
   before: 'Avatar',
 };
+
+export const SkeletonExample: Story = () => (
+  <Group aria-busy>
+    <Cell
+      before={<Skeleton width={48} height={48} borderRadius="50%" />}
+      subtitle={<Skeleton width={90} />}
+    >
+      <Skeleton width={140} />
+    </Cell>
+  </Group>
+);

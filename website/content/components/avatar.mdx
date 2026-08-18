@@ -159,6 +159,17 @@ import { calcInitialsAvatarColor } from '@vkontakte/vkui';
 - поддержка всех стандартных HTML-атрибутов `<img>`;
 - сохранение пропорций изображения при изменении размеров.
 
+## Состояние загрузки
+
+Используйте тот же размер, что и у будущего `Avatar`, и круглое скругление.
+
+{/* @example-description: Круглая заглушка для аватара размером 48px. */}
+<Playground>
+  ```jsx
+  <Skeleton width={48} height={48} borderRadius="50%" aria-label="Аватар загружается" />
+  ```
+</Playground>
+
 ## Свойства и методы [#api]
 
 <PropsTable name="Avatar">

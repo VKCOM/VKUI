@@ -6,6 +6,8 @@ import { cities } from '../../testing/mock';
 import { getFormFieldIconsPresets } from '../../testing/presets';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { FormItem } from '../FormItem/FormItem';
+import { SelectMimicry } from '../SelectMimicry/SelectMimicry';
+import { Skeleton } from '../Skeleton/Skeleton';
 import { CustomSelect, type SelectProps } from './CustomSelect';
 
 const iconsPresets = getFormFieldIconsPresets();
@@ -55,3 +57,9 @@ Playground.args = {
   placeholder: 'Город',
   options: cities,
 };
+
+export const SkeletonExample: StoryFn = () => (
+  <SelectMimicry style={{ width: 300 }} disabled aria-busy>
+    <Skeleton width={120} />
+  </SelectMimicry>
+);

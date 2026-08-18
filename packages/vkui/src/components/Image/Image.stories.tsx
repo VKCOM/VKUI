@@ -2,6 +2,7 @@ import type { Meta, StoryFn } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getAvatarUrl } from '../../testing/mock';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
+import { Skeleton } from '../Skeleton/Skeleton';
 import { Image, type ImageProps } from './Image';
 
 const story: Meta<ImageProps> = {
@@ -32,3 +33,12 @@ Playground.args = {
   src: getAvatarUrl('app_shorm_online'),
   alt: 'Приложение шторм онлайн',
 };
+
+export const SkeletonExample: StoryFn = () => (
+  <Skeleton
+    width={96}
+    height={96}
+    borderRadius="var(--vkui--size_border_radius--regular)"
+    aria-label="Изображение загружается"
+  />
+);
