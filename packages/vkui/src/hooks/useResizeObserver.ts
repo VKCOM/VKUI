@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
-import type * as React from 'react';
-import { isWindow } from '../lib/dom';
+import * as React from 'react';
+import { isWindow, useDOM } from '../lib/dom';
 import { isRefObject } from '../lib/isRefObject';
 import { useStableCallback } from './useStableCallback';
 
@@ -40,5 +40,49 @@ export function useResizeObserver(
       return () => observer.disconnect();
     },
     [ref, stableCallback],
+  );
+}
+
+export function useResizeObserverElement<T extends HTMLElement>(
+  callback: (element: T) => void,
+): React.RefObject<T | null> {
+  const ref = React.useRef<T>(null);
+  const stableCallback = useStableCallback(callback);
+
+  useEffect(
+    function addResizeObserverHandler() {
+      if (!ref?.current) {
+        return;
+      }
+
+      const element = ref.current;
+
+      const observeFn = () => stableCallback(element);
+
+      const observer: ResizeObserver = new ResizeObserver(observeFn);
+      observer.observe(element);
+
+      return () => observer.disconnect();
+    },
+    [stableCallback],
+  );
+
+  return ref;
+}
+
+export function useWindowResizeEventListener(listener: (event: UIEvent) => void) {
+  const { window } = useDOM();
+  const stableListener = useStableCallback(listener);
+
+  useEffect(
+    function addResizeObserverHandler() {
+      if (!window) {
+        return;
+      }
+
+      window.addEventListener('resize', stableListener);
+      return () => window.removeEventListener('resize', stableListener);
+    },
+    [stableListener, window],
   );
 }

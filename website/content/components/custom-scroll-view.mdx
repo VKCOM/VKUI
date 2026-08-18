@@ -73,6 +73,35 @@ tags: layout
 
 Компонент позволяет обрабатывать событие `scroll`, возникающее при прокрутке контента, через свойство `onScroll`.
 
+## useCustomScrollViewTint
+
+Хук, который добавляет тени к краям прокручиваемой области через CSS-маску (`maskImage`).
+Маска реагирует на положение прокрутки: тень появляется только у тех краёв, за которыми
+есть ещё контент.
+
+Хук возвращает объект с тремя свойствами, которые нужно передать прокручиваемому элементу:
+
+- `getRootRef` — референс на прокручиваемый элемент;
+- `onScroll` — обработчик события `scroll`;
+- `style` — объект стилей с `maskImage` и `maskComposite` (необходимо применить к прокручиваемому элементу).
+
+{/* @example-description: Подсветка краёв прокручиваемой области через useCustomScrollViewTint. */}
+<Playground style={{ height: 150 }}>
+  ```jsx
+  const { getRootRef, onScroll, style } = useCustomScrollViewTint();
+
+  return (
+    <CustomScrollView getRootRef={getRootRef} onScroll={onScroll} style={style}>
+      {['Say', 'Hello', 'To', 'My', 'Little', 'Friend'].map((item) => (
+        <Cell key={item} before={<Avatar />}>
+          {item}
+        </Cell>
+      ))}
+    </CustomScrollView>
+  );
+  ```
+</Playground>
+
 ## Свойства и методы [#api]
 
 <PropsTable name="CustomScrollView" />

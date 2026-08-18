@@ -1,7 +1,11 @@
 import { act, useRef } from 'react';
 import { render } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { useResizeObserver } from './useResizeObserver';
+import {
+  useResizeObserver,
+  useResizeObserverElement,
+  useWindowResizeEventListener,
+} from './useResizeObserver';
 
 // Глобальный мок ResizeObserver для всех тестов
 const callbacks = new Set<ResizeObserverCallback>();
@@ -84,5 +88,91 @@ describe('useResizeObserver', () => {
     });
 
     expect(callback).toHaveBeenCalledExactlyOnceWith(window);
+  });
+});
+
+describe('useResizeObserverElement', () => {
+  const Fixture = ({ resizeCallback }: { resizeCallback: (element: HTMLDivElement) => void }) => {
+    const ref = useResizeObserverElement<HTMLDivElement>(resizeCallback);
+    return (
+      <div ref={ref} style={{ position: 'static' }}>
+        <div data-testid="child" style={{ height: 50 }}></div>
+      </div>
+    );
+  };
+
+  beforeEach(() => {
+    callbacks.clear();
+  });
+
+  it('should call callback when resize is triggered', async () => {
+    const callback = vi.fn();
+
+    render(<Fixture resizeCallback={callback} />);
+
+    await act(async () => {
+      triggerResize();
+    });
+
+    expect(callback).toHaveBeenCalledTimes(1);
+    expect(callback).toHaveBeenCalledWith(expect.any(HTMLDivElement));
+  });
+
+  it('should not call callback when ref has no element', () => {
+    const callback = vi.fn();
+
+    const FixtureNoRef = ({
+      resizeCallback,
+    }: {
+      resizeCallback: (element: HTMLDivElement) => void;
+    }) => {
+      useResizeObserverElement<HTMLDivElement>(resizeCallback);
+      return <div />;
+    };
+
+    render(<FixtureNoRef resizeCallback={callback} />);
+
+    triggerResize();
+
+    expect(callback).not.toHaveBeenCalled();
+  });
+});
+
+describe('useWindowResizeEventListener', () => {
+  it('should call listener on window resize', () => {
+    const listener = vi.fn();
+
+    const Fixture = ({ onResize }: { onResize: (event: UIEvent) => void }) => {
+      useWindowResizeEventListener(onResize);
+      return null;
+    };
+
+    render(<Fixture onResize={listener} />);
+
+    const event = new Event('resize');
+    act(() => {
+      window.dispatchEvent(event);
+    });
+
+    expect(listener).toHaveBeenCalledExactlyOnceWith(expect.objectContaining({ type: 'resize' }));
+  });
+
+  it('should not call listener after unmount', () => {
+    const listener = vi.fn();
+
+    const Fixture = ({ onResize }: { onResize: (event: UIEvent) => void }) => {
+      useWindowResizeEventListener(onResize);
+      return null;
+    };
+
+    const { unmount } = render(<Fixture onResize={listener} />);
+
+    unmount();
+
+    act(() => {
+      window.dispatchEvent(new Event('resize'));
+    });
+
+    expect(listener).not.toHaveBeenCalled();
   });
 });

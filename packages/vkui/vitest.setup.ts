@@ -118,7 +118,7 @@ globalThis.getComputedStyle = function (el: Element, pseudoElt?: string | null) 
   const computed = _origGetComputedStyle.call(globalThis, el);
   const inlineStyle = el instanceof HTMLElement ? el.style : null;
 
-  // У happy-dom есть два отличия от jsdom, влияющих на тесты:
+  // У happy-dom есть отличия от jsdom, влияющих на тесты:
   //
   // 1. `getComputedStyle` вычисляется только для элементов, подключённых к
   //    `document` в момент вызова; для detached-элементов возвращается пустой
@@ -131,13 +131,44 @@ globalThis.getComputedStyle = function (el: Element, pseudoElt?: string | null) 
   //    возвращал литерал неразрешённым — на это рассчитаны тесты, проверяющие,
   //    что компонент прокинул `var(...)` в инлайн-стиль.
   //
+  // 3. happy-dom не регистрирует многие CSS-свойства (`mask-image`,
+  //    `mask-composite`, `mask-clip`, …): их IDL-аксессоры (`el.style.maskImage`)
+  //    хранят значение, но оно не попадает ни в CSS-storage
+  //    (`el.style.getPropertyValue('mask-image')` → `''`), ни в
+  //    `getComputedStyle`. В jsdom IDL-аксессоры синхронизированы со storage,
+  //    поэтому `toHaveStyle({ maskImage: 'none' })` работал. Восстанавливаем
+  //    это, читая значения IDL-аксессоров инлайн-стиля как fallback.
+  //
   // Проксируем результат, восстанавливая поведение jsdom: при чтении свойства
   // сначала отдаём подходящий инлайн-стиль, затем — значение из `computed`.
+
+  // Читает инлайн-значение по имени свойства в любой нотации (camelCase или
+  // kebab-case). Сначала пробует CSS-storage (`getPropertyValue` для kebab),
+  // затем — IDL-аксессор (camelCase), который в happy-dom хранит
+  // незарегистрированные свойства вроде `maskImage`.
+  const readInline = (property: string): string => {
+    if (!inlineStyle) {
+      return '';
+    }
+    const kebab = property.startsWith('--')
+      ? property
+      : property.replace(/[A-Z]/g, (m) => `-${m.toLowerCase()}`);
+    const fromStorage = inlineStyle.getPropertyValue(kebab);
+    if (fromStorage) {
+      return fromStorage;
+    }
+    const camel = property.startsWith('--')
+      ? property
+      : kebab.replace(/-([a-z])/g, (_, c) => c.toUpperCase());
+    const fromIdl = (inlineStyle as unknown as Record<string, string>)[camel];
+    return typeof fromIdl === 'string' ? fromIdl : '';
+  };
+
   return new Proxy<CSSStyleDeclaration>(computed, {
-    get(target, prop, receiver) {
+    get(target, prop) {
       if (prop === 'getPropertyValue') {
         return (property: string) => {
-          const inline = inlineStyle?.getPropertyValue(property) ?? '';
+          const inline = readInline(property);
           // Для custom property с `var()` отдаём сырой литерал, как jsdom.
           if (property.startsWith('--') && inline.includes('var(')) {
             return inline;
@@ -146,20 +177,27 @@ globalThis.getComputedStyle = function (el: Element, pseudoElt?: string | null) 
           if (!el.isConnected && inline) {
             return inline;
           }
-          return target.getPropertyValue(property);
+          const native = target.getPropertyValue(property);
+          // Восстанавливаем значения незарегистрированных в happy-dom свойств
+          // (см. п. 3 выше) для подключённых элементов.
+          return native || inline;
         };
       }
       if (prop === 'length' || prop === 'item' || prop === Symbol.toPrimitive) {
-        return Reflect.get(target, prop, receiver);
+        // `Reflect.get` с `receiver` (= Proxy) ломает геттеры happy-dom,
+        // которые проверяют `this instanceof CSSStyleDeclaration` (например
+        // `length`). Передаём `target` — реальный экземпляр.
+        return Reflect.get(target, prop, target);
       }
-      // Прямой доступ к свойству (например `cs.transform`) для detached-элементов.
-      if (!el.isConnected) {
-        const inline = inlineStyle?.getPropertyValue(String(prop)) ?? '';
-        if (inline) {
-          return inline;
-        }
+      // Прямой доступ к свойству (например `cs.transform` / `cs.maskImage`).
+      // Для detached-элементов инлайн — единственный источник; для подключённых
+      // он же служит fallback'ом по незарегистрированным свойствам (п. 3).
+      const inline = readInline(String(prop));
+      if (!el.isConnected && inline) {
+        return inline;
       }
-      return Reflect.get(target, prop, receiver);
+      const native = Reflect.get(target, prop, target);
+      return native ?? (inline || undefined);
     },
   });
 };
