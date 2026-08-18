@@ -54,6 +54,45 @@ tags: forms, layout
   ```
 </Playground>
 
+## Валидация вертикальной сегментированной группы
+
+Передавайте `status="error"` в каждый `FormItem` с невалидным значением. Общее сообщение об ошибке размещайте в свойстве `bottom` последнего `FormItem`: так оно располагается под всей вертикальной сегментированной группой и не разделяет поля.
+
+Если последний `FormItem` сам находится в состоянии `error`, текст в `bottom` получит статус ошибки автоматически. Если ошибка относится к другому полю, а последний `FormItem` валиден, передайте ему `bottomStatus="error"`.
+
+Формулируйте сообщение с учётом количества невалидных полей: «Обязательное поле» для одного и «Обязательные поля» для нескольких. Свяжите сообщение с невалидными полями через `bottomId` и `aria-describedby`.
+
+{/* @example-description: Общая ошибка вертикальной сегментированной группы, в которой два поля невалидны, а последнее содержит сообщение в `bottom`. */}
+<Playground>
+  ```jsx
+  <FormLayoutGroup mode="vertical" segmented>
+    <FormItem htmlFor="last-name" status="error">
+      <VisuallyHidden Component="label" htmlFor="last-name">
+        Фамилия
+      </VisuallyHidden>
+      <Input id="last-name" placeholder="Фамилия" aria-describedby="name-error" />
+    </FormItem>
+    <FormItem htmlFor="first-name" status="error">
+      <VisuallyHidden Component="label" htmlFor="first-name">
+        Имя
+      </VisuallyHidden>
+      <Input id="first-name" placeholder="Имя" aria-describedby="name-error" />
+    </FormItem>
+    <FormItem
+      htmlFor="middle-name"
+      bottom="Обязательные поля"
+      bottomStatus="error"
+      bottomId="name-error"
+    >
+      <VisuallyHidden Component="label" htmlFor="middle-name">
+        Отчество
+      </VisuallyHidden>
+      <Input id="middle-name" placeholder="Отчество" defaultValue="Иванович" />
+    </FormItem>
+  </FormLayoutGroup>
+  ```
+</Playground>
+
 ## Удаление группы
 
 > Поддерживается только для `mode="horizontal"`.

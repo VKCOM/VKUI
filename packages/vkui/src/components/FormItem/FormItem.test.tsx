@@ -37,4 +37,20 @@ describe('FormItem', () => {
     );
     expect(screen.queryByTestId('top')).toBeTruthy();
   });
+
+  it('uses status for bottom semantics by default', () => {
+    render(<FormItem status="error" bottom="Ошибка" />);
+
+    expect(screen.getByRole('alert')).toHaveTextContent('Ошибка');
+  });
+
+  it('allows bottom status to be set independently', () => {
+    const { rerender } = render(<FormItem status="default" bottomStatus="error" bottom="Ошибка" />);
+
+    expect(screen.getByRole('alert')).toHaveTextContent('Ошибка');
+
+    rerender(<FormItem status="error" bottomStatus="default" bottom="Подсказка" />);
+
+    expect(screen.queryByRole('alert')).toBeNull();
+  });
 });
