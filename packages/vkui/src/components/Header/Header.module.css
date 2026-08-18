@@ -22,7 +22,7 @@
 }
 
 .beforeWithSubtitle {
-  margin-block-start: var(--vkui--spacing_size_s);
+  margin-block-start: var(--vkui--spacing_size_2xs);
 }
 
 .subtitleWrapper {
@@ -49,6 +49,7 @@
 .main {
   flex: 1 0 0;
   min-inline-size: 0;
+  margin-block: auto;
   color: var(--vkui--color_text_primary);
 }
 
@@ -95,12 +96,12 @@
 
 /* stylelint-disable selector-max-universal */
 .after.after > * {
-  margin-block: 13px 7px;
+  margin-block: 12px 8px;
   margin-inline-start: 12px;
 }
 
 .sizeS .after.after > * {
-  margin-block-start: 11px;
+  margin-block-start: 12px;
 }
 
 .sizeM .after.after > * {
@@ -112,7 +113,7 @@
 }
 
 .sizeXl .after.after > * {
-  margin-block-start: 16px;
+  margin-block-start: 15px;
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
