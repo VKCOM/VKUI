@@ -265,6 +265,24 @@ describe('Calendar', () => {
     expect(screen.queryByRole('option', { selected: true, name: '40' })).toBeInTheDocument();
   });
 
+  it('does not close time picker on scrollbar mouseDown', () => {
+    render(<Calendar value={targetDate} hoursTestId="hours" enableTime />);
+
+    fireEvent.click(screen.getByTestId('hours'));
+
+    const option = screen.getByRole('option', { name: '10' });
+    const scrollView = option.parentElement;
+    const mouseDownEvent = new MouseEvent('mousedown', {
+      bubbles: true,
+      cancelable: true,
+    });
+
+    scrollView?.dispatchEvent(mouseDownEvent);
+
+    expect(mouseDownEvent.defaultPrevented).toBe(true);
+    expect(option).toBeInTheDocument();
+  });
+
   describe('DEV errors', () => {
     beforeEach(() => setNodeEnv('development'));
     afterEach(() => setNodeEnv('test'));
