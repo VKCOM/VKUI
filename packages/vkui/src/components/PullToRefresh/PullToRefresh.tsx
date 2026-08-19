@@ -10,6 +10,7 @@ import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import type { AnyFunction, HasChildren } from '../../types';
 import { type ScrollContextInterface, useScroll } from '../AppRoot/ScrollContext';
 import { Box } from '../Box/Box';
+import { Button } from '../Button/Button';
 import { ParentWidthWrapper } from '../FixedLayout/ParentWidthWrapper';
 import { type CustomTouchEvent, Touch, type TouchProps } from '../Touch/Touch';
 import TouchRootContext from '../Touch/TouchContext';
@@ -41,6 +42,17 @@ export interface PullToRefreshProps extends DOMProps, TouchProps, HasChildren {
    * Определяет, выполняется ли обновление. Для скрытия спиннера после получения контента необходимо передать `false`.
    */
   isFetching?: boolean | undefined;
+  /**
+   * Текст, объявляемый скринридером для области обновления.
+   *
+   * > ℹ️ Жест «потянуть вниз» недоступен для пользователей ассистивных технологий, поэтому компонент
+   * > предоставляет скрытую кнопку «Обновить», доступную с клавиатуры и скринридера.
+   */
+  accessibilityLabel?: string | undefined;
+  /**
+   * Текст скрытой кнопки, запускающей обновление для пользователей ассистивных технологий.
+   */
+  refreshLabel?: string | undefined;
   /** @ignore */
   scroll?: ScrollContextInterface | undefined;
 }
@@ -52,6 +64,8 @@ export const PullToRefresh = ({
   children,
   isFetching,
   onRefresh,
+  accessibilityLabel = 'Обновление контента',
+  refreshLabel = 'Обновить',
   className,
   ...restProps
 }: PullToRefreshProps): React.ReactNode => {
@@ -234,6 +248,8 @@ export const PullToRefresh = ({
       <Touch
         aria-live="polite"
         aria-busy={!!isFetching}
+        role="region"
+        aria-label={accessibilityLabel}
         {...restProps}
         onStart={onTouchStart}
         onMove={onTouchMove}
@@ -246,6 +262,21 @@ export const PullToRefresh = ({
           className,
         )}
       >
+        {/*
+          Жест «потянуть вниз» недоступен пользователям ассистивных технологий, поэтому
+          предоставляем скрытую кнопку, запускающую обновление с клавиатуры и скринридера.
+          При клавиатурном фокусе кнопка раскрывается во всплывающую, чтобы зрячий
+          пользователь, навигирующийся с клавиатуры, видел, где оказался.
+        */}
+        <Button
+          className={styles.refreshAction}
+          mode="secondary"
+          size="m"
+          onClick={runRefreshing}
+          disabled={refreshing || !!isFetching}
+        >
+          {refreshLabel}
+        </Button>
         <Box
           Component={ParentWidthWrapper}
           className={styles.controls}
