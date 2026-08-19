@@ -302,10 +302,10 @@ import { OverlayButtonWrapper } from '@/components/wrappers';
 
 Используйте `Skeleton` внутри кнопки: так `Button` сам сохранит корректные высоту, радиус и внутренние отступы для выбранного `size`.
 
-{/* @example-description: Неактивная кнопка размера `m` с заглушкой вместо текста. */}
-<Playground>
+{/* @example-description: Кнопка размера `m` с заглушкой вместо текста. */}
+<Playground contrastBackground>
   ```jsx
-  <Button size="m" disabled aria-busy>
+  <Button size="m" aria-busy>
     <Skeleton width={64} />
   </Button>
   ```

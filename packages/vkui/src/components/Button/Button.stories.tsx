@@ -36,7 +36,7 @@ Playground.args = {
 };
 
 export const SkeletonExample: StoryFn = () => (
-  <Button size="m" disabled aria-busy>
+  <Button size="m" aria-busy>
     <Skeleton width={64} />
   </Button>
 );

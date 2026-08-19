@@ -454,10 +454,10 @@ return (
 Если до завершения первоначальной загрузки поле ещё нельзя использовать, временно замените его на `SelectMimicry` со `Skeleton` внутри. `SelectMimicry` сохранит внешний вид и адаптивную высоту будущего `CustomSelect`.
 
 {/* @example-description: Заглушка всего поля `CustomSelect` на основе адаптивного `SelectMimicry`. */}
-<Playground style={{ maxWidth: 270 }}>
+<Playground contrastBackground style={{ maxWidth: 270 }}>
 
 ```jsx
-<SelectMimicry disabled aria-busy>
+<SelectMimicry aria-busy>
   <Skeleton width={120} />
 </SelectMimicry>
 ```

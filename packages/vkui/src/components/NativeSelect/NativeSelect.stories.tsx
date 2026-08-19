@@ -28,7 +28,7 @@ export const Playground: Story = (args: NativeSelectProps) => (
 );
 
 export const SkeletonExample: StoryFn = () => (
-  <SelectMimicry style={{ width: 300 }} disabled aria-busy>
+  <SelectMimicry style={{ width: 300 }} aria-busy>
     <Skeleton width={120} />
   </SelectMimicry>
 );

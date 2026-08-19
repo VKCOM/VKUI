@@ -41,11 +41,13 @@ export interface PlaygroundPreviewProps
   extends Pick<FlexProps, 'direction' | 'align' | 'justify'>,
     Pick<AppRootProps, 'scroll'> {
   className?: string | undefined;
+  contrastBackground?: boolean | undefined;
   Wrapper?: React.ComponentType | undefined;
 }
 
 export function PlaygroundPreview({
   className,
+  contrastBackground = false,
   Wrapper = DefaultWrapper,
   scroll = 'contain',
   ...restProps
@@ -61,6 +63,7 @@ export function PlaygroundPreview({
         styles.root,
         styles.previewBackground,
         colorScheme === 'dark' && styles.previewBackgroundDark,
+        contrastBackground && styles.contrastBackground,
         error && styles.error,
         className,
       )}
