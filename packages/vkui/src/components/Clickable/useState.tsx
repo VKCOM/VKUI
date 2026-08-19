@@ -24,6 +24,14 @@ export interface StateProps {
   hasActive?: boolean | undefined;
 
   /**
+   * Отключает компонент. При переходе в `disabled` внутреннее `hovered`-состояние
+   * сбрасывается, чтобы оно не «залипало» после возврата в активное состояние
+   * (например, когда курсор успел покинуть отключённый элемент, не вызвав
+   * `pointerleave`, что типично для нативных `<button disabled>`).
+   */
+  disabled?: boolean | undefined;
+
+  /**
    * Позволяет родительскому компоненту
    * иметь `hovered`-cостояние при наведении
    * на любой дочерний элемент.
@@ -75,7 +83,7 @@ export const DEFAULT_ACTIVE_EFFECT_DELAY = 600;
 
 const ACTIVE_DELAY = 70;
 
-interface UseHoverProps extends Pick<StateProps, 'hovered' | 'hasHover'> {
+interface UseHoverProps extends Pick<StateProps, 'hovered' | 'hasHover' | 'disabled'> {
   /**
    * Блокирование активации состояний.
    */
@@ -89,6 +97,7 @@ interface UseHoverProps extends Pick<StateProps, 'hovered' | 'hasHover'> {
 export function useHover({
   hovered,
   hasHover = true,
+  disabled = false,
   lockState = false,
   setParentStateLock = noop,
 }: UseHoverProps = {}) {
@@ -103,6 +112,18 @@ export function useHover({
       setParentStateLock(false);
     }
   }, [hasHover, setParentStateLock]);
+
+  // Отключённый компонент не получает события указателя (например,
+  // нативная `<button disabled>`), поэтому `pointerleave` может не сработать
+  // и `hoveredStateLocal` останется `true`. Сбрасываем его при переходе
+  // в `disabled`, чтобы hover не «залипал» после возврата в активное состояние.
+  React.useEffect(() => {
+    if (disabled) {
+      setHoveredStateLocal(false);
+      prevIsHoveredRef.current = false;
+      setParentStateLock(false);
+    }
+  }, [disabled, setParentStateLock]);
 
   const handleHover = React.useCallback(
     (isHover: boolean) => {
@@ -153,7 +174,8 @@ export function useHover({
   };
 }
 
-interface UseActiveProps extends Pick<StateProps, 'activated' | 'activeEffectDelay' | 'hasActive'> {
+interface UseActiveProps
+  extends Pick<StateProps, 'activated' | 'activeEffectDelay' | 'hasActive' | 'disabled'> {
   /**
    * Блокирование активации состояний.
    */
@@ -168,6 +190,7 @@ function useActive({
   activated,
   activeEffectDelay,
   hasActive = true,
+  disabled = false,
   lockState,
   setParentStateLock,
 }: UseActiveProps) {
@@ -182,11 +205,15 @@ function useActive({
   }
 
   React.useEffect(() => {
-    if (lockState || !hasActive) {
-      // Сбрасываем setActivated если обнаруживаем lockState или !hasActive
+    if (lockState || !hasActive || disabled) {
+      // Сбрасываем setActivated если обнаруживаем lockState, !hasActive или disabled.
+      // Отключённый компонент не получает события указателя, поэтому
+      // `pointerup`/`pointercancel` могут не сработать и `activatedState`
+      // останется `true` — сбрасываем, чтобы active не «залипал» после
+      // возврата в активное состояние.
       setActivated(false);
     }
-  }, [lockState, hasActive, setActivated]);
+  }, [lockState, hasActive, disabled, setActivated]);
 
   const onPointerDown = () => {
     if (lockState) {
@@ -274,6 +301,7 @@ function useLockState(
 export function useState({
   hovered,
   hasHover,
+  disabled,
   activated,
   hasActive,
   activeEffectDelay,
@@ -296,6 +324,7 @@ export function useState({
   const { isHovered, ...hoverEvent } = useHover({
     hasHover,
     hovered,
+    disabled,
     lockState: lockHoverState,
     setParentStateLock: setParentStateLockHoverBubbling,
   });
@@ -304,6 +333,7 @@ export function useState({
     activated,
     hasActive,
     activeEffectDelay,
+    disabled,
     lockState: lockActiveState,
     setParentStateLock: setParentStateLockActiveBubbling,
   });
