@@ -483,6 +483,78 @@ describe('CalendarTime', () => {
     });
   });
 
+  describe('Intermediate input with isDayDisabled (minDateTime)', () => {
+    fakeTimersForScope();
+    // minDateTime = 15:00 — часы ниже 15 на этой дате запрещены
+    const baseDate = new Date('2026-07-19T00:00:00.000Z');
+    const minDateTime = setHours(baseDate, 15);
+    const value = setHours(baseDate, 15);
+    const isDayDisabled = (day: Date, withTime?: boolean) => {
+      if (withTime) {
+        return day.getTime() < minDateTime.getTime();
+      }
+      return false;
+    };
+
+    it('should keep intermediate "2" (start of "20") without resetting to min "15"', async () => {
+      const onChange = vi.fn();
+      render(
+        <CalendarTime
+          onChange={onChange}
+          value={value}
+          isDayDisabled={isDayDisabled}
+          hoursTestId="hours-picker"
+        />,
+      );
+
+      const hoursInput = screen.getByTestId('hours-picker');
+      act(() => hoursInput.focus());
+
+      // Вводим первый символ "2" — промежуточное значение для "20".
+      // Баг: "2" трактовалось как 2 часа (< 15) и мгновенно сбрасывалось к "15".
+      fireEvent.input(hoursInput, { target: { value: '2' } });
+      await act(async () => vi.runOnlyPendingTimers());
+
+      expect(hoursInput).toHaveValue('2');
+      expect(onChange).not.toHaveBeenCalled();
+
+      // Вводим второй символ "0" → финальное валидное "20"
+      fireEvent.input(hoursInput, { target: { value: '20' } });
+      await act(async () => vi.runOnlyPendingTimers());
+
+      expect(onChange).toHaveBeenLastCalledWith(setHours(value, 20));
+      expect(hoursInput).toHaveValue('20');
+    });
+
+    it('should reset to min "15" when final hour "10" is below minDateTime', async () => {
+      const onChange = vi.fn();
+      render(
+        <CalendarTime
+          onChange={onChange}
+          value={value}
+          isDayDisabled={isDayDisabled}
+          hoursTestId="hours-picker"
+        />,
+      );
+
+      const hoursInput = screen.getByTestId('hours-picker');
+      act(() => hoursInput.focus());
+
+      // Промежуточное "1"
+      fireEvent.input(hoursInput, { target: { value: '1' } });
+      await act(async () => vi.runOnlyPendingTimers());
+      expect(hoursInput).toHaveValue('1');
+      expect(onChange).not.toHaveBeenCalled();
+
+      // Финальное "10" (< 15) — недопустимо, должно сброситься к минимальному "15"
+      fireEvent.input(hoursInput, { target: { value: '10' } });
+      await act(async () => vi.runOnlyPendingTimers());
+
+      expect(onChange).not.toHaveBeenCalled();
+      expect(hoursInput).toHaveValue('15');
+    });
+  });
+
   describe('Custom setHours and setMinutes', () => {
     fakeTimersForScope();
     it('should use custom setHours function', async () => {
