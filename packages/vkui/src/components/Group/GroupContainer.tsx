@@ -97,6 +97,14 @@ export type GroupContainerProps = HTMLAttributesWithRootRef<HTMLElement> &
      * Отвечает за отступы вокруг контента в режиме `card`.
      */
     padding?: 's' | 'm' | undefined;
+    /**
+     * Отключает закругление в начале блока.
+     */
+    noBlockStartRounding?: boolean | undefined;
+    /**
+     * Отключает закругление в конце блока.
+     */
+    noBlockEndRounding?: boolean | undefined;
   };
 
 const warn = warnOnce('Group');
@@ -107,6 +115,8 @@ export const GroupContainer = ({
   mode: modeProps,
   padding = 'm',
   tabIndex: tabIndexProp,
+  noBlockStartRounding,
+  noBlockEndRounding,
   ...restProps
 }: GroupContainerProps) => {
   const isInsideModal = useModalContext().id !== null;
@@ -159,6 +169,10 @@ export const GroupContainer = ({
           mode === 'plain' && isInsideModal && styles.modePlainInsideModal,
           stylesMode[mode],
           stylesPadding[padding],
+          noBlockStartRounding === undefined && styles.noBlockStartRoundingUndefined,
+          noBlockEndRounding === undefined && styles.noBlockEndRoundingUndefined,
+          noBlockStartRounding !== true && styles.noBlockStartRoundingFalseOrUndefined,
+          noBlockEndRounding !== true && styles.noBlockEndRoundingFalseOrUndefined,
         )}
       >
         {children}
