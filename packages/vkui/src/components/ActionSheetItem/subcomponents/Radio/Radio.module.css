@@ -1,9 +1,19 @@
+/**
+ * Селекторы ниже намеренно ограничены классом `.host`.
+ *
+ * Без класса-предка `.input ~ *` проверяется движком стилей на каждом элементе
+ * документа, и для каждого приходится сканировать всех предыдущих братьев.
+ * Bloom-фильтр при этом не срабатывает (fast-reject = 0), поэтому на страницах
+ * с большими поддеревьями (например, письмо с широкой таблицей) правило
+ * становится заметной статьёй расхода в Recalculate Style при нуле совпадений.
+ */
+
 /* stylelint-disable-next-line selector-max-universal -- отключаем иконку */
-.input ~ * {
+.host > .input ~ * {
   display: none;
 }
 
 /* stylelint-disable-next-line selector-max-universal -- включаем иконку если checked */
-.input:checked ~ * {
+.host > .input:checked ~ * {
   display: block;
 }
