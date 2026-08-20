@@ -2,6 +2,7 @@ import type { Meta, StoryFn } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getFormFieldIconsPresets } from '../../testing/presets/getFormFieldIconsPresets';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
+import { Skeleton } from '../Skeleton/Skeleton';
 import { SelectMimicry, type SelectMimicryProps } from './SelectMimicry';
 
 const iconsPresets = getFormFieldIconsPresets();
@@ -34,4 +35,10 @@ export default story;
 
 export const Playground: StoryFn<StorySelectMimicryProps> = (args: StorySelectMimicryProps) => (
   <SelectMimicry {...args} />
+);
+
+export const SkeletonExample: StoryFn = () => (
+  <SelectMimicry style={{ width: 300 }} aria-busy>
+    <Skeleton width={120} />
+  </SelectMimicry>
 );

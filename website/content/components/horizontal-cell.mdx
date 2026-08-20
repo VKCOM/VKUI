@@ -39,6 +39,29 @@ tags: list
 | `auto`            | Контент произвольной ширины    | не ограничена |
 | Числовое значение | Любые пользовательские размеры | задаётся явно |
 
+## Состояние загрузки
+
+Повторите заглушку несколько раз, чтобы сохранить геометрию горизонтальной коллекции до получения данных.
+
+{/* @example-description: Набор заглушек `HorizontalCell` для горизонтальной коллекции. */}
+<Playground contrastBackground>
+  ```jsx
+  <HorizontalScroll>
+    <Flex>
+      {[1, 2, 3, 4].map((item) => (
+        <HorizontalCell key={item} title={<Skeleton width={48} />}>
+          <Skeleton
+            width={56}
+            height={56}
+            borderRadius="var(--vkui--size_border_radius--regular)"
+          />
+        </HorizontalCell>
+      ))}
+    </Flex>
+  </HorizontalScroll>
+  ```
+</Playground>
+
 ## Свойства и методы [#api]
 
 <PropsTable name="HorizontalCell" />

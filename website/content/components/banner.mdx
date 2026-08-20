@@ -142,6 +142,23 @@ tags: notification
   ```
 </Playground>
 
+## Состояние загрузки
+
+Слоты `Banner` позволяют сохранить его реальную раскладку и заменить заглушками только динамический контент.
+
+{/* @example-description: Заглушка `Banner` с изображением, текстом и действием. */}
+<Playground contrastBackground>
+  ```jsx
+  <Banner
+    before={<Skeleton width={48} height={48} borderRadius="50%" />}
+    title={<Skeleton width={140} />}
+    subtitle={<Skeleton width={200} />}
+    actions={<Skeleton width={96} height={28} />}
+    aria-busy
+  />
+  ```
+</Playground>
+
 ## Свойства и методы [#api]
 
 <PropsTable name="Banner" />

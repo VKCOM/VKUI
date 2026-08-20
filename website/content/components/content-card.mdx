@@ -56,6 +56,24 @@ tags: card
 - **Component** — базовый HTML-тег контейнера (по умолчанию `li`).
 - **titleComponent** — тег для обёртки заголовка (по умолчанию `span`).
 
+## Состояние загрузки
+
+Для карточки лучше обозначить медиаблок и текст отдельно, сохранив итоговый размер контента.
+
+{/* @example-description: Составная заглушка карточки с изображением и текстом. */}
+<Playground contrastBackground>
+  ```jsx
+  <Card style={{ width: 300, overflow: 'hidden' }} aria-busy>
+    <Skeleton width="100%" height={150} borderRadius={0} />
+    <Box padding="system">
+      <Skeleton width={80} />
+      <Skeleton width="100%" />
+      <Skeleton width="75%" />
+    </Box>
+  </Card>
+  ```
+</Playground>
+
 ## Доступность (a11y) [#a11y]
 
 1. По умолчанию используется тег `"li"` для повышения доступности компонента. Вы можете прокинуть необходимый вам тег через prop `Component`.

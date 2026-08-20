@@ -7,6 +7,7 @@ import { createStoryParameters } from '../../testing/storybook/createStoryParame
 import { Flex } from '../Flex/Flex';
 import { Group } from '../Group/Group';
 import { Image } from '../Image/Image';
+import { Skeleton } from '../Skeleton/Skeleton';
 import { HorizontalCell, type HorizontalCellProps } from './HorizontalCell';
 
 const story: Meta<HorizontalCellProps> = {
@@ -75,3 +76,21 @@ Playground.args = {
 };
 
 Playground.decorators = [withSinglePanel, withVKUILayout];
+
+export const SkeletonExample: Story = () => (
+  <Group aria-busy>
+    <Flex>
+      {[1, 2, 3, 4].map((item) => (
+        <HorizontalCell key={item} title={<Skeleton width={48} />}>
+          <Skeleton
+            width={56}
+            height={56}
+            borderRadius="var(--vkui--size_border_radius--regular)"
+          />
+        </HorizontalCell>
+      ))}
+    </Flex>
+  </Group>
+);
+
+SkeletonExample.decorators = [withSinglePanel, withVKUILayout];

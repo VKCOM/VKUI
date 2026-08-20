@@ -5,6 +5,7 @@ import { IconExampleForBadgeBasedOnImageBaseSize } from '../../testing/icons';
 import { getAvatarUrl } from '../../testing/mock';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { imageBaseSizes } from '../ImageBase/types';
+import { Skeleton } from '../Skeleton/Skeleton';
 import { GridAvatar, type GridAvatarProps } from './GridAvatar';
 
 type StoryGridAvatarProps = GridAvatarProps & { badged: boolean };
@@ -52,3 +53,7 @@ Playground.args = {
   src: [getAvatarUrl(), getAvatarUrl(), getAvatarUrl(), getAvatarUrl()],
   badged: false,
 };
+
+export const SkeletonExample: StoryFn = () => (
+  <Skeleton width={48} height={48} borderRadius="50%" aria-label="Аватары загружаются" />
+);

@@ -4,6 +4,7 @@ import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constan
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Box } from '../Box/Box';
 import { Group } from '../Group/Group';
+import { Skeleton } from '../Skeleton/Skeleton';
 import { Accordion, type AccordionProps } from './Accordion';
 
 const story: Meta<AccordionProps> = {
@@ -32,3 +33,20 @@ export const Playground: Story = (args: AccordionProps) => (
 Playground.args = {
   expanded: true,
 };
+
+export const SkeletonExample: Story = () => (
+  <Group aria-busy>
+    <Accordion expanded>
+      <Accordion.Summary>
+        <Skeleton width={180} />
+      </Accordion.Summary>
+      <Accordion.Content>
+        <Box padding="system">
+          <Skeleton width="100%" />
+          <Skeleton width="100%" />
+          <Skeleton width="75%" />
+        </Box>
+      </Accordion.Content>
+    </Accordion>
+  </Group>
+);

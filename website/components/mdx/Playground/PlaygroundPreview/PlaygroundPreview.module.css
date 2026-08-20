@@ -25,6 +25,11 @@
   background-size: 23px 28px;
 }
 
+.contrastBackground {
+  /* stylelint-disable-next-line declaration-property-value-disallowed-list */
+  --vkui_docs--playground_color_background: #fff;
+}
+
 .previewBackgroundDark {
   /* stylelint-disable-next-line declaration-property-value-disallowed-list */
   --vkui_docs--playground_color_background: #0e0e0f;

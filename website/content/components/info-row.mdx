@@ -73,6 +73,19 @@ tags: list
 </InfoRow>
 ```
 
+## Состояние загрузки
+
+Используйте отдельные заглушки для заголовка и значения, чтобы сохранить структуру пары данных.
+
+{/* @example-description: Заглушка `InfoRow` для заголовка и значения. */}
+<Playground contrastBackground>
+  ```jsx
+  <InfoRow header={<Skeleton width={80} />} aria-busy>
+    <Skeleton width={120} />
+  </InfoRow>
+  ```
+</Playground>
+
 ## Свойства и методы [#api]
 
 <PropsTable name="InfoRow" />

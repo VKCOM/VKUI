@@ -99,6 +99,22 @@ import { BlockWrapper } from '@/components/wrappers';
   ```
 </Playground>
 
+## Состояние загрузки
+
+Сохраняйте структуру ячейки во время загрузки: отдельно обозначайте аватар, заголовок и подзаголовок.
+
+{/* @example-description: Заглушка `SimpleCell` с аватаром и двумя строками текста. */}
+<Playground contrastBackground Wrapper={BlockWrapper} style={{ maxWidth: 320 }}>
+  ```jsx
+  <SimpleCell
+    before={<Skeleton width={48} height={48} borderRadius="50%" />}
+    subtitle={<Skeleton width={90} />}
+  >
+    <Skeleton width={140} />
+  </SimpleCell>
+  ```
+</Playground>
+
 ## Доступность (a11y) [#a11y]
 
 ### Поведение как кнопка

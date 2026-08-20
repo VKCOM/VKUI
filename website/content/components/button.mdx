@@ -298,6 +298,19 @@ import { OverlayButtonWrapper } from '@/components/wrappers';
   ```
 </Playground>
 
+## Состояние загрузки
+
+Используйте `Skeleton` внутри кнопки: так `Button` сам сохранит корректные высоту, радиус и внутренние отступы для выбранного `size`.
+
+{/* @example-description: Кнопка размера `m` с заглушкой вместо текста. */}
+<Playground contrastBackground>
+  ```jsx
+  <Button size="m" aria-busy>
+    <Skeleton width={64} />
+  </Button>
+  ```
+</Playground>
+
 ## Доступность (a11y) [#a11y]
 
 Компонент автоматически выбирает правильный `HTML`-тег (`button` по умолчанию или `a` при передаче `href`), обеспечивая базовые требования доступности.

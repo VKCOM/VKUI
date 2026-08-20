@@ -227,6 +227,28 @@ return(
 <Accordion unmountOnCollapsed />
 ```
 
+## Состояние загрузки
+
+Сохраняйте структуру раскрытого блока: заголовок остаётся в `Accordion.Summary`, а строки содержимого — в `Accordion.Content`.
+
+{/* @example-description: Раскрытый `Accordion` с заглушками заголовка и содержимого. */}
+<Playground contrastBackground Wrapper={BlockWrapper} style={{ height: 180 }}>
+  ```jsx
+  <Accordion expanded>
+    <Accordion.Summary>
+      <Skeleton width={180} />
+    </Accordion.Summary>
+    <Accordion.Content>
+      <Box padding="system">
+        <Skeleton width="100%" />
+        <Skeleton width="100%" />
+        <Skeleton width="75%" />
+      </Box>
+    </Accordion.Content>
+  </Accordion>
+  ```
+</Playground>
+
 ## Доступность (a11y) [#a11y]
 
 Доступность реализована на основе рекомендаций из [Accordion WAI-ARIA design pattern](https://www.w3.org/WAI/ARIA/apg/patterns/accordion/).

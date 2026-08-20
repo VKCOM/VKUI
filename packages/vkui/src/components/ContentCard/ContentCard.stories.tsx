@@ -1,6 +1,9 @@
 import type { Meta, StoryFn } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
+import { Box } from '../Box/Box';
+import { Card } from '../Card/Card';
+import { Skeleton } from '../Skeleton/Skeleton';
 import { ContentCard, type ContentCardProps } from './ContentCard';
 
 const story: Meta<ContentCardProps> = {
@@ -29,3 +32,14 @@ Playground.args = {
   caption: 'Photo by Siyuan on Unsplash',
   maxHeight: 150,
 };
+
+export const SkeletonExample: StoryFn = () => (
+  <Card style={{ width: 300, overflow: 'hidden' }} aria-busy>
+    <Skeleton width="100%" height={150} borderRadius={0} />
+    <Box padding="system">
+      <Skeleton width={80} />
+      <Skeleton width="100%" />
+      <Skeleton width="75%" />
+    </Box>
+  </Card>
+);
