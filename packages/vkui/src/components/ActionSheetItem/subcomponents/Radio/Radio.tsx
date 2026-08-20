@@ -1,5 +1,6 @@
 import type * as React from 'react';
 import { Icon20CheckCircleOn, Icon24CheckCircleOn } from '@vkontakte/icons';
+import { classNames } from '@vkontakte/vkjs';
 import type { HasRef, HasRootRef } from '../../../../types';
 import { AdaptiveIconRenderer } from '../../../AdaptiveIconRenderer/AdaptiveIconRenderer';
 import { RootComponent } from '../../../RootComponent/RootComponent';
@@ -29,7 +30,11 @@ export const Radio = ({
   ...restProps
 }: ActionSheetItemCheckedProps): React.ReactNode => {
   return (
-    <RootComponent getRootRef={getRootRef} className={className} style={style}>
+    <RootComponent
+      getRootRef={getRootRef}
+      className={classNames(styles.host, className)}
+      style={style}
+    >
       <VisuallyHidden
         Component="input"
         getRootRef={getRef}
