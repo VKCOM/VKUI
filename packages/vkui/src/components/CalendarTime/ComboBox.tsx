@@ -80,9 +80,6 @@ function Option({ option, onClickOption, selectedValue }: OptionProps) {
     <CustomSelectOption
       getRootRef={ref}
       key={option.value}
-      onMouseDown={(event) => {
-        event.preventDefault();
-      }}
       onClick={() => {
         onClickOption?.(option.value);
       }}
@@ -143,6 +140,10 @@ export function ComboBox({
     labelsElements?.reverse();
   }
 
+  const preventPopperCloseOnClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    event.preventDefault();
+  };
+
   return (
     <>
       <Input
@@ -170,6 +171,7 @@ export function ComboBox({
           targetRef={ref}
           placement={popperPlacement}
           onPlacementChange={setPopperPlacement}
+          onMouseDown={preventPopperCloseOnClick}
           className={classNames(
             styles.popper,
             popperPlacement.includes('top') ? styles.popperTop : styles.popperBottom,

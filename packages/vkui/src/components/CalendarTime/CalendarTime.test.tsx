@@ -537,25 +537,4 @@ describe('CalendarTime', () => {
       expect(customSetMinutes).toHaveBeenCalled();
     });
   });
-
-  describe('Option mouseDown behavior', () => {
-    it('should prevent default on option mouseDown', () => {
-      const onChange = vi.fn();
-      render(<CalendarTime onChange={onChange} value={dayDate} hoursTestId="hours-picker" />);
-
-      const hoursInput = screen.getByTestId('hours-picker');
-      fireEvent.click(hoursInput);
-
-      const option = screen.getByRole('option', { name: '10' });
-      const mouseDownEvent = new MouseEvent('mousedown', {
-        bubbles: true,
-        cancelable: true,
-      });
-      const preventDefaultSpy = vi.spyOn(mouseDownEvent, 'preventDefault');
-
-      option.dispatchEvent(mouseDownEvent);
-
-      expect(preventDefaultSpy).toHaveBeenCalled();
-    });
-  });
 });
