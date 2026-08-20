@@ -66,3 +66,31 @@ export const AccessibleHorizontalSegmented: Story = (args: FormLayoutGroupProps)
     </FormItem>
   </FormLayoutGroup>
 );
+
+export const VerticalValidation: Story = () => (
+  <FormLayoutGroup mode="vertical" segmented>
+    <FormItem htmlFor="last-name" status="error">
+      <VisuallyHidden Component="label" htmlFor="last-name">
+        Фамилия
+      </VisuallyHidden>
+      <Input id="last-name" placeholder="Фамилия" aria-describedby="name-error" />
+    </FormItem>
+    <FormItem htmlFor="first-name" status="error">
+      <VisuallyHidden Component="label" htmlFor="first-name">
+        Имя
+      </VisuallyHidden>
+      <Input id="first-name" placeholder="Имя" aria-describedby="name-error" />
+    </FormItem>
+    <FormItem
+      htmlFor="middle-name"
+      bottomId="name-error"
+      bottom="Обязательные поля"
+      bottomStatus="error"
+    >
+      <VisuallyHidden Component="label" htmlFor="middle-name">
+        Отчество
+      </VisuallyHidden>
+      <Input id="middle-name" placeholder="Отчество" defaultValue="Иванович" />
+    </FormItem>
+  </FormLayoutGroup>
+);

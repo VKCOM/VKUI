@@ -63,11 +63,11 @@
   color: var(--vkui--color_text_secondary);
 }
 
-.statusError .bottom {
+.bottomStatusError {
   color: var(--vkui--color_text_negative);
 }
 
-.statusValid .bottom {
+.bottomStatusValid {
   color: var(--vkui--color_text_positive);
 }
 

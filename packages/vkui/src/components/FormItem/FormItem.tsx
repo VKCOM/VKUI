@@ -21,9 +21,16 @@ const densityClassNames = {
 };
 
 const stylesStatus = {
-  error: classNames(styles.statusError, 'vkuiInternalFormItem--status-error'),
-  valid: classNames(styles.statusValid, 'vkuiInternalFormItem--status-valid'),
+  error: 'vkuiInternalFormItem--status-error',
+  valid: 'vkuiInternalFormItem--status-valid',
 };
+
+const stylesBottomStatus = {
+  error: styles.bottomStatusError,
+  valid: styles.bottomStatusValid,
+};
+
+type FormItemStatus = 'default' | 'error' | 'valid';
 
 export interface FormItemProps
   extends React.AllHTMLAttributes<HTMLElement>,
@@ -64,7 +71,13 @@ export interface FormItemProps
   /**
    * Статус, влияющий на стиль отображения компонента.
    */
-  status?: 'default' | 'error' | 'valid' | undefined;
+  status?: FormItemStatus | undefined;
+  /**
+   * Статус, влияющий на стиль и семантику свойства `bottom`.
+   *
+   * По умолчанию совпадает со значением `status`.
+   */
+  bottomStatus?: FormItemStatus | undefined;
   /**
    * Дает возможность удалить `FormItem`. Рекомендуется использовать только для `Input` или `Select`.
    *
@@ -97,6 +110,7 @@ export const FormItem: React.FC<FormItemProps> & {
   topComponent: topComponentProp,
   bottom,
   status = 'default',
+  bottomStatus = status,
   removable,
   onRemove,
   removePlaceholder = 'Удалить',
@@ -125,9 +139,12 @@ export const FormItem: React.FC<FormItemProps> & {
       {children}
       {hasReactNode(bottom) && (
         <Footnote
-          className={styles.bottom}
+          className={classNames(
+            styles.bottom,
+            bottomStatus !== 'default' && stylesBottomStatus[bottomStatus],
+          )}
           id={bottomId}
-          role={status === 'error' ? 'alert' : undefined}
+          role={bottomStatus === 'error' ? 'alert' : undefined}
         >
           {bottom}
         </Footnote>
