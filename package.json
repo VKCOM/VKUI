@@ -14,7 +14,7 @@
     "@biomejs/biome": "2.5.8",
     "@csstools/postcss-global-data": "4.0.0",
     "@eslint/compat": "^2.1.0",
-    "@morev/stylelint-testing-library": "^1.1.0",
+    "@morev/stylelint-testing-library": "^1.1.1",
     "@playwright/experimental-ct-react": "1.62.1",
     "@playwright/test": "1.62.1",
     "@rspack/cli": "^2.1.9",

@@ -1759,14 +1759,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@morev/stylelint-testing-library@npm:^1.1.0":
-  version: 1.1.0
-  resolution: "@morev/stylelint-testing-library@npm:1.1.0"
+"@morev/stylelint-testing-library@npm:^1.1.1":
+  version: 1.1.1
+  resolution: "@morev/stylelint-testing-library@npm:1.1.1"
   dependencies:
     "@morev/utils": "npm:^3.15.0"
   peerDependencies:
     stylelint: ">=16"
-  checksum: 10/c6dd505708821559a57226127b8e7574268424c93f1027891b0d9591442b669709640be839789e3f9949163e2c72720aa8fb84d0e1eb3ab0a849e3e52d590d14
+  checksum: 10/abf4ee354b7a555ac3fe7c6cd25c84e1d11025bd3758b088db772853dd1625bc736cb7efd6140f6a1a1d1bfdd32648c3ef97a27e5977632f6d575833ce1969f6
   languageName: node
   linkType: hard
 
@@ -5363,7 +5363,7 @@ __metadata:
     "@biomejs/biome": "npm:2.5.8"
     "@csstools/postcss-global-data": "npm:4.0.0"
     "@eslint/compat": "npm:^2.1.0"
-    "@morev/stylelint-testing-library": "npm:^1.1.0"
+    "@morev/stylelint-testing-library": "npm:^1.1.1"
     "@playwright/experimental-ct-react": "npm:1.62.1"
     "@playwright/test": "npm:1.62.1"
     "@project-docs/website": "workspace:1.0.0"
