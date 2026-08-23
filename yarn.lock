@@ -5422,7 +5422,7 @@ __metadata:
     postcss: "npm:^8.5.25"
     postcss-cli: "npm:^11.0.1"
     postcss-custom-media: "npm:^12.0.1"
-    postcss-import: "npm:^16.2.0"
+    postcss-import: "npm:^17.0.0"
     postcss-loader: "npm:^8.2.1"
     postcss-logical: "npm:^9.0.0"
     postcss-modules: "npm:^9.0.1"
@@ -14349,16 +14349,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss-import@npm:^16.2.0":
-  version: 16.2.0
-  resolution: "postcss-import@npm:16.2.0"
+"postcss-import@npm:^17.0.0":
+  version: 17.0.0
+  resolution: "postcss-import@npm:17.0.0"
   dependencies:
     postcss-value-parser: "npm:^4.0.0"
     read-cache: "npm:^1.0.0"
     resolve: "npm:^1.1.7"
   peerDependencies:
     postcss: ^8.0.0
-  checksum: 10/264ada79acbc9819c35465d94ad3bb024912564cc9459f8652c5d3011af2bd383f81e2b078e771be5535a81b1143e071b132aeee321cb04911fb09996b2bbf22
+  checksum: 10/03f1b09a1de0a2c837f79e791fbf4b7d193f752e55ec1d5f977c46cea5f5744519132eb978ce32f589a6b06672ae6b7c5f6e2e313fb42427cd4bfb5cb13cc364
   languageName: node
   linkType: hard
 
