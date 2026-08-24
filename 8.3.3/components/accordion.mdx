@@ -1,0 +1,296 @@
+﻿---
+description: Компонент для создания раскрывающихся/сворачивающихся блоков контента.
+tags: list
+---
+
+<Overview group="data-display">
+
+# Accordion [tag:component]
+
+Компонент для создания раскрывающихся/сворачивающихся блоков контента.
+
+</Overview>
+
+import { BlockWrapper } from '@/components/wrappers';
+
+{/* @example-description: Accordion с заголовком и текстом. */}
+<Playground Wrapper={BlockWrapper} style={{ height: 180 }}>
+  ```jsx
+  <Accordion defaultExpanded>
+    <Accordion.Summary>Новый дизайн профиля</Accordion.Summary>
+    <Accordion.Content>
+      <Div>
+        Внешний вид профиля ВКонтакте действительно обновился. К прежнему варианту вернуться уже не
+        получится. В центре внимания нового дизайна — личность человека и его увлечения. Новый
+        формат профиля особенно удобен для авторов контента и станет для них цифровой визиткой.
+      </Div>
+    </Accordion.Content>
+  </Accordion>
+  ```
+</Playground>
+
+## Структура
+
+Обязательная обёртка для всего сворачивающегося контента - компонент `Accordion`.
+
+Заголовок для триггера разворачивающегося блока необходимо вкладывать в подкомпонент `Accordion.Summary`, который
+наследует все свойства компонента [`SimpleCell`](/components/simple-cell).
+
+Сворачивающийся контент необходимо вкладывать в подкомпонент `Accordion.Content`.
+
+## Режим работы
+
+Компонент поддерживает работу как в неконтролируемом режиме, так и контролируемом. Это стандартное поведение
+React-компонентов, прочитать про это можно в [документации React](https://react.dev/reference/react-dom/components/input#controlling-an-input-with-a-state-variable).
+
+Для использования неконтролируемого режима достаточно просто _не_ передавать `expanded` или передавать `defaultExpanded`, если
+требуется задать значение по умолчанию.
+
+Используйте свойства `expanded` и `onChange` для контролируемого управления состоянием компонента.
+
+```jsx
+// Неконтролируемое состояние, раскрыт по умолчанию
+<Accordion defaultExpanded>
+  <Accordion.Summary>Заголовок</Accordion.Summary>
+  <Accordion.Content>
+    <Div>Контент</Div>
+  </Accordion.Content>
+</Accordion>;
+
+// Контролируемое состояние, раскрыт по умолчанию
+const [expanded, setExpanded] = React.useState(true);
+return (
+  <Accordion expanded={expanded} onChange={setExpanded}>
+    <Accordion.Summary>Заголовок</Accordion.Summary>
+    <Accordion.Content>
+      <Div>Контент</Div>
+    </Accordion.Content>
+  </Accordion>
+);
+```
+
+## Группа аккордеонов
+
+Компонент `Group` позволяет отображать несколько `Accordion`.
+
+{/* @example-description: Группа аккордеонов: только один раскрыт. */}
+<Playground Wrapper={BlockWrapper}>
+
+```jsx
+const data = [
+  {
+    id: 1,
+    title: 'Как сменить номер телефона?',
+    detail: 'Зайдите в раздел Безопасность и вход. Укажите новый номер телефона и подтвердите его.',
+  },
+  {
+    id: 2,
+    title: 'Как изменить пароль?',
+    detail:
+      'Для входа во многие сервисы экосистемы VK используется один пароль. Если вы беспокоитесь по поводу безопасности, этот пароль можно изменить.',
+  },
+  {
+    id: 3,
+    title: 'Как усилить защиту аккаунта?',
+    detail:
+      'Используйте сложный пароль и регулярно меняйте его. Обновить пароль можно в разделе Пароль.',
+  },
+];
+
+const [openId, setOpenId] = React.useState(2);
+
+return (
+  <Group mode="card" separator="hide">
+    {data.map(({ id, title, detail }) => (
+      <Accordion
+        key={id}
+        expanded={openId === id}
+        onChange={(e) => (e ? setOpenId(id) : setOpenId(null))}
+      >
+        <Accordion.Summary>{title}</Accordion.Summary>
+        <Accordion.Content>
+          <Div>
+            <Text>{detail}</Text>
+          </Div>
+        </Accordion.Content>
+      </Accordion>
+    ))}
+  </Group>
+);
+```
+
+</Playground>
+
+## Визуальное оформление
+
+### Иконки
+
+Используйте свойства `ExpandIcon` и `CollapseIcon` для кастомизации иконок раскрытия/сворачивания.
+
+{/* @example-description: Иконки раскрытия/сворачивания перед текстом. */}
+<Playground Wrapper={BlockWrapper} style={{ height: 180 }}>
+  ```jsx
+  <Accordion>
+    <Accordion.Summary
+      iconPosition="before"
+      ExpandIcon={Icon28AddCircleOutline}
+      CollapseIcon={Icon28RemoveCircleOutline}
+    >
+      Новый дизайн профиля
+    </Accordion.Summary>
+    <Accordion.Content>
+      <Div>
+        Внешний вид профиля ВКонтакте действительно обновился. К прежнему варианту вернуться уже не
+        получится. В центре внимания нового дизайна — личность человека и его увлечения. Новый
+        формат профиля особенно удобен для авторов контента и станет для них цифровой визиткой.
+      </Div>
+    </Accordion.Content>
+  </Accordion>
+  ```
+</Playground>
+
+Чтобы расположить иконку в любом месте, используйте компонент `<Accordion.Icon />`
+
+<Playground Wrapper={BlockWrapper} style={{ height: 200 }}>
+  ```jsx
+const users = [
+  {
+    id: 1771114,
+    first_name: 'Ином',
+    last_name: 'Мирджамолов',
+    screen_name: 'inomdzhon',
+    photo_50: 'https://avatars.githubusercontent.com/u/5850354?s=50',
+  },
+  {
+    id: 58690866,
+    first_name: 'Эльдар',
+    last_name: 'Мухаметханов',
+    screen_name: 'e.muhamethanov',
+    photo_50: 'https://avatars.githubusercontent.com/u/61377022?s=50',
+  },
+  {
+    id: 117253521,
+    first_name: 'Даниил',
+    last_name: 'Суворов',
+    screen_name: 'SevereCloud',
+    photo_50: 'https://avatars.githubusercontent.com/u/14944123?s=50',
+  },
+];
+
+return(
+  <Accordion>
+    <Accordion.Summary
+      iconPosition="none"
+      after={
+        <UsersStack
+          photos={users.map(user=>user.photo_50)}
+        />
+      }
+      badgeAfterTitle={<Accordion.Icon />}
+    >
+      Разработчики
+    </Accordion.Summary>
+    <Accordion.Content>
+      {users.map(user => (
+        <SimpleCell
+          key={user.id}
+          href={`https://vk.ru/id${user.id}`}
+          target="_blank"
+          before={<Avatar size={28} src={user.photo_50} alt="Фотография" />}
+        >
+          {user.first_name} {user.last_name}
+        </SimpleCell>
+      ))}
+    </Accordion.Content>
+  </Accordion>
+);
+  ```
+</Playground>
+
+## Анимация
+
+Компонент поддерживает следующие анимационные эффекты:
+
+- плавное раскрытие/сворачивание контента;
+- автоматический расчет высоты содержимого;
+- поддержка прерывания анимации при быстром клике.
+
+## Производительность
+
+По умолчанию контент монтируется, даже если он не развернут. Такое поведение предусмотрено с учётом серверного рендеринга и SEO.
+
+Если внутри контента находится большая иерархия компонентов или если у вас много аккордеонов,
+то для улучшения производительности передавайте свойство `unmountOnCollapsed`, которое позволяет не монтировать
+контент, пока он не развернут и размонтирует компонент при сворачивании.
+
+```jsx
+<Accordion unmountOnCollapsed />
+```
+
+## Доступность (a11y) [#a11y]
+
+Доступность реализована на основе рекомендаций из [Accordion WAI-ARIA design pattern](https://www.w3.org/WAI/ARIA/apg/patterns/accordion/).
+
+## Свойства и методы [#api]
+
+### Accordion
+
+| Свойство | Тип | По умолчанию | Описание |
+| --- | --- | --- | --- |
+| `defaultExpanded` | `boolean` | `false` | Значение по умолчанию. |
+| `disabled` | `boolean` | `-` | Блокировка взаимодействия с компонентом. |
+| `expanded` | `boolean` | `-` | Управляет раскрытием и скрытием контента. |
+| `id` | `string` | `-` | Используется для генерации id для заголовка и контента(a11y). |
+| `onChange` | `((newValue: boolean) => void)` | `-` | Возвращает новое значение при изменении раскрытия/сворачивания контента. |
+| `unmountOnCollapsed` | `boolean` | `false` | Нужно ли удалять из DOM контент при сворачивании. |
+
+### Accordion.Summary
+
+| Свойство | Тип | По умолчанию | Описание |
+| --- | --- | --- | --- |
+| `activated` | `boolean` | `-` | Позволяет управлять `activated`-состоянием извне. |
+| `activeClassName` | `string` | `-` | **Deprecated**: Since 7.3.0. Будет удалено в **VKUI v9**.  Используйте свойство `activeMode`. |
+| `activeEffectDelay` | `number` | `-` | Длительность показа `active`-состояния. |
+| `activeMode` | `StateModeLiteral` | `-` | Стиль подсветки active-состояния. Если передать произвольную строку, она добавится как css-класс во время active. |
+| `after` | `ReactNode` | `-` | Иконка 24\|28 или `<Switch />`. Располагается справа от `indicator`. |
+| `badgeAfterSubtitle` | `ReactNode` | `-` | Иконка 12. Добавится справа от текста `subtitle`. |
+| `badgeAfterTitle` | `ReactNode` | `-` | Иконка 12 или `<Badge />`. Добавится справа от текста `children`. |
+| `badgeBeforeSubtitle` | `ReactNode` | `-` | Иконка 12. Добавится слева от текста `subtitle`. |
+| `badgeBeforeTitle` | `ReactNode` | `-` | Иконка 12 или `<Badge />`. Добавится слева от текста `children`. |
+| `before` | `ReactNode` | `-` | Иконка 28 или `<Avatar size={28\|32\|40\|48\|72} />`. |
+| `borderRadiusMode` | `"auto" \| "inherit"` | `-` | Задает border-radius элементу В режиме `auto` на маленьких экранах `border-radius: 0`, иначе определяется токеном `--vkui--size_border_radius--regular`. |
+| `chevronSize` | `"s" \| "m"` | `-` | Размер chevron. |
+| `CollapseIcon` | `ElementType<any, keyof IntrinsicElements>` | `-` | Иконка для сворачивания контента. |
+| `Component` | `ElementType<any, keyof IntrinsicElements>` | `-` |  |
+| `disabled` | `boolean` | `-` | Блокировка взаимодействия с компонентом. |
+| `ExpandIcon` | `ElementType<any, keyof IntrinsicElements>` | `-` | Иконка для раскрытия контента. |
+| `extraSubtitle` | `ReactNode` | `-` | Дополнительная строка текста под `children` и `subtitle`. |
+| `focusVisibleMode` | `FocusVisibleMode` | `-` | Стиль аутлайна focus visible. Если передать произвольную строку, она добавится как css-класс при :focus-visible |
+| `getRootRef` | `Ref<HTMLElement>` | `-` |  |
+| `hasActive` | `boolean` | `-` | Указывает, должен ли компонент реагировать на `active`-состояние. |
+| `hasHover` | `boolean` | `-` | Указывает, должен ли компонент реагировать на `hover`-состояние. |
+| `hasHoverWithChildren` | `boolean` | `-` | Позволяет родительскому компоненту иметь `hovered`-cостояние при наведении на любой дочерний элемент. По умолчанию состояние hovered у родителя сбрасывается.  Присваивается родителькому компоненту. |
+| `hoverClassName` | `string` | `-` | **Deprecated**: Since 7.3.0. Будет удалено в **VKUI v9**.  Используйте свойство `hoverMode`. |
+| `hovered` | `boolean` | `-` | Позволяет управлять `hovered`-состоянием извне. |
+| `hoverMode` | `StateModeLiteral` | `-` | Стиль подсветки hover-состояния. Если передать произвольную строку, она добавится как css-класс во время hover. |
+| `iconPosition` | `"after" \| "before" \| "none"` | `after` | Позиция иконки. |
+| `indicator` | `ReactNode` | `-` | Контейнер для текста справа от `children`. |
+| `multiline` | `boolean` | `-` | Включает многострочный режим для отображения текста. |
+| `overTitle` | `ReactNode` | `-` | Дополнительная строка текста над `children`. |
+| `subtitle` | `ReactNode` | `-` | Дополнительная строка текста под `children`. |
+| `unlockParentHover` | `boolean` | `-` | Позволяет родительскому компоненту показывать hovered-состояние при наведении на текущий дочерний компонент.  Присваивается дочернему компоненту. |
+
+### Accordion.Icon
+
+| Свойство | Тип | По умолчанию | Описание |
+| --- | --- | --- | --- |
+| `CollapseIcon` | `ElementType<any, keyof IntrinsicElements>` | `-` | Иконка для сворачивания контента. |
+| `ExpandIcon` | `ElementType<any, keyof IntrinsicElements>` | `-` | Иконка для раскрытия контента. |
+
+### Accordion.Content
+
+| Свойство | Тип | По умолчанию | Описание |
+| --- | --- | --- | --- |
+| `getRef` | `Ref<HTMLDivElement>` | `-` |  |
+| `getRootRef` | `Ref<HTMLDivElement>` | `-` |  |
+

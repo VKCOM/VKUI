@@ -1,0 +1,95 @@
+﻿---
+description: Хук для отслеживания предпочтения пользователя в уменьшении анимации.
+---
+
+<Overview type="hook" forcedPath="lib/animation/useReducedMotion.ts">
+
+# useReducedMotion
+
+Хук для отслеживания предпочтения пользователя в уменьшении анимации.
+
+</Overview>
+
+## API
+
+### Возвращаемое значение
+
+Возвращает `true`, если пользователь предпочитает уменьшенную анимацию,
+`false` - если нет, и `undefined` во время серверного рендеринга или во время
+первого рендеринга на клиенте.
+
+## Особенности работы
+
+### Откуда берется настройка
+
+Хук читает системное пользовательское предпочтение через медиавыражение
+`prefers-reduced-motion`.
+
+Это настройка уровня ОС и браузера (например, в настройках доступности iOS, Android, macOS, Windows),
+а не параметр компонента.
+
+## Пример использования
+
+{/* @example-description: Анимация с учетом prefers-reduced-motion. */}
+<Playground direction="column" align="stretch">
+  ```jsx
+  const reducedMotion = useReducedMotion();
+  const modeLabel =
+    reducedMotion === undefined
+      ? "определяется..."
+      : reducedMotion
+        ? "reduce"
+        : "no-preference";
+
+  return (
+    <Flex direction="column" align="start" gap="m">
+      <Caption level="1">
+        prefers-reduced-motion: {modeLabel}
+      </Caption>
+
+      <svg width="48" height="48" viewBox="0 0 24 24" aria-hidden="true">
+        <circle
+          cx="12"
+          cy="12"
+          r="9"
+          fill="none"
+          stroke="var(--vkui--color_icon_accent)"
+          strokeWidth="3"
+          strokeLinecap="round"
+          strokeDasharray="42 14"
+        >
+          {reducedMotion === false && (
+            <animateTransform
+              attributeType="XML"
+              attributeName="transform"
+              type="rotate"
+              from="0 12 12"
+              to="360 12 12"
+              dur="0.7s"
+              repeatCount="indefinite"
+            />
+          )}
+          {reducedMotion === true && (
+            <animate
+              attributeName="opacity"
+              keyTimes="0; 0.5; 1"
+              values="1; 0.2; 1"
+              dur="2s"
+              repeatCount="indefinite"
+            />
+          )}
+        </circle>
+      </svg>
+
+      <Caption level="1">
+        {reducedMotion === false &&
+          "Спиннер вращается: пользователь не ограничил анимации."}
+        {reducedMotion === true &&
+          "Спиннер не вращается, вместо этого используется плавное изменение прозрачности."}
+        {reducedMotion === undefined &&
+          "Состояние станет доступно сразу после первого клиентского рендера."}
+      </Caption>
+    </Flex>
+  );
+  ```
+</Playground>

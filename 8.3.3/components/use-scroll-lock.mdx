@@ -1,0 +1,72 @@
+﻿---
+description: Хук для блокировки прокрутки страницы.
+---
+
+<Overview type="hook" forcedPath="components/AppRoot/ScrollContext.tsx">
+
+# useScrollLock
+
+Хук для блокировки прокрутки страницы. Полезен при открытии модальных окон или всплывающих элементов,
+которые требуют ограничения взаимодействия с фоном.
+
+</Overview>
+
+## Обязательные условия
+
+> Убедитесь, что ваше приложение обёрнуто в компонент [`AppRoot`](/components/app-root),
+> так как именно через этот компонент определяет контекст для управления прокруткой.
+
+## API
+
+### Параметры
+
+| Параметр  | Тип       | По умолчанию | Описание |
+| --------- | --------- | ------------ | -------- |
+| `enabled` | `boolean` | `true`       | Включает или выключает блокировку прокрутки. |
+
+## Особенности работы
+
+- Блокировка устанавливается на тег `html`.
+- Блокировка автоматически снимается при размонтировании компонента.
+- Поддерживается вызов нескольких `useScrollLock` (прокрутка страницы будет неактивна, пока все всплывающие элементы
+  не будут закрыты).
+
+## Пример использования
+
+{/* @example-description: Блокировка скролла с popout. */}
+<Playground direction="column" align="stretch" scroll="global">
+  ```jsx
+  const [opened, setOpened] = React.useState(false);
+
+  // Блокируем прокрутку фона, пока открыт popout.
+  useScrollLock(opened);
+
+  return (
+    <Box position="relative" inlineSize="100%">
+      <Flex direction="column" align="start" gap="m">
+        <Button size="m" onClick={() => setOpened(true)}>
+          Открыть popout и заблокировать скролл
+        </Button>
+      </Flex>
+
+      {opened && (
+        <PopoutWrapper onClick={() => setOpened(false)}>
+          <Card>
+            <Flex direction="column" gap="xl" padding="system">
+              <Title level="3">
+                Popout открыт
+              </Title>
+              <Caption level="1">
+                Закройте окно, чтобы снова разрешить прокрутку.
+              </Caption>
+              <Button stretched onClick={() => setOpened(false)}>
+                Закрыть
+              </Button>
+            </Flex>
+          </Card>
+        </PopoutWrapper>
+      )}
+    </Box>
+  );
+  ```
+</Playground>

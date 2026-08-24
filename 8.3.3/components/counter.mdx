@@ -1,0 +1,203 @@
+﻿---
+description: Компонент для отображения числовых индикаторов в ячейках, кнопках и других интерфейсных элементах.
+tags: status
+---
+
+<Overview group="data-display">
+
+# Counter [tag:component]
+
+Компонент для отображения числовых индикаторов в ячейках, кнопках и других интерфейсных элементах.
+Поддерживает форматирование чисел и доступность для скринридеров.
+
+</Overview>
+
+{/* @example-description: Базовый счётчик уведомлений в режиме `primary`. */}
+<Playground>
+  ```jsx
+  <Counter mode="primary">21</Counter>
+  ```
+</Playground>
+
+## Использование
+
+- В качестве содержимого используйте числа (`5`) или форматированные строки (`"1,234"`, `5k`).
+- Не используйте для отображения текстовой информации.
+- Для кастомных цветов обязательно указывайте `appearance="custom"`
+
+## Режимы отображения
+
+Задаётся свойством `mode`.
+
+- `"primary"` — акцентный индикатор. Используется для важных первичных уведомлений;
+- `"contrast"` — индикатор контрастного цвета, заданного дизайн-системой (в стандартных темах - белый);
+- `"tertiary"` — индикатор без фона с низким акцентом. Используется для уведомлений,
+  которые не требует акцента;
+- `"inherit"` — режим индикатора будет выбран в зависимости от контекста использования.
+
+## Визуальное оформление
+
+### Цвет
+
+Задаётся свойством `appearance`.
+
+#### `"accent"`
+
+Значение задаёт индикатору акцентный цвет, который может меняться в зависимости от светлой или тёмной схемы.
+
+{/* @example-description: Цвет `accent` для всех режимов отображения `Counter`. */}
+<Playground>
+  ```jsx
+  <Counter appearance="accent" mode="primary">
+    4
+  </Counter>
+  <Counter appearance="accent" mode="contrast">
+    4
+  </Counter>
+  <Counter appearance="accent" mode="tertiary">
+    4
+  </Counter>
+  <Counter appearance="accent" mode="inherit">
+    4
+  </Counter>
+  ```
+</Playground>
+
+#### `"neutral"`
+
+Значение задаёт индикатору нейтральный цвет, который также может являться альтернативным акцентным цветом.
+
+{/* @example-description: Нейтральная цветовая схема `Counter` для разных `mode`. */}
+<Playground>
+  ```jsx
+  <Counter appearance="neutral" mode="primary">
+    8
+  </Counter>
+  <Counter appearance="neutral" mode="contrast">
+    8
+  </Counter>
+  <Counter appearance="neutral" mode="tertiary">
+    8
+  </Counter>
+  <Counter appearance="neutral" mode="inherit">
+    8
+  </Counter>
+  ```
+</Playground>
+
+#### `"accent-green"`
+
+Значение задаёт индикатору цвет позитивных уведомлений (чаще всего зеленый).
+
+{/* @example-description: Позитивный вариант `Counter` с `appearance="accent-green"`. */}
+<Playground>
+  ```jsx
+  <Counter appearance="accent-green" mode="primary">
+    7
+  </Counter>
+  <Counter appearance="accent-green" mode="contrast">
+    7
+  </Counter>
+  <Counter appearance="accent-green" mode="tertiary">
+    7
+  </Counter>
+  <Counter appearance="accent-green" mode="inherit">
+    7
+  </Counter>
+  ```
+</Playground>
+
+#### `"negative"`
+
+Значение задаёт индикатору цвет критических уведомлений (чаще всего красный).
+
+{/* @example-description: Критический вариант `Counter` с `appearance="accent-red"`. */}
+<Playground>
+  ```jsx
+  <Counter appearance="accent-red" mode="primary">
+    3
+  </Counter>
+  <Counter appearance="accent-red" mode="contrast">
+    3
+  </Counter>
+  <Counter appearance="accent-red" mode="tertiary">
+    3
+  </Counter>
+  <Counter appearance="accent-red" mode="inherit">
+    3
+  </Counter>
+  ```
+</Playground>
+
+## Пользовательский цвет
+
+Чтобы задать свое пользовательское значение цвета счетчика, необходимо задать `appearance="custom"`
+и указать в свойстве `color` нужный цвет. Обратите внимание, что нужно обязательно указать
+свойство `mode` отличное от `"inherit"` (значение по умолчанию).
+
+- При `mode="primary"` - изменяется фон.
+- При `mode="contrast"` - изменяется цвет текста.
+- При `mode="tertiary"` - изменяется цвет текста.
+- При `mode="inherit"` - изменения не применяются.
+
+{/* @example-description: Пользовательский цвет счётчика через `appearance="custom"` и `color`. */}
+<Playground>
+  ```jsx
+  <Counter appearance="custom" mode="primary" color="#FFA500">
+    12
+  </Counter>
+  <Counter appearance="custom" mode="contrast" color="#FFA500">
+    12
+  </Counter>
+  <Counter appearance="custom" mode="tertiary" color="#FFA500">
+    12
+  </Counter>
+  ```
+</Playground>
+
+## Индикатор в кнопке
+
+При использовании компонента в кнопках, индикатор самостоятельно подстраивается под внешний вид кнопки,
+руководствуясь значениями дизайн-системы.
+
+{/* @example-description: Примеры использования `Counter` внутри кнопок разных размеров и режимов. */}
+<Playground>
+  ```jsx
+  <Button mode="secondary" size="m" after={<Counter>16</Counter>}>
+    Secondary medium
+  </Button>
+  <Button mode="tertiary" after={<Counter size="s">6</Counter>}>
+    Tertiary small
+  </Button>
+  <Button mode="outline" size="m" after={<Counter>20</Counter>}>
+    Outline medium
+  </Button>
+  <Button mode="primary" appearance="positive" size="m" after={<Counter>4</Counter>}>
+    Commerce medium
+  </Button>
+  <Button size="l" after={<Counter>8</Counter>}>
+    Primary large
+  </Button>
+  ```
+</Playground>
+
+## Доступность (a11y) [#a11y]
+
+Для скринридеров можно добавить поясняющий текст:
+
+```jsx
+<Counter mode="primary" size="m">
+  5<VisuallyHidden>новых сообщений</VisuallyHidden>
+</Counter>
+```
+
+## Свойства и методы [#api]
+
+| Свойство | Тип | По умолчанию | Описание |
+| --- | --- | --- | --- |
+| `appearance` | `"custom" \| "accent" \| "neutral" \| "accent-green" \| "accent-red"` | `-` | Внешний вид счетчика. |
+| `color` | `string` | `-` | Пользовательский цвет (работает только при appearance="custom") - При mode="primary" - изменяет фон - При mode="contrast" - изменяет цвет текста - При mode="tertiary" - изменяет цвет текста - При mode="inherit" - не работает. |
+| `getRootRef` | `Ref<HTMLSpanElement>` | `-` |  |
+| `mode` | `"inherit" \| "primary" \| "tertiary" \| "contrast"` | `inherit` | Режим отображения счетчика. |
+| `size` | `"s" \| "m"` | `m` | Размер счетчика. |
+

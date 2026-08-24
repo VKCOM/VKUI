@@ -1,0 +1,1 @@
+import{i as e,s as t}from"./preload-helper-xPQekRTU.js";import{c as n,g as r}from"./useIsomorphicLayoutEffect-Bzwc88xb.js";import{t as i}from"./react-dom-zPqOsLDB.js";var a,o,s=e((()=>{a=t(i(),1),r(),o=(e,t,r)=>{let i=t||n();return i&&a.createPortal(e,i,r)}}));export{s as n,o as t};

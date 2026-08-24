@@ -1,0 +1,1 @@
+import{i as e,s as t}from"./preload-helper-xPQekRTU.js";import{t as n}from"./react-a45N5K9M.js";import{n as r,t as i}from"./useIsomorphicLayoutEffect-Bzwc88xb.js";function a(e=!1){let[t,n]=o.useState(e);return r(()=>{n(!0)},[]),t}var o,s=e((()=>{o=t(n(),1),i()}));export{a as n,s as t};

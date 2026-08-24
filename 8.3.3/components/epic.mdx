@@ -1,0 +1,312 @@
+﻿---
+description: Компонент, реализующий интерфейс с централизованной навигацией через закреплённую нижнюю панель.
+---
+
+<Overview group="navigation">
+
+# Epic [tag:component]
+
+Компонент, реализующий интерфейс с централизованной навигацией через закреплённую нижнюю панель ([`Tabbar`](#tabbar)). Принимает
+коллекцию [`Root`](/components/root) или [`View`](/components/view).
+
+Связанные страницы:
+
+- [Навигация](/overview/navigation)
+
+</Overview>
+
+import { FixedLayoutWrapper } from '@/components/wrappers';
+
+{/* @example-description: Базовая навигация через `Epic` с двумя историями и нижним `Tabbar`. */}
+<Playground Wrapper={FixedLayoutWrapper} style={{ maxWidth: 320, height: 415 }}>
+
+```jsx
+const [activeStory, setActiveStory] = useState('feed');
+return (
+  <Epic
+    activeStory={activeStory}
+    tabbar={
+      <Tabbar>
+        <TabbarItem
+          label="Лента"
+          selected={activeStory === 'feed'}
+          onClick={() => setActiveStory('feed')}
+        >
+          <Icon28NewsfeedOutline />
+        </TabbarItem>
+        <TabbarItem
+          label="Профиль"
+          selected={activeStory === 'profile'}
+          onClick={() => setActiveStory('profile')}
+        >
+          <Icon28UserCircleOutline />
+        </TabbarItem>
+      </Tabbar>
+    }
+  >
+    <View id="feed" activePanel="feed-panel">
+      <Panel id="feed-panel">
+        <PanelHeader>Лента</PanelHeader>
+        <Placeholder stretched>
+          <Icon56NewsfeedOutline />
+        </Placeholder>
+      </Panel>
+    </View>
+    <View id="profile" activePanel="profile-panel">
+      <Panel id="profile-panel">
+        <PanelHeader>Профиль</PanelHeader>
+        <Placeholder stretched>
+          <Icon56UserCircleOutline />
+        </Placeholder>
+      </Panel>
+    </View>
+  </Epic>
+);
+```
+
+</Playground>
+
+## Когда использовать? [#when-to-use]
+
+- Вы разрабатываете мобильное приложение ([`viewWidth <= SMALL_TABLET`](/overview/adaptivity#viewwidth)).
+- По дизайну требуется панель с быстрой навигацией на основные разделы.
+
+## Применение компонента
+
+Принимает необходимое количество [`View`](/components/view) и/или [`Root`](/components/root) с уникальным `id`. Далее `id` с нужным
+сценарием передаётся в свойство `activeStory`.
+
+```
+Epic
+  └─ View N
+    └─ Panel N
+      └─ PanelHeader
+      └─ <content>
+  └─ Root N
+    └─ View N
+      └─ Panel N
+        └─ PanelHeader
+        └─ <content>
+```
+
+## Tabbar
+
+import { FixedLayoutWrapper, BlockWrapper } from '@/components/wrappers';
+
+Подкомпонент прибивает элементы навигации ([`TabbarItem`](#tabbar-item)) к низу экрана. Передаётся в свойство `tabbar` компонента [`Epic`](/components/epic).
+
+<Playground hide Wrapper={BlockWrapper}>
+  ```jsx
+  <Tabbar>
+    <TabbarItem label="Новости">
+      <Icon28NewsfeedOutline />
+    </TabbarItem>
+    <TabbarItem label="Профиль" selected>
+      <Icon28UserCircleOutline />
+    </TabbarItem>
+  </Tabbar>
+  ```
+</Playground>
+
+{/* @example-description: Базовый `Tabbar` с двумя пунктами и активным разделом. */}
+<Playground Wrapper={FixedLayoutWrapper} style={{ height: 60 }}>
+  ```jsx
+  <Tabbar>
+    <TabbarItem label="Новости">
+      <Icon28NewsfeedOutline />
+    </TabbarItem>
+    <TabbarItem label="Профиль" selected>
+      <Icon28UserCircleOutline />
+    </TabbarItem>
+  </Tabbar>
+  ```
+</Playground>
+
+### Выравнивание [#tabbar-align]
+
+В случае, если в `Tabbar` передан один или два элемента [`TabbarItem`](#tabbar-item), контент внутри этих элементов располагается
+по горизонтали, в остальных случаях контент располагается вертикально.
+
+С помощью свойства `mode` у `Tabbar` можно переопределить это поведение.
+
+- `"vertical"` — задаёт всегда вертикальное расположение;
+- `"horizontal"` — задаёт всегда горизонтальное расположение.
+
+{/* @example-description: Принудительное вертикальное выравнивание элементов `Tabbar` через `mode="vertical"`. */}
+<Playground Wrapper={FixedLayoutWrapper} style={{ height: 60 }}>
+  ```jsx
+  <Tabbar mode="vertical">
+    <TabbarItem label="Новости">
+      <Icon28NewsfeedOutline />
+    </TabbarItem>
+    <TabbarItem label="Профиль" selected>
+      <Icon28UserCircleOutline />
+    </TabbarItem>
+  </Tabbar>
+  ```
+</Playground>
+
+## TabbarItem [#tabbar-item]
+
+Подкомпонент позволяет создать навигационный элемент. Чаще всего представлен иконкой размером `28px`. Допускается использовать текст
+рядом с иконкой. Иконку необходимо передавать в свойство `children`, текст — в свойство `label`.
+
+{/* @example-description: Пример `TabbarItem` с иконкой и текстовой подписью. */}
+<Playground>
+  ```jsx
+  <TabbarItem label="Профиль">
+    <Icon28UserCircleOutline />
+  </TabbarItem>
+  ```
+</Playground>
+
+Иконка и текст могут располагаться либо горизонтально, либо вертикально. Управлять этим поведением можно с помощью свойства `mode` у
+[`Tabbar`](/components/tabbar#tabbar-align).
+
+### Выбранное состояние
+
+Используйте свойство `selected`, чтобы показать текущий активный раздел.
+
+{/* @example-description: Выбранный `TabbarItem` с текстом для скринридера через `VisuallyHidden`. */}
+<Playground>
+  ```jsx
+  <TabbarItem selected>
+    {/* Данный текст будет озвучен скринридером */}
+    <VisuallyHidden>Профиль</VisuallyHidden>
+    <Icon28UserCircleOutline />
+  </TabbarItem>
+  ```
+</Playground>
+
+### Индикатор
+
+С помощью свойства `indicator` можно задать для компонента счётчик или индикатор уведомления.
+Передавайте компоненты `Counter` с `size="s"` или `Badge`.
+
+{/* @example-description: `TabbarItem` с индикатором уведомления, переданным в свойство `indicator`. */}
+<Playground>
+  ```jsx
+  <TabbarItem indicator={<Badge />}>
+    {/* Данный текст будет озвучен скринридером */}
+    <VisuallyHidden>Профиль</VisuallyHidden>
+    <Icon28UserCircleOutline />
+  </TabbarItem>
+  ```
+</Playground>
+
+### Тэг компонента
+
+Через свойство `Component` можно переопределить тэг, который будет отрендерен компонентом (по умолчанию при
+передаче свойства `href` компонент использует тэг `a`, в иных случаях `button`);
+
+### Доступность (a11y) [#a11y]
+
+Если вы не передаете свойство `label`, то ассистивные технологии не смогут однозначно озвучить ваш элемент.
+В таком случае рекомендуется вместе с иконкой передавать в свойство `children` компонент `VisuallyHidden`
+с поясняющим текстом.
+
+```jsx
+import { Icon28UserCircleOutline } from '@vkontakte/icons';
+import { TabbarItem, VisuallyHidden } from '@vkontakte/vkui';
+
+<TabbarItem>
+  {/* Данный текст будет озвучен скринридером */}
+  <VisuallyHidden>Профиль</VisuallyHidden>
+  <Icon28UserCircleOutline />
+</TabbarItem>;
+```
+
+В качестве альтернативного решение можно передать текст для скринридера в свойство `aria-label` или создать
+отдельный элемент с текстом и передать его `id` в свойство `aria-labelledby`.
+
+```jsx
+<TabbarItem aria-label="Профиль">
+  <Icon28UserCircleOutline />
+</TabbarItem>
+```
+
+```jsx
+<span id="my-label">Профиль</span>
+
+<TabbarItem aria-labelledby="my-label">
+  <Icon28UserCircleOutline />
+</TabbarItem>
+```
+
+## Адаптивность
+
+Если у вашего приложения есть настольный режим, то по дизайну скорей всего нужно будет заменять `tabbar` на другое меню. Чтобы
+спрятать `tabbar` на настольном экране – используйте хук [`useAdaptivityConditionalRender`](/components/use-adaptivity-conditional-render).
+
+```jsx showLineNumbers
+export default function App() {
+  const { viewWidth } = useAdaptivityConditionalRender();
+
+  return (
+    <Epic
+      activeStory={activeStory}
+      tabbar={
+        viewWidth.tabletPlus && (
+          <Tabbar className={viewWidth.tabletPlus.className}>
+            <TabbarItem label="Лента" selected onClick={() => setActiveStory('feed')}>
+              <Icon28NewsfeedOutline />
+            </TabbarItem>
+            <TabbarItem label="Профиль" onClick={() => setActiveStory('profile')}>
+              <Icon28UserCircleOutline />
+            </TabbarItem>
+          </Tabbar>
+        )
+      }
+    >
+      <View id="feed" activePanel="feed-panel">
+        <Panel id="feed-panel">
+          <PanelHeader>Лента</PanelHeader>
+          <Placeholder stretched>
+            <Icon28NewsfeedOutline />
+          </Placeholder>
+        </Panel>
+      </View>
+      <View id="profile" activePanel="profile-panel">
+        <Panel id="profile-panel">
+          <PanelHeader>Профиль</PanelHeader>
+          <Placeholder stretched>
+            <Icon28UserCircleOutline />
+          </Placeholder>
+        </Panel>
+      </View>
+    </Epic>
+  );
+}
+```
+
+Примеры замены `tabbar` на меню приведён на странице [Навигация | Пример](/overview/navigation#example-app).
+
+## Свойства и методы [#api]
+
+### Epic
+
+| Свойство | Тип | По умолчанию | Описание |
+| --- | --- | --- | --- |
+| `**activeStory** \*` | `string` | `-` | `id` активного окна. |
+| `**children** \*` | `ReactElement<unknown, string \| JSXElementConstructor<any>> \| Iterable<ReactElement<unknown, string \| JSXElementConstructor<any>>>` | `-` | Внутри `Epic` может находиться либо коллекция `Root`, либо коллекция `View`. У каждого элемента коллекции должен быть уникальный `id`. |
+| `getRootRef` | `Ref<HTMLDivElement>` | `-` |  |
+| `tabbar` | `ReactNode` | `-` | Компонент Tabbar, который будет отображаться снизу. |
+
+### Tabbar
+
+| Свойство | Тип | По умолчанию | Описание |
+| --- | --- | --- | --- |
+| `getRootRef` | `Ref<HTMLDivElement>` | `-` |  |
+| `mode` | `"auto" \| "horizontal" \| "vertical"` | `-` | Задает расположение элементов (вертикальное/горизонтальное). |
+| `plain` | `boolean` | `false` | Флаг, который скрывает тень (Android) или границы (iOS). |
+
+### TabbarItem
+
+| Свойство | Тип | По умолчанию | Описание |
+| --- | --- | --- | --- |
+| `Component` | `ElementType<any, keyof IntrinsicElements>` | `href ? 'a' : 'button'` |  |
+| `getRootRef` | `Ref<HTMLElement>` | `-` |  |
+| `indicator` | `ReactNode` | `-` | Индикатор над иконкой. Принимает `<Badge mode="prominent" />` или `<Counter size="s" mode="prominent" />`. |
+| `label` | `ReactNode` | `-` | Текст рядом с иконкой. |
+| `selected` | `boolean` | `-` | Выбранное состояние компонента. |
+

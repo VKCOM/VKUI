@@ -1,0 +1,64 @@
+﻿---
+description: Кнопка для закрытия модальных окон на широком экране.
+tags: buttons
+---
+
+<Overview group="modals">
+
+# ModalDismissButton [tag:component]
+
+Кнопка для закрытия модальных окон на широком экране.
+Для правильной отрисовки нужно расположить в контейнере с `position: "relative"` и отображать при достаточной ширине экрана
+(от `ViewWidth.SMALL_TABLET`).
+
+</Overview>
+
+import { BlockWrapper } from '@/components/wrappers';
+
+<Playground hide>
+  ```jsx
+  <Box position="relative" inlineSize={1}>
+    <ModalDismissButton onClick={() => {}}>Закрыть модальное окно</ModalDismissButton>
+  </Box>
+  ```
+</Playground>
+
+{/* @example-description: Кнопка закрытия модального окна для `compact`-режима на широких экранах. */}
+<Playground Wrapper={BlockWrapper} style={{ width: 1 }}>
+  ```jsx
+  <ModalDismissButton onClick={() => {}}>Закрыть модальное окно</ModalDismissButton>
+  ```
+</Playground>
+
+## Доступность (a11y)
+
+Чтобы кнопка была доступной для ассистивных технологий, мы передаем в нее скрытый визуально текст,
+который сможет прочитать скринридер. Сейчас по умолчанию это — "Закрыть".
+Чтобы заменить текст, передайте его в `children`.
+
+```jsx
+<ModalDismissButton>Закрыть кастомное модальное окно</ModalDismissButton>
+```
+
+## Свойства и методы [#api]
+
+| Свойство | Тип | По умолчанию | Описание |
+| --- | --- | --- | --- |
+| `activated` | `boolean` | `-` | Позволяет управлять `activated`-состоянием извне. |
+| `activeClassName` | `string` | `-` | **Deprecated**: Since 7.3.0. Будет удалено в **VKUI v9**.  Используйте свойство `activeMode`. |
+| `activeEffectDelay` | `number` | `-` | Длительность показа `active`-состояния. |
+| `activeMode` | `StateModeLiteral` | `-` | Стиль подсветки active-состояния. Если передать произвольную строку, она добавится как css-класс во время active. |
+| `aria-label` | `string` | `-` | Текст для скринридера. |
+| `borderRadiusMode` | `"auto" \| "inherit"` | `-` | Задает border-radius элементу В режиме `auto` на маленьких экранах `border-radius: 0`, иначе определяется токеном `--vkui--size_border_radius--regular`. |
+| `children` | `ReactNode` | `Закрыть` | Содержимое кнопки. |
+| `Component` | `ElementType<any, keyof IntrinsicElements>` | `-` |  |
+| `focusVisibleMode` | `FocusVisibleMode` | `-` | Стиль аутлайна focus visible. Если передать произвольную строку, она добавится как css-класс при :focus-visible |
+| `getRootRef` | `Ref<HTMLElement>` | `-` |  |
+| `hasActive` | `boolean` | `-` | Указывает, должен ли компонент реагировать на `active`-состояние. |
+| `hasHover` | `boolean` | `-` | Указывает, должен ли компонент реагировать на `hover`-состояние. |
+| `hasHoverWithChildren` | `boolean` | `-` | Позволяет родительскому компоненту иметь `hovered`-cостояние при наведении на любой дочерний элемент. По умолчанию состояние hovered у родителя сбрасывается.  Присваивается родителькому компоненту. |
+| `hoverClassName` | `string` | `-` | **Deprecated**: Since 7.3.0. Будет удалено в **VKUI v9**.  Используйте свойство `hoverMode`. |
+| `hovered` | `boolean` | `-` | Позволяет управлять `hovered`-состоянием извне. |
+| `hoverMode` | `StateModeLiteral` | `-` | Стиль подсветки hover-состояния. Если передать произвольную строку, она добавится как css-класс во время hover. |
+| `unlockParentHover` | `boolean` | `-` | Позволяет родительскому компоненту показывать hovered-состояние при наведении на текущий дочерний компонент.  Присваивается дочернему компоненту. |
+
