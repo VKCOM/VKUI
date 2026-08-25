@@ -1,0 +1,1 @@
+import{n as e}from"./rolldown-runtime-DkW27tQK.js";import{n as t,t as n}from"./useIsomorphicLayoutEffect-DVUm0D32.js";var r;function i(){return(i=e((()=>{n(),r=(e,n)=>{t(()=>{if(!e.current)return;let t=e.current.closest(`form`);if(t)return t.addEventListener(`reset`,n),()=>{t.removeEventListener(`reset`,n)}},[e,n])}})))()}export{r as n,i as t};

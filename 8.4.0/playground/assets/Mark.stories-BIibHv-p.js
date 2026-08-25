@@ -1,0 +1,5 @@
+import{n as e,r as t}from"./rolldown-runtime-DkW27tQK.js";import{t as n}from"./jsx-runtime-DeHZSEgm.js";import{n as r,t as i}from"./Group-Bp-h8t_O.js";import{n as a,t as o}from"./Mark-BTQOwoGl.js";import{i as s,n as c,t as l}from"./constants-DBkyy3CT.js";import{n as u,t as d}from"./createStoryParameters-DBkK1CfQ.js";var f=t({Playground:()=>h,__namedExportsOrder:()=>g,default:()=>m}),p,m,h,g;function _(){return(_=e((()=>{s(),u(),r(),a(),p=n(),m={title:`Typography/Mark`,component:o,parameters:d(`Mark`,l,c),tags:[`Типографика`]},h=e=>(0,p.jsx)(i,{children:(0,p.jsxs)(`p`,{children:[`Это `,(0,p.jsx)(o,{...e,children:`выделенный`}),` текст`]})}),h.parameters={...h.parameters,docs:{...h.parameters?.docs,source:{originalSource:`(args: MarkProps) => <Group>
+    <p>
+      Это <Mark {...args}>выделенный</Mark> текст
+    </p>
+  </Group>`,...h.parameters?.docs?.source}}},g=[`Playground`]})))()}export{h as n,_ as r,f as t};

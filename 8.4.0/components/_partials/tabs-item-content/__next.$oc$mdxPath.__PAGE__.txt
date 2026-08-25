@@ -1,0 +1,137 @@
+1:"$Sreact.fragment"
+2:I[1794,["426","static/chunks/426-301619e15162f5fa.js","462","static/chunks/462-76b224f9288dd95c.js","573","static/chunks/573-1bfc3bb9bbfde546.js","302","static/chunks/302-3c737c8b0ec291c0.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-3c559e74b9a149c3.js"],"Main"]
+4:I[88835,["426","static/chunks/426-301619e15162f5fa.js","462","static/chunks/462-76b224f9288dd95c.js","573","static/chunks/573-1bfc3bb9bbfde546.js","302","static/chunks/302-3c737c8b0ec291c0.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-3c559e74b9a149c3.js"],"Anchor"]
+5:I[35060,["426","static/chunks/426-301619e15162f5fa.js","462","static/chunks/462-76b224f9288dd95c.js","573","static/chunks/573-1bfc3bb9bbfde546.js","302","static/chunks/302-3c737c8b0ec291c0.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-3c559e74b9a149c3.js"],"PlaygroundLazy"]
+3:Td26,Элемент вкладки. Автоматически наследует режим отображения (`mode`) от родительского компонента [`Tabs`](/components/tabs).
+
+{/* @example-description: Базовый элемент вкладки `TabsItem`. */}
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <TabsItem>Фото</TabsItem>
+  ```
+</Playground>
+
+### Состояния
+
+#### `selected`
+
+Свойство `selected` помечает вкладку выбранной.
+
+{/* @example-description: Пример выбранной вкладки с `selected`. */}
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <TabsItem selected>Фото</TabsItem>
+  ```
+</Playground>
+
+#### `disabled`
+
+Свойство `disabled` блокирует взаимодействие с компонентом и добавляет визуальную индикацию недоступности.
+
+{/* @example-description: Пример недоступной вкладки с `disabled`. */}
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <TabsItem disabled>Фото</TabsItem>
+  ```
+</Playground>
+
+### Дополнительный контент
+
+Компонент поддерживает различные варианты оформления вкладок:
+
+#### Иконки
+
+- `before` — иконка перед текстом:
+  - Для `mode="default"` используйте иконки `24px`;
+  - Для других режимов (`accent`, `secondary`) — иконки `20px`.
+- `after` — иконка после текста (например, `<Icon16Dropdown />`).
+
+{/* @example-description: Вкладка с дополнительным контентом в слотах `before` и `after`. */}
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <TabsItem before={<Icon24BugOutline />} after={<Icon16Dropdown />}>
+    Фото
+  </TabsItem>
+  ```
+</Playground>
+
+#### Статус
+
+Свойство `status` — добавляет элемент для отображения состояния:
+
+- `React.ReactElement` — компонент `Badge` или `Counter` (с `size="s"`).
+- `number` — отображает текстовый блок с числом.
+
+{/* @example-description: Вкладка со статусом через `Counter` в свойстве `status`. */}
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <TabsItem
+    status={
+      <Counter mode="primary" appearance="accent-red" size="s">
+        12
+      </Counter>
+    }
+  >
+    Фото
+  </TabsItem>
+  ```
+</Playground>
+
+### Состояния взаимодействия
+
+Компонент поддерживает все стандартные состояния из [`Tappable`](/components/tappable):
+
+- `hoverMode` — стиль при наведении;
+- `activeMode` — стиль при активации;
+- `focusVisibleMode` — стиль при фокусе.
+
+### Особенности использования
+
+1. Всегда используйте `TabsItem` внутри компонента [`Tabs`](/components/tabs).
+2. Для корректной работы доступности (a11y) необходимо:
+   - Указать `id` для вкладки
+   - Связать с контентом через `aria-controls` (см. документацию [`Tabs`](/components/tabs))1e:X
+23:X
+23:C
+0:{"buildId":"18qfN9ll9r14xNLof7L2a","data":[{"rsc":["$","$1","c",{"children":[[["$","$L2",null,{"metadata":{"title":"Tabs Item Content","filePath":"content/components/_partials/tabs-item-content.mdx","timestamp":1787666331000},"sourceCode":"$3","children":[["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Элемент вкладки. Автоматически наследует режим отображения (",["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"mode"}],") от родительского компонента ",["$","$L4",null,{"href":"/components/tabs","children":["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"Tabs"}]}],"."]}],"\n","\n",["$","$L5",null,{"style":{"maxWidth":270},"code":"<TabsItem>Фото</TabsItem>"}],"\n",["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"sostoyaniya","children":["$","a",null,{"href":"#sostoyaniya","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Состояния","children":["Состояния","$L6"]}]}],"\n","$L7","\n","$L8","\n","\n","$L9","\n","$La","\n","$Lb","\n","\n","$Lc","\n","$Ld","\n","$Le","\n","$Lf","\n","$L10","\n","\n","$L11","\n","$L12","\n","$L13","\n","$L14","\n","\n","$L15","\n","$L16","\n","$L17","\n","$L18","\n","$L19","\n","$L1a"]}],"$L1b"],null,"$L1c"]}],"isPartial":"$@1d","staleTime":"$1e","varyParams":null},{"rsc":"$L1f","isPartial":"$@20","staleTime":"$1e","varyParams":null},{"rsc":"$L21","isPartial":"$@22","staleTime":"$1e","varyParams":"$23"}],"isUpgradeableISRFallback":false,"a":"$@24","rootVaryParams":null,"needsRuntimeRequest":"$@25"}
+26:I[90931,["426","static/chunks/426-301619e15162f5fa.js","462","static/chunks/462-76b224f9288dd95c.js","573","static/chunks/573-1bfc3bb9bbfde546.js","302","static/chunks/302-3c737c8b0ec291c0.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-3c559e74b9a149c3.js"],"TOC"]
+27:I[31872,[],"OutletBoundary"]
+28:"$Sreact.suspense"
+2a:I[31872,[],"ViewportBoundary"]
+2b:I[31872,[],"MetadataBoundary"]
+2c:I[12569,[],"IconMark"]
+2d:I[91133,[],""]
+2e:I[4297,[],""]
+6:["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]
+7:["$","h4",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading4__c9VtX","id":"selected","children":["$","a",null,{"href":"#selected","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию [object Object]","children":[["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"selected"}],["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+8:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"selected"}]," помечает вкладку выбранной."]}]
+9:["$","$L5",null,{"style":{"maxWidth":270},"code":"<TabsItem selected>Фото</TabsItem>"}]
+a:["$","h4",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading4__c9VtX","id":"disabled","children":["$","a",null,{"href":"#disabled","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию [object Object]","children":[["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"disabled"}],["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+b:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"disabled"}]," блокирует взаимодействие с компонентом и добавляет визуальную индикацию недоступности."]}]
+c:["$","$L5",null,{"style":{"maxWidth":270},"code":"<TabsItem disabled>Фото</TabsItem>"}]
+d:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"dopolnitelnyj-kontent","children":["$","a",null,{"href":"#dopolnitelnyj-kontent","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Дополнительный контент","children":["Дополнительный контент",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+e:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Компонент поддерживает различные варианты оформления вкладок:"}]
+f:["$","h4",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading4__c9VtX","id":"ikonki","children":["$","a",null,{"href":"#ikonki","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Иконки","children":["Иконки",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+10:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"before"}]," — иконка перед текстом:","\n",["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["Для ",["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"mode=\"default\""}]," используйте иконки ",["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"24px"}],";"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["Для других режимов (",["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"accent"}],", ",["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"secondary"}],") — иконки ",["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"20px"}],"."]}],"\n"]}],"\n"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"after"}]," — иконка после текста (например, ",["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"<Icon16Dropdown />"}],")."]}],"\n"]}]
+11:["$","$L5",null,{"style":{"maxWidth":270},"code":"<TabsItem before={<Icon24BugOutline />} after={<Icon16Dropdown />}>\n  Фото\n</TabsItem>"}]
+12:["$","h4",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading4__c9VtX","id":"status","children":["$","a",null,{"href":"#status","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Статус","children":["Статус",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+13:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"status"}]," — добавляет элемент для отображения состояния:"]}]
+14:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"React.ReactElement"}]," — компонент ",["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"Badge"}]," или ",["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"Counter"}]," (с ",["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"size=\"s\""}],")."]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"number"}]," — отображает текстовый блок с числом."]}],"\n"]}]
+15:["$","$L5",null,{"style":{"maxWidth":270},"code":"<TabsItem\n  status={\n    <Counter mode=\"primary\" appearance=\"accent-red\" size=\"s\">\n      12\n    </Counter>\n  }\n>\n  Фото\n</TabsItem>"}]
+16:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"sostoyaniya-vzaimodejstviya","children":["$","a",null,{"href":"#sostoyaniya-vzaimodejstviya","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Состояния взаимодействия","children":["Состояния взаимодействия",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+17:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Компонент поддерживает все стандартные состояния из ",["$","$L4",null,{"href":"/components/tappable","children":["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"Tappable"}]}],":"]}]
+18:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"hoverMode"}]," — стиль при наведении;"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"activeMode"}]," — стиль при активации;"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"focusVisibleMode"}]," — стиль при фокусе."]}],"\n"]}]
+19:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"osobennosti-ispolzovaniya","children":["$","a",null,{"href":"#osobennosti-ispolzovaniya","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Особенности использования","children":["Особенности использования",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+1a:["$","ol",null,{"className":"mdx_ol__jzvNl","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["Всегда используйте ",["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"TabsItem"}]," внутри компонента ",["$","$L4",null,{"href":"/components/tabs","children":["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"Tabs"}]}],"."]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["Для корректной работы доступности (a11y) необходимо:","\n",["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["Указать ",["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"id"}]," для вкладки"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["Связать с контентом через ",["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"aria-controls"}]," (см. документацию ",["$","$L4",null,{"href":"/components/tabs","children":["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"Tabs"}]}],")"]}],"\n"]}],"\n"]}],"\n"]}]
+1b:["$","$L26",null,{"toc":[{"value":"Состояния","id":"sostoyaniya","depth":3},{"value":"$7:props:children:props:children:0","id":"selected","depth":4},{"value":"$a:props:children:props:children:0","id":"disabled","depth":4},{"value":"Дополнительный контент","id":"dopolnitelnyj-kontent","depth":3},{"value":"Иконки","id":"ikonki","depth":4},{"value":"Статус","id":"status","depth":4},{"value":"Состояния взаимодействия","id":"sostoyaniya-vzaimodejstviya","depth":3},{"value":"Особенности использования","id":"osobennosti-ispolzovaniya","depth":3}]}]
+1c:["$","$L27",null,{"children":["$","$28",null,{"name":"Next.MetadataOutlet","children":"$@29"}]}]
+1f:["$","$1","h",{"children":[null,["$","$L2a",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]}],["$","div",null,{"hidden":true,"children":["$","$L2b",null,{"children":["$","$28",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"Tabs Item Content | VKUI"}],["$","meta","1",{"name":"description","content":"VKUI — библиотека адаптивных React-компонентов для создания мобильных и веб-приложений."}],["$","link","2",{"rel":"canonical","href":"https://vkui.io/components/_partials/tabs-item-content/"}],["$","meta","3",{"property":"og:title","content":"VKUI – React UI Kit"}],["$","meta","4",{"property":"og:description","content":"VKUI — библиотека адаптивных React-компонентов для создания мобильных и веб-приложений."}],["$","meta","5",{"property":"og:url","content":"https://vkui.io/"}],["$","meta","6",{"property":"og:site_name","content":"VKUI"}],["$","meta","7",{"property":"og:type","content":"website"}],["$","meta","8",{"name":"twitter:card","content":"summary"}],["$","meta","9",{"name":"twitter:title","content":"VKUI – React UI Kit"}],["$","meta","10",{"name":"twitter:description","content":"VKUI — библиотека адаптивных React-компонентов для создания мобильных и веб-приложений."}],["$","link","11",{"rel":"icon","href":"/8.4.0/favicon.ico?60dfc7274b0e657e","type":"image/x-icon","sizes":"48x48"}],["$","link","12",{"rel":"icon","href":"/8.4.0/icon.svg?01ea673639a821e1","type":"image/svg+xml","sizes":"any"}],["$","link","13",{"rel":"apple-touch-icon","href":"/8.4.0/apple-icon.png?131c1f3e67ede032","type":"image/png","sizes":"180x180"}],["$","$L2c","14",{}]]}]}]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}]
+21:["$","$1","c",{"children":[null,["$","$L2d",null,{"parallelRouterKey":"children","template":["$","$L2e",null,{}]}]]}]
+25:true
+29:null
+1e:300
+1e:C
+24:0
+20:"$undefined"
+22:"$undefined"
+1d:"$undefined"

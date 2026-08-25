@@ -1,0 +1,1 @@
+import{n as e}from"./rolldown-runtime-DkW27tQK.js";var t,n;function r(){return(r=e((()=>{t=`data-draggable-placeholder`,n={[t]:`true`}})))()}export{n,r,t};

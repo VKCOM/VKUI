@@ -1,0 +1,160 @@
+1:"$Sreact.fragment"
+2:I[1794,["426","static/chunks/426-301619e15162f5fa.js","462","static/chunks/462-76b224f9288dd95c.js","573","static/chunks/573-1bfc3bb9bbfde546.js","302","static/chunks/302-3c737c8b0ec291c0.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-3c559e74b9a149c3.js"],"Main"]
+3:T1336,---
+description: Компонент, который унифицирует браузерную полосу прокрутки на всех платформах.
+tags: layout
+---
+
+<Overview group="utils">
+
+# CustomScrollView [tag:component]
+
+Компонент, который унифицирует браузерную полосу прокрутки на всех платформах.
+
+</Overview>
+
+> Используются нативные стили для изменения полосы прокрутки. Эта стилизация не работает в `Firefox` < `64` — там будет стандартная полоса.
+
+{/* @example-description: Вертикальная прокрутка списка элементов с кастомной полосой скролла. */}
+<Playground style={{ height: 150 }}>
+  ```jsx
+  <CustomScrollView>
+    {['Say', 'Hello', 'To', 'My', 'Little', 'Friend'].map((item) => (
+      <Cell key={item} before={<Avatar />}>
+        {item}
+      </Cell>
+    ))}
+  </CustomScrollView>
+  ```
+</Playground>
+
+## Прокручиваемый контент
+
+Контент, который требует полосы прокрутки, необходимо передавать в свойство `children`.
+
+## Параметры прокрутки
+
+### `overscrollBehavior`
+
+Свойство `overscrollBehavior` отвечает за поведение при достижении границы области прокрутки.
+Подробнее с поведением и значениями можно ознакомиться в [документации overscrollBehavior](https://developer.mozilla.org/ru/docs/Web/CSS/overscroll-behavior).
+
+### `scrollBehavior`
+
+Свойство `scrollBehavior` отвечает за анимацию прокрутки.
+Подробнее с поведением и значениями можно ознакомиться в [документации scroll-behavior](https://developer.mozilla.org/ru/docs/Web/CSS/scroll-behavior).
+
+### Скрытие полосы прокрутки
+
+Свойство `scrollbarHidden` позволяет управлять видимостью полосы прокрутки.
+
+- `true` — полоса прокрутки скрыта;
+- `false` — полоса прокрутки видна (по умолчанию).
+
+## Горизонтальная полоса прокрутки
+
+Свойство `enableHorizontalScroll` позволяет отображать горизонтальную полосу прокрутки.
+
+- `true` — горизонтальная полоса прокрутки видна;
+- `false` — горизонтальная полоса прокрутки скрыта (по умолчанию).
+
+{/* @example-description: Горизонтальная прокрутка контента с включенным `enableHorizontalScroll`. */}
+<Playground>
+  ```jsx
+  <CustomScrollView enableHorizontalScroll>
+    <Flex gap="m" noWrap>
+      {Array.from({ length: 20 }).map((_, index) => (
+        <Avatar key={index} size={56} />
+      ))}
+    </Flex>
+  </CustomScrollView>
+  ```
+</Playground>
+
+## Обработчики событий
+
+Компонент позволяет обрабатывать событие `scroll`, возникающее при прокрутке контента, через свойство `onScroll`.
+
+## useCustomScrollViewTint
+
+Хук, который добавляет тени к краям прокручиваемой области через CSS-маску (`maskImage`).
+Маска реагирует на положение прокрутки: тень появляется только у тех краёв, за которыми
+есть ещё контент.
+
+Хук возвращает объект с тремя свойствами, которые нужно передать прокручиваемому элементу:
+
+- `getRootRef` — референс на прокручиваемый элемент;
+- `onScroll` — обработчик события `scroll`;
+- `style` — объект стилей с `maskImage` и `maskComposite` (необходимо применить к прокручиваемому элементу).
+
+{/* @example-description: Подсветка краёв прокручиваемой области через useCustomScrollViewTint. */}
+<Playground style={{ height: 150 }}>
+  ```jsx
+  const { getRootRef, onScroll, style } = useCustomScrollViewTint();
+
+  return (
+    <CustomScrollView getRootRef={getRootRef} onScroll={onScroll} style={style}>
+      {['Say', 'Hello', 'To', 'My', 'Little', 'Friend'].map((item) => (
+        <Cell key={item} before={<Avatar />}>
+          {item}
+        </Cell>
+      ))}
+    </CustomScrollView>
+  );
+  ```
+</Playground>
+
+## Свойства и методы [#api]
+
+<PropsTable name="CustomScrollView" />8:X
+d:X
+d:C
+0:{"buildId":"18qfN9ll9r14xNLof7L2a","data":[{"rsc":["$","$1","c",{"children":[[["$","$L2",null,{"metadata":{"description":"Компонент, который унифицирует браузерную полосу прокрутки на всех платформах.","tags":"layout","title":"CustomScrollView","filePath":"content/components/custom-scroll-view.mdx","timestamp":1787666331000},"sourceCode":"$3","children":"$L4"}],"$L5"],null,"$L6"]}],"isPartial":"$@7","staleTime":"$8","varyParams":null},{"rsc":"$L9","isPartial":"$@a","staleTime":"$8","varyParams":null},{"rsc":"$Lb","isPartial":"$@c","staleTime":"$8","varyParams":"$d"}],"isUpgradeableISRFallback":false,"a":"$@e","rootVaryParams":null,"needsRuntimeRequest":"$@f"}
+10:I[88965,["426","static/chunks/426-301619e15162f5fa.js","462","static/chunks/462-76b224f9288dd95c.js","573","static/chunks/573-1bfc3bb9bbfde546.js","302","static/chunks/302-3c737c8b0ec291c0.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-3c559e74b9a149c3.js"],"Overview",1]
+11:I[35060,["426","static/chunks/426-301619e15162f5fa.js","462","static/chunks/462-76b224f9288dd95c.js","573","static/chunks/573-1bfc3bb9bbfde546.js","302","static/chunks/302-3c737c8b0ec291c0.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-3c559e74b9a149c3.js"],"PlaygroundLazy"]
+25:I[90931,["426","static/chunks/426-301619e15162f5fa.js","462","static/chunks/462-76b224f9288dd95c.js","573","static/chunks/573-1bfc3bb9bbfde546.js","302","static/chunks/302-3c737c8b0ec291c0.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-3c559e74b9a149c3.js"],"TOC"]
+26:I[31872,[],"OutletBoundary"]
+27:"$Sreact.suspense"
+29:I[31872,[],"ViewportBoundary"]
+2a:I[31872,[],"MetadataBoundary"]
+2b:I[12569,[],"IconMark"]
+2c:I[91133,[],""]
+2d:I[4297,[],""]
+4:[["$","$L10",null,{"group":"utils","children":[["$","h1",null,{"className":"mdx_h1__1mgpN","data-pagefind-filter":"tag:component","children":"CustomScrollView"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Компонент, который унифицирует браузерную полосу прокрутки на всех платформах."}]]}],"\n",["$","aside",null,{"className":"Callout_root__6UBFP","children":["$","div",null,{"className":"Callout_content__MYf_T","children":["\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Используются нативные стили для изменения полосы прокрутки. Эта стилизация не работает в ",["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"Firefox"}]," < ",["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"64"}]," — там будет стандартная полоса."]}],"\n"]}]}],"\n","\n",["$","$L11",null,{"style":{"height":150},"code":"<CustomScrollView>\n  {['Say', 'Hello', 'To', 'My', 'Little', 'Friend'].map((item) => (\n    <Cell key={item} before={<Avatar />}>\n      {item}\n    </Cell>\n  ))}\n</CustomScrollView>"}],"\n",["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"prokruchivaemyj-kontent","children":["$","a",null,{"href":"#prokruchivaemyj-kontent","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Прокручиваемый контент","children":["Прокручиваемый контент",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}],"\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Контент, который требует полосы прокрутки, необходимо передавать в свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"children"}],"."]}],"\n",["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"parametry-prokrutki","children":["$","a",null,{"href":"#parametry-prokrutki","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Параметры прокрутки","children":["Параметры прокрутки",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}],"\n",["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"overscrollbehavior","children":["$","a",null,{"href":"#overscrollbehavior","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию [object Object]","children":[["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"overscrollBehavior"}],["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}],"\n","$L12","\n","$L13","\n","$L14","\n","$L15","\n","$L16","\n","$L17","\n","$L18","\n","$L19","\n","$L1a","\n","\n","$L1b","\n","$L1c","\n","$L1d","\n","$L1e","\n","$L1f","\n","$L20","\n","$L21","\n","\n","$L22","\n","$L23","\n","$L24"]
+5:["$","$L25",null,{"toc":[{"value":"Прокручиваемый контент","id":"prokruchivaemyj-kontent","depth":2},{"value":"Параметры прокрутки","id":"parametry-prokrutki","depth":2},{"value":"$4:13:props:children:props:children:0","id":"overscrollbehavior","depth":3},{"value":["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"scrollBehavior"}],"id":"scrollbehavior","depth":3},{"value":"Скрытие полосы прокрутки","id":"skrytie-polosy-prokrutki","depth":3},{"value":"Горизонтальная полоса прокрутки","id":"gorizontalnaya-polosa-prokrutki","depth":2},{"value":"Обработчики событий","id":"obrabotchiki-sobytij","depth":2},{"value":"useCustomScrollViewTint","id":"usecustomscrollviewtint","depth":2},{"value":"Свойства и методы","id":"api","depth":2}]}]
+6:["$","$L26",null,{"children":["$","$27",null,{"name":"Next.MetadataOutlet","children":"$@28"}]}]
+9:["$","$1","h",{"children":[null,["$","$L29",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]}],["$","div",null,{"hidden":true,"children":["$","$L2a",null,{"children":["$","$27",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"CustomScrollView | VKUI"}],["$","meta","1",{"name":"description","content":"Компонент, который унифицирует браузерную полосу прокрутки на всех платформах."}],["$","link","2",{"rel":"canonical","href":"https://vkui.io/components/custom-scroll-view/"}],["$","meta","3",{"property":"og:title","content":"VKUI – React UI Kit"}],["$","meta","4",{"property":"og:description","content":"VKUI — библиотека адаптивных React-компонентов для создания мобильных и веб-приложений."}],["$","meta","5",{"property":"og:url","content":"https://vkui.io/"}],["$","meta","6",{"property":"og:site_name","content":"VKUI"}],["$","meta","7",{"property":"og:type","content":"website"}],["$","meta","8",{"name":"twitter:card","content":"summary"}],["$","meta","9",{"name":"twitter:title","content":"VKUI – React UI Kit"}],["$","meta","10",{"name":"twitter:description","content":"VKUI — библиотека адаптивных React-компонентов для создания мобильных и веб-приложений."}],["$","link","11",{"rel":"icon","href":"/8.4.0/favicon.ico?60dfc7274b0e657e","type":"image/x-icon","sizes":"48x48"}],["$","link","12",{"rel":"icon","href":"/8.4.0/icon.svg?01ea673639a821e1","type":"image/svg+xml","sizes":"any"}],["$","link","13",{"rel":"apple-touch-icon","href":"/8.4.0/apple-icon.png?131c1f3e67ede032","type":"image/png","sizes":"180x180"}],["$","$L2b","14",{}]]}]}]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}]
+b:["$","$1","c",{"children":[null,["$","$L2c",null,{"parallelRouterKey":"children","template":["$","$L2d",null,{}]}]]}]
+f:true
+2e:I[88835,["426","static/chunks/426-301619e15162f5fa.js","462","static/chunks/462-76b224f9288dd95c.js","573","static/chunks/573-1bfc3bb9bbfde546.js","302","static/chunks/302-3c737c8b0ec291c0.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-3c559e74b9a149c3.js"],"Anchor"]
+12:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"overscrollBehavior"}]," отвечает за поведение при достижении границы области прокрутки.\nПодробнее с поведением и значениями можно ознакомиться в ",["$","$L2e",null,{"href":"https://developer.mozilla.org/ru/docs/Web/CSS/overscroll-behavior","children":"документации overscrollBehavior"}],"."]}]
+13:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"scrollbehavior","children":["$","a",null,{"href":"#scrollbehavior","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию [object Object]","children":["$5:props:toc:3:value",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+14:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"scrollBehavior"}]," отвечает за анимацию прокрутки.\nПодробнее с поведением и значениями можно ознакомиться в ",["$","$L2e",null,{"href":"https://developer.mozilla.org/ru/docs/Web/CSS/scroll-behavior","children":"документации scroll-behavior"}],"."]}]
+15:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"skrytie-polosy-prokrutki","children":["$","a",null,{"href":"#skrytie-polosy-prokrutki","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Скрытие полосы прокрутки","children":["Скрытие полосы прокрутки",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+16:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"scrollbarHidden"}]," позволяет управлять видимостью полосы прокрутки."]}]
+17:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"true"}]," — полоса прокрутки скрыта;"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"false"}]," — полоса прокрутки видна (по умолчанию)."]}],"\n"]}]
+18:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"gorizontalnaya-polosa-prokrutki","children":["$","a",null,{"href":"#gorizontalnaya-polosa-prokrutki","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Горизонтальная полоса прокрутки","children":["Горизонтальная полоса прокрутки",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+19:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"enableHorizontalScroll"}]," позволяет отображать горизонтальную полосу прокрутки."]}]
+1a:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"true"}]," — горизонтальная полоса прокрутки видна;"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"false"}]," — горизонтальная полоса прокрутки скрыта (по умолчанию)."]}],"\n"]}]
+1b:["$","$L11",null,{"code":"<CustomScrollView enableHorizontalScroll>\n  <Flex gap=\"m\" noWrap>\n    {Array.from({ length: 20 }).map((_, index) => (\n      <Avatar key={index} size={56} />\n    ))}\n  </Flex>\n</CustomScrollView>"}]
+1c:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"obrabotchiki-sobytij","children":["$","a",null,{"href":"#obrabotchiki-sobytij","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Обработчики событий","children":["Обработчики событий",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+1d:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Компонент позволяет обрабатывать событие ",["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"scroll"}],", возникающее при прокрутке контента, через свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"onScroll"}],"."]}]
+1e:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"usecustomscrollviewtint","children":["$","a",null,{"href":"#usecustomscrollviewtint","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию useCustomScrollViewTint","children":["useCustomScrollViewTint",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+1f:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Хук, который добавляет тени к краям прокручиваемой области через CSS-маску (",["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"maskImage"}],").\nМаска реагирует на положение прокрутки: тень появляется только у тех краёв, за которыми\nесть ещё контент."]}]
+20:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Хук возвращает объект с тремя свойствами, которые нужно передать прокручиваемому элементу:"}]
+21:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"getRootRef"}]," — референс на прокручиваемый элемент;"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"onScroll"}]," — обработчик события ",["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"scroll"}],";"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"style"}]," — объект стилей с ",["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"maskImage"}]," и ",["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"maskComposite"}]," (необходимо применить к прокручиваемому элементу)."]}],"\n"]}]
+22:["$","$L11",null,{"style":{"height":150},"code":"const { getRootRef, onScroll, style } = useCustomScrollViewTint();\n\nreturn (\n  <CustomScrollView getRootRef={getRootRef} onScroll={onScroll} style={style}>\n    {['Say', 'Hello', 'To', 'My', 'Little', 'Friend'].map((item) => (\n      <Cell key={item} before={<Avatar />}>\n        {item}\n      </Cell>\n    ))}\n  </CustomScrollView>\n);"}]
+23:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"api","children":["$","a",null,{"href":"#api","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Свойства и методы","children":["Свойства и методы",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+24:["$","div",null,{"className":"Table_root__0rGvK","children":["$","table",null,{"className":"Table_table__NzLHi PropsTable_root__O959b","children":[["$","thead",null,{"children":["$","tr",null,{"children":[["$","th",null,{"children":"Свойство","className":"Table_th__EHorR"}],["$","th",null,{"children":"Описание","className":"Table_th__EHorR"}]],"className":"Table_tr__SD2Ot"}]}],["$","tbody",null,{"children":["$@2f","$@30","$@31","$@32","$@33"]}]]}]}]
+28:null
+8:300
+2f:["$","tr","enableHorizontalScroll",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"enableHorizontalScroll"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"boolean"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Включение отображения горизонтального скролла."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"false"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+30:["$","tr","getRootRef",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"getRootRef"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"Ref<HTMLDivElement>"}],"$undefined",["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+31:["$","tr","overscrollBehavior",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"overscrollBehavior"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"\"none\" | \"auto\" | \"contain\""}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Поведение overscroll, подробнее можно почитать в ",["$","$L2e",null,{"href":"https://developer.mozilla.org/en-US/docs/Web/CSS/overscroll-behavior","children":"документации"}],"."]}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"auto"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+32:["$","tr","scrollbarHidden",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"scrollbarHidden"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"boolean"}],[["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Скрытие скроллбара."}],"\n",["$","aside",null,{"className":"Callout_root__6UBFP","children":["$","div",null,{"className":"Callout_content__MYf_T","children":["\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"В версии ниже Firefox 64 будет виден скролл."}],"\n"]}]}]],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"false"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+33:["$","tr","scrollBehavior",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"scrollBehavior"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"\"auto\" | \"smooth\""}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Поведение scroll-behavior, подробнее можно почитать в ",["$","$L2e",null,{"href":"https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-behavior","children":"документации"}],"."]}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"auto"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+8:C
+e:0
+a:"$undefined"
+c:"$undefined"
+7:"$undefined"

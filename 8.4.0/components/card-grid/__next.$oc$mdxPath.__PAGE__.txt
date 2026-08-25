@@ -1,0 +1,135 @@
+1:"$Sreact.fragment"
+2:I[1794,["426","static/chunks/426-301619e15162f5fa.js","462","static/chunks/462-76b224f9288dd95c.js","573","static/chunks/573-1bfc3bb9bbfde546.js","302","static/chunks/302-3c737c8b0ec291c0.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-3c559e74b9a149c3.js"],"Main"]
+4:I[88965,["426","static/chunks/426-301619e15162f5fa.js","462","static/chunks/462-76b224f9288dd95c.js","573","static/chunks/573-1bfc3bb9bbfde546.js","302","static/chunks/302-3c737c8b0ec291c0.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-3c559e74b9a149c3.js"],"Overview",1]
+5:I[88835,["426","static/chunks/426-301619e15162f5fa.js","462","static/chunks/462-76b224f9288dd95c.js","573","static/chunks/573-1bfc3bb9bbfde546.js","302","static/chunks/302-3c737c8b0ec291c0.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-3c559e74b9a149c3.js"],"Anchor"]
+3:Td36,---
+description: Компонент-контейнер для создания адаптивных сеток из Card.
+tags: card
+---
+
+<Overview group="layout">
+
+# CardGrid [tag:component]
+
+Компонент-контейнер для создания адаптивных сеток из [`Card`](/components/card).
+Выбирает необходимую сетку в зависимости от указанного размера, обеспечивает семантически правильную разметку по умолчанию.
+
+Связанные компоненты:
+
+- [Card](/components/card)
+- [ContentCard](/components/content-card)
+
+</Overview>
+
+import { BlockWrapper } from '@/components/wrappers';
+
+{/* @example-description: Базовая сетка `CardGrid` размера `s` с тремя карточками одинаковых пропорций. */}
+<Playground Wrapper={BlockWrapper}>
+  ```jsx
+  <CardGrid size="s">
+    <Card mode="shadow">
+      <AspectRatio ratio={100 / 92}>
+        <div />
+      </AspectRatio>
+    </Card>
+    <Card mode="shadow">
+      <AspectRatio ratio={100 / 92}>
+        <div />
+      </AspectRatio>
+    </Card>
+    <Card mode="shadow">
+      <AspectRatio ratio={100 / 92}>
+        <div />
+      </AspectRatio>
+    </Card>
+  </CardGrid>
+  ```
+</Playground>
+
+## Размер карточек
+
+Свойство `size` задаёт нужную сетку и накладывает определённые ограничения на пропорции карточек.
+Соблюдение пропорций осуществляется самостоятельно
+(например, с помощью компонента [`AspectRatio`](/components/aspect-ratio), как в примере выше).
+
+| Размер | Пропорции                      | Сетка      | Типовое применение      |
+| :----: | ------------------------------ | ---------- | ----------------------- |
+|  `s`   | высота 92% (≈1:1.08) от ширины | Три в ряд  | Квадратные элементы     |
+|  `m`   | высота 62% (≈1:1.61) от ширины | Два в ряд  | Горизонтальные карточки |
+|  `l`   | высота 30% (≈1:3.33) от ширины | Один в ряд | Широкие баннеры         |
+
+{/* @example-description: Сравнение размеров сетки `m` и `l` для разных сценариев компоновки карточек. */}
+<Playground Wrapper={BlockWrapper}>
+  ```jsx
+  <CardGrid size="m">
+    <Card mode="shadow">
+      <AspectRatio ratio={100 / 62}>
+        <div />
+      </AspectRatio>
+    </Card>
+    <Card mode="shadow">
+      <AspectRatio ratio={100 / 62}>
+        <div />
+      </AspectRatio>
+    </Card>
+  </CardGrid>
+  <CardGrid size="l">
+    <Card mode="shadow">
+      <AspectRatio ratio={100 / 30}>
+        <div />
+      </AspectRatio>
+    </Card>
+  </CardGrid>
+  ```
+</Playground>
+
+## Доступность (a11y) [#a11y]
+
+- По умолчанию используется семантический тег `<ul>`.
+- Для одиночных сеток вне списков меняйте тег через `Component`.
+- Добавляйте `ARIA`-роли при необходимости.
+
+## Свойства и методы [#api]
+
+<PropsTable name="CardGrid" />14:X
+19:X
+19:C
+0:{"buildId":"18qfN9ll9r14xNLof7L2a","data":[{"rsc":["$","$1","c",{"children":[[["$","$L2",null,{"metadata":{"description":"Компонент-контейнер для создания адаптивных сеток из Card.","tags":"card","title":"CardGrid","filePath":"content/components/card-grid.mdx","timestamp":1787666331000},"sourceCode":"$3","children":[["$","$L4",null,{"group":"layout","children":[["$","h1",null,{"className":"mdx_h1__1mgpN","data-pagefind-filter":"tag:component","children":"CardGrid"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Компонент-контейнер для создания адаптивных сеток из ",["$","$L5",null,{"href":"/components/card","children":["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"Card"}]}],".\nВыбирает необходимую сетку в зависимости от указанного размера, обеспечивает семантически правильную разметку по умолчанию."]}],"$L6","$L7"]}],"\n","\n","\n","$L8","\n","$L9","\n","$La","\n","$Lb","\n","\n","$Lc","\n","$Ld","\n","$Le","\n","$Lf","\n","$L10"]}],"$L11"],null,"$L12"]}],"isPartial":"$@13","staleTime":"$14","varyParams":null},{"rsc":"$L15","isPartial":"$@16","staleTime":"$14","varyParams":null},{"rsc":"$L17","isPartial":"$@18","staleTime":"$14","varyParams":"$19"}],"isUpgradeableISRFallback":false,"a":"$@1a","rootVaryParams":null,"needsRuntimeRequest":"$@1b"}
+1c:I[35060,["426","static/chunks/426-301619e15162f5fa.js","462","static/chunks/462-76b224f9288dd95c.js","573","static/chunks/573-1bfc3bb9bbfde546.js","302","static/chunks/302-3c737c8b0ec291c0.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-3c559e74b9a149c3.js"],"PlaygroundLazy"]
+1d:I[38495,["426","static/chunks/426-301619e15162f5fa.js","462","static/chunks/462-76b224f9288dd95c.js","573","static/chunks/573-1bfc3bb9bbfde546.js","302","static/chunks/302-3c737c8b0ec291c0.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-3c559e74b9a149c3.js"],"BlockWrapper"]
+23:I[90931,["426","static/chunks/426-301619e15162f5fa.js","462","static/chunks/462-76b224f9288dd95c.js","573","static/chunks/573-1bfc3bb9bbfde546.js","302","static/chunks/302-3c737c8b0ec291c0.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-3c559e74b9a149c3.js"],"TOC"]
+24:I[31872,[],"OutletBoundary"]
+25:"$Sreact.suspense"
+27:I[31872,[],"ViewportBoundary"]
+28:I[31872,[],"MetadataBoundary"]
+29:I[12569,[],"IconMark"]
+2a:I[91133,[],""]
+2b:I[4297,[],""]
+6:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Связанные компоненты:"}]
+7:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["$","$L5",null,{"href":"/components/card","children":"Card"}]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["$","$L5",null,{"href":"/components/content-card","children":"ContentCard"}]}],"\n"]}]
+8:["$","$L1c",null,{"Wrapper":"$1d","code":"<CardGrid size=\"s\">\n  <Card mode=\"shadow\">\n    <AspectRatio ratio={100 / 92}>\n      <div />\n    </AspectRatio>\n  </Card>\n  <Card mode=\"shadow\">\n    <AspectRatio ratio={100 / 92}>\n      <div />\n    </AspectRatio>\n  </Card>\n  <Card mode=\"shadow\">\n    <AspectRatio ratio={100 / 92}>\n      <div />\n    </AspectRatio>\n  </Card>\n</CardGrid>"}]
+9:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"razmer-kartochek","children":["$","a",null,{"href":"#razmer-kartochek","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Размер карточек","children":["Размер карточек",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+a:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"size"}]," задаёт нужную сетку и накладывает определённые ограничения на пропорции карточек.\nСоблюдение пропорций осуществляется самостоятельно\n(например, с помощью компонента ",["$","$L5",null,{"href":"/components/aspect-ratio","children":["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"AspectRatio"}]}],", как в примере выше)."]}]
+b:["$","div",null,{"className":"Table_root__0rGvK","children":["$","table",null,{"children":[["$","thead",null,{"children":["$","tr",null,{"children":[["$","th",null,{"style":{"textAlign":"center"},"children":"Размер","className":"Table_th__EHorR"}],["$","th",null,{"children":"Пропорции","className":"Table_th__EHorR"}],["$","th",null,{"children":"Сетка","className":"Table_th__EHorR"}],["$","th",null,{"children":"Типовое применение","className":"Table_th__EHorR"}]],"className":"Table_tr__SD2Ot"}]}],["$","tbody",null,{"children":[["$","tr",null,{"children":[["$","td",null,{"style":{"textAlign":"center"},"children":["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"s"}],"className":"Table_td__L3qz5"}],["$","td",null,{"children":"высота 92% (≈1:1.08) от ширины","className":"Table_td__L3qz5"}],["$","td",null,{"children":"Три в ряд","className":"Table_td__L3qz5"}],["$","td",null,{"children":"Квадратные элементы","className":"Table_td__L3qz5"}]],"className":"Table_tr__SD2Ot"}],["$","tr",null,{"children":[["$","td",null,{"style":{"textAlign":"center"},"children":["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"m"}],"className":"Table_td__L3qz5"}],["$","td",null,{"children":"высота 62% (≈1:1.61) от ширины","className":"Table_td__L3qz5"}],["$","td",null,{"children":"Два в ряд","className":"Table_td__L3qz5"}],["$","td",null,{"children":"Горизонтальные карточки","className":"Table_td__L3qz5"}]],"className":"Table_tr__SD2Ot"}],["$","tr",null,{"children":[["$","td",null,{"style":{"textAlign":"center"},"children":["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"l"}],"className":"Table_td__L3qz5"}],["$","td",null,{"children":"высота 30% (≈1:3.33) от ширины","className":"Table_td__L3qz5"}],["$","td",null,{"children":"Один в ряд","className":"Table_td__L3qz5"}],["$","td",null,{"children":"Широкие баннеры","className":"Table_td__L3qz5"}]],"className":"Table_tr__SD2Ot"}]]}]],"className":"Table_table__NzLHi"}]}]
+c:["$","$L1c",null,{"Wrapper":"$1d","code":"<CardGrid size=\"m\">\n  <Card mode=\"shadow\">\n    <AspectRatio ratio={100 / 62}>\n      <div />\n    </AspectRatio>\n  </Card>\n  <Card mode=\"shadow\">\n    <AspectRatio ratio={100 / 62}>\n      <div />\n    </AspectRatio>\n  </Card>\n</CardGrid>\n<CardGrid size=\"l\">\n  <Card mode=\"shadow\">\n    <AspectRatio ratio={100 / 30}>\n      <div />\n    </AspectRatio>\n  </Card>\n</CardGrid>"}]
+d:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"a11y","children":["$","a",null,{"href":"#a11y","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Доступность (a11y)","children":["Доступность (a11y)",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+e:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["По умолчанию используется семантический тег ",["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"<ul>"}],"."]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["Для одиночных сеток вне списков меняйте тег через ",["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"Component"}],"."]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["Добавляйте ",["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"ARIA"}],"-роли при необходимости."]}],"\n"]}]
+f:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"api","children":["$","a",null,{"href":"#api","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Свойства и методы","children":["Свойства и методы",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+10:["$","div",null,{"className":"Table_root__0rGvK","children":["$","table",null,{"className":"Table_table__NzLHi PropsTable_root__O959b","children":[["$","thead",null,{"children":["$","tr",null,{"children":[["$","th",null,{"children":"Свойство","className":"Table_th__EHorR"}],["$","th",null,{"children":"Описание","className":"Table_th__EHorR"}]],"className":"Table_tr__SD2Ot"}]}],["$","tbody",null,{"children":["$@1e","$@1f","$@20","$@21","$@22"]}]]}]}]
+11:["$","$L23",null,{"toc":[{"value":"Размер карточек","id":"razmer-kartochek","depth":2},{"value":"Доступность (a11y)","id":"a11y","depth":2},{"value":"Свойства и методы","id":"api","depth":2}]}]
+12:["$","$L24",null,{"children":["$","$25",null,{"name":"Next.MetadataOutlet","children":"$@26"}]}]
+15:["$","$1","h",{"children":[null,["$","$L27",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]}],["$","div",null,{"hidden":true,"children":["$","$L28",null,{"children":["$","$25",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"CardGrid | VKUI"}],["$","meta","1",{"name":"description","content":"Компонент-контейнер для создания адаптивных сеток из Card."}],["$","link","2",{"rel":"canonical","href":"https://vkui.io/components/card-grid/"}],["$","meta","3",{"property":"og:title","content":"VKUI – React UI Kit"}],["$","meta","4",{"property":"og:description","content":"VKUI — библиотека адаптивных React-компонентов для создания мобильных и веб-приложений."}],["$","meta","5",{"property":"og:url","content":"https://vkui.io/"}],["$","meta","6",{"property":"og:site_name","content":"VKUI"}],["$","meta","7",{"property":"og:type","content":"website"}],["$","meta","8",{"name":"twitter:card","content":"summary"}],["$","meta","9",{"name":"twitter:title","content":"VKUI – React UI Kit"}],["$","meta","10",{"name":"twitter:description","content":"VKUI — библиотека адаптивных React-компонентов для создания мобильных и веб-приложений."}],["$","link","11",{"rel":"icon","href":"/8.4.0/favicon.ico?60dfc7274b0e657e","type":"image/x-icon","sizes":"48x48"}],["$","link","12",{"rel":"icon","href":"/8.4.0/icon.svg?01ea673639a821e1","type":"image/svg+xml","sizes":"any"}],["$","link","13",{"rel":"apple-touch-icon","href":"/8.4.0/apple-icon.png?131c1f3e67ede032","type":"image/png","sizes":"180x180"}],["$","$L29","14",{}]]}]}]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}]
+17:["$","$1","c",{"children":[null,["$","$L2a",null,{"parallelRouterKey":"children","template":["$","$L2b",null,{}]}]]}]
+1b:true
+1e:["$","tr","Component",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"Component"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"ElementType<any, keyof IntrinsicElements>"}],"$undefined",["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"ul"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+1f:["$","tr","getRootRef",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"getRootRef"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"Ref<HTMLDivElement>"}],"$undefined",["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+20:["$","tr","padding",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"padding"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"boolean"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Если true, то вокруг компонента присутствуют стандартные отсупы сверху/снизу и слева/справа."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"false"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+21:["$","tr","render",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"render"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"((props: AllHTMLAttributes<HTMLDivElement> & HasRootRef<HTMLDivElement>) => ReactNode)"}],[["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Позволяет переопределить рендер компонента, получая собранные свойства\n(включая вычисленные ",["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"className"}]," и ",["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"style"}],"). Используется вместо ",["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"Component"}],"."]}],"\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Позволяет гибко объединять несколько компонентов без создания\nпромежуточных DOM-узлов и без ремаунта поддерева на каждый рендер."}]],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+22:["$","tr","size",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"size"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"\"s\" | \"m\" | \"l\""}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Размер карточек."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"s"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+26:null
+14:300
+14:C
+1a:0
+16:"$undefined"
+18:"$undefined"
+13:"$undefined"

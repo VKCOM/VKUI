@@ -65,7 +65,7 @@ VKUI — библиотека адаптивных React-компонентов 
 - [Flex](https://vkui.io/components/flex.mdx): Компонент для позиционирования элементов, построенный на базе flex layout.
 - [FloatingArrow](https://vkui.io/components/floating-arrow.mdx): Иконка-стрелка для всплывающих окон.
 - [FocusTrap](https://vkui.io/components/focus-trap.mdx): Компонент для управления фокусом внутри области, не позволяющий фокусу выходить за её пределы.
-- [Footer](https://vkui.io/components/footer.mdx): Подвал группы, передаётся в конце children компонента Group.
+- [Footer](https://vkui.io/components/footer.mdx): Подвал всей страницы или текущего экрана.
 - [Footnote](https://vkui.io/components/footnote.mdx): Компонент для отображения подписей и вспомогательного текста — подсказок, пояснений к форме, мелких аннотаций под основным контентом.
 - [FormField](https://vkui.io/components/form-field.mdx): Компонент для создания полей ввода с возможностью добавления иконок и статусов.
 - [FormItem](https://vkui.io/components/form-item.mdx): Компонент для создания элементов форм с поддержкой заголовка, подсказки и статуса валидации.

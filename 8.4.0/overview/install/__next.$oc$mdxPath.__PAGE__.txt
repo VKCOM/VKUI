@@ -1,0 +1,357 @@
+1:"$Sreact.fragment"
+2:I[1794,["426","static/chunks/426-301619e15162f5fa.js","462","static/chunks/462-76b224f9288dd95c.js","573","static/chunks/573-1bfc3bb9bbfde546.js","302","static/chunks/302-3c737c8b0ec291c0.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-3c559e74b9a149c3.js"],"Main"]
+3:T23aa,---
+description: Пошаговые инструкции по настройке окружения, установке зависимостей и непосредственное подключение VKUI для приложения.
+---
+
+<Overview type="doc">
+# Установка
+
+На этой странице — пошаговая инструкция по настройке окружения, установке зависимостей и подключению VKUI.
+
+Если вы разрабатываете мини-приложение ВКонтакте, см. также [Интеграции | VK Mini Apps](https://www.npmjs.com/package/@vkontakte/create-vk-mini-app).
+
+</Overview>
+
+<InstallTemplates />
+
+## Базовая установка [#base-install]
+
+<Steps>
+
+### Подготовьте SPA React приложение [#step1]
+
+О вариантах создания React-приложения — в [документации React](https://ru.react.dev/learn/start-a-new-react-project). Подойдут любые шаблоны и сборщики, включая [Vite](https://vite.dev/) и [Next.js](https://nextjs.org/). VKUI поддерживает TypeScript.
+
+### Установите зависимости [#step2]
+
+Установите библиотеку командой вашего пакетного менеджера:
+
+<PackageManagers
+  npm="npm i --save @vkontakte/vkui"
+  yarn="yarn add @vkontakte/vkui"
+  pnpm="pnpm add @vkontakte/vkui"
+/>
+
+#### Peer Dependencies
+
+Если не используете стартовый пакет, установите обязательные зависимости:
+
+```json
+"peerDependencies": {
+  "react": "^18.2.0 || ^19.0.0",
+  "react-dom": "^18.2.0 || ^19.0.0"
+}
+```
+
+### Настройте `meta`-тег [#step3]
+
+Для корректного отображения на безрамочных смартфонах (подробнее — ["The Notch" and CSS](https://css-tricks.com/the-notch-and-css/)) добавьте [meta-тег](https://developer.mozilla.org/en-US/docs/Web/HTML/Viewport_meta_tag) в корневой `html`:
+
+```html
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no, viewport-fit=cover"
+/>
+```
+
+- см. [Vite | `index.html` and Project Root](https://vite.dev/guide/#index-html-and-project-root)
+- см. [Next.js | How to add metadata and create OG images](https://nextjs.org/docs/app/building-your-application/optimizing/metadata)
+
+### Подключите VKUI [#step4]
+
+Оберните приложение в обязательные провайдеры и импортируйте CSS-бандл `'@vkontakte/vkui/dist/vkui.css'`. Лучше сделать это в корне приложения (обычно `main.tsx` или `index.tsx`).
+
+Пример для шаблона [React + TypeScript + Vite](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts).
+
+```tsx showLineNumbers filename="src/main.tsx" {4,9-10,12-13}
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import { ConfigProvider, AppRoot } from '@vkontakte/vkui';
+import '@vkontakte/vkui/dist/vkui.css';
+import App from './App.tsx';
+
+createRoot(document.getElementById('root')!).render(
+  <StrictMode>
+    <ConfigProvider>
+      <AppRoot>
+        <App />
+      </AppRoot>
+    </ConfigProvider>
+  </StrictMode>,
+);
+```
+
+- [`ConfigProvider`](/components/config-provider) – конфигурирует приложение под разные платформы и темы.
+- [`AppRoot`](/components/app-root) – управляет режимами встраивания, полосой прокрутки, безопасными отступами и порталами.
+- см. [Vite | CSS](https://vite.dev/guide/features#css)
+- см. [Next.js | External stylesheets](https://nextjs.org/docs/app/getting-started/css#external-stylesheets)
+
+</Steps>
+
+## Установка ESNext версии [#esnext-install]
+
+VKUI позволяет подключить сборку с ESNext и [CSS Modules](https://github.com/css-modules/css-modules). Она уменьшает размер приложения — и JS, и CSS, — но требует дополнительной настройки сборщика.
+
+Шаги те же, что в [базовой установке](#base-install), но отличается CSS-бандл.
+
+<Steps>
+
+### Подключите стили [#esnext-step1]
+
+Импортируйте CSS-бандл `'@vkontakte/vkui/dist/cssm/styles/themes.css'` вместо `'@vkontakte/vkui/dist/vkui.css'` в корень вашего приложения.
+
+На примере файла `src/main.tsx` из [базовой установки](#base-install):
+
+```diff filename="src/main.tsx"
+import { ConfigProvider, AppRoot } from '@vkontakte/vkui';
+- import '@vkontakte/vkui/dist/vkui.css';
++ import '@vkontakte/vkui/dist/cssm/styles/themes.css';
+import { App } from './App.tsx';
+```
+
+### Настройте сборщик [#esnext-step2]
+
+Нужно трансформировать импорты, включить транспиляцию и подключить CSS Modules. Для каждого сборщика или фреймворка — свои инструкции.
+
+<details>
+<summary>Next.js</summary>
+
+```js filename="next.config.js"
+module.exports = {
+  // ...
+
+  // Включаем транспиляцию
+  transpilePackages: ['@vkontakte/vkui'],
+
+  // Трансформируем импорты
+  modularizeImports: {
+    '@vkontakte/vkui': {
+      transform: '@vkontakte/vkui/dist/cssm',
+      skipDefaultConversion: true,
+    },
+  },
+};
+```
+
+[Пример приложения](https://codesandbox.io/p/sandbox/vkui-next-js-cssm-el0g7c) на Next.js
+
+</details>
+
+<details>
+<summary>Vite</summary>
+
+```js filename="vite.config.js"
+export default defineConfig({
+  // ...
+  resolve: {
+    alias: [{ find: /^@vkontakte\/vkui$/, replacement: '@vkontakte/vkui/dist/cssm' }],
+  },
+});
+```
+
+[Пример приложения](https://codesandbox.io/p/sandbox/vkui-vite-cssm-4iikku) на Vite
+
+</details>
+
+<details>
+<summary>webpack</summary>
+
+```js filename="webpack.config.js"
+module.exports = {
+  //...
+
+  module: {
+    rules: [
+      // Включаем транспиляцию
+      {
+        test: /\.js$/,
+        include: /node_modules\/@vkontakte\/vkui/,
+        use: ['babel-loader'],
+      },
+
+      // Обрабатываем css modules
+      {
+        test: /\.css$/,
+        include: /node_modules\/@vkontakte\/vkui/,
+        use: [
+          {
+            loader: 'css-loader',
+            /* Используем следующие опции в случае использования `css-loader >= 7.0.0` (см. https://github.com/webpack-contrib/css-loader/blob/v7.1.0/CHANGELOG.md) */
+            // options: {
+            //   namedExport: false,
+            //   exportLocalsConvention: 'as-is',
+            // }
+          },
+        ],
+      },
+    ],
+  },
+
+  // Трансформируем импорты
+  resolve: {
+    alias: {
+      '@vkontakte/vkui$': '@vkontakte/vkui/dist/cssm',
+    },
+  },
+};
+```
+
+</details>
+
+</Steps>
+
+## Иконки [#icons]
+
+Некоторые компоненты VKUI используют иконки из [@vkontakte/icons](https://www.npmjs.com/package/@vkontakte/icons) — набор готовых SVG-иконок в виде React-компонентов. Полный список — в [отдельной документации иконок](https://vkcom.github.io/icons).
+
+Если вы тоже используете `@vkontakte/icons` и указываете пакет в `package.json`, возможна дубликация зависимостей.
+
+### Дедупликация @vkontakte/icons [#dedupe-icons]
+
+Выполните команду вашего пакетного менеджера:
+
+<PackageManagers npm="npm dedupe" yarn="yarn dedupe @vkontakte/icons" pnpm="pnpm dedupe" />
+
+## CDN
+
+Чтобы начать с минимальной настройкой, подключите VKUI через [esm.sh](https://esm.sh/) или [esm.run](https://www.jsdelivr.com/esm).
+
+Пример с `esm.sh`:
+
+```html
+<link rel="stylesheet" href="https://esm.sh/@vkontakte/vkui@7/dist/vkui.css" />
+<script type="importmap">
+  {
+    "imports": {
+      "react": "https://esm.sh/react@19/",
+      "react-dom/": "https://esm.sh/react-dom@19/",
+      "@vkontakte/vkui": "https://esm.sh/@vkontakte/vkui@7/"
+    }
+  }
+</script>
+<script type="module">
+  import React from 'react';
+  import { createRoot } from 'react-dom/client';
+  import { Button } from '@vkontakte/vkui';
+
+  const root = createRoot(document.getElementById('root'));
+  root.render(React.createElement(Button, null, 'Кнопка'));
+</script>
+```
+
+<Callout>
+  Этот метод подходит только для быстрого прототипирования. Для оптимальных настроек используйте [установку со сборщиком](#base-install).
+</Callout>8:X
+d:X
+d:C
+0:{"buildId":"18qfN9ll9r14xNLof7L2a","data":[{"rsc":["$","$1","c",{"children":[[["$","$L2",null,{"metadata":{"description":"Пошаговые инструкции по настройке окружения, установке зависимостей и непосредственное подключение VKUI для приложения.","title":"Установка","filePath":"content/overview/install.mdx","timestamp":1787666331000},"sourceCode":"$3","children":"$L4"}],"$L5"],null,"$L6"]}],"isPartial":"$@7","staleTime":"$8","varyParams":null},{"rsc":"$L9","isPartial":"$@a","staleTime":"$8","varyParams":null},{"rsc":"$Lb","isPartial":"$@c","staleTime":"$8","varyParams":"$d"}],"isUpgradeableISRFallback":false,"a":"$@e","rootVaryParams":null,"needsRuntimeRequest":"$@f"}
+10:I[88965,["426","static/chunks/426-301619e15162f5fa.js","462","static/chunks/462-76b224f9288dd95c.js","573","static/chunks/573-1bfc3bb9bbfde546.js","302","static/chunks/302-3c737c8b0ec291c0.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-3c559e74b9a149c3.js"],"Overview",1]
+11:I[88835,["426","static/chunks/426-301619e15162f5fa.js","462","static/chunks/462-76b224f9288dd95c.js","573","static/chunks/573-1bfc3bb9bbfde546.js","302","static/chunks/302-3c737c8b0ec291c0.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-3c559e74b9a149c3.js"],"Anchor"]
+12:I[40059,["426","static/chunks/426-301619e15162f5fa.js","462","static/chunks/462-76b224f9288dd95c.js","573","static/chunks/573-1bfc3bb9bbfde546.js","302","static/chunks/302-3c737c8b0ec291c0.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-3c559e74b9a149c3.js"],"InstallTemplates"]
+2f:I[90931,["426","static/chunks/426-301619e15162f5fa.js","462","static/chunks/462-76b224f9288dd95c.js","573","static/chunks/573-1bfc3bb9bbfde546.js","302","static/chunks/302-3c737c8b0ec291c0.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-3c559e74b9a149c3.js"],"TOC"]
+30:I[31872,[],"OutletBoundary"]
+31:"$Sreact.suspense"
+33:I[31872,[],"ViewportBoundary"]
+34:I[31872,[],"MetadataBoundary"]
+35:I[12569,[],"IconMark"]
+36:I[91133,[],""]
+37:I[4297,[],""]
+4:[["$","$L10",null,{"type":"doc","children":[["$","h1",null,{"className":"mdx_h1__1mgpN","children":"Установка"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"На этой странице — пошаговая инструкция по настройке окружения, установке зависимостей и подключению VKUI."}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Если вы разрабатываете мини-приложение ВКонтакте, см. также ",["$","$L11",null,{"href":"https://www.npmjs.com/package/@vkontakte/create-vk-mini-app","children":"Интеграции | VK Mini Apps"}],"."]}]]}],"\n",["$","$L12",null,{}],"\n",["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"base-install","children":["$","a",null,{"href":"#base-install","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Базовая установка","children":["Базовая установка",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}],"\n",["$","div",null,{"className":"Steps_root__xNLhi","children":[["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"step1","children":["$","a",null,{"href":"#step1","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Подготовьте SPA React приложение","children":["Подготовьте SPA React приложение",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["О вариантах создания React-приложения — в ",["$","$L11",null,{"href":"https://ru.react.dev/learn/start-a-new-react-project","children":"документации React"}],". Подойдут любые шаблоны и сборщики, включая ",["$","$L11",null,{"href":"https://vite.dev/","children":"Vite"}]," и ",["$","$L11",null,{"href":"https://nextjs.org/","children":"Next.js"}],". VKUI поддерживает TypeScript."]}],["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"step2","children":["$","a",null,{"href":"#step2","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Установите зависимости","children":["Установите зависимости",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Установите библиотеку командой вашего пакетного менеджера:"}],"$L13","$L14","$L15","$L16","$L17","$L18","$L19","$L1a","$L1b","$L1c","$L1d","$L1e","$L1f"]}],"\n","$L20","\n","$L21","\n","$L22","\n","$L23","\n","$L24","\n","$L25","\n","$L26","\n","$L27","\n","$L28","\n","$L29","\n","$L2a","\n","$L2b","\n","$L2c","\n","$L2d","\n","$L2e"]
+5:["$","$L2f",null,{"toc":[{"value":"Базовая установка","id":"base-install","depth":2},{"value":"Подготовьте SPA React приложение","id":"step1","depth":3},{"value":"Установите зависимости","id":"step2","depth":3},{"value":"Peer Dependencies","id":"peer-dependencies","depth":4},{"value":["Настройте ",["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"meta"}],"-тег"],"id":"step3","depth":3},{"value":"Подключите VKUI","id":"step4","depth":3},{"value":"Установка ESNext версии","id":"esnext-install","depth":2},{"value":"Подключите стили","id":"esnext-step1","depth":3},{"value":"Настройте сборщик","id":"esnext-step2","depth":3},{"value":"Иконки","id":"icons","depth":2},{"value":"Дедупликация @vkontakte/icons","id":"dedupe-icons","depth":3},{"value":"CDN","id":"cdn","depth":2}]}]
+6:["$","$L30",null,{"children":["$","$31",null,{"name":"Next.MetadataOutlet","children":"$@32"}]}]
+9:["$","$1","h",{"children":[null,["$","$L33",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]}],["$","div",null,{"hidden":true,"children":["$","$L34",null,{"children":["$","$31",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"Установка | VKUI"}],["$","meta","1",{"name":"description","content":"Пошаговые инструкции по настройке окружения, установке зависимостей и непосредственное подключение VKUI для приложения."}],["$","link","2",{"rel":"canonical","href":"https://vkui.io/overview/install/"}],["$","meta","3",{"property":"og:title","content":"VKUI – React UI Kit"}],["$","meta","4",{"property":"og:description","content":"VKUI — библиотека адаптивных React-компонентов для создания мобильных и веб-приложений."}],["$","meta","5",{"property":"og:url","content":"https://vkui.io/"}],["$","meta","6",{"property":"og:site_name","content":"VKUI"}],["$","meta","7",{"property":"og:type","content":"website"}],["$","meta","8",{"name":"twitter:card","content":"summary"}],["$","meta","9",{"name":"twitter:title","content":"VKUI – React UI Kit"}],["$","meta","10",{"name":"twitter:description","content":"VKUI — библиотека адаптивных React-компонентов для создания мобильных и веб-приложений."}],["$","link","11",{"rel":"icon","href":"/8.4.0/favicon.ico?60dfc7274b0e657e","type":"image/x-icon","sizes":"48x48"}],["$","link","12",{"rel":"icon","href":"/8.4.0/icon.svg?01ea673639a821e1","type":"image/svg+xml","sizes":"any"}],["$","link","13",{"rel":"apple-touch-icon","href":"/8.4.0/apple-icon.png?131c1f3e67ede032","type":"image/png","sizes":"180x180"}],["$","$L35","14",{}]]}]}]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}]
+b:["$","$1","c",{"children":[null,["$","$L36",null,{"parallelRouterKey":"children","template":["$","$L37",null,{}]}]]}]
+f:true
+38:I[23443,["426","static/chunks/426-301619e15162f5fa.js","462","static/chunks/462-76b224f9288dd95c.js","573","static/chunks/573-1bfc3bb9bbfde546.js","302","static/chunks/302-3c737c8b0ec291c0.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-3c559e74b9a149c3.js"],"PackageManagersClient"]
+39:I[70176,["426","static/chunks/426-301619e15162f5fa.js","462","static/chunks/462-76b224f9288dd95c.js","573","static/chunks/573-1bfc3bb9bbfde546.js","302","static/chunks/302-3c737c8b0ec291c0.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-3c559e74b9a149c3.js"],"Pre"]
+13:["$","$L38",null,{"packageManagers":[{"id":"npm","content":["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","data-language":"sh","children":["$","span",null,{"data-line":"","children":[["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":"npm"}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":" i"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":" --save"}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":" @vkontakte/vkui"}]]}]}]}]},{"id":"yarn","content":["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","data-language":"sh","children":["$","span",null,{"data-line":"","children":[["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":"yarn"}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":" add"}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":" @vkontakte/vkui"}]]}]}]}]},{"id":"pnpm","content":["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","data-language":"sh","children":["$","span",null,{"data-line":"","children":[["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":"pnpm"}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":" add"}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":" @vkontakte/vkui"}]]}]}]}]}]}]
+14:["$","h4",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading4__c9VtX","id":"peer-dependencies","children":["$","a",null,{"href":"#peer-dependencies","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Peer Dependencies","children":["Peer Dependencies",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+15:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Если не используете стартовый пакет, установите обязательные зависимости:"}]
+16:["$","$L39",null,{"tabIndex":"0","data-language":"json","data-word-wrap":"","data-copy":"","data-pagefind-ignore":"all","children":["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":[["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"peerDependencies\""}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":": {"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"  \"react\""}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":": "}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"^18.2.0 || ^19.0.0\""}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":","}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"  \"react-dom\""}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":": "}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"^18.2.0 || ^19.0.0\""}]]}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"}"}]}]]}]}]
+17:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"step3","children":["$","a",null,{"href":"#step3","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию [object Object]","children":["$5:props:toc:4:value",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+18:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Для корректного отображения на безрамочных смартфонах (подробнее — ",["$","$L11",null,{"href":"https://css-tricks.com/the-notch-and-css/","children":"“The Notch” and CSS"}],") добавьте ",["$","$L11",null,{"href":"https://developer.mozilla.org/en-US/docs/Web/HTML/Viewport_meta_tag","children":"meta-тег"}]," в корневой ",["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"html"}],":"]}]
+19:["$","$L39",null,{"tabIndex":"0","data-language":"html","data-word-wrap":"","data-copy":"","data-pagefind-ignore":"all","children":["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":[["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"<"}],["$","span",null,{"style":{"--shiki-light":"#22863A","--shiki-dark":"#85E89D"},"children":"meta"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":"  name"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"viewport\""}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":"  content"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no, viewport-fit=cover\""}]]}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"/>"}]}]]}]}]
+1a:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["см. ",["$","$L11",null,{"href":"https://vite.dev/guide/#index-html-and-project-root","children":["Vite | ",["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"index.html"}]," and Project Root"]}]]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["см. ",["$","$L11",null,{"href":"https://nextjs.org/docs/app/building-your-application/optimizing/metadata","children":"Next.js | How to add metadata and create OG images"}]]}],"\n"]}]
+1b:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"step4","children":["$","a",null,{"href":"#step4","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Подключите VKUI","children":["Подключите VKUI",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+1c:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Оберните приложение в обязательные провайдеры и импортируйте CSS-бандл ",["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"'@vkontakte/vkui/dist/vkui.css'"}],". Лучше сделать это в корне приложения (обычно ",["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"main.tsx"}]," или ",["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"index.tsx"}],")."]}]
+1d:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Пример для шаблона ",["$","$L11",null,{"href":"https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts","children":"React + TypeScript + Vite"}],"."]}]
+1e:["$","$L39",null,{"tabIndex":"0","data-language":"tsx","data-word-wrap":"","data-filename":"src/main.tsx","data-copy":"","data-pagefind-ignore":"all","children":["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","data-line-numbers":"","data-line-numbers-max-digits":"2","children":[["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"import"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" { StrictMode } "}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"from"}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":" 'react'"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":";"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"import"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" { createRoot } "}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"from"}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":" 'react-dom/client'"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":";"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"import"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" { ConfigProvider, AppRoot } "}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"from"}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":" '@vkontakte/vkui'"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":";"}]]}],"\n",["$","span",null,{"data-highlighted-line":"","children":[["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"import"}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":" '@vkontakte/vkui/dist/vkui.css'"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":";"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"import"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" App "}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"from"}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":" './App.tsx'"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":";"}]]}],"\n",["$","span",null,{"children":" "}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":"createRoot"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"(document."}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":"getElementById"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"("}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"'root'"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":")"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"!"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":")."}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":"render"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"("}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  <"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"StrictMode"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}],"\n",["$","span",null,{"data-highlighted-line":"","children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"    <"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"ConfigProvider"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}],"\n",["$","span",null,{"data-highlighted-line":"","children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"      <"}],"$L3a","$L3b"]}],"\n","$L3c","\n","$L3d","\n","$L3e","\n","$L3f","\n","$L40"]}]}]
+1f:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","$L11",null,{"href":"/components/config-provider","children":["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"ConfigProvider"}]}]," – конфигурирует приложение под разные платформы и темы."]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","$L11",null,{"href":"/components/app-root","children":["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"AppRoot"}]}]," – управляет режимами встраивания, полосой прокрутки, безопасными отступами и порталами."]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["см. ",["$","$L11",null,{"href":"https://vite.dev/guide/features#css","children":"Vite | CSS"}]]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["см. ",["$","$L11",null,{"href":"https://nextjs.org/docs/app/getting-started/css#external-stylesheets","children":"Next.js | External stylesheets"}]]}],"\n"]}]
+20:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"esnext-install","children":["$","a",null,{"href":"#esnext-install","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Установка ESNext версии","children":["Установка ESNext версии",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+21:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["VKUI позволяет подключить сборку с ESNext и ",["$","$L11",null,{"href":"https://github.com/css-modules/css-modules","children":"CSS Modules"}],". Она уменьшает размер приложения — и JS, и CSS, — но требует дополнительной настройки сборщика."]}]
+22:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Шаги те же, что в ",["$","$L11",null,{"href":"#base-install","children":"базовой установке"}],", но отличается CSS-бандл."]}]
+23:["$","div",null,{"className":"Steps_root__xNLhi","children":[["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"esnext-step1","children":["$","a",null,{"href":"#esnext-step1","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Подключите стили","children":["Подключите стили",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Импортируйте CSS-бандл ",["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"'@vkontakte/vkui/dist/cssm/styles/themes.css'"}]," вместо ",["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"'@vkontakte/vkui/dist/vkui.css'"}]," в корень вашего приложения."]}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["На примере файла ",["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"src/main.tsx"}]," из ",["$","$L11",null,{"href":"#base-install","children":"базовой установки"}],":"]}],["$","$L39",null,{"tabIndex":"0","data-language":"diff","data-word-wrap":"","data-filename":"src/main.tsx","data-copy":"","data-pagefind-ignore":"all","children":["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":[["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"import { ConfigProvider, AppRoot } from '@vkontakte/vkui';"}]}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#B31D28","--shiki-dark":"#FDAEB7"},"children":"- import '@vkontakte/vkui/dist/vkui.css';"}]}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#22863A","--shiki-dark":"#85E89D"},"children":"+ import '@vkontakte/vkui/dist/cssm/styles/themes.css';"}]}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"import { App } from './App.tsx';"}]}]]}]}],["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"esnext-step2","children":["$","a",null,{"href":"#esnext-step2","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Настройте сборщик","children":["Настройте сборщик",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Нужно трансформировать импорты, включить транспиляцию и подключить CSS Modules. Для каждого сборщика или фреймворка — свои инструкции."}],["$","details",null,{"className":"mdx_details__Rxp89","children":[["$","summary",null,{"className":"mdx_summary___Rt8S","children":"Next.js"}],["$","$L39",null,{"tabIndex":"0","data-language":"js","data-word-wrap":"","data-filename":"next.config.js","data-copy":"","data-pagefind-ignore":"all","children":["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":["$L41","\n","$L42","\n","$L43","\n","$L44","\n","$L45","\n","$L46","\n","$L47","\n","$L48","\n","$L49","\n","$L4a","\n","$L4b","\n","$L4c","\n","$L4d","\n","$L4e"]}]}],"$L4f"]}],"$L50","$L51"]}]
+24:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"icons","children":["$","a",null,{"href":"#icons","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Иконки","children":["Иконки",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+25:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Некоторые компоненты VKUI используют иконки из ",["$","$L11",null,{"href":"https://www.npmjs.com/package/@vkontakte/icons","children":"@vkontakte/icons"}]," — набор готовых SVG-иконок в виде React-компонентов. Полный список — в ",["$","$L11",null,{"href":"https://vkcom.github.io/icons","children":"отдельной документации иконок"}],"."]}]
+26:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Если вы тоже используете ",["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"@vkontakte/icons"}]," и указываете пакет в ",["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"package.json"}],", возможна дубликация зависимостей."]}]
+27:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"dedupe-icons","children":["$","a",null,{"href":"#dedupe-icons","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Дедупликация @vkontakte/icons","children":["Дедупликация @vkontakte/icons",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+28:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Выполните команду вашего пакетного менеджера:"}]
+29:["$","$L38",null,{"packageManagers":[{"id":"npm","content":["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","data-language":"sh","children":["$","span",null,{"data-line":"","children":[["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":"npm"}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":" dedupe"}]]}]}]}]},{"id":"yarn","content":["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","data-language":"sh","children":["$","span",null,{"data-line":"","children":[["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":"yarn"}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":" dedupe"}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":" @vkontakte/icons"}]]}]}]}]},{"id":"pnpm","content":["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","data-language":"sh","children":["$","span",null,{"data-line":"","children":[["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":"pnpm"}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":" dedupe"}]]}]}]}]}]}]
+2a:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"cdn","children":["$","a",null,{"href":"#cdn","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию CDN","children":["CDN",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+2b:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Чтобы начать с минимальной настройкой, подключите VKUI через ",["$","$L11",null,{"href":"https://esm.sh/","children":"esm.sh"}]," или ",["$","$L11",null,{"href":"https://www.jsdelivr.com/esm","children":"esm.run"}],"."]}]
+2c:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Пример с ",["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"esm.sh"}],":"]}]
+2d:["$","$L39",null,{"tabIndex":"0","data-language":"html","data-word-wrap":"","data-copy":"","data-pagefind-ignore":"all","children":["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":[["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"<"}],["$","span",null,{"style":{"--shiki-light":"#22863A","--shiki-dark":"#85E89D"},"children":"link"}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" rel"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"stylesheet\""}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" href"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"https://esm.sh/@vkontakte/vkui@7/dist/vkui.css\""}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" />"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"<"}],["$","span",null,{"style":{"--shiki-light":"#22863A","--shiki-dark":"#85E89D"},"children":"script"}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" type"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"importmap\""}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  {"}]}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"    \"imports\": {"}]}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"      \"react\": \"https://esm.sh/react@19/\","}]}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"      \"react-dom/\": \"https://esm.sh/react-dom@19/\","}]}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"      \"@vkontakte/vkui\": \"https://esm.sh/@vkontakte/vkui@7/\""}]}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"    }"}]}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  }"}]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"</"}],["$","span",null,{"style":{"--shiki-light":"#22863A","--shiki-dark":"#85E89D"},"children":"script"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"<"}],["$","span",null,{"style":{"--shiki-light":"#22863A","--shiki-dark":"#85E89D"},"children":"script"}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" type"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"module\""}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"  import"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" React "}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"from"}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":" 'react'"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":";"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"  import"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" { createRoot } "}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"from"}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":" 'react-dom/client'"}],"$L52"]}],"\n","$L53","\n","$L54","\n","$L55","\n","$L56","\n","$L57"]}]}]
+2e:["$","aside",null,{"className":"Callout_root__6UBFP","children":["$","div",null,{"className":"Callout_content__MYf_T","children":["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Этот метод подходит только для быстрого прототипирования. Для оптимальных настроек используйте ",["$","$L11",null,{"href":"#base-install","children":"установку со сборщиком"}],"."]}]}]}]
+32:null
+8:300
+3a:["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"AppRoot"}]
+3b:["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]
+3c:["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"        <"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"App"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" />"}]]}]
+3d:["$","span",null,{"data-highlighted-line":"","children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"      </"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"AppRoot"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}]
+3e:["$","span",null,{"data-highlighted-line":"","children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"    </"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"ConfigProvider"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}]
+3f:["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  </"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"StrictMode"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">,"}]]}]
+40:["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":");"}]}]
+41:["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"module"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"."}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"exports"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":" ="}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" {"}]]}]
+42:["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#6A737D","--shiki-dark":"#6A737D"},"children":"  // ..."}]}]
+43:["$","span",null,{"children":" "}]
+44:["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#6A737D","--shiki-dark":"#6A737D"},"children":"  // Включаем транспиляцию"}]}]
+45:["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  transpilePackages: ["}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"'@vkontakte/vkui'"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"],"}]]}]
+46:["$","span",null,{"children":" "}]
+47:["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#6A737D","--shiki-dark":"#6A737D"},"children":"  // Трансформируем импорты"}]}]
+48:["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  modularizeImports: {"}]}]
+49:["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"    '@vkontakte/vkui'"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":": {"}]]}]
+4a:["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"      transform: "}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"'@vkontakte/vkui/dist/cssm'"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":","}]]}]
+4b:["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"      skipDefaultConversion: "}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"true"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":","}]]}]
+4c:["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"    },"}]}]
+4d:["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  },"}]}]
+4e:["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"};"}]}]
+4f:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":[["$","$L11",null,{"href":"https://codesandbox.io/p/sandbox/vkui-next-js-cssm-el0g7c","children":"Пример приложения"}]," на Next.js"]}]
+50:["$","details",null,{"className":"mdx_details__Rxp89","children":[["$","summary",null,{"className":"mdx_summary___Rt8S","children":"Vite"}],["$","$L39",null,{"tabIndex":"0","data-language":"js","data-word-wrap":"","data-filename":"vite.config.js","data-copy":"","data-pagefind-ignore":"all","children":["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":[["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"export"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":" default"}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" defineConfig"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"({"}]]}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#6A737D","--shiki-dark":"#6A737D"},"children":"  // ..."}]}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  resolve: {"}]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"    alias: [{ find:"}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":" /"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"^"}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#DBEDFF"},"children":"@vkontakte"}],["$","span",null,{"style":{"--shiki-light":"#22863A","--shiki-light-font-weight":"bold","--shiki-dark":"#85E89D","--shiki-dark-font-weight":"bold"},"children":"\\/"}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#DBEDFF"},"children":"vkui"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"$$"}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"/"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":", replacement: "}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"'@vkontakte/vkui/dist/cssm'"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" }],"}]]}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  },"}]}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"});"}]}]]}]}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":[["$","$L11",null,{"href":"https://codesandbox.io/p/sandbox/vkui-vite-cssm-4iikku","children":"Пример приложения"}]," на Vite"]}]]}]
+51:["$","details",null,{"className":"mdx_details__Rxp89","children":[["$","summary",null,{"className":"mdx_summary___Rt8S","children":"webpack"}],["$","$L39",null,{"tabIndex":"0","data-language":"js","data-word-wrap":"","data-filename":"webpack.config.js","data-copy":"","data-pagefind-ignore":"all","children":["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":[["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"module"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"."}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"exports"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":" ="}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" {"}]]}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#6A737D","--shiki-dark":"#6A737D"},"children":"  //..."}]}],"\n",["$","span",null,{"children":" "}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  module: {"}]}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"    rules: ["}]}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#6A737D","--shiki-dark":"#6A737D"},"children":"      // Включаем транспиляцию"}]}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"      {"}]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"        test:"}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":" /"}],["$","span",null,{"style":{"--shiki-light":"#22863A","--shiki-light-font-weight":"bold","--shiki-dark":"#85E89D","--shiki-dark-font-weight":"bold"},"children":"\\."}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#DBEDFF"},"children":"js"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"$$"}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"/"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":","}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"        include:"}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":" /"}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#DBEDFF"},"children":"node_modules"}],["$","span",null,{"style":{"--shiki-light":"#22863A","--shiki-light-font-weight":"bold","--shiki-dark":"#85E89D","--shiki-dark-font-weight":"bold"},"children":"\\/"}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#DBEDFF"},"children":"@vkontakte"}],["$","span",null,{"style":{"--shiki-light":"#22863A","--shiki-light-font-weight":"bold","--shiki-dark":"#85E89D","--shiki-dark-font-weight":"bold"},"children":"\\/"}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#DBEDFF"},"children":"vkui"}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"/"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":","}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"        use: ["}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"'babel-loader'"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"],"}]]}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"      },"}]}],"\n",["$","span",null,{"children":" "}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#6A737D","--shiki-dark":"#6A737D"},"children":"      // Обрабатываем css modules"}]}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"      {"}]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"        test:"}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":" /"}],["$","span",null,{"style":{"--shiki-light":"#22863A","--shiki-light-font-weight":"bold","--shiki-dark":"#85E89D","--shiki-dark-font-weight":"bold"},"children":"\\."}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#DBEDFF"},"children":"css"}],"$L58","$L59","$L5a"]}],"\n","$L5b","\n","$L5c","\n","$L5d","\n","$L5e","\n","$L5f","\n","$L60","\n","$L61","\n","$L62","\n","$L63","\n","$L64","\n","$L65","\n","$L66","\n","$L67","\n","$L68","\n","$L69","\n","$L6a","\n","$L6b","\n","$L6c","\n","$L6d","\n","$L6e","\n","$L6f","\n","$L70"]}]}]]}]
+52:["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":";"}]
+53:["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"  import"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" { Button } "}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"from"}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":" '@vkontakte/vkui'"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":";"}]]}]
+54:["$","span",null,{"children":" "}]
+55:["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"  const"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":" root"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":" ="}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" createRoot"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"(document."}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":"getElementById"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"("}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"'root'"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"));"}]]}]
+56:["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  root."}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":"render"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"(React."}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":"createElement"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"(Button, "}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"null"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":", "}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"'Кнопка'"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"));"}]]}]
+57:["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"</"}],["$","span",null,{"style":{"--shiki-light":"#22863A","--shiki-dark":"#85E89D"},"children":"script"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}]
+8:C
+58:["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"$$"}]
+59:["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"/"}]
+5a:["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":","}]
+5b:["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"        include:"}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":" /"}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#DBEDFF"},"children":"node_modules"}],["$","span",null,{"style":{"--shiki-light":"#22863A","--shiki-light-font-weight":"bold","--shiki-dark":"#85E89D","--shiki-dark-font-weight":"bold"},"children":"\\/"}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#DBEDFF"},"children":"@vkontakte"}],["$","span",null,{"style":{"--shiki-light":"#22863A","--shiki-light-font-weight":"bold","--shiki-dark":"#85E89D","--shiki-dark-font-weight":"bold"},"children":"\\/"}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#DBEDFF"},"children":"vkui"}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"/"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":","}]]}]
+5c:["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"        use: ["}]}]
+5d:["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"          {"}]}]
+5e:["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"            loader: "}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"'css-loader'"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":","}]]}]
+5f:["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#6A737D","--shiki-dark":"#6A737D"},"children":"            /* Используем следующие опции в случае использования `css-loader >= 7.0.0` (см. https://github.com/webpack-contrib/css-loader/blob/v7.1.0/CHANGELOG.md) */"}]}]
+60:["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#6A737D","--shiki-dark":"#6A737D"},"children":"            // options: {"}]}]
+61:["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#6A737D","--shiki-dark":"#6A737D"},"children":"            //   namedExport: false,"}]}]
+62:["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#6A737D","--shiki-dark":"#6A737D"},"children":"            //   exportLocalsConvention: 'as-is',"}]}]
+63:["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#6A737D","--shiki-dark":"#6A737D"},"children":"            // }"}]}]
+64:["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"          },"}]}]
+65:["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"        ],"}]}]
+66:["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"      },"}]}]
+67:["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"    ],"}]}]
+68:["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  },"}]}]
+69:["$","span",null,{"children":" "}]
+6a:["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#6A737D","--shiki-dark":"#6A737D"},"children":"  // Трансформируем импорты"}]}]
+6b:["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  resolve: {"}]}]
+6c:["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"    alias: {"}]}]
+6d:["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"      '@vkontakte/vkui$'"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":": "}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"'@vkontakte/vkui/dist/cssm'"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":","}]]}]
+6e:["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"    },"}]}]
+6f:["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  },"}]}]
+70:["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"};"}]}]
+e:0
+a:"$undefined"
+c:"$undefined"
+7:"$undefined"

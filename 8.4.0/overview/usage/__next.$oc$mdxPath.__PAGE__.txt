@@ -1,0 +1,230 @@
+1:"$Sreact.fragment"
+2:I[1794,["426","static/chunks/426-301619e15162f5fa.js","462","static/chunks/462-76b224f9288dd95c.js","573","static/chunks/573-1bfc3bb9bbfde546.js","302","static/chunks/302-3c737c8b0ec291c0.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-3c559e74b9a149c3.js"],"Main"]
+3:T1259,---
+description: Инструкция по запуску приложения с базовой структурой и навигацией на VKUI.
+---
+
+<Overview type="doc">
+# Использование
+
+После шагов из [Установки](/overview/install) у вас должно запускаться минимально работающее приложение. Здесь разберём простой пример использования и рекомендации по дальнейшим шагам.
+
+Примеры продолжим на шаблоне [React + TypeScript + Vite](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts).
+
+</Overview>
+
+## Быстрый старт [#quick-start]
+
+Начнём с компонента [`Button`](/components/button):
+
+```jsx filename="src/App.tsx"
+import { Button } from '@vkontakte/vkui';
+
+export default function App() {
+  return (
+    <Button mode="outline" size="l">
+      Привет, мир!
+    </Button>
+  );
+}
+```
+
+На странице должно появиться что-то похожее:
+
+import { BlockWrapper } from '@/components/wrappers';
+
+<Playground Wrapper={BlockWrapper}>
+  ```jsx
+  <Button mode="outline" size="l">
+    Привет, мир!
+  </Button>
+  ```
+</Playground>
+
+## Навигационные слои [#navigation]
+
+Приложение состоит из набора экранов с информацией. В VKUI есть специальные компоненты для экранов и навигации между ними. Подробно — в разделе [Навигация](/overview/navigation). Ниже — базовый пример.
+
+<Playground Wrapper={FixedLayoutWrapper} style={{ maxWidth: 320, height: 415, overflow: 'hidden' }}>
+
+```jsx
+import { useState } from 'react';
+import {
+  SplitLayout,
+  SplitCol,
+  View,
+  Panel,
+  PanelHeader,
+  Group,
+  CellButton,
+  usePlatform,
+} from '@vkontakte/vkui';
+
+const [activePanel, setActivePanel] = useState('feed-panel');
+const platform = usePlatform();
+
+return (
+  <SplitLayout header={platform !== 'vkcom' && <PanelHeader delimiter="none" />}>
+    <SplitCol width="100%" stretchedOnMobile autoSpaced>
+      <View activePanel={activePanel}>
+        <Panel id="feed-panel">
+          <PanelHeader>Лента</PanelHeader>
+          <Placeholder
+            action={
+              <Button onClick={() => setActivePanel('profile-panel')}>Перейти в Профиль</Button>
+            }
+            stretched
+          >
+            <Icon56NewsfeedOutline />
+          </Placeholder>
+        </Panel>
+        <Panel id="profile-panel">
+          <PanelHeader>Профиль</PanelHeader>
+          <Placeholder
+            action={<Button onClick={() => setActivePanel('feed-panel')}>Вернуться в Ленту</Button>}
+            stretched
+          >
+            <Icon56UserCircleOutline />
+          </Placeholder>
+        </Panel>
+      </View>
+    </SplitCol>
+  </SplitLayout>
+);
+```
+
+</Playground>
+
+## Многоколоночный интерфейс [#multiple-columns]
+
+На мобильных элементы приходится ограничивать, на настольных — можно размещать больше, разделяя интерфейс на колонки. Для этого есть [`SplitLayout`](/components/split-layout) с подкомпонентом [`SplitCol`](/components/split-layout#split-col). Подробнее — на странице [Навигация](/overview/navigation).
+
+Адаптивный пример работы `SplitLayout`:
+
+import { FixedLayoutWrapper } from '@/components/wrappers';
+
+<Playground Wrapper={FixedLayoutWrapper}>
+
+```jsx
+const { viewWidth } = useAdaptivityConditionalRender();
+
+return (
+  <SplitLayout>
+    {viewWidth.tabletPlus && (
+      <SplitCol fixed width={280} maxWidth={280} className={viewWidth.tabletPlus.className}>
+        <div
+          style={{
+            padding: 12,
+            color: 'white',
+            backgroundColor: 'tomato',
+          }}
+        >
+          Фиксированная колонка слева
+        </div>
+      </SplitCol>
+    )}
+    <SplitCol>
+      <div
+        style={{
+          padding: 12,
+          color: 'white',
+          backgroundColor: 'steelblue',
+        }}
+      >
+        Колонка справа
+        {viewWidth.tabletMinus && (
+          <p className={viewWidth.tabletMinus.className}>
+            ⚠️ колонка слева спрятана по условию адаптивности
+          </p>
+        )}
+      </div>
+    </SplitCol>
+  </SplitLayout>
+);
+```
+
+</Playground>8:X
+d:X
+d:C
+0:{"buildId":"18qfN9ll9r14xNLof7L2a","data":[{"rsc":["$","$1","c",{"children":[[["$","$L2",null,{"metadata":{"description":"Инструкция по запуску приложения с базовой структурой и навигацией на VKUI.","title":"Использование","filePath":"content/overview/usage.mdx","timestamp":1787666331000},"sourceCode":"$3","children":"$L4"}],"$L5"],null,"$L6"]}],"isPartial":"$@7","staleTime":"$8","varyParams":null},{"rsc":"$L9","isPartial":"$@a","staleTime":"$8","varyParams":null},{"rsc":"$Lb","isPartial":"$@c","staleTime":"$8","varyParams":"$d"}],"isUpgradeableISRFallback":false,"a":"$@e","rootVaryParams":null,"needsRuntimeRequest":"$@f"}
+10:I[88965,["426","static/chunks/426-301619e15162f5fa.js","462","static/chunks/462-76b224f9288dd95c.js","573","static/chunks/573-1bfc3bb9bbfde546.js","302","static/chunks/302-3c737c8b0ec291c0.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-3c559e74b9a149c3.js"],"Overview",1]
+11:I[88835,["426","static/chunks/426-301619e15162f5fa.js","462","static/chunks/462-76b224f9288dd95c.js","573","static/chunks/573-1bfc3bb9bbfde546.js","302","static/chunks/302-3c737c8b0ec291c0.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-3c559e74b9a149c3.js"],"Anchor"]
+12:I[70176,["426","static/chunks/426-301619e15162f5fa.js","462","static/chunks/462-76b224f9288dd95c.js","573","static/chunks/573-1bfc3bb9bbfde546.js","302","static/chunks/302-3c737c8b0ec291c0.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-3c559e74b9a149c3.js"],"Pre"]
+1f:I[90931,["426","static/chunks/426-301619e15162f5fa.js","462","static/chunks/462-76b224f9288dd95c.js","573","static/chunks/573-1bfc3bb9bbfde546.js","302","static/chunks/302-3c737c8b0ec291c0.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-3c559e74b9a149c3.js"],"TOC"]
+20:I[31872,[],"OutletBoundary"]
+21:"$Sreact.suspense"
+23:I[31872,[],"ViewportBoundary"]
+24:I[31872,[],"MetadataBoundary"]
+25:I[12569,[],"IconMark"]
+26:I[91133,[],""]
+27:I[4297,[],""]
+4:[["$","$L10",null,{"type":"doc","children":[["$","h1",null,{"className":"mdx_h1__1mgpN","children":"Использование"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["После шагов из ",["$","$L11",null,{"href":"/overview/install","children":"Установки"}]," у вас должно запускаться минимально работающее приложение. Здесь разберём простой пример использования и рекомендации по дальнейшим шагам."]}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Примеры продолжим на шаблоне ",["$","$L11",null,{"href":"https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts","children":"React + TypeScript + Vite"}],"."]}]]}],"\n",["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"quick-start","children":["$","a",null,{"href":"#quick-start","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Быстрый старт","children":["Быстрый старт",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}],"\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Начнём с компонента ",["$","$L11",null,{"href":"/components/button","children":["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"Button"}]}],":"]}],"\n",["$","$L12",null,{"tabIndex":"0","data-language":"jsx","data-word-wrap":"","data-filename":"src/App.tsx","data-copy":"","data-pagefind-ignore":"all","children":["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":[["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"import"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" { Button } "}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"from"}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":" '@vkontakte/vkui'"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":";"}]]}],"\n",["$","span",null,{"children":" "}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"export"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":" default"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":" function"}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" App"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"() {"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"  return"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" ("}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"    <"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Button"}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" mode"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"outline\""}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" size"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"l\""}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"      Привет, мир!"}]}],"\n","$L13","\n","$L14","\n","$L15"]}]}],"\n","$L16","\n","\n","$L17","\n","$L18","\n","$L19","\n","$L1a","\n","$L1b","\n","$L1c","\n","$L1d","\n","\n","$L1e"]
+5:["$","$L1f",null,{"toc":[{"value":"Быстрый старт","id":"quick-start","depth":2},{"value":"Навигационные слои","id":"navigation","depth":2},{"value":"Многоколоночный интерфейс","id":"multiple-columns","depth":2}]}]
+6:["$","$L20",null,{"children":["$","$21",null,{"name":"Next.MetadataOutlet","children":"$@22"}]}]
+9:["$","$1","h",{"children":[null,["$","$L23",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]}],["$","div",null,{"hidden":true,"children":["$","$L24",null,{"children":["$","$21",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"Использование | VKUI"}],["$","meta","1",{"name":"description","content":"Инструкция по запуску приложения с базовой структурой и навигацией на VKUI."}],["$","link","2",{"rel":"canonical","href":"https://vkui.io/overview/usage/"}],["$","meta","3",{"property":"og:title","content":"VKUI – React UI Kit"}],["$","meta","4",{"property":"og:description","content":"VKUI — библиотека адаптивных React-компонентов для создания мобильных и веб-приложений."}],["$","meta","5",{"property":"og:url","content":"https://vkui.io/"}],["$","meta","6",{"property":"og:site_name","content":"VKUI"}],["$","meta","7",{"property":"og:type","content":"website"}],["$","meta","8",{"name":"twitter:card","content":"summary"}],["$","meta","9",{"name":"twitter:title","content":"VKUI – React UI Kit"}],["$","meta","10",{"name":"twitter:description","content":"VKUI — библиотека адаптивных React-компонентов для создания мобильных и веб-приложений."}],["$","link","11",{"rel":"icon","href":"/8.4.0/favicon.ico?60dfc7274b0e657e","type":"image/x-icon","sizes":"48x48"}],["$","link","12",{"rel":"icon","href":"/8.4.0/icon.svg?01ea673639a821e1","type":"image/svg+xml","sizes":"any"}],["$","link","13",{"rel":"apple-touch-icon","href":"/8.4.0/apple-icon.png?131c1f3e67ede032","type":"image/png","sizes":"180x180"}],["$","$L25","14",{}]]}]}]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}]
+b:["$","$1","c",{"children":[null,["$","$L26",null,{"parallelRouterKey":"children","template":["$","$L27",null,{}]}]]}]
+f:true
+28:I[35060,["426","static/chunks/426-301619e15162f5fa.js","462","static/chunks/462-76b224f9288dd95c.js","573","static/chunks/573-1bfc3bb9bbfde546.js","302","static/chunks/302-3c737c8b0ec291c0.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-3c559e74b9a149c3.js"],"PlaygroundLazy"]
+29:I[38495,["426","static/chunks/426-301619e15162f5fa.js","462","static/chunks/462-76b224f9288dd95c.js","573","static/chunks/573-1bfc3bb9bbfde546.js","302","static/chunks/302-3c737c8b0ec291c0.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-3c559e74b9a149c3.js"],"BlockWrapper"]
+2a:I[45021,["426","static/chunks/426-301619e15162f5fa.js","462","static/chunks/462-76b224f9288dd95c.js","573","static/chunks/573-1bfc3bb9bbfde546.js","302","static/chunks/302-3c737c8b0ec291c0.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-3c559e74b9a149c3.js"],"FixedLayoutWrapper"]
+13:["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"    </"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Button"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}]
+14:["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  );"}]}]
+15:["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"}"}]}]
+16:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"На странице должно появиться что-то похожее:"}]
+17:["$","$L28",null,{"Wrapper":"$29","code":"<Button mode=\"outline\" size=\"l\">\n  Привет, мир!\n</Button>"}]
+18:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"navigation","children":["$","a",null,{"href":"#navigation","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Навигационные слои","children":["Навигационные слои",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+19:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Приложение состоит из набора экранов с информацией. В VKUI есть специальные компоненты для экранов и навигации между ними. Подробно — в разделе ",["$","$L11",null,{"href":"/overview/navigation","children":"Навигация"}],". Ниже — базовый пример."]}]
+2b:T4b4,import { useState } from 'react';
+import {
+  SplitLayout,
+  SplitCol,
+  View,
+  Panel,
+  PanelHeader,
+  Group,
+  CellButton,
+  usePlatform,
+} from '@vkontakte/vkui';
+
+const [activePanel, setActivePanel] = useState('feed-panel');
+const platform = usePlatform();
+
+return (
+  <SplitLayout header={platform !== 'vkcom' && <PanelHeader delimiter="none" />}>
+    <SplitCol width="100%" stretchedOnMobile autoSpaced>
+      <View activePanel={activePanel}>
+        <Panel id="feed-panel">
+          <PanelHeader>Лента</PanelHeader>
+          <Placeholder
+            action={
+              <Button onClick={() => setActivePanel('profile-panel')}>Перейти в Профиль</Button>
+            }
+            stretched
+          >
+            <Icon56NewsfeedOutline />
+          </Placeholder>
+        </Panel>
+        <Panel id="profile-panel">
+          <PanelHeader>Профиль</PanelHeader>
+          <Placeholder
+            action={<Button onClick={() => setActivePanel('feed-panel')}>Вернуться в Ленту</Button>}
+            stretched
+          >
+            <Icon56UserCircleOutline />
+          </Placeholder>
+        </Panel>
+      </View>
+    </SplitCol>
+  </SplitLayout>
+);1a:["$","$L28",null,{"Wrapper":"$2a","style":{"maxWidth":320,"height":415,"overflow":"hidden"},"code":"$2b"}]
+1b:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"multiple-columns","children":["$","a",null,{"href":"#multiple-columns","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Многоколоночный интерфейс","children":["Многоколоночный интерфейс",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+1c:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["На мобильных элементы приходится ограничивать, на настольных — можно размещать больше, разделяя интерфейс на колонки. Для этого есть ",["$","$L11",null,{"href":"/components/split-layout","children":["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"SplitLayout"}]}]," с подкомпонентом ",["$","$L11",null,{"href":"/components/split-layout#split-col","children":["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"SplitCol"}]}],". Подробнее — на странице ",["$","$L11",null,{"href":"/overview/navigation","children":"Навигация"}],"."]}]
+1d:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Адаптивный пример работы ",["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"SplitLayout"}],":"]}]
+1e:["$","$L28",null,{"Wrapper":"$2a","code":"const { viewWidth } = useAdaptivityConditionalRender();\n\nreturn (\n  <SplitLayout>\n    {viewWidth.tabletPlus && (\n      <SplitCol fixed width={280} maxWidth={280} className={viewWidth.tabletPlus.className}>\n        <div\n          style={{\n            padding: 12,\n            color: 'white',\n            backgroundColor: 'tomato',\n          }}\n        >\n          Фиксированная колонка слева\n        </div>\n      </SplitCol>\n    )}\n    <SplitCol>\n      <div\n        style={{\n          padding: 12,\n          color: 'white',\n          backgroundColor: 'steelblue',\n        }}\n      >\n        Колонка справа\n        {viewWidth.tabletMinus && (\n          <p className={viewWidth.tabletMinus.className}>\n            ⚠️ колонка слева спрятана по условию адаптивности\n          </p>\n        )}\n      </div>\n    </SplitCol>\n  </SplitLayout>\n);"}]
+22:null
+8:300
+8:C
+e:0
+a:"$undefined"
+c:"$undefined"
+7:"$undefined"

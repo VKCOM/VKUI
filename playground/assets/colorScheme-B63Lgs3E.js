@@ -1,0 +1,1 @@
+import{n as e}from"./rolldown-runtime-DkW27tQK.js";var t,n;function r(){return(r=e((()=>{t=`light`,n={DARK:`dark`,LIGHT:`light`}})))()}export{t as n,r,n as t};

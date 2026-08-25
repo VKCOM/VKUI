@@ -1,0 +1,94 @@
+1:"$Sreact.fragment"
+2:I[1794,["426","static/chunks/426-301619e15162f5fa.js","462","static/chunks/462-76b224f9288dd95c.js","573","static/chunks/573-1bfc3bb9bbfde546.js","302","static/chunks/302-3c737c8b0ec291c0.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-3c559e74b9a149c3.js"],"Main"]
+4:I[88965,["426","static/chunks/426-301619e15162f5fa.js","462","static/chunks/462-76b224f9288dd95c.js","573","static/chunks/573-1bfc3bb9bbfde546.js","302","static/chunks/302-3c737c8b0ec291c0.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-3c559e74b9a149c3.js"],"Overview",1]
+5:I[35060,["426","static/chunks/426-301619e15162f5fa.js","462","static/chunks/462-76b224f9288dd95c.js","573","static/chunks/573-1bfc3bb9bbfde546.js","302","static/chunks/302-3c737c8b0ec291c0.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-3c559e74b9a149c3.js"],"PlaygroundLazy"]
+3:T8c4,---
+description: Подвал всей страницы или текущего экрана.
+---
+
+<Overview group="layout">
+
+# Footer [tag:component]
+
+Подвал всей страницы или текущего экрана.
+
+</Overview>
+
+{/* @example-description: Базовый подвал `Footer`. */}
+<Playground>
+  ```jsx
+  <Panel>
+    <Group>
+      <Cell before={<Avatar />} subtitle="Веб-сайт" onClick={() => void 0}>
+        Команда ВКонтакте
+      </Cell>
+      <Cell before={<Avatar />} subtitle="Музыкант" onClick={() => void 0}>
+        Robbie Williams
+      </Cell>
+      <Cell before={<Avatar />} subtitle="Издательский дом" onClick={() => void 0}>
+        ПостНаука
+      </Cell>
+    </Group>
+    <Footer>Copyright VK LLC</Footer>
+  </Panel>
+  ```
+</Playground>
+
+#### Ключевые правила
+
+| Сценарий                   | Решение                       | Почему важно                       |
+| -------------------------- | ----------------------------- | ---------------------------------- |
+| Глобальный подвал страницы | Только один на страницу       | Соответствие стандартам `WAI-ARIA` |
+| Несколько подвалов         | Добавить `aria-label` каждому | Различение разделов скринридерами  |
+| Декоративный элемент       | `<Footer Component="div">`    | Избежать ложной семантики          |
+
+### Доступность (a11y) [#a11y]
+
+#### Семантическая роль
+
+По умолчанию использует HTML-тег `<footer>`, дополнительно задаётся роль `role="contentinfo"` ([для поддержки Safari\<=13](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/footer#accessibility)).
+
+Предназначен для:
+
+- контактной информации;
+- ссылок на разделы сайта;
+- копирайта и юридических данных;
+- мета-информации о содержимом.
+
+## Свойства и методы [#api]
+
+<PropsTable name="Footer" />11:X
+16:X
+16:C
+0:{"buildId":"18qfN9ll9r14xNLof7L2a","data":[{"rsc":["$","$1","c",{"children":[[["$","$L2",null,{"metadata":{"description":"Подвал всей страницы или текущего экрана.","title":"Footer","filePath":"content/components/footer.mdx","timestamp":1787666331000},"sourceCode":"$3","children":[["$","$L4",null,{"group":"layout","children":[["$","h1",null,{"className":"mdx_h1__1mgpN","data-pagefind-filter":"tag:component","children":"Footer"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Подвал всей страницы или текущего экрана."}]]}],"\n","\n",["$","$L5",null,{"code":"<Panel>\n  <Group>\n    <Cell before={<Avatar />} subtitle=\"Веб-сайт\" onClick={() => void 0}>\n      Команда ВКонтакте\n    </Cell>\n    <Cell before={<Avatar />} subtitle=\"Музыкант\" onClick={() => void 0}>\n      Robbie Williams\n    </Cell>\n    <Cell before={<Avatar />} subtitle=\"Издательский дом\" onClick={() => void 0}>\n      ПостНаука\n    </Cell>\n  </Group>\n  <Footer>Copyright VK LLC</Footer>\n</Panel>"}],"\n",["$","h4",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading4__c9VtX","id":"klyuchevye-pravila","children":["$","a",null,{"href":"#klyuchevye-pravila","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Ключевые правила","children":["Ключевые правила",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}],"\n","$L6","\n","$L7","\n","$L8","\n","$L9","\n","$La","\n","$Lb","\n","$Lc","\n","$Ld"]}],"$Le"],null,"$Lf"]}],"isPartial":"$@10","staleTime":"$11","varyParams":null},{"rsc":"$L12","isPartial":"$@13","staleTime":"$11","varyParams":null},{"rsc":"$L14","isPartial":"$@15","staleTime":"$11","varyParams":"$16"}],"isUpgradeableISRFallback":false,"a":"$@17","rootVaryParams":null,"needsRuntimeRequest":"$@18"}
+19:I[88835,["426","static/chunks/426-301619e15162f5fa.js","462","static/chunks/462-76b224f9288dd95c.js","573","static/chunks/573-1bfc3bb9bbfde546.js","302","static/chunks/302-3c737c8b0ec291c0.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-3c559e74b9a149c3.js"],"Anchor"]
+1c:I[90931,["426","static/chunks/426-301619e15162f5fa.js","462","static/chunks/462-76b224f9288dd95c.js","573","static/chunks/573-1bfc3bb9bbfde546.js","302","static/chunks/302-3c737c8b0ec291c0.js","217","static/chunks/app/%5B%5B...mdxPath%5D%5D/page-3c559e74b9a149c3.js"],"TOC"]
+1d:I[31872,[],"OutletBoundary"]
+1e:"$Sreact.suspense"
+20:I[31872,[],"ViewportBoundary"]
+21:I[31872,[],"MetadataBoundary"]
+22:I[12569,[],"IconMark"]
+23:I[91133,[],""]
+24:I[4297,[],""]
+6:["$","div",null,{"className":"Table_root__0rGvK","children":["$","table",null,{"children":[["$","thead",null,{"children":["$","tr",null,{"children":[["$","th",null,{"children":"Сценарий","className":"Table_th__EHorR"}],["$","th",null,{"children":"Решение","className":"Table_th__EHorR"}],["$","th",null,{"children":"Почему важно","className":"Table_th__EHorR"}]],"className":"Table_tr__SD2Ot"}]}],["$","tbody",null,{"children":[["$","tr",null,{"children":[["$","td",null,{"children":"Глобальный подвал страницы","className":"Table_td__L3qz5"}],["$","td",null,{"children":"Только один на страницу","className":"Table_td__L3qz5"}],["$","td",null,{"children":["Соответствие стандартам ",["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"WAI-ARIA"}]],"className":"Table_td__L3qz5"}]],"className":"Table_tr__SD2Ot"}],["$","tr",null,{"children":[["$","td",null,{"children":"Несколько подвалов","className":"Table_td__L3qz5"}],["$","td",null,{"children":["Добавить ",["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"aria-label"}]," каждому"],"className":"Table_td__L3qz5"}],["$","td",null,{"children":"Различение разделов скринридерами","className":"Table_td__L3qz5"}]],"className":"Table_tr__SD2Ot"}],["$","tr",null,{"children":[["$","td",null,{"children":"Декоративный элемент","className":"Table_td__L3qz5"}],["$","td",null,{"children":["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"<Footer Component=\"div\">"}],"className":"Table_td__L3qz5"}],["$","td",null,{"children":"Избежать ложной семантики","className":"Table_td__L3qz5"}]],"className":"Table_tr__SD2Ot"}]]}]],"className":"Table_table__NzLHi"}]}]
+7:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"a11y","children":["$","a",null,{"href":"#a11y","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Доступность (a11y)","children":["Доступность (a11y)",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+8:["$","h4",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading4__c9VtX","id":"semanticheskaya-rol","children":["$","a",null,{"href":"#semanticheskaya-rol","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Семантическая роль","children":["Семантическая роль",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+9:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["По умолчанию использует HTML-тег ",["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"<footer>"}],", дополнительно задаётся роль ",["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"role=\"contentinfo\""}]," (",["$","$L19",null,{"href":"https://developer.mozilla.org/en-US/docs/Web/HTML/Element/footer#accessibility","children":"для поддержки Safari<=13"}],")."]}]
+a:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Предназначен для:"}]
+b:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":"контактной информации;"}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":"ссылок на разделы сайта;"}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":"копирайта и юридических данных;"}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":"мета-информации о содержимом."}],"\n"]}]
+c:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"api","children":["$","a",null,{"href":"#api","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Свойства и методы","children":["Свойства и методы",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+d:["$","div",null,{"className":"Table_root__0rGvK","children":["$","table",null,{"className":"Table_table__NzLHi PropsTable_root__O959b","children":[["$","thead",null,{"children":["$","tr",null,{"children":[["$","th",null,{"children":"Свойство","className":"Table_th__EHorR"}],["$","th",null,{"children":"Описание","className":"Table_th__EHorR"}]],"className":"Table_tr__SD2Ot"}]}],["$","tbody",null,{"children":["$@1a","$@1b"]}]]}]}]
+e:["$","$L1c",null,{"toc":[{"value":"Ключевые правила","id":"klyuchevye-pravila","depth":4},{"value":"Доступность (a11y)","id":"a11y","depth":3},{"value":"Семантическая роль","id":"semanticheskaya-rol","depth":4},{"value":"Свойства и методы","id":"api","depth":2}]}]
+f:["$","$L1d",null,{"children":["$","$1e",null,{"name":"Next.MetadataOutlet","children":"$@1f"}]}]
+12:["$","$1","h",{"children":[null,["$","$L20",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]}],["$","div",null,{"hidden":true,"children":["$","$L21",null,{"children":["$","$1e",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"Footer | VKUI"}],["$","meta","1",{"name":"description","content":"Подвал всей страницы или текущего экрана."}],["$","link","2",{"rel":"canonical","href":"https://vkui.io/components/footer/"}],["$","meta","3",{"property":"og:title","content":"VKUI – React UI Kit"}],["$","meta","4",{"property":"og:description","content":"VKUI — библиотека адаптивных React-компонентов для создания мобильных и веб-приложений."}],["$","meta","5",{"property":"og:url","content":"https://vkui.io/"}],["$","meta","6",{"property":"og:site_name","content":"VKUI"}],["$","meta","7",{"property":"og:type","content":"website"}],["$","meta","8",{"name":"twitter:card","content":"summary"}],["$","meta","9",{"name":"twitter:title","content":"VKUI – React UI Kit"}],["$","meta","10",{"name":"twitter:description","content":"VKUI — библиотека адаптивных React-компонентов для создания мобильных и веб-приложений."}],["$","link","11",{"rel":"icon","href":"/8.4.0/favicon.ico?60dfc7274b0e657e","type":"image/x-icon","sizes":"48x48"}],["$","link","12",{"rel":"icon","href":"/8.4.0/icon.svg?01ea673639a821e1","type":"image/svg+xml","sizes":"any"}],["$","link","13",{"rel":"apple-touch-icon","href":"/8.4.0/apple-icon.png?131c1f3e67ede032","type":"image/png","sizes":"180x180"}],["$","$L22","14",{}]]}]}]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}]
+14:["$","$1","c",{"children":[null,["$","$L23",null,{"parallelRouterKey":"children","template":["$","$L24",null,{}]}]]}]
+18:true
+1a:["$","tr","Component",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"Component"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"ElementType<any, keyof IntrinsicElements>"}],"$undefined",["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"footer"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+1b:["$","tr","render",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"render"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"((props: AllHTMLAttributes<HTMLElement> & HasRootRef<HTMLElement>) => ReactNode)"}],[["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Позволяет переопределить рендер компонента, получая собранные свойства\n(включая вычисленные ",["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"className"}]," и ",["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"style"}],"). Используется вместо ",["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"Component"}],"."]}],"\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Позволяет гибко объединять несколько компонентов без создания\nпромежуточных DOM-узлов и без ремаунта поддерева на каждый рендер."}]],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_cdbdbf","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+1f:null
+11:300
+11:C
+17:0
+13:"$undefined"
+15:"$undefined"
+10:"$undefined"
