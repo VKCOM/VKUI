@@ -20,7 +20,7 @@ describe('IconButton', () => {
   });
 
   it('Component: IconButton w/ href is a link', () => {
-    render(<IconButtonTest href="https://vk.com" />);
+    render(<IconButtonTest href="https://vk.ru" />);
     expect(button().tagName.toLowerCase()).toMatch('a');
   });
 });

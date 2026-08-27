@@ -38,7 +38,7 @@ export const WithIcon: Story = () => {
       </Link>
       <br />
       <Link
-        href="https://vk.com/video807566_169118280"
+        href="https://vk.ru/video807566_169118280"
         target="_blank"
         before={<Icon16ChainOutline />}
         after={<Icon24ExternalLinkOutline width={16} height={16} />}

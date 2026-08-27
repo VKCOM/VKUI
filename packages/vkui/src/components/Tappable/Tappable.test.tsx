@@ -28,13 +28,13 @@ describe(Tappable, () => {
   });
 
   it('Component: if a href is passed w/ no Component Tappable becomes a native link', () => {
-    render(<TappableTest href="https://vk.com">VK Link</TappableTest>);
+    render(<TappableTest href="https://vk.ru">VK Link</TappableTest>);
     expect(tappable().tagName.toLowerCase()).toMatch('a');
   });
 
   it('Component: if a href is passed w/ Component Tappable becomes a [Component]', () => {
     render(
-      <TappableTest href="https://vk.com" Component="div" role="link">
+      <TappableTest href="https://vk.ru" Component="div" role="link">
         VK Link Div
       </TappableTest>,
     );
@@ -43,7 +43,7 @@ describe(Tappable, () => {
 
   it('Component: if Component is undefined it should respect component autodetect', () => {
     render(
-      <TappableTest href="https://vk.com" Component={undefined}>
+      <TappableTest href="https://vk.ru" Component={undefined}>
         VK Link
       </TappableTest>,
     );
