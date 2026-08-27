@@ -15,7 +15,7 @@ import { getPageMap } from 'nextra/page-map';
 import { PlaygroundStoreProvider } from '@/providers/playgroundStoreProvider';
 import challengeCode from '../inline/challange.js?raw';
 import uwuCode from '../inline/uwu.js?raw';
-import { FooterLinks, RedirectHandler, Versions } from './_components';
+import { AlternateMdxLink, FooterLinks, RedirectHandler, Versions } from './_components';
 import '@vkontakte/vkui-docs-theme/styles.css';
 
 const inlineCodeArray = [challengeCode, uwuCode];
@@ -100,7 +100,9 @@ const RootLayout: React.FC<{ children: React.ReactNode }> = async ({ children })
 
   return (
     <html lang="ru" dir="ltr" suppressHydrationWarning>
-      <Head />
+      <Head>
+        <AlternateMdxLink />
+      </Head>
       <body>
         <InlineCode />
         <RedirectHandler />
