@@ -83,9 +83,7 @@ export const PopoutWrapper = ({
     )}
     baseStyle={{ zIndex }}
   >
-    <div className={styles.container}>
-      <div className={styles.overlay} onClick={onClick} />
-      <div className={styles.content}>{children}</div>
-    </div>
+    <div className={styles.overlay} onClick={onClick} />
+    {children}
   </RootComponent>
 );
