@@ -4,6 +4,7 @@ import {
   type ComponentPlaygroundProps,
   TEST_CLASS_NAMES,
 } from '@vkui-e2e/playground-helpers';
+import { Link } from '../Link/Link';
 import { TooltipBase, type TooltipBaseProps } from './TooltipBase';
 
 export const TooltipBasePlayground = (props: ComponentPlaygroundProps) => {
@@ -14,6 +15,14 @@ export const TooltipBasePlayground = (props: ComponentPlaygroundProps) => {
         {
           title: [undefined, 'Some header'],
           onCloseIconClick: [undefined, noop],
+        },
+        {
+          action: [
+            <Link href="#" key="">
+              Ссылка
+            </Link>,
+          ],
+          appearance: ['white'],
         },
       ]}
     >

@@ -36,6 +36,10 @@ export interface TooltipBaseProps
    */
   title?: React.ReactNode | undefined;
   /**
+   * Элемент действия.
+   */
+  action?: React.ReactNode | undefined;
+  /**
    * [a11y] Id для заголовка тултипа.
    * Можно использовать для связи элемента с `role="dialog"` и заголовка через `aria-labelledby`.
    */
@@ -89,6 +93,7 @@ export const TooltipBase = ({
   description,
   title,
   titleId,
+  action,
   maxWidth = TOOLTIP_MAX_WIDTH,
   closeIconLabel = 'Закрыть',
   onCloseIconClick,
@@ -122,6 +127,7 @@ export const TooltipBase = ({
           {hasReactNode(description) && (
             <Subhead className={styles.description}>{description}</Subhead>
           )}
+          {hasReactNode(action) && action}
         </div>
         {typeof onCloseIconClick === 'function' && (
           <Tappable
