@@ -1,10 +1,18 @@
 .host {
+  position: relative;
   inset-block-start: 0;
   inset-inline-start: 0;
   box-sizing: border-box;
+  display: flex;
   inline-size: 100%;
   block-size: 100%;
   pointer-events: none;
+}
+
+/* stylelint-disable-next-line selector-max-universal */
+.host > * {
+  /* overlay создает контекст наложения */
+  isolation: isolate;
 }
 
 .opened {
@@ -32,67 +40,46 @@
   opacity: 1;
 }
 
-.opened > .container > .overlay {
+.opened > .overlay {
   animation: animationPopoutWrapperFullFadeIn var(--vkui--animation_duration_m) ease both;
 }
 
-.closing > .container > .overlay {
+.closing > .overlay {
   opacity: 0;
   animation: animationPopoutWrapperFullFadeOut var(--vkui--animation_duration_m)
     var(--vkui--animation_easing_default) both;
 }
 
-.masked > .container > .overlay {
+.masked > .overlay {
   background: var(--vkui--color_overlay_primary);
 }
 
-.fixed > .container > .overlay,
-.absolute > .container > .overlay {
+.fixed > .overlay,
+.absolute > .overlay {
   position: absolute;
 }
 
-.container {
-  position: relative;
-  box-sizing: border-box;
-  display: flex;
-  inline-size: 100%;
-  block-size: 100%;
-}
-
-.content {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  inline-size: 100%;
-  pointer-events: none;
-}
-
-/* stylelint-disable-next-line selector-max-universal */
-.content > * {
-  pointer-events: auto;
-}
-
-.alignYCenter > .container {
+.alignYCenter {
   align-items: center;
 }
 
-.alignYBottom > .container {
+.alignYBottom {
   align-items: flex-end;
 }
 
-.alignYTop > .container {
+.alignYTop {
   align-items: flex-start;
 }
 
-.alignXCenter > .container {
+.alignXCenter {
   justify-content: center;
 }
 
-.alignXLeft > .container {
+.alignXLeft {
   justify-content: flex-start;
 }
 
-.alignXRight > .container {
+.alignXRight {
   justify-content: flex-end;
 }
 
