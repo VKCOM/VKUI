@@ -17,7 +17,7 @@ describe('PanelHeaderButton', () => {
   });
 
   it('Component: PanelHeaderButton w/ href is a link', () => {
-    render(<PanelHeaderButtonTest href="https://vk.com" />);
+    render(<PanelHeaderButtonTest href="https://vk.ru" />);
     expect(button().tagName.toLowerCase()).toMatch('a');
   });
 });

@@ -105,7 +105,7 @@ describe('ActionSheetItem', () => {
   });
 
   it('Component: ActionSheetItem w/ href is a native link', () => {
-    render(<ActionSheetItemTest href="https://vk.com">ActionSheetItem</ActionSheetItemTest>);
+    render(<ActionSheetItemTest href="https://vk.ru">ActionSheetItem</ActionSheetItemTest>);
     const el = item();
     expect(el.tagName.toLowerCase()).toMatch('a');
   });

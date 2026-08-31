@@ -38,12 +38,12 @@ describe('Clickable', () => {
   ));
 
   it('href: should be link', () => {
-    const result = render(<Clickable href="https://vk.com" />);
+    const result = render(<Clickable href="https://vk.ru" />);
     expect(result.getByRole('link')).toBeInTheDocument();
   });
 
   it('href && disabled: should be link', () => {
-    const result = render(<Clickable href="https://vk.com" disabled />);
+    const result = render(<Clickable href="https://vk.ru" disabled />);
     expect(result.getByRole('link')).toBeInTheDocument();
   });
 
