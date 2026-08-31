@@ -23,13 +23,13 @@ describe('TabbarItem', () => {
   });
 
   it('renders link if href is passed', () => {
-    render(<TabbarItem href="https://vk.com" data-testid="test" />);
+    render(<TabbarItem href="https://vk.ru" data-testid="test" />);
 
     expect(screen.getByTestId('test').tagName.toLowerCase()).toBe('a');
   });
 
   it('renders Component if it is passed', () => {
-    render(<TabbarItem Component="div" href="https://vk.com" data-testid="test" />);
+    render(<TabbarItem Component="div" href="https://vk.ru" data-testid="test" />);
 
     expect(screen.getByTestId('test').tagName.toLowerCase()).toBe('div');
   });

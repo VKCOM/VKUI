@@ -29,8 +29,8 @@ export const MiniInfoCellPlayground = (props: ComponentPlaygroundProps) => {
         {
           before: [<Icon20WorkOutline key="icon" />],
           children: [
-            <Link key="link" href="https://vk.com/team">
-              vk.com/team
+            <Link key="link" href="https://vk.ru/team">
+              vk.ru/team
             </Link>,
           ],
           chevron: [true],

@@ -7,7 +7,7 @@ import styles from './Link.module.css';
 
 describe(Link, () => {
   baselineComponent((props) => (
-    <Link href="https://vk.com" {...props}>
+    <Link href="https://vk.ru" {...props}>
       Link
     </Link>
   ));
@@ -18,7 +18,7 @@ describe(Link, () => {
   });
 
   it('should use link role', () => {
-    const result = render(<Link href="https://vk.com" />);
+    const result = render(<Link href="https://vk.ru" />);
     expect(result.getByRole('link')).toBeInTheDocument();
   });
 
@@ -31,7 +31,7 @@ describe(Link, () => {
   it('should render before and after elements', () => {
     const result = render(
       <Link
-        href="https://vk.com"
+        href="https://vk.ru"
         before={<span data-testid="before" />}
         after={<span data-testid="after" />}
       />,
@@ -42,18 +42,18 @@ describe(Link, () => {
   });
 
   it('should disable underline', () => {
-    const result = render(<Link href="https://vk.com" />);
+    const result = render(<Link href="https://vk.ru" />);
     expect(result.getByRole('link')).toHaveClass(styles.withUnderline);
 
-    result.rerender(<Link href="https://vk.com" noUnderline />);
+    result.rerender(<Link href="https://vk.ru" noUnderline />);
     expect(result.getByRole('link')).not.toHaveClass(styles.withUnderline);
   });
 
   it('should use visited style', () => {
-    const result = render(<Link href="https://vk.com" />);
+    const result = render(<Link href="https://vk.ru" />);
     expect(result.getByRole('link')).not.toHaveClass(styles.hasVisited);
 
-    result.rerender(<Link href="https://vk.com" hasVisited />);
+    result.rerender(<Link href="https://vk.ru" hasVisited />);
     expect(result.getByRole('link')).toHaveClass(styles.hasVisited);
   });
 });
