@@ -2179,19 +2179,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@next/bundle-analyzer@npm:^16.3.1":
-  version: 16.3.1
-  resolution: "@next/bundle-analyzer@npm:16.3.1"
+"@next/bundle-analyzer@npm:^16.3.3":
+  version: 16.3.3
+  resolution: "@next/bundle-analyzer@npm:16.3.3"
   dependencies:
     webpack-bundle-analyzer: "npm:4.10.1"
-  checksum: 10/a741f3fb02815d11302990d9099ee91b769beb9bd55b03a270c7d78c2ad8eae64442b17ba907c3703c556d86f8db882578a7fd3d5e8d696acb3962d024a88ca9
+  checksum: 10/734fb77b04c9e756feade98fdd01885bdbb9dc3757bd325541a64cbc19ccbd8e051e03af74f2f8289cf9b4906cef433130dbfcefe1a3464a6c45e9d2458ba987
   languageName: node
   linkType: hard
 
-"@next/env@npm:16.3.1":
-  version: 16.3.1
-  resolution: "@next/env@npm:16.3.1"
-  checksum: 10/d6cd2906f937c09bab62edd8c0caac2a8b7aba5ce86123db7860ffc5f44f6831b5c0c84bf3615fea04442825694109f64ef167ec74e97e506ebca5c05c9e0078
+"@next/env@npm:16.3.3":
+  version: 16.3.3
+  resolution: "@next/env@npm:16.3.3"
+  checksum: 10/dd599366ef155a35e6fb15907980709c0fe642ec33218e0e8521b4542640d6121f83a2289cec33280e81950ed6a56803da709ebb942291306c962aaead1e5c20
   languageName: node
   linkType: hard
 
@@ -2202,58 +2202,58 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@next/swc-darwin-arm64@npm:16.3.1":
-  version: 16.3.1
-  resolution: "@next/swc-darwin-arm64@npm:16.3.1"
+"@next/swc-darwin-arm64@npm:16.3.3":
+  version: 16.3.3
+  resolution: "@next/swc-darwin-arm64@npm:16.3.3"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-"@next/swc-darwin-x64@npm:16.3.1":
-  version: 16.3.1
-  resolution: "@next/swc-darwin-x64@npm:16.3.1"
+"@next/swc-darwin-x64@npm:16.3.3":
+  version: 16.3.3
+  resolution: "@next/swc-darwin-x64@npm:16.3.3"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"@next/swc-linux-arm64-gnu@npm:16.3.1":
-  version: 16.3.1
-  resolution: "@next/swc-linux-arm64-gnu@npm:16.3.1"
+"@next/swc-linux-arm64-gnu@npm:16.3.3":
+  version: 16.3.3
+  resolution: "@next/swc-linux-arm64-gnu@npm:16.3.3"
   conditions: os=linux & cpu=arm64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@next/swc-linux-arm64-musl@npm:16.3.1":
-  version: 16.3.1
-  resolution: "@next/swc-linux-arm64-musl@npm:16.3.1"
+"@next/swc-linux-arm64-musl@npm:16.3.3":
+  version: 16.3.3
+  resolution: "@next/swc-linux-arm64-musl@npm:16.3.3"
   conditions: os=linux & cpu=arm64 & libc=musl
   languageName: node
   linkType: hard
 
-"@next/swc-linux-x64-gnu@npm:16.3.1":
-  version: 16.3.1
-  resolution: "@next/swc-linux-x64-gnu@npm:16.3.1"
+"@next/swc-linux-x64-gnu@npm:16.3.3":
+  version: 16.3.3
+  resolution: "@next/swc-linux-x64-gnu@npm:16.3.3"
   conditions: os=linux & cpu=x64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@next/swc-linux-x64-musl@npm:16.3.1":
-  version: 16.3.1
-  resolution: "@next/swc-linux-x64-musl@npm:16.3.1"
+"@next/swc-linux-x64-musl@npm:16.3.3":
+  version: 16.3.3
+  resolution: "@next/swc-linux-x64-musl@npm:16.3.3"
   conditions: os=linux & cpu=x64 & libc=musl
   languageName: node
   linkType: hard
 
-"@next/swc-win32-arm64-msvc@npm:16.3.1":
-  version: 16.3.1
-  resolution: "@next/swc-win32-arm64-msvc@npm:16.3.1"
+"@next/swc-win32-arm64-msvc@npm:16.3.3":
+  version: 16.3.3
+  resolution: "@next/swc-win32-arm64-msvc@npm:16.3.3"
   conditions: os=win32 & cpu=arm64
   languageName: node
   linkType: hard
 
-"@next/swc-win32-x64-msvc@npm:16.3.1":
-  version: 16.3.1
-  resolution: "@next/swc-win32-x64-msvc@npm:16.3.1"
+"@next/swc-win32-x64-msvc@npm:16.3.3":
+  version: 16.3.3
+  resolution: "@next/swc-win32-x64-msvc@npm:16.3.3"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
@@ -2714,14 +2714,14 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@project-docs/website@workspace:website"
   dependencies:
-    "@next/bundle-analyzer": "npm:^16.3.1"
+    "@next/bundle-analyzer": "npm:^16.3.3"
     "@shikijs/transformers": "npm:^4.4.3"
     "@stackblitz/sdk": "npm:^1.11.1"
     "@vkontakte/vkui": "workspace:^"
     "@vkontakte/vkui-docs-theme": "workspace:^"
     browserslist-vscode: "github:browserslist/browserslist-vscode"
     lz-string: "npm:^1.5.0"
-    next: "npm:^16.3.1"
+    next: "npm:^16.3.3"
     next-sitemap: "npm:^4.2.3"
     nextra: "npm:^4.6.1"
     pagefind: "npm:^1.5.2"
@@ -5333,14 +5333,14 @@ __metadata:
     "@vkontakte/vkjs": "npm:^2.0.2"
     "@vkontakte/vkui": "workspace:^"
     "@vkontakte/vkui-tokens": "npm:4.91.0"
-    next: "npm:^16.3.1"
+    next: "npm:^16.3.3"
     nextra: "npm:^4.6.1"
     react: "npm:^19.2.8"
     react-dom: "npm:^19.2.8"
     scroll-into-view-if-needed: "npm:^3.1.0"
     typescript: "npm:^6.0.3"
   peerDependencies:
-    next: ^16.3.1
+    next: ^16.3.3
     nextra: ^4.6.1
     react: ^19.2.8
     react-dom: ^19.2.8
@@ -13124,19 +13124,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"next@npm:^16.3.1":
-  version: 16.3.1
-  resolution: "next@npm:16.3.1"
+"next@npm:^16.3.3":
+  version: 16.3.3
+  resolution: "next@npm:16.3.3"
   dependencies:
-    "@next/env": "npm:16.3.1"
-    "@next/swc-darwin-arm64": "npm:16.3.1"
-    "@next/swc-darwin-x64": "npm:16.3.1"
-    "@next/swc-linux-arm64-gnu": "npm:16.3.1"
-    "@next/swc-linux-arm64-musl": "npm:16.3.1"
-    "@next/swc-linux-x64-gnu": "npm:16.3.1"
-    "@next/swc-linux-x64-musl": "npm:16.3.1"
-    "@next/swc-win32-arm64-msvc": "npm:16.3.1"
-    "@next/swc-win32-x64-msvc": "npm:16.3.1"
+    "@next/env": "npm:16.3.3"
+    "@next/swc-darwin-arm64": "npm:16.3.3"
+    "@next/swc-darwin-x64": "npm:16.3.3"
+    "@next/swc-linux-arm64-gnu": "npm:16.3.3"
+    "@next/swc-linux-arm64-musl": "npm:16.3.3"
+    "@next/swc-linux-x64-gnu": "npm:16.3.3"
+    "@next/swc-linux-x64-musl": "npm:16.3.3"
+    "@next/swc-win32-arm64-msvc": "npm:16.3.3"
+    "@next/swc-win32-x64-msvc": "npm:16.3.3"
     "@swc/helpers": "npm:0.5.23"
     baseline-browser-mapping: "npm:^2.9.19"
     caniuse-lite: "npm:^1.0.30001579"
@@ -13180,7 +13180,7 @@ __metadata:
       optional: true
   bin:
     next: dist/bin/next
-  checksum: 10/c1e50b985bdc5c595cfcb15cc0f5d430b536d5d609242e97d51966349c36f250b961212b0d7861deace6d49f9e229ebb447653d5718ab32a15dc6ed953c3988a
+  checksum: 10/c5570b6a375f002e0edb66d1b58f0cef1bd52dae466cb052b415b8ab3707ebfc791ca173628f71a47c97a30c609597e56795bd3858b919b390026ec721c347b1
   languageName: node
   linkType: hard
 
