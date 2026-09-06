@@ -4517,12 +4517,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^26.4.0":
-  version: 26.4.0
-  resolution: "@types/node@npm:26.4.0"
+"@types/node@npm:^26.4.1":
+  version: 26.4.1
+  resolution: "@types/node@npm:26.4.1"
   dependencies:
     undici-types: "npm:~8.3.0"
-  checksum: 10/90e2a82f8c17200c74515753ed48f6e13987b657d4c93e9b9922860a0abef0627b66037eb77d2a315d0255e9cd0115d71e791d13446ec02d93f85d8ab02dec69
+  checksum: 10/63fbe80250fc8824d52a1c8787b591f17be566db11560fad0a29e9e3d230303ca7a3e77d5c474d60438d14120dcb9323950641db754197b4822e4fae3c506927
   languageName: node
   linkType: hard
 
@@ -5310,7 +5310,7 @@ __metadata:
     "@swc/core": "npm:^1.15.47"
     "@types/cross-spawn": "npm:^6.0.6"
     "@types/jscodeshift": "npm:^17.3.0"
-    "@types/node": "npm:^26.4.0"
+    "@types/node": "npm:^26.4.1"
     "@types/prompts": "npm:^2.4.9"
     chalk: "npm:^6.0.0"
     commander: "npm:^15.0.0"
@@ -5336,7 +5336,7 @@ __metadata:
   dependencies:
     "@date-fns/tz": "npm:1.5.0"
     "@swc/core": "npm:^1.15.47"
-    "@types/node": "npm:^26.4.0"
+    "@types/node": "npm:^26.4.1"
     typescript: "npm:^6.0.3"
   languageName: unknown
   linkType: soft
@@ -5434,7 +5434,7 @@ __metadata:
     "@testing-library/dom": "npm:^10.4.1"
     "@testing-library/react": "npm:^16.3.3"
     "@testing-library/user-event": "npm:^14.6.6"
-    "@types/node": "npm:^26.4.0"
+    "@types/node": "npm:^26.4.1"
     "@types/react": "npm:^19.2.18"
     "@types/react-dom": "npm:^19.2.5"
     "@types/semver": "npm:^7.8.0"
