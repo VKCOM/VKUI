@@ -5462,7 +5462,7 @@ __metadata:
     eslint-plugin-unicorn: "npm:^74.0.0"
     globals: "npm:^17.11.0"
     happy-css-modules: "npm:^5.0.2"
-    happy-dom: "npm:^20.11.8"
+    happy-dom: "npm:^20.13.2"
     husky: "npm:^9.1.6"
     lint-staged: "npm:^17.3.0"
     mini-css-extract-plugin: "npm:^2.10.2"
@@ -10082,9 +10082,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"happy-dom@npm:^20.11.8":
-  version: 20.11.8
-  resolution: "happy-dom@npm:20.11.8"
+"happy-dom@npm:^20.13.2":
+  version: 20.13.2
+  resolution: "happy-dom@npm:20.13.2"
   dependencies:
     "@types/node": "npm:>=20.0.0"
     "@types/whatwg-mimetype": "npm:^3.0.2"
@@ -10093,7 +10093,7 @@ __metadata:
     entities: "npm:^7.0.1"
     whatwg-mimetype: "npm:^3.0.0"
     ws: "npm:^8.21.0"
-  checksum: 10/035a67f0c21d6b5d5b20bf696d15009d08567c9947ca3fd022582dce51b0e6e87e4b5f08c511dd1ba60b8ee57d550a44a797e5c37f41d8d36c88ad1f7df0784d
+  checksum: 10/a9da471036dd74832c80f8989d1c88380133b1c72f671971da123c3887549b980665f3ba9f5f7f0b970b8c28e48f27763de4f8a06bc181ad9833f7306b9413c9
   languageName: node
   linkType: hard
 
