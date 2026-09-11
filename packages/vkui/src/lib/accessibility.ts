@@ -119,6 +119,64 @@ export function shouldTriggerClickOnEnterOrSpace(
 }
 
 /**
+ * Роли, для которых ARIA допускает атрибут `aria-expanded`.
+ *
+ * @see https://www.w3.org/TR/wai-aria-1.2/#aria-expanded
+ */
+const ROLES_SUPPORTING_ARIA_EXPANDED: React.AriaRole[] = [
+  'application',
+  'button',
+  'checkbox',
+  'columnheader',
+  'combobox',
+  'gridcell',
+  'link',
+  'listbox',
+  'menuitem',
+  'menuitemcheckbox',
+  'menuitemradio',
+  'row',
+  'rowheader',
+  'switch',
+  'tab',
+  'treeitem',
+];
+
+/**
+ * Теги, неявная роль которых допускает атрибут `aria-expanded`.
+ */
+const TAG_NAMES_SUPPORTING_ARIA_EXPANDED = [
+  'a',
+  'area',
+  'button',
+  'input',
+  'select',
+  'summary',
+  'textarea',
+];
+
+/**
+ * Проверяет, допускает ли элемент атрибут `aria-expanded`.
+ *
+ * Для элемента с явной ролью решает роль, для DOM-элемента без роли — тег. Для компонента роль
+ * корневого элемента неизвестна, поэтому решение остаётся за самим компонентом.
+ */
+export const supportsAriaExpanded = (element: React.ReactElement): boolean => {
+  const role: React.AriaRole | undefined = (element.props as { role?: React.AriaRole } | undefined)
+    ?.role;
+
+  if (role) {
+    return ROLES_SUPPORTING_ARIA_EXPANDED.includes(role);
+  }
+
+  if (typeof element.type !== 'string') {
+    return true;
+  }
+
+  return TAG_NAMES_SUPPORTING_ARIA_EXPANDED.includes(element.type);
+};
+
+/**
  * @see https://doka.guide/a11y/aria-expanded/
  */
 export const injectAriaExpandedPropByRole = (
