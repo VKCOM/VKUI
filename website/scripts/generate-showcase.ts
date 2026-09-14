@@ -182,7 +182,7 @@ function buildDocsUrl(name: string, parent?: string): string {
   return `/components/${toKebabCase(name)}`;
 }
 
-export function generateShowcaseData() {
+export async function generateShowcaseData() {
   // eslint-disable-next-line no-console
   console.log('🔄 Генерация данных витрины компонентов...');
 
@@ -195,7 +195,7 @@ export function generateShowcaseData() {
   for (const filePath of mdxFiles) {
     const raw = fs.readFileSync(filePath, 'utf8');
     const { data, body } = parseFrontmatter(raw);
-    const resolvedBody = resolvePartials(body, filePath);
+    const resolvedBody = await resolvePartials(body, filePath);
     const slug = slugFromPath(filePath);
 
     if (IGNORED_COMPONENTS.has(slug) || isHookSlug(slug)) {
