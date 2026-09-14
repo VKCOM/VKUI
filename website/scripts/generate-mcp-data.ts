@@ -172,7 +172,7 @@ function formatExamplesText(examples: PlaygroundExample[]): string {
     .join(SEPARATOR);
 }
 
-function generateMcpData() {
+async function generateMcpData() {
   // eslint-disable-next-line no-console
   console.log('🔄 Генерация MCP данных...');
   ensureDir(OUT_COMPONENTS_DIR);
@@ -195,7 +195,7 @@ function generateMcpData() {
     const itemName = hook ? hookKeyFromSlug(slug) : getComponentName(slug);
     const description = data.description || '';
     const props = docgen[itemName] || [];
-    const resolvedBody = resolvePartials(body, filePath);
+    const resolvedBody = await resolvePartials(body, filePath);
     const playgroundExamples = extractPlaygroundExamples(resolvedBody);
     const category = hook ? null : extractCategory(body);
 
@@ -259,4 +259,4 @@ function generateMcpData() {
   console.log('✅ MCP данные сгенерированы.');
 }
 
-generateMcpData();
+await generateMcpData();

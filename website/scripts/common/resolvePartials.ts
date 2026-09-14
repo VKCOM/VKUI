@@ -10,7 +10,12 @@ import * as path from 'node:path';
  * @param filePath - абсолютный путь к исходному MDX-файлу (нужен для резолва относительных импортов)
  * @returns body с раскрытыми партиалами
  */
-export function resolvePartials(body: string, filePath: string): string {
+export async function resolvePartials(
+  body: string,
+  filePath: string,
+  transformPartial: (content: string, filePath: string) => string | Promise<string> = (content) =>
+    content,
+): Promise<string> {
   const dir = path.dirname(filePath);
 
   // import Foo from './something.mdx'  (с кавычками или без точки с запятой)
@@ -29,8 +34,8 @@ export function resolvePartials(body: string, filePath: string): string {
     }
 
     const partialRaw = fs.readFileSync(fullPath, 'utf8');
-    const partialResolved = resolvePartials(partialRaw, fullPath);
-    partials.set(componentName, partialResolved.trim());
+    const partialResolved = await resolvePartials(partialRaw, fullPath, transformPartial);
+    partials.set(componentName, (await transformPartial(partialResolved, fullPath)).trim());
     importLinesToRemove.add(fullImportLine);
   }
 
