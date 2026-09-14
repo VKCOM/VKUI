@@ -2725,8 +2725,8 @@ __metadata:
     next-sitemap: "npm:^4.2.3"
     nextra: "npm:^4.6.1"
     pagefind: "npm:^1.5.2"
-    react: "npm:^19.2.8"
-    react-dom: "npm:^19.2.8"
+    react: "npm:^19.3.0"
+    react-dom: "npm:^19.3.0"
     react-live: "npm:^4.1.8"
     serve: "npm:^14.2.6"
     slug: "npm:^12.0.1"
@@ -2760,10 +2760,10 @@ __metadata:
   dependencies:
     "@storybook/icons": "npm:^2.1.0"
     "@storybook/react": "npm:10.6.0"
-    "@types/react": "npm:^19.2.18"
-    "@types/react-dom": "npm:^19.2.5"
-    react: "npm:^19.2.8"
-    react-dom: "npm:^19.2.8"
+    "@types/react": "npm:^19.3.0"
+    "@types/react-dom": "npm:^19.3.0"
+    react: "npm:^19.3.0"
+    react-dom: "npm:^19.3.0"
     storybook: "npm:10.6.0"
     typescript: "npm:^6.0.3"
   languageName: unknown
@@ -4527,21 +4527,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:^19.2.5":
-  version: 19.2.5
-  resolution: "@types/react-dom@npm:19.2.5"
+"@types/react-dom@npm:^19.3.0":
+  version: 19.3.0
+  resolution: "@types/react-dom@npm:19.3.0"
   peerDependencies:
-    "@types/react": ^19.2.0
-  checksum: 10/e6b752ad923b70638a44bb537d2866bed98f08bba973bc2199365875c003abe1e5f0e5a6d73ba8778e97f13eca36fdb2ab47f530793238eff92e4df04df18f70
+    "@types/react": ^19.3.0
+  checksum: 10/e24ee9948dc3a6c81e8aa4acf120a1194d3a3b68e97205b1e5e24e087b9f0c0c2e40b128fd258663ccb5889c852aeee558c0daa3255c3d82e0fc1c5d64c4b69a
   languageName: node
   linkType: hard
 
-"@types/react@npm:^19.2.18":
-  version: 19.2.18
-  resolution: "@types/react@npm:19.2.18"
+"@types/react@npm:^19.3.0":
+  version: 19.3.0
+  resolution: "@types/react@npm:19.3.0"
   dependencies:
     csstype: "npm:^3.2.2"
-  checksum: 10/c718ec5c5272ef5c1c77fcdd07f567c77197b593583539459b4bdaea89ca55ad7c814b7eb2151dccfa459b2c384b599a45e7e35550b789883d66b363d30c94d8
+  checksum: 10/2f4589222fd9c512e1ef78e65f334ade8777400add8ec0803fcc3a044761679b7984ba8410a890af24255383c3251a568bb692b60acfa22397ba0a64b2e032bf
   languageName: node
   linkType: hard
 
@@ -5238,7 +5238,7 @@ __metadata:
   dependencies:
     "@babel/standalone": "npm:^8.0.4"
     monaco-editor: "npm:^0.56.0"
-    react: "npm:^19.2.8"
+    react: "npm:^19.3.0"
     typescript: "npm:^6.0.3"
   peerDependencies:
     "@storybook/icons": ">=2.0.0"
@@ -5319,15 +5319,15 @@ __metadata:
     "@vkontakte/vkui-tokens": "npm:4.92.0"
     next: "npm:^16.3.3"
     nextra: "npm:^4.6.1"
-    react: "npm:^19.2.8"
-    react-dom: "npm:^19.2.8"
+    react: "npm:^19.3.0"
+    react-dom: "npm:^19.3.0"
     scroll-into-view-if-needed: "npm:^3.1.0"
     typescript: "npm:^6.0.3"
   peerDependencies:
     next: ^16.3.3
     nextra: ^4.6.1
-    react: ^19.2.8
-    react-dom: ^19.2.8
+    react: ^19.3.0
+    react-dom: ^19.3.0
   languageName: unknown
   linkType: soft
 
@@ -5351,8 +5351,8 @@ __metadata:
     "@floating-ui/react-dom": "npm:^2.1.9"
     "@swc/core": "npm:^1.15.47"
     "@swc/helpers": "npm:^0.5.23"
-    react: "npm:^19.2.8"
-    react-dom: "npm:^19.2.8"
+    react: "npm:^19.3.0"
+    react-dom: "npm:^19.3.0"
   peerDependencies:
     react: ">=16.8.0"
     react-dom: ">=16.8.0"
@@ -5403,8 +5403,8 @@ __metadata:
     "@testing-library/react": "npm:^16.3.3"
     "@testing-library/user-event": "npm:^14.6.6"
     "@types/node": "npm:^26.5.1"
-    "@types/react": "npm:^19.2.18"
-    "@types/react-dom": "npm:^19.2.5"
+    "@types/react": "npm:^19.3.0"
+    "@types/react-dom": "npm:^19.3.0"
     "@types/semver": "npm:^7.8.0"
     "@typescript-eslint/eslint-plugin": "npm:^8.70.0"
     "@typescript-eslint/parser": "npm:^8.70.0"
@@ -5443,8 +5443,8 @@ __metadata:
     postcss-modules: "npm:^9.0.1"
     postcss-value-parser: "npm:^4.2.0"
     process: "npm:^0.11.10"
-    react: "npm:^19.2.8"
-    react-dom: "npm:^19.2.8"
+    react: "npm:^19.3.0"
+    react-dom: "npm:^19.3.0"
     semver: "npm:^7.8.5"
     shx: "npm:^0.4.0"
     size-limit: "npm:^13.0.3"
@@ -5497,8 +5497,8 @@ __metadata:
     "@vkontakte/vkjs": "npm:^2.0.2"
     "@vkontakte/vkui-date-fns-tz": "npm:^0.0.6"
     "@vkontakte/vkui-floating-ui": "npm:^0.2.8"
-    react: "npm:^19.2.8"
-    react-dom: "npm:^19.2.8"
+    react: "npm:^19.3.0"
+    react-dom: "npm:^19.3.0"
     size-limit: "npm:^13.0.3"
     storybook: "npm:10.6.0"
     typescript: "npm:^6.0.3"
@@ -15333,7 +15333,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dom@npm:^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0, react-dom@npm:^19.2.8":
+"react-dom@npm:^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0":
   version: 19.2.8
   resolution: "react-dom@npm:19.2.8"
   dependencies:
@@ -15341,6 +15341,17 @@ __metadata:
   peerDependencies:
     react: ^19.2.8
   checksum: 10/fb45d500a8615a36d71a821213a3d4bfe32a70aa1d04ce17d8791dd10c4ef0281e7fdd46694e1112f0f2dcf58df89d12043a13228be9788458aa82f4885a9cdc
+  languageName: node
+  linkType: hard
+
+"react-dom@npm:^19.3.0":
+  version: 19.3.0
+  resolution: "react-dom@npm:19.3.0"
+  dependencies:
+    scheduler: "npm:^0.28.0"
+  peerDependencies:
+    react: ^19.3.0
+  checksum: 10/fa6c6a3d0cca3f98280017936f818a1f9e474d61d1a64a7b02bfedabbf936234dd3752ba5b7f35efa7f2264c9a073ebace56cb2521e1cbfe7a50444a43ef5690
   languageName: node
   linkType: hard
 
@@ -15382,10 +15393,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react@npm:^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0, react@npm:^19.2.8":
+"react@npm:^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0":
   version: 19.2.8
   resolution: "react@npm:19.2.8"
   checksum: 10/a3c697798035e295ca9e51591d3a8700824535cb8c070fac1f8abbe69717ceb99108cbc4ba7b31a606806f336b1eba705705f63b9d39ace198fe51e8990ac843
+  languageName: node
+  linkType: hard
+
+"react@npm:^19.3.0":
+  version: 19.3.0
+  resolution: "react@npm:19.3.0"
+  checksum: 10/e98669f09750c41abb1bf020af67cc847e018c91a8c5413d3f40ddd737e3daef6e419bcd1521b113fda73fd667ae82d5f0e9d9e3ff462faeb82059c09e7f04b1
   languageName: node
   linkType: hard
 
@@ -16174,6 +16192,13 @@ __metadata:
   version: 0.27.0
   resolution: "scheduler@npm:0.27.0"
   checksum: 10/eab3c3a8373195173e59c147224fc30dabe6dd453f248f5e610e8458512a5a2ee3a06465dc400ebfe6d35c9f5b7f3bb6b2e41c88c86fd177c25a73e7286a1e06
+  languageName: node
+  linkType: hard
+
+"scheduler@npm:^0.28.0":
+  version: 0.28.0
+  resolution: "scheduler@npm:0.28.0"
+  checksum: 10/2a936a3729df438bd42e6af7a16a62b83543796209c9d2e637f3d7b198bd5c25c5909478a9da4f66923d290e01997816338cf740587c440448863783bd33d31d
   languageName: node
   linkType: hard
 
