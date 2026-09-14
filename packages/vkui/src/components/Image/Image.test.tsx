@@ -82,7 +82,9 @@ describe(Image, () => {
       );
 
       className && expect(screen.getByTestId('image')).toHaveClass(className);
-      expect(screen.getByTestId('image')).toHaveStyle(`${cssVariable}: ${expectedSize}px`);
+      expect(getComputedStyle(screen.getByTestId('image')).getPropertyValue(cssVariable)).toBe(
+        `${expectedSize}px`,
+      );
     });
   });
 });

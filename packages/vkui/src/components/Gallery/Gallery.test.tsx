@@ -93,7 +93,7 @@ const setup = ({
   showArrows?: BaseGalleryProps['showArrows'] | undefined;
 }) => {
   let slideDataByIndexMap: Record<number, any> = {};
-  let layerTransform = '';
+  let layer: HTMLDivElement;
   let viewPort: HTMLDivElement;
   let containerWidth = defaultContainerWidth;
   let viewPortWidth = defaultViewPortWidth;
@@ -109,9 +109,7 @@ const setup = ({
     if (!element) {
       return;
     }
-    vi.spyOn(element.style, 'transform', 'set').mockImplementation(
-      (newTransform) => (layerTransform = newTransform),
-    );
+    layer = element;
 
     vi.spyOn(element, 'offsetWidth', 'get').mockReturnValue(viewPortWidth);
   };
@@ -135,14 +133,11 @@ const setup = ({
       revertRtlValue(slideWidth * index, isRtl),
     );
 
-    let transform = '';
-    vi.spyOn(element.parentElement!.style, 'transform', 'set').mockImplementation(
-      (newTransform) => (transform = newTransform),
-    );
+    const slide = element.parentElement!;
 
     slideDataByIndexMap[index] = {
       get transform() {
-        return transform;
+        return slide.style.transform;
       },
     };
   };
@@ -190,7 +185,7 @@ const setup = ({
     component,
     rerender,
     get layerTransform() {
-      return layerTransform;
+      return layer.style.transform;
     },
     get viewPort() {
       return viewPort;

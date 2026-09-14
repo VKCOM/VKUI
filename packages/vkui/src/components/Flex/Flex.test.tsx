@@ -15,8 +15,12 @@ describe(Flex, () => {
         <div></div>
       </Flex>,
     );
-    expect(screen.getByTestId('flex')).toHaveStyle('--vkui_internal--row_gap: 15px');
-    expect(screen.getByTestId('flex')).toHaveStyle('--vkui_internal--column_gap: 20px');
+    expect(
+      getComputedStyle(screen.getByTestId('flex')).getPropertyValue('--vkui_internal--row_gap'),
+    ).toBe('15px');
+    expect(
+      getComputedStyle(screen.getByTestId('flex')).getPropertyValue('--vkui_internal--column_gap'),
+    ).toBe('20px');
   });
 
   it('should not have css custom variable with gaps values for one child', () => {
@@ -25,8 +29,12 @@ describe(Flex, () => {
         <div></div>
       </Flex>,
     );
-    expect(screen.getByTestId('flex')).not.toHaveStyle('--vkui_internal--row_gap: 20px');
-    expect(screen.getByTestId('flex')).not.toHaveStyle('--vkui_internal--column_gap: 15px');
+    expect(
+      getComputedStyle(screen.getByTestId('flex')).getPropertyValue('--vkui_internal--row_gap'),
+    ).not.toBe('20px');
+    expect(
+      getComputedStyle(screen.getByTestId('flex')).getPropertyValue('--vkui_internal--column_gap'),
+    ).not.toBe('15px');
   });
 
   it('should reset gap in nested flex', () => {
@@ -39,8 +47,12 @@ describe(Flex, () => {
         </Flex>
       </Flex>,
     );
-    expect(screen.getByTestId('parent')).toHaveStyle('--vkui_internal--row_gap: 20px');
-    expect(screen.getByTestId('child')).toHaveStyle('--vkui_internal--row_gap: 0px');
+    expect(
+      getComputedStyle(screen.getByTestId('parent')).getPropertyValue('--vkui_internal--row_gap'),
+    ).toBe('20px');
+    expect(
+      getComputedStyle(screen.getByTestId('child')).getPropertyValue('--vkui_internal--row_gap'),
+    ).toBe('0px');
   });
 
   describe('check correct classNames', () => {

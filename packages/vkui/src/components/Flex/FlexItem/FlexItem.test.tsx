@@ -17,8 +17,8 @@ describe(FlexItem, () => {
     expect(content).toHaveClass('vkui-flex-shrink');
     expect(content).toHaveClass('vkui-flex-grow');
 
-    expect(content).toHaveStyle('--vkui_internal--flex-grow: 1');
-    expect(content).toHaveStyle('--vkui_internal--flex-shrink: 0');
-    expect(content).toHaveStyle('--vkui_internal--flex-basis: 0px');
+    expect(getComputedStyle(content).getPropertyValue('--vkui_internal--flex-grow')).toBe('1');
+    expect(getComputedStyle(content).getPropertyValue('--vkui_internal--flex-shrink')).toBe('0');
+    expect(getComputedStyle(content).getPropertyValue('--vkui_internal--flex-basis')).toBe('0px');
   });
 });

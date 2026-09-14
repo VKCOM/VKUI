@@ -28,13 +28,20 @@ describe('HorizontalCell', () => {
 
   it('should use custom size', () => {
     const h = render(<HorizontalCell size={100} title="Image" />);
-    expect(h.container.firstElementChild).toHaveStyle(`${CUSTOM_CSS_TOKEN_FOR_CELL_WIDTH}: 100px`);
+    expect(
+      getComputedStyle(h.container.firstElementChild!).getPropertyValue(
+        CUSTOM_CSS_TOKEN_FOR_CELL_WIDTH,
+      ),
+    ).toBe('100px');
   });
 
   it('should preserve user style', () => {
     const h = render(<HorizontalCell size={100} style={{ background: 'red' }} />);
-    expect(h.container.firstElementChild).toHaveStyle(
-      `background: red; ${CUSTOM_CSS_TOKEN_FOR_CELL_WIDTH}: 100px`,
-    );
+    expect(h.container.firstElementChild).toHaveStyle('background: red');
+    expect(
+      getComputedStyle(h.container.firstElementChild!).getPropertyValue(
+        CUSTOM_CSS_TOKEN_FOR_CELL_WIDTH,
+      ),
+    ).toBe('100px');
   });
 });

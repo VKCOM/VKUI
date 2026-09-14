@@ -15,9 +15,22 @@ describe('SimpleGrid', () => {
         <div></div>
       </SimpleGrid>,
     );
-    expect(screen.getByTestId('grid')).toHaveStyle(
-      '--vkui_internal--row_gap: 10px; --vkui_internal--column_gap: 15px; --vkui_internal--grid_columns: 2; --vkui_internal--min_col_width: 150px',
-    );
+    expect(
+      getComputedStyle(screen.getByTestId('grid')).getPropertyValue('--vkui_internal--row_gap'),
+    ).toBe('10px');
+    expect(
+      getComputedStyle(screen.getByTestId('grid')).getPropertyValue('--vkui_internal--column_gap'),
+    ).toBe('15px');
+    expect(
+      getComputedStyle(screen.getByTestId('grid')).getPropertyValue(
+        '--vkui_internal--grid_columns',
+      ),
+    ).toBe('2');
+    expect(
+      getComputedStyle(screen.getByTestId('grid')).getPropertyValue(
+        '--vkui_internal--min_col_width',
+      ),
+    ).toBe('150px');
   });
 
   it.each<{ props: Partial<SimpleGridProps>; className: string }>([

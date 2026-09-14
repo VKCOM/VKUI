@@ -224,18 +224,22 @@ describe(ImageBase, () => {
     render(<ImageBaseTest src="#" objectPosition="center bottom" />);
 
     expect(getImageBaseImgEl()).toHaveClass(styles.withObjectPosition);
-    expect(getImageBaseImgEl()).toHaveStyle({
-      '--vkui_internal--ImageBase_object_position': 'center bottom',
-    });
+    expect(
+      getComputedStyle(getImageBaseImgEl()).getPropertyValue(
+        '--vkui_internal--ImageBase_object_position',
+      ),
+    ).toBe('center bottom');
   });
 
   it('should apply custom filter style', () => {
     render(<ImageBaseTest src="#" filter="blur(5px)" />);
 
     expect(getImageBaseImgEl()).toHaveClass(styles.withFilter);
-    expect(getImageBaseImgEl()).toHaveStyle({
-      '--vkui_internal--ImageBase_object_filter': 'blur(5px)',
-    });
+    expect(
+      getComputedStyle(getImageBaseImgEl()).getPropertyValue(
+        '--vkui_internal--ImageBase_object_filter',
+      ),
+    ).toBe('blur(5px)');
   });
 
   describe('DEV errros', () => {

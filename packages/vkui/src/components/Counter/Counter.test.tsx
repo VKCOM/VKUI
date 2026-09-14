@@ -23,9 +23,11 @@ describe('Counter', () => {
           10
         </Counter>,
       );
-      expect(screen.getByTestId('counter')).toHaveStyle({
-        '--vkui_internal--counter_background': testColor,
-      });
+      expect(
+        getComputedStyle(screen.getByTestId('counter')).getPropertyValue(
+          '--vkui_internal--counter_background',
+        ),
+      ).toBe(testColor);
     });
 
     it('applies foreground color in contrast mode', () => {
@@ -34,9 +36,11 @@ describe('Counter', () => {
           10
         </Counter>,
       );
-      expect(screen.getByTestId('counter')).toHaveStyle({
-        '--vkui_internal--counter_foreground': testColor,
-      });
+      expect(
+        getComputedStyle(screen.getByTestId('counter')).getPropertyValue(
+          '--vkui_internal--counter_foreground',
+        ),
+      ).toBe(testColor);
     });
 
     it('applies foreground color in tertiary mode', () => {
@@ -45,9 +49,11 @@ describe('Counter', () => {
           10
         </Counter>,
       );
-      expect(screen.getByTestId('counter')).toHaveStyle({
-        '--vkui_internal--counter_foreground': testColor,
-      });
+      expect(
+        getComputedStyle(screen.getByTestId('counter')).getPropertyValue(
+          '--vkui_internal--counter_foreground',
+        ),
+      ).toBe(testColor);
     });
 
     it('does not apply color in inherit mode', () => {
@@ -57,10 +63,12 @@ describe('Counter', () => {
         </Counter>,
       );
       const element = screen.getByTestId('counter');
-      expect(element).not.toHaveStyle({
-        '--vkui_internal--counter_background': testColor,
-        '--vkui_internal--counter_foreground': testColor,
-      });
+      expect(
+        getComputedStyle(element).getPropertyValue('--vkui_internal--counter_background'),
+      ).not.toBe(testColor);
+      expect(
+        getComputedStyle(element).getPropertyValue('--vkui_internal--counter_foreground'),
+      ).not.toBe(testColor);
     });
   });
 });
