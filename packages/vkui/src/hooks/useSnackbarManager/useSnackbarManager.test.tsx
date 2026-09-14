@@ -394,9 +394,11 @@ describe('useSnackbarManager', () => {
 
     const snackbarContainer = container.firstChild?.firstChild as HTMLElement;
     expect(snackbarContainer).toBeInTheDocument();
-    expect(snackbarContainer).toHaveStyle({
-      '--vkui_internal--snackbars_container_offset_y_start': '50px',
-    });
+    expect(
+      getComputedStyle(snackbarContainer).getPropertyValue(
+        '--vkui_internal--snackbars_container_offset_y_start',
+      ),
+    ).toBe('50px');
   });
 
   it('should apply offsetYStart as string to snackbar container', async () => {
@@ -411,9 +413,11 @@ describe('useSnackbarManager', () => {
 
     const snackbarContainer = container.firstChild?.firstChild as HTMLElement;
     expect(snackbarContainer).toBeInTheDocument();
-    expect(snackbarContainer).toHaveStyle({
-      '--vkui_internal--snackbars_container_offset_y_start': '3rem',
-    });
+    expect(
+      getComputedStyle(snackbarContainer).getPropertyValue(
+        '--vkui_internal--snackbars_container_offset_y_start',
+      ),
+    ).toBe('3rem');
   });
 
   it('should dynamically update offsetYStart using setOffsetYStart', async () => {
@@ -424,18 +428,22 @@ describe('useSnackbarManager', () => {
     });
 
     let snackbarContainer = container.firstChild?.firstChild as HTMLElement;
-    expect(snackbarContainer).toHaveStyle({
-      '--vkui_internal--snackbars_container_offset_y_start': '20px',
-    });
+    expect(
+      getComputedStyle(snackbarContainer).getPropertyValue(
+        '--vkui_internal--snackbars_container_offset_y_start',
+      ),
+    ).toBe('20px');
 
     act(() => {
       apiRef.current?.setOffsetYStart(80);
     });
 
     snackbarContainer = container.firstChild?.firstChild as HTMLElement;
-    expect(snackbarContainer).toHaveStyle({
-      '--vkui_internal--snackbars_container_offset_y_start': '80px',
-    });
+    expect(
+      getComputedStyle(snackbarContainer).getPropertyValue(
+        '--vkui_internal--snackbars_container_offset_y_start',
+      ),
+    ).toBe('80px');
   });
 
   it('should apply offsetYEnd to snackbar container', async () => {
@@ -450,9 +458,11 @@ describe('useSnackbarManager', () => {
 
     const snackbarContainer = container.firstChild?.firstChild as HTMLElement;
     expect(snackbarContainer).toBeInTheDocument();
-    expect(snackbarContainer).toHaveStyle({
-      '--vkui_internal--snackbars_container_offset_y_end': '60px',
-    });
+    expect(
+      getComputedStyle(snackbarContainer).getPropertyValue(
+        '--vkui_internal--snackbars_container_offset_y_end',
+      ),
+    ).toBe('60px');
   });
 
   it('should apply offsetYEnd as string to snackbar container', async () => {
@@ -467,9 +477,11 @@ describe('useSnackbarManager', () => {
 
     const snackbarContainer = container.firstChild?.firstChild as HTMLElement;
     expect(snackbarContainer).toBeInTheDocument();
-    expect(snackbarContainer).toHaveStyle({
-      '--vkui_internal--snackbars_container_offset_y_end': '2.5rem',
-    });
+    expect(
+      getComputedStyle(snackbarContainer).getPropertyValue(
+        '--vkui_internal--snackbars_container_offset_y_end',
+      ),
+    ).toBe('2.5rem');
   });
 
   it('should dynamically update offsetYEnd using setOffsetYEnd', async () => {
@@ -480,17 +492,21 @@ describe('useSnackbarManager', () => {
     });
 
     let snackbarContainer = container.firstChild?.firstChild as HTMLElement;
-    expect(snackbarContainer).toHaveStyle({
-      '--vkui_internal--snackbars_container_offset_y_end': '30px',
-    });
+    expect(
+      getComputedStyle(snackbarContainer).getPropertyValue(
+        '--vkui_internal--snackbars_container_offset_y_end',
+      ),
+    ).toBe('30px');
 
     act(() => {
       apiRef.current?.setOffsetYEnd(90);
     });
 
     snackbarContainer = container.firstChild?.firstChild as HTMLElement;
-    expect(snackbarContainer).toHaveStyle({
-      '--vkui_internal--snackbars_container_offset_y_end': '90px',
-    });
+    expect(
+      getComputedStyle(snackbarContainer).getPropertyValue(
+        '--vkui_internal--snackbars_container_offset_y_end',
+      ),
+    ).toBe('90px');
   });
 });

@@ -16,11 +16,17 @@ describe(AspectRatio, () => {
     const { rerender } = render(
       <AspectRatio data-testid="ratio" ratio="var(--custom-aspect-ratio-var)" />,
     );
-    expect(screen.getByTestId('ratio')).toHaveStyle(
-      '--vkui_internal--aspect_ratio: var(--custom-aspect-ratio-var);',
-    );
+    expect(
+      getComputedStyle(screen.getByTestId('ratio')).getPropertyValue(
+        '--vkui_internal--aspect_ratio',
+      ),
+    ).toBe('var(--custom-aspect-ratio-var)');
 
     rerender(<AspectRatio data-testid="ratio" ratio="calc(16 / 9)" />);
-    expect(screen.getByTestId('ratio')).toHaveStyle('--vkui_internal--aspect_ratio: calc(16 / 9);');
+    expect(
+      getComputedStyle(screen.getByTestId('ratio')).getPropertyValue(
+        '--vkui_internal--aspect_ratio',
+      ),
+    ).toBe('calc(16 / 9)');
   });
 });

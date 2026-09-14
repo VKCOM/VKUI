@@ -18,14 +18,20 @@ describe('Progress', () => {
   it('Custom color', () => {
     render(<Progress data-testid="progress" appearance="#f3f405" />);
 
-    expect(screen.getByTestId('progress')).toHaveStyle(
-      '--vkui_internal_Progress_background_color: #f3f405',
-    );
+    expect(
+      getComputedStyle(screen.getByTestId('progress')).getPropertyValue(
+        '--vkui_internal_Progress_background_color',
+      ),
+    ).toBe('#f3f405');
   });
 
   it('Progress css variable', () => {
     render(<Progress data-testid="progress" value={20} />);
-    expect(screen.getByTestId('progress')).toHaveStyle('--vkui_internal_Progress_progress: 20');
+    expect(
+      getComputedStyle(screen.getByTestId('progress')).getPropertyValue(
+        '--vkui_internal_Progress_progress',
+      ),
+    ).toBe('20');
   });
 
   it('Progress trackDisable', () => {

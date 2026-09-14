@@ -295,19 +295,28 @@ describe('AppRoot', () => {
     });
 
     it.each(['embedded', 'full'] as const)('should add safe area insets in %s mode', (mode) => {
-      const CUSTOM_PROPERTY_INSET_TOP = `${CUSTOM_PROPERTY_INSET_PREFIX}top: 0px`;
-      const CUSTOM_PROPERTY_INSET_BOTTOM = `${CUSTOM_PROPERTY_INSET_PREFIX}bottom: 0px`;
-      const CUSTOM_PROPERTY_INSETS = `${CUSTOM_PROPERTY_INSET_TOP}; ${CUSTOM_PROPERTY_INSET_BOTTOM}`;
-
       const component = render(
         <AppRoot data-testid="app-root" mode={mode} safeAreaInsets={{ top: 0 }} />,
       );
-      expect(screen.queryByTestId('app-root')).toHaveStyle(CUSTOM_PROPERTY_INSET_TOP);
+      expect(
+        getComputedStyle(screen.getByTestId('app-root')).getPropertyValue(
+          `${CUSTOM_PROPERTY_INSET_PREFIX}top`,
+        ),
+      ).toBe('0px');
 
       component.rerender(
         <AppRoot data-testid="app-root" mode={mode} safeAreaInsets={{ top: 0, bottom: 0 }} />,
       );
-      expect(screen.queryByTestId('app-root')).toHaveStyle(CUSTOM_PROPERTY_INSETS);
+      expect(
+        getComputedStyle(screen.getByTestId('app-root')).getPropertyValue(
+          `${CUSTOM_PROPERTY_INSET_PREFIX}top`,
+        ),
+      ).toBe('0px');
+      expect(
+        getComputedStyle(screen.getByTestId('app-root')).getPropertyValue(
+          `${CUSTOM_PROPERTY_INSET_PREFIX}bottom`,
+        ),
+      ).toBe('0px');
     });
 
     const CUSTOM_TOKEN_CLASS_NAME = 'myClassName';

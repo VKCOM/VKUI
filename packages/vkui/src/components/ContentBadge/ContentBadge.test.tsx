@@ -50,13 +50,15 @@ describe(ContentBadge, () => {
 
     const badge = screen.getByTestId('badge');
 
-    expect(badge).toHaveStyle('--vkui_internal_ContentBadge--background: #f3f405');
-    expect(badge).toHaveStyle(
-      '--vkui_internal_ContentBadge--color: var(--vkui--color_text_contrast)',
+    expect(
+      getComputedStyle(badge).getPropertyValue('--vkui_internal_ContentBadge--background'),
+    ).toBe('#f3f405');
+    expect(getComputedStyle(badge).getPropertyValue('--vkui_internal_ContentBadge--color')).toBe(
+      'var(--vkui--color_text_contrast)',
     );
-    expect(badge).toHaveStyle(
-      '--vkui_internal_ContentBadge--iconColor: var(--vkui--color_icon_contrast)',
-    );
+    expect(
+      getComputedStyle(badge).getPropertyValue('--vkui_internal_ContentBadge--iconColor'),
+    ).toBe('var(--vkui--color_icon_contrast)');
   });
 
   it('should apply custom appearance styles in secondary mode', () => {
@@ -72,16 +74,18 @@ describe(ContentBadge, () => {
 
     const badge = screen.getByTestId('badge');
 
-    expect(badge).toHaveStyle(
-      '--vkui_internal_ContentBadge--color: var(--vkui--color_icon_tertiary)',
+    expect(getComputedStyle(badge).getPropertyValue('--vkui_internal_ContentBadge--color')).toBe(
+      'var(--vkui--color_icon_tertiary)',
     );
-    expect(badge).toHaveStyle(
-      '--vkui_internal_ContentBadge--iconColor: var(--vkui--color_icon_tertiary)',
-    );
-    expect(badge).toHaveStyle(
-      '--vkui_internal_ContentBadge--background: var(--vkui--color_icon_tertiary)',
-    );
-    expect(badge).toHaveStyle('--vkui_internal_ContentBadge--backgroundOpacity: 0.16');
+    expect(
+      getComputedStyle(badge).getPropertyValue('--vkui_internal_ContentBadge--iconColor'),
+    ).toBe('var(--vkui--color_icon_tertiary)');
+    expect(
+      getComputedStyle(badge).getPropertyValue('--vkui_internal_ContentBadge--background'),
+    ).toBe('var(--vkui--color_icon_tertiary)');
+    expect(
+      getComputedStyle(badge).getPropertyValue('--vkui_internal_ContentBadge--backgroundOpacity'),
+    ).toBe('0.16');
   });
 
   it('should apply custom appearance styles in outline mode', () => {
@@ -93,8 +97,14 @@ describe(ContentBadge, () => {
 
     const badge = screen.getByTestId('badge');
 
-    expect(badge).toHaveStyle('--vkui_internal_ContentBadge--color: #f3f405');
-    expect(badge).toHaveStyle('--vkui_internal_ContentBadge--iconColor: #f3f405');
-    expect(badge).toHaveStyle('--vkui_internal_ContentBadge--borderColor: #f3f405');
+    expect(getComputedStyle(badge).getPropertyValue('--vkui_internal_ContentBadge--color')).toBe(
+      '#f3f405',
+    );
+    expect(
+      getComputedStyle(badge).getPropertyValue('--vkui_internal_ContentBadge--iconColor'),
+    ).toBe('#f3f405');
+    expect(
+      getComputedStyle(badge).getPropertyValue('--vkui_internal_ContentBadge--borderColor'),
+    ).toBe('#f3f405');
   });
 });

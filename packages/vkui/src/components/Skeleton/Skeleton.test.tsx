@@ -47,7 +47,9 @@ describe('Skeleton', () => {
       render(<Skeleton {...props} data-testid="skeleton" />);
       expectedValue &&
         cssVariable &&
-        expect(screen.getByTestId('skeleton')).toHaveStyle(`${cssVariable}: ${expectedValue}`);
+        expect(getComputedStyle(screen.getByTestId('skeleton')).getPropertyValue(cssVariable)).toBe(
+          `${expectedValue}`,
+        );
       className && expect(screen.getByTestId('skeleton')).toHaveClass(className);
     },
   );

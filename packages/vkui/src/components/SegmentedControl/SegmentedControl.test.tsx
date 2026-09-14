@@ -172,8 +172,12 @@ describe('SegmentedControl', () => {
     it('should use correct css variables', () => {
       const { container } = render(<SegmentedControlTabsTest defaultValue="ok" />);
       const slider = container.getElementsByClassName(styles.slider)[0];
-      expect(slider).toHaveStyle('--vkui_internal--SegmentedControl_actual_index: 1');
-      expect(slider).toHaveStyle('--vkui_internal--SegmentedControl_options: 3');
+      expect(
+        getComputedStyle(slider).getPropertyValue('--vkui_internal--SegmentedControl_actual_index'),
+      ).toBe('1');
+      expect(
+        getComputedStyle(slider).getPropertyValue('--vkui_internal--SegmentedControl_options'),
+      ).toBe('3');
     });
   });
 

@@ -330,9 +330,11 @@ describe(ModalPage, () => {
       );
 
       await waitModalPageCSSTransitionEnd(h.getByTestId('host'));
-      expect(h.getByTestId('host')).toHaveStyle(
-        '--vkui_internal_ModalPage--desktopMaxWidth: 500px',
-      );
+      expect(
+        getComputedStyle(h.getByTestId('host')).getPropertyValue(
+          '--vkui_internal_ModalPage--desktopMaxWidth',
+        ),
+      ).toBe('500px');
     });
 
     it('sets CSS variable for custom string size on desktop', async () => {
@@ -350,9 +352,11 @@ describe(ModalPage, () => {
       );
 
       await waitModalPageCSSTransitionEnd(h.getByTestId('host'));
-      expect(h.getByTestId('host')).toHaveStyle(
-        '--vkui_internal_ModalPage--desktopMaxWidth: fit-content',
-      );
+      expect(
+        getComputedStyle(h.getByTestId('host')).getPropertyValue(
+          '--vkui_internal_ModalPage--desktopMaxWidth',
+        ),
+      ).toBe('fit-content');
     });
 
     it('ignores size on mobile', async () => {
