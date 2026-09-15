@@ -1,7 +1,11 @@
 import { Icon12Add } from '@vkontakte/icons';
 import { describe, expect, it } from 'vitest';
 import { VisuallyHidden } from '../components/VisuallyHidden/VisuallyHidden';
-import { hasAccessibleName, injectAriaExpandedPropByRole } from './accessibility';
+import {
+  hasAccessibleName,
+  injectAriaExpandedPropByRole,
+  supportsAriaExpanded,
+} from './accessibility';
 
 describe('accessibility utils', () => {
   describe('injectAriaExpandedPropByRole()', () => {
@@ -18,6 +22,51 @@ describe('accessibility utils', () => {
       expect(injectAriaExpandedPropByRole({}, false)).toEqual({});
       expect(injectAriaExpandedPropByRole({}, true, 'alert')).toEqual({});
       expect(injectAriaExpandedPropByRole({}, false, 'alert')).toEqual({});
+    });
+  });
+
+  describe('supportsAriaExpanded()', () => {
+    it.each(['button', 'link', 'combobox', 'menuitem', 'tab', 'treeitem', 'switch'])(
+      'should return true for an element with role="%s"',
+      (role) => {
+        expect(supportsAriaExpanded(<div role={role} />)).toBe(true);
+      },
+    );
+
+    it.each(['presentation', 'none', 'article', 'list', 'alert'])(
+      'should return false for an element with role="%s"',
+      (role) => {
+        expect(supportsAriaExpanded(<div role={role} />)).toBe(false);
+      },
+    );
+
+    it.each(['a', 'area', 'button', 'input', 'select', 'summary', 'textarea'])(
+      'should return true for <%s> without an explicit role',
+      (tagName) => {
+        const Element = tagName as 'button';
+
+        expect(supportsAriaExpanded(<Element />)).toBe(true);
+      },
+    );
+
+    it.each(['div', 'span', 'p', 'li'])(
+      'should return false for <%s> without an explicit role',
+      (tagName) => {
+        const Element = tagName as 'div';
+
+        expect(supportsAriaExpanded(<Element />)).toBe(false);
+      },
+    );
+
+    it('should return true for a component, because the role of its root element is unknown', () => {
+      const Component = () => <button type="button" />;
+
+      expect(supportsAriaExpanded(<Component />)).toBe(true);
+    });
+
+    it('should prefer an explicit role over the implicit one', () => {
+      expect(supportsAriaExpanded(<button role="presentation" type="button" />)).toBe(false);
+      expect(supportsAriaExpanded(<div role="button" />)).toBe(true);
     });
   });
 
