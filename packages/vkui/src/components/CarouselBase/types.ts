@@ -107,7 +107,7 @@ export interface BaseGalleryProps
    * Будет вызвано при нажатии на кнопку-стрелку вправо.
    */
   onNextClick?: ((event: React.MouseEvent) => void) | undefined;
-  bullets?: 'dark' | 'light' | false | undefined;
+  bullets?: 'dark' | 'light' | 'contrast' | false | undefined;
   /**
    * Позволяет отключить реагирование на тач-события.
    */

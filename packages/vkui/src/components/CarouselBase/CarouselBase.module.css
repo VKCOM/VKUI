@@ -55,12 +55,18 @@
   block-size: 6px;
 }
 
-.bulletsDark .bullet {
+.bulletsDark > .bullet {
   background-color: var(--vkui--color_icon_primary_invariably);
 }
 
-.bulletsLight .bullet {
+.bulletsLight > .bullet {
   background-color: var(--vkui--color_icon_contrast);
+}
+
+.bulletsContrast > .bullet {
+  background-color: var(--vkui--color_icon_contrast);
+  mix-blend-mode: exclusion;
+  backdrop-filter: grayscale(1) contrast(100);
 }
 
 .bullet {

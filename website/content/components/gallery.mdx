@@ -47,7 +47,7 @@ import { BlockWrapper } from '@/components/wrappers';
 {/* @example-description: Зацикленная галерея `looped` с буллетами и стрелками навигации. */}
 <Playground Wrapper={BlockWrapper}>
   ```jsx
-  <Gallery slideWidth="90%" bullets="dark" showArrows looped>
+  <Gallery slideWidth="90%" bullets="contrast" showArrows looped>
     <Placeholder style={{ backgroundColor: 'var(--vkui--color_background_negative)' }} title="1" />
     <Placeholder style={{ backgroundColor: 'var(--vkui--color_background_positive)' }} title="2" />
     <Placeholder style={{ backgroundColor: 'var(--vkui--color_background_accent)' }} title="3" />
@@ -83,13 +83,14 @@ import { BlockWrapper } from '@/components/wrappers';
 Для более удобного использования компонента можно включить индикатор прогресса с помощью свойства `bullets`:
 
 - `false` - значение по умолчанию, индикатор скрыт;
+- `contrast` - включает отображение в контрастном варианте;
 - `light` - включает отображение в светлом варианте;
-- `dark` - включает отображение в светлом варианте.
+- `dark` - включает отображение в темном варианте.
 
 {/* @example-description: Включенный индикатор прогресса `bullets` для навигации по слайдам. */}
 <Playground Wrapper={BlockWrapper}>
   ```jsx
-  <Gallery slideWidth="90%" bullets="dark" showArrows>
+  <Gallery slideWidth="90%" bullets="contrast" showArrows>
     <div style={{ backgroundColor: 'var(--vkui--color_background_negative)' }} />
     <div style={{ backgroundColor: 'var(--vkui--color_background_positive)' }} />
     <div style={{ backgroundColor: 'var(--vkui--color_background_accent)' }} />
@@ -174,7 +175,7 @@ return (
   ```jsx
   <Gallery
     slideWidth="90%"
-    bullets="dark"
+    bullets="contrast"
     showArrows
     animationDuration={1000}
     animationEasing={[0, 0, 0.2, 1]}
