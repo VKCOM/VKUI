@@ -1,5 +1,9 @@
 import type * as React from 'react';
-import { hasOwnInteractiveSemantics, supportsAriaExpanded } from '../lib/accessibility';
+import {
+  hasAccessibleName,
+  hasOwnInteractiveSemantics,
+  supportsAriaExpanded,
+} from '../lib/accessibility';
 import { clickByKeyboardHandler, isValidNotReactFragmentElement } from '../lib/utils';
 import { COMMON_WARNINGS, warnOnce } from '../lib/warnOnce';
 import { usePatchChildren } from './usePatchChildren';
@@ -13,9 +17,10 @@ const warn = warnOnce('useReferenceElement');
  * фокусируемость. На `div` получается элемент, до которого нельзя добраться с клавиатуры, и
  * нарушение `aria-allowed-attr`: состояние без роли, которой оно принадлежит.
  *
- * Роль и `tabIndex` добавляются только элементу без собственной интерактивной семантики. Если роль
- * задана явно или элемент — нативный контрол, решение принимал потребитель либо платформа:
- * переопределять его нельзя, поэтому остаётся убрать недопустимый атрибут.
+ * Роль и `tabIndex` добавляются только элементу без собственной интерактивной семантики и с доступным
+ * именем. Если роль задана явно или элемент — нативный контрол, решение принимал потребитель либо
+ * платформа, переопределять его нельзя. Безымянная кнопка не лучше `div`: она становится точкой
+ * табуляции, которая ничего не объявляет. В обоих случаях остаётся убрать недопустимый атрибут.
  */
 function enhanceNonInteractiveReference<
   Props extends {
@@ -31,9 +36,15 @@ function enhanceNonInteractiveReference<
     return injectProps;
   }
 
+  const elementProps = (element.props ?? {}) as React.AriaAttributes & {
+    children?: React.ReactNode;
+    tabIndex?: number;
+    title?: string;
+  };
   const openedByClick = typeof injectProps.onClick === 'function';
+  const canBecomeButton = openedByClick && hasAccessibleName(elementProps);
 
-  if (hasOwnInteractiveSemantics(element) || !openedByClick) {
+  if (hasOwnInteractiveSemantics(element) || !canBecomeButton) {
     if (process.env.NODE_ENV === 'development') {
       warn(COMMON_WARNINGS.a11y['aria-allowed-attr'], 'error');
     }
@@ -43,12 +54,10 @@ function enhanceNonInteractiveReference<
     return restInjectProps as Props;
   }
 
-  const { tabIndex } = (element.props as { tabIndex?: number } | undefined) ?? {};
-
   return {
     ...injectProps,
     role: 'button',
-    tabIndex: tabIndex ?? 0,
+    tabIndex: elementProps.tabIndex ?? 0,
     onKeyDown: clickByKeyboardHandler,
   };
 }

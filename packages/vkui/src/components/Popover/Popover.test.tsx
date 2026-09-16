@@ -126,6 +126,43 @@ describe(Popover, () => {
     expect(target).not.toHaveAttribute('tabindex');
   });
 
+  it('should not turn a target without an accessible name into a button', async () => {
+    const result = render(
+      <Popover
+        shown
+        id="menu"
+        role="dialog"
+        trigger="click"
+        aria-labelledby="target"
+        content={<button>1</button>}
+      >
+        <div id="target" aria-controls="menu" data-testid="target" />
+      </Popover>,
+    );
+    await waitForFloatingPosition();
+
+    const target = result.getByTestId('target');
+
+    expect(target).not.toHaveAttribute('aria-expanded');
+    expect(target).not.toHaveAttribute('role');
+    expect(target).not.toHaveAttribute('tabindex');
+  });
+
+  it('should accept aria-label as the accessible name of a non-interactive target', async () => {
+    const result = render(
+      <Popover shown id="menu" role="dialog" trigger="click" content={<button>1</button>}>
+        <div id="target" aria-label="Открыть меню" data-testid="target" />
+      </Popover>,
+    );
+    await waitForFloatingPosition();
+
+    const target = result.getByTestId('target');
+
+    expect(target).toHaveAttribute('role', 'button');
+    expect(target).toHaveAttribute('tabindex', '0');
+    expect(target).toHaveAttribute('aria-expanded', 'true');
+  });
+
   it('should call onPlacementChange', async () => {
     const onPlacementChange = vi.fn();
 
