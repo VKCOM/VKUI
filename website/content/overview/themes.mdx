@@ -80,7 +80,7 @@ import '@vkontakte/vkui/dist/vkui.css';
 
 ```jsx
 const colorScheme = useColorScheme();
-<Div>{colorScheme === 'light' ? 'Out of the blue' : 'And into the black'}</Div>;
+<Box padding="system">{colorScheme === 'light' ? 'Out of the blue' : 'And into the black'}</Box>;
 ```
 
 > Учтите, что некоторые компоненты делегируют цвет фона родителю выше — например, [Cell](/components/cell) и его производные.

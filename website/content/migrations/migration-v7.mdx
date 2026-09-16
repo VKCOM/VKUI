@@ -134,9 +134,9 @@ description: Инструкция миграции VKUI на версию v7.
   - <AppearanceProvider value={colorScheme}>
   + <ColorSchemeProvider value={colorScheme}>
     <AdaptivityProvider sizeY="regular">
-      <Div style={{ padding: 10 }}>
+      <Box padding="system" style={{ padding: 10 }}>
         <Textarea id="textarea" />
-      </Div>
+      </Box>
     </AdaptivityProvider>
   - </AppearanceProvider>
   + </ColorSchemeProvider>
@@ -170,7 +170,7 @@ description: Инструкция миграции VKUI на версию v7.
   + colorScheme="light"
   >
     <AdaptivityProvider viewWidth={ViewWidth.DESKTOP} hasPointer>
-      <Div>Content</Div>
+      <Box padding="system">Content</Box>
     </AdaptivityProvider>
   </ConfigProvider>
   ```
