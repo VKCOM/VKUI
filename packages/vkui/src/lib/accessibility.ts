@@ -142,38 +142,70 @@ const ROLES_SUPPORTING_ARIA_EXPANDED: React.AriaRole[] = [
   'treeitem',
 ];
 
-/**
- * Теги, неявная роль которых допускает атрибут `aria-expanded`.
- */
-const TAG_NAMES_SUPPORTING_ARIA_EXPANDED = [
-  'a',
-  'area',
-  'button',
-  'input',
-  'select',
-  'summary',
-  'textarea',
-];
+const INPUT_TYPES_SUPPORTING_ARIA_EXPANDED = ['button', 'checkbox', 'image', 'reset', 'submit'];
+
+interface ReferenceElementProps {
+  role?: React.AriaRole;
+  href?: string;
+  type?: string;
+  tabIndex?: number;
+}
+
+const getElementProps = (element: React.ReactElement): ReferenceElementProps =>
+  (element.props as ReferenceElementProps | undefined) ?? {};
+
+/** Неявная роль зависит от атрибутов: `<a>` без `href` не `link`, а роль `<input>` задаёт тип. */
+const tagSupportsAriaExpanded = (tagName: string, props: ReferenceElementProps): boolean => {
+  switch (tagName) {
+    case 'button':
+    case 'select':
+    case 'summary':
+      return true;
+    case 'a':
+    case 'area':
+      return props.href !== undefined;
+    case 'input':
+      return INPUT_TYPES_SUPPORTING_ARIA_EXPANDED.includes(props.type ?? 'text');
+    default:
+      return false;
+  }
+};
 
 /**
  * Проверяет, допускает ли элемент атрибут `aria-expanded`.
  *
- * Для элемента с явной ролью решает роль, для DOM-элемента без роли — тег. Для компонента роль
- * корневого элемента неизвестна, поэтому решение остаётся за самим компонентом.
+ * Для элемента с явной ролью решает роль, для DOM-элемента без роли — тег и его атрибуты. Для
+ * компонента роль корневого элемента неизвестна, поэтому решение остаётся за самим компонентом.
  */
 export const supportsAriaExpanded = (element: React.ReactElement): boolean => {
-  const role: React.AriaRole | undefined = (element.props as { role?: React.AriaRole } | undefined)
-    ?.role;
+  const props = getElementProps(element);
 
-  if (role) {
-    return ROLES_SUPPORTING_ARIA_EXPANDED.includes(role);
+  if (props.role) {
+    return ROLES_SUPPORTING_ARIA_EXPANDED.includes(props.role);
   }
 
   if (typeof element.type !== 'string') {
     return true;
   }
 
-  return TAG_NAMES_SUPPORTING_ARIA_EXPANDED.includes(element.type);
+  return tagSupportsAriaExpanded(element.type, props);
+};
+
+const NATIVELY_INTERACTIVE_TAG_NAMES = ['button', 'input', 'select', 'summary', 'textarea'];
+
+/** Проверяет, есть ли у элемента своя интерактивная семантика, которую нельзя переопределять. */
+export const hasOwnInteractiveSemantics = (element: React.ReactElement): boolean => {
+  const props = getElementProps(element);
+
+  if (props.role || typeof element.type !== 'string') {
+    return true;
+  }
+
+  if (element.type === 'a' || element.type === 'area') {
+    return props.href !== undefined;
+  }
+
+  return NATIVELY_INTERACTIVE_TAG_NAMES.includes(element.type);
 };
 
 /**

@@ -104,6 +104,28 @@ describe(Popover, () => {
     expect(target).toHaveAttribute('role', 'presentation');
   });
 
+  it('should not re-role a native control that does not support aria-expanded', async () => {
+    const result = render(
+      <Popover
+        shown
+        id="menu"
+        role="dialog"
+        trigger="click"
+        aria-labelledby="target"
+        content={<button>1</button>}
+      >
+        <input type="text" id="target" aria-controls="menu" data-testid="target" />
+      </Popover>,
+    );
+    await waitForFloatingPosition();
+
+    const target = result.getByTestId('target');
+
+    expect(target).not.toHaveAttribute('aria-expanded');
+    expect(target).not.toHaveAttribute('role');
+    expect(target).not.toHaveAttribute('tabindex');
+  });
+
   it('should call onPlacementChange', async () => {
     const onPlacementChange = vi.fn();
 

@@ -1,5 +1,5 @@
 import type * as React from 'react';
-import { supportsAriaExpanded } from '../lib/accessibility';
+import { hasOwnInteractiveSemantics, supportsAriaExpanded } from '../lib/accessibility';
 import { clickByKeyboardHandler, isValidNotReactFragmentElement } from '../lib/utils';
 import { COMMON_WARNINGS, warnOnce } from '../lib/warnOnce';
 import { usePatchChildren } from './usePatchChildren';
@@ -13,9 +13,9 @@ const warn = warnOnce('useReferenceElement');
  * фокусируемость. На `div` получается элемент, до которого нельзя добраться с клавиатуры, и
  * нарушение `aria-allowed-attr`: состояние без роли, которой оно принадлежит.
  *
- * Роль и `tabIndex` добавляются только элементу без собственной роли. Если роль задана явно и
- * `aria-expanded` не допускает, решение принимал потребитель — переопределять его нельзя, поэтому
- * атрибут убирается.
+ * Роль и `tabIndex` добавляются только элементу без собственной интерактивной семантики. Если роль
+ * задана явно или элемент — нативный контрол, решение принимал потребитель либо платформа:
+ * переопределять его нельзя, поэтому остаётся убрать недопустимый атрибут.
  */
 function enhanceNonInteractiveReference<
   Props extends {
@@ -31,11 +31,9 @@ function enhanceNonInteractiveReference<
     return injectProps;
   }
 
-  const elementProps = element.props as { role?: React.AriaRole; tabIndex?: number } | undefined;
-  const hasOwnRole = Boolean(elementProps?.role);
   const openedByClick = typeof injectProps.onClick === 'function';
 
-  if (hasOwnRole || !openedByClick) {
+  if (hasOwnInteractiveSemantics(element) || !openedByClick) {
     if (process.env.NODE_ENV === 'development') {
       warn(COMMON_WARNINGS.a11y['aria-allowed-attr'], 'error');
     }
@@ -45,10 +43,12 @@ function enhanceNonInteractiveReference<
     return restInjectProps as Props;
   }
 
+  const { tabIndex } = (element.props as { tabIndex?: number } | undefined) ?? {};
+
   return {
     ...injectProps,
     role: 'button',
-    tabIndex: elementProps?.tabIndex ?? 0,
+    tabIndex: tabIndex ?? 0,
     onKeyDown: clickByKeyboardHandler,
   };
 }

@@ -3,6 +3,7 @@ import { describe, expect, it } from 'vitest';
 import { VisuallyHidden } from '../components/VisuallyHidden/VisuallyHidden';
 import {
   hasAccessibleName,
+  hasOwnInteractiveSemantics,
   injectAriaExpandedPropByRole,
   supportsAriaExpanded,
 } from './accessibility';
@@ -40,7 +41,7 @@ describe('accessibility utils', () => {
       },
     );
 
-    it.each(['a', 'area', 'button', 'input', 'select', 'summary', 'textarea'])(
+    it.each(['button', 'select', 'summary'])(
       'should return true for <%s> without an explicit role',
       (tagName) => {
         const Element = tagName as 'button';
@@ -49,7 +50,7 @@ describe('accessibility utils', () => {
       },
     );
 
-    it.each(['div', 'span', 'p', 'li'])(
+    it.each(['div', 'span', 'p', 'li', 'textarea'])(
       'should return false for <%s> without an explicit role',
       (tagName) => {
         const Element = tagName as 'div';
@@ -57,6 +58,31 @@ describe('accessibility utils', () => {
         expect(supportsAriaExpanded(<Element />)).toBe(false);
       },
     );
+
+    it('should require href, because <a> and <area> without it are not links', () => {
+      expect(supportsAriaExpanded(<a href="/" />)).toBe(true);
+      expect(supportsAriaExpanded(<a />)).toBe(false);
+      expect(supportsAriaExpanded(<area href="/" />)).toBe(true);
+      expect(supportsAriaExpanded(<area />)).toBe(false);
+    });
+
+    it.each(['button', 'checkbox', 'image', 'reset', 'submit'])(
+      'should return true for <input type="%s">',
+      (type) => {
+        expect(supportsAriaExpanded(<input type={type} />)).toBe(true);
+      },
+    );
+
+    it.each(['text', 'email', 'number', 'radio', 'range', 'search'])(
+      'should return false for <input type="%s">',
+      (type) => {
+        expect(supportsAriaExpanded(<input type={type} />)).toBe(false);
+      },
+    );
+
+    it('should treat <input> without a type as a textbox', () => {
+      expect(supportsAriaExpanded(<input />)).toBe(false);
+    });
 
     it('should return true for a component, because the role of its root element is unknown', () => {
       const Component = () => <button type="button" />;
@@ -67,6 +93,40 @@ describe('accessibility utils', () => {
     it('should prefer an explicit role over the implicit one', () => {
       expect(supportsAriaExpanded(<button role="presentation" type="button" />)).toBe(false);
       expect(supportsAriaExpanded(<div role="button" />)).toBe(true);
+    });
+  });
+
+  describe('hasOwnInteractiveSemantics()', () => {
+    it.each(['button', 'input', 'select', 'summary', 'textarea'])(
+      'should return true for the native control <%s>',
+      (tagName) => {
+        const Element = tagName as 'button';
+
+        expect(hasOwnInteractiveSemantics(<Element />)).toBe(true);
+      },
+    );
+
+    it.each(['div', 'span', 'p', 'li'])('should return false for <%s>', (tagName) => {
+      const Element = tagName as 'div';
+
+      expect(hasOwnInteractiveSemantics(<Element />)).toBe(false);
+    });
+
+    it('should require href, because <a> and <area> without it are not interactive', () => {
+      expect(hasOwnInteractiveSemantics(<a href="/" />)).toBe(true);
+      expect(hasOwnInteractiveSemantics(<a />)).toBe(false);
+      expect(hasOwnInteractiveSemantics(<area href="/" />)).toBe(true);
+      expect(hasOwnInteractiveSemantics(<area />)).toBe(false);
+    });
+
+    it('should return true for an element with an explicit role', () => {
+      expect(hasOwnInteractiveSemantics(<div role="presentation" />)).toBe(true);
+    });
+
+    it('should return true for a component, because its root element is unknown', () => {
+      const Component = () => <div />;
+
+      expect(hasOwnInteractiveSemantics(<Component />)).toBe(true);
     });
   });
 
