@@ -4690,12 +4690,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:>=20.0.0, @types/node@npm:^26.4.0, @types/node@npm:^26.5.1":
+"@types/node@npm:*, @types/node@npm:>=20.0.0, @types/node@npm:^26.4.0":
   version: 26.5.1
   resolution: "@types/node@npm:26.5.1"
   dependencies:
     undici-types: "npm:~8.9.0"
   checksum: 10/5b509d30dc9344c91cba3291acecf6f424320cb763c8192befd50cc8b1a8207dd7dcff8c4f313eea6468e9f2121cc78ffb6affbd7ecd951b4b32e2629ea9856d
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^26.6.1":
+  version: 26.6.1
+  resolution: "@types/node@npm:26.6.1"
+  dependencies:
+    undici-types: "npm:~8.9.0"
+  checksum: 10/86e4bbb49b696e1183d42e1e8653b13b969146969e6e30635aa5de7d4340f06fcdd748284bcc68ea6a3f8300d9dc54569ec377f312cdeb1c1ae0a5996ec075d7
   languageName: node
   linkType: hard
 
@@ -5393,7 +5402,7 @@ __metadata:
     "@swc/core": "npm:^1.15.47"
     "@types/cross-spawn": "npm:^6.0.6"
     "@types/jscodeshift": "npm:^17.3.0"
-    "@types/node": "npm:^26.5.1"
+    "@types/node": "npm:^26.6.1"
     "@types/prompts": "npm:^2.4.9"
     chalk: "npm:^6.0.0"
     commander: "npm:^15.0.0"
@@ -5419,7 +5428,7 @@ __metadata:
   dependencies:
     "@date-fns/tz": "npm:1.5.0"
     "@swc/core": "npm:^1.15.47"
-    "@types/node": "npm:^26.5.1"
+    "@types/node": "npm:^26.6.1"
     typescript: "npm:^6.0.3"
   languageName: unknown
   linkType: soft
@@ -5517,7 +5526,7 @@ __metadata:
     "@testing-library/dom": "npm:^10.4.2"
     "@testing-library/react": "npm:^16.3.3"
     "@testing-library/user-event": "npm:^14.6.7"
-    "@types/node": "npm:^26.5.1"
+    "@types/node": "npm:^26.6.1"
     "@types/react": "npm:^19.3.0"
     "@types/react-dom": "npm:^19.3.0"
     "@types/semver": "npm:^7.8.0"
