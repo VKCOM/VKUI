@@ -5580,7 +5580,7 @@ __metadata:
     vitest: "npm:^4.1.11"
     vitest-axe: "npm:^0.1.0"
     vitest-fail-on-console: "npm:^0.10.1"
-    webpack: "npm:^5.110.3"
+    webpack: "npm:^5.111.0"
     webpack-cli: "npm:^7.2.3"
     webpack-merge: "npm:^6.0.1"
     yargs: "npm:^18.1.0"
@@ -8395,7 +8395,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"enhanced-resolve@npm:^5.22.2, enhanced-resolve@npm:^5.24.4":
+"enhanced-resolve@npm:^5.22.2":
   version: 5.24.4
   resolution: "enhanced-resolve@npm:5.24.4"
   dependencies:
@@ -13073,7 +13073,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"neo-async@npm:^2.5.0, neo-async@npm:^2.6.2":
+"neo-async@npm:^2.5.0":
   version: 2.6.2
   resolution: "neo-async@npm:2.6.2"
   checksum: 10/1a7948fea86f2b33ec766bc899c88796a51ba76a4afc9026764aedc6e7cde692a09067031e4a1bf6db4f978ccd99e7f5b6c03fe47ad9865c3d4f99050d67e002
@@ -18644,38 +18644,6 @@ __metadata:
   version: 0.6.2
   resolution: "webpack-virtual-modules@npm:0.6.2"
   checksum: 10/d9a0d035f7ec0c7f1055aaf88bfe48b7f96458043916a1b2926d9012fd61de3810a6b768e31a8cd4b3c84a9b6d55824361a9dd20aaf9f5ccfb6f017af216a178
-  languageName: node
-  linkType: hard
-
-"webpack@npm:^5.110.3":
-  version: 5.110.3
-  resolution: "webpack@npm:5.110.3"
-  dependencies:
-    "@types/estree": "npm:^1.0.8"
-    "@types/json-schema": "npm:^7.0.15"
-    "@webassemblyjs/ast": "npm:^1.14.1"
-    "@webassemblyjs/wasm-edit": "npm:^1.14.1"
-    "@webassemblyjs/wasm-parser": "npm:^1.14.1"
-    acorn: "npm:^8.16.0"
-    browserslist: "npm:^4.28.1"
-    chrome-trace-event: "npm:^1.0.2"
-    enhanced-resolve: "npm:^5.24.4"
-    es-module-lexer: "npm:^2.1.0"
-    events: "npm:^3.2.0"
-    graceful-fs: "npm:^4.2.11"
-    mime-db: "npm:^1.54.0"
-    minimizer-webpack-plugin: "npm:^5.7.0"
-    neo-async: "npm:^2.6.2"
-    schema-utils: "npm:^4.3.3"
-    tapable: "npm:^2.3.0"
-    watchpack: "npm:^2.5.2"
-    webpack-sources: "npm:^3.5.1"
-  peerDependenciesMeta:
-    webpack-cli:
-      optional: true
-  bin:
-    webpack: bin/webpack.js
-  checksum: 10/be12a8b532febb0ab47d1b98f1f243708926be1b9fc39bceecdf8876af907a93defc9b36c9cece3adfccfc76c6960909b187f488e8c3497e8ae989c0701f0e37
   languageName: node
   linkType: hard
 
