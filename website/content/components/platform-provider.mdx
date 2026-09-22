@@ -33,16 +33,16 @@ tags: provider
 > ```jsx
 > function BadComponent({ children }) {
 >   return (
->     <Div>
+>     <Box padding="system">
 >       <Button>I'm not ios 😔</Button>
->     </Div>
+>     </Box>
 >   );
 > }
 > function GoodComponent({ className, children }) {
 >   return (
->     <Div className={className}>
+>     <Box padding="system" className={className}>
 >       <Button>I'm ios 😎</Button>
->     </Div>
+>     </Box>
 >   );
 > }
 > function InfoBoard({ children }) {

@@ -30,7 +30,7 @@ const onRefresh = React.useCallback(() => {
 
 return (
   <PullToRefresh onRefresh={onRefresh} isFetching={fetching}>
-    <Div>
+    <Box padding="system">
       {!users.length && <Text>Потяните вниз</Text>}
       {users.map((_, i) => {
         return (
@@ -39,7 +39,7 @@ return (
           </Cell>
         );
       })}
-    </Div>
+    </Box>
   </PullToRefresh>
 );
 ```

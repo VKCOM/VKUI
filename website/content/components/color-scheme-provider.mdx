@@ -32,20 +32,20 @@ tags: provider
 > ```jsx
 > function BadComponent({ children }) {
 >   return (
->     <Div>
+>     <Box padding="system">
 >       <Button mode="primary" appearance="accent">
 >         Акцентная кнопка светлой схемы 😔
 >       </Button>
->     </Div>
+>     </Box>
 >   );
 > }
 > function GoodComponent({ className, children }) {
 >   return (
->     <Div className={className}>
+>     <Box padding="system" className={className}>
 >       <Button mode="primary" appearance="accent">
 >         Акцентная кнопка тёмной схемы 😎
 >       </Button>
->     </Div>
+>     </Box>
 >   );
 > }
 > function InfoBoard({ children }) {

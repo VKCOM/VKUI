@@ -230,9 +230,9 @@ const ProfilePanelContent = ({ id, onSettingsClick, onBack }) => {
       <PanelHeader before={<PanelHeaderBack onClick={onBack} />}>Профиль</PanelHeader>
       <Group>
         <Placeholder>Теперь свайпните от левого края направо, чтобы вернуться</Placeholder>
-        <Div style={{ height: 50, background: '#eee' }} data-vkui-swipe-back={false}>
+        <Box padding="system" style={{ height: 50, background: '#eee' }} data-vkui-swipe-back={false}>
           Здесь свайпбек отключен
-        </Div>
+        </Box>
       </Group>
       <Group>
         <CellButton onClick={onSettingsClick}>Настройки</CellButton>

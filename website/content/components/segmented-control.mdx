@@ -128,19 +128,19 @@ return (
       ]}
     />
     {selected === 'news' && (
-      <Div id="tab-content-news" aria-labelledby="tab-news" role="tabpanel" tabIndex={0}>
+      <Box padding="system" id="tab-content-news" aria-labelledby="tab-news" role="tabpanel" tabIndex={0}>
         Контент новостей
-      </Div>
+      </Box>
     )}
     {selected === 'recommendations' && (
-      <Div
+      <Box padding="system"
         id="tab-content-recommendations"
         aria-labelledby="tab-recommendations"
         role="tabpanel"
         tabIndex={0}
       >
         Контент рекомендаций
-      </Div>
+      </Box>
     )}
   </Group>
 );
