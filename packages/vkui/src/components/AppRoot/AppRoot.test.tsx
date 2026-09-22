@@ -93,7 +93,7 @@ describe('AppRoot', () => {
         embedded: false,
         mode: 'full',
         disablePortal: false,
-        layout: undefined,
+        layoutMode: undefined,
       },
       undefined,
     );
@@ -235,12 +235,12 @@ describe('AppRoot', () => {
       expect(document.documentElement).not.toHaveClass('vkui--layout-card');
       expect(document.documentElement).not.toHaveClass('vkui--layout-plain');
 
-      component.rerender(<AppRoot mode="full" layout="card" />);
+      component.rerender(<AppRoot mode="full" layoutMode="card" />);
 
       expect(document.documentElement).toHaveClass('vkui--layout-card');
       expect(document.documentElement).not.toHaveClass('vkui--layout-plain');
 
-      component.rerender(<AppRoot mode="full" layout="plain" />);
+      component.rerender(<AppRoot mode="full" layoutMode="plain" />);
 
       expect(document.documentElement).not.toHaveClass('vkui--layout-card');
       expect(document.documentElement).toHaveClass('vkui--layout-plain');
@@ -254,12 +254,12 @@ describe('AppRoot', () => {
         expect(document.documentElement).not.toHaveClass('vkui--layout-card');
         expect(document.documentElement).not.toHaveClass('vkui--layout-plain');
 
-        component.rerender(<AppRoot mode={mode} layout="card" />);
+        component.rerender(<AppRoot mode={mode} layoutMode="card" />);
 
         expect(document.documentElement).not.toHaveClass('vkui--layout-card');
         expect(document.documentElement).not.toHaveClass('vkui--layout-plain');
 
-        component.rerender(<AppRoot mode={mode} layout="plain" />);
+        component.rerender(<AppRoot mode={mode} layoutMode="plain" />);
 
         expect(document.documentElement).not.toHaveClass('vkui--layout-card');
         expect(document.documentElement).not.toHaveClass('vkui--layout-plain');

@@ -100,7 +100,7 @@ const data = [
 const [openId, setOpenId] = React.useState(2);
 
 return (
-  <Group mode="card" separator="hide">
+  <Group layoutMode="card" separator="hide">
     {data.map(({ id, title, detail }) => (
       <Accordion
         key={id}

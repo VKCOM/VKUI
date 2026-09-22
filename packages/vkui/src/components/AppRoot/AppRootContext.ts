@@ -10,7 +10,7 @@ export interface AppRootContextInterface {
   embedded: boolean;
   mode: 'partial' | 'embedded' | 'full';
   disablePortal: boolean;
-  layout?: 'card' | 'plain' | undefined;
+  layoutMode?: 'card' | 'plain' | undefined;
   userSelectMode?: AppRootUserSelectMode | undefined;
 }
 

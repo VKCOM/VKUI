@@ -8,11 +8,11 @@ export function useSyncHTMLWithBaseVKUIClasses({
   appRootRef,
   mode,
   enable,
-  layout,
+  layoutMode,
 }: {
   appRootRef: React.RefObject<HTMLElement | null>;
   mode: AppRootMode;
-  layout?: AppRootLayout | undefined;
+  layoutMode?: AppRootLayout | undefined;
   enable: boolean;
 }) {
   useIsomorphicLayoutEffect(() => {
@@ -31,8 +31,8 @@ export function useSyncHTMLWithBaseVKUIClasses({
     }
 
     if (mode === 'full') {
-      if (layout) {
-        htmlElementClasses.push(layoutClassNames[layout]);
+      if (layoutMode) {
+        htmlElementClasses.push(layoutClassNames[layoutMode]);
       }
       /* eslint-disable-next-line no-restricted-properties */
       htmlElement?.classList.add(...htmlElementClasses);
@@ -49,5 +49,5 @@ export function useSyncHTMLWithBaseVKUIClasses({
       /* eslint-disable-next-line no-restricted-properties */
       parentElement?.classList.remove(...parentElementClasses);
     };
-  }, [mode, enable, layout, appRootRef]);
+  }, [mode, enable, layoutMode, appRootRef]);
 }
