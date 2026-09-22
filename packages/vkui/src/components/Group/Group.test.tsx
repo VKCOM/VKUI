@@ -17,67 +17,67 @@ describe('Group', () => {
   baselineComponent(Group);
 
   it.each<{
-    mode: GroupProps['mode'];
+    layoutMode: GroupProps['layoutMode'];
     isInsideModal: boolean;
     viewWidth?: ViewWidthType | undefined;
-    layout?: AppRootContextInterface['layout'] | undefined;
+    appRootLayoutMode?: AppRootContextInterface['layoutMode'] | undefined;
     className: string;
   }>([
     {
-      mode: 'plain',
+      layoutMode: 'plain',
       isInsideModal: true,
       viewWidth: undefined,
-      layout: undefined,
+      appRootLayoutMode: undefined,
       className: styles.modePlain,
     },
     {
-      mode: undefined,
+      layoutMode: undefined,
       isInsideModal: true,
       viewWidth: undefined,
-      layout: undefined,
+      appRootLayoutMode: undefined,
       className: classNames(styles.modePlain, styles.modePlainInsideModal),
     },
     {
-      mode: undefined,
+      layoutMode: undefined,
       isInsideModal: false,
       viewWidth: undefined,
-      layout: 'card',
+      appRootLayoutMode: 'card',
       className: styles.modeCard,
     },
     {
-      mode: undefined,
+      layoutMode: undefined,
       isInsideModal: false,
-      layout: undefined,
+      appRootLayoutMode: undefined,
       viewWidth: ViewWidth.MOBILE,
       className: styles.modePlain,
     },
     {
-      mode: undefined,
+      layoutMode: undefined,
       isInsideModal: false,
-      layout: undefined,
+      appRootLayoutMode: undefined,
       viewWidth: ViewWidth.SMALL_TABLET,
       className: styles.modeCard,
     },
     {
-      mode: undefined,
+      layoutMode: undefined,
       isInsideModal: false,
-      layout: undefined,
+      appRootLayoutMode: undefined,
       viewWidth: undefined,
       className: styles.modeNone,
     },
   ])(
-    'should have className $className with mode $mode isInsideModal $isInsideModal viewWidth $viewWidth',
-    ({ mode, isInsideModal, viewWidth, layout, className }) => {
+    'should have className $className with layoutMode $layoutMode isInsideModal $isInsideModal viewWidth $viewWidth',
+    ({ layoutMode, isInsideModal, viewWidth, appRootLayoutMode, className }) => {
       render(
         <AppRootContext.Provider
           value={{
             ...DEFAULT_APP_ROOT_CONTEXT_VALUE,
-            layout,
+            layoutMode: appRootLayoutMode,
           }}
         >
           <AdaptivityContext.Provider value={{ viewWidth }}>
             <ModalContext.Provider value={isInsideModal ? 'test' : null}>
-              <Group mode={mode} data-testid="group">
+              <Group layoutMode={layoutMode} data-testid="group">
                 <div />
               </Group>
             </ModalContext.Provider>
@@ -99,12 +99,12 @@ describe('Group', () => {
       </Group>,
     );
     const modePlainResult = render(
-      <Group separator={separator} mode="plain">
+      <Group separator={separator} layoutMode="plain">
         <div />
       </Group>,
     );
     const modeCardResult = render(
-      <Group separator={separator} mode="card">
+      <Group separator={separator} layoutMode="card">
         <div />
       </Group>,
     );
