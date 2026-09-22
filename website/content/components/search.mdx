@@ -55,14 +55,14 @@ const [value, setValue] = React.useState('Поиск');
     icon={(renderButton) => (
       <Popover
         content={({ onClose }) => (
-          <Div>
+          <Box padding="system">
             <CellButton before={<Icon28TagOutline />} onClick={onClose}>
               По тегам
             </CellButton>
             <CellButton before={<Icon28CalendarOutline />} onClick={onClose}>
               По дате
             </CellButton>
-          </Div>
+          </Box>
         )}
       >
         {renderButton(<Icon24Filter />, { 'aria-label': 'Фильтры' })}

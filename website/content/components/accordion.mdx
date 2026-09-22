@@ -19,11 +19,11 @@ import { BlockWrapper } from '@/components/wrappers';
   <Accordion defaultExpanded>
     <Accordion.Summary>Новый дизайн профиля</Accordion.Summary>
     <Accordion.Content>
-      <Div>
+      <Box padding="system">
         Внешний вид профиля ВКонтакте действительно обновился. К прежнему варианту вернуться уже не
         получится. В центре внимания нового дизайна — личность человека и его увлечения. Новый
         формат профиля особенно удобен для авторов контента и станет для них цифровой визиткой.
-      </Div>
+      </Box>
     </Accordion.Content>
   </Accordion>
   ```
@@ -53,7 +53,7 @@ React-компонентов, прочитать про это можно в [д
 <Accordion defaultExpanded>
   <Accordion.Summary>Заголовок</Accordion.Summary>
   <Accordion.Content>
-    <Div>Контент</Div>
+    <Box padding="system">Контент</Box>
   </Accordion.Content>
 </Accordion>;
 
@@ -63,7 +63,7 @@ return (
   <Accordion expanded={expanded} onChange={setExpanded}>
     <Accordion.Summary>Заголовок</Accordion.Summary>
     <Accordion.Content>
-      <Div>Контент</Div>
+      <Box padding="system">Контент</Box>
     </Accordion.Content>
   </Accordion>
 );
@@ -109,9 +109,9 @@ return (
       >
         <Accordion.Summary>{title}</Accordion.Summary>
         <Accordion.Content>
-          <Div>
+          <Box padding="system">
             <Text>{detail}</Text>
-          </Div>
+          </Box>
         </Accordion.Content>
       </Accordion>
     ))}
@@ -139,11 +139,11 @@ return (
       Новый дизайн профиля
     </Accordion.Summary>
     <Accordion.Content>
-      <Div>
+      <Box padding="system">
         Внешний вид профиля ВКонтакте действительно обновился. К прежнему варианту вернуться уже не
         получится. В центре внимания нового дизайна — личность человека и его увлечения. Новый
         формат профиля особенно удобен для авторов контента и станет для них цифровой визиткой.
-      </Div>
+      </Box>
     </Accordion.Content>
   </Accordion>
   ```

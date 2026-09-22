@@ -21,9 +21,9 @@ tags: overlay
     shown
     autoFocus={false}
     content={
-      <Div>
+      <Box padding="system">
         <Text>Привет</Text>
-      </Div>
+      </Box>
     }
   >
     <Button mode="outline">
@@ -41,9 +41,9 @@ tags: overlay
     role="tooltip"
     aria-describedby="tooltip-1"
     content={
-      <Div>
+      <Box padding="system">
         <Text>Привет</Text>
-      </Div>
+      </Box>
     }
     restoreFocus="anchor-element"
   >
@@ -77,9 +77,9 @@ tags: overlay
     role="tooltip"
     aria-describedby="tooltip-1"
     content={
-      <Div>
+      <Box padding="system">
         <Text>Привет</Text>
-      </Div>
+      </Box>
     }
     restoreFocus="anchor-element"
   >
@@ -110,9 +110,9 @@ tags: overlay
     trigger="hover"
     placement="bottom"
     content={
-      <Div>
+      <Box padding="system">
         <Text>Привет</Text>
-      </Div>
+      </Box>
     }
     aria-hidden="true"
     disableFocusTrap
@@ -135,9 +135,9 @@ tags: overlay
     role="tooltip"
     aria-describedby="tooltip-1"
     content={
-      <Div>
+      <Box padding="system">
         <Text>Привет</Text>
-      </Div>
+      </Box>
     }
     restoreFocus="anchor-element"
   >
@@ -183,9 +183,9 @@ return (
     aria-describedby="tooltip-1"
     onShownChange={handleShownChange}
     content={
-      <Div>
+      <Box padding="system">
         <Text>Привет</Text>
-      </Div>
+      </Box>
     }
     restoreFocus="anchor-element"
   >
@@ -213,9 +213,9 @@ const { anchorRef, anchorProps, popover } = usePopover({
   'id': 'menupopup',
   'aria-labelledby': 'menubutton',
   'content': ({ onClose }) => (
-    <Div>
+    <Box padding="system">
       <Text>Привет</Text>
-    </Div>
+    </Box>
   ),
 });
 
