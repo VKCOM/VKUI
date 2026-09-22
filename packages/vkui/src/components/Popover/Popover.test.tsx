@@ -148,6 +148,23 @@ describe(Popover, () => {
     expect(target).not.toHaveAttribute('tabindex');
   });
 
+  it('should not annotate a non-interactive target when the popover opens on hover', async () => {
+    const result = render(
+      <Popover shown id="menu" role="dialog" trigger="hover" content={<button>1</button>}>
+        <div id="target" data-testid="target">
+          Target
+        </div>
+      </Popover>,
+    );
+    await waitForFloatingPosition();
+
+    const target = result.getByTestId('target');
+
+    expect(target).not.toHaveAttribute('aria-expanded');
+    expect(target).not.toHaveAttribute('role');
+    expect(target).not.toHaveAttribute('tabindex');
+  });
+
   it('should accept aria-label as the accessible name of a non-interactive target', async () => {
     const result = render(
       <Popover shown id="menu" role="dialog" trigger="click" content={<button>1</button>}>
