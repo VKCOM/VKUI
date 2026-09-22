@@ -43,26 +43,26 @@ const stylesPadding = {
 type GroupMode = 'plain' | 'card' | 'none';
 
 /**
- * Вычисляем mode для Group.
+ * Вычисляем layoutMode для Group.
  */
 function useGroupMode(
-  forcedMode: GroupContainerProps['mode'],
+  forcedLayoutMode: GroupContainerProps['layoutMode'],
   viewWidth: ViewWidthType | 'none',
   legacySizeX: SizeTypeValues | undefined,
   isInsideModal: boolean,
 ): GroupMode {
-  const { layout } = React.useContext(AppRootContext);
+  const { layoutMode } = React.useContext(AppRootContext);
 
-  if (forcedMode) {
-    return forcedMode;
+  if (forcedLayoutMode) {
+    return forcedLayoutMode;
   }
 
   if (isInsideModal) {
     return 'plain';
   }
 
-  if (layout) {
-    return layout;
+  if (layoutMode) {
+    return layoutMode;
   }
 
   // TODO [>=10]: #9015 Удалить это условие
@@ -81,7 +81,7 @@ export type GroupContainerProps = HTMLAttributesWithRootRef<HTMLElement> &
   HasComponent &
   HasRender<HTMLElement> & {
     /**
-    `show` (только для `mode="plain"`) - разделитель всегда показывается
+    `show` (только для `layoutMode="plain"`) - разделитель всегда показывается
     `hide` - разделитель всегда спрятан,
     `auto` - разделитель рисуется автоматически между соседними группами.
    */
@@ -91,6 +91,10 @@ export type GroupContainerProps = HTMLAttributesWithRootRef<HTMLElement> &
      * обводкой и внешними отступами. Если `plain` — без отступов и обводки.
      * По умолчанию режим отображения зависит от `viewWidth` (`card` при `SMALL_TABLET` и `plain` при `MOBILE`)
      * В модальных окнах по умолчанию `plain`.
+     */
+    layoutMode?: 'plain' | 'card' | undefined;
+    /**
+     * @deprecated Используйте `layoutMode`.
      */
     mode?: 'plain' | 'card' | undefined;
     /**
@@ -112,7 +116,8 @@ const warn = warnOnce('Group');
 export const GroupContainer = ({
   children,
   separator = 'auto',
-  mode: modeProps,
+  layoutMode: layoutModeProp,
+  mode: modeProp,
   padding = 'm',
   tabIndex: tabIndexProp,
   noBlockStartRounding,
@@ -122,7 +127,7 @@ export const GroupContainer = ({
   const isInsideModal = useModalContext().id !== null;
   const { sizeX: legacySizeX, viewWidth = 'none' } = useAdaptivity();
 
-  const mode = useGroupMode(modeProps, viewWidth, legacySizeX, isInsideModal);
+  const mode = useGroupMode(layoutModeProp ?? modeProp, viewWidth, legacySizeX, isInsideModal);
 
   const isTabPanel = restProps.role === 'tabpanel';
 

@@ -39,7 +39,7 @@ Playground.args = {
 export const Example: Story = () => (
   <>
     <Group>
-      <Group mode="plain">
+      <Group layoutMode="plain">
         <SimpleCell indicator="+7 ••• •• •• 96" before={<Icon28PhoneOutline />}>
           Номер телефона
         </SimpleCell>
@@ -47,7 +47,7 @@ export const Example: Story = () => (
           Email
         </SimpleCell>
       </Group>
-      <Group mode="plain">
+      <Group layoutMode="plain">
         <SimpleCell indicator="Обновлён 3 года назад" before={<Icon28KeyOutline />}>
           Пароль
         </SimpleCell>

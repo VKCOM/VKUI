@@ -15,7 +15,7 @@ export const GroupPlayground = (props: ComponentPlaygroundProps) => {
               Content
             </Box>,
           ],
-          mode: ['plain', 'card'],
+          layoutMode: ['plain', 'card'],
         },
         {
           header: [<Header key="header">Header</Header>],
@@ -27,7 +27,7 @@ export const GroupPlayground = (props: ComponentPlaygroundProps) => {
           description: ['Description'],
         },
         {
-          mode: ['card'],
+          layoutMode: ['card'],
           children: [
             <Box padding="system" key="Box">
               Content
@@ -37,7 +37,7 @@ export const GroupPlayground = (props: ComponentPlaygroundProps) => {
           noBlockEndRounding: [false],
         },
         {
-          mode: ['card'],
+          layoutMode: ['card'],
           children: [
             <Box padding="system" key="Box">
               Content
@@ -59,7 +59,7 @@ export const GroupWithExpandedContentPlayground = (props: ComponentPlaygroundPro
       {...props}
       propSets={[
         {
-          mode: ['plain', 'card'],
+          layoutMode: ['plain', 'card'],
           padding: ['s', 'm'],
           $adaptivity: 'x',
           children: [
