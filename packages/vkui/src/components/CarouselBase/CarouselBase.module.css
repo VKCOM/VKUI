@@ -47,27 +47,34 @@
 .bullets {
   position: absolute;
   inset-block-end: 10px;
-  inset-inline-start: 0;
+  inset-inline: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  inline-size: 100%;
+  inline-size: max-content;
   block-size: 6px;
+  margin-inline: auto;
 }
 
 .bulletsDark .bullet {
   background-color: var(--vkui--color_icon_primary_invariably);
 }
 
-.bulletsLight .bullet {
+.bulletsLight .bullet,
+.bulletsOverlay .bullet {
   background-color: var(--vkui--color_icon_contrast);
+}
+
+.bulletsOverlay {
+  block-size: auto;
+  background-color: var(--vkui--color_overlay_primary);
+  border-radius: 6px;
 }
 
 .bullet {
   inline-size: 6px;
   block-size: 6px;
-  margin-block: 0;
-  margin-inline: 3px;
+  margin: 3px;
   border-radius: 50%;
   opacity: var(--vkui--opacity_disable);
 }

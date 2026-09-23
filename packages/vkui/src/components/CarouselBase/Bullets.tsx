@@ -20,6 +20,7 @@ interface BulletsProps extends BulletsTestIds {
 const stylesBullets = {
   dark: styles.bulletsDark,
   light: styles.bulletsLight,
+  overlay: styles.bulletsOverlay,
 };
 
 export const Bullets = ({ bullets, slideIndex, count, bulletTestId }: BulletsProps) => {
