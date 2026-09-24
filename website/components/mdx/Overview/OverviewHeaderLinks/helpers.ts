@@ -21,6 +21,14 @@ export function createStorybookUrl(componentName: string, group: string) {
   return `${VKUI_CONFIG.HOMEPAGE}/${VKUI_CONFIG.VERSION}/playground?path=${encodeURIComponent(storybookPath)}`;
 }
 
+export function createStorybookHomeUrl() {
+  return `${VKUI_CONFIG.HOMEPAGE}/${VKUI_CONFIG.VERSION}/playground`;
+}
+
+export function createPageUrl(fsRoute: string) {
+  return `${VKUI_CONFIG.HOMEPAGE}${fsRoute}`;
+}
+
 export function createMdxUrl(fsRoute: string) {
   const normalized = fsRoute.replace(/\/$/, '');
   const basePath = process.env.NEXT_PUBLIC_VKUI_DOCS_BASE_PATH || '';

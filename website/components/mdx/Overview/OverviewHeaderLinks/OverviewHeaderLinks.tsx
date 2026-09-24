@@ -1,8 +1,17 @@
-import { Flex, Link, Subhead } from '@vkontakte/vkui';
+import { Flex, Subhead } from '@vkontakte/vkui';
 import { useConfig } from '@vkontakte/vkui-docs-theme';
 import { useFSRoute } from 'nextra/hooks';
-import { createMdxUrl, createSourceUrl, createStorybookUrl, getComponentName } from './helpers';
-import type { OverviewHeaderLinkProps, OverviewHeaderLinksProps } from './types';
+import { OverviewHeaderActions } from './OverviewHeaderActions/OverviewHeaderActions';
+import { OverviewHeaderLink } from './OverviewHeaderLink/OverviewHeaderLink';
+import {
+  createMdxUrl,
+  createPageUrl,
+  createSourceUrl,
+  createStorybookHomeUrl,
+  createStorybookUrl,
+  getComponentName,
+} from './helpers';
+import type { OverviewHeaderLinksProps } from './types';
 import styles from '../Overview.module.css';
 
 export function OverviewHeaderLinks({
@@ -15,17 +24,20 @@ export function OverviewHeaderLinks({
     normalizePagesResult: { activeMetadata },
   } = useConfig();
   const fsRoute = useFSRoute();
-  const mdxUrl = createMdxUrl(fsRoute);
 
   if (fsRoute === '/blog') {
     return null;
   }
 
+  const pageUrl = createPageUrl(fsRoute);
+  const mdxUrl = createMdxUrl(fsRoute);
+
   if (type === 'doc') {
     return (
       <Subhead>
-        <Flex className={styles.header} gap="2xl">
-          <OverviewHeaderLink href={mdxUrl}>MDX</OverviewHeaderLink>
+        <Flex className={styles.header} gap="2xl" justify="space-between">
+          <OverviewHeaderLink href={createStorybookHomeUrl()}>Песочница</OverviewHeaderLink>
+          <OverviewHeaderActions pageUrl={pageUrl} mdxUrl={mdxUrl} />
         </Flex>
       </Subhead>
     );
@@ -42,19 +54,13 @@ export function OverviewHeaderLinks({
 
   return (
     <Subhead>
-      <Flex className={styles.header} gap="2xl">
-        <OverviewHeaderLink href={sourceUrl}>Исходник</OverviewHeaderLink>
-        {storybookUrl && <OverviewHeaderLink href={storybookUrl}>Песочница</OverviewHeaderLink>}
-        <OverviewHeaderLink href={mdxUrl}>MDX</OverviewHeaderLink>
+      <Flex className={styles.header} justify="space-between">
+        <Flex gap="2xl">
+          <OverviewHeaderLink href={sourceUrl}>Исходник</OverviewHeaderLink>
+          {storybookUrl && <OverviewHeaderLink href={storybookUrl}>Песочница</OverviewHeaderLink>}
+        </Flex>
+        <OverviewHeaderActions pageUrl={pageUrl} mdxUrl={mdxUrl} />
       </Flex>
     </Subhead>
-  );
-}
-
-function OverviewHeaderLink({ href, children }: OverviewHeaderLinkProps) {
-  return (
-    <Link target="_blank" rel="noreferrer" href={href}>
-      {children}&nbsp;↗
-    </Link>
   );
 }
