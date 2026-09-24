@@ -40,9 +40,9 @@ describe(Popover, () => {
         aria-labelledby="target"
         content={<button>1</button>}
       >
-        <div id="target" aria-controls="menu" data-testid="target">
+        <button type="button" id="target" aria-controls="menu" data-testid="target">
           Target
-        </div>
+        </button>
       </Popover>
     );
     const result = render(<Fixture shown />);
@@ -51,6 +51,133 @@ describe(Popover, () => {
     result.rerender(<Fixture shown={false} />);
     await waitForFloatingPosition();
     expect(result.getByTestId('target')).toHaveAttribute('aria-expanded', 'false');
+  });
+
+  it('should make a non-interactive target focusable and operable by keyboard', async () => {
+    const result = render(
+      <Popover
+        id="menu"
+        role="dialog"
+        trigger="click"
+        aria-labelledby="target"
+        content={<button>1</button>}
+      >
+        <div id="target" aria-controls="menu" data-testid="target">
+          Target
+        </div>
+      </Popover>,
+    );
+    await waitForFloatingPosition();
+
+    const target = result.getByTestId('target');
+
+    expect(target).toHaveAttribute('role', 'button');
+    expect(target).toHaveAttribute('tabindex', '0');
+    expect(target).toHaveAttribute('aria-expanded', 'false');
+
+    fireEvent.keyDown(target, { key: 'Enter' });
+    await waitForFloatingPosition();
+
+    expect(target).toHaveAttribute('aria-expanded', 'true');
+  });
+
+  it('should not inject aria-expanded attr to target element whose own role does not support it', async () => {
+    const result = render(
+      <Popover
+        shown
+        id="menu"
+        role="dialog"
+        trigger="click"
+        aria-labelledby="target"
+        content={<button>1</button>}
+      >
+        <div id="target" role="presentation" aria-controls="menu" data-testid="target">
+          Target
+        </div>
+      </Popover>,
+    );
+    await waitForFloatingPosition();
+
+    const target = result.getByTestId('target');
+
+    expect(target).not.toHaveAttribute('aria-expanded');
+    expect(target).toHaveAttribute('role', 'presentation');
+  });
+
+  it('should not re-role a native control that does not support aria-expanded', async () => {
+    const result = render(
+      <Popover
+        shown
+        id="menu"
+        role="dialog"
+        trigger="click"
+        aria-labelledby="target"
+        content={<button>1</button>}
+      >
+        <input type="text" id="target" aria-controls="menu" data-testid="target" />
+      </Popover>,
+    );
+    await waitForFloatingPosition();
+
+    const target = result.getByTestId('target');
+
+    expect(target).not.toHaveAttribute('aria-expanded');
+    expect(target).not.toHaveAttribute('role');
+    expect(target).not.toHaveAttribute('tabindex');
+  });
+
+  it('should not turn a target without an accessible name into a button', async () => {
+    const result = render(
+      <Popover
+        shown
+        id="menu"
+        role="dialog"
+        trigger="click"
+        aria-labelledby="target"
+        content={<button>1</button>}
+      >
+        <div id="target" aria-controls="menu" data-testid="target" />
+      </Popover>,
+    );
+    await waitForFloatingPosition();
+
+    const target = result.getByTestId('target');
+
+    expect(target).not.toHaveAttribute('aria-expanded');
+    expect(target).not.toHaveAttribute('role');
+    expect(target).not.toHaveAttribute('tabindex');
+  });
+
+  it('should not annotate a non-interactive target when the popover opens on hover', async () => {
+    const result = render(
+      <Popover shown id="menu" role="dialog" trigger="hover" content={<button>1</button>}>
+        <div id="target" data-testid="target">
+          Target
+        </div>
+      </Popover>,
+    );
+    await waitForFloatingPosition();
+
+    const target = result.getByTestId('target');
+
+    expect(target).not.toHaveAttribute('aria-expanded');
+    expect(target).not.toHaveAttribute('role');
+    expect(target).not.toHaveAttribute('tabindex');
+  });
+
+  it('should accept aria-label as the accessible name of a non-interactive target', async () => {
+    const result = render(
+      <Popover shown id="menu" role="dialog" trigger="click" content={<button>1</button>}>
+        <div id="target" aria-label="Открыть меню" data-testid="target" />
+      </Popover>,
+    );
+    await waitForFloatingPosition();
+
+    const target = result.getByTestId('target');
+
+    expect(target).toHaveAttribute('role', 'button');
+    expect(target).toHaveAttribute('tabindex', '0');
+    expect(target).toHaveAttribute('aria-expanded', 'true');
   });
 
   it('should call onPlacementChange', async () => {
