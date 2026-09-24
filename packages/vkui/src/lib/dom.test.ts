@@ -86,7 +86,8 @@ describe(getScrollRect, () => {
       () => viewportHeight,
     );
     const rect = new DOMRect(0, scrollTop > 0 ? -1 * scrollTop : scrollTop, 1280, viewportHeight);
-    window.scrollY = document.documentElement.scrollTop = scrollTop;
+    Object.defineProperty(window, 'scrollY', { configurable: true, value: scrollTop });
+    document.documentElement.scrollTop = scrollTop;
     document.documentElement.getBoundingClientRect = vi.fn(() => rect);
     const { relative, edges } = getScrollRect(window);
     expect(relative).toEqual(rect);
@@ -101,7 +102,8 @@ describe(getScrollRect, () => {
   ])('[element] should return correct y edges for %j', ({ scrollTop, viewportHeight }) => {
     const rect = new DOMRect(0, scrollTop > 0 ? -1 * scrollTop : scrollTop, 1280, viewportHeight);
     const scrollEl = document.createElement('div');
-    window.scrollY = scrollEl.scrollTop = scrollTop;
+    Object.defineProperty(window, 'scrollY', { configurable: true, value: scrollTop });
+    scrollEl.scrollTop = scrollTop;
     scrollEl.getBoundingClientRect = vi.fn(() => rect);
     const { relative, edges } = getScrollRect(scrollEl);
     expect(relative).toEqual(rect);
