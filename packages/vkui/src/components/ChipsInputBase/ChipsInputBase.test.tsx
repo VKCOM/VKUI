@@ -4,6 +4,7 @@ import { fireEvent, render, screen, within } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import {
+  a11yTest,
   baselineComponent,
   fakeTimersForScope,
   userEvent,
@@ -64,15 +65,22 @@ describe(ChipsInputBase, () => {
         />
       </>
     ),
-    {
-      a11yConfig: {
-        rules: {
-          // Внутри Chip c role="gridcell" находится кнопка удаления
-          'nested-interactive': { enabled: false },
-        },
-      },
-    },
   );
+
+  a11yTest(() => (
+    <>
+      <label htmlFor="empty-chips">Chips Input</label>
+      <ChipsInputBase
+        id="empty-chips"
+        chipsListLabel="Выбранные опции"
+        onAddChipOption={onAddChipOption}
+        onRemoveChipOption={onRemoveChipOption}
+        onClear={onClearOptions}
+        value={[]}
+        onInputChange={noop}
+      />
+    </>
+  ));
 
   beforeEach(() => {
     onAddChipOption.mockClear();

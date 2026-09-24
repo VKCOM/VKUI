@@ -22,7 +22,6 @@
   list-style: none;
 }
 
-/* Строка грида повторяет раскладку контейнера, чтобы чипы переносились как раньше. */
 .row {
   display: inline-flex;
   flex-wrap: wrap;
