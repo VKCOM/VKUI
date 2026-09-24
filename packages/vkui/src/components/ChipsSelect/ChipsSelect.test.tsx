@@ -305,7 +305,7 @@ describe('ChipsSelect', () => {
         />,
       );
       expect(
-        result.getByRole('option', {
+        result.getByRole('gridcell', {
           name: withRegExp(FIRST_OPTION.label),
         }),
       ).toBeTruthy();
@@ -480,7 +480,7 @@ describe('ChipsSelect', () => {
         />,
       );
       expect(
-        result.getByRole('option', {
+        result.getByRole('gridcell', {
           name: withRegExp(FIRST_OPTION.label),
         }),
       ).toBeTruthy();
@@ -525,7 +525,7 @@ describe('ChipsSelect', () => {
         />,
       );
       expect(
-        result.getByRole('option', {
+        result.getByRole('gridcell', {
           name: withRegExp(selectedOption.label),
         }),
       ).toBeTruthy();
@@ -540,7 +540,7 @@ describe('ChipsSelect', () => {
       const result = render(
         <ChipsSelect defaultValue={[FIRST_OPTION, SECOND_OPTION]} options={colors} />,
       );
-      const chipEl = result.getByRole('option', { name: withRegExp(FIRST_OPTION.label) });
+      const chipEl = result.getByRole('gridcell', { name: withRegExp(FIRST_OPTION.label) });
       await userEvent.click(chipEl);
       expect(result.getByRole('combobox')).not.toHaveFocus();
     }),
