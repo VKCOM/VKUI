@@ -1,9 +1,11 @@
-import '@testing-library/jest-dom/vitest';
+import * as jestDomMatchers from '@testing-library/jest-dom/matchers';
 import 'vitest-axe/extend-expect';
 import { cleanup } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
-import { afterEach, beforeEach, vi } from 'vitest';
+import { afterEach, beforeEach, expect, vi } from 'vitest';
 import failOnConsole from 'vitest-fail-on-console';
+
+expect.extend(jestDomMatchers);
 
 // В этом окружении `localStorage` может быть недоступен или вести себя
 // нестабильно (экспериментальный геттер Node печатает

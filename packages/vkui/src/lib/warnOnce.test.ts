@@ -28,6 +28,8 @@ describe(warnOnce, () => {
   });
 
   it('shows only one message', () => {
+    const warn = warnOnce('zone');
+
     warn(warnMsg);
     warn(warnMsg);
     warn(warnMsg);

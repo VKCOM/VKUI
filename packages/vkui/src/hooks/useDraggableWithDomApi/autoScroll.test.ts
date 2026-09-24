@@ -8,7 +8,8 @@ const SCROLL_HEIGHT = 2000;
 const MAX_SCROLL_Y = SCROLL_HEIGHT - VIEWPORT_HEIGHT;
 
 const setScrollTop = (scrollEl: HTMLElement, scrollTop: number) => {
-  window.scrollY = scrollEl.scrollTop = scrollTop;
+  Object.defineProperty(window, 'scrollY', { configurable: true, value: scrollTop });
+  scrollEl.scrollTop = scrollTop;
   scrollEl.getBoundingClientRect = vi.fn(
     () => new DOMRect(0, scrollTop > 0 ? -1 * scrollTop : 0, VIEWPORT_WIDTH, VIEWPORT_HEIGHT),
   );

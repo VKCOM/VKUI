@@ -112,7 +112,8 @@ describe(useVirtualKeyboardState, () => {
     await act(vi.runOnlyPendingTimers);
 
     expect(window.scrollY).toBe(0);
-    fireEvent.scroll(window, { target: { scrollY: 100 } });
+    Object.defineProperty(window, 'scrollY', { configurable: true, value: 100 });
+    fireEvent.scroll(window);
     await act(vi.runOnlyPendingTimers);
     expect(window.scrollY).toBe(0);
 
