@@ -100,7 +100,7 @@ function generateProjects() {
   };
 
   const colorSchemes = ['light', 'dark'];
-  const projects = colorSchemes
+  let projects = colorSchemes
     .map((colorSchemeType) => [
       {
         name: `android (chromium) • ${colorSchemeType}`,
@@ -148,6 +148,10 @@ function generateProjects() {
       },
     ])
     .flat();
+
+  if (env.PLAYWRIGHT_COVERAGE === '1' && env.PLAYWRIGHT_COVERAGE_ALL_PROJECTS !== '1') {
+    projects = projects.filter((project) => project.name.includes('(chromium)'));
+  }
 
   if (typeof env.PLAYWRIGHT_FORCE_PROJECTS === 'string') {
     try {

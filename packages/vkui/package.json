@@ -69,6 +69,7 @@
     "test:e2e": "../../scripts/generate_env_docker.sh && docker compose --env-file=./.env.docker up --abort-on-container-exit",
     "test:e2e-update": "../../scripts/generate_env_docker.sh -u && docker compose --env-file=./.env.docker up --abort-on-container-exit",
     "test:e2e:ci": "yarn run -T playwright test --config playwright-ct.config.ts",
+    "test:e2e:coverage:ci": "node scripts/coverage.ts",
     "test:e2e:ci:ui": "node --run test:e2e:ci -- --ui --ui-port=4300 --ui-host=0.0.0.0",
     "test:e2e:ui": "../../scripts/generate_env_docker.sh -r test:e2e:ci:ui && docker compose --env-file=./.env.docker up --abort-on-container-exit",
     "test:e2e-update:ci": "node --run test:e2e:ci -- --update-snapshots",
