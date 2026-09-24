@@ -1,0 +1,66 @@
+.icon {
+  position: relative;
+  display: inline-flex;
+  inline-size: 20px;
+  block-size: 20px;
+}
+
+.smallIcon {
+  inline-size: 12px;
+  block-size: 12px;
+}
+
+.copyIcon {
+  opacity: 1;
+}
+
+.doneIcon {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+}
+
+.copied .copyIcon {
+  animation: animationHideIcon 1.25s forwards;
+}
+
+.copied .doneIcon {
+  animation: animationShowIcon 1.25s 0.15s forwards;
+}
+
+@keyframes animationHideIcon {
+  0% {
+    opacity: 1;
+  }
+
+  20% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+
+  80% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes animationShowIcon {
+  0% {
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 1;
+  }
+
+  60% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
