@@ -19,11 +19,15 @@ const TS_CONFIG_ALIASES = Object.entries(tsconfig.compilerOptions.paths).reduce<
 
 // eslint-disable-next-line import/no-default-export -- требование vitetest
 export default {
-  build: { commonjsOptions: { include: [/node_modules/, /\.js/] }, sourcemap: false },
+  build: {
+    commonjsOptions: { include: [/node_modules/, /\.js/] },
+    sourcemap: process.env.PLAYWRIGHT_COVERAGE === '1',
+  },
 
   resolve: { alias: TS_CONFIG_ALIASES },
 
   css: {
+    devSourcemap: process.env.PLAYWRIGHT_COVERAGE === '1',
     postcss: {
       plugins: [
         // Обработка css импортов

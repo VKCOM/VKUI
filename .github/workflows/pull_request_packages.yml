@@ -106,6 +106,8 @@ jobs:
     if: ${{ needs.changed_files.outputs.package_vkui == 'true' }}
     needs: changed_files
     name: Call reusable workflow
+    permissions:
+      contents: read
     uses: ./.github/workflows/reusable_workflow_test_e2e.yml
 
   test_e2e_prepare_and_upload_report:
