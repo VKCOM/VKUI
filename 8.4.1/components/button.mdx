@@ -1,0 +1,357 @@
+﻿---
+description: Компонент, который даёт пользователю возможность выполнить какое‑то действие или перейти на другую страницу.
+---
+
+<Overview group="buttons">
+
+# Button [tag:component]
+
+Компонент, который даёт пользователю возможность выполнить какое‑то действие или перейти на другую страницу.
+Правильный `HTML`-тег определяется автоматически (по умолчанию `button` или `a` при передаче свойства `href`).
+
+Связанные компоненты:
+
+- [`ButtonGroup`](/components/button-group)
+
+</Overview>
+
+{/* @example-description: Кнопка с текстом. */}
+<Playground>
+  ```jsx
+  <Button>Кнопка</Button>
+  ```
+</Playground>
+
+## Режимы отображения
+
+Задаётся свойством `mode`.
+
+- `"primary"` — акцентная кнопка для основных действий (например, «Сохранить», «Отправить», «Открыть»);
+- `"secondary"` — второстепенная кнопка для важных, но не основных действий (например, «Отмена», «Редактировать»). Часто используется в паре с `primary`;
+- `"outline"` — второстепенная кнопка с обводкой и средним акцентом. Подходит, когда нужно сохранить визуальную лёгкость интерфейса, или когда фон `secondary` сливается с фоном интерфейса/баннера;
+- `"tertiary"` — кнопка без фона с низким акцентом для действий с минимальным влиянием на интерфейс (например, «Помощь», «Подробнее», «Справка»). Применяется, когда `primary` и `secondary` уже заданы;
+- `"link"` — визуально как `tertiary`, но без фона и боковых отступов. Удобна в шапках или в ряду с элементами интерфейса, где нужен небольшой отступ между объектами.
+
+## Визуальное оформление
+
+### Цвет
+
+Задаётся свойством `appearance`.
+
+#### `"accent"`
+
+Акцентный цвет, меняющийся в зависимости от светлой или тёмной схемы.
+
+{/* @example-description: Все mode с appearance="accent". */}
+<Playground>
+  ```jsx
+  <Button appearance="accent" mode="primary">
+    Primary
+  </Button>
+  <Button appearance="accent" mode="outline">
+    Outline
+  </Button>
+  <Button appearance="accent" mode="secondary">
+    Secondary
+  </Button>
+  <Button appearance="accent" mode="tertiary">
+    Tertiary
+  </Button>
+  <Button appearance="accent" mode="link">
+    Link
+  </Button>
+  ```
+</Playground>
+
+#### `"accent-invariable"`
+
+Акцентный цвет, который не меняется в зависимости от светлой или тёмной темы.
+
+{/* @example-description: mode с accent-invariable. */}
+<Playground>
+  ```jsx
+  <Button appearance="accent-invariable" mode="primary">
+    Primary
+  </Button>
+  <Button appearance="accent-invariable" mode="outline">
+    Outline
+  </Button>
+  <Button appearance="accent-invariable" mode="secondary">
+    Secondary
+  </Button>
+  <Button appearance="accent-invariable" mode="tertiary">
+    Tertiary
+  </Button>
+  <Button appearance="accent-invariable" mode="link">
+    Link
+  </Button>
+  ```
+</Playground>
+
+#### `"positive"`
+
+Цвет для действия подтверждения (чаще всего зелёный).
+
+{/* @example-description: appearance="positive" во всех mode. */}
+<Playground>
+  ```jsx
+  <Button appearance="positive" mode="primary">
+    Primary
+  </Button>
+  <Button appearance="positive" mode="outline">
+    Outline
+  </Button>
+  <Button appearance="positive" mode="secondary">
+    Secondary
+  </Button>
+  <Button appearance="positive" mode="tertiary">
+    Tertiary
+  </Button>
+  <Button appearance="positive" mode="link">
+    Link
+  </Button>
+  ```
+</Playground>
+
+#### `"negative"`
+
+Цвет критических действий (чаще всего красный).
+
+{/* @example-description: Примеры критического стиля `appearance="negative"` для разных `mode`. */}
+<Playground>
+  ```jsx
+  <Button appearance="negative" mode="primary">
+    Primary
+  </Button>
+  <Button appearance="negative" mode="outline">
+    Outline
+  </Button>
+  <Button appearance="negative" mode="secondary">
+    Secondary
+  </Button>
+  <Button appearance="negative" mode="tertiary">
+    Tertiary
+  </Button>
+  <Button appearance="negative" mode="link">
+    Link
+  </Button>
+  ```
+</Playground>
+
+#### `"neutral"`
+
+Нейтральный цвет, который может служить альтернативным акцентным.
+
+{/* @example-description: Нейтральная палитра кнопок `appearance="neutral"` во всех режимах отображения. */}
+<Playground>
+  ```jsx
+  <Button appearance="neutral" mode="primary">
+    Primary
+  </Button>
+  <Button appearance="neutral" mode="outline">
+    Outline
+  </Button>
+  <Button appearance="neutral" mode="secondary">
+    Secondary
+  </Button>
+  <Button appearance="neutral" mode="tertiary">
+    Tertiary
+  </Button>
+  <Button appearance="neutral" mode="link">
+    Link
+  </Button>
+  ```
+</Playground>
+
+#### `"overlay"`
+
+Цвет для кнопок поверх цветных элементов или фото.
+
+import { OverlayButtonWrapper } from '@/components/wrappers';
+
+{/* @example-description: Кнопки `appearance="overlay"` для размещения поверх изображений и цветных фонов. */}
+<Playground Wrapper={OverlayButtonWrapper}>
+  ```jsx
+  <Button appearance="overlay" mode="primary">
+    Primary
+  </Button>
+  <Button appearance="overlay" mode="outline">
+    Outline
+  </Button>
+  <Button appearance="overlay" mode="secondary">
+    Secondary
+  </Button>
+  <Button appearance="overlay" mode="tertiary">
+    Tertiary
+  </Button>
+  <Button appearance="overlay" mode="link">
+    Link
+  </Button>
+  ```
+</Playground>
+
+### Скругление
+
+Задаётся свойством `rounded`.
+
+Позволяет получить полностью скруглённую кнопку.
+
+{/* @example-description: Скруглённые кнопки: текстовая и иконка-кнопка с `rounded`. */}
+<Playground>
+  ```jsx
+  <Button rounded>Rounded</Button>
+  <Button before={<Icon12Add />} rounded aria-label="Добавить" />
+  ```
+</Playground>
+
+## Размеры
+
+Задаётся свойством `size`.
+
+Значения, соответствующие каждому размеру, зависят от параметра адаптивности `density`.
+В режиме `density="compact"` значения каждого из размеров будут меньше, чем в режиме `density="regular"`.
+
+{/* @example-description: Сравнение размеров `s/m/l` в режимах адаптивности `compact` и `regular`. */}
+<Playground direction="column">
+  ```jsx
+  <AdaptivityProvider density="compact">
+    <Flex gap="m" align="center">
+      <Button size="s">s</Button>
+      <Button size="m">m</Button>
+      <Button size="l">l</Button>
+    </Flex>
+  </AdaptivityProvider>
+  <AdaptivityProvider density="regular">
+    <Flex gap="m" align="center">
+      <Button size="s">s</Button>
+      <Button size="m">m</Button>
+      <Button size="l">l</Button>
+    </Flex>
+  </AdaptivityProvider>
+  ```
+</Playground>
+
+## Состояния
+
+### `disabled`
+
+Отключает взаимодействие с кнопкой и добавляет визуальную индикацию недоступности.
+
+{/* @example-description: Кнопка в состоянии `disabled` без возможности взаимодействия. */}
+<Playground>
+  ```jsx
+  <Button disabled>Button</Button>
+  ```
+</Playground>
+
+### `loading`
+
+Показывает индикацию загрузки вместо содержимого кнопки. Используйте, когда после нажатия запускаются длительные действия.
+
+⚠️ **Важно для доступности**: при `loading={true}` компонент автоматически устанавливает `aria-label` в значение `loadingLabel` (по умолчанию «Загрузка...»), чтобы скринридер объявил контекст загрузки. Значение можно переопределить через `loadingLabel`.
+
+{/* @example-description: Состояние загрузки кнопки с дефолтным и кастомным `loadingLabel`. */}
+<Playground>
+  ```jsx
+<Button loading>Сохранить</Button>
+<Button loading loadingLabel="Сохранение данных...">Сохранить</Button>
+  ```
+</Playground>
+
+## Выравнивание
+
+Задаётся свойством `align`.
+
+{/* @example-description: Выравнивание содержимого кнопки по левому, центру и правому краю. */}
+<Playground>
+  ```jsx
+  <Button align="left">Left</Button>
+  <Button align="center">Center</Button>
+  <Button align="right">Right</Button>
+  ```
+</Playground>
+
+## Контент в начале/в конце
+
+Слева и/или справа от текста можно добавить контент через свойства `before` и `after` соответственно. Чаще всего это иконки.
+
+Рекомендации по размеру иконок:
+
+- `size="s"` — `12px`;
+- `size="m"` — `16px`;
+- `size="l"` — `24px`.
+
+Для `size="l"` в `before`/`after` также подойдёт компонент `Counter`.
+
+`before`/`after` можно использовать без `children` — получится кнопка только с иконкой. Такие кнопки требуют дополнительных действий для доступности — см. раздел [`a11y`](#a11y).
+
+{/* @example-description: Добавление контента в `before/after`: иконки и счётчик в кнопках разных размеров. */}
+<Playground>
+  ```jsx
+  <Button after={<Icon12Like />} size="s" aria-label="Добавить в избранное" />
+  <Button before={<Icon16Add />} size="m">
+    Добавить
+  </Button>
+  <Button after={<Counter>16</Counter>} size="l">
+    Открыть
+  </Button>
+  ```
+</Playground>
+
+## Доступность (a11y) [#a11y]
+
+Компонент автоматически выбирает правильный `HTML`-тег (`button` по умолчанию или `a` при передаче `href`), обеспечивая базовые требования доступности.
+
+Поддерживаются все стандартные `aria`-атрибуты на случай, если нужно переопределить стандартное поведение.
+
+При одновременной передаче `href` и `disabled` VKUI не передаёт `href` тегу `a`, отключая взаимодействие. По возможности не передавайте `href` и `disabled` вместе — это не соответствует `a11y`.
+
+Для кнопки только с иконкой (`before`/`after` без `children`) обязательно добавьте `aria-label`. Ещё лучше — использовать `VisuallyHidden` с нужным текстом: это универсальнее для ассистивных технологий.
+
+```jsx
+// хорошо
+<Button before={<Icon16Search />} size="m" aria-label="Найти" />
+
+// ещё лучше
+<Button before={<Icon16Search />} size="m">
+  <VisuallyHidden>Найти</VisuallyHidden>
+</Button>
+```
+
+### disableSpinnerAnimation
+
+Свойство `disableSpinnerAnimation` отключает анимацию при `loading={true}`.
+
+## Свойства и методы [#api]
+
+| Свойство | Тип | По умолчанию | Описание |
+| --- | --- | --- | --- |
+| `activated` | `boolean` | `-` | Позволяет управлять `activated`-состоянием извне. |
+| `activeClassName` | `string` | `-` | **Deprecated**: Since 7.3.0. Будет удалено в **VKUI v9**.  Используйте свойство `activeMode`. |
+| `activeEffectDelay` | `number` | `-` | Длительность показа `active`-состояния. |
+| `activeMode` | `StateModeLiteral` | `-` | Стиль подсветки active-состояния. Если передать произвольную строку, она добавится как css-класс во время active. |
+| `after` | `ReactNode` | `-` | Контент, отображаемый после основного содержимого кнопки. |
+| `align` | `AlignType` | `center` |  |
+| `appearance` | `"accent" \| "positive" \| "negative" \| "neutral" \| "overlay" \| "accent-invariable"` | `accent` | Цветовая схема кнопки. |
+| `before` | `ReactNode` | `-` | Контент, отображаемый перед основным содержимым кнопки. |
+| `borderRadiusMode` | `"auto" \| "inherit"` | `-` | Задает border-radius элементу В режиме `auto` на маленьких экранах `border-radius: 0`, иначе определяется токеном `--vkui--size_border_radius--regular`. |
+| `Component` | `ElementType<any, keyof IntrinsicElements>` | `-` |  |
+| `disableSpinnerAnimation` | `boolean` | `-` | Отключает анимацию спиннера загрузки. |
+| `elevation` | `Elevation` | `-` | Добавляет тень кнопке. |
+| `focusVisibleMode` | `FocusVisibleMode` | `-` | Стиль аутлайна focus visible. Если передать произвольную строку, она добавится как css-класс при :focus-visible |
+| `getRootRef` | `Ref<HTMLElement>` | `-` |  |
+| `hasActive` | `boolean` | `-` | Указывает, должен ли компонент реагировать на `active`-состояние. |
+| `hasHover` | `boolean` | `-` | Указывает, должен ли компонент реагировать на `hover`-состояние. |
+| `hasHoverWithChildren` | `boolean` | `-` | Позволяет родительскому компоненту иметь `hovered`-cостояние при наведении на любой дочерний элемент. По умолчанию состояние hovered у родителя сбрасывается.  Присваивается родителькому компоненту. |
+| `hoverClassName` | `string` | `-` | **Deprecated**: Since 7.3.0. Будет удалено в **VKUI v9**.  Используйте свойство `hoverMode`. |
+| `hovered` | `boolean` | `-` | Позволяет управлять `hovered`-состоянием извне. |
+| `hoverMode` | `StateModeLiteral` | `-` | Стиль подсветки hover-состояния. Если передать произвольную строку, она добавится как css-класс во время hover. |
+| `loading` | `boolean` | `-` | Включает состояние загрузки (отображает спиннер).  ⚠️ **Важно для доступности**: При использовании `loading={true}` компонент автоматически устанавливает `aria-label` в значение `loadingLabel` (по умолчанию "Загрузка..."), чтобы скринридер мог объявить контекст загрузки. Вы можете переопределить это значение, передав свойство `loadingLabel`. |
+| `loadingLabel` | `string` | `Загрузка...` | Текст для `aria-label` при состоянии загрузки. Подменяет переданный в компонент `aria-label` только когда `loading={true}`. |
+| `mode` | `"link" \| "primary" \| "secondary" \| "tertiary" \| "outline"` | `primary` | Режим отображения кнопки. |
+| `render` | `((props: AllHTMLAttributes<HTMLElement> & HasRootRef<HTMLElement>) => ReactNode)` | `-` | Позволяет переопределить рендер компонента, получая собранные свойства (включая вычисленные `className` и `style`). Используется вместо `Component`.  Позволяет гибко объединять несколько компонентов без создания промежуточных DOM-узлов и без ремаунта поддерева на каждый рендер. |
+| `rounded` | `boolean` | `-` | Добавляет скругленные углы кнопке. |
+| `size` | `"s" \| "m" \| "l"` | `s` | Размер кнопки. |
+| `stretched` | `boolean` | `false` | Растягивает кнопку на всю ширину контейнера. |
+| `unlockParentHover` | `boolean` | `-` | Позволяет родительскому компоненту показывать hovered-состояние при наведении на текущий дочерний компонент.  Присваивается дочернему компоненту. |
+

@@ -1,0 +1,176 @@
+﻿---
+title: Тестирование VKUI-приложений
+date: 2024/12/24
+description: Разберём основные принципы тестирования приложений на базе VKUI.
+tags: testing
+image: /blog/vkui-testing.png
+---
+
+import { PostHeader } from '@vkontakte/vkui-docs-theme';
+
+<PostHeader frontMatter={metadata} />
+
+## Тестирование с помощью Jest и React Testing Library
+
+Инструментов для тестирования React-приложений несколько, но для функционального и unit-тестирования VKUI мы рекомендуем `Jest` и `React Testing Library`. Этот же стек мы применяем для тестирования компонентов VKUI. Здесь разберём основные подходы.
+
+<Callout>
+  Подразумевается, что вы владеете базовыми навыками работы с этими инструментами. Если нет — см. документацию [Jest](https://jestjs.io/) и [React Testing Library](https://testing-library.com/docs/react-testing-library/intro). Здесь сосредоточимся на настройках, специфичных для VKUI.
+</Callout>
+
+### Jest
+
+Специфичная настройка `Jest` для VKUI-компонентов не требуется, но возможны трудности с компонентами, которые опираются на браузерное API — об этом в [секции ниже](#special-components).
+
+Для корректной работы VKUI-компонентов нужна обязательная обёртка, о чём говорится в [Быстром старте](/overview/quick-start#step4).
+
+### React Testing Library
+
+Чтобы тесты было проще поддерживать, не завязывайтесь на детали реализации. Не опираясь на внутреннее устройство, вы делаете тесты устойчивыми к изменениям структуры VKUI — даже в рамках минорных версий.
+
+Мы стараемся снабжать все компоненты функциональными ролями и атрибутами или обеспечивать их поддержку. Вместе с `React Testing Library`, которая работает с настоящим DOM, вы взаимодействуете с компонентами почти как пользователь.
+
+Например, `Checkbox` по умолчанию имеет `role="checkbox"`, поэтому найти его можно через API `React Testing Library`:
+
+```jsx
+import { render, screen } from '@testing-library/react';
+
+test('best practices of element accesing', () => {
+  // ✅ - используем функциональную роль
+  render(<Checkbox>Text</Checkbox>);
+  const checkbox = screen.getByRole('checkbox');
+
+  // ❌ - завязываемся на класс, который может измениться
+  render(<Checkbox>Text</Checkbox>);
+  const checkbox = document.querySelector('.CheckboxInput__input');
+
+  // write your test...
+});
+```
+
+Обратите внимание: если компонент — композиция более мелких, не всегда получится опираться на роль или атрибут. В таком случае для нужной части можно прокинуть `data-testid`. Например:
+
+```jsx
+import { render, screen } from '@testing-library/react';
+
+test('check if prevButton disabled', () => {
+  render(<Pagination prevButtonTestId="prevButton" currentPage={1} totalPages={10} />);
+
+  const prevButton = screen.getByTestId('prevButton');
+  expect(prevButton).toBeDisabled();
+});
+```
+
+Если всё же не получается протестировать нужную часть без привязки, например, к внутреннему классу, создайте [feature request](https://github.com/VKCOM/VKUI/issues/new/choose) на GitHub.
+
+## Особые компоненты [#special-components]
+
+### Snackbar, Spinner, SplitCol
+
+Некоторые компоненты зависят от браузерного API, которого нет в окружении `Jest`. Для их тестирования предоставьте `mock`-реализацию самостоятельно. Подробнее — в [руководстве по manual mocks](https://jestjs.io/docs/manual-mocks).
+
+### Select
+
+Так как VKUI мимикрирует под разные платформы, некоторые компоненты существенно отличаются структурой. Например, `Select` на мобильных платформах (`android`/`iOS`) — нативный элемент, а на десктопе — кастомная реализация.
+
+Из-за поддержки SSR мы не всегда заранее знаем, какое представление отрисовывать. Если отрендерить `Select` без указания платформы, в DOM окажутся две реализации. Чтобы избежать ошибок, оберните `Select` в `PlatformProvider` с `vkcom` для `web`-реализации или `android` для мобильной.
+
+```jsx
+import { render } from '@testing-library/react';
+import { PlatformProvider, Select } from '@vkontakte/vkui';
+
+test('test web view', () => {
+  render(
+    <PlatformProvider value="vkcom">
+      <Select id="select-id" options={[]} {...props} />
+    </PlatformProvider>,
+  );
+
+  // write your test...
+});
+
+test('test mobile view', () => {
+  render(
+    <PlatformProvider value="android">
+      <Select id="select-id" options={[]} {...props} />
+    </PlatformProvider>,
+  );
+
+  // write your test...
+});
+```
+
+Для тестирования мобильного представления используйте стандартное API `React Testing Library` и `Testing Library`:
+
+```jsx
+import { render, screen } from '@testing-library/react';
+import { userEvent } from './testing/helpers';
+import { PlatformProvider, Select } from '@vkontakte/vkui';
+
+test('test is value selected on mobile', () => {
+  render(
+    <PlatformProvider value="android">
+      <Select
+        data-testid="target"
+        defaultValue="1"
+        options={[
+          { value: '0', label: 'Mike' },
+          { value: '1', label: 'Josh' },
+        ]}
+      />
+    </PlatformProvider>,
+  );
+
+  await userEvent.selectOptions(screen.getByTestId('target'), ['0']);
+  expect(screen.getByTestId('target')).toHaveValue('0');
+});
+```
+
+<Callout>
+  Мы не используем `userEvent` напрямую из `@testing-library/user-event`, а импортируем обёртку, которая адаптирует функцию под `Jest`-окружение:
+
+```jsx filename="./testing/helpers"
+import userEventLib from '@testing-library/user-event';
+/**
+ * Переконфигурируем работу userEvent под jest
+ *
+ * https://github.com/testing-library/user-event/issues/833
+ */
+export const userEvent = userEventLib.setup({ advanceTimers: jest.advanceTimersByTime });
+```
+
+</Callout>
+
+Для тестирования `web`-реализации используйте более низкоуровневое API `React Testing Library`:
+
+```jsx
+import { render, fireEvent, screen } from '@testing-library/react';
+import { PlatformProvider, Select } from '@vkontakte/vkui';
+
+test('test is value selected on web', () => {
+  render(
+    <PlatformProvider value="vkcom">
+      <Select
+        labelTextTestId="labelTextTestId"
+        defaultValue="0"
+        options={[
+          { value: '0', label: 'Mike' },
+          { value: '1', label: 'Josh' },
+        ]}
+      />
+    </PlatformProvider>,
+  );
+
+  fireEvent.click(screen.getByTestId('labelTextTestId'));
+  const unselectedOption = screen.getByRole('option', { selected: false, name: 'Josh' });
+  fireEvent.mouseEnter(unselectedOption);
+  fireEvent.click(unselectedOption);
+
+  expect(screen.getByTestId('labelTextTestId').textContent).toEqual('Josh');
+});
+```
+
+<Callout>
+  Выше мы используем `labelTextTestId` вместо `data-testid`: это позволяет эмулировать мышь или тач и быстрее получить доступ к выбранной опции.
+
+</Callout>

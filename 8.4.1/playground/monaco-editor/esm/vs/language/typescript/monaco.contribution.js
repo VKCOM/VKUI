@@ -1,0 +1,1 @@
+export { JsxEmit, ModuleKind, ModuleResolutionKind, NewLineKind, ScriptTarget, getJavaScriptWorker, getTypeScriptWorker, javascriptDefaults, typescriptDefaults, typescriptVersion } from '../../languages/features/typescript/register.js';

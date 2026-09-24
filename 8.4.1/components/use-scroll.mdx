@@ -1,0 +1,93 @@
+﻿---
+description: Хук предоставляет единый API для чтения и управления прокруткой из контекста `AppRoot`. Корректно работает с режимами `scroll="contain"` и `scroll="global"`, а также с блокировкой через `useScrollLock`.
+---
+
+<Overview type="hook" forcedPath="components/AppRoot/ScrollContext.tsx">
+
+# useScroll
+
+Хук предоставляет единый API для чтения и управления прокруткой из контекста `AppRoot`.
+Корректно работает с режимами `scroll="contain"` и `scroll="global"`, а также с блокировкой через `useScrollLock`.
+
+</Overview>
+
+## Обязательные условия
+
+> Убедитесь, что ваше приложение обёрнуто в компонент [`AppRoot`](/components/app-root),
+> так как именно через этот компонент определяет контекст для управления прокруткой.
+
+## API
+
+### Возвращаемое значение
+
+Объект с методами:
+
+| Метод       | Тип                                                        | Описание                                |
+| ----------- | ---------------------------------------------------------- | --------------------------------------- |
+| `getScroll` | `(options?: GetScrollOptions) => { x: number; y: number }` | Возвращает текущие координаты прокрутки |
+| `scrollTo`  | `(x?: number, y?: number) => void`                         | Прокручивает к указанным координатам    |
+
+## Особенности работы
+
+### Параметр `scroll` в `AppRoot`
+
+В зависимости от значения свойства `scroll` компонента `AppRoot` меняется поведение `useScroll`:
+
+| `scroll`    | Поведение                                               |
+| ----------- | ------------------------------------------------------- |
+| `"contain"` | Управляет прокруткой внутреннего контейнера приложения. |
+| `"global"`  | Работает с глобальной полосой прокрутки окна браузера.  |
+
+## Практический пример
+
+{/* @example-description: Программная прокрутка через useScroll. */}
+<Playground direction="column" align="stretch" scroll="global">
+  ```jsx
+  const [opened, setOpened] = React.useState(false);
+  const { getScroll, scrollTo } = useScroll();
+
+  // Блокируем прокрутку, пока открыт popout.
+  useScrollLock(opened);
+
+  const scrollDown = () => {
+    const currentY = getScroll().y;
+    scrollTo(0, currentY + 120);
+  };
+
+  const scrollUp = () => {
+    const currentY = getScroll().y;
+    scrollTo(0, currentY - 120);
+  };
+
+  return (
+    <Box position="relative" inlineSize="100%">
+      <Flex direction="column" align="start" gap="m">
+        <Button onClick={() => setOpened(true)}>Открыть popout</Button>
+      </Flex>
+
+      {opened && (
+        <PopoutWrapper onClick={() => setOpened(false)}>
+          <Card>
+            <Flex direction="column" gap="xl" padding="system">
+              <Title level="3">
+                Popout
+              </Title>
+              <Caption level="1">
+                Во время блокировки можно программно прокручивать контент через useScroll.
+              </Caption>
+              <Flex gap="s">
+                <Button onClick={scrollDown}>Скролл вниз</Button>
+                <Button onClick={scrollUp}>Скролл вверх</Button>
+                <Button mode="secondary" onClick={() => setOpened(false)}>
+                  Закрыть
+                </Button>
+              </Flex>
+            </Box>
+          </Card>
+        </PopoutWrapper>
+      )}
+    </Box>
+  );
+  ```
+</Playground>
+

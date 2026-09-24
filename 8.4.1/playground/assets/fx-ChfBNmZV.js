@@ -1,0 +1,1 @@
+import{n as e}from"./rolldown-runtime-DkW27tQK.js";import{t}from"./curve-Dr3mnmUV.js";function n(e){return .5*(1-Math.cos(Math.PI*e))}function r(e,n,r,i){return function(a){return t(0,0,e,n,r,i,1,1,a)[1]}}function i(){return(i=e((()=>{})))()}export{n,i as r,r as t};

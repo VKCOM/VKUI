@@ -1,0 +1,1 @@
+import{a as e,n as t}from"./rolldown-runtime-DkW27tQK.js";import{t as n}from"./react-BZJXY1be.js";var r,i,a;function o(){return(o=t((()=>{r=e(n(),1),i={appRoot:r.createRef(),mode:`full`,portalRoot:null,safeAreaInsets:void 0,embedded:!1,disablePortal:!1},a=r.createContext(i)})))()}export{o as n,a as t};
