@@ -344,46 +344,49 @@ export const ChipsInputBase = <O extends ChipOption>({
           className={styles.listBox}
           // для a11y
           ref={listboxRef}
-          role="listbox"
-          aria-orientation="horizontal"
+          role="grid"
           aria-disabled={disabled}
           aria-readonly={readOnly}
           aria-label={chipsListLabel}
         >
-          {value.map((option, index) => (
-            <React.Fragment key={`${typeof option.value}-${option.value}`}>
-              {renderChip(
-                {
-                  /**
-                   * Компилятор сходит с ума из-за рефа внутри handleChipRemove.
-                   * Обходной путь прокидывать ref в свойства для рендер пропов.
-                   */
-                  ...(false
-                    ? { '__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED': inputRef }
-                    : {}),
-                  'Component': 'div',
-                  'value': option.value,
-                  'label': option.label,
-                  'disabled': option.disabled || disabled,
-                  'readOnly': option.readOnly || readOnly,
-                  'className': styles.chip,
-                  'onRemove': handleChipRemove,
-                  // чтобы можно было легче найти этот чип в DOM
-                  'data-index': index,
-                  'data-value': option.value,
-                  'data-value-type': typeof option.value,
-                  // для a11y
-                  'tabIndex': lastFocusedChipOptionIndex === index ? 0 : -1,
-                  'role': 'option',
-                  'aria-selected': true,
-                  'aria-posinset': index + 1,
-                  'aria-setsize': valueLength,
-                  'aria-description': 'Для удаления используйте Backspace или Delete',
-                },
-                option,
-              )}
-            </React.Fragment>
-          ))}
+          {/* Одна строка: чипы идут ячейками. Grid, в отличие от listbox, допускает
+              интерактивное содержимое внутри ячейки — кнопку удаления чипа. */}
+          {valueLength > 0 && (
+            <div role="row" className={styles.row}>
+              {value.map((option, index) => (
+                <React.Fragment key={`${typeof option.value}-${option.value}`}>
+                  {renderChip(
+                    {
+                      /**
+                       * Компилятор сходит с ума из-за рефа внутри handleChipRemove.
+                       * Обходной путь прокидывать ref в свойства для рендер пропов.
+                       */
+                      ...(false
+                        ? { '__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED': inputRef }
+                        : {}),
+                      'Component': 'div',
+                      'value': option.value,
+                      'label': option.label,
+                      'disabled': option.disabled || disabled,
+                      'readOnly': option.readOnly || readOnly,
+                      'className': styles.chip,
+                      'onRemove': handleChipRemove,
+                      // чтобы можно было легче найти этот чип в DOM
+                      'data-index': index,
+                      'data-value': option.value,
+                      'data-value-type': typeof option.value,
+                      // для a11y
+                      'tabIndex': lastFocusedChipOptionIndex === index ? 0 : -1,
+                      'role': 'gridcell',
+                      'aria-colindex': index + 1,
+                      'aria-description': 'Для удаления используйте Backspace или Delete',
+                    },
+                    option,
+                  )}
+                </React.Fragment>
+              ))}
+            </div>
+          )}
         </div>
         <Text
           autoCapitalize="none"
