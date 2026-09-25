@@ -92,13 +92,13 @@
 
 .before:first-child,
 .label:first-child {
-  padding-inline-start: var(--vkui--size_button_base_small_padding_horizontal_icon--regular);
+  margin-inline-start: var(--vkui--size_button_base_small_padding_horizontal_icon--regular);
 }
 
 .after:last-child,
 .label:last-child,
 .chevronIcon {
-  padding-inline-end: var(--vkui--size_button_base_small_padding_horizontal_icon--regular);
+  margin-inline-end: var(--vkui--size_button_base_small_padding_horizontal_icon--regular);
 }
 
 /**

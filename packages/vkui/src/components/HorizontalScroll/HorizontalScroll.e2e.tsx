@@ -1,10 +1,5 @@
 import { test } from '@vkui-e2e/test';
 import { ViewWidth } from '../../lib/adaptivity';
-import {
-  HorizontalScrollHoverTestPlayground,
-  HorizontalScrollSmallTabletPlayground,
-  HorizontalScrollWithFocusVisible,
-} from './HorizontalScroll.e2e-playground';
 
 test.describe('HorizontalScroll', () => {
   test.use({
@@ -19,7 +14,7 @@ test.describe('HorizontalScroll', () => {
     expectScreenshotClippedToContent,
     componentPlaygroundProps,
   }) => {
-    await mount(<HorizontalScrollSmallTabletPlayground {...componentPlaygroundProps} />);
+    await mount('HorizontalScrollSmallTabletPlayground', componentPlaygroundProps);
     await expectScreenshotClippedToContent();
   });
 });
@@ -34,12 +29,10 @@ test.describe('HorizontalScroll', () => {
     expectScreenshotClippedToContent,
     componentPlaygroundProps,
   }) => {
-    await mount(
-      <HorizontalScrollHoverTestPlayground
-        {...componentPlaygroundProps}
-        data-testid={DATA_TESTID}
-      />,
-    );
+    await mount('HorizontalScrollHoverTestPlayground', {
+      ...componentPlaygroundProps,
+      'data-testid': DATA_TESTID,
+    });
 
     await page.hover(CUSTOM_ROOT_SELECTOR);
 
@@ -64,7 +57,7 @@ test.describe('HorizontalScroll', () => {
     expectScreenshotClippedToContent,
     componentPlaygroundProps,
   }) => {
-    await mount(<HorizontalScrollWithFocusVisible {...componentPlaygroundProps} />);
+    await mount('HorizontalScrollWithFocusVisible', componentPlaygroundProps);
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.keyboard.press('Tab');
     await expectScreenshotClippedToContent();

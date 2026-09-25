@@ -1,7 +1,5 @@
 import { test } from '@vkui-e2e/test';
 import { Platform } from '../../lib/platform';
-import { LinkFocusVisiblePlayground, LinkWithIcons } from './Link.e2e-playground';
-
 test.describe('Link', () => {
   test.use({
     onlyForPlatforms: [Platform.ANDROID],
@@ -14,7 +12,7 @@ test.describe('Link', () => {
     expectScreenshotClippedToContent,
     componentPlaygroundProps,
   }) => {
-    await mount(<LinkFocusVisiblePlayground {...componentPlaygroundProps} />);
+    await mount('LinkFocusVisiblePlayground', componentPlaygroundProps);
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.keyboard.press('Tab');
     await expectScreenshotClippedToContent();
@@ -25,7 +23,7 @@ test.describe('Link', () => {
     expectScreenshotClippedToContent,
     componentPlaygroundProps,
   }) => {
-    await mount(<LinkWithIcons {...componentPlaygroundProps} />);
+    await mount('LinkWithIcons', componentPlaygroundProps);
     await expectScreenshotClippedToContent();
   });
 });

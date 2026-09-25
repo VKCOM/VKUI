@@ -1,7 +1,5 @@
 import { test } from '@vkui-e2e/test';
 import { ViewWidth } from '../../lib/adaptivity';
-import { ActionSheetPlayground } from './ActionSheet.e2e-playground';
-
 test.describe('ActionSheet', () => {
   test.use({
     adaptivityProviderProps: {
@@ -16,7 +14,7 @@ test.describe('ActionSheet', () => {
     expectScreenshotClippedToContent,
     componentPlaygroundProps,
   }) => {
-    await mount(<ActionSheetPlayground {...componentPlaygroundProps} />);
+    await mount('ActionSheetPlayground', componentPlaygroundProps);
 
     const item = page.getByTestId('last-item-test-id');
     await item.hover();
@@ -42,7 +40,7 @@ test.describe('ActionSheet', () => {
     expectScreenshotClippedToContent,
     componentPlaygroundProps,
   }) => {
-    await mount(<ActionSheetPlayground {...componentPlaygroundProps} />);
+    await mount('ActionSheetPlayground', componentPlaygroundProps);
 
     const item = page.getByTestId('last-item-test-id');
     await item.hover();

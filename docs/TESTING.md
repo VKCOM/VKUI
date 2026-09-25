@@ -23,7 +23,7 @@
 
 Используем:
 
-- [@playwright/experimental-ct-react](https://playwright.dev/docs/test-components)
+- [@playwright/test](https://playwright.dev/docs/test-intro) и gallery-компоненты Playwright
 - [git-lfs](https://git-lfs.github.com) – помогает от раздувания репозитория из-за эталонных скриншотов.
 - [Docker](https://www.docker.com/products/docker-desktop) – запускаем тесты в докере, чтобы для тестов было одинаковое окружение, что в CI, что локально. Этим достигается одинаковый рендер страницы. Для примера, шрифты рендерятся по разному в зависимости от ОС.
 
@@ -52,7 +52,7 @@
     >   await expectScreenshotClippedToContent();
     > });
     > ```
-- В папке [packages/vkui/playwright](../packages/vkui/playwright) подключаем шрифты, подключаем CSS, подготавливаем HTML файл.
+- В папке [packages/vkui/playwright](../packages/vkui/playwright) подключаем шрифты, CSS и gallery для компонентных тестов.
 - В файле [packages/vkui/playwright-сt.config.ts](../packages/vkui/playwright-сt.config.ts) конфигурируем Playwright.
 - В файле `env.development.local` определяем переменные окружения для удобства локального тестирования.
 
@@ -186,7 +186,7 @@ vkui-package_vkui-1  | transforming...
 vkui-package_vkui-1  | Error when using sourcemap for reporting an error: Can't resolve original location of error.
 vkui-package_vkui-1  | ✓ 2616 modules transformed.
 vkui-package_vkui-1  | ✓ built in 3.67s
-vkui-package_vkui-1  | "AccordionE2EPlayground" is not exported by "src/components/Accordion/Accordion.e2e-playground.tsx", imported by "playwright/index.tsx".
+vkui-package_vkui-1  | "AccordionE2EPlayground" is not exported by "src/components/Accordion/Accordion.e2e-playground.tsx", imported by "playwright/gallery/main.tsx".
 ```
 
 Очистили кэш, запустили заново тесты и ошибка пропала.

@@ -1,20 +1,13 @@
 import { test } from '@vkui-e2e/test';
 import { ViewWidth } from '../../lib/adaptivity';
-import {
-  ButtonPlayground,
-  ButtonWithCounterPlayground,
-  ButtonWithPaddingsPlayground,
-  ButtonWithStatePlayground,
-} from './Button.e2e-playground';
-
 test('Button', async ({ mount, expectScreenshotClippedToContent, componentPlaygroundProps }) => {
-  await mount(<ButtonPlayground {...componentPlaygroundProps} />);
+  await mount('ButtonPlayground', componentPlaygroundProps);
   await expectScreenshotClippedToContent();
 });
 
 test.describe('Button', () => {
   test('counter', async ({ mount, expectScreenshotClippedToContent, componentPlaygroundProps }) => {
-    await mount(<ButtonWithCounterPlayground {...componentPlaygroundProps} />);
+    await mount('ButtonWithCounterPlayground', componentPlaygroundProps);
     await expectScreenshotClippedToContent();
   });
 });
@@ -26,7 +19,7 @@ test.describe('Button', () => {
     expectScreenshotClippedToContent,
     componentPlaygroundProps,
   }) => {
-    await mount(<ButtonWithPaddingsPlayground {...componentPlaygroundProps} />);
+    await mount('ButtonWithPaddingsPlayground', componentPlaygroundProps);
     await expectScreenshotClippedToContent();
   });
 });
@@ -38,7 +31,7 @@ test.describe('Button', () => {
     },
   });
   test('state', async ({ mount, expectScreenshotClippedToContent, componentPlaygroundProps }) => {
-    await mount(<ButtonWithStatePlayground {...componentPlaygroundProps} />);
+    await mount('ButtonWithStatePlayground', componentPlaygroundProps);
     await expectScreenshotClippedToContent();
   });
 });

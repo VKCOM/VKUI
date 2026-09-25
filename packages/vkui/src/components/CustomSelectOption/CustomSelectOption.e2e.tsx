@@ -1,6 +1,4 @@
 import { test } from '@vkui-e2e/test';
-import { CustomSelectOptionPlayground } from './CustomSelectOption.e2e-playground';
-
 test.use({
   adaptivityProviderProps: { density: 'regular' },
 });
@@ -10,6 +8,6 @@ test('CustomSelectOption', async ({
   expectScreenshotClippedToContent,
   componentPlaygroundProps,
 }) => {
-  await mount(<CustomSelectOptionPlayground {...componentPlaygroundProps} />);
+  await mount('CustomSelectOptionPlayground', componentPlaygroundProps);
   await expectScreenshotClippedToContent();
 });

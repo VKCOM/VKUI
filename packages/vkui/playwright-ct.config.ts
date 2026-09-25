@@ -1,9 +1,8 @@
 import * as path from 'node:path';
 import * as process from 'node:process';
-import { defineConfig, devices } from '@playwright/experimental-ct-react';
+import { defineConfig, devices } from '@playwright/test';
 import type { ReporterDescription } from '@playwright/test';
 import dotenv from 'dotenv';
-import viteConfig from './vite.config.ts';
 
 const env = process.env as unknown as Record<string, string>;
 
@@ -64,11 +63,18 @@ export default defineConfig({
 
     deviceScaleFactor: 1,
 
-    ctViteConfig: viteConfig,
+    baseURL: 'http://127.0.0.1:5173/playwright/gallery/index.html',
+    serviceWorkers: 'block',
   },
 
   /* Configure projects for major browsers */
   projects: generateProjects(),
+
+  webServer: {
+    command: '../../node_modules/.bin/vite --config vite.config.ts --host 127.0.0.1',
+    url: 'http://127.0.0.1:5173/playwright/gallery/index.html',
+    reuseExistingServer: !env.CI,
+  },
 });
 
 function generateTestMatch() {

@@ -1,6 +1,4 @@
 import { test } from '@vkui-e2e/test';
-import { PanelHeaderContextPlayground } from './PanelHeaderContext.e2e-playground';
-
 test.use({
   contextOptions: {
     reducedMotion: 'reduce',
@@ -12,6 +10,6 @@ test('PanelHeaderContext', async ({
   expectScreenshotClippedToContent,
   componentPlaygroundProps,
 }) => {
-  await mount(<PanelHeaderContextPlayground {...componentPlaygroundProps} />);
+  await mount('PanelHeaderContextPlayground', componentPlaygroundProps);
   await expectScreenshotClippedToContent();
 });

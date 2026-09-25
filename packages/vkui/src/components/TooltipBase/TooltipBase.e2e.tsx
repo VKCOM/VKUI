@@ -1,6 +1,4 @@
 import { test } from '@vkui-e2e/test';
-import { TooltipBasePlayground } from './TooltipBase.e2e-playground';
-
 test.use({ onlyForPlatforms: ['android'] });
 
 test('TooltipBase', async ({
@@ -8,6 +6,6 @@ test('TooltipBase', async ({
   expectScreenshotClippedToContent,
   componentPlaygroundProps,
 }) => {
-  await mount(<TooltipBasePlayground {...componentPlaygroundProps} />);
+  await mount('TooltipBasePlayground', componentPlaygroundProps);
   await expectScreenshotClippedToContent();
 });
