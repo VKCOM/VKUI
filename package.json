@@ -16,7 +16,7 @@
     "@eslint/compat": "^2.1.1",
     "@morev/stylelint-testing-library": "^1.1.1",
     "@playwright/experimental-ct-react": "1.62.1",
-    "@playwright/test": "1.62.1",
+    "@playwright/test": "1.63.0",
     "@rspack/cli": "^2.2.7",
     "@rspack/core": "^2.2.7",
     "@size-limit/file": "^14.0.0",
