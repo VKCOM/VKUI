@@ -1,8 +1,4 @@
 import { test } from '@vkui-e2e/test';
-import {
-  PullToRefreshChildrenPositionPlayground,
-  PullToRefreshPlayground,
-} from './PullToRefresh.e2e-playground';
 
 test.describe('PullToRefresh', () => {
   // we are interested in VKCOM only as we need to test here mostly
@@ -15,8 +11,7 @@ test.describe('PullToRefresh', () => {
     expectScreenshotClippedToContent,
     componentPlaygroundProps,
   }) => {
-    const result = await mount(<PullToRefreshPlayground {...componentPlaygroundProps} />);
-    await result.waitFor();
+    await mount('PullToRefreshPlayground', componentPlaygroundProps);
     await page.evaluate(() => new Promise((resolve) => setTimeout(resolve, 500)));
 
     await page.mouse.move(100, 100);
@@ -32,10 +27,10 @@ test.describe('PullToRefresh', () => {
     expectScreenshotClippedToContent,
     componentPlaygroundProps,
   }) => {
-    const result = await mount(
-      <PullToRefreshPlayground {...componentPlaygroundProps} paddingLeft="150px" />,
-    );
-    await result.waitFor();
+    await mount('PullToRefreshPlayground', {
+      ...componentPlaygroundProps,
+      paddingLeft: '150px',
+    });
     await page.evaluate(() => new Promise((resolve) => setTimeout(resolve, 500)));
 
     await page.mouse.move(200, 100);
@@ -51,10 +46,7 @@ test.describe('PullToRefresh', () => {
     expectScreenshotClippedToContent,
     componentPlaygroundProps,
   }) => {
-    const result = await mount(
-      <PullToRefreshChildrenPositionPlayground {...componentPlaygroundProps} />,
-    );
-    await result.waitFor();
+    await mount('PullToRefreshChildrenPositionPlayground', componentPlaygroundProps);
     await page.evaluate(() => new Promise((resolve) => setTimeout(resolve, 500)));
     await expectScreenshotClippedToContent();
   });

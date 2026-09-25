@@ -1,7 +1,5 @@
 import { test } from '@vkui-e2e/test';
 import { ViewWidth } from '../../lib/adaptivity';
-import { ModalCardOutsideButtonPlayground, ModalCardPlayground } from './ModalCard.e2e-playground';
-
 test.describe('ModalCard', () => {
   test.use({
     adaptivityProviderProps: {
@@ -11,7 +9,7 @@ test.describe('ModalCard', () => {
     onlyForPlatforms: ['ios', 'android'],
   });
   test('mobile', async ({ mount, expectScreenshotClippedToContent, componentPlaygroundProps }) => {
-    await mount(<ModalCardPlayground {...componentPlaygroundProps} />);
+    await mount('ModalCardPlayground', componentPlaygroundProps);
     await expectScreenshotClippedToContent();
   });
 });
@@ -25,7 +23,7 @@ test.describe('ModalCard', () => {
     onlyForPlatforms: ['ios', 'android'],
   });
   test('tablet', async ({ mount, expectScreenshotClippedToContent, componentPlaygroundProps }) => {
-    await mount(<ModalCardPlayground {...componentPlaygroundProps} />);
+    await mount('ModalCardPlayground', componentPlaygroundProps);
     await expectScreenshotClippedToContent();
   });
 });
@@ -39,7 +37,7 @@ test.describe(() => {
     expectScreenshotClippedToContent,
     componentPlaygroundProps,
   }) => {
-    await mount(<ModalCardPlayground {...componentPlaygroundProps} />);
+    await mount('ModalCardPlayground', componentPlaygroundProps);
     await expectScreenshotClippedToContent();
   });
 });
@@ -58,7 +56,7 @@ test.describe('ModalCard', () => {
     expectScreenshotClippedToContent,
     componentPlaygroundProps,
   }) => {
-    await mount(<ModalCardOutsideButtonPlayground {...componentPlaygroundProps} />);
+    await mount('ModalCardOutsideButtonPlayground', componentPlaygroundProps);
     await expectScreenshotClippedToContent();
   });
 });

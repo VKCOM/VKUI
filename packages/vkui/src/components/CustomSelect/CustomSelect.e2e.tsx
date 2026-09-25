@@ -1,17 +1,11 @@
 import { test } from '@vkui-e2e/test';
 import { ColorScheme } from '../../lib/colorScheme';
-import {
-  CustomSelectNoMaxHeightPlayground,
-  CustomSelectOptionScrollPlayground,
-  CustomSelectPlayground,
-} from './CustomSelect.e2e-playground';
-
 test('CustomSelect', async ({
   mount,
   expectScreenshotClippedToContent,
   componentPlaygroundProps,
 }) => {
-  await mount(<CustomSelectPlayground {...componentPlaygroundProps} />);
+  await mount('CustomSelectPlayground', componentPlaygroundProps);
   await expectScreenshotClippedToContent();
 });
 
@@ -25,7 +19,7 @@ test.describe('CustomSelect', () => {
     expectScreenshotClippedToContent,
     componentPlaygroundProps,
   }) => {
-    await mount(<CustomSelectNoMaxHeightPlayground {...componentPlaygroundProps} />);
+    await mount('CustomSelectNoMaxHeightPlayground', componentPlaygroundProps);
 
     await page
       .getByTestId('target-select')
@@ -51,7 +45,7 @@ test.describe('CustomSelect', () => {
     expectScreenshotClippedToContent,
     componentPlaygroundProps,
   }) => {
-    await mount(<CustomSelectOptionScrollPlayground {...componentPlaygroundProps} />);
+    await mount('CustomSelectOptionScrollPlayground', componentPlaygroundProps);
 
     await page.getByTestId('target-select').click();
 

@@ -1,13 +1,7 @@
 import { expect, test } from '@vkui-e2e/test';
-import {
-  SliderPlayground,
-  SliderPlaygroundForKeyboardTest,
-  SliderPlaygroundForKeyboardTestWithTabButton,
-  SliderPlaygroundForTooltipTest,
-} from './Slider.e2e-playground';
 
 test('Slider', async ({ mount, expectScreenshotClippedToContent, componentPlaygroundProps }) => {
-  await mount(<SliderPlayground {...componentPlaygroundProps} />);
+  await mount('SliderPlayground', componentPlaygroundProps);
   await expectScreenshotClippedToContent();
 });
 
@@ -19,9 +13,8 @@ test.describe('Slider with Tooltip', () => {
     expectScreenshotClippedToContent,
     componentPlaygroundProps,
   }) => {
-    const result = await mount(<SliderPlaygroundForTooltipTest {...componentPlaygroundProps} />);
+    await mount('SliderPlaygroundForTooltipTest', componentPlaygroundProps);
     await page.emulateMedia({ reducedMotion: 'reduce' });
-    await result.waitFor();
 
     await page.keyboard.press('Tab');
     await expectScreenshotClippedToContent();
@@ -38,11 +31,8 @@ test.describe('keyboard events', () => {
   test.use({ onlyForPlatforms: ['android'], onlyForColorSchemes: ['light'] });
 
   test('should be focused with Tab button', async ({ page, mount, componentPlaygroundProps }) => {
-    const result = await mount(
-      <SliderPlaygroundForKeyboardTestWithTabButton {...componentPlaygroundProps} />,
-    );
+    await mount('SliderPlaygroundForKeyboardTestWithTabButton', componentPlaygroundProps);
     await page.emulateMedia({ reducedMotion: 'reduce' });
-    await result.waitFor();
 
     const locator = page.getByRole('slider');
     const [startSlider, endSlider] = await locator.all();
@@ -62,8 +52,7 @@ test.describe('keyboard events', () => {
     mount,
     componentPlaygroundProps,
   }) => {
-    const result = await mount(<SliderPlaygroundForKeyboardTest {...componentPlaygroundProps} />);
-    await result.waitFor();
+    await mount('SliderPlaygroundForKeyboardTest', componentPlaygroundProps);
 
     const slider = page.getByRole('slider');
 
