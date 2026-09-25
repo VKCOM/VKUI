@@ -79,7 +79,7 @@
   font-family: Roboto !important;
 }
 
-.vkuiTestAppRoot * {
+:where(.vkuiTestAppRoot) * {
   box-sizing: border-box;
 }
 

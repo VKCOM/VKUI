@@ -1,9 +1,7 @@
 import { test } from '@vkui-e2e/test';
 import { Platform } from '../../lib/platform';
-import { SwitchFocusVisiblePlayground, SwitchPlayground } from './Switch.e2e-playground';
-
 test('Switch', async ({ mount, expectScreenshotClippedToContent, componentPlaygroundProps }) => {
-  await mount(<SwitchPlayground {...componentPlaygroundProps} />);
+  await mount('SwitchPlayground', componentPlaygroundProps);
   await expectScreenshotClippedToContent();
 });
 
@@ -19,7 +17,7 @@ test.describe('Switch', () => {
     expectScreenshotClippedToContent,
     componentPlaygroundProps,
   }) => {
-    await mount(<SwitchFocusVisiblePlayground {...componentPlaygroundProps} />);
+    await mount('SwitchFocusVisiblePlayground', componentPlaygroundProps);
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.keyboard.press('Tab');
     await expectScreenshotClippedToContent();
