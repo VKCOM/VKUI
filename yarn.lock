@@ -5474,6 +5474,7 @@ __metadata:
     "@biomejs/biome": "npm:2.5.14"
     "@csstools/postcss-global-data": "npm:4.0.0"
     "@eslint/compat": "npm:^2.1.1"
+    "@jridgewell/trace-mapping": "npm:^0.3.31"
     "@morev/stylelint-testing-library": "npm:^1.1.1"
     "@playwright/experimental-ct-react": "npm:1.62.1"
     "@playwright/test": "npm:1.62.1"

@@ -13,6 +13,9 @@
  */
 
 // 1. Расширяем Playwright под свои нужды.
+import { mkdir, writeFile } from 'node:fs/promises';
+import { dirname } from 'node:path';
+import { gzipSync } from 'node:zlib';
 import { type devices, expect, test as testBase } from '@playwright/experimental-ct-react';
 import type { PlaywrightTestConfig } from '@playwright/test';
 import { screenshotWithClipToContent } from './screenshotWithClipToContent';
@@ -27,10 +30,41 @@ import { generateCustomScreenshotName } from './utils';
 export type { VKUITestOptions } from './types';
 
 export const test = testBase.extend<VKUITestOptions & InternalVKUITestOptions & VKUITestHelpers>({
-  page: async function initialMouseSetup({ page }, use) {
+  page: async function initialMouseSetup({ page, browserName }, use, testInfo) {
+    const collectCoverage = process.env.PLAYWRIGHT_COVERAGE === '1' && browserName === 'chromium';
+    if (collectCoverage) {
+      await Promise.all([
+        page.coverage.startJSCoverage({ resetOnNavigation: false }),
+        page.coverage.startCSSCoverage({ resetOnNavigation: false }),
+      ]);
+    }
     await page.mouse.move(0, 0);
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    await use(page);
+    try {
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      await use(page);
+    } finally {
+      if (collectCoverage) {
+        const [js, css] = await Promise.all([
+          page.coverage.stopJSCoverage(),
+          page.coverage.stopCSSCoverage(),
+        ]);
+        const isProjectResource = ({ url }: { url: string }) => {
+          const pathname = new URL(url).pathname;
+          return pathname.includes('/assets/');
+        };
+        const outputPath = testInfo.outputPath('coverage.json.gz');
+        await mkdir(dirname(outputPath), { recursive: true });
+        await writeFile(
+          outputPath,
+          gzipSync(
+            JSON.stringify({
+              js: js.filter(isProjectResource),
+              css: css.filter(isProjectResource),
+            }),
+          ),
+        );
+      }
+    }
   },
   platform: ['android', { option: true }],
   colorSchemeType: ['light', { option: true }],

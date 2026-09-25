@@ -36,6 +36,8 @@ jobs:
     needs: get_playwright_docker_image
     if: success()
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     container:
       image: ${{ needs.get_playwright_docker_image.outputs.image }}
       options: --ipc=host
@@ -63,6 +65,22 @@ jobs:
       - name: Run e2e tests for @vkontakte/vkui workspace
         # Почему HOME=/root см. https://github.com/microsoft/playwright/issues/6500
         run: HOME=/root node --run test:e2e:ci -- --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
+        env:
+          PLAYWRIGHT_COVERAGE: '1'
+          PLAYWRIGHT_COVERAGE_ALL_PROJECTS: '1'
+
+      - name: Generate Playwright coverage report
+        if: always()
+        run: HOME=/root node scripts/coverage.ts --report-only
+        working-directory: packages/vkui
+
+      - name: Upload Playwright coverage artifact
+        if: ${{ always() && hashFiles('packages/vkui/coverage/playwright/lcov.info') != '' }}
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: playwright-coverage-${{ matrix.shardIndex }}-${{ matrix.shardTotal }}
+          path: packages/vkui/coverage/playwright/lcov.info
+          retention-days: 1
 
       - name: Upload Playwright blob report to GitHub Actions Artifacts
         if: always()
@@ -71,3 +89,29 @@ jobs:
           name: all-blob-reports-${{ matrix.shardIndex }}-${{ matrix.shardTotal }}
           path: packages/vkui/blob-report
           retention-days: 1
+
+  upload_playwright_coverage:
+    needs: test_e2e
+    if: ${{ always() && !cancelled() }}
+    runs-on: ubuntu-slim
+    name: Upload Playwright coverage to Codecov
+    permissions:
+      contents: read
+      id-token: write
+      code-quality: write
+    steps:
+      - name: Download Playwright coverage artifacts
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          pattern: playwright-coverage-*
+          path: coverage-artifacts
+
+      - name: Upload Playwright coverage to Codecov
+        if: ${{ hashFiles('coverage-artifacts/**/lcov.info') != '' }}
+        uses: codecov/codecov-action@fb8b3582c8e4def4969c97caa2f19720cb33a72f # v7.0.0
+        with:
+          use_oidc: true
+          flags: playwright
+          files: coverage-artifacts/**/lcov.info
+          fail_ci_if_error: true
+          verbose: true
