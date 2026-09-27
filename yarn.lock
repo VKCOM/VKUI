@@ -1935,9 +1935,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@modelcontextprotocol/sdk@npm:^1.25.3":
-  version: 1.30.0
-  resolution: "@modelcontextprotocol/sdk@npm:1.30.0"
+"@modelcontextprotocol/sdk@npm:^1.30.1":
+  version: 1.30.1
+  resolution: "@modelcontextprotocol/sdk@npm:1.30.1"
   dependencies:
     "@hono/node-server": "npm:^1.19.9 || ^2.0.5"
     ajv: "npm:^8.17.1"
@@ -1964,7 +1964,7 @@ __metadata:
       optional: true
     zod:
       optional: false
-  checksum: 10/369723a62ce230e55d4fc98549fb080a51916a2004f3907bfca899f5602de8791d9b252038abc6cf120a9d1c75845d2459a471b678c9b9cfc7bae5febf112b63
+  checksum: 10/74c02ff5beff412ee46ae0f36e03ac0dbef24d2b04d77ee382a1cda6b405823120066256ad37f7eb73c31189eec3550256e84f815db180e9e5a6ea526d0e4ed2
   languageName: node
   linkType: hard
 
@@ -5459,7 +5459,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@vkontakte/vkui-mcp@workspace:packages/vkui-mcp"
   dependencies:
-    "@modelcontextprotocol/sdk": "npm:^1.25.3"
+    "@modelcontextprotocol/sdk": "npm:^1.30.1"
     typescript: "npm:^6.0.3"
     zod: "npm:^4.6.5"
   bin:
