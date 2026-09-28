@@ -24,7 +24,7 @@
     "pagefind": "^1.5.2",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
-    "react-live": "^4.1.8",
+    "react-live": "^5.0.0",
     "remark-frontmatter": "^5.0.0",
     "remark-gfm": "^4.0.0",
     "remark-mdx": "^3.0.0",

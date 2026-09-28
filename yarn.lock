@@ -2908,7 +2908,7 @@ __metadata:
     pagefind: "npm:^1.5.2"
     react: "npm:^19.3.0"
     react-dom: "npm:^19.3.0"
-    react-live: "npm:^4.1.8"
+    react-live: "npm:^5.0.0"
     remark-frontmatter: "npm:^5.0.0"
     remark-gfm: "npm:^4.0.0"
     remark-mdx: "npm:^3.0.0"
@@ -15094,7 +15094,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prism-react-renderer@npm:^2.4.0":
+"prism-react-renderer@npm:^2.4.1":
   version: 2.4.1
   resolution: "prism-react-renderer@npm:2.4.1"
   dependencies:
@@ -15326,17 +15326,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-live@npm:^4.1.8":
-  version: 4.1.8
-  resolution: "react-live@npm:4.1.8"
+"react-live@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "react-live@npm:5.0.0"
   dependencies:
-    prism-react-renderer: "npm:^2.4.0"
-    sucrase: "npm:^3.35.0"
+    prism-react-renderer: "npm:^2.4.1"
+    sucrase: "npm:^3.35.1"
     use-editable: "npm:^2.3.3"
   peerDependencies:
     react: ">=18.0.0"
     react-dom: ">=18.0.0"
-  checksum: 10/594aa527940819d7c756f92d541d08a4ba476201594694bedd4327ed20e31c54c16b896404bcb8aa56ae137d489859a3e81004050cf5a8b8e7fb3fd8c9807a16
+  checksum: 10/444ebca742e1cd1024e5a9e041e37337866c578759942eb5b0d5b1216994ae7a10c99b7c377355c7495f0280ff2c5fdd9716efabebf55721bb7f26e8d6f8733b
   languageName: node
   linkType: hard
 
@@ -17323,7 +17323,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sucrase@npm:^3.35.0":
+"sucrase@npm:^3.35.1":
   version: 3.35.1
   resolution: "sucrase@npm:3.35.1"
   dependencies:
