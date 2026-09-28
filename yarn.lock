@@ -5564,7 +5564,7 @@ __metadata:
     webpack: "npm:^5.111.0"
     webpack-cli: "npm:^7.2.3"
     webpack-merge: "npm:^6.0.1"
-    yargs: "npm:^18.1.0"
+    yargs: "npm:^18.2.0"
   languageName: unknown
   linkType: soft
 
@@ -18949,7 +18949,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yargs@npm:^18.0.0, yargs@npm:^18.1.0":
+"yargs@npm:^18.0.0":
   version: 18.1.0
   resolution: "yargs@npm:18.1.0"
   dependencies:
@@ -18960,6 +18960,20 @@ __metadata:
     y18n: "npm:^5.0.5"
     yargs-parser: "npm:^22.0.0"
   checksum: 10/b26d477c3f62b0a031d8f3fea16325e286375e6039e5fca5efb1ec1d64eab3cfe136edb2887e4f2e2c9a5e004d0eca735079ea0be4ca34273c6e949639c6177b
+  languageName: node
+  linkType: hard
+
+"yargs@npm:^18.2.0":
+  version: 18.2.0
+  resolution: "yargs@npm:18.2.0"
+  dependencies:
+    cliui: "npm:^9.0.1"
+    escalade: "npm:^3.1.1"
+    get-caller-file: "npm:^2.0.5"
+    string-width: "npm:^8.2.1"
+    y18n: "npm:^5.0.5"
+    yargs-parser: "npm:^22.0.0"
+  checksum: 10/a780cc1fa693028baa50c0c88bcc2c59c92817f0f8e2dfbd226aa1c27cf0dbfb1743511012b73a4f415119d9caa22a6de19350c781d5ef75f874359ae7601ac3
   languageName: node
   linkType: hard
 
