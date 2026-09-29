@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState, useEffect } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Icon24ArrowUpOutline } from '@vkontakte/icons';
 import { classNames, throttle } from '@vkontakte/vkjs';
 import { Button } from '../../../src';
@@ -22,7 +22,7 @@ export const GoToUpButton = () => {
     window!.addEventListener('scroll', updateVisibility);
 
     return () => window!.removeEventListener('scroll', updateVisibility);
-  }, [updateVisibility]);
+  }, [updateVisibility, window]);
 
   return (
     <div className={classNames(styles.upButton, !visible && styles.hidden)}>
