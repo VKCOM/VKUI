@@ -12,6 +12,7 @@
     "global.vitest.ts",
     "vite.config.ts",
     "scripts/**/*.ts",
+    "website/**/*.ts*",
     "cssm/postcss.config.ts"
   ],
   "exclude": [

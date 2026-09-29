@@ -28,7 +28,7 @@ docs_storybook:
   - 'packages/vkui/storybook/**'
   - 'packages/vkui/src/**/*.stories.*'
   - 'packages/vkui/src/**/*.mdx'
-  - 'packages/vkui/docs/**'
+  - 'packages/vkui/website/**'
   - 'tools/storybook-*/**'
 
 docs_website:
