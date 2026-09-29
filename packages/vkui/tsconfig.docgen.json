@@ -5,7 +5,7 @@
     "types/css.d.ts",
     "global.vitest.ts",
     "src",
-    "docs",
+    "website",
     "../storybook-addons/src"
   ],
   "exclude": ["src/**/*.test.ts*", "src/**/*.e2e*.ts*"],

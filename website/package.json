@@ -10,6 +10,7 @@
     "pagefind": "pagefind --site out/ --output-path ./public/_pagefind && cp -r ./public/_pagefind ./out",
     "next-sitemap": "next-sitemap",
     "generate": "node ./scripts/index.ts",
+    "generate:package-docs": "node ./scripts/generate-props/generate-props.ts && node ./scripts/copy-mdx-to-public.ts",
     "lint:types": "tsc"
   },
   "devDependencies": {
