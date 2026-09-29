@@ -3,18 +3,19 @@ import { runIfMain } from '../common/runIfMain.ts';
 import { getPaths } from './get-paths.ts';
 import { getProps } from './get-props.ts';
 
-export function generateProps(): void {
+export function generateProps() {
   // eslint-disable-next-line no-console
   console.log('🔄 Генерация свойств компонентов...');
   const componentPaths = getPaths();
-  const props = getProps({ paths: componentPaths });
+  return getProps({ paths: componentPaths });
+}
 
-  if (!fs.existsSync('.docgen')) {
-    fs.mkdirSync('.docgen');
-  }
+function writeProps() {
+  const props = generateProps();
+  fs.mkdirSync('.docgen', { recursive: true });
   fs.writeFileSync('.docgen/docgen.json', JSON.stringify(props));
   // eslint-disable-next-line no-console
   console.log(`✅ Свойства сгенерированы.`);
 }
 
-void runIfMain(import.meta.url, generateProps);
+void runIfMain(import.meta.url, writeProps);

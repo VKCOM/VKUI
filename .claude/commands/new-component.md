@@ -216,7 +216,7 @@ export type { <ComponentName>Props } from './components/<ComponentName>/<Compone
 
 В объекте `vkuiScope` добавить `<ComponentName>: <ComponentName>,` по алфавиту.
 
-### 11. Добавить компонент в `packages/vkui/docs/components-overview/config.tsx`
+### 11. Добавить компонент в `packages/vkui/website/components-overview/config.tsx`
 
 Этот файл содержит конфигурацию для страницы "Components Overview". Нужно добавить 3 вещи:
 

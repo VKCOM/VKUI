@@ -21,7 +21,7 @@ export interface ImageBaseOverlayCommonProps
    * > Определение просиходит с помощью двойного рендера, так что на устройствах без мыши
    * > оверлей покажется не раньше второго рендера.
    * > Если это критично (например при SSR), то старайтесь явно указывать значение `visibility`, либо используйте
-   * > [AdaptivityProvider](#/AdaptivityProvider) для того, чтобы явно определить `hasPointer`.
+   * > [AdaptivityProvider](https://vkui.io/components/adaptivity-provider/) для того, чтобы явно определить `hasPointer`.
    */
   visibility?: 'on-hover' | 'always' | undefined;
   /**

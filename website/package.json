@@ -12,6 +12,7 @@
     "generate": "node ./scripts/index.ts",
     "test": "node ./scripts/generate-previews.ts && yarn run -T vitest run",
     "test:ci": "node --run test",
+    "generate:package-docs": "node ./scripts/generate-package-docs.ts",
     "lint:types": "node ./scripts/generate-previews.ts && node ../node_modules/@typescript/native/bin/tsc"
   },
   "devDependencies": {
