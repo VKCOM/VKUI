@@ -27,6 +27,7 @@ jobs:
       pull-requests: read
     outputs:
       package_vkui: ${{ steps.changes.outputs.package_vkui }}
+      package_vkui_docs: ${{ steps.changes.outputs.package_vkui_docs }}
       docs_storybook: ${{ steps.changes.outputs.docs_storybook }}
       docs_website: ${{ steps.changes.outputs.docs_website }}
       dependencies: ${{ steps.changes.outputs.dependencies }}
@@ -153,7 +154,7 @@ jobs:
           retention-days: 30
 
   build_package:
-    if: ${{ needs.changed_files.outputs.package_vkui == 'true' }}
+    if: ${{ needs.changed_files.outputs.package_vkui == 'true' || needs.changed_files.outputs.package_vkui_docs == 'true' }}
     needs: changed_files
     runs-on: ubuntu-latest
     name: Build package

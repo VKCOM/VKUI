@@ -4,7 +4,7 @@ import {
   type ConfigData,
   createIconsConfig,
   getIconDisplayName,
-} from '../../../../packages/vkui/docs/icons-overview/config';
+} from '../../../../packages/vkui/website/icons-overview/config';
 
 let configPromise: Promise<ConfigData[]> | undefined;
 
