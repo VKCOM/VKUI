@@ -1,9 +1,7 @@
 import { test } from '@vkui-e2e/test';
 import { ColorScheme } from '../../lib/colorScheme';
-import { TabsItemsFlexModePlayground, TabsPlayground } from './Tabs.e2e-playground';
-
 test('Tabs', async ({ mount, expectScreenshotClippedToContent, componentPlaygroundProps }) => {
-  await mount(<TabsPlayground {...componentPlaygroundProps} />);
+  await mount('TabsPlayground', componentPlaygroundProps);
   await expectScreenshotClippedToContent();
 });
 
@@ -16,7 +14,7 @@ test.describe('Tabs', () => {
     expectScreenshotClippedToContent,
     componentPlaygroundProps,
   }) => {
-    await mount(<TabsItemsFlexModePlayground {...componentPlaygroundProps} />);
+    await mount('TabsItemsFlexModePlayground', componentPlaygroundProps);
     await expectScreenshotClippedToContent();
   });
 });

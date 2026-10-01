@@ -1,9 +1,7 @@
 import { test } from '@vkui-e2e/test';
 import { Platform } from '../../lib/platform';
-import { TextareaPlayground, TextareaStatePlayground } from './Textarea.e2e-playground';
-
 test('Textarea', async ({ mount, expectScreenshotClippedToContent, componentPlaygroundProps }) => {
-  await mount(<TextareaPlayground {...componentPlaygroundProps} />);
+  await mount('TextareaPlayground', componentPlaygroundProps);
   await expectScreenshotClippedToContent();
 });
 
@@ -19,7 +17,7 @@ test.describe('Textarea', () => {
     expectScreenshotClippedToContent,
     componentPlaygroundProps,
   }) => {
-    await mount(<TextareaStatePlayground {...componentPlaygroundProps} />);
+    await mount('TextareaStatePlayground', componentPlaygroundProps);
 
     await page.locator('#textarea').fill('1\n2\n3\n4\n5\n6\n7\n8');
 
@@ -42,7 +40,7 @@ test.describe('Textarea', () => {
     expectScreenshotClippedToContent,
     componentPlaygroundProps,
   }) => {
-    await mount(<TextareaStatePlayground {...componentPlaygroundProps} />);
+    await mount('TextareaStatePlayground', componentPlaygroundProps);
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.keyboard.press('Tab');
     await expectScreenshotClippedToContent();

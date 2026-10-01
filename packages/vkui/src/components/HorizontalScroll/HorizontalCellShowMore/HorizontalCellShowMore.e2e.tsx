@@ -1,10 +1,5 @@
 import { test } from '@vkui-e2e/test';
 import { ViewWidth } from '../../../lib/adaptivity';
-import {
-  HorizontalCellShowMoreMobilePlayground,
-  HorizontalCellShowMorePlayground,
-} from './HorizontalCellShowMore.e2e-playground';
-
 test.use({ toMatchSnapshot: { threshold: 0.03 } });
 
 test.describe('HorizontalCellShowMore', () => {
@@ -19,7 +14,7 @@ test.describe('HorizontalCellShowMore', () => {
     expectScreenshotClippedToContent,
     componentPlaygroundProps,
   }) => {
-    await mount(<HorizontalCellShowMorePlayground {...componentPlaygroundProps} />);
+    await mount('HorizontalCellShowMorePlayground', componentPlaygroundProps);
     await expectScreenshotClippedToContent();
   });
 
@@ -28,7 +23,7 @@ test.describe('HorizontalCellShowMore', () => {
     expectScreenshotClippedToContent,
     componentPlaygroundProps,
   }) => {
-    await mount(<HorizontalCellShowMoreMobilePlayground {...componentPlaygroundProps} />);
+    await mount('HorizontalCellShowMoreMobilePlayground', componentPlaygroundProps);
     await expectScreenshotClippedToContent();
   });
 });

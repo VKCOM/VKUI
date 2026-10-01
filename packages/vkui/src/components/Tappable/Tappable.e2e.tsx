@@ -1,9 +1,7 @@
 import { test } from '@vkui-e2e/test';
 import { Platform } from '../../lib/platform';
-import { TappableFocusVisiblePlayground, TappablePlayground } from './Tappable.e2e-playground';
-
 test('Tappable', async ({ mount, expectScreenshotClippedToContent, componentPlaygroundProps }) => {
-  await mount(<TappablePlayground {...componentPlaygroundProps} />);
+  await mount('TappablePlayground', componentPlaygroundProps);
   await expectScreenshotClippedToContent();
 });
 
@@ -21,7 +19,7 @@ test.describe('Tappable', () => {
         expectScreenshotClippedToContent,
         componentPlaygroundProps,
       }) => {
-        await mount(<TappableFocusVisiblePlayground {...componentPlaygroundProps} mode={mode} />);
+        await mount('TappableFocusVisiblePlayground', { ...componentPlaygroundProps, mode: mode });
         await page.emulateMedia({ reducedMotion: 'reduce' });
         await page.keyboard.press('Tab');
         await expectScreenshotClippedToContent();
