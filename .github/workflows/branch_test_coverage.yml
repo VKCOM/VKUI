@@ -75,7 +75,7 @@ jobs:
         # но при прямом пуше в stable-ветку PR отсутствует, и загрузка падает с HTTP 400.
         # Поэтому загружаем coverage в GitHub только для дефолтной ветки (master).
         if: github.ref == 'refs/heads/master'
-        uses: actions/upload-code-coverage@d8e329117199404bba6fc81efe8093dc7c015e34 # v1.4.2
+        uses: actions/upload-code-coverage@bfa741d815a28cb064a8e3a0837e577457a017d5 # v1.4.3
         with:
           file: .nyc_output/cobertura-coverage.xml
           language: TypeScript
