@@ -8,6 +8,7 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { IconButton } from '../IconButton/IconButton';
 import { Tappable, type TappableOmitProps } from '../Tappable/Tappable';
 import { Headline } from '../Typography/Headline/Headline';
+import { Paragraph } from '../Typography/Paragraph/Paragraph';
 import { Subhead } from '../Typography/Subhead/Subhead';
 import { Text } from '../Typography/Text/Text';
 import { Title } from '../Typography/Title/Title';
@@ -136,9 +137,9 @@ export const Banner = ({
           </SubheadTypography>
         )}
         {hasReactNode(extraSubtitle) && (
-          <Text Component="div" className={styles.extraSubtitle}>
+          <Paragraph Component="div" className={styles.extraSubtitle}>
             {extraSubtitle}
-          </Text>
+          </Paragraph>
         )}
         {hasReactNode(actions) && React.Children.count(actions) > 0 && (
           <div className={styles.actions}>{actions}</div>
