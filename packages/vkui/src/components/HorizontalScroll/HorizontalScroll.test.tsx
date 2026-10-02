@@ -355,14 +355,6 @@ function mockRef(element: HTMLDivElement | null) {
     return;
   }
 
-  // to make sure we really call the logic that calculates show flag using element properties
-  // we return 0 for first initial render, so, arrow won't be visible,
-  // and on second call, we return value, which will allows us to see arrow on hover.
-  vi.spyOn(element, 'scrollWidth', 'get')
-    .mockImplementationOnce(() => {
-      return 0;
-    })
-    .mockImplementation(() => {
-      return 300;
-    });
+  // Make the scroller overflow so the arrow appears when visibility is calculated on hover.
+  vi.spyOn(element, 'scrollWidth', 'get').mockReturnValue(300);
 }
