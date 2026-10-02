@@ -23,6 +23,7 @@
   },
   "files": [
     "./dist",
+    "./docs",
     "./src",
     "!./src/**/*.webp",
     "!./src/**/*.md",
@@ -47,7 +48,7 @@
   "bugs": "https://github.com/VKCOM/VKUI/issues",
   "homepage": "https://vkui.io/",
   "scripts": {
-    "prepack": "node --run copy-essensial-files && node --run build",
+    "prepack": "node --run copy-essensial-files && node --run build && yarn workspace @project-docs/website run generate:package-docs",
     "copy-essensial-files": "cp ../../LICENSE . && cp ../../README.md .",
     "size": "node --run clear && node --run build:no-types && size-limit",
     "size:ci": "YARN_ENABLE_SCRIPTS=false yarn install --immutable && node --run build:no-types",
