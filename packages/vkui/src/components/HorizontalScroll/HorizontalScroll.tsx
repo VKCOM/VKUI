@@ -256,6 +256,7 @@ export const HorizontalScroll = ({
 
   const [canScrollStart, setCanScrollStart] = React.useState(false);
   const [canScrollEnd, setCanScrollEnd] = React.useState(false);
+  const isInitialRender = React.useRef(true);
   const { focusVisible, ...focusEvents } = useFocusVisible();
   const focusVisibleClassNames = useFocusVisibleClassName({
     focusVisible,
@@ -321,7 +322,16 @@ export const HorizontalScroll = ({
     }
   }, [showArrows, scrollerRef, isRtl]);
 
-  React.useEffect(calculateArrowsVisibility, [calculateArrowsVisibility, children]);
+  React.useEffect(() => {
+    if (isInitialRender.current) {
+      isInitialRender.current = false;
+      if (showArrows !== 'always') {
+        return;
+      }
+    }
+
+    calculateArrowsVisibility();
+  }, [calculateArrowsVisibility, children, showArrows]);
 
   useIsomorphicLayoutEffect(
     function addWheelEventHandler() {
@@ -329,6 +339,20 @@ export const HorizontalScroll = ({
       if (!scrollEl) {
         return noop;
       }
+
+      let animationFrameId: number | undefined;
+
+      const onScroll = () => {
+        if (animationFrameId !== undefined) {
+          return;
+        }
+
+        animationFrameId = requestAnimationFrame(() => {
+          animationFrameId = undefined;
+          calculateArrowsVisibility();
+        });
+      };
+
       /**
        * Прокрутка с помощью любого колеса мыши.
        */
@@ -342,15 +366,18 @@ export const HorizontalScroll = ({
       if (scrollOnAnyWheel) {
         scrollEl.addEventListener('wheel', onWheel, listenerOptions);
       }
-      scrollEl.addEventListener('scroll', calculateArrowsVisibility, listenerOptions);
+      scrollEl.addEventListener('scroll', onScroll, listenerOptions);
 
       return () => {
+        if (animationFrameId !== undefined) {
+          cancelAnimationFrame(animationFrameId);
+        }
         if (scrollOnAnyWheel) {
           // @ts-expect-error: TS2769 В интерфейсе EventListenerOptions для wheel нет passive свойства
           scrollEl.removeEventListener('wheel', onWheel, listenerOptions);
         }
         // @ts-expect-error: TS2769 В интерфейсе EventListenerOptions для scroll нет passive свойства
-        scrollEl.removeEventListener('scroll', calculateArrowsVisibility, listenerOptions);
+        scrollEl.removeEventListener('scroll', onScroll, listenerOptions);
       };
     },
     [scrollOnAnyWheel, calculateArrowsVisibility, scrollerRef],
