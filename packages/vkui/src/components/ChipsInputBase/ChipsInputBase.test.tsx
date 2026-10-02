@@ -4,6 +4,7 @@ import { fireEvent, render, screen, within } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import {
+  a11yTest,
   baselineComponent,
   fakeTimersForScope,
   userEvent,
@@ -64,15 +65,22 @@ describe(ChipsInputBase, () => {
         />
       </>
     ),
-    {
-      a11yConfig: {
-        rules: {
-          // Внутри Chip c role="option" находится кнопка удаления
-          'nested-interactive': { enabled: false },
-        },
-      },
-    },
   );
+
+  a11yTest(() => (
+    <>
+      <label htmlFor="empty-chips">Chips Input</label>
+      <ChipsInputBase
+        id="empty-chips"
+        chipsListLabel="Выбранные опции"
+        onAddChipOption={onAddChipOption}
+        onRemoveChipOption={onRemoveChipOption}
+        onClear={onClearOptions}
+        value={[]}
+        onInputChange={noop}
+      />
+    </>
+  ));
 
   beforeEach(() => {
     onAddChipOption.mockClear();
@@ -220,7 +228,7 @@ describe(ChipsInputBase, () => {
           onClear={onClearOptions}
         />,
       );
-      const chipRedLocator = result.getByRole('option', { name: withRegExp(RED_OPTION.label) });
+      const chipRedLocator = result.getByRole('gridcell', { name: withRegExp(RED_OPTION.label) });
       const removeButton = within(chipRedLocator).getByRole('button');
       await userEvent.click(removeButton);
       expect(onRemoveChipOption).toHaveBeenCalledExactlyOnceWith(RED_OPTION.value);
@@ -240,7 +248,7 @@ describe(ChipsInputBase, () => {
       );
       await userEvent.tab();
       await userEvent.type(
-        result.getByRole('option', { name: withRegExp(RED_OPTION.label) }),
+        result.getByRole('gridcell', { name: withRegExp(RED_OPTION.label) }),
         `{${type}}`,
       );
       expect(onRemoveChipOption).toHaveBeenCalledExactlyOnceWith(RED_OPTION.value);
@@ -261,7 +269,7 @@ describe(ChipsInputBase, () => {
       );
       await userEvent.tab();
       await userEvent.type(
-        result.getByRole('option', { name: withRegExp(RED_OPTION.label) }),
+        result.getByRole('gridcell', { name: withRegExp(RED_OPTION.label) }),
         `{${type}}`,
       );
       expect(onRemoveChipOption).not.toHaveBeenCalled();
@@ -279,7 +287,7 @@ describe(ChipsInputBase, () => {
           onClear={onClearOptions}
         />,
       );
-      const containerEl = result.getByRole('listbox').closest('div')!;
+      const containerEl = result.getByRole('grid').closest('div')!;
       await userEvent.click(containerEl);
       expect(result.getByTestId('chips-input')).toHaveFocus();
     });
@@ -293,7 +301,7 @@ describe(ChipsInputBase, () => {
           onClear={onClearOptions}
         />,
       );
-      const containerEl = result.getByRole('listbox').closest('div')!;
+      const containerEl = result.getByRole('grid').closest('div')!;
       await userEvent.click(containerEl);
       expect(result.getByTestId('chips-input')).toHaveFocus();
     });
@@ -320,7 +328,7 @@ describe(ChipsInputBase, () => {
           onClear={onClearOptions}
         />,
       );
-      const chipLocator = result.getByRole('option', { name: withRegExp(RED_OPTION.label) });
+      const chipLocator = result.getByRole('gridcell', { name: withRegExp(RED_OPTION.label) });
       await userEvent.click(chipLocator);
       expect(chipLocator).toHaveFocus();
     });
@@ -341,9 +349,8 @@ describe(ChipsInputBase, () => {
       expect(chipsInputLocator).toHaveFocus();
 
       await userEvent.type(chipsInputLocator, '{Backspace}');
-      const listbox = chipsInputLocator.previousSibling;
-      const lastChip = listbox?.lastChild;
-      expect(lastChip).toHaveFocus();
+      const chips = result.getAllByRole('gridcell');
+      expect(chips[chips.length - 1]).toHaveFocus();
     });
 
     it('navigates between chips with arrow buttons (it should be cycle)', async () => {
@@ -357,7 +364,7 @@ describe(ChipsInputBase, () => {
         />,
       );
       const [chipRedLocator, chipBlueLocator, chipYellowLocator] = value.map(({ label }) =>
-        result.getByRole('option', { name: withRegExp(label) }),
+        result.getByRole('gridcell', { name: withRegExp(label) }),
       );
 
       await userEvent.type(chipRedLocator, '{ArrowRight}');
@@ -397,7 +404,7 @@ describe(ChipsInputBase, () => {
       );
       const chipsInputLocator = result.getByTestId('chips-input');
       const [chipRedLocator, chipBlueLocator] = value.map(({ label }) =>
-        result.getByRole('option', { name: withRegExp(label) }),
+        result.getByRole('gridcell', { name: withRegExp(label) }),
       );
 
       await userEvent.tab();
@@ -439,12 +446,12 @@ describe(ChipsInputBase, () => {
           onClear={onClearOptions}
         />,
       );
-      const chipRedLocator = result.getByRole('option', { name: withRegExp(RED_OPTION.label) });
+      const chipRedLocator = result.getByRole('gridcell', { name: withRegExp(RED_OPTION.label) });
       await userEvent.type(chipRedLocator, '{Delete}');
       const nextLocatorWithFocus =
         value.length <= 1
           ? result.getByTestId('chips-input')
-          : result.getByRole('option', { name: withRegExp(BLUE_OPTION.label) });
+          : result.getByRole('gridcell', { name: withRegExp(BLUE_OPTION.label) });
       expect(nextLocatorWithFocus).toHaveFocus();
     });
   });
@@ -485,15 +492,15 @@ describe(ChipsInputBase, () => {
       />,
     );
 
-    const redOption = screen.getByRole('option', { name: /Красный/ });
+    const redOption = screen.getByRole('gridcell', { name: /Красный/ });
     expect(redOption.getAttribute('aria-readonly')).toBeTruthy();
     expect(redOption.getAttribute('aria-disabled')).toBeFalsy();
 
-    const blueOption = screen.getByRole('option', { name: /Синий/ });
+    const blueOption = screen.getByRole('gridcell', { name: /Синий/ });
     expect(blueOption.getAttribute('aria-readonly')).toBeFalsy();
     expect(blueOption.getAttribute('aria-disabled')).toBeTruthy();
 
-    const yellowOption = screen.getByRole('option', { name: /Жёлтый/ });
+    const yellowOption = screen.getByRole('gridcell', { name: /Жёлтый/ });
     expect(yellowOption.getAttribute('aria-readonly')).toBeFalsy();
     expect(yellowOption.getAttribute('aria-disabled')).toBeFalsy();
   });
@@ -514,15 +521,15 @@ describe(ChipsInputBase, () => {
       />,
     );
 
-    const redOption = screen.getByRole('option', { name: /Красный/ });
+    const redOption = screen.getByRole('gridcell', { name: /Красный/ });
     expect(redOption.getAttribute('aria-readonly')).toBeTruthy();
     expect(redOption.getAttribute('aria-disabled')).toBeTruthy();
 
-    const blueOption = screen.getByRole('option', { name: /Синий/ });
+    const blueOption = screen.getByRole('gridcell', { name: /Синий/ });
     expect(blueOption.getAttribute('aria-readonly')).toBeTruthy();
     expect(blueOption.getAttribute('aria-disabled')).toBeTruthy();
 
-    const yellowOption = screen.getByRole('option', { name: /Жёлтый/ });
+    const yellowOption = screen.getByRole('gridcell', { name: /Жёлтый/ });
     expect(yellowOption.getAttribute('aria-readonly')).toBeTruthy();
     expect(yellowOption.getAttribute('aria-disabled')).toBeTruthy();
   });
@@ -574,7 +581,7 @@ describe(ChipsInputBase, () => {
       );
       await userEvent.tab();
       await userEvent.type(
-        result.getByRole('option', { name: withRegExp('Красный') }),
+        result.getByRole('gridcell', { name: withRegExp('Красный') }),
         `{Backspace}`,
       );
       expect(onRemoveChipOption).toHaveBeenCalledExactlyOnceWith(1);
@@ -607,7 +614,7 @@ describe(ChipsInputBase, () => {
     fireEvent.mouseDown(input);
     checkPreventDefault(false);
 
-    const option = screen.getByRole('option', {
+    const option = screen.getByRole('gridcell', {
       name: new RegExp(RED_OPTION.label),
     });
     // Проверяем, что при mouseDown в option не происходит preventDefault
@@ -624,7 +631,7 @@ describe(ChipsInputBase, () => {
     fireEvent.mouseDown(root);
     checkPreventDefault(true);
 
-    fireEvent.mouseDown(screen.getByRole('listbox'));
+    fireEvent.mouseDown(screen.getByRole('grid'));
     checkPreventDefault(true);
   });
 });
