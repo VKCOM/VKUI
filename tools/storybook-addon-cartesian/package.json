@@ -10,8 +10,8 @@
   },
   "dependencies": {
     "@storybook/icons": "^2.1.0",
-    "@storybook/react": "10.6.0",
-    "storybook": "10.6.0"
+    "@storybook/react": "10.6.1",
+    "storybook": "10.6.1"
   },
   "devDependencies": {
     "@types/react": "^19.3.0",
