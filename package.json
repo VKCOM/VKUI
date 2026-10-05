@@ -15,7 +15,7 @@
     "@csstools/postcss-global-data": "4.0.0",
     "@eslint/compat": "^2.1.1",
     "@morev/stylelint-testing-library": "^1.1.1",
-    "@playwright/test": "1.62.1",
+    "@playwright/test": "1.63.0",
     "@rspack/cli": "^2.2.8",
     "@rspack/core": "^2.2.8",
     "@size-limit/file": "^14.1.0",
