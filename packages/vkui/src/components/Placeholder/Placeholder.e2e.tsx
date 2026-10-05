@@ -1,6 +1,4 @@
 import { test } from '@vkui-e2e/test';
-import { PlaceholderPlayground } from './Placeholder.e2e-playground';
-
 test.use({
   adaptivityProviderProps: {
     sizeX: 'regular',
@@ -12,6 +10,6 @@ test('Placeholder', async ({
   expectScreenshotClippedToContent,
   componentPlaygroundProps,
 }) => {
-  await mount(<PlaceholderPlayground {...componentPlaygroundProps} />);
+  await mount('PlaceholderPlayground', componentPlaygroundProps);
   await expectScreenshotClippedToContent();
 });

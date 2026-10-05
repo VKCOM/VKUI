@@ -1,10 +1,5 @@
 import { test } from '@vkui-e2e/test';
 import { ViewWidth } from '../../lib/adaptivity';
-import {
-  ModalPageHeaderIOSPlayground,
-  ModalPageHeaderPlayground,
-} from './ModalPageHeader.e2e-playground';
-
 test.describe('ModalPageHeader', () => {
   test.use({
     adaptivityProviderProps: {
@@ -17,7 +12,7 @@ test.describe('ModalPageHeader', () => {
     expectScreenshotClippedToContent,
     componentPlaygroundProps,
   }) => {
-    await mount(<ModalPageHeaderPlayground {...componentPlaygroundProps} />);
+    await mount('ModalPageHeaderPlayground', componentPlaygroundProps);
     await expectScreenshotClippedToContent();
   });
 });
@@ -34,7 +29,7 @@ test.describe('ModalPageHeader', () => {
     expectScreenshotClippedToContent,
     componentPlaygroundProps,
   }) => {
-    await mount(<ModalPageHeaderPlayground {...componentPlaygroundProps} />);
+    await mount('ModalPageHeaderPlayground', componentPlaygroundProps);
     await expectScreenshotClippedToContent();
   });
 });
@@ -51,7 +46,7 @@ test.describe('ModalPageHeader', () => {
     expectScreenshotClippedToContent,
     componentPlaygroundProps,
   }) => {
-    await mount(<ModalPageHeaderIOSPlayground {...componentPlaygroundProps} />);
+    await mount('ModalPageHeaderIOSPlayground', componentPlaygroundProps);
     await expectScreenshotClippedToContent();
   });
 });
@@ -68,7 +63,7 @@ test.describe('ModalPageHeader', () => {
     expectScreenshotClippedToContent,
     componentPlaygroundProps,
   }) => {
-    await mount(<ModalPageHeaderIOSPlayground {...componentPlaygroundProps} />);
+    await mount('ModalPageHeaderIOSPlayground', componentPlaygroundProps);
     await expectScreenshotClippedToContent();
   });
 });

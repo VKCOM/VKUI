@@ -66,6 +66,20 @@ export const HorizontalScrollSmallTabletPlayground = (props: ComponentPlayground
   );
 };
 
+export const HorizontalScrollScrollHandlingPlayground = () => (
+  <HorizontalScroll
+    data-testid="horizontal-scroll"
+    style={{ width: 200 }}
+    showArrows="always"
+    slotProps={{
+      prevArrow: { 'data-testid': 'prev-arrow' },
+      nextArrow: { 'data-testid': 'next-arrow' },
+    }}
+  >
+    <div data-testid="scroll-content" style={{ width: 1000, height: 50, flexShrink: 0 }} />
+  </HorizontalScroll>
+);
+
 export const HorizontalScrollHoverTestPlayground = ({
   colorScheme,
   ...restProps

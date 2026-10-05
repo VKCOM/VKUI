@@ -13,8 +13,8 @@
  */
 
 // 1. Расширяем Playwright под свои нужды.
-import { type devices, expect, test as testBase } from '@playwright/experimental-ct-react';
-import type { PlaywrightTestConfig } from '@playwright/test';
+import { expect, test as testBase } from '@playwright/test';
+import type { devices, PlaywrightTestConfig } from '@playwright/test';
 import { screenshotWithClipToContent } from './screenshotWithClipToContent';
 import type {
   InternalVKUITestOptions,
@@ -113,7 +113,7 @@ export const test = testBase.extend<VKUITestOptions & InternalVKUITestOptions & 
 });
 
 // 2. Ре-экспортируем нужные модули, типы и константы.
-export { expect, defineConfig, devices } from '@playwright/experimental-ct-react';
+export { expect, defineConfig, devices } from '@playwright/test';
 export type { PlaywrightTestConfig, ReporterDescription } from '@playwright/test';
 export { ColorScheme } from '../../lib/colorScheme';
 export { Platform } from '../../lib/platform';

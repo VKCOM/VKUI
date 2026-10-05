@@ -1,11 +1,5 @@
 import { expect, test } from '@vkui-e2e/test';
 import { ViewWidth } from '../../lib/adaptivity';
-import { HorizontalScroll } from './HorizontalScroll';
-import {
-  HorizontalScrollHoverTestPlayground,
-  HorizontalScrollSmallTabletPlayground,
-  HorizontalScrollWithFocusVisible,
-} from './HorizontalScroll.e2e-playground';
 
 test.describe('HorizontalScroll', () => {
   test.use({
@@ -20,7 +14,7 @@ test.describe('HorizontalScroll', () => {
     expectScreenshotClippedToContent,
     componentPlaygroundProps,
   }) => {
-    await mount(<HorizontalScrollSmallTabletPlayground {...componentPlaygroundProps} />);
+    await mount('HorizontalScrollSmallTabletPlayground', componentPlaygroundProps);
     await expectScreenshotClippedToContent();
   });
 });
@@ -31,22 +25,8 @@ test.describe('HorizontalScroll scroll handling', () => {
     onlyForPlatforms: ['vkcom'],
   });
 
-  const scroll = (
-    <HorizontalScroll
-      data-testid="horizontal-scroll"
-      style={{ width: 200 }}
-      showArrows="always"
-      slotProps={{
-        prevArrow: { 'data-testid': 'prev-arrow' },
-        nextArrow: { 'data-testid': 'next-arrow' },
-      }}
-    >
-      <div data-testid="scroll-content" style={{ width: 1000, height: 50, flexShrink: 0 }} />
-    </HorizontalScroll>
-  );
-
   test('updates arrows after native scroll', async ({ mount, page }) => {
-    await mount(scroll);
+    await mount('HorizontalScrollScrollHandlingPlayground');
 
     const scroller = page.getByTestId('horizontal-scroll').locator('> div').last();
     await expect(page.getByTestId('next-arrow')).toBeVisible();
@@ -61,7 +41,7 @@ test.describe('HorizontalScroll scroll handling', () => {
   });
 
   test('batches layout recalculations from a burst of scroll events', async ({ mount, page }) => {
-    await mount(scroll);
+    await mount('HorizontalScrollScrollHandlingPlayground');
     await expect(page.getByTestId('next-arrow')).toBeVisible();
 
     const cdp = await page.context().newCDPSession(page);
@@ -112,12 +92,10 @@ test.describe('HorizontalScroll', () => {
     expectScreenshotClippedToContent,
     componentPlaygroundProps,
   }) => {
-    await mount(
-      <HorizontalScrollHoverTestPlayground
-        {...componentPlaygroundProps}
-        data-testid={DATA_TESTID}
-      />,
-    );
+    await mount('HorizontalScrollHoverTestPlayground', {
+      ...componentPlaygroundProps,
+      'data-testid': DATA_TESTID,
+    });
 
     await page.hover(CUSTOM_ROOT_SELECTOR);
 
@@ -142,7 +120,7 @@ test.describe('HorizontalScroll', () => {
     expectScreenshotClippedToContent,
     componentPlaygroundProps,
   }) => {
-    await mount(<HorizontalScrollWithFocusVisible {...componentPlaygroundProps} />);
+    await mount('HorizontalScrollWithFocusVisible', componentPlaygroundProps);
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.keyboard.press('Tab');
     await expectScreenshotClippedToContent();
