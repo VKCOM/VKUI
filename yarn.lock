@@ -14298,14 +14298,14 @@ __metadata:
   linkType: hard
 
 "piscina@npm:^4.3.1":
-  version: 4.9.3
-  resolution: "piscina@npm:4.9.3"
+  version: 4.9.4
+  resolution: "piscina@npm:4.9.4"
   dependencies:
     "@napi-rs/nice": "npm:^1.0.1"
   dependenciesMeta:
     "@napi-rs/nice":
       optional: true
-  checksum: 10/04382e77aaee664323999d36334fb4463c5af1980db1bf582c462567c5fcc4dbe47b3ecf08e6a09d2a777902432955e45bbc08479ac751b49e9d50e18355aee9
+  checksum: 10/1184a56fd2390c6368bf81891ed0b9b0aea55362aeb6b0fdbc75fdd28fdbd220e7dd5641fdd890155485276b0d674a6e58803f6002ce1f45d972c1c88bacf345
   languageName: node
   linkType: hard
 
