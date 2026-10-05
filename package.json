@@ -28,7 +28,7 @@
     "@storybook/addon-links": "10.6.1",
     "@storybook/react-vite": "10.6.1",
     "@swc/cli": "^0.8.1",
-    "@swc/core": "^1.16.2",
+    "@swc/core": "^1.16.13",
     "@testing-library/dom": "^10.4.2",
     "@testing-library/react": "^16.3.3",
     "@testing-library/user-event": "^14.6.7",
