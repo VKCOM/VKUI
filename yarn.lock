@@ -5468,7 +5468,7 @@ __metadata:
   resolution: "@vkontakte/storybook-addons@workspace:packages/storybook-addons"
   dependencies:
     "@babel/standalone": "npm:^8.0.6"
-    monaco-editor: "npm:^0.56.0"
+    monaco-editor: "npm:^0.57.0"
     react: "npm:^19.3.0"
     typescript: "npm:^6.0.3"
   peerDependencies:
@@ -8424,7 +8424,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dompurify@npm:^3.3.3, dompurify@npm:^3.4.12":
+"dompurify@npm:3.4.15":
+  version: 3.4.15
+  resolution: "dompurify@npm:3.4.15"
+  dependencies:
+    "@types/trusted-types": "npm:^2.0.7"
+  dependenciesMeta:
+    "@types/trusted-types":
+      optional: true
+  checksum: 10/159f592307578405c5217ba40ab467d4ac35f23eb20abc7f32b85698b8c1aff92f71b00c80779f891a8e463edafab05d9a4db53052d5c67005240ac4fff7fc72
+  languageName: node
+  linkType: hard
+
+"dompurify@npm:^3.3.3":
   version: 3.4.16
   resolution: "dompurify@npm:3.4.16"
   dependencies:
@@ -13127,13 +13139,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"monaco-editor@npm:^0.56.0":
-  version: 0.56.0
-  resolution: "monaco-editor@npm:0.56.0"
+"monaco-editor@npm:^0.57.0":
+  version: 0.57.0
+  resolution: "monaco-editor@npm:0.57.0"
   dependencies:
-    dompurify: "npm:3.4.8"
+    dompurify: "npm:3.4.15"
     marked: "npm:14.0.0"
-  checksum: 10/18a9d532259d758cc4a0740e4b3460a95a4b6b41eba6d29f5247b69e89a6085bd484ed0e95835d3a3155b3f2deb0108e22e94e1c0bf3e72591bb9e1609d4bde0
+  checksum: 10/190a681cb01c8b862875803ca4fedcd6a945c90c09dad3c8c8932d37b9510ccb82991cab0177b8c98be7deb74d49e4727fb6d43c2fc6ed94f712beb9fb1ccec3
   languageName: node
   linkType: hard
 
