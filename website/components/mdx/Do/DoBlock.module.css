@@ -1,0 +1,25 @@
+.block {
+  margin-block-start: var(--vkui--spacing_size_xl);
+  background-color: var(--vkui--color_background_tertiary);
+  border: 1px solid var(--vkui_docs--color_stroke_separator_secondary);
+  border-radius: var(--vkui--spacing_size_m);
+}
+
+.footer {
+  background-color: var(--vkui--color_background_secondary);
+  border-block-start: 1px solid var(--vkui_docs--color_stroke_separator_secondary);
+  border-end-start-radius: inherit;
+  border-end-end-radius: inherit;
+}
+
+.positiveFooter {
+  color: var(--vkui--color_text_positive);
+}
+
+.warningFooter {
+  color: var(--vkui--color_icon_warning);
+}
+
+.negativeFooter {
+  color: var(--vkui--color_text_negative);
+}

@@ -1,26 +1,212 @@
 .host {
-  --vkui_internal--IconsOverview_icons_color: var(--vkui--color_text_primary_invariably);
+  --vkui_internal--IconsOverview_icons_color: var(--vkui--color_icon_primary);
+
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 320px);
+  block-size: 80vh;
+  overflow: hidden;
+  border: 1px solid var(--vkui_docs--color_stroke_separator_secondary);
+  border-radius: 8px;
+}
+
+.overview {
+  display: flex;
+  flex-direction: column;
+  grid-row: 1;
+  grid-column: 1;
+  min-inline-size: 0;
+  min-block-size: 0;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  grid-row: 1;
+  grid-column: 2;
+  min-block-size: 0;
+  overflow: auto;
+  border-inline-start: 1px solid var(--vkui_docs--color_stroke_separator_secondary);
+}
+
+.flexStretch {
+  flex: 1;
+}
+
+.copyFeedbackIcon {
+  position: relative;
+  display: inline-flex;
+  inline-size: 24px;
+  block-size: 24px;
+}
+
+.copyFeedbackIconSmall {
+  inline-size: 16px;
+  block-size: 16px;
+}
+
+.copyIcon {
+  opacity: 1;
+}
+
+.doneIcon {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+}
+
+.copied .copyIcon {
+  animation: animationHideIcon 1.25s forwards;
+}
+
+.copied .doneIcon {
+  animation: animationShowIcon 1.25s 0.15s forwards;
+}
+
+@keyframes animationHideIcon {
+  0% {
+    opacity: 1;
+  }
+
+  20% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+
+  80% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes animationShowIcon {
+  0% {
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 1;
+  }
+
+  60% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+.preview {
+  display: flex;
+  flex-direction: column;
+  gap: var(--vkui--spacing_size_2xl);
+  align-items: center;
+  padding: var(--vkui--spacing_size_2xl);
+  color: var(--vkui--color_text_primary);
+  overflow-wrap: anywhere;
+}
+
+.previewIcon {
+  --vkui_internal--IconsOverview_grid_color: color-mix(
+    in srgb,
+    var(--vkui--color_separator_primary) 35%,
+    transparent
+  );
+
+  display: grid;
+  place-items: center;
+  inline-size: 192px;
+  block-size: 192px;
+  color: var(--vkui--color_icon_primary);
+  background-color: var(--vkui--color_background_secondary);
+  background-image:
+    linear-gradient(to right, var(--vkui_internal--IconsOverview_grid_color) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--vkui_internal--IconsOverview_grid_color) 1px, transparent 1px);
+  background-size: 16px 16px;
+}
+
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
+.previewIcon > :global(.vkuiIcon) {
+  /* stylelint-disable-next-line declaration-no-important */
+  inline-size: 100% !important;
+  /* stylelint-disable-next-line declaration-no-important */
+  block-size: 100% !important;
+}
+
+.header {
+  flex: 0 0 auto;
+  inline-size: 100%;
+  margin-inline-start: 0;
+}
+
+.scrollable {
+  box-sizing: border-box;
+  flex: 1;
+  inline-size: 100%;
+  min-inline-size: 0;
+  min-block-size: 0;
+  padding: var(--vkui--spacing_size_2xl);
+  contain: paint;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+@media (max-width: 720px) {
+  .host {
+    grid-template-rows: minmax(0, 1fr) auto;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .sidebar {
+    grid-row: 2;
+    grid-column: 1;
+    max-block-size: 35vh;
+    border-block-start: 1px solid var(--vkui_docs--color_stroke_separator_secondary);
+    border-inline-start: 0;
+  }
+
+  .overview {
+    grid-row: 1;
+  }
+
+  .previewIcon {
+    inline-size: 96px;
+    block-size: 96px;
+    background-size: 8px 8px;
+  }
+}
+
+.loader {
+  flex: 0 0 24px;
+  inline-size: 100%;
+  block-size: 24px;
 }
 
 .icon {
+  box-sizing: content-box;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: var(--vkui--spacing_size_m);
   color: var(--vkui_internal--IconsOverview_icons_color);
   cursor: pointer;
+  background-color: var(--vkui--color_background_secondary);
+  border: 0;
   border-radius: var(--vkui--spacing_size_m);
   transition: all 0.2s ease;
 }
 
 .icon:focus-visible {
   outline: none;
-  background-color: var(--vkui--color_background_contrast_themed);
+  background-color: var(--vkui--color_background_secondary);
   box-shadow: 0 0 0 2px var(--vkui--color_stroke_accent_themed);
 }
 
 .icon:hover {
-  background-color: var(--vkui--color_background_contrast_themed);
+  background-color: var(--vkui--color_background_secondary--hover);
   box-shadow: var(
     --vkui--elevation3,
     0 2px 24px 0 rgb(0, 0, 0, 0.08),
@@ -29,5 +215,5 @@
 }
 
 .icon:active {
-  background-color: var(--vkui--color_background_contrast_themed);
+  background-color: var(--vkui--color_background_secondary--active);
 }
