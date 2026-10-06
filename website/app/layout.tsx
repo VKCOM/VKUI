@@ -1,21 +1,18 @@
 import type * as React from 'react';
-import {
-  Footer,
-  Head,
-  Layout,
-  LogoIcon,
-  LogoIconUwu,
-  Navbar,
-  Search,
-  type SearchProps,
-} from '@vkontakte/vkui-docs-theme';
+import { Footer, Head, Layout, Search, type SearchProps } from '@vkontakte/vkui-docs-theme';
 import type { Metadata } from 'next';
 import type { PageMapItem } from 'nextra';
 import { getPageMap } from 'nextra/page-map';
 import { PlaygroundStoreProvider } from '@/providers/playgroundStoreProvider';
 import challengeCode from '../inline/challange.js?raw';
 import uwuCode from '../inline/uwu.js?raw';
-import { AlternateMdxLink, FooterLinks, RedirectHandler, Versions } from './_components';
+import {
+  AlternateMdxLink,
+  DocsNavbar,
+  FooterLinks,
+  RedirectHandler,
+  Versions,
+} from './_components';
 import '@vkontakte/vkui-docs-theme/styles.css';
 
 const inlineCodeArray = [challengeCode, uwuCode];
@@ -64,22 +61,7 @@ export const metadata: Metadata = {
 
 const versions = <Versions />;
 
-const fakeNavbarItem = {
-  title: 'Компоненты',
-  href: '/overview/about',
-};
-
-const navbar = (
-  <Navbar
-    logo={
-      <>
-        <LogoIcon />
-        <LogoIconUwu />
-      </>
-    }
-    fakeNavbarItem={fakeNavbarItem}
-  />
-);
+const navbar = <DocsNavbar />;
 
 const footer = (
   <Footer>

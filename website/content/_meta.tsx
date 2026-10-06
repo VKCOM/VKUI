@@ -29,9 +29,17 @@ const meta: MetaRecord = {
     title: 'Миграции',
   },
   icons: {
-    type: 'page',
+    type: 'doc',
+    display: 'hidden',
     title: 'Иконки',
-    href: 'https://vkcom.github.io/icons/',
+    theme: {
+      breadcrumb: false,
+      toc: false,
+      sidebar: false,
+      pagination: false,
+      layout: 'full',
+      copyPage: false,
+    },
   },
   tokens: {
     type: 'page',

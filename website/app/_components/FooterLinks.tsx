@@ -28,7 +28,7 @@ export function FooterLinks() {
     <>
       <LogoIcon width={44} height={23} viewBox="0 0 73 36" />
       <LogoIconUwu />•<FooterLink href="/blog">Блог</FooterLink>•
-      <FooterLink href="https://vkcom.github.io/icons/">Иконки</FooterLink>•
+      <FooterLink href="/icons/">Иконки</FooterLink>•
       <FooterLink href="https://vkcom.github.io/vkui-tokens/">Токены</FooterLink>•
       <UwuModeSwitcher />
     </>

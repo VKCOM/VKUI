@@ -5,6 +5,11 @@
 @import '../src/styles/adaptivity.module.css';
 @import '../src/styles/common.css';
 
+/* stylelint-disable-next-line selector-max-id, selector-pseudo-class-disallowed-list */
+#storybook-docs > .sbdocs {
+  background: inherit;
+}
+
 /* stylelint-disable-next-line selector-max-id */
 #root {
   block-size: 100%;

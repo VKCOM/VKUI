@@ -24,9 +24,9 @@ export const ICON_SIZES: IconSize[] = [
 const ICON_REGEX = /Icon(\d+)/;
 const sizeToIconsMap: Map<IconSize, Map<IconName, React.ReactNode>> = new Map();
 
-const getIconSize = (iconName: IconName) => {
+export const getIconSize = (iconName: IconName) => {
   const match = iconName.match(ICON_REGEX);
-  return match?.[1] as IconSize | null;
+  return match?.[1] as IconSize | undefined;
 };
 
 const fillIconsMap = () => {
@@ -53,12 +53,14 @@ const fillIconsMap = () => {
 
 fillIconsMap();
 
+export type IconData = {
+  name: IconName;
+  node: ReactNode;
+};
+
 export type ConfigData = {
   size: IconSize;
-  icons: Array<{
-    name: IconName;
-    node: ReactNode;
-  }>;
+  icons: IconData[];
 };
 
 export const CONFIG: ConfigData[] = ICON_SIZES.map((size) => {
