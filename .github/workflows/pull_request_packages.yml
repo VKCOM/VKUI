@@ -108,6 +108,8 @@ jobs:
     name: Call reusable workflow
     permissions:
       contents: read
+      id-token: write
+      code-quality: write
     uses: ./.github/workflows/reusable_workflow_test_e2e.yml
 
   test_e2e_prepare_and_upload_report:
