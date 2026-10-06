@@ -9,7 +9,9 @@ import { warnOnce } from '../../lib/warnOnce';
 import type { HasComponent, HasRender, HTMLAttributesWithRootRef } from '../../types';
 import { AppRootContext } from '../AppRoot/AppRootContext';
 import { RootComponent } from '../RootComponent/RootComponent';
+import stylesGlobal from './Group.global.module.css';
 import styles from './Group.module.css';
+import stylesPanelHeaderGlobal from '../PanelHeader/PanelHeader.global.module.css';
 
 function getViewWidthClassName(
   viewWidth: ViewWidthType | 'none',
@@ -22,7 +24,7 @@ function getViewWidthClassName(
       : styles.viewWidthSmallTabletMinus;
   }
   if (viewWidth === 'none') {
-    return classNames(styles.viewWidthNone, 'vkuiInternalGroup--viewWidth-none');
+    return classNames(styles.viewWidthNone, stylesGlobal.vkuiInternalGroupViewWidthNone);
   }
   return viewWidth >= ViewWidth.SMALL_TABLET
     ? styles.viewWidthSmallTabletPlus
@@ -30,9 +32,9 @@ function getViewWidthClassName(
 }
 
 const stylesMode = {
-  none: classNames(styles.modeNone, 'vkuiInternalGroup--mode-none'),
-  plain: classNames(styles.modePlain, 'vkuiInternalGroup--mode-plain'),
-  card: classNames(styles.modeCard, 'vkuiInternalGroup--mode-card'),
+  none: classNames(styles.modeNone, stylesGlobal.vkuiInternalGroupModeNone),
+  plain: classNames(styles.modePlain, stylesGlobal.vkuiInternalGroupModePlain),
+  card: classNames(styles.modeCard, stylesGlobal.vkuiInternalGroupModeCard),
 };
 
 const stylesPadding = {
@@ -163,7 +165,10 @@ export const GroupContainer = ({
         {...restProps}
         tabIndex={tabIndex}
         baseClassName={classNames(
-          'vkuiInternalGroup',
+          stylesGlobal.vkuiInternalGroup,
+          stylesPanelHeaderGlobal.groupHost,
+          noBlockStartRounding === undefined &&
+            stylesPanelHeaderGlobal.groupNoBlockStartRoundingUndefined,
           styles.host,
           getViewWidthClassName(viewWidth, legacySizeX),
           mode === 'plain' && isInsideModal && styles.modePlainInsideModal,

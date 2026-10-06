@@ -21,6 +21,7 @@ import { RootComponent } from '../RootComponent/RootComponent';
 import { Tappable } from '../Tappable/Tappable';
 import { Paragraph } from '../Typography/Paragraph/Paragraph';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
+import stylesGlobal from './CalendarHeader.global.module.css';
 import styles from './CalendarHeader.module.css';
 
 const formatterDateTimeFormatOptions = {
@@ -251,7 +252,7 @@ export const CalendarHeader = ({
       )}
       {disablePickers ? (
         <Paragraph
-          className={classNames(styles.pickers, 'vkuiInternalCalendarHeader__pickers')}
+          className={classNames(styles.pickers, stylesGlobal.vkuiInternalCalendarHeaderPickers)}
           weight="2"
         >
           <span className={styles.month}>
@@ -262,9 +263,11 @@ export const CalendarHeader = ({
         </Paragraph>
       ) : (
         <AdaptivityProvider density="compact">
-          <div className={classNames(styles.pickers, 'vkuiInternalCalendarHeader__pickers')}>
+          <div
+            className={classNames(styles.pickers, stylesGlobal.vkuiInternalCalendarHeaderPickers)}
+          >
             <CustomSelect
-              className={classNames(styles.picker, 'vkuiInternalCalendarHeader__picker')}
+              className={classNames(styles.picker, stylesGlobal.vkuiInternalCalendarHeaderPicker)}
               value={currentMonth}
               options={months}
               dropdownOffsetDistance={4}
@@ -285,7 +288,7 @@ export const CalendarHeader = ({
               }}
             />
             <CustomSelect
-              className={classNames(styles.picker, 'vkuiInternalCalendarHeader__picker')}
+              className={classNames(styles.picker, stylesGlobal.vkuiInternalCalendarHeaderPicker)}
               value={currentYear}
               options={years}
               dropdownOffsetDistance={4}

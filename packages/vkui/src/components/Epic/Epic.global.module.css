@@ -1,0 +1,29 @@
+.vkuiInternalEpicHasTabbar .fixedLayoutVerticalBottom {
+  padding-block-end: calc(
+    var(--vkui_internal--tabbar_height) +
+    var(--vkui_internal--safe_area_inset_bottom)
+  );
+}
+
+.vkuiInternalEpicHasTabbar .snackbarHost {
+  --vkui_internal--snackbar_safe_area_inset_bottom: calc(
+    var(--vkui_internal--tabbar_height) +
+    var(--vkui_internal--safe_area_inset_bottom)
+  );
+}
+
+.vkuiInternalEpicHasTabbar .snackbarsContainerHost {
+  --vkui_internal--snackbars_container_offset_y_end: var(--vkui_internal--tabbar_height);
+}
+
+.vkuiInternalEpicHasTabbar .panelHost .panelIn {
+  padding-block-end: var(--vkui_internal--tabbar_height);
+  padding-block-end: calc(
+    var(--vkui_internal--safe_area_inset_bottom) +
+    var(--vkui_internal--tabbar_height)
+  );
+}
+
+.panelIn {
+  /* Panel target marker. */
+}

@@ -16,6 +16,7 @@ import { SelectTypography } from '../../SelectTypography/SelectTypography';
 import { Text } from '../../Typography/Text/Text';
 import { VisuallyHidden } from '../../VisuallyHidden/VisuallyHidden';
 import styles from './CustomSelectInput.module.css';
+import calendarHeaderStylesGlobal from '../../CalendarHeader/CalendarHeader.global.module.css';
 
 const densityClassNames = {
   none: styles.densityNone,
@@ -171,7 +172,11 @@ export const CustomSelectInput = ({
     >
       <div className={styles.inputGroup}>
         <div
-          className={classNames(styles.container, className)}
+          className={classNames(
+            styles.container,
+            className,
+            calendarHeaderStylesGlobal.calendarSelectContainer,
+          )}
           tabIndex={-1}
           aria-hidden
           data-testid={labelTextTestId}

@@ -11,6 +11,7 @@ import type { HasComponent, HasRender, HasRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Tappable } from '../Tappable/Tappable';
 import { Footnote } from '../Typography/Footnote/Footnote';
+import stylesGlobal from './TabbarItem.global.module.css';
 import styles from './TabbarItem.module.css';
 
 export interface TabbarItemProps
@@ -77,6 +78,7 @@ export const TabbarItem = ({
       href={href}
       baseClassName={classNames(
         styles.host,
+        stylesGlobal.tabbarItemHost,
         platform === 'ios' && styles.ios,
         platform === 'android' && styles.android,
         selected && styles.selected,
@@ -93,15 +95,17 @@ export const TabbarItem = ({
         onClick={noop}
         tabIndex={-1}
       />
-      <div className={styles.in}>
+      <div className={classNames(styles.in, stylesGlobal.tabbarItemIn)}>
         <div className={styles.icon}>
           {children}
-          <div className="vkuiInternalTabbarItem__label">
-            {hasReactNode(indicator) && indicator}
-          </div>
+          <div className={stylesGlobal.tabbarItemLabel}>{hasReactNode(indicator) && indicator}</div>
         </div>
         {label && (
-          <Footnote Component="div" className={styles.label} weight="2">
+          <Footnote
+            Component="div"
+            className={classNames(styles.label, stylesGlobal.tabbarItemTextLabel)}
+            weight="2"
+          >
             {label}
           </Footnote>
         )}

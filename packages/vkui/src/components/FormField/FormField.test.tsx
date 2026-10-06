@@ -1,13 +1,34 @@
-import { render, screen } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 import { Icon20User, Icon24WalletOutline } from '@vkontakte/icons';
 import { describe, expect, it } from 'vitest';
 import { baselineComponent } from '../../testing/utils';
 import { IconButton } from '../IconButton/IconButton';
 import { FormField } from './FormField';
 import styles from './FormField.module.css';
+import stylesFormItemGlobal from '../FormItem/FormItem.global.module.css';
 
 describe('FormField', () => {
   baselineComponent(FormField);
+
+  it('should apply the FormItem focus marker only while a child is focused', () => {
+    render(
+      <>
+        <FormField data-testid="field" mode="plain">
+          <input aria-label="Field" />
+        </FormField>
+        <button>Outside</button>
+      </>,
+    );
+
+    const field = screen.getByTestId('field');
+    expect(field).not.toHaveClass(stylesFormItemGlobal.formFieldFocusVisible);
+
+    act(() => screen.getByRole('textbox').focus());
+    expect(field).toHaveClass(stylesFormItemGlobal.formFieldFocusVisible);
+
+    act(() => screen.getByRole('button').focus());
+    expect(field).not.toHaveClass(stylesFormItemGlobal.formFieldFocusVisible);
+  });
 
   it('should have maxHeight style', () => {
     render(

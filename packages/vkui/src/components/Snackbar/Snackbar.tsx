@@ -29,6 +29,7 @@ import {
   shouldBeClosedByShiftData,
 } from './utils';
 import styles from './Snackbar.module.css';
+import stylesEpicGlobal from '../Epic/Epic.global.module.css';
 
 export type { BasicProps as SnackbarBasicProps };
 
@@ -345,6 +346,7 @@ export const Snackbar: React.FC<SnackbarProps> & { Basic: typeof Basic } = ({
       role="presentation"
       baseClassName={classNames(
         styles.host,
+        stylesEpicGlobal.snackbarHost,
         !isInsideContainer && styles.fixed,
         platform === 'ios' && styles.ios,
         touched && styles.touched,

@@ -11,13 +11,20 @@ import { warnOnce } from '../../lib/warnOnce';
 import type { HasComponent, HTMLAttributesWithRootRef } from '../../types';
 import { OnboardingTooltipContainer } from '../OnboardingTooltip/OnboardingTooltipContainer';
 import { SplitColContext } from '../SplitCol/SplitColContext';
+import stylesGlobal from './FixedLayout.global.module.css';
 import styles from './FixedLayout.module.css';
+import stylesEpicGlobal from '../Epic/Epic.global.module.css';
+import stylesPanelHeaderGlobal from '../PanelHeader/PanelHeader.global.module.css';
 
 const warn = warnOnce('FixedLayout');
 
 const stylesVertical = {
-  top: styles.verticalTop,
-  bottom: classNames(styles.verticalBottom, 'vkuiInternalFixedLayout--vertical-bottom'),
+  top: classNames(styles.verticalTop, stylesPanelHeaderGlobal.fixedLayoutVerticalTop),
+  bottom: classNames(
+    styles.verticalBottom,
+    stylesGlobal.vkuiInternalFixedLayoutVerticalBottom,
+    stylesEpicGlobal.fixedLayoutVerticalBottom,
+  ),
 };
 
 export interface FixedLayoutProps extends HTMLAttributesWithRootRef<HTMLDivElement>, HasComponent {
@@ -109,7 +116,7 @@ export const FixedLayout = ({
       ref={handleRootRef}
       className={classNames(
         styles.host,
-        platform === 'ios' && 'vkuiInternalFixedLayout--ios',
+        platform === 'ios' && stylesGlobal.vkuiInternalFixedLayoutIos,
         filled && styles.filled,
         vertical && stylesVertical[vertical],
         className,

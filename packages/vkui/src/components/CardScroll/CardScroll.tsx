@@ -6,12 +6,15 @@ import { useConfigDirection } from '../../hooks/useConfigDirection';
 import type { HasComponent, HasRender, HTMLAttributesWithRootRef } from '../../types';
 import { HorizontalScroll, type HorizontalScrollProps } from '../HorizontalScroll/HorizontalScroll';
 import { RootComponent } from '../RootComponent/RootComponent';
+import stylesGlobal from './CardScroll.global.module.css';
 import styles from './CardScroll.module.css';
+import stylesGroupGlobal from '../Group/Group.global.module.css';
+import stylesSplitColGlobal from '../SplitCol/SplitCol.global.module.css';
 
 const stylesSize = {
-  s: 'vkuiInternalCardScroll--size-s',
-  m: 'vkuiInternalCardScroll--size-m',
-  l: 'vkuiInternalCardScroll--size-l',
+  s: stylesGlobal.vkuiInternalCardScrollSizeS,
+  m: stylesGlobal.vkuiInternalCardScrollSizeM,
+  l: stylesGlobal.vkuiInternalCardScrollSizeL,
 };
 
 export interface CardScrollProps
@@ -127,7 +130,11 @@ export const CardScroll = ({
       {...restProps}
       baseClassName={classNames(
         styles.host,
-        'vkuiInternalCardScroll',
+        size === 'l' && stylesSplitColGlobal.cardScrollSizeL,
+        padding && stylesSplitColGlobal.cardScrollHostWithPaddings,
+        size === 'l' && stylesGroupGlobal.cardScrollSizeL,
+        padding && stylesGroupGlobal.cardScrollHostWithPaddings,
+        stylesGlobal.vkuiInternalCardScroll,
         size !== false && stylesSize[size],
         padding && styles.withPaddings,
       )}

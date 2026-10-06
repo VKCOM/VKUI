@@ -28,6 +28,7 @@ import { ImageBaseContext } from './context';
 import type { ImageBaseContextProps, ImageBaseExpectedIconProps, ImageBaseSize } from './types';
 import { validateFallbackIcon, validateSize } from './validators';
 import styles from './ImageBase.module.css';
+import stylesPanelHeaderGlobal from '../PanelHeader/PanelHeader.global.module.css';
 
 export type {
   ImageBaseSize,
@@ -353,6 +354,7 @@ export const ImageBase: React.FC<ImageBaseProps> & {
         baseStyle={{ width, height }}
         baseClassName={classNames(
           styles.host,
+          stylesPanelHeaderGlobal.imageBaseHost,
           hasSrc && loaded && styles.loaded,
           withTransparentBackground && styles.transparentBackground,
         )}

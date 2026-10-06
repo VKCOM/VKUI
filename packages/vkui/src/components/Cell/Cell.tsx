@@ -12,6 +12,7 @@ import { CellCheckbox, type CellCheckboxProps } from './CellCheckbox/CellCheckbo
 import { CellDragger } from './CellDragger/CellDragger';
 import { DEFAULT_DRAGGABLE_LABEL } from './constants';
 import styles from './Cell.module.css';
+import stylesFormItemGlobal from '../FormItem/FormItem.global.module.css';
 
 export interface CellProps
   extends Omit<SimpleCellProps, 'getRootRef'>,
@@ -131,9 +132,12 @@ export const Cell: React.FC<CellProps> & {
 
   const cellClasses = classNames(
     styles.host,
+    stylesFormItemGlobal.formItemChildHost,
     dragging && styles.dragging,
     platform === 'ios' && styles.ios,
     removable && styles.removable,
+    removable && stylesFormItemGlobal.cellRemovable,
+    platform === 'ios' && stylesFormItemGlobal.cellIos,
   );
 
   const simpleCellProps: SimpleCellProps = {

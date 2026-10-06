@@ -8,6 +8,9 @@ import { useFocusVisibleClassName } from '../../hooks/useFocusVisibleClassName';
 import { useFocusWithin } from '../../hooks/useFocusWithin';
 import type { HasComponent, HasRootRef } from '../../types';
 import styles from './FormField.module.css';
+import calendarHeaderStylesGlobal from '../CalendarHeader/CalendarHeader.global.module.css';
+import stylesFormItemGlobal from '../FormItem/FormItem.global.module.css';
+import stylesIconButtonGlobal from '../IconButton/IconButton.global.module.css';
 
 const densityClassNames = {
   none: styles.densityNone,
@@ -145,12 +148,15 @@ export const FormField = ({
       onMouseLeave={handleMouseLeave}
       className={classNames(
         styles.host,
+        stylesFormItemGlobal.formFieldHost,
         mode === 'default' && styles.modeDefault,
+        mode === 'default' && stylesFormItemGlobal.formFieldModeDefault,
         status !== 'default' && stylesStatus[status],
         density !== 'regular' && densityClassNames[density],
         disabled && styles.disabled,
         !disabled && hover && styles.hover,
         focusVisibleClassNames,
+        focusWithin && stylesFormItemGlobal.formFieldFocusVisible,
         className,
       )}
     >
@@ -158,9 +164,21 @@ export const FormField = ({
         {before && renderIcon(before, beforeAlign, styles.before)}
         <div className={styles.content}>{children}</div>
         {after &&
-          renderIcon(after, afterAlign, classNames(styles.after, 'vkuiInternalFormField__after'))}
+          renderIcon(
+            after,
+            afterAlign,
+            classNames(
+              styles.after,
+              stylesFormItemGlobal.formFieldAfter,
+              stylesIconButtonGlobal.iconButtonFormFieldAfter,
+              calendarHeaderStylesGlobal.calendarFormFieldAfter,
+            ),
+          )}
       </div>
-      <span aria-hidden className={styles.border} />
+      <span
+        aria-hidden
+        className={classNames(styles.border, stylesFormItemGlobal.formFieldBorder)}
+      />
     </Component>
   );
 };

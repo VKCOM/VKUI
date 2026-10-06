@@ -12,6 +12,8 @@ import { Subhead } from '../Typography/Subhead/Subhead';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import { Chevron } from './Chevron/Chevron';
 import styles from './SimpleCell.module.css';
+import stylesFormItemGlobal from '../FormItem/FormItem.global.module.css';
+import stylesIconButtonGlobal from '../IconButton/IconButton.global.module.css';
 
 const densityClassNames = {
   none: styles.densityNone,
@@ -114,6 +116,7 @@ export const SimpleCell = ({
       {...restProps}
       baseClassName={classNames(
         styles.host,
+        stylesFormItemGlobal.formItemChildHost,
         restProps.disabled && styles.disabled,
         density !== 'regular' && densityClassNames[density],
         multiline && styles.mult,
@@ -160,7 +163,7 @@ export const SimpleCell = ({
         </Headline>
       )}
       {hasAfter && (
-        <div className={classNames(styles.after, 'vkuiInternalSimpleCell__after')}>
+        <div className={classNames(styles.after, stylesIconButtonGlobal.iconButtonSimpleCellAfter)}>
           {after}
           {hasChevron && <Chevron size={chevronSize} className={styles.chevronIcon} />}
         </div>

@@ -44,18 +44,6 @@
   padding-inline-end: 44px;
 }
 
-/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-.removable :global(.vkuiInternalRemovable__content) {
-  padding-inline-start: 0;
-}
-
-/* stylelint-disable-next-line selector-pseudo-class-disallowed-list -- для того чтобы активная область Cell распространялась и на область removable */
-.removable :global(.vkuiInternalRemovable__action) {
-  position: absolute;
-  inset-inline-end: 0;
-  padding-inline-start: 0;
-}
-
 /**
  * iOS
  */
@@ -76,25 +64,4 @@
   /* размер removable icon + icon margins*/
   padding-inline: 48px var(--vkui--size_base_padding_horizontal--regular);
   /* правый паддинг от removable который мы обнулили ниже */
-}
-
-/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-.ios.removable :global(.vkuiInternalRemovable__action) {
-  inset-inline: 0 auto;
-  z-index: 1;
-}
-
-/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-.ios.removable :global(.vkuiInternalRemovable__content) {
-  padding-inline-end: 0;
-}
-
-/**
- * CMP:
- * FormItem
- */
-/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalFormItem) > .host {
-  margin-block: 0;
-  margin-inline: calc(-1 * var(--vkui--size_base_padding_horizontal--regular));
 }

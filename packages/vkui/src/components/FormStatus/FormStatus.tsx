@@ -2,6 +2,7 @@ import type * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { Banner } from '../Banner/Banner';
+import stylesGlobal from './FormStatus.global.module.css';
 import styles from './FormStatus.module.css';
 
 export interface FormStatusProps extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'title'> {
@@ -33,8 +34,9 @@ export const FormStatus = ({
       role={role}
       subtitle={children}
       className={classNames(
-        'vkuiInternalFormStatus',
-        mode === 'error' && classNames(styles.modeError, 'vkuiInternalFormStatus--mode-error'),
+        stylesGlobal.vkuiInternalFormStatus,
+        mode === 'error' &&
+          classNames(styles.modeError, stylesGlobal.vkuiInternalFormStatusModeError),
         className,
       )}
     />

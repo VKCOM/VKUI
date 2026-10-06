@@ -13,6 +13,7 @@ import { Headline } from '../Typography/Headline/Headline';
 import { Subhead } from '../Typography/Subhead/Subhead';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import styles from './TabsItem.module.css';
+import stylesTabsGlobal from '../Tabs/Tabs.global.module.css';
 
 const densityClassNames = {
   none: styles.densityNone,
@@ -210,6 +211,7 @@ export const TabsItem = ({
       tabIndex={tabIndex}
       baseClassName={classNames(
         styles.host,
+        stylesTabsGlobal.tabsItemHost,
         mode && stylesMode[mode],
         selected && styles.selected,
         density !== 'regular' && densityClassNames[density],
@@ -232,7 +234,11 @@ export const TabsItem = ({
       {statusComponent}
       {after && <div className={styles.after}>{after}</div>}
       {mode === 'default' && (
-        <div className={styles.underline} aria-hidden data-selected={selected} />
+        <div
+          className={classNames(styles.underline, stylesTabsGlobal.tabsItemUnderline)}
+          aria-hidden
+          data-selected={selected}
+        />
       )}
     </Tappable>
   );

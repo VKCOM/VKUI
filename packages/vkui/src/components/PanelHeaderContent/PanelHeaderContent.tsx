@@ -10,6 +10,7 @@ import { Tappable } from '../Tappable/Tappable';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { Text } from '../Typography/Text/Text';
 import styles from './PanelHeaderContent.module.css';
+import stylesPanelHeaderGlobal from '../PanelHeader/PanelHeader.global.module.css';
 
 const platformClassNames = {
   ios: styles.ios,
@@ -97,6 +98,7 @@ export const PanelHeaderContent = ({
         platformClassNames.hasOwnProperty(platform)
           ? platformClassNames[platform]
           : platformClassNames.android,
+        platform === 'vkcom' && stylesPanelHeaderGlobal.panelHeaderContentVkcom,
         density !== 'regular' && densityClassNames[density],
       )}
     >

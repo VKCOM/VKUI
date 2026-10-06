@@ -8,24 +8,25 @@ import { COMMON_WARNINGS, warnOnce } from '../../lib/warnOnce';
 import { Tappable, type TappableOmitProps } from '../Tappable/Tappable';
 import { Text } from '../Typography/Text/Text';
 import { Title } from '../Typography/Title/Title';
+import stylesGlobal from './PanelHeaderButton.global.module.css';
 import styles from './PanelHeaderButton.module.css';
 
 const platformClassNames = {
-  ios: styles.ios,
+  ios: classNames(styles.ios, stylesGlobal.panelHeaderButtonIos),
   android: styles.android,
-  vkcom: styles.vkcom,
+  vkcom: classNames(styles.vkcom, stylesGlobal.panelHeaderButtonVkcom),
 };
 
 const defaultHoverMode = {
   ios: 'background',
   android: 'background',
-  vkcom: styles.hover,
+  vkcom: stylesGlobal.panelHeaderButtonHover,
 };
 
 const defaultActiveMode = {
   ios: 'opacity',
   android: 'background',
-  vkcom: styles.active,
+  vkcom: stylesGlobal.panelHeaderButtonActive,
 };
 
 export interface PanelHeaderButtonProps extends Omit<TappableOmitProps, 'label'> {
@@ -104,6 +105,7 @@ export const PanelHeaderButton = ({
       {...restProps}
       baseClassName={classNames(
         styles.host,
+        stylesGlobal.panelHeaderButtonHost,
         platformClassNames.hasOwnProperty(platform)
           ? platformClassNames[platform]
           : platformClassNames.android,

@@ -8,10 +8,12 @@ import type { HTMLAttributesWithRootRef } from '../../types';
 import { Removable, type RemovableProps } from '../Removable/Removable';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './FormLayoutGroup.module.css';
+import stylesGlobal from '../FormItem/FormItem.global.module.css';
+import stylesIconButtonGlobal from '../IconButton/IconButton.global.module.css';
 
 const densityClassNames = {
-  none: classNames(styles.densityNone, 'vkuiInternalFormLayoutGroup--density-none'),
-  compact: classNames(styles.densityCompact, 'vkuiInternalFormLayoutGroup--density-compact'),
+  none: stylesGlobal.formLayoutGroupDensityNone,
+  compact: stylesGlobal.formLayoutGroupDensityCompact,
 };
 
 export interface FormLayoutGroupProps
@@ -67,10 +69,11 @@ export const FormLayoutGroup = ({
         mode === 'horizontal' && !noPadding && styles.withPadding,
         density !== 'regular' && densityClassNames[density],
         mode === 'horizontal' &&
-          classNames(styles.modeHorizontal, 'vkuiInternalFormLayoutGroup--mode-horizontal'),
-        mode === 'vertical' && 'vkuiInternalFormLayoutGroup--mode-vertical',
-        isRemovable && classNames(styles.withRemovable, 'vkuiInternalFormLayoutGroup--removable'),
-        segmented && classNames(styles.segmented, 'vkuiInternalFormLayoutGroup--segmented'),
+          classNames(styles.modeHorizontal, stylesGlobal.formLayoutGroupModeHorizontal),
+        mode === 'vertical' && stylesGlobal.formLayoutGroupModeVertical,
+        isRemovable && classNames(styles.withRemovable, stylesGlobal.formLayoutGroupRemovable),
+        isRemovable && stylesIconButtonGlobal.iconButtonFormLayoutGroupRemovable,
+        segmented && classNames(styles.segmented, stylesGlobal.formLayoutGroupSegmented),
       )}
       disabled={disabled}
       {...restProps}
@@ -94,7 +97,10 @@ export const FormLayoutGroup = ({
       ) : (
         <React.Fragment>
           {children}
-          <span className={styles.offset} aria-hidden />
+          <span
+            className={classNames(styles.offset, stylesGlobal.formLayoutGroupOffset)}
+            aria-hidden
+          />
         </React.Fragment>
       )}
     </RootComponent>

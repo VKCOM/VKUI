@@ -13,6 +13,7 @@ import { Subhead } from '../Typography/Subhead/Subhead';
 import { Text } from '../Typography/Text/Text';
 import { Title } from '../Typography/Title/Title';
 import styles from './Banner.module.css';
+import stylesFormStatusGlobal from '../FormStatus/FormStatus.global.module.css';
 
 export interface BannerProps extends Omit<TappableOmitProps, 'title' | 'size'> {
   /**
@@ -132,7 +133,10 @@ export const Banner = ({
           </HeaderTypography>
         )}
         {hasReactNode(subtitle) && (
-          <SubheadTypography Component="div" className={styles.subtitle}>
+          <SubheadTypography
+            Component="div"
+            className={classNames(styles.subtitle, stylesFormStatusGlobal.formStatusSubtitle)}
+          >
             {subtitle}
           </SubheadTypography>
         )}
@@ -180,6 +184,7 @@ export const Banner = ({
       activeMode={platform === 'ios' ? 'opacity' : 'background'}
       baseClassName={classNames(
         styles.host,
+        stylesFormStatusGlobal.formStatusBanner,
         platform === 'ios' && styles.ios,
         mode === 'image' && styles.modeImage,
         size === 'm' && styles.sizeM,

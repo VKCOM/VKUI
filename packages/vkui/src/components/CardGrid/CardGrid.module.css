@@ -26,30 +26,3 @@
 .host + .host {
   margin-block-start: calc(var(--vkui--size_cardgrid_padding_vertical--regular) * 2);
 }
-
-/**
- * CMP:
- * Group
- */
-
-/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalGroup--mode-card) .host {
-  padding-inline: var(--vkui--size_base_padding_horizontal--regular);
-}
-
-@media (--viewWidth-smallTabletPlus) {
-  /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-  :global(.vkuiInternalGroup--mode-none) .host {
-    padding-inline: 8px;
-  }
-}
-
-/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalGroup) .host:first-child {
-  margin-block-start: var(--vkui--size_cardgrid_padding_vertical--regular);
-}
-
-/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalGroup) .host:last-child {
-  margin-block-end: var(--vkui--size_cardgrid_padding_vertical--regular);
-}

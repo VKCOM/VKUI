@@ -89,14 +89,6 @@
 }
 
 /**
- * VKCOM
- */
-/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalPanelHeader--no-before) .vkcom {
-  padding-inline-start: 16px;
-}
-
-/**
  * Common
  */
 .densityCompact:not(.vkcom) .childrenIn {
