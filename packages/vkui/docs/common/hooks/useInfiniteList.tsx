@@ -1,10 +1,11 @@
-import { type ReactNode, type RefObject, useEffect, useMemo, useRef, useState } from 'react';
-import { Spinner } from '../../../src';
+import { type RefObject, useEffect, useMemo, useRef, useState } from 'react';
 import { useResizeObserver } from '../../../src/hooks/useResizeObserver';
+import { useStableCallback } from '../../../src/hooks/useStableCallback';
 import { useDOM } from '../../../src/lib/dom';
+import { useIsomorphicLayoutEffect } from '../../../src/lib/useIsomorphicLayoutEffect';
 
-const SPINNER_HEIGHT = 24;
-const WINDOW_PADDING_BOTTOM = 64;
+const LOAD_MORE_TRIGGER_HEIGHT = 24;
+const VIEWPORT_PADDING_BOTTOM = 64;
 
 type SectionBounds = {
   height: number;
@@ -22,61 +23,75 @@ type RemappedSection<Section extends { id: string }> = Section & {
 };
 
 type UseInfiniteListResult<Section extends { id: string }> = {
-  showMoreElement: ReactNode;
+  hasMoreSections: boolean;
   remappedSections: Array<RemappedSection<Section>>;
+};
+
+const getInitialData = <Section extends { id: string }>(
+  sections: Section[],
+  initialSectionsCount: number,
+) => {
+  const initialSections = sections.slice(0, initialSectionsCount);
+  return {
+    mountedSections: initialSections.map(({ id }) => id),
+    sectionsVisibilityData: Object.fromEntries(
+      initialSections.map((section) => [section.id, section]),
+    ),
+  };
 };
 
 export const useInfiniteList = <Section extends { id: string }>(
   sections: Section[],
   sectionsRefs: Record<string, RefObject<HTMLDivElement | null>>,
-  containerRef: RefObject<HTMLElement | null>,
+  contentRef: RefObject<HTMLElement | null>,
+  scrollContainerRef?: RefObject<HTMLElement | null>,
+  initialSectionsCount = 1,
 ): UseInfiniteListResult<Section> => {
   const { window, document } = useDOM();
+  const getScrollContainer = () => scrollContainerRef?.current ?? document?.documentElement;
 
-  const [data, setData] = useState<{
-    mountedSections: string[];
-    sectionsVisibilityData: Record<string, RemappedSection<Section>>;
-  }>({
-    mountedSections: [],
-    sectionsVisibilityData: {},
-  });
+  const [data, setData] = useState(() => getInitialData(sections, initialSectionsCount));
 
   const sectionsDataRef = useRef<Record<string, SectionData<Section>>>({});
 
-  const recalculateSectionsBounds = () => {
+  const recalculateSectionsBounds = useStableCallback(() => {
+    const scrollContainer = getScrollContainer();
+    if (!scrollContainer) {
+      return;
+    }
+    const containerTop = scrollContainerRef ? scrollContainer.getBoundingClientRect().top : 0;
+    const sectionsById = new Map(sections.map((section) => [section.id, section]));
     const newSectionsData: Record<string, SectionData<Section>> = {};
     Object.entries(sectionsRefs).forEach(([sectionId, sectionRef]) => {
       if (sectionRef && sectionRef.current) {
-        const sectionData = sections.find((section) => section.id === sectionId);
+        const sectionData = sectionsById.get(sectionId);
         if (sectionData) {
+          const sectionBounds = sectionRef.current.getBoundingClientRect();
           newSectionsData[sectionId] = {
             data: sectionData,
             bounds: {
-              height: sectionRef.current.offsetHeight,
-              offsetTop: sectionRef.current.offsetTop,
+              height: sectionBounds.height,
+              offsetTop: sectionBounds.top - containerTop + scrollContainer.scrollTop,
             },
           };
         }
       }
     });
     sectionsDataRef.current = newSectionsData;
-  };
+  });
 
   const showMoreVisible = () => {
-    if (!window || !document) {
+    const scrollContainer = getScrollContainer();
+    if (!scrollContainer) {
       return;
     }
-    const pageYOffset = window.pageYOffset;
 
     setData((oldData) => {
       const { mountedSections, sectionsVisibilityData } = oldData;
       if (mountedSections.length < sections.length) {
-        const maxScrollTop =
-          document.documentElement.scrollHeight -
-          window.innerHeight -
-          SPINNER_HEIGHT -
-          WINDOW_PADDING_BOTTOM;
-        const isLoaderVisible = pageYOffset >= maxScrollTop;
+        const isLoaderVisible =
+          scrollContainer.scrollTop + scrollContainer.clientHeight >=
+          scrollContainer.scrollHeight - LOAD_MORE_TRIGGER_HEIGHT - VIEWPORT_PADDING_BOTTOM;
         if (isLoaderVisible) {
           const section = sections[mountedSections.length];
 
@@ -93,27 +108,27 @@ export const useInfiniteList = <Section extends { id: string }>(
     });
   };
 
-  const recalculateVisibleSections = () => {
+  const recalculateVisibleSections = useStableCallback(() => {
     const sectionsData = sectionsDataRef.current;
 
-    if (!window || !document) {
+    const scrollContainer = getScrollContainer();
+    if (!scrollContainer) {
       return;
     }
-    const pageYOffset = window.pageYOffset;
-
     setData((oldData) => {
-      const { mountedSections } = oldData;
+      const { mountedSections, sectionsVisibilityData } = oldData;
       const newSectionsVisibilityData: Record<string, RemappedSection<Section>> = {};
 
       mountedSections.forEach((sectionId) => {
         const sectionData = sectionsData[sectionId];
         if (!sectionData) {
+          newSectionsVisibilityData[sectionId] = sectionsVisibilityData[sectionId];
           return;
         }
         const { bounds, data } = sectionData;
         if (
-          bounds.offsetTop + bounds.height <= pageYOffset ||
-          bounds.offsetTop >= pageYOffset + window.innerHeight
+          bounds.offsetTop + bounds.height <= scrollContainer.scrollTop ||
+          bounds.offsetTop >= scrollContainer.scrollTop + scrollContainer.clientHeight
         ) {
           newSectionsVisibilityData[sectionId] = {
             ...data,
@@ -132,19 +147,30 @@ export const useInfiniteList = <Section extends { id: string }>(
     });
 
     showMoreVisible();
+  });
+
+  useIsomorphicLayoutEffect(() => {
+    if (scrollContainerRef?.current) {
+      scrollContainerRef.current.scrollTop = 0;
+    }
+    setData(getInitialData(sections, initialSectionsCount));
+  }, [sections, scrollContainerRef, initialSectionsCount]);
+
+  useEffect(recalculateSectionsBounds, [sections, sectionsRefs, recalculateSectionsBounds]);
+
+  const onResize = () => {
+    recalculateSectionsBounds();
+    showMoreVisible();
   };
-
-  useEffect(() => setData({ mountedSections: [], sectionsVisibilityData: {} }), [sections]);
-
-  useEffect(recalculateSectionsBounds, [sectionsRefs]);
-
-  useResizeObserver(containerRef, () => requestAnimationFrame(showMoreVisible));
+  useResizeObserver(contentRef, onResize);
+  useResizeObserver(scrollContainerRef ?? window, onResize);
 
   useEffect(() => {
-    window!.addEventListener('scroll', recalculateVisibleSections);
+    const scrollContainer = scrollContainerRef?.current ?? window;
+    scrollContainer?.addEventListener('scroll', recalculateVisibleSections);
 
-    return () => window!.removeEventListener('scroll', recalculateVisibleSections);
-  }, [recalculateVisibleSections]);
+    return () => scrollContainer?.removeEventListener('scroll', recalculateVisibleSections);
+  }, [scrollContainerRef, window, recalculateVisibleSections]);
 
   const remappedSections: Array<RemappedSection<Section>> = useMemo(() => {
     return data.mountedSections
@@ -154,6 +180,6 @@ export const useInfiniteList = <Section extends { id: string }>(
 
   return {
     remappedSections,
-    showMoreElement: data.mountedSections.length < sections.length && <Spinner />,
+    hasMoreSections: data.mountedSections.length < sections.length,
   };
 };

@@ -1,3 +1,5 @@
+'use client';
+
 import { type FocusEvent, useCallback, useState } from 'react';
 import { useKeyboardInputTracker } from './useKeyboardInputTracker';
 
