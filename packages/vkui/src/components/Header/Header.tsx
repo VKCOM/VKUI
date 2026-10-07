@@ -11,6 +11,7 @@ import { Paragraph } from '../Typography/Paragraph/Paragraph';
 import { Subhead } from '../Typography/Subhead/Subhead';
 import { Title } from '../Typography/Title/Title';
 import styles from './Header.module.css';
+import groupStylesGlobal from '../Group/Group.global.module.css';
 
 export interface HeaderProps
   extends HTMLAttributesWithRootRef<HTMLElement>,
@@ -124,6 +125,8 @@ export const Header = ({
       {...restProps}
       baseClassName={classNames(
         styles.host,
+        groupStylesGlobal.groupNestedHeader,
+        (size === 'm' || size === undefined) && groupStylesGlobal.groupNestedHeaderSizeM,
         sizeClassNames[size],
         isPrimitiveReactNode(indicator) && styles.pi,
       )}

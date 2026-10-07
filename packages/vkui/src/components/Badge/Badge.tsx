@@ -2,6 +2,8 @@ import { classNames } from '@vkontakte/vkjs';
 import { RootComponent, type RootComponentProps } from '../RootComponent/RootComponent';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import styles from './Badge.module.css';
+import panelHeaderButtonStylesGlobal from '../PanelHeaderButton/PanelHeaderButton.global.module.css';
+import tabbarStylesGlobal from '../TabbarItem/TabbarItem.global.module.css';
 
 const stylesMode = {
   new: styles.modeNew,
@@ -21,7 +23,12 @@ export interface BadgeProps extends RootComponentProps<HTMLSpanElement> {
 export const Badge = ({ mode = 'new', children, ...restProps }: BadgeProps): React.ReactNode => (
   <RootComponent
     Component="span"
-    baseClassName={classNames(styles.host, 'vkuiInternalBadge', stylesMode[mode])}
+    baseClassName={classNames(
+      styles.host,
+      tabbarStylesGlobal.tabbarItemIndicator,
+      panelHeaderButtonStylesGlobal.panelHeaderButtonBadge,
+      stylesMode[mode],
+    )}
     {...restProps}
   >
     {children && <VisuallyHidden>{children}</VisuallyHidden>}

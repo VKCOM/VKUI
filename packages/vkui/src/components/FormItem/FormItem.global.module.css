@@ -1,0 +1,205 @@
+/* FormLayoutGroup and FormItem layout relationship. */
+.formLayoutGroupModeHorizontal .formItemHost {
+  flex-grow: 1;
+  flex-shrink: 0;
+  flex-basis: 0;
+  min-inline-size: 1px;
+  max-inline-size: 100%;
+  padding: 0;
+}
+
+.formLayoutGroupModeHorizontal:not(.formLayoutGroupSegmented) .formItemHost + .formItemHost {
+  margin-inline-start: var(--vkui--spacing_size_2xl);
+}
+
+.formLayoutGroupModeHorizontal.formLayoutGroupSegmented .formItemHost + .formItemHost {
+  margin-inline-start: calc(-1 * var(--vkui--size_border--regular));
+}
+
+.formLayoutGroupModeVertical.formLayoutGroupSegmented .formItemHost + .formItemHost {
+  padding-block-start: 0;
+  margin-block-start: calc(-1 * var(--vkui--size_border--regular));
+}
+
+.formLayoutGroupModeVertical.formLayoutGroupSegmented .formItemHost:not(:last-of-type) {
+  padding-block-end: 0;
+}
+
+.formLayoutGroupModeHorizontal .formItemWithTop,
+.formItemWithTop .formItemRemovableInner {
+  margin-block-start: calc(
+    -1 *
+    var(--vkui--spacing_size_2xs) -
+    var(--vkui--font_subhead--line_height--regular) -
+    var(--vkui--spacing_size_m)
+  );
+}
+
+.formLayoutGroupModeHorizontal .formItemDensityCompact.formItemWithTop,
+.formItemDensityCompact.formItemWithTop .formItemRemovableInner {
+  margin-block-start: calc(
+    -1 *
+    var(--vkui--spacing_size_2xs) -
+    var(--vkui--font_subhead--line_height--compact) -
+    var(--vkui--spacing_size_s)
+  );
+}
+
+@media (--density-compact) {
+  .formLayoutGroupModeHorizontal .formItemDensityNone.formItemWithTop,
+  .formItemDensityNone.formItemWithTop .formItemRemovableInner {
+    margin-block-start: calc(
+      -1 *
+      var(--vkui--spacing_size_2xs) -
+      var(--vkui--font_subhead--line_height--compact) -
+      var(--vkui--spacing_size_s)
+    );
+  }
+}
+
+/* FormItem status, FormField and NativeSelect relationships. */
+.formItemStatusError .formFieldModeDefault > .formFieldBorder,
+.formItemStatusError .formFieldFocusVisible > .formFieldBorder {
+  z-index: var(--vkui_internal--z_index_form_field_status);
+  border-color: var(--vkui--color_stroke_negative);
+}
+
+.formItemStatusError .formFieldHost {
+  background-color: var(--vkui--color_background_negative_tint);
+}
+
+.formItemStatusValid .formFieldModeDefault > .formFieldBorder,
+.formItemStatusValid .formFieldFocusVisible > .formFieldBorder {
+  z-index: var(--vkui_internal--z_index_form_field_status);
+  border-color: var(--vkui--color_stroke_positive);
+}
+
+.formItemStatusValid .formFieldHost:not(.formFieldModeDefault) {
+  background-color: var(--vkui--color_background_positive_tint);
+}
+
+/* FormItem spacing for common child controls. */
+.formItem > .formItemChildHost,
+.formItem .formItemChildHostNested {
+  margin-block: 0;
+  margin-inline: calc(-1 * var(--vkui--size_base_padding_horizontal--regular));
+}
+
+.formItem .formItemChildHostInlineOnly {
+  margin-inline: calc(-1 * var(--vkui--size_base_padding_horizontal--regular));
+}
+
+.formItem .formItemChildHostContentBox {
+  box-sizing: content-box;
+}
+
+.formItem .formItemChildHostFullWidth {
+  inline-size: 100%;
+}
+
+.nativeSelect .formFieldAfter {
+  pointer-events: none;
+}
+
+/* Cell and Removable relationship. */
+.cellRemovable .removableContent {
+  padding-inline-start: 0;
+}
+
+.cellRemovable .removableAction {
+  position: absolute;
+  inset-inline-end: 0;
+  padding-inline-start: 0;
+}
+
+.cellIos.cellRemovable .removableAction {
+  inset-inline: 0 auto;
+  z-index: 1;
+}
+
+.cellIos.cellRemovable .removableContent {
+  padding-inline-end: 0;
+}
+
+/* Segmented FormLayoutGroup and FormField relationship. */
+.formLayoutGroupSegmented .formFieldHost {
+  z-index: auto;
+  border-radius: 0;
+  isolation: auto;
+}
+
+.formLayoutGroupSegmented.formLayoutGroupModeHorizontal .formItemHost:first-of-type .formFieldHost {
+  border-start-start-radius: var(--vkui--size_border_radius--regular);
+  border-end-start-radius: var(--vkui--size_border_radius--regular);
+}
+
+.formLayoutGroupSegmented.formLayoutGroupModeHorizontal .formItemHost:last-of-type .formFieldHost {
+  border-start-end-radius: var(--vkui--size_border_radius--regular);
+  border-end-end-radius: var(--vkui--size_border_radius--regular);
+}
+
+.formLayoutGroupSegmented.formLayoutGroupModeVertical .formItemHost:first-of-type .formFieldHost {
+  border-start-start-radius: var(--vkui--size_border_radius--regular);
+  border-start-end-radius: var(--vkui--size_border_radius--regular);
+}
+
+.formLayoutGroupSegmented.formLayoutGroupModeVertical .formItemHost:last-of-type .formFieldHost {
+  border-end-start-radius: var(--vkui--size_border_radius--regular);
+  border-end-end-radius: var(--vkui--size_border_radius--regular);
+}
+
+/* FormLayoutGroup and FormItem top offsets. */
+.formLayoutGroupModeHorizontal .formItemWithTop ~ .formLayoutGroupOffset {
+  display: block;
+  order: -1;
+  min-inline-size: 100%;
+  block-size: calc(2px + var(--vkui--font_subhead--line_height--regular) + 8px);
+}
+
+.formLayoutGroupDensityCompact.formLayoutGroupModeHorizontal
+  .formItemWithTop
+  ~ .formLayoutGroupOffset {
+  block-size: calc(2px + var(--vkui--font_subhead--line_height--compact) + 6px);
+}
+
+@media (--density-compact) {
+  .formLayoutGroupDensityNone.formLayoutGroupModeHorizontal
+    .formItemWithTop
+    ~ .formLayoutGroupOffset {
+    block-size: calc(2px + var(--vkui--font_subhead--line_height--compact) + 6px);
+  }
+}
+
+/* Removable interaction with FormItem and FormLayoutGroup. */
+.formItemRemovable .removableContent,
+.formLayoutGroupRemovable .removableContent {
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.removableOffset {
+  display: none;
+}
+
+.formItemWithTop .removableContent .formItemRemovableInner ~ .removableOffset,
+.formLayoutGroupRemovable .formItemWithTop ~ .removableOffset {
+  display: block;
+  order: -1;
+  inline-size: 100%;
+  block-size: calc(2px + var(--vkui--font_subhead--line_height--regular) + 8px);
+}
+
+.formItemDensityCompact.formItemWithTop
+  .removableContent
+  .formItemRemovableInner
+  ~ .removableOffset,
+.formLayoutGroupDensityCompact.formLayoutGroupRemovable .formItemWithTop ~ .removableOffset {
+  block-size: calc(2px + var(--vkui--font_subhead--line_height--compact) + 6px);
+}
+
+@media (--density-compact) {
+  .formItemDensityNone.formItemWithTop .removableContent .formItemRemovableInner ~ .removableOffset,
+  .formLayoutGroupDensityNone.formLayoutGroupRemovable .formItemWithTop ~ .removableOffset {
+    block-size: calc(2px + var(--vkui--font_subhead--line_height--compact) + 6px);
+  }
+}

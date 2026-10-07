@@ -10,7 +10,12 @@ import { RootComponent } from '../RootComponent/RootComponent';
 import { useTabsController } from './TabsController';
 import { TabsControllerContext } from './TabsControllerContext';
 import { TabsModeContext } from './TabsModeContext';
+import stylesGlobal from './Tabs.global.module.css';
 import styles from './Tabs.module.css';
+import fixedLayoutStylesGlobal from '../FixedLayout/FixedLayout.global.module.css';
+import groupStylesGlobal from '../Group/Group.global.module.css';
+import panelHeaderStylesGlobal from '../PanelHeader/PanelHeader.global.module.css';
+
 export interface TabsProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   /**
    * Режим отображения компонента.
@@ -91,15 +96,17 @@ export const Tabs = ({
     <RootComponent
       {...restProps}
       baseClassName={classNames(
-        styles.host,
-        'vkuiInternalTabs',
-        platform === 'vkcom' && 'vkuiInternalTabs--vkcom',
-        withGaps && classNames(styles.withGaps, 'vkuiInternalTabs--withGaps'),
-        mode === 'default' && styles.modeDefault,
+        groupStylesGlobal.groupTabsHost,
+        mode === 'default' && groupStylesGlobal.groupTabsModeDefault,
+        panelHeaderStylesGlobal.panelHeaderTabsContent,
+        fixedLayoutStylesGlobal.tabsHost,
+        stylesGlobal.vkuiInternalTabs,
+        platform === 'vkcom' && stylesGlobal.vkuiInternalTabsVkcom,
+        withGaps && classNames(styles.withGaps, stylesGlobal.vkuiInternalTabsWithGaps),
       )}
       role={role}
     >
-      <div className={styles.in} ref={tabsRef}>
+      <div className={classNames(styles.in, fixedLayoutStylesGlobal.tabsIn)} ref={tabsRef}>
         <TabsModeContext.Provider value={tabsModeContext}>
           <TabsControllerContext.Provider value={controller}>
             {children}

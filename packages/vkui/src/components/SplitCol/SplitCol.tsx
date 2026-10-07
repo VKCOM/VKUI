@@ -9,13 +9,14 @@ import { ViewWidth, viewWidthToClassName } from '../../lib/adaptivity';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { SplitColContext } from './SplitColContext';
+import stylesGlobal from './SplitCol.global.module.css';
 import styles from './SplitCol.module.css';
 
 const breakpointClassNames = {
-  none: classNames(styles.viewWidthNone, 'vkuiInternalSplitCol--viewWidth-none'),
+  none: classNames(styles.viewWidthNone, stylesGlobal.vkuiInternalSplitColViewWidthNone),
   tabletMinus: styles.viewWidthTabletMinus,
   smallTabletPlus: styles.viewWidthSmallTabletPlus,
-  tabletPlus: 'vkuiInternalSplitCol--viewWidth-tabletPlus',
+  tabletPlus: stylesGlobal.vkuiInternalSplitColViewWidthTabletPlus,
 };
 
 function useTransitionAnimate(animateProp?: boolean) {
@@ -118,7 +119,7 @@ export const SplitCol = (props: SplitColProps): React.ReactNode => {
       baseClassName={classNames(
         styles.host,
         viewWidthToClassName(breakpointClassNames, viewWidth),
-        autoSpaced && classNames(styles.spacedAuto, 'vkuiInternalSplitCol--spaced-auto'),
+        autoSpaced && classNames(styles.spacedAuto, stylesGlobal.vkuiInternalSplitColSpacedAuto),
         fixed && styles.fixed,
         stretchedOnMobile && styles.stretchedOnMobile,
       )}

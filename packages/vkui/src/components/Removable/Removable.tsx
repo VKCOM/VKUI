@@ -10,6 +10,8 @@ import { IconButton } from '../IconButton/IconButton';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { RemovableIos } from './RemovableIos';
 import styles from './Removable.module.css';
+import stylesFormItemGlobal from '../FormItem/FormItem.global.module.css';
+import stylesIconButtonGlobal from '../IconButton/IconButton.global.module.css';
 
 export interface RemovableProps {
   /**
@@ -57,8 +59,9 @@ const RemovableCommon = ({
     <div
       className={classNames(
         styles.content,
+        stylesFormItemGlobal.removableContent,
+        stylesIconButtonGlobal.iconButtonRemovableContent,
         !noPadding && styles.withPadding,
-        'vkuiInternalRemovable__content',
       )}
     >
       {typeof children === 'function' ? children({ isRemoving: false }) : children}
@@ -69,7 +72,7 @@ const RemovableCommon = ({
         <IconButton
           activeMode="opacity"
           hoverMode="opacity"
-          className={classNames(styles.action, 'vkuiInternalRemovable__action')}
+          className={classNames(styles.action, stylesFormItemGlobal.removableAction)}
           onClick={onRemoveClick}
           label={removePlaceholderString}
           data-testid={removeButtonTestId}
@@ -78,7 +81,10 @@ const RemovableCommon = ({
           <Icon24Cancel role="presentation" />
         </IconButton>
       )}
-      <span className={styles.offset} aria-hidden />
+      <span
+        className={classNames(styles.offset, stylesFormItemGlobal.removableOffset)}
+        aria-hidden
+      />
     </div>
   );
 };

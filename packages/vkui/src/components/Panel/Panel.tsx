@@ -12,6 +12,10 @@ import { OnboardingTooltipContainer } from '../OnboardingTooltip/OnboardingToolt
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Touch } from '../Touch/Touch';
 import styles from './Panel.module.css';
+import stylesEpicGlobal from '../Epic/Epic.global.module.css';
+import stylesGroupGlobal from '../Group/Group.global.module.css';
+import stylesPanelHeaderGlobal from '../PanelHeader/PanelHeader.global.module.css';
+import stylesViewGlobal from '../View/View.global.module.css';
 
 function getViewWidthClassName(
   viewWidth: ViewWidthType | 'none',
@@ -20,15 +24,18 @@ function getViewWidthClassName(
   // TODO [>=10]: #9015 Удалить это условие
   if (legacySizeX !== undefined) {
     return legacySizeX === 'regular'
-      ? styles.viewWidthSmallTabletPlus
-      : styles.viewWidthSmallTabletMinus;
+      ? stylesPanelHeaderGlobal.panelViewWidthSmallTabletPlus
+      : stylesPanelHeaderGlobal.panelViewWidthSmallTabletMinus;
   }
   if (viewWidth === 'none') {
-    return classNames(styles.viewWidthNone, 'vkuiInternalGroup--viewWidth-none');
+    return classNames(
+      stylesPanelHeaderGlobal.panelViewWidthNone,
+      stylesGroupGlobal.vkuiInternalGroupViewWidthNone,
+    );
   }
   return viewWidth >= ViewWidth.SMALL_TABLET
-    ? styles.viewWidthSmallTabletPlus
-    : styles.viewWidthSmallTabletMinus;
+    ? stylesPanelHeaderGlobal.panelViewWidthSmallTabletPlus
+    : stylesPanelHeaderGlobal.panelViewWidthSmallTabletMinus;
 }
 
 const stylesMode = {
@@ -81,18 +88,28 @@ export const Panel = ({
         {...restProps}
         baseClassName={classNames(
           styles.host,
+          stylesEpicGlobal.panelHost,
+          stylesViewGlobal.panelHost,
           getViewWidthClassName(viewWidth, legacySizeX),
-          centered && 'vkuiInternalPanel--centered',
+          centered && stylesPanelHeaderGlobal.vkuiInternalPanelCentered,
           disableBackground && styles.disableBackground,
           stylesMode[mode],
         )}
       >
         <Touch
           Component={OnboardingTooltipContainer}
-          className={classNames(styles.in, 'vkuiInternalPanel__in')}
+          className={classNames(styles.in, stylesViewGlobal.panelIn, stylesEpicGlobal.panelIn)}
         >
           <div className={styles.inBefore} />
-          {centered ? <div className={styles.centered}>{children}</div> : children}
+          {centered ? (
+            <div
+              className={classNames(styles.centered, stylesPanelHeaderGlobal.panelCenteredContent)}
+            >
+              {children}
+            </div>
+          ) : (
+            children
+          )}
           <div className={styles.inAfter} />
         </Touch>
       </RootComponent>

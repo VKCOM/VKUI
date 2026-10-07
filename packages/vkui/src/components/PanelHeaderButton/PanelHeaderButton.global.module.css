@@ -1,0 +1,38 @@
+.panelHeaderButtonVkcom > :not(.panelHeaderButtonBadge):not(.panelHeaderButtonCounter) {
+  opacity: 0.7;
+  transition: opacity 0.3s;
+}
+
+.panelHeaderButtonVkcom.panelHeaderButtonHover
+  > :not(.panelHeaderButtonCounter):not(.panelHeaderButtonBadge),
+.panelHeaderButtonVkcom.panelHeaderButtonActive
+  > :not(.panelHeaderButtonCounter):not(.panelHeaderButtonBadge) {
+  opacity: 1;
+}
+
+.panelHeaderButtonHost .panelHeaderButtonCounter {
+  position: absolute;
+  inset-block-start: 4px;
+  inset-inline-end: 4px;
+  padding: 0;
+}
+
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
+.panelHeaderButtonHost :global(.vkuiIcon--24) ~ .panelHeaderButtonCounter,
+.panelHeaderButtonIos .panelHeaderButtonCounter {
+  inset-block-start: 2px;
+  inset-inline-end: 2px;
+}
+
+.panelHeaderButtonHost .panelHeaderButtonBadge {
+  position: absolute;
+  inset-block-start: 8px;
+  inset-inline-end: 8px;
+}
+
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
+.panelHeaderButtonHost :global(.vkuiIcon--24) ~ .panelHeaderButtonBadge,
+.panelHeaderButtonIos .panelHeaderButtonBadge {
+  inset-block-start: 6px;
+  inset-inline-end: 6px;
+}

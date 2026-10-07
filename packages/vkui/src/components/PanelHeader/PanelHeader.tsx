@@ -22,12 +22,14 @@ import { OnboardingTooltipContainer } from '../OnboardingTooltip/OnboardingToolt
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Separator } from '../Separator/Separator';
 import { Text } from '../Typography/Text/Text';
+import stylesGlobal from './PanelHeader.global.module.css';
 import styles from './PanelHeader.module.css';
+import stylesSplitColGlobal from '../SplitCol/SplitCol.global.module.css';
 
 const platformClassNames = {
   ios: styles.ios,
   android: styles.android,
-  vkcom: classNames(styles.vkcom, 'vkuiInternalPanelHeader--vkcom'),
+  vkcom: classNames(styles.vkcom, stylesGlobal.vkuiInternalPanelHeaderVkcom),
 };
 
 function getViewWidthClassName(
@@ -136,10 +138,14 @@ const PanelHeaderIn = ({ before, after, children, typographyProps = {} }: PanelH
 
   return (
     <OnboardingTooltipContainer fixed className={styles.in}>
-      <div className={classNames(styles.before, 'vkuiInternalPanelHeader__before')}>{before}</div>
-      <div className={styles.content}>{typographyNode}</div>
+      <div className={classNames(styles.before, stylesGlobal.vkuiInternalPanelHeaderBefore)}>
+        {before}
+      </div>
+      <div className={classNames(styles.content, stylesSplitColGlobal.splitColPanelHeaderContent)}>
+        {typographyNode}
+      </div>
       <div
-        className={classNames(styles.after, 'vkuiInternalPanelHeader__after')}
+        className={classNames(styles.after, stylesGlobal.vkuiInternalPanelHeaderAfter)}
         {...afterSlotProps}
       />
     </OnboardingTooltipContainer>
@@ -183,17 +189,28 @@ export const PanelHeader = ({
       {...restProps}
       baseClassName={classNames(
         styles.host,
-        'vkuiInternalPanelHeader',
+        stylesGlobal.vkuiInternalPanelHeader,
+        stylesGlobal.panelHeaderHost,
         platformClassNames.hasOwnProperty(platform)
           ? platformClassNames[platform]
           : platformClassNames.android,
         transparent && styles.trnsp,
         shadow && styles.shadow,
-        !float && classNames(styles.static, 'vkuiInternalPanelHeader--static'),
-        staticSeparatorVisible && classNames(styles.sep, 'vkuiInternalPanelHeader--sep'),
+        !float && classNames(styles.static, stylesGlobal.vkuiInternalPanelHeaderStatic),
+        staticSeparatorVisible &&
+          classNames(styles.sep, stylesGlobal.vkuiInternalPanelHeaderStaticPanelSep),
         staticSpacingVisible && styles.hasSpacingDelimiter,
-        !before && classNames(styles.noBefore, 'vkuiInternalPanelHeader--no-before'),
-        !after && styles.noAfter,
+        !before &&
+          classNames(
+            styles.noBefore,
+            stylesGlobal.vkuiInternalPanelHeaderNoBefore,
+            platform === 'android' && stylesSplitColGlobal.splitColAndroidHeaderNoBefore,
+          ),
+        !after &&
+          classNames(
+            styles.noAfter,
+            platform === 'android' && stylesSplitColGlobal.splitColAndroidHeaderNoAfter,
+          ),
         isFixed && styles.hasFixed,
         getViewWidthClassName(viewWidth, legacySizeX),
         density !== 'regular' && densityClassNames[density],
@@ -202,7 +219,7 @@ export const PanelHeader = ({
     >
       {isFixed ? (
         <FixedLayout
-          className={classNames(styles.fixed, 'vkuiInternalPanelHeader__fixed')}
+          className={classNames(styles.fixed, stylesGlobal.vkuiInternalPanelHeaderFixed)}
           vertical="top"
           getRootRef={getRef}
         >

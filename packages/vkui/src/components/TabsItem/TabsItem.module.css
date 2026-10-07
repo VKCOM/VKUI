@@ -186,35 +186,6 @@
   opacity: 1;
 }
 
-/**
- * CMP:
- * Tabs
- */
-/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalTabs--vkcom) .host {
-  flex-grow: 0;
-  min-inline-size: auto;
-  padding-inline: 10px;
-}
-
-/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalTabs--vkcom) .underline {
-  inset-block-end: 0;
-  inset-inline: 2px;
-}
-
-/**
- * CMP:
- * HorizontalScroll
- */
-/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalHorizontalScroll) .host {
-  flex-grow: 1;
-  flex-shrink: 0;
-  flex-basis: auto;
-  min-inline-size: 64px;
-}
-
 .host.stretched {
   flex-grow: 1;
 }

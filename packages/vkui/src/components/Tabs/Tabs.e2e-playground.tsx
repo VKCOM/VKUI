@@ -42,7 +42,7 @@ const Unscrollable = ({
   );
 };
 
-// TODO: Удалить HorizontalScroll вместе с `vkuiInternalTabs--withGaps`
+// TODO: Удалить HorizontalScroll вместе с маркером Tabs для отступов
 const Scrollable = ({ disabled }: { disabled?: boolean }) => {
   const beforeIconByMode = useIconByMode();
 

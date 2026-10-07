@@ -10,6 +10,8 @@ import { Tappable } from '../Tappable/Tappable';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import type { RemovableIosRenderProps, RemovableProps } from './Removable';
 import styles from './Removable.module.css';
+import stylesFormItemGlobal from '../FormItem/FormItem.global.module.css';
+import stylesIconButtonGlobal from '../IconButton/IconButton.global.module.css';
 
 /* eslint-disable jsdoc/require-jsdoc */
 interface RemovableIosOwnProps extends RemovableProps {
@@ -76,14 +78,19 @@ const RemovableIosWithRemove = ({
 
   return (
     <div
-      className={classNames(styles.content, isRtl && styles.rtl, 'vkuiInternalRemovable__content')}
+      className={classNames(
+        styles.content,
+        stylesFormItemGlobal.removableContent,
+        stylesIconButtonGlobal.iconButtonRemovableContent,
+        isRtl && styles.rtl,
+      )}
       style={style}
       onTransitionEnd={onRemoveTransitionEnd}
     >
       <IconButton
         hasActive={false}
         hasHover={false}
-        className={classNames(styles.action, styles.toggle, 'vkuiInternalRemovable__action')}
+        className={classNames(styles.action, styles.toggle, stylesFormItemGlobal.removableAction)}
         onClick={onRemoveActivateClick}
         disabled={removeOffset > 0 || disabled}
         data-testid={toggleButtonTestId}
@@ -95,7 +102,10 @@ const RemovableIosWithRemove = ({
         ? childrenProp({ isRemoving: removeOffset > 0 })
         : childrenProp}
 
-      <span className={styles.offset} aria-hidden />
+      <span
+        className={classNames(styles.offset, stylesFormItemGlobal.removableOffset)}
+        aria-hidden
+      />
 
       <Tappable
         Component="button"
@@ -117,13 +127,26 @@ const RemovableIosWithIndent = ({
   children: childrenProp,
 }: Pick<RemovableIosOwnProps, 'children'>) => {
   return (
-    <div className={classNames(styles.content, 'vkuiInternalRemovable__content')}>
+    <div
+      className={classNames(
+        styles.content,
+        stylesFormItemGlobal.removableContent,
+        stylesIconButtonGlobal.iconButtonRemovableContent,
+      )}
+    >
       <div
-        className={classNames(styles.action, styles.indentation, 'vkuiInternalRemovable__action')}
+        className={classNames(
+          styles.action,
+          styles.indentation,
+          stylesFormItemGlobal.removableAction,
+        )}
       />
       {typeof childrenProp === 'function' ? childrenProp({ isRemoving: false }) : childrenProp}
 
-      <span className={styles.offset} aria-hidden />
+      <span
+        className={classNames(styles.offset, stylesFormItemGlobal.removableOffset)}
+        aria-hidden
+      />
     </div>
   );
 };

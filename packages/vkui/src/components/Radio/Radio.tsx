@@ -10,7 +10,7 @@ import { SelectionControl } from '../SelectionControl/SelectionControl';
 import { SelectionControlLabel } from '../SelectionControl/SelectionControlLabel/SelectionControlLabel';
 import type { TappableOmitProps } from '../Tappable/Tappable';
 import { RadioInput } from './RadioInput/RadioInput';
-import styles from './Radio.module.css';
+import stylesRadioGroupGlobal from '../RadioGroup/RadioGroup.global.module.css';
 
 const warn = warnOnce('Radio');
 
@@ -122,7 +122,7 @@ export const Radio = ({
 
   const { onClick: onRootClick, ...rootRest } = useMergeProps(
     {
-      className: classNames(styles.host, className),
+      className: classNames(stylesRadioGroupGlobal.radioHost, className),
       ...labelProps,
       ...restProps,
     },

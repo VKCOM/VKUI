@@ -13,16 +13,18 @@ import { FormItemTop } from './FormItemTop/FormItemTop';
 import { FormItemTopAside } from './FormItemTop/FormItemTopAside';
 import { FormItemTopLabel } from './FormItemTop/FormItemTopLabel';
 import { FormItemContext } from './context';
+import stylesGlobal from './FormItem.global.module.css';
 import styles from './FormItem.module.css';
+import stylesIconButtonGlobal from '../IconButton/IconButton.global.module.css';
 
 const densityClassNames = {
-  none: classNames(styles.densityNone, 'vkuiInternalFormItem--density-none'),
-  compact: classNames(styles.densityCompact, 'vkuiInternalFormItem--density-compact'),
+  none: classNames(styles.densityNone, stylesGlobal.formItemDensityNone),
+  compact: classNames(styles.densityCompact, stylesGlobal.formItemDensityCompact),
 };
 
 const stylesStatus = {
-  error: classNames(styles.statusError, 'vkuiInternalFormItem--status-error'),
-  valid: classNames(styles.statusValid, 'vkuiInternalFormItem--status-valid'),
+  error: classNames(styles.statusError, stylesGlobal.formItemStatusError),
+  valid: classNames(styles.statusValid, stylesGlobal.formItemStatusValid),
 };
 
 export interface FormItemProps
@@ -143,12 +145,14 @@ export const FormItem: React.FC<FormItemProps> & {
       getRootRef={rootEl}
       baseClassName={classNames(
         styles.host,
+        stylesGlobal.formItemHost,
         !noPadding && styles.withPadding,
-        'vkuiInternalFormItem',
+        stylesGlobal.formItem,
         status !== 'default' && stylesStatus[status],
         density !== 'regular' && densityClassNames[density],
-        hasReactNode(top) && classNames(styles.withTop, 'vkuiInternalFormItem--withTop'),
-        removable && classNames(styles.withRemovable, 'vkuiInternalFormItem--removable'),
+        hasReactNode(top) && stylesGlobal.formItemWithTop,
+        removable && classNames(styles.withRemovable, stylesGlobal.formItemRemovable),
+        removable && stylesIconButtonGlobal.iconButtonFormItemRemovable,
       )}
     >
       <FormItemContext.Provider value={context}>
@@ -165,7 +169,7 @@ export const FormItem: React.FC<FormItemProps> & {
             noPadding={noPadding}
             disabled={disabled}
           >
-            <div className={classNames(styles.removable, 'vkuiInternalFormItem__removable')}>
+            <div className={classNames(styles.removable, stylesGlobal.formItemRemovableInner)}>
               {wrappedChildren}
             </div>
           </Removable>

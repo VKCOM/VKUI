@@ -1,0 +1,36 @@
+.vkuiInternalCardGrid .cardHost {
+  margin-inline-end: var(--vkui--size_cardgrid_padding--regular);
+}
+
+.vkuiInternalCardGridSizeL .cardHost {
+  inline-size: 100%;
+  margin-inline-end: 0;
+}
+
+.vkuiInternalCardGridSizeL .cardHost:not(:first-child) {
+  margin-block-start: var(--vkui--size_cardgrid_padding--regular);
+}
+
+.vkuiInternalCardGridSizeM .cardHost {
+  inline-size: calc(50% - (var(--vkui--size_cardgrid_padding--regular) / 2));
+}
+
+.vkuiInternalCardGridSizeM .cardHost:nth-child(n + 3) {
+  margin-block-start: var(--vkui--size_cardgrid_padding--regular);
+}
+
+.vkuiInternalCardGridSizeM .cardHost:nth-child(2n) {
+  margin-inline-end: 0;
+}
+
+.vkuiInternalCardGridSizeS .cardHost {
+  inline-size: calc((100% - 2 * var(--vkui--size_cardgrid_padding--regular)) / 3);
+}
+
+.vkuiInternalCardGridSizeS .cardHost:nth-child(n + 4) {
+  margin-block-start: var(--vkui--size_cardgrid_padding--regular);
+}
+
+.vkuiInternalCardGridSizeS .cardHost:nth-child(3n) {
+  margin-inline-end: 0;
+}

@@ -22,6 +22,7 @@ import { RootComponent } from '../RootComponent/RootComponent';
 import { Headline } from '../Typography/Headline/Headline';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import styles from './Search.module.css';
+import groupStylesGlobal from '../Group/Group.global.module.css';
 
 const warn = warnOnce('Search');
 
@@ -345,7 +346,7 @@ export const Search = ({
   return (
     <RootComponent
       baseClassName={classNames(
-        'vkuiInternalSearch',
+        groupStylesGlobal.searchHost,
         styles.host,
         density === 'none' && styles.densityNone,
         density === 'compact' && styles.densityCompact,

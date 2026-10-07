@@ -1,0 +1,21 @@
+.vkuiInternalCardScroll .cardHost {
+  flex-shrink: 0;
+  margin-inline-end: var(--vkui--size_cardgrid_padding--regular);
+}
+
+.vkuiInternalCardScroll .cardHost:last-of-type {
+  margin-inline-end: 0;
+}
+
+.vkuiInternalCardScrollSizeS .cardHost {
+  inline-size: 40%;
+}
+
+.vkuiInternalCardScrollSizeM .cardHost {
+  inline-size: 62%;
+}
+
+.vkuiInternalCardScrollSizeL .cardHost {
+  inline-size: calc(100% - var(--vkui--size_base_padding_horizontal--regular) * 2);
+  margin-inline-end: var(--vkui--size_base_padding_horizontal--regular);
+}

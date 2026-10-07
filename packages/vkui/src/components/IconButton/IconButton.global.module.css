@@ -1,0 +1,46 @@
+.iconButtonFormItemRemovable .iconButtonRemovableContent > .iconButtonHost,
+.iconButtonFormLayoutGroupRemovable .iconButtonRemovableContent > .iconButtonHost,
+.iconButtonFormFieldAfter .iconButtonHost {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  inline-size: var(--vkui--size_field_height--regular);
+  block-size: var(--vkui--size_field_height--regular);
+  border-radius: var(--vkui--size_border_radius--regular);
+}
+
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
+.iconButtonFormFieldAfter .iconButtonHost :global(.vkuiIcon):global(.vkuiIcon):global(.vkuiIcon) {
+  padding: 0;
+}
+
+.iconButtonFormFieldAfter .iconButtonDensityCompact {
+  inline-size: var(--vkui--size_field_height--compact);
+  block-size: var(--vkui--size_field_height--compact);
+}
+
+.iconButtonFormItemRemovable .iconButtonRemovableContent > .iconButtonDensityCompact,
+.iconButtonFormLayoutGroupRemovable .iconButtonRemovableContent > .iconButtonDensityCompact {
+  block-size: var(--vkui--size_field_height--compact);
+}
+
+@media (--density-compact) {
+  .iconButtonFormFieldAfter .iconButtonDensityNone {
+    inline-size: var(--vkui--size_field_height--compact);
+    block-size: var(--vkui--size_field_height--compact);
+  }
+
+  .iconButtonFormItemRemovable .iconButtonRemovableContent > .iconButtonDensityNone,
+  .iconButtonFormLayoutGroupRemovable .iconButtonRemovableContent > .iconButtonDensityNone {
+    block-size: var(--vkui--size_field_height--compact);
+  }
+}
+
+.iconButtonSimpleCellAfter .iconButtonHost:last-child {
+  margin-inline-end: -12px;
+}
+
+.iconButtonSimpleCellAfter .iconButtonIos:last-child {
+  margin-inline-end: -9px;
+}

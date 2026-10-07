@@ -8,6 +8,7 @@ import { CustomScrollView, type CustomScrollViewProps } from '../CustomScrollVie
 import { Popper } from '../Popper/Popper';
 import { Spinner } from '../Spinner/Spinner';
 import styles from './CustomSelectDropdown.module.css';
+import calendarHeaderStylesGlobal from '../CalendarHeader/CalendarHeader.global.module.css';
 
 export interface CustomSelectDropdownProps
   extends HTMLAttributesWithRootRef<HTMLDivElement>,
@@ -53,9 +54,8 @@ export const CustomSelectDropdown = ({
       placement={placement}
       className={classNames(
         styles.host,
-        'vkuiInternalCustomSelectDropdown',
         offsetDistance === 0 && (placement.includes('top') ? styles.top : styles.bottom),
-        autoWidth && classNames(styles.wide, 'vkuiInternalCustomSelectDropdown--wide'),
+        autoWidth && styles.wide,
         className,
       )}
       usePortal={forcePortal}
@@ -65,7 +65,14 @@ export const CustomSelectDropdown = ({
     >
       <CustomScrollView
         getRootRef={scrollBoxRef}
-        className={noMaxHeight ? undefined : styles.inWithMaxHeight}
+        className={
+          noMaxHeight
+            ? undefined
+            : classNames(
+                styles.inWithMaxHeight,
+                calendarHeaderStylesGlobal.calendarHeaderDropdownContent,
+              )
+        }
         overscrollBehavior={overscrollBehavior}
         tabIndex={-1}
         aria-busy={fetching}

@@ -5,7 +5,9 @@ import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { type SizeTypeValues, ViewWidth, type ViewWidthType } from '../../lib/adaptivity';
 import type { HasComponent, HasRender, HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
+import stylesGlobal from './CardGrid.global.module.css';
 import styles from './CardGrid.module.css';
+import stylesGroupGlobal from '../Group/Group.global.module.css';
 
 function getViewWidthClassName(
   viewWidth: ViewWidthType | 'none',
@@ -25,9 +27,9 @@ function getViewWidthClassName(
 }
 
 const stylesSize = {
-  s: 'vkuiInternalCardGrid--size-s',
-  m: 'vkuiInternalCardGrid--size-m',
-  l: 'vkuiInternalCardGrid--size-l',
+  s: stylesGlobal.vkuiInternalCardGridSizeS,
+  m: stylesGlobal.vkuiInternalCardGridSizeM,
+  l: stylesGlobal.vkuiInternalCardGridSizeL,
 };
 
 export interface CardGridProps
@@ -61,7 +63,8 @@ export const CardGrid = ({
       Component={Component}
       baseClassName={classNames(
         styles.host,
-        'vkuiInternalCardGrid',
+        stylesGlobal.vkuiInternalCardGrid,
+        stylesGroupGlobal.cardGridHost,
         padding && styles.padding,
         stylesSize[size],
         getViewWidthClassName(viewWidth, legacySizeX),

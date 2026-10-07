@@ -1,0 +1,104 @@
+.vkuiInternalPanelHeader {
+  /* PanelHeader producer marker. */
+}
+
+.panelHeaderHost {
+  /* PanelHeader target for centered Panel. */
+}
+
+/* stylelint-disable-next-line selector-max-universal */
+/* stylelint-disable selector-max-universal */
+.vkuiInternalPanelHeaderVkcom ~ .groupHost:first-of-type.groupNoBlockStartRoundingUndefined,
+.vkuiInternalPanelHeaderVkcom + * .groupHost:first-of-type.groupNoBlockStartRoundingUndefined {
+  position: relative;
+  inset-block-start: -1px;
+  border-start-start-radius: 0;
+  border-start-end-radius: 0;
+}
+/* stylelint-enable selector-max-universal */
+
+.vkuiInternalPanelHeaderNoBefore .panelHeaderContentVkcom {
+  padding-inline-start: 16px;
+}
+
+/* stylelint-disable-next-line selector-max-universal */
+.vkuiInternalPanelHeader ~ .fixedLayoutVerticalTop,
+/* stylelint-disable-next-line selector-max-universal */
+  .vkuiInternalPanelHeader
+  ~ *
+  .fixedLayoutVerticalTop:not(.vkuiInternalPanelHeaderFixed) {
+  inset-block-start: calc(
+    var(--vkui_internal--panel_header_height) +
+    var(--vkui_internal--safe_area_inset_top)
+  );
+}
+
+.vkuiInternalPanelHeaderBefore > .imageBaseHost {
+  margin-inline-start: 8px;
+}
+
+.vkuiInternalPanelHeaderAfter > .imageBaseHost {
+  margin-inline-end: 8px;
+}
+
+.imageBaseHost {
+  /* ImageBase target marker. */
+}
+
+/* stylelint-disable-next-line selector-max-universal */
+.panelCenteredContent .vkuiInternalPanelHeaderStatic + * {
+  margin-block-start: var(--vkui_internal--panel_header_height);
+}
+
+/* stylelint-disable-next-line selector-max-universal */
+.panelViewWidthSmallTabletMinus .panelCenteredContent .vkuiInternalPanelHeaderStaticPanelSep + * {
+  margin-block-start: calc(var(--vkui_internal--panel_header_height) + 5px);
+}
+
+@media (--viewWidth-smallTabletMinus) {
+  /* stylelint-disable-next-line selector-max-universal */
+  .panelViewWidthNone .panelCenteredContent .vkuiInternalPanelHeaderStaticPanelSep + * {
+    margin-block-start: calc(var(--vkui_internal--panel_header_height) + 5px);
+  }
+}
+
+/* stylelint-disable-next-line selector-max-universal */
+.panelViewWidthSmallTabletPlus .panelCenteredContent .vkuiInternalPanelHeaderStaticPanelSep + * {
+  margin-block-start: calc(var(--vkui_internal--panel_header_height) + 16px);
+}
+
+@media (--viewWidth-smallTabletPlus) {
+  /* stylelint-disable-next-line selector-max-universal */
+  .panelViewWidthNone .panelCenteredContent .vkuiInternalPanelHeaderStaticPanelSep + * {
+    margin-block-start: calc(var(--vkui_internal--panel_header_height) + 16px);
+  }
+}
+
+.vkuiInternalPanelCentered .panelHeaderHost {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  inline-size: 100%;
+}
+
+.vkuiInternalPanelHeader .panelHeaderTabsContent {
+  overflow: hidden;
+  font-family: var(--vkui--font_family_base);
+}
+
+.vkuiInternalPanelHeader .panelHeaderTabsContent::after {
+  display: block;
+  inline-size: 1000px;
+  content: '';
+}
+
+.vkuiInternalPanelCentered {
+  /* Panel producer marker. */
+}
+
+.panelViewWidthSmallTabletMinus,
+.panelViewWidthNone,
+.panelViewWidthSmallTabletPlus,
+.panelCenteredContent {
+  /* Panel target markers. */
+}

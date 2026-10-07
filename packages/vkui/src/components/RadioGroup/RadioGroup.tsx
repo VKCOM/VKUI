@@ -2,7 +2,9 @@ import type * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
+import stylesGlobal from './RadioGroup.global.module.css';
 import styles from './RadioGroup.module.css';
+import stylesFormItemGlobal from '../FormItem/FormItem.global.module.css';
 
 export interface RadioGroupProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   /**
@@ -21,8 +23,9 @@ export const RadioGroup = ({
   return (
     <RootComponent
       baseClassName={classNames(
-        styles.host,
-        'vkuiInternalRadioGroup',
+        stylesFormItemGlobal.formItemChildHostNested,
+        stylesFormItemGlobal.formItemChildHostContentBox,
+        stylesGlobal.vkuiInternalRadioGroup,
         mode === 'horizontal' && styles.modeHorizontal,
       )}
       role="radiogroup"

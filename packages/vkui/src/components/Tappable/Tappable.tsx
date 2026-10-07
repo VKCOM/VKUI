@@ -8,6 +8,7 @@ import { checkClickable, Clickable, type ClickableProps } from '../Clickable/Cli
 import { Ripple, useMaybeNeedRipple, useRipple } from './Ripple';
 import { activeClass, DEFAULT_STATE_MODE, hoverClass, type StateProps } from './state';
 import styles from './Tappable.module.css';
+import groupStylesGlobal from '../Group/Group.global.module.css';
 
 function getViewWidthClassName(
   viewWidth: ViewWidthType | 'none',
@@ -94,7 +95,7 @@ export const Tappable = ({
   return (
     <Clickable
       baseClassName={classNames(
-        'vkuiInternalTappable',
+        groupStylesGlobal.groupNestedTappable,
         baseClassName,
         styles.host,
         getViewWidthClassName(viewWidth, legacySizeX),
