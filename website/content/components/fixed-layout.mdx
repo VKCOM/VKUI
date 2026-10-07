@@ -41,7 +41,7 @@ import { FixedLayoutWrapper } from '@/components/wrappers';
     <Search />
     <Separator />
   </FixedLayout>
-  <Group mode="plain">
+  <Group layoutMode="plain">
     {/** Компенсируем место, занятое поиском **/}
     <Spacing size={40} />
     <Box paddingInline={16} paddingBlock={12} maxBlockSize={170} overflow="auto" tabIndex={0}>
@@ -80,7 +80,7 @@ import { FixedLayoutWrapper } from '@/components/wrappers';
 {/* @example-description: Пример миграции с `FixedLayout` на `Box` с `position="sticky"`. */}
 <Playground Wrapper={FixedLayoutWrapper}>
   ```jsx
-  <Group mode="plain">
+  <Group layoutMode="plain">
     <Box position="sticky" insetBlockStart={0}>
       <Search />
       <Separator />

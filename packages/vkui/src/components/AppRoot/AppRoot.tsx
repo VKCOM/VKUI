@@ -57,6 +57,10 @@ export interface AppRootProps extends React.HTMLAttributes<HTMLDivElement> {
    * Глобально задаёт тип оформления макета для компонентов
    * [Panel](https://vkui.io/components/panel) и [Group](https://vkui.io/components/group).
    */
+  layoutMode?: AppRootLayout | undefined;
+  /**
+   * @deprecated Используйте `layoutMode`.
+   */
   layout?: AppRootLayout | undefined;
   /**
    * Задаёт режим выбора текста (выделения текста) для всего приложения.
@@ -93,6 +97,7 @@ export const AppRoot = ({
   disablePortal = false,
   disableParentTransformForPositionFixedElements,
   safeAreaInsets: safeAreaInsetsProp,
+  layoutMode,
   layout,
   userSelectMode,
   disableSettingVKUIClassesInRuntime,
@@ -100,6 +105,7 @@ export const AppRoot = ({
   ...props
 }: AppRootProps): React.ReactNode => {
   const appRootRef = React.useRef<HTMLDivElement | null>(null);
+  const resolvedLayoutMode = layoutMode ?? layout;
 
   const safeAreaInsets = useSafeAreaInsetsMemo(safeAreaInsetsProp);
 
@@ -111,10 +117,10 @@ export const AppRoot = ({
       embedded: mode === 'embedded',
       mode,
       disablePortal,
-      layout,
+      layoutMode: resolvedLayoutMode,
       userSelectMode,
     }),
-    [portalRoot, disablePortal, layout, mode, safeAreaInsets, userSelectMode],
+    [portalRoot, disablePortal, resolvedLayoutMode, mode, safeAreaInsets, userSelectMode],
   );
 
   /*
@@ -133,7 +139,7 @@ export const AppRoot = ({
   useSyncHTMLWithBaseVKUIClasses({
     appRootRef,
     mode,
-    layout,
+    layoutMode: resolvedLayoutMode,
     enable: mode !== 'partial' && !disableSettingVKUIClassesInRuntime,
   });
 
@@ -153,7 +159,7 @@ export const AppRoot = ({
         className={classNames(
           className,
           styles.host,
-          layout && layoutClassNames[layout],
+          resolvedLayoutMode && layoutClassNames[resolvedLayoutMode],
           mode === 'embedded' && !disableParentTransformForPositionFixedElements
             ? styles.transformForPositionFixedElements
             : undefined,
