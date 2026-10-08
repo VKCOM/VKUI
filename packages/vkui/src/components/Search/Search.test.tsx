@@ -158,10 +158,13 @@ describe(Search, () => {
         </form>,
       );
       expect(getClearIcon()).toHaveAttribute('tabindex', '-1');
+      expect(getClearIcon()).toHaveAttribute('aria-hidden', 'true');
       await userEvent.type(getInput(), 'user');
       expect(getClearIcon()).not.toHaveAttribute('tabindex');
+      expect(getClearIcon()).not.toHaveAttribute('aria-hidden');
       fireEvent.click(screen.getByTestId('reset'));
       expect(getClearIcon()).toHaveAttribute('tabindex', '-1');
+      expect(getClearIcon()).toHaveAttribute('aria-hidden', 'true');
     });
     it('handles clear button visibility with default value correctly', async () => {
       render(
@@ -220,8 +223,10 @@ describe(Search, () => {
         <Search value="init" slotProps={{ clearButton: { 'data-testid': 'clear-button' } }} />,
       );
       expect(getClearIcon()).not.toHaveAttribute('tabindex');
+      expect(getClearIcon()).not.toHaveAttribute('aria-hidden');
       rerender(<Search value="" slotProps={{ clearButton: { 'data-testid': 'clear-button' } }} />);
       expect(getClearIcon()).toHaveAttribute('tabindex', '-1');
+      expect(getClearIcon()).toHaveAttribute('aria-hidden', 'true');
     });
     it('hides clear button with hideClearButton prop', () => {
       const h = render(
@@ -291,6 +296,22 @@ describe(Search, () => {
       expect(cb).toHaveBeenCalled();
     }),
   );
+
+  it('hides find button from assistive technologies while empty', () => {
+    const { rerender } = render(
+      <Search value="" findButtonTestId="find-button" onFindButtonClick={noop} />,
+    );
+    expect(getFindButton()).toHaveAttribute('tabindex', '-1');
+    expect(getFindButton()).toHaveAttribute('aria-hidden', 'true');
+    rerender(<Search value="test" findButtonTestId="find-button" onFindButtonClick={noop} />);
+    expect(getFindButton()).not.toHaveAttribute('tabindex');
+    expect(getFindButton()).not.toHaveAttribute('aria-hidden');
+  });
+
+  it('keeps icon button accessible while empty', () => {
+    render(<Search value="" icon={<Icon24Done />} iconLabel="Icon" />);
+    expect(screen.getByRole('button', { name: 'Icon' })).not.toHaveAttribute('aria-hidden');
+  });
 
   it(
     'calls onFindButtonClick',
