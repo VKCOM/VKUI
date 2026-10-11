@@ -3565,36 +3565,36 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@size-limit/file@npm:^14.1.0":
-  version: 14.1.0
-  resolution: "@size-limit/file@npm:14.1.0"
+"@size-limit/file@npm:^14.2.0":
+  version: 14.2.0
+  resolution: "@size-limit/file@npm:14.2.0"
   peerDependencies:
-    size-limit: 14.1.0
-  checksum: 10/a10c75d3638db9823149b478615925e3229e6b25b9d1845bb109f39ab3034432d5c35d67949814929f555c7e0daa585b34a505a586cfedb7a8e8914bbc814e47
+    size-limit: 14.2.0
+  checksum: 10/7deaa6714c02b5dbc56be1599cf2d185cf49e2257dcf6358503fc055392e08736c3dd24a0e35a8c8a54d55aed6bdd276b8c75e623ec9daa0ba0de0ff7744a7b5
   languageName: node
   linkType: hard
 
-"@size-limit/webpack-css@npm:^14.1.0":
-  version: 14.1.0
-  resolution: "@size-limit/webpack-css@npm:14.1.0"
+"@size-limit/webpack-css@npm:^14.2.0":
+  version: 14.2.0
+  resolution: "@size-limit/webpack-css@npm:14.2.0"
   dependencies:
     css-loader: "npm:^7.1.5"
     css-minimizer-webpack-plugin: "npm:^8.0.0"
     style-loader: "npm:^4.0.0"
   peerDependencies:
-    size-limit: 14.1.0
-  checksum: 10/0a64c900c201b6a880518b7a15d57c53ee3bddd6b51f979e43387d0021537edbf14d266c67c5f02e99866dd1c8a9ab3a3d0a5c42f5b501d67dcc443cd5e5accf
+    size-limit: 14.2.0
+  checksum: 10/b86b99c0da4a01cb92cc1dc1f245039534a48037ca8a6f77b7368529243c4c682081661aabf52f3bc6a8e6a391b3129617ae654e9828ccf787a8551aba62787d
   languageName: node
   linkType: hard
 
-"@size-limit/webpack@npm:^14.1.0":
-  version: 14.1.0
-  resolution: "@size-limit/webpack@npm:14.1.0"
+"@size-limit/webpack@npm:^14.2.0":
+  version: 14.2.0
+  resolution: "@size-limit/webpack@npm:14.2.0"
   dependencies:
     webpack: "npm:^5.111.1"
   peerDependencies:
-    size-limit: 14.1.0
-  checksum: 10/2ff91203cd7effa14c98aa541e87590112e37bf0df3f5a2944fa81a5ec5a03cd23d7617ca68ce53c7b60f25b74c7b2c468a65b7ae89824301a6b86d8beee35a5
+    size-limit: 14.2.0
+  checksum: 10/4be98ad5d527e9c441820768ccc6f07c05853311f681cef31f48208d1e0dd1d41cd74f56be5a22b2d115c4cd5a71974971fc0bf162fa81f1bf33d7d434660325
   languageName: node
   linkType: hard
 
@@ -5493,9 +5493,9 @@ __metadata:
     "@project-tools/stylelint-plugin-vkui": "workspace:1.0.0"
     "@rspack/cli": "npm:^2.2.8"
     "@rspack/core": "npm:^2.2.8"
-    "@size-limit/file": "npm:^14.1.0"
-    "@size-limit/webpack": "npm:^14.1.0"
-    "@size-limit/webpack-css": "npm:^14.1.0"
+    "@size-limit/file": "npm:^14.2.0"
+    "@size-limit/webpack": "npm:^14.2.0"
+    "@size-limit/webpack-css": "npm:^14.2.0"
     "@storybook/addon-a11y": "npm:10.6.1"
     "@storybook/addon-designs": "npm:11.1.4"
     "@storybook/addon-docs": "npm:10.6.1"
@@ -5551,7 +5551,7 @@ __metadata:
     react-dom: "npm:^19.3.0"
     semver: "npm:^7.8.5"
     shx: "npm:^0.4.0"
-    size-limit: "npm:^14.1.0"
+    size-limit: "npm:^14.2.0"
     storybook: "npm:10.6.1"
     style-loader: "npm:^4.0.0"
     stylelint: "npm:^17.15.0"
@@ -5603,7 +5603,7 @@ __metadata:
     "@vkontakte/vkui-floating-ui": "npm:^0.2.8"
     react: "npm:^19.3.0"
     react-dom: "npm:^19.3.0"
-    size-limit: "npm:^14.1.0"
+    size-limit: "npm:^14.2.0"
     storybook: "npm:10.6.1"
     typescript: "npm:^6.0.3"
     vite: "npm:^8.3.1"
@@ -16589,15 +16589,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"size-limit@npm:^14.1.0":
-  version: 14.1.0
-  resolution: "size-limit@npm:14.1.0"
+"size-limit@npm:^14.2.0":
+  version: 14.2.0
+  resolution: "size-limit@npm:14.2.0"
   dependencies:
     lilconfig: "npm:^3.1.3"
     nanospinner: "npm:^1.2.2"
   bin:
     size-limit: bin.js
-  checksum: 10/2fd508ff85b1fa4508ef4f4a6dec4105e613709a082bc06cafde385de4cc2088afbbdbde87569d375205ae0cf6ac62ad4c5c3c312c710c6177995f82305e42b6
+  checksum: 10/acb211e0a801d2cedd193321599f2d97711137d68853a00fc7d29c53ab89a07cdc80465e0f9b4a84ef730add85d4b5bbba63b9fa1d56a76e11e6283c9d0d6186
   languageName: node
   linkType: hard
 
