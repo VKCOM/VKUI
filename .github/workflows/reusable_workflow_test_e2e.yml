@@ -76,7 +76,7 @@ jobs:
 
       - name: Upload Playwright coverage artifact
         if: ${{ always() && hashFiles('packages/vkui/coverage/playwright/lcov.info') != '' }}
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: playwright-coverage-${{ matrix.shardIndex }}-${{ matrix.shardTotal }}
           path: packages/vkui/coverage/playwright/lcov.info
@@ -84,7 +84,7 @@ jobs:
 
       - name: Upload Playwright blob report to GitHub Actions Artifacts
         if: always()
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: all-blob-reports-${{ matrix.shardIndex }}-${{ matrix.shardTotal }}
           path: packages/vkui/blob-report
