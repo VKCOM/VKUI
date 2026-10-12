@@ -4,6 +4,7 @@ import { setRef } from '../lib/utils';
 class ExternalRef<T> implements React.RefObject<T | null> {
   #element: T | null = null;
   readonly #externRefs = new Set<React.Ref<T>>();
+  readonly #cleanups = new Map<React.Ref<T>, () => void>();
 
   constructor(externRefs: Array<React.Ref<T> | undefined | false> = []) {
     externRefs.forEach((ref) => {
@@ -14,14 +15,44 @@ class ExternalRef<T> implements React.RefObject<T | null> {
   }
 
   updateExternRefs(refs: Array<React.Ref<T> | undefined | false>) {
-    refs.forEach((ref) => {
-      if (!ref || this.#externRefs.has(ref)) {
-        return;
+    const nextRefs = new Set(refs.filter((ref): ref is React.Ref<T> => Boolean(ref)));
+    this.#externRefs.forEach((ref) => {
+      if (!nextRefs.has(ref)) {
+        if (this.#element !== null) {
+          this.detachRef(ref);
+        }
+        this.#externRefs.delete(ref);
       }
-
-      setRef(this.#element, ref);
-      this.#externRefs.add(ref);
     });
+    nextRefs.forEach((ref) => {
+      if (!this.#externRefs.has(ref)) {
+        this.#externRefs.add(ref);
+        if (this.#element !== null) {
+          this.attachRef(ref);
+        }
+      }
+    });
+  }
+
+  private attachRef(ref: React.Ref<T>) {
+    if (typeof ref === 'function') {
+      const cleanup = ref(this.#element);
+      if (typeof cleanup === 'function') {
+        this.#cleanups.set(ref, cleanup);
+      }
+    } else {
+      setRef(this.#element, ref);
+    }
+  }
+
+  private detachRef(ref: React.Ref<T>) {
+    const cleanup = this.#cleanups.get(ref);
+    if (cleanup) {
+      this.#cleanups.delete(ref);
+      cleanup();
+    } else {
+      setRef(null, ref);
+    }
   }
 
   get current() {
@@ -29,8 +60,13 @@ class ExternalRef<T> implements React.RefObject<T | null> {
   }
 
   set current(el) {
+    if (this.#element !== null) {
+      this.#externRefs.forEach((ref) => this.detachRef(ref));
+    }
     this.#element = el;
-    this.#externRefs.forEach((ref) => setRef(el, ref));
+    if (el !== null) {
+      this.#externRefs.forEach((ref) => this.attachRef(ref));
+    }
   }
 
   /**
