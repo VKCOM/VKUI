@@ -1,5 +1,8 @@
+'use client';
+
 import { Icon28ChevronRightCircle } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
+import { useExternRef } from '../../../hooks/useExternRef';
 import type { HasRef, HasRootRef, LiteralUnion } from '../../../types';
 import type { ImageBaseSize } from '../../ImageBase/ImageBase';
 import { Tappable, type TappableOmitProps } from '../../Tappable/Tappable';
@@ -12,7 +15,7 @@ const sizeClassNames = {
 };
 
 export interface HorizontalCellShowMoreProps
-  extends Omit<TappableOmitProps, 'getRootRef' | 'size' | 'borderRadiusMode'>,
+  extends Omit<TappableOmitProps, 'getRootRef' | 'ref' | 'size' | 'borderRadiusMode'>,
     HasRef<HTMLElement>,
     HasRootRef<HTMLDivElement> {
   /**
@@ -50,13 +53,15 @@ export const HorizontalCellShowMore = ({
   className,
   style,
   getRef,
-  getRootRef,
+  getRootRef: getRootRefProp,
+  ref: refProp,
   height,
   size = 's',
   children = size === 's' ? 'Все' : 'Показать все',
   centered = false,
   ...restProps
 }: HorizontalCellShowMoreProps): React.ReactNode => {
+  const getRootRef = useExternRef(getRootRefProp, refProp);
   return (
     <div
       style={style}

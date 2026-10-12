@@ -130,6 +130,7 @@ export const Popper = ({
   // rest
   targetRef,
   getRootRef,
+  ref: refProp,
   children,
   usePortal = true,
   onPlacementChange,
@@ -188,7 +189,7 @@ export const Popper = ({
 
   const { arrow: arrowCoords } = middlewareData;
 
-  const handleRootRef = useExternRef<HTMLDivElement>(refs.setFloating, getRootRef);
+  const handleRootRef = useExternRef<HTMLDivElement>(refs.setFloating, getRootRef, refProp);
 
   useIsomorphicLayoutEffect(() => {
     refs.setReference('current' in targetRef ? targetRef.current : targetRef);

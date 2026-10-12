@@ -4,6 +4,7 @@ import * as React from 'react';
 import { classNames, noop } from '@vkontakte/vkjs';
 import { withContext } from '../../hoc/withContext';
 import { withPlatform } from '../../hoc/withPlatform';
+import { useExternRef } from '../../hooks/useExternRef';
 import { millisecondsInSecond } from '../../lib/date';
 import { canUseDOM, type DOMProps, withDOM } from '../../lib/dom';
 import { getNavId, type NavIdProps } from '../../lib/getNavId';
@@ -674,7 +675,7 @@ class ViewInfiniteComponent extends React.Component<
   }
 }
 
-export const ViewInfinite: React.FC<ViewInfiniteProps> = withContext(
+const ViewInfiniteWithContext: React.FC<ViewInfiniteProps> = withContext(
   withContext(
     withContext(
       withPlatform(withDOM<ViewInfiniteProps>(ViewInfiniteComponent)),
@@ -687,3 +688,8 @@ export const ViewInfinite: React.FC<ViewInfiniteProps> = withContext(
   ScrollContext,
   'scroll',
 );
+
+export const ViewInfinite = ({ ref, getRootRef, ...props }: ViewInfiniteProps): React.ReactNode => {
+  const rootRef = useExternRef(ref, getRootRef);
+  return <ViewInfiniteWithContext {...props} getRootRef={rootRef} />;
+};

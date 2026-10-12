@@ -35,10 +35,12 @@ export type ImageBaseOverlayProps =
 const ImageBaseOverlayInteractive = ({
   children,
   className,
-  getRootRef,
+  getRootRef: getRootRefProp,
+  ref: refProp,
   overlayShown,
   ...restProps
 }: ImageBaseOverlayInteractiveProps & { overlayShown?: boolean }) => {
+  const getRootRef = useExternRef(getRootRefProp, refProp);
   const { focusVisible, ...focusEvents } = useFocusVisible();
   const focusVisibleClassNames = useFocusVisibleClassName({ focusVisible, mode: 'inside' });
 
@@ -68,10 +70,11 @@ const ImageBaseOverlayInteractive = ({
 const ImageBaseOverlayNonInteractive = ({
   className,
   getRootRef,
+  ref: refProp,
   overlayShown: overlayShownProps,
   ...restProps
 }: ImageBaseOverlayNonInteractiveProps & { overlayShown?: boolean }) => {
-  const rootRef = useExternRef(getRootRef);
+  const rootRef = useExternRef(getRootRef, refProp);
   const { shown: overlayShown, onClick: onOverlayClick } = useNonInteractiveOverlayProps(rootRef);
 
   return (

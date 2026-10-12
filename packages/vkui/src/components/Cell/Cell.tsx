@@ -14,7 +14,7 @@ import { DEFAULT_DRAGGABLE_LABEL } from './constants';
 import styles from './Cell.module.css';
 
 export interface CellProps
-  extends Omit<SimpleCellProps, 'getRootRef'>,
+  extends Omit<SimpleCellProps, 'getRootRef' | 'ref'>,
     RemovableProps,
     HasRootRef<HTMLDivElement> {
   /**
@@ -78,6 +78,7 @@ export const Cell: React.FC<CellProps> & {
   checked,
   defaultChecked,
   getRootRef,
+  ref: refProp,
   draggerLabel = DEFAULT_DRAGGABLE_LABEL,
   className,
   style,
@@ -95,7 +96,7 @@ export const Cell: React.FC<CellProps> & {
 
   const platform = usePlatform();
 
-  const rootElRef = useExternRef(getRootRef);
+  const rootElRef = useExternRef(getRootRef, refProp);
 
   const dragger = draggable ? (
     <CellDragger

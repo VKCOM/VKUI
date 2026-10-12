@@ -1,3 +1,5 @@
+'use client';
+
 import { type HasRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 
@@ -8,7 +10,7 @@ export function iconClassName(size: number) {
   return `vkuiIcon vkuiIcon--${size} vkuiIcon--w-${size} vkuiIcon--h-${size}`;
 }
 
-interface SvgIconProps extends React.ComponentProps<'svg'>, HasRootRef<SVGElement> {
+interface SvgIconProps extends React.ComponentPropsWithoutRef<'svg'>, HasRootRef<SVGElement> {
   /**
    * Размер иконки.
    */

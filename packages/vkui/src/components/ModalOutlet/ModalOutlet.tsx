@@ -1,6 +1,9 @@
+'use client';
+
 /* eslint-disable jsdoc/require-jsdoc */
 
 import { classNames } from '@vkontakte/vkjs';
+import { useExternRef } from '../../hooks/useExternRef';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import styles from './ModalOutlet.module.css';
 
@@ -19,10 +22,12 @@ export const ModalOutlet = ({
   hidden,
   isDesktop,
   children,
-  getRootRef,
+  getRootRef: getRootRefProp,
+  ref: refProp,
   disableModalOverlay,
   ...restProps
 }: ModalOutletProps) => {
+  const getRootRef = useExternRef(getRootRefProp, refProp);
   return (
     <div
       ref={getRootRef}

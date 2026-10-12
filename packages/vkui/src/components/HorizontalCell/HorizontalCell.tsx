@@ -1,6 +1,9 @@
+'use client';
+
 import type * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { mergeStyle } from '../../helpers/mergeStyle';
+import { useExternRef } from '../../hooks/useExternRef';
 import type { CSSCustomProperties, HasRef, HasRootRef, LiteralUnion } from '../../types';
 import { Avatar } from '../Avatar/Avatar';
 import { Tappable, type TappableOmitProps } from '../Tappable/Tappable';
@@ -27,7 +30,7 @@ const textAlignClassNames = {
 type HorizontalCellSizes = 's' | 'm' | 'l' | 'xl' | 'auto';
 
 export interface HorizontalCellProps
-  extends Omit<TappableOmitProps, 'size' | 'getRootRef' | 'title' | 'borderRadiusMode'>,
+  extends Omit<TappableOmitProps, 'size' | 'getRootRef' | 'ref' | 'title' | 'borderRadiusMode'>,
     HasRootRef<HTMLDivElement>,
     HasRef<HTMLDivElement> {
   /**
@@ -77,7 +80,8 @@ export const HorizontalCell = ({
   subtitle,
   size = 's',
   children = <Avatar size={56} />,
-  getRootRef,
+  getRootRef: getRootRefProp,
+  ref: refProp,
   getRef,
   extraSubtitle,
   textAlign = size === 's' ? 'center' : 'start',
@@ -85,6 +89,7 @@ export const HorizontalCell = ({
   TitleComponent = size === 's' ? Caption : Subhead,
   ...restProps
 }: HorizontalCellProps): React.ReactNode => {
+  const getRootRef = useExternRef(getRootRefProp, refProp);
   const hasTypography =
     hasReactNode(title) || hasReactNode(subtitle) || hasReactNode(extraSubtitle);
 

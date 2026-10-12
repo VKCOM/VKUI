@@ -26,12 +26,14 @@ export interface AccordionContentProps
     React.HTMLAttributes<HTMLDivElement> {}
 
 export const AccordionContent = ({
-  getRootRef,
+  getRootRef: getRootRefProp,
+  ref: refProp,
   getRef,
   className,
   children,
   ...restProps
 }: AccordionContentProps) => {
+  const getRootRef = useExternRef(getRootRefProp, refProp);
   const { expanded, labelId, contentId, unmountOnCollapsed } = React.useContext(AccordionContext);
 
   const inRef = useExternRef(getRef);

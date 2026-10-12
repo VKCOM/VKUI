@@ -204,6 +204,7 @@ export const ImageBase: React.FC<ImageBaseProps> & {
   filter,
   keepAspectRatio = false,
   getRootRef,
+  ref: refProp,
   elementTiming,
   slotProps,
   ...restProps
@@ -218,7 +219,7 @@ export const ImageBase: React.FC<ImageBaseProps> & {
   }
 
   const size = sizeProp ?? minOr([sizeToNumber(widthSize), sizeToNumber(heightSize)], defaultSize);
-  const wrapperRef = useExternRef(getRootRef);
+  const wrapperRef = useExternRef(getRootRef, refProp);
 
   const width = widthSize ?? (keepAspectRatio ? undefined : size);
   const height = heightSize ?? (keepAspectRatio ? undefined : size);

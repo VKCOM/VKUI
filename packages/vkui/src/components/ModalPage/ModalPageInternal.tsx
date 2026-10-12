@@ -49,6 +49,7 @@ export interface ModalPageInternalProps
  */
 export const ModalPageInternal = ({
   getRootRef,
+  ref: refProp,
   open,
   header,
   footer,
@@ -82,7 +83,7 @@ export const ModalPageInternal = ({
   ...restProps
 }: ModalPageInternalProps) => {
   const { hasCustomPanelHeaderAfter } = useConfigProvider();
-  const rootRef = useExternRef(getRootRef);
+  const rootRef = useExternRef(getRootRef, refProp);
   const [transitionState, { ref, onTransitionEnd }] = useCSSTransition<HTMLDivElement>(open, {
     enableAppear: !disableOpenAnimation,
     enableEnter: !disableOpenAnimation,

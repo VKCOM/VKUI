@@ -8,6 +8,7 @@ import {
   getAdaptivityConditionalRenderForSizeXCompact,
   useAdaptivityConditionalRender,
 } from '../../hooks/useAdaptivityConditionalRender';
+import { useExternRef } from '../../hooks/useExternRef';
 import { usePlatform } from '../../hooks/usePlatform';
 import { type SizeTypeValues, ViewWidth, type ViewWidthType } from '../../lib/adaptivity';
 import type {
@@ -159,6 +160,7 @@ export const PanelHeader = ({
   shadow,
   getRef,
   getRootRef,
+  ref: refProp,
   fixed,
   typographyProps,
   ...restProps
@@ -173,6 +175,7 @@ export const PanelHeader = ({
   );
   const isVKCOM = platform === 'vkcom';
   const isFixed = fixed !== undefined ? fixed : !isVKCOM;
+  const rootRef = useExternRef(getRootRef, refProp, !isFixed && getRef);
   const separatorVisible = delimiter === 'auto' || delimiter === 'separator';
   const staticSeparatorVisible = !float && separatorVisible;
   const staticSpacingVisible =
@@ -198,7 +201,7 @@ export const PanelHeader = ({
         getViewWidthClassName(viewWidth, legacySizeX),
         density !== 'regular' && densityClassNames[density],
       )}
-      getRootRef={isFixed ? getRootRef : getRef}
+      getRootRef={rootRef}
     >
       {isFixed ? (
         <FixedLayout

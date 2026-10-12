@@ -48,6 +48,7 @@ const warn = warnOnce('Gallery');
 export const CarouselBase = ({
   bullets = false,
   getRootRef,
+  ref: refProp,
   children,
   slideWidth = '100%',
   slideIndex = 0,
@@ -86,7 +87,7 @@ export const CarouselBase = ({
   const textDirection = useConfigDirection();
   const isRtl = textDirection === 'rtl';
 
-  const rootRef = useExternRef(getRootRef);
+  const rootRef = useExternRef(getRootRef, refProp);
   const viewportRef = useExternRef(getRef);
   const layerRef = React.useRef<HTMLDivElement>(null);
   const animationFrameRef = React.useRef<ReturnType<typeof requestAnimationFrame> | null>(null);

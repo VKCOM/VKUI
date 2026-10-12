@@ -39,6 +39,7 @@ export type UsePopoverResult<ElementType extends HTMLElement = HTMLElement> = {
 export const usePopover = <ElementType extends HTMLElement = HTMLElement>({
   // UsePopoverProps
   getRootRef,
+  ref: refProp,
   arrow: withArrow,
   arrowHeight = DEFAULT_ARROW_HEIGHT,
   arrowPadding = DEFAULT_ARROW_PADDING,
@@ -87,7 +88,7 @@ export const usePopover = <ElementType extends HTMLElement = HTMLElement>({
   role = 'dialog',
   ...restPopoverProps
 }: UsePopoverProps): UsePopoverResult<ElementType> => {
-  const focusTrapRootRef = useExternRef(getRootRef);
+  const focusTrapRootRef = useExternRef(getRootRef, refProp);
   const renderFloatingComponent: UseFloatingElementProps<HTMLDivElement>['renderFloatingComponent'] =
     React.useCallback(
       ({

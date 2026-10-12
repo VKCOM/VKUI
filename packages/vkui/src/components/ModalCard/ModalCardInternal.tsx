@@ -64,6 +64,7 @@ export const ModalCardInternal = ({
   modalOverlayTestId,
   modalDismissButtonTestId,
   getRootRef,
+  ref: refProp,
   dismissButtonMode,
   dismissLabel,
   noFocusToDialog,
@@ -113,7 +114,7 @@ export const ModalCardInternal = ({
       },
     },
   );
-  const handleRef = useExternRef<HTMLDivElement>(setSheetEl, ref, getRootRef);
+  const handleRef = useExternRef<HTMLDivElement>(setSheetEl, ref, getRootRef, refProp);
   const style = keyboardOpened
     ? {
         ...styleProp,

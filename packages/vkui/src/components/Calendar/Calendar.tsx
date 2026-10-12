@@ -4,6 +4,7 @@ import * as React from 'react';
 import { classNames, isSameDate } from '@vkontakte/vkjs';
 import { useCalendar } from '../../hooks/useCalendar';
 import { useCustomEnsuredControl } from '../../hooks/useEnsuredControl';
+import { useExternRef } from '../../hooks/useExternRef';
 import { Keys, pressedKey } from '../../lib/accessibility';
 import { clamp, isFirstDay, isLastDay, navigateDate, NAVIGATION_KEYS } from '../../lib/calendar';
 import {
@@ -145,7 +146,8 @@ const warn = warnOnce('Calendar');
  * @see https://vkui.io/components/calendar
  */
 export const Calendar = ({
-  getRootRef,
+  getRootRef: getRootRefProp,
+  ref: refProp,
   'value': valueProp,
   defaultValue,
   onChange,
@@ -193,6 +195,7 @@ export const Calendar = ({
   dayTestId,
   ...props
 }: CalendarProps): React.ReactNode => {
+  const getRootRef = useExternRef(getRootRefProp, refProp);
   const _onChange = React.useCallback(
     (date: Date | null) => {
       const newDate = convertDateFromTimeZone(date, timezone);

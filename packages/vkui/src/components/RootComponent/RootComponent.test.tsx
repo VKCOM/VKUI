@@ -8,9 +8,33 @@ describe('RootComponent', () => {
   baselineComponent(RootComponent);
 
   describe('render prop', () => {
+    it('does not overwrite an explicit ref with spread render props', () => {
+      const localRef = createRef<HTMLDivElement>();
+      render(
+        <RootComponent<HTMLDivElement>
+          render={({ getRootRef, ...props }) => (
+            <div ref={localRef} {...props} data-testid="rendered" />
+          )}
+        />,
+      );
+
+      expect(localRef.current).toBe(screen.getByTestId('rendered'));
+    });
+
+    baselineComponent(
+      (props) => (
+        <RootComponent<HTMLDivElement>
+          {...props}
+          render={({ getRootRef, ...rootProps }) => <div ref={getRootRef} {...rootProps} />}
+        />
+      ),
+      {},
+      'baseline with render',
+    );
+
     it('uses render instead of Component', () => {
       render(
-        <RootComponent
+        <RootComponent<HTMLSpanElement>
           Component="div"
           render={({ getRootRef, ...props }) => <span data-testid="rendered" {...props} />}
         />,
@@ -22,7 +46,7 @@ describe('RootComponent', () => {
 
     it('passes resolved className and style to render', () => {
       render(
-        <RootComponent
+        <RootComponent<HTMLDivElement>
           className="customClassName"
           baseClassName="baseClassName"
           style={{ color: 'red' }}
@@ -40,7 +64,7 @@ describe('RootComponent', () => {
 
     it('passes rest props to render', () => {
       render(
-        <RootComponent
+        <RootComponent<HTMLDivElement>
           id="custom-id"
           aria-label="label"
           render={({ getRootRef, ...props }) => <div data-testid="rendered" {...props} />}
@@ -55,7 +79,7 @@ describe('RootComponent', () => {
     it('forwards getRootRef through render', () => {
       const ref = createRef<HTMLDivElement>();
       render(
-        <RootComponent
+        <RootComponent<HTMLDivElement>
           getRootRef={ref}
           render={({ getRootRef, ...props }) => (
             <div data-testid="rendered" ref={getRootRef} {...props} />
@@ -123,7 +147,7 @@ describe('RootComponent', () => {
       };
 
       const { rerender } = render(
-        <RootComponent
+        <RootComponent<HTMLDivElement>
           Component={(props) => (
             <div {...props}>
               <Child />
@@ -136,7 +160,7 @@ describe('RootComponent', () => {
       expect(unmount).not.toHaveBeenCalled();
 
       rerender(
-        <RootComponent
+        <RootComponent<HTMLDivElement>
           Component={(props) => (
             <div {...props}>
               <Child />

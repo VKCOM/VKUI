@@ -15,6 +15,7 @@ import styles from './ActionSheet.module.css';
 
 export const ActionSheetDropdownSheet = ({
   getRootRef,
+  ref: refProp,
   children,
   closing,
   // these 2 props are only omitted - ActionSheetDesktop compat
@@ -31,7 +32,7 @@ export const ActionSheetDropdownSheet = ({
   ...restProps
 }: SharedDropdownProps): React.ReactNode => {
   const { density } = useAdaptivityWithJSMediaQueries();
-  const focusTrapRootRef = useExternRef(getRootRef);
+  const focusTrapRootRef = useExternRef(getRootRef, refProp);
   const platform = usePlatform();
 
   const { onClose: onActionSheetClose } =

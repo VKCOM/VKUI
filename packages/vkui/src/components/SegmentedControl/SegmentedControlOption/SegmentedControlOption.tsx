@@ -22,6 +22,7 @@ export const SegmentedControlOption = ({
   getRef,
   children,
   getRootRef,
+  ref,
   before,
   rootProps,
   inputProps,
@@ -32,6 +33,7 @@ export const SegmentedControlOption = ({
     hoverClassName={styles.hover}
     activeClassName={styles.hover}
     getRootRef={getRootRef}
+    ref={ref}
     {...rootProps}
   >
     {inputProps && (

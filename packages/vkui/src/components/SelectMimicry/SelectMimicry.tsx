@@ -46,6 +46,7 @@ export const SelectMimicry = ({
   children,
   align,
   getRootRef,
+  ref: refProp,
   multiline,
   disabled,
   onClick,
@@ -57,7 +58,7 @@ export const SelectMimicry = ({
   autoFocus,
   ...restProps
 }: SelectMimicryProps): React.ReactNode => {
-  const rootRef = useExternRef(getRootRef);
+  const rootRef = useExternRef(getRootRef, refProp);
 
   const { density = 'none' } = useAdaptivity();
   const title = children || placeholder;

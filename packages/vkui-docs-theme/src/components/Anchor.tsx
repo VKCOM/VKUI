@@ -16,7 +16,7 @@ type AnchorProps = Omit<LinkProps, 'href' | 'as'> & {
 
 const EXTERNAL_HREF_REGEX = /https?:\/\//;
 
-const Link = React.forwardRef<HTMLAnchorElement, LinkProps>((props, ref) => (
+const Link = React.forwardRef<HTMLElement, LinkProps>((props, ref) => (
   <VKUILink {...props} getRootRef={ref} />
 ));
 

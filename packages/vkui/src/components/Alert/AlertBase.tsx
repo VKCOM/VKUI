@@ -19,7 +19,7 @@ import { AlertDescription, AlertTitle } from './AlertTypography';
 import styles from './Alert.module.css';
 
 export interface AlertBaseProps
-  extends Omit<AlertProps, 'usePortal' | 'className' | 'style' | 'getRootRef'> {
+  extends Omit<AlertProps, 'usePortal' | 'className' | 'style' | 'getRootRef' | 'ref'> {
   /**
    * Флаг, определяющий состояние закрытия модального окна.
    * Когда установлен в true, запускает анимацию закрытия окна.

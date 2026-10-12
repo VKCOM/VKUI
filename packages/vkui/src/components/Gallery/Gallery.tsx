@@ -38,11 +38,12 @@ export const Gallery = ({
   onDragStart,
   onDragEnd,
   getRootRef,
+  ref: refProp,
   onMouseOver,
   onMouseOut,
   ...props
 }: GalleryProps): React.ReactNode => {
-  const rootRef = useExternRef(getRootRef);
+  const rootRef = useExternRef(getRootRef, refProp);
   const [localSlideIndex, setSlideIndex] = React.useState(initialSlideIndex);
   const isControlled = typeof props.slideIndex === 'number';
   const slideIndex = isControlled ? (props.slideIndex ?? 0) : localSlideIndex;

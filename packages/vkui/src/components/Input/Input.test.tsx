@@ -19,8 +19,11 @@ describe('Input', () => {
   it('should work with slotProps', () => {
     const rootRef1 = createRef<HTMLDivElement>();
     const rootRef2 = createRef<HTMLDivElement>();
+    const rootRef3 = createRef<HTMLDivElement>();
+    const rootRef4 = createRef<HTMLDivElement>();
     const inputRef1 = createRef<HTMLInputElement>();
     const inputRef2 = createRef<HTMLInputElement>();
+    const inputRef3 = createRef<HTMLInputElement>();
     const onRootClick1 = vi.fn();
     const onRootClick2 = vi.fn();
     const onInputClick = vi.fn();
@@ -30,6 +33,7 @@ describe('Input', () => {
         data-testid="input"
         className="rootClassName"
         getRootRef={rootRef1}
+        ref={rootRef3}
         getRef={inputRef1}
         value="value"
         autoComplete="off"
@@ -48,11 +52,13 @@ describe('Input', () => {
               color: 'rgb(255, 0, 0)',
             },
             'getRootRef': rootRef2,
+            'ref': rootRef4,
             'onClick': onRootClick2,
           },
           input: {
             'className': 'inputClassName',
             'getRootRef': inputRef2,
+            'ref': inputRef3,
             'data-testid': 'input-2',
             'onClick': onInputClick,
           },
@@ -78,9 +84,12 @@ describe('Input', () => {
 
     expect(rootRef1.current).toBe(rootRef2.current);
     expect(rootRef1.current).toBe(root);
+    expect(rootRef3.current).toBe(root);
+    expect(rootRef4.current).toBe(root);
 
     expect(inputRef1.current).toBe(inputRef2.current);
     expect(inputRef1.current).toBe(input);
+    expect(inputRef3.current).toBe(input);
 
     fireEvent.click(input);
     expect(onInputClick).toHaveBeenCalledTimes(1);

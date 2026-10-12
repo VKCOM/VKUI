@@ -51,12 +51,13 @@ export const FormLayoutGroup = ({
   removePlaceholder = 'Удалить',
   onRemove,
   getRootRef,
+  ref: refProp,
   disabled,
   ...restProps
 }: FormLayoutGroupProps): React.ReactNode => {
   const { density = 'none' } = useAdaptivity();
   const isRemovable = removable && mode === 'horizontal';
-  const rootEl = useExternRef(getRootRef);
+  const rootEl = useExternRef(getRootRef, refProp);
 
   return (
     <RootComponent

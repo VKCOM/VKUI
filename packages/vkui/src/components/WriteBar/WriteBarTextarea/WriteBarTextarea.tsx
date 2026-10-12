@@ -21,6 +21,7 @@ type WriteBarTextareaProps = Omit<RootComponentProps<HTMLTextAreaElement>, 'rend
 export const WriteBarTextarea = ({
   className,
   getRootRef,
+  ref: refProp,
   onHeightChange,
   onChange,
   ...restProps
@@ -28,7 +29,7 @@ export const WriteBarTextarea = ({
   const platform = usePlatform();
 
   const [refResizeTextarea, resize] = useResizeTextarea(onHeightChange, true);
-  const textareaRef = useExternRef(getRootRef, refResizeTextarea);
+  const textareaRef = useExternRef(getRootRef, refResizeTextarea, refProp);
 
   React.useEffect(resize, [resize, platform]);
 

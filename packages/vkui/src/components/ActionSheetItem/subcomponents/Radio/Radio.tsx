@@ -1,6 +1,9 @@
+'use client';
+
 import type * as React from 'react';
 import { Icon20CheckCircleOn, Icon24CheckCircleOn } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
+import { useExternRef } from '../../../../hooks/useExternRef';
 import type { HasRef, HasRootRef } from '../../../../types';
 import { AdaptiveIconRenderer } from '../../../AdaptiveIconRenderer/AdaptiveIconRenderer';
 import { RootComponent } from '../../../RootComponent/RootComponent';
@@ -23,12 +26,14 @@ interface ActionSheetItemCheckedProps
 
 export const Radio = ({
   children = adaptiveIcon,
-  getRootRef,
+  getRootRef: getRootRefProp,
+  ref: refProp,
   getRef,
   className,
   style,
   ...restProps
 }: ActionSheetItemCheckedProps): React.ReactNode => {
+  const getRootRef = useExternRef(getRootRefProp, refProp);
   return (
     <RootComponent
       getRootRef={getRootRef}

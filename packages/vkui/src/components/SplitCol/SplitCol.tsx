@@ -92,9 +92,10 @@ export const SplitCol = (props: SplitColProps): React.ReactNode => {
     autoSpaced,
     stretchedOnMobile,
     getRootRef,
+    ref: refProp,
     ...restProps
   } = props;
-  const baseRef = useExternRef(getRootRef);
+  const baseRef = useExternRef(getRootRef, refProp);
   const { viewWidth } = useAdaptivity();
   const animate = useTransitionAnimate(animateProp);
 
