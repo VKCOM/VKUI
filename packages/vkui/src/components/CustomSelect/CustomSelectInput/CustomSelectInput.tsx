@@ -57,7 +57,8 @@ export interface CustomSelectInputProps
 export const CustomSelectInput = ({
   style: rootStyle,
   className: rootClassName,
-  getRootRef: rootGetRootRef,
+  getRootRef: rootGetRootRefProp,
+  ref: refProp,
   align = 'left',
   getRef,
   before,
@@ -75,6 +76,7 @@ export const CustomSelectInput = ({
   slotProps,
   ...restProps
 }: CustomSelectInputProps): React.ReactNode => {
+  const rootGetRootRef = useExternRef(rootGetRootRefProp, refProp);
   const { density = 'none' } = useAdaptivity();
 
   const { style, className, getRootRef, ...rootRest } = useMergeProps(

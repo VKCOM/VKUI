@@ -155,6 +155,38 @@ export function getRootRefTest(Component: React.ComponentType<any>) {
   });
 }
 
+export function refTest(Component: React.ComponentType<any>) {
+  it.each(['object', 'callback'] as const)('ref (%s)', async (type) => {
+    const ref = React.createRef<Element>();
+    const callbackRef = vi.fn((element: Element | null) => {
+      ref.current = element;
+    });
+    const { unmount } = render(<Component ref={type === 'object' ? ref : callbackRef} />);
+    await waitForFloatingPosition();
+    await act(vi.runAllTimers);
+
+    expect(ref.current).toBeInstanceOf(Element);
+
+    unmount();
+    expect(ref.current).toBeNull();
+  });
+
+  it('ref together with getRootRef', async () => {
+    const ref = React.createRef<Element>();
+    const getRootRef = React.createRef<Element>();
+    const { unmount } = render(<Component ref={ref} getRootRef={getRootRef} />);
+    await waitForFloatingPosition();
+    await act(vi.runAllTimers);
+
+    expect(ref.current).toBeInstanceOf(Element);
+    expect(ref.current).toBe(getRootRef.current);
+
+    unmount();
+    expect(ref.current).toBeNull();
+    expect(getRootRef.current).toBeNull();
+  });
+}
+
 export function baselineComponent<Props extends object>(
   RawComponent: React.ComponentType<Props>,
   {
@@ -251,6 +283,7 @@ export function baselineComponent<Props extends object>(
 
     if (getRootRef) {
       getRootRefTest(Component);
+      refTest(Component);
     }
   });
 }

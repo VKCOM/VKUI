@@ -102,6 +102,7 @@ export const OnboardingTooltip = ({
   maxWidth = TOOLTIP_MAX_WIDTH,
   'style': styleProp,
   getRootRef,
+  ref: refProp,
   disableArrow = false,
   onPlacementChange,
   disableFlipMiddleware = false,
@@ -154,7 +155,7 @@ export const OnboardingTooltip = ({
     }),
   });
 
-  const tooltipRef = useExternRef<HTMLDivElement>(getRootRef, refs.setFloating);
+  const tooltipRef = useExternRef<HTMLDivElement>(getRootRef, refs.setFloating, refProp);
   const focusTrapRootRef = React.useRef<HTMLDivElement | null>(null);
   const [childRef, child] = usePatchChildren(children, {
     'aria-describedby': shown ? tooltipId : undefined,

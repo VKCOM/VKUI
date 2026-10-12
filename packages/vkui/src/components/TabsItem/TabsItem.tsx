@@ -89,6 +89,7 @@ export const TabsItem = ({
   role = 'tab',
   tabIndex: tabIndexProp,
   getRootRef,
+  ref: refProp,
   hoverMode = styles.hover,
   activeMode = '',
   hasActive = false,
@@ -142,7 +143,7 @@ export const TabsItem = ({
     tabIndex = selected ? 0 : -1;
   }
 
-  const rootRef = useExternRef(getRootRef);
+  const rootRef = useExternRef(getRootRef, refProp);
 
   const prevSelectedRef = React.useRef<boolean | undefined>(undefined);
 

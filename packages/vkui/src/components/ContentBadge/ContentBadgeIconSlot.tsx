@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
+import { useExternRef } from '../../hooks/useExternRef';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { ContentBadgeContext } from './ContentBadgeContext';
 import styles from './ContentBadge.module.css';
@@ -20,10 +21,12 @@ type ContentBadgeIconSlotProps = HTMLAttributesWithRootRef<HTMLDivElement>;
 
 export const ContentBadgeIconSlot = ({
   className,
-  getRootRef,
+  getRootRef: getRootRefProp,
+  ref: refProp,
   children,
   ...restProps
 }: ContentBadgeIconSlotProps) => {
+  const getRootRef = useExternRef(getRootRefProp, refProp);
   const { size, isSingleChild } = React.useContext(ContentBadgeContext);
 
   if (size === 's') {

@@ -3,7 +3,7 @@ import { type HasRootRef } from '../../../types';
 import { svgPathToString } from '../../svg/path/path';
 import * as shapes from './shapes';
 
-export interface ShapeProps extends React.ComponentProps<'svg'>, HasRootRef<SVGElement> {
+export interface ShapeProps extends React.ComponentPropsWithoutRef<'svg'>, HasRootRef<SVGElement> {
   size?: number;
   params: shapes.ShapeParameters;
 }

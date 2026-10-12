@@ -101,6 +101,7 @@ export const FormItem: React.FC<FormItemProps> & {
   onRemove,
   removePlaceholder = 'Удалить',
   getRootRef,
+  ref: refProp,
   htmlFor,
   bottomId,
   noPadding,
@@ -108,7 +109,7 @@ export const FormItem: React.FC<FormItemProps> & {
   disabled,
   ...restProps
 }: FormItemProps) => {
-  const rootEl = useExternRef(getRootRef);
+  const rootEl = useExternRef(getRootRef, refProp);
   const { density = 'none' } = useAdaptivity();
 
   const wrappedChildren = (

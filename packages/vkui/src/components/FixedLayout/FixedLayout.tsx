@@ -3,6 +3,7 @@
 import { useCallback } from 'react';
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
+import { useExternRef } from '../../hooks/useExternRef';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useResizeObserver } from '../../hooks/useResizeObserver';
 import { useDOM } from '../../lib/dom';
@@ -47,12 +48,14 @@ export const FixedLayout = ({
   children,
   style,
   vertical,
-  getRootRef,
+  getRootRef: getRootRefProp,
+  ref: refProp,
   filled,
   className,
   useParentWidth,
   ...restProps
 }: FixedLayoutProps): React.ReactNode => {
+  const getRootRef = useExternRef(getRootRefProp, refProp);
   /* istanbul ignore if: не проверяем в тестах */
   if (process.env.NODE_ENV === 'development') {
     warn(
@@ -68,13 +71,9 @@ export const FixedLayout = ({
 
   const handleRootRef = useCallback(
     (node: HTMLElement | null) => {
-      if (!node) {
-        return;
-      }
-
       setRef(node, getRootRef);
       setRef(node, ref);
-      setRef(node.parentElement, parentRef);
+      setRef(node?.parentElement ?? null, parentRef);
     },
     [getRootRef],
   );

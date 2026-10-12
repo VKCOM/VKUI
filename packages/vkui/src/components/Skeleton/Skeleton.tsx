@@ -161,10 +161,11 @@ export const Skeleton = ({
   duration,
   margin,
   getRootRef,
+  ref: refProp,
   visibilityDelay,
   ...restProps
 }: SkeletonProps): React.ReactNode => {
-  const rootRef = useExternRef(getRootRef);
+  const rootRef = useExternRef(getRootRef, refProp);
 
   const disableAnimation = !useSkeletonSyncAnimation(noAnimation, duration);
   const skeletonGradientLeft = useSkeletonPosition(rootRef);

@@ -273,11 +273,12 @@ export const Touch = ({
   useCapture = false,
   Component = 'div',
   getRootRef,
+  ref: refProp,
   noSlideClick = false,
   stopPropagation = false,
   ...restProps
 }: TouchProps) => {
-  const hostRef = useExternRef(getRootRef);
+  const hostRef = useExternRef(getRootRef, refProp);
   const [isTouchEnabled] = React.useState(touchEnabled);
   const gestureRef = React.useRef<Gesture | null>(null);
   const didSlide = React.useRef(false);

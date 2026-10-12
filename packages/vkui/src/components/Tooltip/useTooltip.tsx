@@ -3,6 +3,7 @@
 import * as React from 'react';
 import { type Ref, useCallback } from 'react';
 import { classNames } from '@vkontakte/vkjs';
+import { useExternRef } from '../../hooks/useExternRef';
 import {
   type FloatingComponentProps,
   useFloatingElement,
@@ -65,7 +66,8 @@ export const useTooltip = ({
 
   // TooltipBaseProps
   id: idProp,
-  getRootRef,
+  getRootRef: getRootRefProp,
+  ref: refProp,
   appearance = 'neutral',
   style: styleProp,
   className,
@@ -74,6 +76,7 @@ export const useTooltip = ({
   onPlacementChange,
   ...popperProps
 }: UseTooltipProps): UseTooltipResult => {
+  const getRootRef = useExternRef(getRootRefProp, refProp);
   const generatedId = React.useId();
   const tooltipId = idProp || generatedId;
 

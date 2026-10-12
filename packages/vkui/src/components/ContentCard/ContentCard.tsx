@@ -1,5 +1,8 @@
+'use client';
+
 import type * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
+import { useExternRef } from '../../hooks/useExternRef';
 import { getFetchPriorityProp } from '../../lib/utils';
 import type { HasComponent, HasRef, HasRootRef } from '../../types';
 import { Card, type CardProps } from '../Card/Card';
@@ -13,7 +16,7 @@ import styles from './ContentCard.module.css';
 export interface ContentCardProps
   extends HasRootRef<HTMLDivElement>,
     HasComponent,
-    Omit<TappableOmitProps, 'getRootRef' | 'crossOrigin' | 'title' | 'src'>,
+    Omit<TappableOmitProps, 'getRootRef' | 'ref' | 'crossOrigin' | 'title' | 'src'>,
     Omit<React.ImgHTMLAttributes<HTMLImageElement>, keyof React.HTMLAttributes<HTMLImageElement>>,
     HasRef<HTMLImageElement> {
   /**
@@ -64,7 +67,8 @@ export const ContentCard = ({
   className,
   mode = 'shadow',
   style,
-  getRootRef,
+  getRootRef: getRootRefProp,
+  ref: refProp,
   // img props
   getRef,
   maxHeight,
@@ -87,6 +91,7 @@ export const ContentCard = ({
   render,
   ...restProps
 }: ContentCardProps): React.ReactNode => {
+  const getRootRef = useExternRef(getRootRefProp, refProp);
   return (
     <Card
       mode={mode}

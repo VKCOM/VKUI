@@ -98,6 +98,7 @@ export const FormField = ({
   status = 'default',
   children,
   getRootRef,
+  ref: refProp,
   before,
   after,
   beforeAlign = 'center',
@@ -111,7 +112,7 @@ export const FormField = ({
   onMouseLeave,
   ...restProps
 }: FormFieldOwnProps): React.ReactNode => {
-  const elRef = useExternRef(getRootRef);
+  const elRef = useExternRef(getRootRef, refProp);
   const { density = 'none' } = useAdaptivity();
   const [hover, setHover] = React.useState(false);
 

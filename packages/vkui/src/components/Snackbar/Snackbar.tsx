@@ -133,6 +133,7 @@ export const Snackbar: React.FC<SnackbarProps> & { Basic: typeof Basic } = ({
   subtitle,
   offsetY,
   getRootRef: getRootRefProp,
+  ref: refProp,
 
   slotProps,
   open: openProp,
@@ -169,7 +170,7 @@ export const Snackbar: React.FC<SnackbarProps> & { Basic: typeof Basic } = ({
   const direction = useConfigDirection();
   const isRtl = direction === 'rtl';
 
-  const rootRef = useExternRef(getRootRef);
+  const rootRef = useExternRef(getRootRef, refProp);
   const focused = useFocusWithin(rootRef);
   const inRef = React.useRef<HTMLDivElement>(null);
   const panGestureRecognizer = React.useRef<UIPanGestureRecognizer | null>(null);

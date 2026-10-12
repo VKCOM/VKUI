@@ -256,6 +256,7 @@ export const DateInput = ({
   closeOnChange = true,
   disablePickers,
   getRootRef,
+  ref: refProp,
   name,
   autoFocus,
   disabled,
@@ -380,7 +381,7 @@ export const DateInput = ({
 
   const { density = 'none' } = useAdaptivity();
 
-  const handleRootRef = useExternRef(rootRef, getRootRef);
+  const handleRootRef = useExternRef(rootRef, getRootRef, refProp);
 
   useIsomorphicLayoutEffect(
     function resetValueOnCloseCalendar() {

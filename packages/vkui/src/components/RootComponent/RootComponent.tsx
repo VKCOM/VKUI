@@ -1,6 +1,9 @@
+'use client';
+
 import type * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { mergeStyle } from '../../helpers/mergeStyle';
+import { useExternRef } from '../../hooks/useExternRef';
 import type { HasComponent, HasRender, HasRootRef } from '../../types';
 import styles from './RootComponent.module.css';
 
@@ -24,7 +27,8 @@ export interface RootComponentInternalProps<T>
   extends RootComponentProps<T>,
     RootComponentExtendProps {}
 
-interface RenderRootComponentProps<T> extends Omit<RootComponentInternalProps<T>, 'render'> {
+interface RenderRootComponentProps<T>
+  extends Omit<RootComponentInternalProps<T>, 'render' | 'ref'> {
   /**
    * Функция кастомного рендера. См. `RootComponentProps['render']`.
    */
@@ -46,10 +50,12 @@ export const RootComponent = <T,>({
   className,
   baseStyle,
   style,
-  getRootRef,
+  getRootRef: getRootRefProp,
+  ref: refProp,
   render,
   ...restProps
 }: RootComponentInternalProps<T>): React.ReactNode => {
+  const getRootRef = useExternRef(getRootRefProp, refProp);
   const resolvedProps = {
     className: classNames(
       className,

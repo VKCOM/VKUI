@@ -44,6 +44,7 @@ export const ModalOverlay = ({
   visible = false,
   position = 'absolute',
   getRootRef,
+  ref: refProp,
   onClick,
   onClosed,
   onShowed,
@@ -58,7 +59,7 @@ export const ModalOverlay = ({
     onExited: onClosed,
     onEntered: onShowed,
   });
-  const handleRef = useExternRef(getRootRef, ref);
+  const handleRef = useExternRef(getRootRef, ref, refProp);
 
   return (
     <div

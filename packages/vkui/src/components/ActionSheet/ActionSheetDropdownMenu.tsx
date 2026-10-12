@@ -35,6 +35,7 @@ export const ActionSheetDropdownMenu = ({
   allowClickPropagation = false,
   onClick,
   getRootRef,
+  ref: refProp,
   // FocusTrap props
   autoFocus,
   restoreFocus,
@@ -44,7 +45,7 @@ export const ActionSheetDropdownMenu = ({
 }: SharedDropdownProps): React.ReactNode => {
   const platform = usePlatform();
   const { density } = useAdaptivityWithJSMediaQueries();
-  const focusTrapRootRef = useExternRef(getRootRef);
+  const focusTrapRootRef = useExternRef(getRootRef, refProp);
   const elementRef = React.useRef<HTMLDivElement | null>(null);
 
   const { onClose: onActionSheetClose } =

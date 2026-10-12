@@ -149,6 +149,7 @@ export interface ChipsSelectProps<O extends ChipOption>
 export const ChipsSelect = <Option extends ChipOption>({
   // FormFieldProps
   getRootRef,
+  ref: refProp,
   className,
   status = 'default',
   icon: dropdownIconProp,
@@ -286,7 +287,7 @@ export const ChipsSelect = <Option extends ChipOption>({
   });
 
   // Связано с ChipsInputProps
-  const rootRef = useExternRef(getRootRef);
+  const rootRef = useExternRef(getRootRef, refProp);
   const inputRef = useExternRef(getInputRef, inputRefHook);
 
   // Связано с CustomSelectDropdownProps

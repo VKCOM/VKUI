@@ -1,6 +1,7 @@
 'use client';
 
 import { useContext } from 'react';
+import { useExternRef } from '../../../hooks/useExternRef';
 import { setRef } from '../../../lib/utils';
 import type { ModalOverlayProps } from '../../ModalOverlay/ModalOverlay';
 import { ModalRootOverlayContext } from '../ModalRootContext';
@@ -20,11 +21,13 @@ export type VisuallyHiddenModalOverlayProps = ModalOverlayProps;
 export const VisuallyHiddenModalOverlay = ({
   visible: visibleExcluded,
   position: positionExcluded,
-  getRootRef,
+  getRootRef: getRootRefProp,
+  ref: refProp,
   disableOpenAnimation,
   disableCloseAnimation,
   ...restProps
 }: VisuallyHiddenModalOverlayProps) => {
+  const getRootRef = useExternRef(getRootRefProp, refProp);
   const ref = useContext(ModalRootOverlayContext);
   return (
     <div

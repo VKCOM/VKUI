@@ -12,6 +12,11 @@ const panelHeader = () => screen.getByTestId('header');
 
 describe('PanelHeader', () => {
   baselineComponent(PanelHeader);
+  baselineComponent(
+    (props: PanelHeaderProps) => <PanelHeader {...props} fixed={false} />,
+    {},
+    'baseline without fixed layout',
+  );
 
   it('resolves isFixed if fixed prop if it is passed', () => {
     const { rerender } = render(<PanelHeaderTest fixed />);

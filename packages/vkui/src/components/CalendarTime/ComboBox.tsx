@@ -104,6 +104,7 @@ type ComboBoxProps = InputProps & {
 
 export function ComboBox({
   getRootRef,
+  ref: refProp,
   onBlur,
   onFocus,
   after,
@@ -113,7 +114,7 @@ export function ComboBox({
   onClickOption,
   ...restProps
 }: ComboBoxProps) {
-  const ref = useExternRef(getRootRef);
+  const ref = useExternRef(getRootRef, refProp);
   const inputRef = useExternRef(slotProps?.input?.getRootRef);
 
   const [focus, setFocus, setBlur] = useBooleanState(false);

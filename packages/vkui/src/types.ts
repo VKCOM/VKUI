@@ -15,6 +15,7 @@ export type HasDataAttribute = Record<
 >;
 
 export interface HasRootRef<T> {
+  ref?: React.Ref<T> | undefined;
   getRootRef?: React.Ref<T> | undefined;
 }
 
@@ -34,7 +35,9 @@ export type HasRender<T> = {
    * Позволяет гибко объединять несколько компонентов без создания
    * промежуточных DOM-узлов и без ремаунта поддерева на каждый рендер.
    */
-  render?: ((props: React.AllHTMLAttributes<T> & HasRootRef<T>) => React.ReactNode) | undefined;
+  render?:
+    | ((props: React.AllHTMLAttributes<T> & Omit<HasRootRef<T>, 'ref'>) => React.ReactNode)
+    | undefined;
 };
 
 export interface HasAlign {

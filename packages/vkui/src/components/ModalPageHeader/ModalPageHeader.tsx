@@ -8,6 +8,7 @@ import {
   isSizeXCompactFallback,
   useAdaptivityWithJSMediaQueries,
 } from '../../hooks/useAdaptivityWithJSMediaQueries';
+import { useExternRef } from '../../hooks/useExternRef';
 import { usePlatform } from '../../hooks/usePlatform';
 import type { HasRef, HasRootRef } from '../../types';
 import { PanelHeader, type PanelHeaderProps } from '../PanelHeader/PanelHeader';
@@ -31,11 +32,13 @@ export interface ModalPageHeaderProps
 export const ModalPageHeader = ({
   children,
   noSeparator = false,
-  getRootRef,
+  getRootRef: getRootRefProp,
+  ref: refProp,
   className,
   typographyProps,
   ...restProps
 }: ModalPageHeaderProps): React.ReactNode => {
+  const getRootRef = useExternRef(getRootRefProp, refProp);
   const platform = usePlatform();
   const { sizeX: legacySizeXContext } = useAdaptivity();
   const { isDesktop, sizeX: legacySizeX, viewWidth } = useAdaptivityWithJSMediaQueries();

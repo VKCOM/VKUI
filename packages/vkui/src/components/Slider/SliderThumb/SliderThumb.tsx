@@ -34,6 +34,7 @@ interface SliderThumbProps extends HasRootRef<HTMLSpanElement>, HasDataAttribute
 export const SliderThumb = ({
   className,
   getRootRef,
+  ref: refProp,
   inputProps,
   withTooltip,
   isActive,
@@ -75,7 +76,7 @@ export const SliderThumb = ({
 
   const [isHovered, setHoveredTrue, setHoveredFalse] = useBooleanState(false);
 
-  const handleRootRef = useExternRef<HTMLSpanElement>(getRootRef, refs.setReference);
+  const handleRootRef = useExternRef<HTMLSpanElement>(getRootRef, refs.setReference, refProp);
 
   const shouldShowTooltip = withTooltip && (focusVisible || isHovered || isActive);
 

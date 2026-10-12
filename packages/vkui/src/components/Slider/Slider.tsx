@@ -136,7 +136,8 @@ export const Slider = ({
   defaultValue = multipleProp ? [min, max] : min,
   disabled,
   className,
-  getRootRef,
+  getRootRef: getRootRefProp,
+  ref: refProp,
   getAriaLabel,
   getAriaValueText,
   startThumbTestId,
@@ -147,6 +148,7 @@ export const Slider = ({
   style: styleProp,
   ...restProps
 }: SliderProps | SliderMultipleProps): React.ReactNode => {
+  const getRootRef = useExternRef(getRootRefProp, refProp);
   const { density = 'none' } = useAdaptivity();
   const direction = useConfigDirection();
   const isRtl = direction === 'rtl';

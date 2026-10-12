@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import { classNames, isSameDate } from '@vkontakte/vkjs';
+import { useExternRef } from '../../hooks/useExternRef';
 import { useLocale } from '../../hooks/useLocale';
 import { useTodayDate } from '../../hooks/useTodayDate';
 import { getDaysNames, getWeeks } from '../../lib/calendar';
@@ -145,11 +146,13 @@ export const CalendarDays = ({
   showNeighboringMonth = false,
   dayProps,
   listenDayChangesForUpdate = false,
-  getRootRef,
+  getRootRef: getRootRefProp,
+  ref: refProp,
   renderDayContent,
   dayTestId,
   ...props
 }: CalendarDaysProps): React.ReactNode => {
+  const getRootRef = useExternRef(getRootRefProp, refProp);
   const locale = useLocale();
   const now = useTodayDate(listenDayChangesForUpdate);
 
@@ -189,6 +192,7 @@ export const CalendarDays = ({
         {currentMonthLabel}
       </VisuallyHidden>
       <RootComponent
+        getRootRef={getRootRef}
         role="grid"
         {...props}
         baseClassName={styles.host}

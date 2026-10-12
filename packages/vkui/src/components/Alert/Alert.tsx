@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import { useExternRef } from '../../hooks/useExternRef';
 import { warnOnce } from '../../lib/warnOnce';
 import type {
   AlignType,
@@ -133,10 +134,12 @@ export const Alert = ({
   usePortal,
   style,
   className,
-  getRootRef,
+  getRootRef: getRootRefProp,
+  ref: refProp,
   onClose,
   ...restProps
 }: AlertProps): React.ReactNode => {
+  const getRootRef = useExternRef(getRootRefProp, refProp);
   const [closing, setClosing] = React.useState(false);
 
   const close = React.useCallback(() => {

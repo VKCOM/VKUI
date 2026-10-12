@@ -21,6 +21,7 @@ export const useMergeProps = <T extends BaseProps = BaseProps>(
   const rootSlotGetRef = slotProps?.getRootRef;
 
   const getRootRef = useExternRef(originalSlotGetRef, rootSlotGetRef);
+  const ref = useExternRef(originalProps.ref, slotProps?.ref);
 
   if (!slotProps) {
     return filterProps(originalProps);
@@ -60,6 +61,9 @@ export const useMergeProps = <T extends BaseProps = BaseProps>(
   }
   if (rootSlotGetRef || originalSlotGetRef) {
     resolvedProps.getRootRef = getRootRef;
+  }
+  if (originalProps.ref || slotProps.ref) {
+    resolvedProps.ref = ref;
   }
 
   return filterProps(resolvedProps);

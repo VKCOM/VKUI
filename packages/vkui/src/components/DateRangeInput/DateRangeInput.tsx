@@ -240,6 +240,7 @@ export const DateRangeInput = ({
   closeOnChange = true,
   disablePickers,
   getRootRef,
+  ref: refProp,
   name,
   autoFocus,
   disabled,
@@ -371,7 +372,7 @@ export const DateRangeInput = ({
 
   const { density = 'none' } = useAdaptivity();
 
-  const handleRootRef = useExternRef(rootRef, getRootRef);
+  const handleRootRef = useExternRef(rootRef, getRootRef, refProp);
 
   const onCalendarChange = React.useCallback(
     (newValue: DateRangeType) => {
