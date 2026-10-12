@@ -21,7 +21,7 @@
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.test.tsbuildinfo",
     "target": "esnext",
     "module": "esnext",
-    "lib": ["es2020", "dom", "dom.Iterable"],
+    "lib": ["ESNext", "dom", "dom.Iterable"],
     "types": ["node"],
     "moduleResolution": "bundler",
     "jsx": "react-jsx",
