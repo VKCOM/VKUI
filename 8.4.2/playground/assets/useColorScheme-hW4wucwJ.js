@@ -1,0 +1,1 @@
+import{a as e,n as t}from"./rolldown-runtime-DkW27tQK.js";import{t as n}from"./react-BZJXY1be.js";import{o as r,t as i}from"./ConfigProviderSubContexts-DpjbjCeo.js";import{r as a}from"./colorScheme-B63Lgs3E.js";function o(){return s.useContext(i)??`light`}var s;function c(){return(c=t((()=>{s=e(n(),1),r(),a()})))()}export{o as n,c as t};

@@ -7,9 +7,9 @@
 :HL["/_next/static/css/fa2934d112574db6.css","style"]
 :HL["/_next/static/css/0430611849c22bee.css","style"]
 :HL["/_next/static/css/e7ec54de1a0cc22a.css","style"]
-:HL["/_next/static/css/6f97c3da0d9403df.css","style"]
+:HL["/_next/static/css/0c5c4386b3cd6047.css","style"]
 :HL["/_next/static/css/93599187b50fe48e.css","style"]
 :HL["/_next/static/css/194b95083a6ba1ac.css","style"]
 :HL["/_next/static/css/7b5f6b68da73fea3.css","style"]
 :HL["/_next/static/css/2efa1b85ab2a38c5.css","style"]
-0:{"tree":{"name":"","param":null,"prefetchHints":4112,"slots":{"children":{"name":"mdxPath","param":{"type":"oc","key":"components/locale-provider","siblings":["_not-found","_global-error","apple-icon.png","favicon.ico","icon.svg"]},"prefetchHints":4160,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":4256,"slots":null}}}}},"staleTime":300,"buildId":"jZV3YR-5I8Ohe6jUP-YPw"}
+0:{"tree":{"name":"","param":null,"prefetchHints":4112,"slots":{"children":{"name":"mdxPath","param":{"type":"oc","key":"components/locale-provider","siblings":["_not-found","_global-error","apple-icon.png","favicon.ico","icon.svg"]},"prefetchHints":4160,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":4256,"slots":null}}}}},"staleTime":300,"buildId":"bw26lgbDxwH95Iqv7gSXp"}

@@ -1,0 +1,120 @@
+﻿---
+description: Компонент для отображения нескольких аватаров в виде сетки. Поддерживает от 1 до 4 элементов.
+tags: media
+---
+
+<Overview group="data-display">
+
+# GridAvatar [tag:component]
+
+Компонент для отображения нескольких аватаров в виде сетки. Поддерживает от 1 до 4 элементов.
+
+</Overview>
+
+## Использование
+
+Передавайте массив ссылок на изображения в свойство `src`:
+
+{/* @example-description: Базовый `GridAvatar` с четырьмя изображениями участников. */}
+<Playground>
+  ```jsx
+  <GridAvatar
+    src={[
+      'https://avatars.githubusercontent.com/u/61377022?s=50',
+      'https://avatars.githubusercontent.com/u/5850354?s=50',
+      'https://avatars.githubusercontent.com/u/7431217?s=50',
+      'https://avatars.githubusercontent.com/u/14944123?s=50',
+    ]}
+  />
+  ```
+</Playground>
+
+**Особенности отображения:**
+
+- 1 элемент — занимает всю область;
+- 2 элемента — области поделены на половину;
+- 3 элемента — один элемент занимает половину, два остальных по четверти;
+- 4 элемента — занимают равные четверти.
+
+{/* @example-description: Сравнение раскладки `GridAvatar` для 1, 2, 3 и 4 изображений. */}
+<Playground>
+  ```jsx
+  <GridAvatar src={['https://avatars.githubusercontent.com/u/61377022?s=50']} />
+  <GridAvatar
+    src={[
+      'https://avatars.githubusercontent.com/u/61377022?s=50',
+      'https://avatars.githubusercontent.com/u/5850354?s=50',
+    ]}
+  />
+  <GridAvatar
+    src={[
+      'https://avatars.githubusercontent.com/u/61377022?s=50',
+      'https://avatars.githubusercontent.com/u/7431217?s=50',
+      'https://avatars.githubusercontent.com/u/5850354?s=50',
+    ]}
+  />
+  <GridAvatar
+    src={[
+      'https://avatars.githubusercontent.com/u/61377022?s=50',
+      'https://avatars.githubusercontent.com/u/5850354?s=50',
+      'https://avatars.githubusercontent.com/u/7431217?s=50',
+      'https://avatars.githubusercontent.com/u/14944123?s=50',
+    ]}
+  />
+  ```
+</Playground>
+
+## Добавление индикатора
+
+Используйте подкомпонент `Badge` для индикаторов:
+
+{/* @example-description: `GridAvatar` с бейджем в углу для дополнительной индикации. */}
+<Playground>
+  ```jsx
+  <GridAvatar
+    src={[
+      'https://avatars.githubusercontent.com/u/5850354?s=50',
+      'https://avatars.githubusercontent.com/u/14944123?s=50',
+    ]}
+  >
+    <GridAvatar.Badge background="stroke">
+      <Icon20GiftCircleFillRed />
+    </GridAvatar.Badge>
+  </GridAvatar>
+  ```
+</Playground>
+
+## Важные ограничения
+
+- Передавайте минимум 1 элемент в массиве `src`.
+- Передавайте максимум 4 элемента (лишние игнорируются).
+
+## Свойства и методы [#api]
+
+### GridAvatar
+
+| Свойство | Тип | По умолчанию | Описание |
+| --- | --- | --- | --- |
+| `elementTiming` | `string` | `-` | Смотри https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/elementtiming. |
+| `filter` | `Filter` | `-` | Пользовательское значения стиля filter. Подробнее можно почитать в [документации](https://developer.mozilla.org/ru/docs/Web/CSS/filter).  При передаче этого свойства `<img />` будет обёрнут в дополнительный контейнер. |
+| `getRef` | `Ref<HTMLImageElement>` | `-` | **Deprecated**: Since 7.9.0. Будет удалено в v9. Используйте `slotProps={ img: { getRootRef: ... } }`. |
+| `getRootRef` | `Ref<HTMLDivElement>` | `-` |  |
+| `heightSize` | `string \| number` | `-` | Высота изображения. |
+| `keepAspectRatio` | `boolean` | `-` | Флаг для сохранения пропорций картинки. Для корректной работы необходимо задать размеры хотя бы одной стороны картинки. |
+| `noBorder` | `boolean` | `-` | Отключает обводку. |
+| `objectFit` | `ObjectFit` | `-` | Пользовательское значения стиля object-fit Подробнее можно почитать в [документации](https://developer.mozilla.org/ru/docs/Web/CSS/object-fit). |
+| `objectPosition` | `ObjectPosition<string \| number>` | `-` | Пользовательское значения стиля object-position Подробнее можно почитать в [документации](https://developer.mozilla.org/ru/docs/Web/CSS/object-position). |
+| `size` | `LiteralUnion<16 \| 20 \| 24 \| 28 \| 32 \| 36 \| 40 \| 44 \| 48 \| 56 \| 64 \| 72 \| 80 \| 88 \| 96, number>` | `48` | Задаёт размер картинки.  Используйте размеры заданные дизайн-системой `16 \| 20 \| 24 \| 28 \| 32 \| 36 \| 40 \| 44 \| 48 \| 56 \| 64 \| 72 \| 80 \| 88 \| 96`.  > ⚠️ Использование кастомного размера – это пограничный кейс. |
+| `slotProps` | `{ img?: (ClassAttributes<HTMLImageElement> & ImgHTMLAttributes<HTMLImageElement> & HasRootRef<HTMLImageElement> & HasDataAttribute); } \| undefined` | `-` | Свойства, которые можно прокинуть внутрь компонента: - `img`: свойства для прокидывания в тег `<img>`;. |
+| `src` | `string[]` | `[]` | Массив со ссылками. От 1 до 4 элементов. |
+| `widthSize` | `string \| number` | `-` | Ширина изображения. |
+| `withTransparentBackground` | `boolean` | `-` | Отключает фон, заданный по умолчанию. Полезен для отображения картинок с прозрачностью. |
+
+### GridAvatar.Badge
+
+| Свойство | Тип | По умолчанию | Описание |
+| --- | --- | --- | --- |
+| `background` | `"stroke" \| "shadow"` | `-` | Вид подложки под иконку.  - `"stroke"` – имитирует вырез (⚠️ если фон под компонентом динамический, то ожидайте баг). - `"shadow"` – добавляет небольшую тень (⚠️ если фон под компонентом динамический, то ожидайте баг). |
+| `**children** \*` | `ReactElement<ImageBaseExpectedIconProps, string \| JSXElementConstructor<any>>` | `-` | Принимает иконку.  > 📝 Нужный для `<ImageBase size={...} />` размер можно узнать из функции `getBadgeIconSizeByImageBaseSize()`.  > Предпочтительней использовать иконки из `@vkontakte/icons`.  > 📊️ Если вы хотите передать кастомную иконку, то следует именовать её по шаблону `Icon<size><name>`. Или же > чтобы в неё был передан параметр `width`. Тогда мы сможем выводить в консоль подсказку правильного ли размера вы > использовали иконку. |
+| `getRootRef` | `Ref<HTMLDivElement>` | `-` |  |
+

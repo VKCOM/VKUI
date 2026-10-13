@@ -1,0 +1,89 @@
+﻿---
+description: Хук, возвращающий расширенную версию параметров адаптивности.
+---
+
+<Overview type="hook">
+# useAdaptivityWithJSMediaQueries
+
+Хук возвращает расширенную версию [параметров адаптивности](/overview/adaptivity#adaptivity-props). Условия реализованы через
+[matchMedia()](https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia).
+
+Связанные страницы:
+
+- [Адаптивность](/overview/adaptivity)
+- [Серверный рендер | Примечание к адаптивности](/overview/ssr#adaptivity-note)
+
+</Overview>
+
+## Когда использовать?
+
+Используйте когда нужно показать или скрыть элемент интерфейса по тому или иному брейкпоинту, но при условии, что вы:
+
+- либо **не поддерживаете SSR**;
+- либо **у вас есть компонент, который не показывается при первом рендере**.
+
+В библиотеке хук используется для всплывающих окон как раз из-за того, что они удовлетворяют условию показа только после первого
+рендера.
+
+## API
+
+### Возвращаемое значение
+
+Объект с параметрами адаптивности:
+
+| Свойство     | Тип        | Описание |
+| ------------ | ---------- | -------- |
+| `isDesktop`  | `boolean`  | Флаг десктопного режима. |
+| `viewWidth`  | `number`   | Текущий брейкпоинт ширины экрана. |
+| `viewHeight` | `number`   | Текущий брейкпоинт высоты экрана. |
+| `sizeX`      | `'compact' \| 'regular'` | Устаревшее поле. Используйте `density`. |
+| `sizeY`      | `'compact' \| 'regular'` | Устаревшее поле. Используйте `density`. |
+| `density`    | `'compact' \| 'regular'` | Плотность интерфейса. |
+| `hasPointer` | `boolean`  | Есть ли у устройства точный указатель. |
+| `hasHover`   | `boolean`  | Поддерживает ли устройство наведение. |
+
+## Пример использования
+
+Предположим, что нам не нужна поддержка SSR и нужно показать дополнительную колонку только на настольных экранах.
+
+{/* @example-description: Десктопная колонка без SSR. */}
+<Playground direction="column" align="stretch">
+  ```jsx
+  const { isDesktop, viewWidth, density } = useAdaptivityWithJSMediaQueries();
+
+  return (
+    <Flex
+      direction={isDesktop ? "row" : "column"}
+      align="stretch"
+      gap="m"
+      inlineSize="100%"
+      padding="xl"
+    >
+      {isDesktop && (
+        <Card style={{ width: 220 }}>
+          <Box padding="system">
+            <Caption level="1">Дополнительная колонка (desktop)</Caption>
+          </Box>
+        </Card>
+      )}
+      <Card style={{ flex: 1 }}>
+        <Flex direction="column" gap="xl" padding="system">
+          <Title level="3">
+            Основной контент
+          </Title>
+          <Caption level="1">isDesktop: {String(isDesktop)}</Caption>
+          <Caption level="1">viewWidth: {viewWidth}</Caption>
+          <Caption level="1">density: {density}</Caption>
+        </Flex>
+      </Card>
+      {!isDesktop && (
+        <Card>
+          <Box padding="system">
+            <Caption level="1">На мобильном дополнительная колонка скрыта.</Caption>
+          </Box>
+        </Card>
+      )}
+    </Flex>
+  );
+  ```
+</Playground>

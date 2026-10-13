@@ -1,0 +1,1 @@
+import{n as e}from"./rolldown-runtime-DkW27tQK.js";var t;function n(){return(n=e((()=>{t=e=>typeof e==`object`&&!!e&&e.hasOwnProperty(`current`)})))()}export{t as n,n as t};
