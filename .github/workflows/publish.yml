@@ -55,28 +55,28 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        uses: actions/checkout@v7.0.1
         with:
           token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
 
       - name: Setting up the repository environment
-        uses: ./.github/actions/publish-workflow-1-setup
+        uses: $/.github/actions/publish-workflow-1-setup
 
       - name: Bump version
         id: updated_versions_info
-        uses: ./.github/actions/publish-workflow-2-bump-version
+        uses: $/.github/actions/publish-workflow-2-bump-version
         with:
           package_name: ${{ inputs.package_name }}
           version_type: ${{ inputs.custom_version || inputs.version_type }}
           prerelease_id: ${{ inputs.prerelease_id }}
 
       - name: Run pre-publish checks
-        uses: ./.github/actions/publish-workflow-3-validation
+        uses: $/.github/actions/publish-workflow-3-validation
         with:
           package_name: ${{ inputs.package_name }}
 
       - name: Complete publish (for prerelease)
-        uses: ./.github/actions/publish-workflow-4-complete
+        uses: $/.github/actions/publish-workflow-4-complete
         with:
           branch: ${{ github.ref }}
           prev_version: ${{ steps.updated_versions_info.outputs.prev_version }}

@@ -20,15 +20,15 @@ jobs:
       image: ${{ steps.result.outputs.value }}
     steps:
       - name: Checkout
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        uses: actions/checkout@v7.0.1
 
       # Создаем кэш для ветки один раз
       - name: Checkout LFS objects
-        uses: ./.github/actions/lfs
+        uses: $/.github/actions/lfs
         with:
           apt_mirror: ${{ vars.APT_MIRROR }}
 
-      - uses: ./.github/actions/get-playwright-docker-image
+      - uses: $/.github/actions/get-playwright-docker-image
         id: result
 
   update_screens:
@@ -46,10 +46,10 @@ jobs:
     name: 'Run e2e tests for (shard ${{ matrix.shardIndex }}/${{ matrix.shardTotal }})'
     steps:
       - name: Checkout
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        uses: actions/checkout@v7.0.1
 
       - name: Checkout LFS objects
-        uses: ./.github/actions/lfs
+        uses: $/.github/actions/lfs
         with:
           apt_mirror: ${{ vars.APT_MIRROR }}
           sudo_cmd: ''
@@ -59,7 +59,7 @@ jobs:
           apt-get install -y rsync zip
 
       - name: Node setup
-        uses: ./.github/actions/node-setup
+        uses: $/.github/actions/node-setup
 
       - name: Update screenshots
         # Почему HOME=/root см. https://github.com/microsoft/playwright/issues/6500
@@ -90,7 +90,7 @@ jobs:
 
       - name: Upload archive
         if: steps.zip-screenshots.outputs.needUpload == 'true'
-        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        uses: actions/upload-artifact@v7.0.2
         with:
           name: screenshots-${{ matrix.shardIndex }}-${{ matrix.shardTotal }}
           path: packages/vkui/screenshots-${{ matrix.shardIndex }}-${{ matrix.shardTotal }}.zip
@@ -104,11 +104,11 @@ jobs:
     name: 'Collect updated screenshots and push changes'
     steps:
       - name: Checkout
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        uses: actions/checkout@v7.0.1
 
       - name: Download artifacts
         id: artifacts
-        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        uses: actions/download-artifact@v8.0.2
         with:
           path: packages/vkui/artifacts
 
@@ -134,7 +134,7 @@ jobs:
 
       - name: Create pull request with updated screenshots
         if: ${{ steps.unzip.outputs.found == 'true' && github.event_name == 'push' }}
-        uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1
+        uses: peter-evans/create-pull-request@v8.1.1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           title: 'ci(e2e): Update screenshots for ${{ github.ref_name }}'
