@@ -53,12 +53,16 @@ export interface PanelProps extends HTMLAttributesWithRootRef<HTMLDivElement>, N
    * Тип оформления панели.
    *
    * Позволяет переопределить тип оформления панели,
-   * заданный через адаптивность или свойство layout у [AppRoot](https://vkui.io/components/app-root),
+   * заданный через адаптивность или свойство layoutMode у [AppRoot](https://vkui.io/components/app-root),
    * глобально задающим тип оформления макета.
    *
    * Если установлен `card` - Panel имеет фон отличный от фона контента.
-   * Позволяет компоненту [Group](https://vkui.io/components/group) со свойством mode='card' точечно выглядеть как карточка.
+   * Позволяет компоненту [Group](https://vkui.io/components/group) со свойством layoutMode='card' точечно выглядеть как карточка.
    * Тип `plain` — соответствует фону по умолчанию.
+   */
+  layoutMode?: 'plain' | 'card' | undefined;
+  /**
+   * @deprecated Используйте `layoutMode`.
    */
   mode?: 'plain' | 'card' | undefined;
   /**
@@ -74,13 +78,14 @@ export const Panel = ({
   centered = false,
   children,
   nav,
+  layoutMode: layoutModeProp,
   mode: modeProp,
   disableBackground,
   ...restProps
 }: PanelProps): React.ReactNode => {
   const { sizeX: legacySizeX, viewWidth = 'none' } = useAdaptivity();
 
-  const mode = usePanelMode(modeProp, viewWidth, legacySizeX);
+  const layoutMode = usePanelLayoutMode(layoutModeProp ?? modeProp, viewWidth, legacySizeX);
 
   return (
     <NavPanelIdContext.Provider value={restProps.id || nav}>
@@ -93,7 +98,7 @@ export const Panel = ({
           getViewWidthClassName(viewWidth, legacySizeX),
           centered && stylesPanelHeaderGlobal.vkuiInternalPanelCentered,
           disableBackground && styles.disableBackground,
-          stylesMode[mode],
+          stylesMode[layoutMode],
         )}
       >
         <Touch
@@ -117,19 +122,19 @@ export const Panel = ({
   );
 };
 
-function usePanelMode(
-  modeProp: PanelProps['mode'],
+function usePanelLayoutMode(
+  layoutModeProp: PanelProps['layoutMode'],
   viewWidth: ViewWidthType | 'none',
   legacySizeX: SizeTypeValues | undefined,
 ): 'plain' | 'card' | 'none' {
-  const { layout } = React.useContext(AppRootContext);
+  const { layoutMode } = React.useContext(AppRootContext);
 
-  if (modeProp) {
-    return modeProp;
+  if (layoutModeProp) {
+    return layoutModeProp;
   }
 
-  if (layout) {
-    return layout;
+  if (layoutMode) {
+    return layoutMode;
   }
 
   // TODO [>=10]: #9015 Удалить это условие

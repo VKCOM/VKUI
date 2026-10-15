@@ -57,7 +57,7 @@ export const PanelModePlayground = (props: ComponentPlaygroundProps) => {
       propSets={[
         {
           $adaptivity: 'x',
-          mode: ['plain', 'card', undefined],
+          layoutMode: ['plain', 'card', undefined],
         },
         {
           $adaptivity: 'x',
@@ -68,9 +68,9 @@ export const PanelModePlayground = (props: ComponentPlaygroundProps) => {
       {(props: PanelProps) => (
         <Panel {...props}>
           <div style={{ padding: '8px', boxSizing: 'content-box' }}>
-            <Group mode={props.mode}>
+            <Group layoutMode={props.layoutMode}>
               <div style={{ minHeight: '100px', minWidth: '100px' }}>
-                Text within Group with mode {props.mode}
+                Text within Group with layoutMode {props.layoutMode}
               </div>
             </Group>
           </div>

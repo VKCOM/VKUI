@@ -135,7 +135,7 @@ return (
   <SplitLayout header={hasHeader && <PanelHeader delimiter="none" />}>
     {viewWidth.tabletPlus && (
       <SplitCol className={viewWidth.tabletPlus.className} fixed width={280} maxWidth={280}>
-        <Panel mode="card">
+        <Panel layoutMode="card">
           {hasHeader && <PanelHeader />}
           <Group>
             <Box padding="system">Колонка слева</Box>
@@ -144,9 +144,9 @@ return (
       </SplitCol>
     )}
     <SplitCol maxWidth="560px" stretchedOnMobile autoSpaced>
-      <Panel mode="card">
+      <Panel layoutMode="card">
         <PanelHeader>Шапка</PanelHeader>
-        <Group mode="card">
+        <Group layoutMode="card">
           <Box padding="system">Колонка справа</Box>
         </Group>
       </Panel>
