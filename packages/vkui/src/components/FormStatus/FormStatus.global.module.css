@@ -1,0 +1,11 @@
+.vkuiInternalFormStatus.formStatusBanner::before {
+  border: 0;
+}
+
+.vkuiInternalFormStatusModeError.formStatusBanner {
+  background-color: var(--vkui--color_background_negative_tint);
+}
+
+.vkuiInternalFormStatusModeError .formStatusSubtitle {
+  color: var(--vkui--color_background_negative);
+}

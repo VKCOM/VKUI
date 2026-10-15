@@ -6,6 +6,7 @@ import { usePlatform } from '../../hooks/usePlatform';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './Tabbar.module.css';
+import stylesGlobal from '../TabbarItem/TabbarItem.global.module.css';
 
 export interface TabbarProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   /**
@@ -24,9 +25,9 @@ const getItemsLayoutClassName = (
 ): string => {
   switch (itemsLayout) {
     case 'horizontal':
-      return 'vkuiInternalTabbar--layout-horizontal';
+      return stylesGlobal.vkuiInternalTabbarLayoutHorizontal;
     case 'vertical':
-      return 'vkuiInternalTabbar--layout-vertical';
+      return stylesGlobal.vkuiInternalTabbarLayoutVertical;
     default:
       return React.Children.count(children) > 2
         ? getItemsLayoutClassName('vertical', [])
@@ -43,7 +44,7 @@ export const Tabbar = ({ plain = false, mode, ...restProps }: TabbarProps): Reac
   return (
     <RootComponent
       baseClassName={classNames(
-        'vkuiInternalTabbar',
+        stylesGlobal.vkuiInternalTabbar,
         styles.host,
         platform === 'ios' && styles.ios,
         getItemsLayoutClassName(mode, restProps.children),

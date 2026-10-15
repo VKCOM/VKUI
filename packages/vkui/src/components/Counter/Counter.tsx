@@ -7,6 +7,8 @@ import type { CSSCustomProperties, HTMLAttributesWithRootRef } from '../../types
 import { Caption } from '../Typography/Caption/Caption';
 import { Headline } from '../Typography/Headline/Headline';
 import styles from './Counter.module.css';
+import panelHeaderButtonStylesGlobal from '../PanelHeaderButton/PanelHeaderButton.global.module.css';
+import tabbarStylesGlobal from '../TabbarItem/TabbarItem.global.module.css';
 
 const modeClassNames = {
   primary: styles.modePrimary,
@@ -107,7 +109,8 @@ export const Counter = ({
       style={mergeStyle(style, styleProp)}
       Component="span"
       className={classNames(
-        'vkuiInternalCounter',
+        tabbarStylesGlobal.tabbarItemIndicatorCounter,
+        panelHeaderButtonStylesGlobal.panelHeaderButtonCounter,
         styles.host,
         modeClassNames[mode],
         !!appearance && appearanceClassNames[appearance],

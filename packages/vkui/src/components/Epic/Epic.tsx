@@ -7,6 +7,7 @@ import { warnOnce } from '../../lib/warnOnce';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { ScrollSaver } from './ScrollSaver';
+import stylesGlobal from './Epic.global.module.css';
 import styles from './Epic.module.css';
 
 export interface EpicProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
@@ -48,7 +49,7 @@ export const Epic = ({
   return (
     <RootComponent
       {...restProps}
-      baseClassName={classNames(styles.host, tabbar && 'vkuiInternalEpic--hasTabbar')}
+      baseClassName={classNames(styles.host, tabbar && stylesGlobal.vkuiInternalEpicHasTabbar)}
     >
       <ScrollSaver
         key={activeStory}

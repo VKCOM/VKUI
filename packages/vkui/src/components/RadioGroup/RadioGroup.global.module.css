@@ -1,0 +1,5 @@
+.vkuiInternalRadioGroup .radioHost {
+  box-sizing: border-box;
+  flex: 1;
+  margin: 0;
+}

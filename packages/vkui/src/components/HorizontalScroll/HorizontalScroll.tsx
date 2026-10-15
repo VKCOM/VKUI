@@ -16,6 +16,7 @@ import { useHover } from '../Clickable/useState';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { ScrollArrow, type ScrollArrowProps } from '../ScrollArrow/ScrollArrow';
 import styles from './HorizontalScroll.module.css';
+import stylesTabsGlobal from '../Tabs/Tabs.global.module.css';
 
 /* eslint-disable jsdoc/require-jsdoc */
 interface ScrollContext {
@@ -407,7 +408,7 @@ export const HorizontalScroll = ({
       {...handlers}
       baseClassName={classNames(
         styles.host,
-        'vkuiInternalHorizontalScroll',
+        stylesTabsGlobal.horizontalScrollHost,
         (showArrows === 'always' || isHovered) && styles.showArrows,
         isRtl && styles.rtl,
         withPadding && styles.withPadding,
@@ -445,7 +446,11 @@ export const HorizontalScroll = ({
         {...focusEvents}
       >
         <ContentWrapperComponent
-          className={classNames(styles.inWrapper, contentWrapperClassName)}
+          className={classNames(
+            styles.inWrapper,
+            contentWrapperClassName,
+            stylesTabsGlobal.horizontalScrollInWrapper,
+          )}
           ref={contentWrapperRef}
         >
           {children}

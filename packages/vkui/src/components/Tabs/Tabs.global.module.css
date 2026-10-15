@@ -1,0 +1,32 @@
+.vkuiInternalTabs .horizontalScrollHost {
+  min-inline-size: 100%;
+}
+
+.vkuiInternalTabsWithGaps .horizontalScrollInWrapper::after,
+.vkuiInternalTabsWithGaps .horizontalScrollInWrapper::before {
+  display: block;
+  flex-shrink: 0;
+  inline-size: var(--vkui--size_base_padding_horizontal--regular);
+  block-size: 1px;
+  content: '';
+}
+
+.vkuiInternalTabsVkcom .tabsItemHost {
+  flex-grow: 0;
+  min-inline-size: auto;
+  padding-inline: 10px;
+}
+
+/* VKCOM positioning takes precedence over TabsItem's density-specific offsets. */
+.vkuiInternalTabsVkcom .tabsItemUnderline.tabsItemUnderline {
+  inset-block-end: 0;
+  inset-inline: 2px;
+}
+
+/* Scrollable items override the VKCOM sizing above. */
+.horizontalScrollHost .tabsItemHost {
+  flex-grow: 1;
+  flex-shrink: 0;
+  flex-basis: auto;
+  min-inline-size: 64px;
+}

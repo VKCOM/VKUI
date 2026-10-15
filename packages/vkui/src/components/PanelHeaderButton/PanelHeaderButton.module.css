@@ -90,19 +90,6 @@
   color: var(--vkui--color_icon_secondary);
 }
 
-/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-.vkcom > :not(:global(.vkuiInternalBadge)):not(:global(.vkuiInternalCounter)) {
-  opacity: 0.7;
-  transition: opacity 0.3s;
-}
-
-/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-.vkcom.hover > :not(:global(.vkuiInternalCounter)):not(:global(.vkuiInternalBadge)),
-/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-.vkcom.active > :not(:global(.vkuiInternalCounter)):not(:global(.vkuiInternalBadge)) {
-  opacity: 1;
-}
-
 .vkcom {
   display: flex;
   align-items: center;
@@ -131,45 +118,4 @@
   .backViewWidthNone.backIos .label {
     display: none;
   }
-}
-
-/*
- * CMP:
- * Counter
- */
-
-/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-.host :global(.vkuiInternalCounter) {
-  position: absolute;
-  inset-block-start: 4px;
-  inset-inline-end: 4px;
-  padding: 0;
-}
-
-/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-.host :global(.vkuiIcon--24) ~ :global(.vkuiInternalCounter),
-/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-.ios :global(.vkuiInternalCounter) {
-  inset-block-start: 2px;
-  inset-inline-end: 2px;
-}
-
-/*
- * CMP:
- * Badge
- */
-
-/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-.host :global(.vkuiInternalBadge) {
-  position: absolute;
-  inset-block-start: 8px;
-  inset-inline-end: 8px;
-}
-
-/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-.host :global(.vkuiIcon--24) ~ :global(.vkuiInternalBadge),
-/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-.ios :global(.vkuiInternalBadge) {
-  inset-block-start: 6px;
-  inset-inline-end: 6px;
 }

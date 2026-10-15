@@ -16,6 +16,8 @@ import { FormField, type FormFieldProps } from '../FormField/FormField';
 import { RootComponent } from '../RootComponent/RootComponent';
 import type { SelectType } from '../Select/Select';
 import { SelectTypography } from '../SelectTypography/SelectTypography';
+import calendarHeaderStylesGlobal from '../CalendarHeader/CalendarHeader.global.module.css';
+import stylesFormItemGlobal from '../FormItem/FormItem.global.module.css';
 import styles from '../Select/Select.module.css';
 
 const warn = warnOnce('NativeSelect');
@@ -198,7 +200,7 @@ export const NativeSelect = ({
       Component="div"
       className={classNames(
         styles.host,
-        'vkuiInternalNativeSelect',
+        stylesFormItemGlobal.nativeSelect,
         before && styles.hasBefore,
         empty && styles.empty,
         multiline && styles.multiline,
@@ -232,7 +234,10 @@ export const NativeSelect = ({
         {placeholder && <option value={NOT_SELECTED.NATIVE}>{placeholder}</option>}
         {children}
       </RootComponent>
-      <div className={styles.container} aria-hidden>
+      <div
+        className={classNames(styles.container, calendarHeaderStylesGlobal.calendarSelectContainer)}
+        aria-hidden
+      >
         <SelectTypography className={styles.title} selectType={selectType}>
           {title}
         </SelectTypography>

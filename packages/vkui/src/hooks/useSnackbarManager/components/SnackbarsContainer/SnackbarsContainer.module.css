@@ -62,12 +62,3 @@
     --vkui_internal--snackbars_container_in_padding: 12px;
   }
 }
-
-/**
- * CMP:
- * Epic
- */
-/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalEpic--hasTabbar) .host {
-  --vkui_internal--snackbars_container_offset_y_end: var(--vkui_internal--tabbar_height);
-}

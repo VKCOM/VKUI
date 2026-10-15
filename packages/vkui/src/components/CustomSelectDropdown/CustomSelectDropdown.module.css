@@ -33,12 +33,3 @@
 .inWithMaxHeight {
   max-block-size: 160px;
 }
-
-/**
- * CMP:
- * CalendarHeader
- */
-/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalCalendarHeader__pickers) .inWithMaxHeight {
-  max-block-size: 184px;
-}

@@ -1,0 +1,38 @@
+.vkuiInternalTabbar .tabbarItemHost {
+  flex-grow: 1;
+  flex-shrink: 0;
+  flex-basis: 0;
+  min-inline-size: 0;
+  max-inline-size: 100%;
+}
+
+.vkuiInternalTabbarLayoutVertical .tabbarItemIn {
+  flex-direction: column;
+}
+
+.vkuiInternalTabbarLayoutHorizontal .tabbarItemIn {
+  flex-direction: row;
+}
+
+.vkuiInternalTabbarLayoutVertical .tabbarItemTextLabel {
+  --vkui--font_footnote--font_size--regular: 10px;
+  --vkui--font_footnote--line_height--regular: 12px;
+
+  margin-block-start: 2px;
+}
+
+.vkuiInternalTabbarLayoutHorizontal .tabbarItemTextLabel {
+  margin-inline-start: 8px;
+}
+
+.tabbarItemLabel .tabbarItemIndicator {
+  position: absolute;
+  inset-block-start: -2px;
+  inset-inline-end: -2px;
+}
+
+.tabbarItemLabel .tabbarItemIndicatorCounter {
+  position: absolute;
+  inset-block-start: -2px;
+  inset-inline-end: -9px;
+}

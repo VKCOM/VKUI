@@ -71,12 +71,3 @@
 .alignCenter .title {
   text-align: center;
 }
-
-/**
- * CMP:
- * CalendarHeader
- */
-/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalCalendarHeader__picker) .container {
-  padding-inline-end: 4px;
-}

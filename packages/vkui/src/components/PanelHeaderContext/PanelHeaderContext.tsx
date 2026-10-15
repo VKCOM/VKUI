@@ -11,6 +11,7 @@ import type { HTMLAttributesWithRootRef } from '../../types';
 import { useScrollLock } from '../AppRoot/ScrollContext';
 import { FixedLayout } from '../FixedLayout/FixedLayout';
 import styles from './PanelHeaderContext.module.css';
+import stylesGroupGlobal from '../Group/Group.global.module.css';
 
 function getViewWidthClassName(
   viewWidth: ViewWidthType | 'none',
@@ -23,7 +24,7 @@ function getViewWidthClassName(
       : styles.viewWidthSmallTabletMinus;
   }
   if (viewWidth === 'none') {
-    return classNames(styles.viewWidthNone, 'vkuiInternalGroup--viewWidth-none');
+    return classNames(styles.viewWidthNone, stylesGroupGlobal.vkuiInternalGroupViewWidthNone);
   }
   return viewWidth >= ViewWidth.SMALL_TABLET
     ? styles.viewWidthSmallTabletPlus

@@ -156,12 +156,3 @@
     line-height: var(--vkui--font_subhead--line_height--regular);
   }
 }
-
-/**
- * CMP:
- * FormItem
- **/
-/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalFormItem) .host {
-  margin-inline: calc(-1 * var(--vkui--size_base_padding_horizontal--regular));
-}

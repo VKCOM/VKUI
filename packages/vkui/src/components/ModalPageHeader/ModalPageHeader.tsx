@@ -14,6 +14,8 @@ import type { HasRef, HasRootRef } from '../../types';
 import { PanelHeader, type PanelHeaderProps } from '../PanelHeader/PanelHeader';
 import { Separator } from '../Separator/Separator';
 import styles from './ModalPageHeader.module.css';
+import stylesPanelHeader from '../PanelHeader/PanelHeader.module.css';
+import stylesSplitColGlobal from '../SplitCol/SplitCol.global.module.css';
 
 export interface ModalPageHeaderProps
   extends React.HTMLAttributes<HTMLDivElement>,
@@ -55,7 +57,11 @@ export const ModalPageHeader = ({
         ref={getRootRef}
       >
         <PanelHeader
-          className={classNames('vkuiInternalModalPageHeader__in', className)}
+          className={classNames(
+            stylesPanelHeader.modalPageHeaderIn,
+            stylesSplitColGlobal.splitColModalPageHeaderIn,
+            className,
+          )}
           typographyProps={{
             Component: 'h2',
             id: modalContext.labelId,

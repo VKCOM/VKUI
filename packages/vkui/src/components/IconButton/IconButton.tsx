@@ -7,7 +7,9 @@ import { hasAccessibleName } from '../../lib/accessibility';
 import { COMMON_WARNINGS, warnOnce } from '../../lib/warnOnce';
 import { Tappable, type TappableOmitProps } from '../Tappable/Tappable';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
+import stylesIconButtonGlobal from './IconButton.global.module.css';
 import styles from './IconButton.module.css';
+import stylesAlertGlobal from '../Alert/Alert.global.module.css';
 
 const densityClassNames = {
   none: styles.densityNone,
@@ -50,8 +52,13 @@ export const IconButton = ({ label, children, ...restProps }: IconButtonProps): 
       {...restProps}
       baseClassName={classNames(
         styles.host,
+        stylesAlertGlobal.alertIconButtonHost,
+        stylesIconButtonGlobal.iconButtonHost,
         density !== 'regular' && densityClassNames[density],
+        density === 'compact' && stylesIconButtonGlobal.iconButtonDensityCompact,
+        density === 'none' && stylesIconButtonGlobal.iconButtonDensityNone,
         platform === 'ios' && styles.ios,
+        platform === 'ios' && stylesIconButtonGlobal.iconButtonIos,
       )}
     >
       {label && <VisuallyHidden>{label}</VisuallyHidden>}

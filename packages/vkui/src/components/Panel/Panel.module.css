@@ -22,63 +22,6 @@
   justify-content: center;
 }
 
-/* stylelint-disable selector-max-universal */
-
-/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-.centered :global(.vkuiInternalPanelHeader--static) + * {
-  margin-block-start: var(--vkui_internal--panel_header_height);
-}
-
-/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-.viewWidthSmallTabletMinus .centered :global(.vkuiInternalPanelHeader--sep) + * {
-  margin-block-start: calc(var(--vkui_internal--panel_header_height) + 5px);
-}
-
-@media (--viewWidth-smallTabletMinus) {
-  /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-  .viewWidthNone .centered :global(.vkuiInternalPanelHeader--sep) + * {
-    margin-block-start: calc(var(--vkui_internal--panel_header_height) + 5px);
-  }
-}
-
-/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-.viewWidthSmallTabletPlus .centered :global(.vkuiInternalPanelHeader--sep) + * {
-  margin-block-start: calc(var(--vkui_internal--panel_header_height) + 16px);
-}
-
-@media (--viewWidth-smallTabletPlus) {
-  /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-  .viewWidthNone .centered :global(.vkuiInternalPanelHeader--sep) + * {
-    margin-block-start: calc(var(--vkui_internal--panel_header_height) + 16px);
-  }
-}
-
-/* stylelint-enable selector-max-universal */
-
-/**
- * CMP:
- * View
- */
-/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalView--ios) .in {
-  padding-block: 0 var(--vkui_internal--safe_area_inset_bottom);
-  padding-inline: var(--vkui_internal--safe_area_inset_left)
-    var(--vkui_internal--safe_area_inset_right);
-}
-
-/**
- * CMP:
- * Epic
- */
-/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalEpic--hasTabbar) .in {
-  padding-block-end: var(--vkui_internal--tabbar_height);
-  padding-block-end: calc(
-    var(--vkui_internal--safe_area_inset_bottom) +
-    var(--vkui_internal--tabbar_height)
-  );
-}
-
 .inBefore {
   block-size: 1px;
   margin-block-end: -1px;

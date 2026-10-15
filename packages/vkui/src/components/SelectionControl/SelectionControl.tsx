@@ -10,6 +10,7 @@ import { Tappable, type TappableOmitProps } from '../Tappable/Tappable';
 import { SelectionControlContext } from './SelectionControlContext';
 import { SelectionControlLabel } from './SelectionControlLabel/SelectionControlLabel';
 import styles from './SelectionControl.module.css';
+import stylesFormItemGlobal from '../FormItem/FormItem.global.module.css';
 
 const densityClassNames = {
   none: styles.densityNone,
@@ -51,6 +52,7 @@ export const SelectionControl = ({
         Component="label"
         baseClassName={classNames(
           styles.host,
+          stylesFormItemGlobal.formItemChildHostNested,
           density !== 'regular' && densityClassNames[density],
           !noPadding && styles.withPadding,
         )}

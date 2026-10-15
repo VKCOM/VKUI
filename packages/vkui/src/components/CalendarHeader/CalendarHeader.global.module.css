@@ -1,0 +1,13 @@
+.vkuiInternalCalendarHeaderPickers .calendarHeaderDropdownContent {
+  max-block-size: 184px;
+}
+
+.vkuiInternalCalendarHeaderPicker .calendarSelectContainer {
+  padding-inline-end: 4px;
+}
+
+/* Keep the picker override above FormField's density-specific icon sizing. */
+.vkuiInternalCalendarHeaderPicker .calendarFormFieldAfter.calendarFormFieldAfter {
+  min-inline-size: 12px;
+  padding-inline-end: 8px;
+}

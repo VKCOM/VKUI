@@ -12,6 +12,7 @@ import {
   type SnackbarsContainerContextData,
 } from '../SnackbarsContainerContext';
 import styles from './SnackbarsContainer.module.css';
+import stylesEpicGlobal from '../../../../components/Epic/Epic.global.module.css';
 /* eslint-disable jsdoc/require-jsdoc */
 
 interface SnackbarsContainerProps
@@ -83,7 +84,11 @@ export const SnackbarsContainer: React.FC<SnackbarsContainerProps> = ({
   return (
     <SnackbarsContainerContext.Provider value={contextValue}>
       <Flex
-        className={classNames(styles.host, placementClassNames[placement])}
+        className={classNames(
+          styles.host,
+          stylesEpicGlobal.snackbarsContainerHost,
+          placementClassNames[placement],
+        )}
         style={containerStyles}
       >
         {snackbars.map((snackbar) => (

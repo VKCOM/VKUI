@@ -1,0 +1,68 @@
+.vkuiInternalSplitColViewWidthTabletPlus.vkuiInternalSplitColSpacedAuto
+  .cardScrollHostWithPaddings {
+  --vkui_internal--CardScroll_horizontal_padding: 16px;
+}
+
+.vkuiInternalSplitColViewWidthTabletPlus.vkuiInternalSplitColSpacedAuto .cardScrollSizeL .cardHost {
+  inline-size: calc(100% - 32px);
+  margin-inline-end: 16px;
+}
+
+.vkuiInternalSplitColViewWidthTabletPlus.vkuiInternalSplitColSpacedAuto
+  .cardScrollSizeL
+  .cardHost:last-of-type {
+  margin-inline-end: 0;
+}
+
+@media (--viewWidth-smallTabletPlus) {
+  .vkuiInternalSplitColViewWidthNone.vkuiInternalSplitColSpacedAuto .cardScrollHostWithPaddings {
+    --vkui_internal--CardScroll_horizontal_padding: 16px;
+  }
+
+  .vkuiInternalSplitColViewWidthNone.vkuiInternalSplitColSpacedAuto .cardScrollSizeL .cardHost {
+    inline-size: calc(100% - 32px);
+    margin-inline-end: 16px;
+  }
+
+  .vkuiInternalSplitColViewWidthNone.vkuiInternalSplitColSpacedAuto
+    .cardScrollSizeL
+    .cardHost:last-of-type {
+    margin-inline-end: 0;
+  }
+}
+
+.vkuiInternalSplitColViewWidthTabletPlus.vkuiInternalSplitColSpacedAuto
+  .splitColAndroidHeaderNoBefore:not(.splitColModalPageHeaderIn)
+  .splitColPanelHeaderContent {
+  padding-inline-start: 0;
+}
+
+.vkuiInternalSplitColViewWidthTabletPlus.vkuiInternalSplitColSpacedAuto
+  .splitColAndroidHeaderNoAfter:not(.splitColModalPageHeaderIn)
+  .splitColPanelHeaderContent {
+  padding-inline-end: 0;
+}
+
+@media (--viewWidth-smallTabletPlus) {
+  .vkuiInternalSplitColViewWidthNone.vkuiInternalSplitColSpacedAuto
+    .splitColAndroidHeaderNoBefore:not(.splitColModalPageHeaderIn)
+    .splitColPanelHeaderContent {
+    padding-inline-start: 0;
+  }
+
+  .vkuiInternalSplitColViewWidthNone.vkuiInternalSplitColSpacedAuto
+    .splitColAndroidHeaderNoAfter:not(.splitColModalPageHeaderIn)
+    .splitColPanelHeaderContent {
+    padding-inline-end: 0;
+  }
+}
+
+.splitColAndroidHeaderNoBefore,
+.splitColAndroidHeaderNoAfter,
+.splitColPanelHeaderContent {
+  /* PanelHeader target markers. */
+}
+
+.splitColModalPageHeaderIn {
+  /* ModalPageHeader marker for SplitCol styles. */
+}

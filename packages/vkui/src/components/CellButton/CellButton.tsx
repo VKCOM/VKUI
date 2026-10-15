@@ -12,6 +12,7 @@ import { Headline } from '../Typography/Headline/Headline';
 import { Subhead } from '../Typography/Subhead/Subhead';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import styles from './CellButton.module.css';
+import stylesFormItemGlobal from '../FormItem/FormItem.global.module.css';
 
 const densityClassNames = {
   none: styles.densityNone,
@@ -130,6 +131,9 @@ export const CellButton = ({
       {...restProps}
       baseClassName={classNames(
         styles.host,
+        stylesFormItemGlobal.formItemChildHostNested,
+        stylesFormItemGlobal.formItemChildHostContentBox,
+        stylesFormItemGlobal.formItemChildHostFullWidth,
         restProps.disabled && styles.disabled,
         density !== 'regular' && densityClassNames[density],
         multiline && styles.mult,

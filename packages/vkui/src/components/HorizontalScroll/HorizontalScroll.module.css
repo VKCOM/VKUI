@@ -65,18 +65,12 @@
  * CMP:
  * Tabs
  */
-.withPadding,
-/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalTabs) .host {
+.withPadding {
   min-inline-size: 100%;
 }
 
 .withPadding .inWrapper::before,
-.withPadding .inWrapper::after,
-/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalTabs--withGaps) .inWrapper::after,
-/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalTabs--withGaps) .inWrapper::before {
+.withPadding .inWrapper::after {
   display: block;
   flex-shrink: 0;
   inline-size: var(--vkui--size_base_padding_horizontal--regular);

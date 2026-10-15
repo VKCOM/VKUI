@@ -21,6 +21,7 @@ import {
   hasHorizontalScrollableElementWithScrolledToLeft,
   swipeBackExcluded,
 } from './utils';
+import stylesGlobal from './View.global.module.css';
 import styles from './View.module.css';
 
 export const scrollsCache = new Map<string, Map<string, number | undefined>>();
@@ -461,7 +462,8 @@ export const View = ({
         {...restProps}
         className={classNames(
           styles.host,
-          platform === 'ios' && classNames(styles.ios, 'vkuiInternalView--ios'),
+          platform === 'ios' && classNames(styles.ios, stylesGlobal.vkuiInternalViewIos),
+          platform === 'ios' && disableAnimation && stylesGlobal.viewIosNoMotion,
           !disableAnimation && animated && styles.animated,
           !disableAnimation && swipingBack && styles.swipingBack,
           disableAnimation && styles.noMotion,

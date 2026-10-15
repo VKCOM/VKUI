@@ -338,19 +338,3 @@
 }
 
 /* TODO [>=9]: Избавиться от магии проставления первому элементу закруглений */
-
-/*
- * CMP:
- * PanelHeader
- */
-/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalPanelHeader--vkcom) ~ .host:first-of-type.noBlockStartRoundingUndefined,
-/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-  :global(.vkuiInternalPanelHeader--vkcom)
-  + *
-  .host:first-of-type.noBlockStartRoundingUndefined {
-  position: relative;
-  inset-block-start: -1px;
-  border-start-start-radius: 0;
-  border-start-end-radius: 0;
-}

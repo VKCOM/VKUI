@@ -1,0 +1,15 @@
+.vkuiInternalViewIos .panelIn {
+  padding-block: 0 var(--vkui_internal--safe_area_inset_bottom);
+  padding-inline: var(--vkui_internal--safe_area_inset_left)
+    var(--vkui_internal--safe_area_inset_right);
+}
+
+.viewIosNoMotion .panelHost .panelIn {
+  animation: none;
+}
+
+.panelHost,
+.panelIn,
+.viewIosNoMotion {
+  /* Cross-component markers. */
+}

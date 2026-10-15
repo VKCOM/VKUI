@@ -8,7 +8,9 @@ import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { Group } from '../Group/Group';
 import { TabsItem } from '../TabsItem/TabsItem';
 import { Tabs, type TabsProps } from './Tabs';
+import stylesGlobal from './Tabs.global.module.css';
 import styles from './Tabs.module.css';
+import groupStylesGlobal from '../Group/Group.global.module.css';
 
 function TestTabs(props: { disabledKeys?: string[] | undefined; role?: string | undefined }) {
   const [currentTab, setCurrentTab] = useState('first');
@@ -182,26 +184,26 @@ describe(Tabs, () => {
           mode: 'accent',
         },
         platform: Platform.ANDROID,
-        className: classNames(styles.withGaps, 'vkuiInternalTabs--withGaps'),
+        className: classNames(styles.withGaps, stylesGlobal.vkuiInternalTabsWithGaps),
       },
       {
         props: {
           mode: 'secondary',
         },
         platform: Platform.ANDROID,
-        className: classNames(styles.withGaps, 'vkuiInternalTabs--withGaps'),
+        className: classNames(styles.withGaps, stylesGlobal.vkuiInternalTabsWithGaps),
       },
       {
         props: {
           mode: 'default',
         },
         platform: Platform.ANDROID,
-        className: styles.modeDefault,
+        className: groupStylesGlobal.groupTabsModeDefault,
       },
       {
         props: {},
         platform: Platform.VKCOM,
-        className: 'vkuiInternalTabs--vkcom',
+        className: stylesGlobal.vkuiInternalTabsVkcom,
       },
     ])('should have className $className', ({ props, platform, className }) => {
       render(

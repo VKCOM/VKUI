@@ -8,6 +8,7 @@ import { Tappable, type TappableOmitProps } from '../Tappable/Tappable';
 import { Subhead } from '../Typography/Subhead/Subhead';
 import { RichCellIcon } from './RichCellIcon/RichCellIcon';
 import styles from './RichCell.module.css';
+import stylesFormItemGlobal from '../FormItem/FormItem.global.module.css';
 
 const warn = warnOnce('RichCell');
 
@@ -146,6 +147,7 @@ export const RichCell: React.FC<RichCellProps> & {
       {...restProps}
       baseClassName={classNames(
         styles.host,
+        stylesFormItemGlobal.formItemChildHostInlineOnly,
         !multiline && styles.textEllipsis,
         density !== 'regular' && densityClassNames[density],
         (after || afterCaption) && alignAfterClassNames[afterAlign],

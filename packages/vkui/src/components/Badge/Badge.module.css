@@ -14,14 +14,3 @@
 .modeProminent {
   background-color: var(--vkui--color_accent_red);
 }
-
-/**
- * CMP:
- * TabbarItem
- */
-/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalTabbarItem__label) .host {
-  position: absolute;
-  inset-block-start: -2px;
-  inset-inline-end: -2px;
-}

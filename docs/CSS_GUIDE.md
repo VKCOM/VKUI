@@ -96,34 +96,32 @@ const Component = ({ objectFit, children }) => {
 
 ## Глобальные классы
 
-Класс, который начинается с `vkui` и `vkuiInternal`, обозначает, что он глобальный. Например,
-`vkuiIcon` у иконок из `@vkontakte/icons` и `vkuiInternalFormItem` у `<FormItem />`.
+Класс, который начинается с `vkui`, может быть глобальным. Например, `vkuiIcon` у иконок из
+`@vkontakte/icons`. В CSS Modules такой внешний класс нужно оборачивать в
+[`:global(.xxx)`](https://github.com/css-modules/css-modules#exceptions), чтобы CSS Modules его не
+переименовывал.
 
-В файлах `*.module.css` они должны быть обёрнуты в [`:global(.xxx)`](https://github.com/css-modules/css-modules#exceptions),
-чтобы CSS Modules не трогал их.
+Для связей между компонентами VKUI используйте локальные классы из `*.global.module.css`. CSS
+Modules сгенерирует для них локальные имена, а компонент добавит их на нужные элементы:
 
-Рассмотрим на примере.
+```tsx
+// Tabs.tsx
+import stylesGlobal from './Tabs.global.module.css';
 
-```jsx
-// Cell.tsx
-<div className={classNames(styles.host, 'vkuiInternalCell')}>{before}</div>
+<RootComponent className={stylesGlobal.vkuiInternalTabs} />
 ```
 
-В `before` может быть `<Avatar />` или иконка из библиотеки `@vkontakte/icons`. И нам необходимо
-для них добавить отступ справа.
-
-Модификацию `<Avatar />` мы производим непосредственно в его CSS файле, чтобы видеть в каких
-контекстах он изменяется (см. **Проблемы | Обращения к элементам другого блока**):
-
 ```css
-/* Avatar.module.css */
-:global(.vkuiInternalCell) .host {
-  margin-inline-end: 8px;
+/* Tabs.global.module.css */
+.vkuiInternalTabs .horizontalScrollHost {
+  min-inline-size: 100%;
 }
 ```
 
-а модификацию иконки вносим в CSS файл самого `<Cell />`, потому что иконки лежат в отдельном
-пакете со своими CSS селекторами:
+Так межкомпонентные стили остаются scoped CSS Modules и не зависят от глобальных классов.
+
+Стили иконки внутри `<Cell />` вносим в CSS файл самого `<Cell />`, потому что иконки лежат
+в отдельном пакете со своими CSS селекторами:
 
 ```css
 /* Cell.module.css */
@@ -220,5 +218,5 @@ Button мы тоже наделяем возможностью рендерит�
 
 Не обращаться к элементам другого блока
 
-Для поддержки старого кода в некоторых местах используются глобальные классы `vkuiInternal*`.
-От них следует избавляться.
+Межкомпонентные связи оформляйте локальными классами в `*.global.module.css`; не добавляйте новые
+глобальные классы `vkuiInternal*` и селекторы `:global(.vkuiInternal*)`.

@@ -16,6 +16,7 @@ import { RootComponent } from '../RootComponent/RootComponent';
 import type { AlertActionInterface, AlertCloseReason, AlertProps } from './Alert';
 import { AlertActions } from './AlertActions';
 import { AlertDescription, AlertTitle } from './AlertTypography';
+import stylesGlobal from './Alert.global.module.css';
 import styles from './Alert.module.css';
 
 export interface AlertBaseProps
@@ -160,7 +161,7 @@ export const AlertBase = ({
           {isDismissButtonVisible && dismissButtonMode === 'inside' && (
             <IconButton
               label={dismissLabel}
-              className={classNames(styles.dismiss, 'vkuiInternalAlert__dismiss')}
+              className={classNames(styles.dismiss, stylesGlobal.vkuiInternalAlertDismiss)}
               onClick={onCloseButtonClick}
               hoverMode="opacity"
               activeMode="opacity"
