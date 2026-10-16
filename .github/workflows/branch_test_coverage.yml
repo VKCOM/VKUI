@@ -43,6 +43,14 @@ jobs:
     with:
       workspace: '@vkontakte/vkui'
 
+  test_e2e:
+    name: Call reusable e2e tests workflow
+    permissions:
+      contents: read
+      id-token: write
+      code-quality: write
+    uses: ./.github/workflows/reusable_workflow_test_e2e.yml
+
   deploy_test_coverage:
     if: ${{ !cancelled() && (success() || failure()) }}
     needs: test
