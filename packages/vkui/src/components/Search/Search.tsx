@@ -392,6 +392,7 @@ export const Search = ({
                 onPointerDown={onClearPointerDown}
                 onClick={onClearClick}
                 tabIndex={hasValue ? undefined : -1}
+                aria-hidden={hasValue ? undefined : true}
                 disabled={inputRest.disabled}
                 data-testid={clearButtonTestId}
                 {...clearButtonRest}
@@ -408,6 +409,7 @@ export const Search = ({
                 focusVisibleMode="inside"
                 onClick={onFindButtonClick}
                 tabIndex={hasValue ? undefined : -1}
+                aria-hidden={hasValue ? undefined : true}
                 data-testid={findButtonTestId}
               >
                 {findButtonText}
