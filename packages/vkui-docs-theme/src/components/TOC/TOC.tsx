@@ -48,7 +48,7 @@ export function TOC({ toc }: TOCProps) {
   } = useConfig();
   const { toc: tocVisible } = themeContext;
 
-  if (isBlog || isComponentsShowCase) {
+  if (isBlog || isComponentsShowCase || themeContext.layout === 'full') {
     return null;
   }
 
