@@ -5432,7 +5432,7 @@ __metadata:
     css-minimizer-webpack-plugin: "npm:^8.0.0"
     cssnano: "npm:^9.8.0"
     diff2html-cli: "npm:^5.2.15"
-    dotenv: "npm:^18.0.6"
+    dotenv: "npm:^18.0.8"
     eslint: "npm:^10.12.0"
     eslint-plugin-compat: "npm:^7.0.2"
     eslint-plugin-import-x: "npm:^4.17.1"
@@ -8173,12 +8173,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dotenv@npm:^18.0.6":
-  version: 18.0.6
-  resolution: "dotenv@npm:18.0.6"
+"dotenv@npm:^18.0.8":
+  version: 18.0.8
+  resolution: "dotenv@npm:18.0.8"
   bin:
     dotenv: dist/index.cjs
-  checksum: 10/67f9d106d75db66c61a7257fe83da05a89fab1e78fce00e8ed066c95758e7cde5f6cdcc00fa00cc11bbe3d636d4aa9d3453fc805bf27060743844c04f967b284
+  checksum: 10/db96395978bb0fb6c634c11f03040315588b0f5d534a7a49b37d931114918848765c6bdf54f2746231f429eadf17252a33daae9292431510d1a21750bdaa5a52
   languageName: node
   linkType: hard
 
