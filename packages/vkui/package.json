@@ -106,7 +106,7 @@
     "size-limit": "^14.2.0",
     "storybook": "10.6.1",
     "typescript": "^6.0.3",
-    "vite": "^8.3.3"
+    "vite": "^8.3.4"
   },
   "size-limit": [
     {
