@@ -5,7 +5,7 @@ import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { type SizeTypeValues, ViewWidth, type ViewWidthType } from '../../lib/adaptivity';
 import { mergeCalls } from '../../lib/mergeCalls';
 import { checkClickable, Clickable, type ClickableProps } from '../Clickable/Clickable';
-import { Ripple, useMaybeNeedRipple, useRipple } from './Ripple';
+import { Ripple, useRipple } from './Ripple';
 import { activeClass, DEFAULT_STATE_MODE, hoverClass, type StateProps } from './state';
 import styles from './Tappable.module.css';
 import groupStylesGlobal from '../Group/Group.global.module.css';
@@ -74,6 +74,7 @@ export const Tappable = ({
   children,
   hoverMode = DEFAULT_STATE_MODE,
   activeMode = DEFAULT_STATE_MODE,
+  onPointerUp,
   onPointerDown,
   onPointerCancel,
   ...restProps
@@ -82,10 +83,11 @@ export const Tappable = ({
 
   const { sizeX: legacySizeX, viewWidth = 'none', hasPointer } = useAdaptivity();
 
-  const needRipple = useMaybeNeedRipple(activeMode, hasPointer);
-  const { clicks, ...rippleEvents } = useRipple(needRipple, hasPointer);
+  const needRipple = activeMode === 'background';
+  const { wave, onWaveAnimationEnd, ...rippleEvents } = useRipple(needRipple);
 
   const handlers = mergeCalls(rippleEvents, {
+    onPointerUp,
     onPointerDown,
     onPointerCancel,
   });
@@ -101,6 +103,7 @@ export const Tappable = ({
         getViewWidthClassName(viewWidth, legacySizeX),
         borderRadiusMode === 'inherit' && styles.borderRadiusInherit,
         hasPointerClassName(hasPointer),
+        activeMode === 'background' && restProps.activated && styles.activatedBackground,
       )}
       hoverClassName={hoverClass(hoverMode)}
       activeClassName={activeClass(activeMode)}
@@ -110,7 +113,7 @@ export const Tappable = ({
     >
       {children}
       {isClickable && (hoverMode === 'background' || activeMode === 'background') && (
-        <Ripple needRipple={needRipple} clicks={clicks} />
+        <Ripple needRipple={needRipple} wave={wave} onWaveAnimationEnd={onWaveAnimationEnd} />
       )}
     </Clickable>
   );
