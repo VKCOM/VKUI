@@ -119,6 +119,23 @@ describe('SegmentedControl', () => {
     it('names the tablist with aria-label', () => {
       render(<SegmentedControlTabsTest aria-label="Разделы" />);
       expect(screen.getByRole('tablist', { name: 'Разделы' })).toBeInTheDocument();
+      expect(ctrl()).not.toHaveAttribute('aria-label');
+    });
+
+    it('names the tablist with aria-labelledby and describes it with aria-describedby', () => {
+      render(
+        <>
+          <span id="label">Разделы</span>
+          <span id="description">Переключает соцсеть</span>
+          <SegmentedControlTabsTest aria-labelledby="label" aria-describedby="description" />
+        </>,
+      );
+
+      const tablist = screen.getByRole('tablist', { name: 'Разделы' });
+
+      expect(tablist).toHaveAccessibleDescription('Переключает соцсеть');
+      expect(ctrl()).not.toHaveAttribute('aria-labelledby');
+      expect(ctrl()).not.toHaveAttribute('aria-describedby');
     });
 
     it('sets aria-selected correctly', () => {
