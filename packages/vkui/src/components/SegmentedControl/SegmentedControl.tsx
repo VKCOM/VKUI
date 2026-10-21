@@ -72,6 +72,42 @@ export interface SegmentedControlProps<T extends SegmentedControlValue = Segment
 const warn = warnOnce('SegmentedControl');
 
 /**
+ * Атрибуты, которые описывают группу целиком. Роль стоит на внутреннем элементе,
+ * поэтому на корне без роли скринридер их бы не прочитал.
+ */
+const GROUP_ARIA_ATTRIBUTES = [
+  'aria-label',
+  'aria-labelledby',
+  'aria-describedby',
+  'aria-details',
+  'aria-roledescription',
+  'aria-required',
+  'aria-invalid',
+  'aria-errormessage',
+  'aria-disabled',
+  'aria-readonly',
+  'aria-orientation',
+] as const;
+
+type GroupAriaAttributes = Pick<React.AriaAttributes, (typeof GROUP_ARIA_ATTRIBUTES)[number]>;
+
+function splitGroupAriaAttributes<P extends GroupAriaAttributes>(
+  props: P,
+): [GroupAriaAttributes, Omit<P, keyof GroupAriaAttributes>] {
+  const groupProps: Record<string, unknown> = {};
+  const rootProps: Record<string, unknown> = { ...props };
+
+  for (const name of GROUP_ARIA_ATTRIBUTES) {
+    if (name in rootProps) {
+      groupProps[name] = rootProps[name];
+      delete rootProps[name];
+    }
+  }
+
+  return [groupProps, rootProps as Omit<P, keyof GroupAriaAttributes>];
+}
+
+/**
  * @see https://vkui.io/components/segmented-control
  */
 export const SegmentedControl = <T extends SegmentedControlValue = SegmentedControlValue>({
@@ -83,11 +119,9 @@ export const SegmentedControl = <T extends SegmentedControlValue = SegmentedCont
   onChange: onChangeProp,
   value: valueProp,
   role = 'radiogroup',
-  'aria-label': ariaLabel,
-  'aria-labelledby': ariaLabelledBy,
-  'aria-describedby': ariaDescribedBy,
-  ...restProps
+  ...props
 }: SegmentedControlProps<T>): React.ReactNode => {
+  const [groupAriaProps, restProps] = splitGroupAriaAttributes(props);
   const id = React.useId();
   const direction = useConfigDirection();
   const isRtl = direction === 'rtl';
@@ -125,14 +159,7 @@ export const SegmentedControl = <T extends SegmentedControlValue = SegmentedCont
         isRtl && styles.rtl,
       )}
     >
-      <div
-        role={role}
-        aria-label={ariaLabel}
-        aria-labelledby={ariaLabelledBy}
-        aria-describedby={ariaDescribedBy}
-        ref={tabsRef}
-        className={styles.in}
-      >
+      <div role={role} {...groupAriaProps} ref={tabsRef} className={styles.in}>
         {actualIndex > -1 && <div aria-hidden className={styles.slider} style={sliderStyle} />}
         {options.map(({ label, before, ...optionProps }) => {
           const selected = value === optionProps.value;

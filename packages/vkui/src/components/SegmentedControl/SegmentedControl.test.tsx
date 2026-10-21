@@ -34,6 +34,38 @@ describe('SegmentedControl', () => {
       expect(ctrl()).not.toHaveAttribute('aria-label');
     });
 
+    it('moves group state attributes to the radiogroup', () => {
+      render(
+        <SegmentedControlTest
+          aria-required
+          aria-invalid
+          aria-errormessage="error"
+          aria-details="details"
+          aria-disabled
+          aria-readonly
+          aria-orientation="horizontal"
+          aria-roledescription="переключатель"
+        />,
+      );
+
+      const radiogroup = screen.getByRole('radiogroup');
+      const attributes = {
+        'aria-required': 'true',
+        'aria-invalid': 'true',
+        'aria-errormessage': 'error',
+        'aria-details': 'details',
+        'aria-disabled': 'true',
+        'aria-readonly': 'true',
+        'aria-orientation': 'horizontal',
+        'aria-roledescription': 'переключатель',
+      };
+
+      for (const [name, value] of Object.entries(attributes)) {
+        expect(radiogroup).toHaveAttribute(name, value);
+        expect(ctrl()).not.toHaveAttribute(name);
+      }
+    });
+
     it('names the radiogroup with aria-labelledby and describes it with aria-describedby', () => {
       render(
         <>
