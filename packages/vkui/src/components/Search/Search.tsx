@@ -338,6 +338,8 @@ export const Search = ({
 
     const ev2 = new Event('input', { bubbles: true });
     inputRef.current?.dispatchEvent(ev2);
+    // При очистке с клавиатуры кнопка скрывается от скринридера, поэтому фокус переводим в поле
+    inputRef.current?.focus();
 
     onClearButtonClick?.(e);
   };

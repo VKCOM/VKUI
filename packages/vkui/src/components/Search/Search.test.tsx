@@ -137,6 +137,22 @@ describe(Search, () => {
       expect(getInput()).toHaveValue('');
       expect(onClearClick).toHaveBeenCalledTimes(1);
     });
+    it('moves focus to input when cleared by keyboard', async () => {
+      render(
+        <Search
+          defaultValue="def"
+          slotProps={{ clearButton: { 'data-testid': 'clear-button' } }}
+        />,
+      );
+      act(() => getClearIcon().focus());
+      await userEvent.keyboard('{Enter}');
+      act(() => {
+        vi.runOnlyPendingTimers();
+      });
+      expect(getInput()).toHaveValue('');
+      expect(getInput()).toHaveFocus();
+      expect(getClearIcon()).toHaveAttribute('aria-hidden', 'true');
+    });
     it('form reset form', async () => {
       render(
         <form data-testid="form">
