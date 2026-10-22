@@ -1,0 +1,105 @@
+import { Icons } from "../../components/mdx/Icons/Icons";
+import { IconsPage } from "../../components/mdx/Icons/IconsPage";
+import { DoGrid } from "../../components/mdx/Do/DoGrid";
+import { DoBlock } from "../../components/mdx/Do/DoBlock";
+import {
+  DoPixelGrid,
+  DontPixelGrid,
+} from "../../components/examples/icons/index/DoPixelGrid";
+import { BlockWrapper } from "@/components/wrappers";
+
+<IconsPage>
+
+<Overview type="doc">
+# Иконки
+
+Набор SVG-иконок в виде React-компонентов.
+
+</Overview>
+
+<Icons />
+
+## Использование иконок
+
+Установите пакет `@vkontakte/icons`:
+
+<PackageManagers
+  npm="npm i --save @vkontakte/icons"
+  yarn="yarn add @vkontakte/icons"
+  pnpm="pnpm add @vkontakte/icons"
+/>
+
+Импортируйте иконку и используйте её как React-компонент:
+
+```tsx
+import { Icon24Cancel } from "@vkontakte/icons";
+
+<Icon24Cancel />;
+```
+
+## Стилизация
+
+Чтобы изменить цвет иконки, задайте CSS-свойство `color` самой иконке или родительскому элементу. Заливка SVG использует `fill: currentColor` и принимает этот цвет.
+
+<Playground>
+```tsx
+const [color, setColor] = React.useState("#447bba");
+const inputOnChange = (event) => setColor(event.target.value);
+
+return (
+
+<Box>
+  <Flex padding="m" justify="center" style={{ color }}>
+    <Icon56PaletteOutline />
+  </Flex>
+
+  <FormItem htmlFor="color" top="Цвет">
+    <Input
+      after={
+        <input
+          id="color"
+          type="color"
+          style={{
+            border: 'none',
+            background: 'none',
+            width: 24,
+            height: 24,
+          }}
+          value={color}
+          onChange={inputOnChange}
+        />
+      }
+      value={color}
+      onChange={inputOnChange}
+      />
+  </FormItem>
+</Box>
+)
+```
+</Playground>
+
+## Размеры иконок
+
+Число в названии компонента задаёт размер иконки в пикселях. Например, `Icon24FolderAdd` рассчитана на 24 × 24 пикселя.
+
+Выбирайте иконку нужного размера из набора. Её контуры выровнены по пиксельной сетке. При масштабировании они могут оказаться между пикселями: иконка станет размытой, а обводка будет выглядеть неравномерной.
+
+<DoGrid>
+  <DoBlock mode="positive" caption="Используйте иконку в исходном размере">
+    <DoPixelGrid />
+    ```tsx
+    <Icon24FolderAdd />
+    ```
+  </DoBlock>
+  <DoBlock
+    mode="negative"
+    caption="Масштабирование может сделать иконку размытой"
+  >
+    <DontPixelGrid />
+    ```tsx
+    <Icon24FolderAdd width={32} height={32} />
+    ```
+  </DoBlock>
+</DoGrid>
+
+</IconsPage>
