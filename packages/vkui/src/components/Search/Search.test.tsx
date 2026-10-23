@@ -1,4 +1,4 @@
-import { act, createRef } from 'react';
+import { act, createRef, useState } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { Icon24Done } from '@vkontakte/icons';
 import { noop } from '@vkontakte/vkjs';
@@ -153,6 +153,19 @@ describe(Search, () => {
       expect(getInput()).toHaveFocus();
       expect(getClearIcon()).toHaveAttribute('aria-hidden', 'true');
     });
+    it('moves focus to input when form is reset with focus on clear button', async () => {
+      render(
+        <form data-testid="form">
+          <Search slotProps={{ clearButton: { 'data-testid': 'clear-button' } }} />
+        </form>,
+      );
+      await userEvent.type(getInput(), 'user');
+      act(() => getClearIcon().focus());
+      act(() => {
+        screen.getByTestId<HTMLFormElement>('form').reset();
+      });
+      expect(getInput()).toHaveFocus();
+    });
     it('form reset form', async () => {
       render(
         <form data-testid="form">
@@ -211,6 +224,25 @@ describe(Search, () => {
   });
 
   describe('works controlled', () => {
+    it('moves focus to input when value is cleared by find button', async () => {
+      const ControlledSearch = () => {
+        const [value, setValue] = useState('def');
+        return (
+          <Search
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+            findButtonTestId="find-button"
+            onFindButtonClick={() => setValue('')}
+          />
+        );
+      };
+      render(<ControlledSearch />);
+      act(() => getFindButton().focus());
+      await userEvent.keyboard('{Enter}');
+      expect(getInput()).toHaveValue('');
+      expect(getInput()).toHaveFocus();
+      expect(getFindButton()).toHaveAttribute('aria-hidden', 'true');
+    });
     fakeTimersForScope();
     it('respects outer value', () => {
       const { rerender } = render(<Search value="init" />);
