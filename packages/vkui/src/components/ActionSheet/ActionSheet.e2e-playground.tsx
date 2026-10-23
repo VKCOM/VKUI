@@ -10,6 +10,7 @@ import {
 } from '@vkui-e2e/playground-helpers';
 import { usePlatform } from '../../hooks/usePlatform';
 import { ActionSheetItem } from '../ActionSheetItem/ActionSheetItem';
+import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { ActionSheet, type ActionSheetProps } from './ActionSheet';
 
 const AppWrapper = ({ children, ...restProps }: AppDefaultWrapperProps) => (
@@ -100,5 +101,30 @@ export const ActionSheetPlayground = (props: ComponentPlaygroundProps) => {
     <ComponentPlayground {...props} propSets={propSets} AppWrapper={AppWrapper}>
       {(props: ActionSheetProps) => <ActionSheetWrapper {...props} />}
     </ComponentPlayground>
+  );
+};
+
+export const ActionSheetDropdownStyleTest = ({ mode }: Pick<ActionSheetProps, 'mode'>) => {
+  const toggleRef = React.useRef<HTMLButtonElement>(null);
+  const [open, setOpen] = React.useState(true);
+
+  return (
+    <ConfigProvider platform="vkcom">
+      <AppDefaultWrapper>
+        <button ref={toggleRef}>Открыть меню</button>
+        {open && (
+          <ActionSheet
+            mode={mode}
+            toggleRef={toggleRef}
+            onClose={() => setOpen(false)}
+            onClosed={noop}
+            title="Заголовок меню с ограничением ширины всплывающей панели"
+            slotProps={{ dropdown: { className: 'dropdown', style: { maxWidth: 350 } } }}
+          >
+            <ActionSheetItem autoCloseDisabled>Действие</ActionSheetItem>
+          </ActionSheet>
+        )}
+      </AppDefaultWrapper>
+    </ConfigProvider>
   );
 };

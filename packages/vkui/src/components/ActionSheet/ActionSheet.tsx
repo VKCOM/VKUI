@@ -1,7 +1,8 @@
 'use client';
 
 import * as React from 'react';
-import { noop } from '@vkontakte/vkjs';
+import { classNames, noop } from '@vkontakte/vkjs';
+import { mergeStyle } from '../../helpers/mergeStyle';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useStableCallback } from '../../hooks/useStableCallback';
@@ -85,10 +86,12 @@ export interface ActionSheetProps
   iosCloseItem?: React.ReactNode | undefined;
   /**
    * Свойства, которые можно прокинуть внутрь компонента:
+   * - `dropdown`: стили и класс всплывающей панели в режимах `menu` и `sheet`.
    * - `iosCloseItem`: свойства для прокидывания в кнопку отмены на iOS.
    */
   slotProps?:
     | {
+        dropdown?: Pick<SharedDropdownProps, 'style' | 'className'> | undefined;
         iosCloseItem?:
           | (Omit<ActionSheetItemProps, 'mode' | 'isCancelItem'> & HasRootRef<HTMLElement>)
           | undefined;
@@ -202,8 +205,8 @@ export const ActionSheet = ({
         autoFocus={animationState === 'entered'}
         {...dropdownProps}
         {...animationHandlers}
-        className={mode === 'menu' ? className : undefined}
-        style={mode === 'menu' ? style : undefined}
+        className={classNames(mode === 'menu' && className, slotProps?.dropdown?.className)}
+        style={mergeStyle(mode === 'menu' ? style : undefined, slotProps?.dropdown?.style)}
       >
         <div className={styles.contentWrapper}>
           {(title || description) && (
