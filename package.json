@@ -60,7 +60,7 @@
     "eslint-plugin-unicorn": "^78.0.0",
     "globals": "^17.13.0",
     "happy-css-modules": "^5.0.2",
-    "happy-dom": "^21.0.1",
+    "happy-dom": "^21.0.4",
     "husky": "^9.1.6",
     "lint-staged": "^17.6.0",
     "mini-css-extract-plugin": "^2.10.2",
