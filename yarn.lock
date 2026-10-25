@@ -5131,15 +5131,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vkontakte/icons@npm:^3.76.0":
-  version: 3.76.0
-  resolution: "@vkontakte/icons@npm:3.76.0"
+"@vkontakte/icons@npm:^3.78.0":
+  version: 3.78.0
+  resolution: "@vkontakte/icons@npm:3.78.0"
   dependencies:
     "@swc/helpers": "npm:^0.5.23"
     "@vkontakte/icons-sprite": "npm:^3.2.2"
   peerDependencies:
     react: ^18 || ^19
-  checksum: 10/0380a4ed269b321701a9388964d815b34a688fe5b06be2c13c47f8996663a1ba62ece679672cd1e07633d0ccd873240d91c50938a45c6915483d2bf1d9f11b18
+  checksum: 10/9754318a986719823d9492c17d0059823fd065aa954315dc9177cf472c453ac700b1bc341e1f37742617e25cb31155fdf41aa11c3c6c7ab55a2cabc8b3a7b18d
   languageName: node
   linkType: hard
 
@@ -5224,7 +5224,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@vkontakte/vkui-docs-theme@workspace:packages/vkui-docs-theme"
   dependencies:
-    "@vkontakte/icons": "npm:^3.76.0"
+    "@vkontakte/icons": "npm:^3.78.0"
     "@vkontakte/vkjs": "npm:^2.0.2"
     "@vkontakte/vkui": "workspace:^"
     "@vkontakte/vkui-tokens": "npm:4.93.0"
@@ -5403,7 +5403,7 @@ __metadata:
     "@swc/helpers": "npm:^0.5.23"
     "@types/node": "npm:*"
     "@types/postcss-import": "npm:^14.0.3"
-    "@vkontakte/icons": "npm:^3.76.0"
+    "@vkontakte/icons": "npm:^3.78.0"
     "@vkontakte/storybook-addons": "workspace:^"
     "@vkontakte/vkjs": "npm:^2.0.2"
     "@vkontakte/vkui-date-fns-tz": "npm:^0.0.6"
