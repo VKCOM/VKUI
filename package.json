@@ -11,7 +11,7 @@
     "@project-tools/stylelint-plugin-vkui": "workspace:1.0.0"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.5.15",
+    "@biomejs/biome": "2.6.2",
     "@csstools/postcss-global-data": "4.0.0",
     "@eslint/compat": "^2.1.1",
     "@jridgewell/trace-mapping": "^0.3.31",
