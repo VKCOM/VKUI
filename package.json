@@ -81,7 +81,7 @@
     "storybook": "10.6.2",
     "style-loader": "^4.0.0",
     "stylelint": "^17.16.0",
-    "stylelint-config-recess-order": "^7.8.0",
+    "stylelint-config-recess-order": "^7.8.2",
     "stylelint-config-standard": "^40.0.0",
     "stylelint-media-use-custom-media": "^4.1.0",
     "stylelint-order": "^8.1.2",
