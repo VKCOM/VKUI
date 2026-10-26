@@ -37,7 +37,7 @@ export function hoverClass(hoverMode: StateModeLiteral = DEFAULT_STATE_MODE): st
 }
 
 const stylesActivated: Record<string, string> = {
-  background: styles.activatedBackground,
+  background: '',
   opacity: styles.activatedOpacity,
   none: '',
 };
