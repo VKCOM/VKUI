@@ -5838,10 +5838,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@xmldom/xmldom@npm:0.9.10":
-  version: 0.9.10
-  resolution: "@xmldom/xmldom@npm:0.9.10"
-  checksum: 10/8d39ed498baf33dc8bbc82ec575e7448ddf08a0d6874bcc30a70c001b7519e6df6564f98d13c03836fa8be099c6d74cbc4078cfcfcbcf005681d4e67f1363412
+"@xmldom/xmldom@npm:^0.9.12":
+  version: 0.9.12
+  resolution: "@xmldom/xmldom@npm:0.9.12"
+  checksum: 10/4a38ed437688b0e33919f7597c6669f8b0507e80ee15497ee163d6e4bbf7a69fd24a4fe4c2d3ee9fe1e861d42b4030d72895a64a92cb8d4ebc3091f560c29111
   languageName: node
   linkType: hard
 
@@ -16333,15 +16333,15 @@ __metadata:
   linkType: hard
 
 "speech-rule-engine@npm:^4.0.6":
-  version: 4.1.4
-  resolution: "speech-rule-engine@npm:4.1.4"
+  version: 4.1.5
+  resolution: "speech-rule-engine@npm:4.1.5"
   dependencies:
-    "@xmldom/xmldom": "npm:0.9.10"
+    "@xmldom/xmldom": "npm:^0.9.12"
     commander: "npm:13.1.0"
     wicked-good-xpath: "npm:1.3.0"
   bin:
     sre: bin/sre
-  checksum: 10/78a5ec1d6d3a30ca0628037150d533a4d54b062bae5b2424645f64b70bfa56fa819a1d9ab53520ea9315f447c114780f5aba445b98c578f5ac8a12a8e3b069a7
+  checksum: 10/640178fa76d14806f091649deaccf624b61df460d73b2793011f3a787a5a731c8acf95139c905a81d5bd50295b252dc40c62998a081067ed9c75838b07cfcf4f
   languageName: node
   linkType: hard
 
