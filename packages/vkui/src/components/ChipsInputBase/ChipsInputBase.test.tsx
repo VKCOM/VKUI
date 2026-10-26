@@ -4,6 +4,7 @@ import { fireEvent, render, screen, within } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import {
+  a11yTest,
   baselineComponent,
   fakeTimersForScope,
   userEvent,
@@ -48,31 +49,36 @@ describe(ChipsInputBase, () => {
   const onRemoveChipOption = vi.fn();
   const onClearOptions = vi.fn();
 
-  baselineComponent(
-    (props) => (
-      <>
-        <label htmlFor="chips">Chips Input</label>
-        <ChipsInputBase
-          id="chips"
-          chipsListLabel="Выбранные опции"
-          onAddChipOption={onAddChipOption}
-          onRemoveChipOption={onRemoveChipOption}
-          onClear={onClearOptions}
-          value={[RED_OPTION]}
-          onInputChange={noop}
-          {...props}
-        />
-      </>
-    ),
-    {
-      a11yConfig: {
-        rules: {
-          // Внутри Chip c role="gridcell" находится кнопка удаления
-          'nested-interactive': { enabled: false },
-        },
-      },
-    },
-  );
+  baselineComponent((props) => (
+    <>
+      <label htmlFor="chips">Chips Input</label>
+      <ChipsInputBase
+        id="chips"
+        chipsListLabel="Выбранные опции"
+        onAddChipOption={onAddChipOption}
+        onRemoveChipOption={onRemoveChipOption}
+        onClear={onClearOptions}
+        value={[RED_OPTION]}
+        onInputChange={noop}
+        {...props}
+      />
+    </>
+  ));
+
+  a11yTest(() => (
+    <>
+      <label htmlFor="empty-chips">Chips Input</label>
+      <ChipsInputBase
+        id="empty-chips"
+        chipsListLabel="Выбранные опции"
+        onAddChipOption={onAddChipOption}
+        onRemoveChipOption={onRemoveChipOption}
+        onClear={onClearOptions}
+        value={[]}
+        onInputChange={noop}
+      />
+    </>
+  ));
 
   beforeEach(() => {
     onAddChipOption.mockClear();
@@ -625,5 +631,22 @@ describe(ChipsInputBase, () => {
 
     fireEvent.mouseDown(screen.getByRole('grid'));
     checkPreventDefault(true);
+
+    // Проверяем, что при mouseDown в строку между чипами происходит preventDefault
+    fireEvent.mouseDown(screen.getByRole('row'));
+    checkPreventDefault(true);
+  });
+
+  it('does not expose an empty grid', () => {
+    render(
+      <ChipsInputBaseTest
+        value={[]}
+        onAddChipOption={onAddChipOption}
+        onRemoveChipOption={onRemoveChipOption}
+        onClear={onClearOptions}
+      />,
+    );
+
+    expect(screen.queryByRole('grid')).not.toBeInTheDocument();
   });
 });
