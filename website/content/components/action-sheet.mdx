@@ -129,6 +129,25 @@ function handleClosed({ closedBy }) {
 
 Свойство `popupOffsetDistance` позволяет задать отступ (в пикселях) от якорного элемента.
 
+## Стилизация всплывающей панели
+
+Используйте `slotProps.dropdown.style` и `slotProps.dropdown.className`, чтобы настроить панель
+с заголовком и списком действий в режимах `menu` и `sheet`:
+
+```jsx
+<ActionSheet
+  toggleRef={toggleRef}
+  onClosed={handleClosed}
+  slotProps={{ dropdown: { style: { maxWidth: 350 } } }}
+>
+  <ActionSheetItem>Действие</ActionSheetItem>
+</ActionSheet>
+```
+
+Ограничение ширины через `style` самого `ActionSheet` сужает также подложку и область клика снаружи.
+Перенесите такие стили в `slotProps.dropdown.style`, чтобы подложка занимала всю доступную область.
+В режиме `menu` стили слота имеют приоритет над одноимёнными стилями из `style`.
+
 ## Браузерные события
 
 ### Click Event

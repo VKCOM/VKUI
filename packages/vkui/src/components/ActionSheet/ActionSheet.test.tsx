@@ -243,6 +243,62 @@ describe(ActionSheet, () => {
     });
   });
 
+  describe.each([
+    ['menu', ActionSheetDesktop],
+    ['sheet', ActionSheetSheet],
+  ])('slotProps.dropdown in %s mode', (mode, ActionSheet) => {
+    fakeTimersForScope();
+
+    it('customizes the dropdown without changing the overlay wrapper', async () => {
+      const onClose = vi.fn();
+      const result = render(
+        <ActionSheet
+          className="wrapper"
+          style={{ color: 'red' }}
+          slotProps={{ dropdown: { className: 'dropdown', style: { maxWidth: 350 } } }}
+          onClose={onClose}
+        >
+          <div>Action</div>
+        </ActionSheet>,
+      );
+      await waitForFloatingPosition();
+
+      const wrapper = result.container.querySelector<HTMLElement>('.wrapper')!;
+      const dropdown = result.container.querySelector<HTMLElement>('.dropdown')!;
+      expect(wrapper).not.toHaveClass('dropdown');
+      expect(wrapper.style.maxWidth).toBe('');
+      expect(wrapper.style.color).toBe('red');
+      expect(dropdown.style.maxWidth).toBe('350px');
+      if (mode === 'menu') {
+        expect(dropdown).toHaveClass('wrapper');
+        expect(dropdown.style.color).toBe('red');
+      }
+
+      await userEvent.click(screen.getByText('Action'));
+      expect(onClose).not.toHaveBeenCalled();
+      await userEvent.click(
+        result.container.querySelector<HTMLElement>(`.${popoutWrapperStyles.overlay}`)!,
+      );
+      expect(onClose).toHaveBeenCalledExactlyOnceWith('click-overlay');
+    });
+
+    it('gives dropdown styles priority over legacy menu styles', async () => {
+      const result = render(
+        <ActionSheet
+          className="wrapper"
+          style={{ maxWidth: 420 }}
+          slotProps={{ dropdown: { className: 'dropdown', style: { maxWidth: 350 } } }}
+        />,
+      );
+      await waitForFloatingPosition();
+
+      expect(result.container.querySelector<HTMLElement>('.wrapper')!.style.maxWidth).toBe('420px');
+      expect(result.container.querySelector<HTMLElement>('.dropdown')!.style.maxWidth).toBe(
+        '350px',
+      );
+    });
+  });
+
   it(
     'renders header and text',
     withFakeTimers(async () => {
