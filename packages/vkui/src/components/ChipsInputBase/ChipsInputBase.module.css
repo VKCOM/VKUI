@@ -22,6 +22,12 @@
   list-style: none;
 }
 
+.row {
+  display: inline-flex;
+  flex-wrap: wrap;
+  max-inline-size: 100%;
+}
+
 .chip {
   max-inline-size: calc(100% - var(--vkui_internal--chips_input_base_container_gap));
   margin: 2px;
