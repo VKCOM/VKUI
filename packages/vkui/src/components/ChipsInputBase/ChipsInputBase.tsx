@@ -117,6 +117,7 @@ export const ChipsInputBase = <O extends ChipOption>({
   const inputRef = useExternRef(getInputRef);
   const containerRef = React.useRef<HTMLDivElement>(null);
   const listboxRef = React.useRef<HTMLDivElement>(null);
+  const rowRef = React.useRef<HTMLDivElement>(null);
 
   const valueLength = value.length;
   const withPlaceholder = valueLength === 0;
@@ -278,11 +279,13 @@ export const ChipsInputBase = <O extends ChipOption>({
   const inputId = id || `chips-input-base-generated-id-${idGenerated}`;
 
   const handleRootMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
-    // Если клик был в один из чипов, то preventDefault делать не нужно, так как не будет срабатывать выделение текста
+    // Если клик был в один из чипов, то preventDefault делать не нужно, так как не будет срабатывать выделение текста.
+    // Клик в контейнер или строку между чипами — это клик в поле, а не в чип
     if (
       isHTMLElement(e.target) &&
       contains(listboxRef.current, e.target) &&
-      listboxRef.current !== e.target
+      e.target !== listboxRef.current &&
+      e.target !== rowRef.current
     ) {
       return;
     }
@@ -344,46 +347,50 @@ export const ChipsInputBase = <O extends ChipOption>({
           className={styles.listBox}
           // для a11y
           ref={listboxRef}
-          role="listbox"
-          aria-orientation="horizontal"
-          aria-disabled={disabled}
-          aria-readonly={readOnly}
-          aria-label={chipsListLabel}
+          // Пустая таблица без строк скринридеру не нужна: роль появляется вместе с чипами
+          role={valueLength > 0 ? 'grid' : undefined}
+          aria-disabled={valueLength > 0 ? disabled : undefined}
+          aria-readonly={valueLength > 0 ? readOnly : undefined}
+          aria-label={valueLength > 0 ? chipsListLabel : undefined}
         >
-          {value.map((option, index) => (
-            <React.Fragment key={`${typeof option.value}-${option.value}`}>
-              {renderChip(
-                {
-                  /**
-                   * Компилятор сходит с ума из-за рефа внутри handleChipRemove.
-                   * Обходной путь прокидывать ref в свойства для рендер пропов.
-                   */
-                  ...(false
-                    ? { '__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED': inputRef }
-                    : {}),
-                  'Component': 'div',
-                  'value': option.value,
-                  'label': option.label,
-                  'disabled': option.disabled || disabled,
-                  'readOnly': option.readOnly || readOnly,
-                  'className': styles.chip,
-                  'onRemove': handleChipRemove,
-                  // чтобы можно было легче найти этот чип в DOM
-                  'data-index': index,
-                  'data-value': option.value,
-                  'data-value-type': typeof option.value,
-                  // для a11y
-                  'tabIndex': lastFocusedChipOptionIndex === index ? 0 : -1,
-                  'role': 'option',
-                  'aria-selected': true,
-                  'aria-posinset': index + 1,
-                  'aria-setsize': valueLength,
-                  'aria-description': 'Для удаления используйте Backspace или Delete',
-                },
-                option,
-              )}
-            </React.Fragment>
-          ))}
+          {/* Одна строка: чипы идут ячейками. Grid, в отличие от listbox, допускает
+              интерактивное содержимое внутри ячейки — кнопку удаления чипа. */}
+          {valueLength > 0 && (
+            <div ref={rowRef} role="row" className={styles.row}>
+              {value.map((option, index) => (
+                <React.Fragment key={`${typeof option.value}-${option.value}`}>
+                  {renderChip(
+                    {
+                      /**
+                       * Компилятор сходит с ума из-за рефа внутри handleChipRemove.
+                       * Обходной путь прокидывать ref в свойства для рендер пропов.
+                       */
+                      ...(false
+                        ? { '__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED': inputRef }
+                        : {}),
+                      'Component': 'div',
+                      'value': option.value,
+                      'label': option.label,
+                      'disabled': option.disabled || disabled,
+                      'readOnly': option.readOnly || readOnly,
+                      'className': styles.chip,
+                      'onRemove': handleChipRemove,
+                      // чтобы можно было легче найти этот чип в DOM
+                      'data-index': index,
+                      'data-value': option.value,
+                      'data-value-type': typeof option.value,
+                      // для a11y
+                      'tabIndex': lastFocusedChipOptionIndex === index ? 0 : -1,
+                      'role': 'gridcell',
+                      'aria-colindex': index + 1,
+                      'aria-description': 'Для удаления используйте Backspace или Delete',
+                    },
+                    option,
+                  )}
+                </React.Fragment>
+              ))}
+            </div>
+          )}
         </div>
         <Text
           autoCapitalize="none"
