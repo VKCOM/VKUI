@@ -12,14 +12,19 @@ export function filterDirectories(directories: Array<PageItem | Item>, search: s
   );
 
   return directories.reduce<Array<PageItem | Item>>((data, item) => {
-    const title = typeof item.title === 'string' ? item.title.toLowerCase() : null;
+    const keywords = 'frontMatter' in item ? item.frontMatter?.keywords : undefined;
+    const searchValues = [item.title, ...(Array.isArray(keywords) ? keywords : [keywords])];
 
     if (item.type === 'separator') {
       lastSeparator = item;
       itemsAfterSeparator = 0;
     } else if (
-      title !== null &&
-      (title.includes(normalizedSearch) || title.includes(searchInEnglishLayout))
+      searchValues.some(
+        (value) =>
+          typeof value === 'string' &&
+          (value.toLowerCase().includes(normalizedSearch) ||
+            value.toLowerCase().includes(searchInEnglishLayout)),
+      )
     ) {
       ++itemsAfterSeparator;
       if (lastSeparator && itemsAfterSeparator === 1) {
