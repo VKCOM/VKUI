@@ -21,11 +21,11 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsc",
+    "build": "node ../../node_modules/@typescript/native/bin/tsc",
     "prepack": "node --run build",
     "test": "node --run build && yarn run -T vitest run",
     "test:ci": "yarn run -T vitest run",
-    "lint:types": "tsc --noEmit"
+    "lint:types": "node ../../node_modules/@typescript/native/bin/tsc --noEmit"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.32.1",

@@ -47,8 +47,8 @@
   },
   "scripts": {
     "test": "echo no test",
-    "lint": "tsc",
-    "build": "tsc"
+    "lint": "node ../../node_modules/@typescript/native/bin/tsc",
+    "build": "node ../../node_modules/@typescript/native/bin/tsc"
   },
   "publishConfig": {
     "access": "public"

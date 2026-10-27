@@ -30,12 +30,12 @@
   },
   "scripts": {
     "prepack": "node --run build",
-    "build": "tsc",
+    "build": "node ../../node_modules/@typescript/native/bin/tsc",
     "test": "yarn run -T vitest run --pool=vmThreads",
     "test:update": "node --run test -- -u",
     "test:ci": "node --run test",
     "migrate": "jscodeshift",
-    "lint:types": "tsc"
+    "lint:types": "node ../../node_modules/@typescript/native/bin/tsc"
   },
   "publishConfig": {
     "provenance": true,
