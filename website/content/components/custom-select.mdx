@@ -24,16 +24,20 @@ tags: selection
 <Playground style={{ maxWidth: 270 }}>
 
 ```jsx
-<CustomSelect
-  options={[
-    { value: 0, label: 'Москва' },
-    { value: 1, label: 'Санкт-Петербург' },
-    { value: 2, label: 'Новосибирск' },
-    { value: 3, label: 'Йошкар-Ола' },
-  ]}
-  placeholder="Выберите город"
-  allowClearButton
-/>
+<FormItem top="Город" htmlFor="custom-select-input-1">
+  <CustomSelect
+    id="custom-select-input-1"
+    name="city"
+    options={[
+      { value: 0, label: 'Москва' },
+      { value: 1, label: 'Санкт-Петербург' },
+      { value: 2, label: 'Новосибирск' },
+      { value: 3, label: 'Йошкар-Ола' },
+    ]}
+    placeholder="Выберите город"
+    allowClearButton
+  />
+</FormItem>
 ```
 
 </Playground>
@@ -82,7 +86,15 @@ const [color, setColor] = React.useState('red');
 <Playground style={{ maxWidth: 270 }}>
 
 ```jsx
-<CustomSelect options={[{ value: 'red', label: 'Красный' }]} defaultValue="red" disabled />
+<FormItem top="Цвет" htmlFor="custom-select-input-2" disabled>
+  <CustomSelect
+    name="custom-select-option-2"
+    id="custom-select-input-2"
+    options={[{ value: 'red', label: 'Красный' }]}
+    defaultValue="red"
+    disabled
+  />
+</FormItem>
 ```
 
 </Playground>
@@ -99,12 +111,22 @@ const [color, setColor] = React.useState('red');
 <Playground style={{ maxWidth: 270 }}>
 
 ```jsx
-<CustomSelect options={[{ value: 'red', label: 'Красный' }]} defaultValue="red" status="error" />
-<CustomSelect
-  options={[{ value: 'green', label: 'Зеленый' }]}
-  defaultValue="green"
-  status="valid"
-/>
+<FormItem top="Цвет" htmlFor="custom-select-input-3" status="error">
+  <CustomSelect
+    name="custom-select-option-3"
+    id="custom-select-input-3"
+    options={[{ value: 'red', label: 'Красный' }]}
+    defaultValue="red"
+  />
+</FormItem>
+<FormItem top="Цвет" htmlFor="custom-select-input-4" status="valid">
+  <CustomSelect
+    name="custom-select-option-4"
+    id="custom-select-input-4"
+    options={[{ value: 'green', label: 'Зеленый' }]}
+    defaultValue="green"
+  />
+</FormItem>
 ```
 
 </Playground>
@@ -120,19 +142,23 @@ const [color, setColor] = React.useState('red');
 <Playground style={{ maxWidth: 270 }}>
 
 ```jsx
-<CustomSelect
-  options={[
-    { value: 0, label: 'Москва', country: 'Россия' },
-    { value: 1, label: 'Санкт-Петербург', country: 'Россия' },
-    { value: 2, label: 'Новосибирск', country: 'Россия' },
-    { value: 3, label: 'Йошкар-Ола', country: 'Россия' },
-  ]}
-  placeholder="Выберите город"
-  allowClearButton
-  renderOption={({ option, ...restProps }) => (
-    <CustomSelectOption {...restProps} description={option.country} />
-  )}
-/>
+<FormItem top="Город" htmlFor="custom-select-input-5">
+  <CustomSelect
+    name="custom-select-option-5"
+    id="custom-select-input-5"
+    options={[
+      { value: 0, label: 'Москва', country: 'Россия' },
+      { value: 1, label: 'Санкт-Петербург', country: 'Россия' },
+      { value: 2, label: 'Новосибирск', country: 'Россия' },
+      { value: 3, label: 'Йошкар-Ола', country: 'Россия' },
+    ]}
+    placeholder="Выберите город"
+    allowClearButton
+    renderOption={({ option, ...restProps }) => (
+      <CustomSelectOption {...restProps} description={option.country} />
+    )}
+  />
+</FormItem>
 ```
 
 </Playground>
@@ -222,22 +248,26 @@ const onCustomSearchInputChange = (e) => {
 };
 
 return (
-  <CustomSelect
-    value={value}
-    placeholder="Введите имя пользователя"
-    searchable
-    options={customSearchOptions()}
-    onInputChange={onCustomSearchInputChange}
-    renderOption={({ option, ...restProps }) => (
-      <CustomSelectOption
-        style={option.value === '0' ? { color: 'var(--vkui--color_text_accent)' } : {}}
-        {...restProps}
-      >
-        {option.label}
-      </CustomSelectOption>
-    )}
-    onChange={onCustomSearchChange}
-  />
+  <FormItem top="Пользователь" htmlFor="custom-select-input-6">
+    <CustomSelect
+      name="custom-select-option-6"
+      id="custom-select-input-6"
+      value={value}
+      placeholder="Введите имя пользователя"
+      searchable
+      options={customSearchOptions()}
+      onInputChange={onCustomSearchInputChange}
+      renderOption={({ option, ...restProps }) => (
+        <CustomSelectOption
+          style={option.value === '0' ? { color: 'var(--vkui--color_text_accent)' } : {}}
+          {...restProps}
+        >
+          {option.label}
+        </CustomSelectOption>
+      )}
+      onChange={onCustomSearchChange}
+    />
+  </FormItem>
 );
 ```
 
@@ -286,16 +316,19 @@ const customSearchFilter = (value, option) =>
   option.description.toLowerCase().includes(value.toLowerCase());
 
 return (
-  <CustomSelect
-    id="custom-search-algo-select-id"
-    placeholder="Введите название города или страны"
-    searchable
-    filterFn={customSearchFilter}
-    renderOption={({ option, ...restProps }) => (
-      <CustomSelectOption {...restProps} description={option.description} />
-    )}
-    options={cities}
-  />
+  <FormItem top="Город или страна" htmlFor="custom-search-algo-select-id">
+    <CustomSelect
+      name="custom-select-option-7"
+      id="custom-search-algo-select-id"
+      placeholder="Введите название города или страны"
+      searchable
+      filterFn={customSearchFilter}
+      renderOption={({ option, ...restProps }) => (
+        <CustomSelectOption {...restProps} description={option.description} />
+      )}
+      options={cities}
+    />
+  </FormItem>
 );
 ```
 
@@ -414,8 +447,10 @@ React.useEffect(() => {
 
 return (
   <FormLayoutGroup mode="horizontal" style={{ width: '100%' }}>
-    <FormItem style={{ flexGrow: 1, flexShrink: 1 }}>
+    <FormItem top="Пользователь" htmlFor="custom-select-input-8" style={{ flexGrow: 1, flexShrink: 1 }}>
       <CustomSelect
+        name="custom-select-option-8"
+        id="custom-select-input-8"
         aria-label="Пользователь"
         options={remoteUsers}
         searchable={searchable}
@@ -515,32 +550,35 @@ return (
   const selectRef = React.useRef();
 
   return (
-    <CustomSelect
-      options={[
-        { value: 0, label: 'Москва' },
-        { value: 1, label: 'Санкт-Петербург' },
-        { value: 2, label: 'Новосибирск' },
-        { value: 3, label: 'Йошкар-Ола' },
-      ]}
-      placeholder="Выберите город"
-      className="my-root-class"
-      data-testid="select-root"
-      id="custom-select-input-id"
-      slotProps={{
-        root: {
-          id: 'select-root-id',
-        },
-        input: {
-          className: 'my-input-class',
-          getRootRef: inputRef,
-        },
-        select: {
-          className: 'my-select-class',
-          'data-test-id': 'select',
-          getRootRef: selectRef,
-        }
-      }}
-    />
+    <FormItem top="Город" htmlFor="custom-select-input-id">
+      <CustomSelect
+        name="custom-select-option-9"
+        options={[
+          { value: 0, label: 'Москва' },
+          { value: 1, label: 'Санкт-Петербург' },
+          { value: 2, label: 'Новосибирск' },
+          { value: 3, label: 'Йошкар-Ола' },
+        ]}
+        placeholder="Выберите город"
+        className="my-root-class"
+        data-testid="select-root"
+        id="custom-select-input-id"
+        slotProps={{
+          root: {
+            id: 'select-root-id',
+          },
+          input: {
+            className: 'my-input-class',
+            getRootRef: inputRef,
+          },
+          select: {
+            className: 'my-select-class',
+            'data-test-id': 'select',
+            getRootRef: selectRef,
+          }
+        }}
+      />
+    </FormItem>
   )
   ```
 </Playground>

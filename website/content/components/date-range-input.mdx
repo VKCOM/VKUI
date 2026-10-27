@@ -16,7 +16,9 @@ tags: forms
 {/* @example-description: Базовый `DateRangeInput` для выбора периода из двух дат. */}
 <Playground style={{ width: 'fit-content' }}>
   ```jsx
-  <DateRangeInput />
+  <FormItem top="Период" htmlFor="date-range-input-date-range">
+    <DateRangeInput id="date-range-input-date-range" aria-label="Период" name="date-range" />
+  </FormItem>
   ```
 </Playground>
 
@@ -59,10 +61,15 @@ const [date, setDate] = React.useState([new Date(2024, 2, 1), new Date(2024, 2, 
 {/* @example-description: `DateRangeInput` в неактивном состоянии с заданным диапазоном дат. */}
 <Playground style={{ width: 'fit-content' }}>
   ```jsx
-  <DateRangeInput
-    defaultValue={[new Date(2024, 2, 1), new Date(2024, 2, 10)]}
-    disabled
-  />
+  <FormItem top="Период" htmlFor="date-range-input-disabled-date-range" disabled>
+    <DateRangeInput
+      id="date-range-input-disabled-date-range"
+      aria-label="Период"
+      name="disabled-date-range"
+      defaultValue={[new Date(2024, 2, 1), new Date(2024, 2, 10)]}
+      disabled
+    />
+  </FormItem>
   ```
 </Playground>
 
@@ -78,14 +85,22 @@ const [date, setDate] = React.useState([new Date(2024, 2, 1), new Date(2024, 2, 
 <Playground style={{ width: 'fit-content' }}>
   ```jsx
   <Flex direction="column" gap="m">
-    <DateRangeInput
-      status="error"
-      defaultValue={[new Date(2024, 2, 1), new Date(2024, 2, 10)]}
-    />
-    <DateRangeInput
-      status="valid"
-      defaultValue={[new Date(2024, 2, 1), new Date(2024, 2, 10)]}
-    />
+    <FormItem top="Период" htmlFor="date-range-input-invalid-date-range" status="error">
+      <DateRangeInput
+        id="date-range-input-invalid-date-range"
+        aria-label="Период"
+        name="invalid-date-range"
+        defaultValue={[new Date(2024, 2, 1), new Date(2024, 2, 10)]}
+      />
+    </FormItem>
+    <FormItem top="Период" htmlFor="date-range-input-valid-date-range" status="valid">
+      <DateRangeInput
+        id="date-range-input-valid-date-range"
+        aria-label="Период"
+        name="valid-date-range"
+        defaultValue={[new Date(2024, 2, 1), new Date(2024, 2, 10)]}
+      />
+    </FormItem>
   </Flex>
   ```
 </Playground>

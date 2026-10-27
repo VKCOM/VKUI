@@ -20,14 +20,18 @@ tags: selection
 {/* @example-description: Базовый адаптивный `Select` с предустановленным значением и списком опций. */}
 <Playground style={{ width: 270 }}>
   ```jsx
-  <Select
-    defaultValue="2"
-    options={[
-      { value: '1', label: 'Опция 1' },
-      { value: '2', label: 'Опция 2' },
-      { value: '3', label: 'Опция 3' },
-    ]}
-  />
+  <FormItem top="Опция" htmlFor="select-input-1">
+    <Select
+      id="select-input-1"
+      name="adaptive-option"
+      defaultValue="2"
+      options={[
+        { value: '1', label: 'Опция 1' },
+        { value: '2', label: 'Опция 2' },
+        { value: '3', label: 'Опция 3' },
+      ]}
+    />
+  </FormItem>
   ```
 </Playground>
 
@@ -74,7 +78,15 @@ const [color, setColor] = React.useState('red');
 {/* @example-description: `Select` в неактивном состоянии `disabled`. */}
 <Playground style={{ maxWidth: 270 }}>
   ```jsx
-  <Select options={[{ value: 'red', label: 'Красный' }]} defaultValue="red" disabled />
+  <FormItem top="Цвет" htmlFor="select-input-2" disabled>
+    <Select
+      name="select-option-2"
+      id="select-input-2"
+      options={[{ value: 'red', label: 'Красный' }]}
+      defaultValue="red"
+      disabled
+    />
+  </FormItem>
   ```
 </Playground>
 
@@ -89,8 +101,22 @@ const [color, setColor] = React.useState('red');
 {/* @example-description: Состояния валидации `Select` со статусами `error` и `valid`. */}
 <Playground style={{ maxWidth: 270 }}>
   ```jsx
-  <Select options={[{ value: 'red', label: 'Красный' }]} defaultValue="red" status="error" />
-  <Select options={[{ value: 'green', label: 'Зеленый' }]} defaultValue="green" status="valid" />
+  <FormItem top="Цвет" htmlFor="select-input-3" status="error">
+    <Select
+      name="select-option-3"
+      id="select-input-3"
+      options={[{ value: 'red', label: 'Красный' }]}
+      defaultValue="red"
+    />
+  </FormItem>
+  <FormItem top="Цвет" htmlFor="select-input-4" status="valid">
+    <Select
+      name="select-option-4"
+      id="select-input-4"
+      options={[{ value: 'green', label: 'Зеленый' }]}
+      defaultValue="green"
+    />
+  </FormItem>
   ```
 </Playground>
 

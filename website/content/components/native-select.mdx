@@ -23,11 +23,13 @@ tags: selection
 {/* @example-description: Базовый `NativeSelect` с набором нативных опций выбора. */}
 <Playground style={{ maxWidth: 280 }}>
   ```jsx
-  <NativeSelect>
-    <option value="1">Опция 1</option>
-    <option value="2">Опция 2</option>
-    <option value="3">Опция 3</option>
-  </NativeSelect>
+  <FormItem top="Опция" htmlFor="native-select-native-option">
+    <NativeSelect id="native-select-native-option" name="native-option">
+      <option value="1">Опция 1</option>
+      <option value="2">Опция 2</option>
+      <option value="3">Опция 3</option>
+    </NativeSelect>
+  </FormItem>
   ```
 </Playground>
 
@@ -71,9 +73,11 @@ const [gender, setGender] = React.useState('f');
 {/* @example-description: `NativeSelect` в неактивном состоянии `disabled`. */}
 <Playground style={{ maxWidth: 280 }}>
   ```jsx
-  <NativeSelect disabled>
-    <option value="1">Опция 1</option>
-  </NativeSelect>
+  <FormItem top="Опция" htmlFor="native-select-native-select-option-2" disabled>
+    <NativeSelect id="native-select-native-select-option-2" name="native-select-option-2" disabled>
+      <option value="1">Опция 1</option>
+    </NativeSelect>
+  </FormItem>
   ```
 </Playground>
 
@@ -88,12 +92,16 @@ const [gender, setGender] = React.useState('f');
 {/* @example-description: Валидационные статусы `NativeSelect`: ошибка и успешное состояние. */}
 <Playground style={{ maxWidth: 270 }}>
   ```jsx
-  <NativeSelect status="error">
-    <option value="1">Опция 1</option>
-  </NativeSelect>
-  <NativeSelect status="valid">
-    <option value="1">Опция 1</option>
-  </NativeSelect>
+  <FormItem top="Опция" htmlFor="native-select-native-select-option-3" status="error">
+    <NativeSelect id="native-select-native-select-option-3" name="native-select-option-3">
+      <option value="1">Опция 1</option>
+    </NativeSelect>
+  </FormItem>
+  <FormItem top="Опция" htmlFor="native-select-native-select-option-4" status="valid">
+    <NativeSelect id="native-select-native-select-option-4" name="native-select-option-4">
+      <option value="1">Опция 1</option>
+    </NativeSelect>
+  </FormItem>
   ```
 </Playground>
 
@@ -108,26 +116,29 @@ const [gender, setGender] = React.useState('f');
   const selectRef = React.useRef();
 
   return (
-    <NativeSelect
-      className="my-root-class"
-      data-testid="native-select-root"
-      id="native-select-id"
-      slotProps={{
-        root: {
-          id: 'select-root-id',
-        },
-        select: {
-          className: 'my-select-class',
-          'data-test-id': 'select',
-          getRootRef: selectRef,
-          'aria-label': 'Пример slotProps'
-        }
-      }}
-    >
-      <option value="1">Опция 1</option>
-      <option value="2">Опция 2</option>
-      <option value="3">Опция 3</option>
-    </NativeSelect>
+    <FormItem top="Опция" htmlFor="native-select-id">
+      <NativeSelect
+        name="native-select-option-5"
+        className="my-root-class"
+        data-testid="native-select-root"
+        id="native-select-id"
+        slotProps={{
+          root: {
+            id: 'select-root-id',
+          },
+          select: {
+            className: 'my-select-class',
+            'data-test-id': 'select',
+            getRootRef: selectRef,
+            'aria-label': 'Пример slotProps'
+          }
+        }}
+      >
+        <option value="1">Опция 1</option>
+        <option value="2">Опция 2</option>
+        <option value="3">Опция 3</option>
+      </NativeSelect>
+    </FormItem>
   )
   ```
 </Playground>
