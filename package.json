@@ -38,6 +38,7 @@
     "@types/semver": "^7.8.0",
     "@typescript-eslint/eslint-plugin": "^8.72.0",
     "@typescript-eslint/parser": "^8.72.0",
+    "@typescript/native": "npm:typescript@^7.0.2",
     "@vitest/coverage-v8": "^5.0.5",
     "@vitest/eslint-plugin": "^1.6.27",
     "@vitest/utils": "^5.0.5",
@@ -106,6 +107,7 @@
     "postcss@npm:8.4.31": "npm:^8.5.16"
   },
   "scripts": {
+    "tsc": "node ./node_modules/@typescript/native/bin/tsc",
     "docs:storybook": "yarn workspace @vkontakte/vkui storybook",
     "docs:storybook:build": "yarn workspace @vkontakte/vkui storybook:build",
     "docs:website": "yarn workspace @project-docs/website run dev",

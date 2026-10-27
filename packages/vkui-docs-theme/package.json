@@ -47,6 +47,6 @@
   },
   "scripts": {
     "test": "echo no test",
-    "lint:types": "tsc"
+    "lint:types": "node ../../node_modules/@typescript/native/bin/tsc"
   }
 }

@@ -81,7 +81,7 @@
     "build": "node build.ts",
     "test": "node --test '**/*.test.*'",
     "test:ci": "node --run test",
-    "lint:types": "tsc",
+    "lint:types": "node ../../node_modules/@typescript/native/bin/tsc",
     "prepack": "node --run build"
   },
   "devDependencies": {

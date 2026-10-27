@@ -381,7 +381,7 @@ describe('ChipsSelect', () => {
     '$description selected option if `selectedBehavior` is `"$selectedBehavior"`',
     withFakeTimers<[{ selectedBehavior: 'hide' | 'highlight' }]>(async ({ selectedBehavior }) => {
       const result = render(
-        <ChipsSelect
+        <ChipsSelect<ChipOption>
           options={colors}
           defaultValue={[FIRST_OPTION]}
           selectedBehavior={selectedBehavior}
@@ -538,7 +538,7 @@ describe('ChipsSelect', () => {
     'does not focus input field on chip click',
     withFakeTimers(async () => {
       const result = render(
-        <ChipsSelect defaultValue={[FIRST_OPTION, SECOND_OPTION]} options={colors} />,
+        <ChipsSelect<ChipOption> defaultValue={[FIRST_OPTION, SECOND_OPTION]} options={colors} />,
       );
       const chipEl = result.getByRole('gridcell', { name: withRegExp(FIRST_OPTION.label) });
       await userEvent.click(chipEl);
