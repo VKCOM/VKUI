@@ -14,7 +14,9 @@ tags: forms
 {/* @example-description: Базовое поле `DateInput` для ввода и выбора даты. */}
 <Playground style={{ width: 'fit-content' }}>
   ```jsx
-  <DateInput />
+  <FormItem top="Дата" htmlFor="date-input-date">
+    <DateInput id="date-input-date" aria-label="Дата" name="date" />
+  </FormItem>
   ```
 </Playground>
 
@@ -57,7 +59,15 @@ const [date, setDate] = React.useState(new Date());
 {/* @example-description: `DateInput` в неактивном состоянии с предустановленной датой. */}
 <Playground style={{ width: 'fit-content' }}>
   ```jsx
-  <DateInput defaultValue={new Date()} disabled />
+  <FormItem top="Дата" htmlFor="date-input-disabled-date" disabled>
+    <DateInput
+      id="date-input-disabled-date"
+      aria-label="Дата"
+      name="disabled-date"
+      defaultValue={new Date()}
+      disabled
+    />
+  </FormItem>
   ```
 </Playground>
 
@@ -73,8 +83,22 @@ const [date, setDate] = React.useState(new Date());
 <Playground style={{ width: 'fit-content' }}>
   ```jsx
   <Flex direction="column" gap="m">
-    <DateInput status="error" defaultValue={new Date()} />
-    <DateInput status="valid" defaultValue={new Date()} />
+    <FormItem top="Дата" htmlFor="date-input-invalid-date" status="error">
+      <DateInput
+        id="date-input-invalid-date"
+        aria-label="Дата"
+        name="invalid-date"
+        defaultValue={new Date()}
+      />
+    </FormItem>
+    <FormItem top="Дата" htmlFor="date-input-valid-date" status="valid">
+      <DateInput
+        id="date-input-valid-date"
+        aria-label="Дата"
+        name="valid-date"
+        defaultValue={new Date()}
+      />
+    </FormItem>
   </Flex>
   ```
 </Playground>
