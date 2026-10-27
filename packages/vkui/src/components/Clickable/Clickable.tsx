@@ -12,9 +12,12 @@ import {
   type RootComponentExtendProps,
   type RootComponentProps,
 } from '../RootComponent/RootComponent';
+import { checkClickable } from './helpers';
 import type { StateProps } from './useState';
 import { ClickableLockStateContext, DEFAULT_ACTIVE_EFFECT_DELAY, useState } from './useState';
 import styles from './Clickable.module.css';
+
+export { checkClickable } from './helpers';
 
 function nonClickableProps<T>({
   href,
@@ -161,22 +164,6 @@ export interface ClickableProps<T = HTMLElement>
    * Компонент который будет при передаче `onClick`. По умолчанию `"div"`.
    */
   DefaultComponent?: React.ElementType | undefined;
-}
-
-/**
- * Проверяем, является ли компонент кликабельным.
- */
-export function checkClickable<T>(props: ClickableProps<T>): boolean {
-  return (
-    (props.href !== undefined ||
-      props.onClick !== undefined ||
-      props.onClickCapture !== undefined ||
-      props.Component === 'a' ||
-      props.Component === 'button' ||
-      props.Component === 'label' ||
-      props.Component === 'input') &&
-    !props.disabled
-  );
 }
 
 /**

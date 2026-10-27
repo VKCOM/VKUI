@@ -18,12 +18,12 @@ import {
 } from '../CustomSelectDropdown/CustomSelectDropdown';
 import { CustomSelectOption } from '../CustomSelectOption/CustomSelectOption';
 import type { FormFieldProps } from '../FormField/FormField';
+import type { NativeSelectProps } from '../NativeSelect/NativeSelect';
 import {
-  type NativeSelectProps,
   NOT_SELECTED,
   remapFromNativeValueToSelectValue,
   type SelectValue,
-} from '../NativeSelect/NativeSelect';
+} from '../NativeSelect/helpers';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';

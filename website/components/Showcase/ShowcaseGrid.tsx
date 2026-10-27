@@ -1,5 +1,3 @@
-'use client';
-
 import { Flex, Title } from '@vkontakte/vkui';
 import showcaseData from '@/generated/showcase-data.json';
 import { ShowcaseCard } from './ShowcaseCard';

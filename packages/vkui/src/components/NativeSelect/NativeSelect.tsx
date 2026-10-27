@@ -16,6 +16,12 @@ import { FormField, type FormFieldProps } from '../FormField/FormField';
 import { RootComponent } from '../RootComponent/RootComponent';
 import type { SelectType } from '../Select/Select';
 import { SelectTypography } from '../SelectTypography/SelectTypography';
+import {
+  NOT_SELECTED,
+  remapFromNativeValueToSelectValue,
+  remapFromSelectValueToNativeValue,
+  type SelectValue,
+} from './helpers';
 import calendarHeaderStylesGlobal from '../CalendarHeader/CalendarHeader.global.module.css';
 import stylesFormItemGlobal from '../FormItem/FormItem.global.module.css';
 import styles from '../Select/Select.module.css';
@@ -27,26 +33,12 @@ const densityClassNames = {
   compact: styles.densityCompact,
 };
 
-export type SelectValue = Exclude<
-  React.SelectHTMLAttributes<HTMLSelectElement>['value'],
-  undefined
-> | null;
-
-export type NativeSelectValue = Exclude<SelectValue, null>;
-
-export const NOT_SELECTED = {
-  NATIVE: '__vkui_internal_Select_not_selected__',
-  CUSTOM: null,
-};
-
-/**
- * @visibleName NativeSelect
- */
-export const remapFromSelectValueToNativeValue = (value: SelectValue): NativeSelectValue =>
-  value === NOT_SELECTED.CUSTOM ? NOT_SELECTED.NATIVE : value;
-
-export const remapFromNativeValueToSelectValue = (value: NativeSelectValue): SelectValue =>
-  value === NOT_SELECTED.NATIVE ? NOT_SELECTED.CUSTOM : value;
+export type { NativeSelectValue, SelectValue } from './helpers';
+export {
+  NOT_SELECTED,
+  remapFromNativeValueToSelectValue,
+  remapFromSelectValueToNativeValue,
+} from './helpers';
 
 export type NativeHTMLSelectProps = Omit<
   React.SelectHTMLAttributes<HTMLSelectElement>,

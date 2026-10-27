@@ -1,5 +1,3 @@
-'use client';
-
 import type * as React from 'react';
 import { Tappable, type TappableOmitProps } from '../Tappable/Tappable';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';

@@ -1,9 +1,5 @@
-'use client';
-
-import { useRef } from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { getTextFromChildren } from '../../../lib/children';
-import { useIsomorphicLayoutEffect } from '../../../lib/useIsomorphicLayoutEffect';
 import type { HasRootRef } from '../../../types';
 import { RootComponent, type RootComponentProps } from '../../RootComponent/RootComponent';
 import styles from './EllipsisText.module.css';
@@ -45,14 +41,6 @@ const EllipsisText = ({
   disableNativeTitle = false,
   ...restProps
 }: EllipsisTextProps): React.ReactNode => {
-  const contentRef = useRef<HTMLSpanElement | null>(null);
-
-  useIsomorphicLayoutEffect(() => {
-    if (contentRef && contentRef.current) {
-      contentRef.current.style.setProperty('-webkit-line-clamp', maxLines > 1 ? `${maxLines}` : '');
-    }
-  }, [contentRef, maxLines]);
-
   return (
     <RootComponent
       Component={Component}
@@ -65,8 +53,7 @@ const EllipsisText = ({
       {...restProps}
     >
       <span
-        style={{ maxWidth }}
-        ref={contentRef}
+        style={{ maxWidth, WebkitLineClamp: maxLines > 1 ? `${maxLines}` : undefined }}
         className={classNames(styles.content, maxLines > 1 && styles.contentMultiline)}
       >
         {children}

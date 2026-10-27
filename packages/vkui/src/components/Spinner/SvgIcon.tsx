@@ -1,5 +1,3 @@
-'use client';
-
 import { type HasRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 

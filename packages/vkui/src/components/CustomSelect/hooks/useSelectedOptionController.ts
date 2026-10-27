@@ -7,7 +7,7 @@ import {
   remapFromNativeValueToSelectValue,
   remapFromSelectValueToNativeValue,
   type SelectValue,
-} from '../../NativeSelect/NativeSelect';
+} from '../../NativeSelect/helpers';
 import type { SelectProps } from '../CustomSelect';
 
 /* eslint-disable jsdoc/require-jsdoc */

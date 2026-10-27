@@ -1,5 +1,3 @@
-'use client';
-
 import type * as React from 'react';
 import { classNames, hasReactNode, isPrimitiveReactNode } from '@vkontakte/vkjs';
 import type { HasComponent, HasRender, HTMLAttributesWithRootRef } from '../../types';

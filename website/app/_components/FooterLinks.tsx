@@ -1,10 +1,7 @@
-'use client';
-
 import type * as React from 'react';
 import { Icon16LinkOutline } from '@vkontakte/icons';
 import { Button } from '@vkontakte/vkui';
-import { LogoIcon, LogoIconUwu } from '@vkontakte/vkui-docs-theme';
-import NextLink from 'next/link';
+import { LogoIcon, LogoIconUwu, NextLink } from '@vkontakte/vkui-docs-theme';
 import { UwuModeSwitcher } from './UwuModeSwitcher.tsx';
 
 function FooterLink({ children, href }: React.PropsWithChildren<{ href: string }>) {
