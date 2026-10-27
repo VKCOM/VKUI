@@ -91,6 +91,33 @@ export default withBundleAnalyzer(
         type: 'asset/source',
       });
 
+      if (!isServer) {
+        config.module.rules.push({
+          test: /\.[jt]sx?$/,
+          include: [import.meta.dirname, path.resolve(import.meta.dirname, '../packages/vkui')],
+          exclude: /node_modules/,
+          resourceQuery: { not: [/raw/] },
+          enforce: 'pre',
+          loader: 'swc-loader',
+          options: {
+            swcrc: false,
+            jsc: {
+              target: 'esnext',
+              parser: {
+                syntax: 'typescript',
+                tsx: true,
+              },
+              transform: {
+                react: {
+                  runtime: 'preserve',
+                },
+                reactCompiler: true,
+              },
+            },
+          },
+        });
+      }
+
       return config;
     },
   }),
