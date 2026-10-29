@@ -284,6 +284,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     // FormFieldProps
     status,
     before,
+    after,
 
     // CustomSelectDropdownProps
     overscrollBehavior,
@@ -798,7 +799,16 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
         searchable={searchable}
         accessible={accessible}
         before={before}
-        after={afterItems}
+        after={
+          after ? (
+            <React.Fragment>
+              {after}
+              {afterItems}
+            </React.Fragment>
+          ) : (
+            afterItems
+          )
+        }
         selectType={selectType || mode || 'default'}
         align={align}
         status={status}
