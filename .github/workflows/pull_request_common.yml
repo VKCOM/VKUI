@@ -22,18 +22,18 @@ jobs:
     name: Add labels
     steps:
       - name: Checkout code
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        uses: actions/checkout@v7.0.1
 
       - name: Patch
         if: ${{ startsWith(github.event.pull_request.title, 'fix') }}
-        uses: ./.github/actions/add-label-to-pull-request
+        uses: $/.github/actions/add-label-to-pull-request
         with:
           issue_number: ${{ github.event.pull_request.number }}
           label: 'ci:cherry-pick:patch'
 
       - name: VKUI-tokens
         if: ${{ github.event.pull_request.user.login == 'dependabot[bot]' && contains(github.event.pull_request.title, '@vkontakte/vkui-tokens') }}
-        uses: ./.github/actions/add-label-to-pull-request
+        uses: $/.github/actions/add-label-to-pull-request
         with:
           issue_number: ${{ github.event.pull_request.number }}
           label: 'vkui-tokens'
@@ -47,19 +47,19 @@ jobs:
     if: ${{ github.event.action == 'opened' && github.event.pull_request.user.login == 'dependabot[bot]' }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        uses: actions/checkout@v7.0.1
 
       - name: Node setup
-        uses: ./.github/actions/node-setup
+        uses: $/.github/actions/node-setup
 
       - name: Fetch Dependabot metadata
         id: metadata
-        uses: dependabot/fetch-metadata@25dd0e34f4fe68f24cc83900b1fe3fe149efef98 # v3.1.0
+        uses: dependabot/fetch-metadata@v3.1.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Find changes
-        uses: dorny/paths-filter@ceb8a2b8f2d89434be7ff52d3de7ec3738c5cc9d # v4.0.3
+        uses: dorny/paths-filter@v4.0.3
         id: file_changes
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -125,9 +125,9 @@ jobs:
     name: Check code formatting
     steps:
       - name: Checkout
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        uses: actions/checkout@v7.0.1
 
       - name: Node setup
-        uses: ./.github/actions/node-setup
+        uses: $/.github/actions/node-setup
       - name: Run Biome format
         run: node --run lint:format

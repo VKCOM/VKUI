@@ -15,12 +15,12 @@ jobs:
       contents: write
     steps:
       - name: Checkout
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        uses: actions/checkout@v7.0.1
         with:
           persist-credentials: false
 
       - name: Node setup
-        uses: ./.github/actions/node-setup
+        uses: $/.github/actions/node-setup
 
       - name: Build VKUI
         run: node --run build:vkui
@@ -31,7 +31,7 @@ jobs:
           yarn workspace @project-docs/website next-sitemap
 
       - name: Publishing docs
-        uses: JamesIves/github-pages-deploy-action@d92aa235d04922e8f08b40ce78cc5442fcfbfa2f # v4.8.0
+        uses: JamesIves/github-pages-deploy-action@v4.8.0
         with:
           token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
           branch: gh-pages
