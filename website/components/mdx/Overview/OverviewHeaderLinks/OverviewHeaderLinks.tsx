@@ -1,3 +1,5 @@
+'use client';
+
 import { Flex, Subhead } from '@vkontakte/vkui';
 import { useConfig } from '@vkontakte/vkui-docs-theme';
 import { useFSRoute } from 'nextra/hooks';

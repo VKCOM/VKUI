@@ -2,22 +2,10 @@
 
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../../hooks/useAdaptivity';
-import type { DensityTypeValues } from '../../../lib/adaptivity';
 import { type HasCaps, Typography, type TypographyProps } from '../Typography';
-import styles from './Footnote.module.css';
+import { footnoteClassNames } from './helpers';
 
-const densityClassNames = {
-  none: styles.densityNone,
-  compact: styles.densityCompact,
-};
-
-export function footnoteClassNames(density: 'none' | DensityTypeValues, caps = false) {
-  return classNames(
-    styles.host,
-    density !== 'regular' && densityClassNames[density],
-    caps && styles.caps,
-  );
-}
+export { footnoteClassNames } from './helpers';
 
 export interface FootnoteProps extends TypographyProps, HasCaps {}
 

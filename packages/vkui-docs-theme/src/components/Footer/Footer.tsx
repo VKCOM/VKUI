@@ -1,5 +1,3 @@
-'use client';
-
 import { Flex } from '@vkontakte/vkui';
 import styles from './Footer.module.css';
 

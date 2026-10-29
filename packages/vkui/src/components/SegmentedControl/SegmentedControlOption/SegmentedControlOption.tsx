@@ -1,4 +1,3 @@
-'use client';
 /* eslint-disable jsdoc/require-jsdoc */
 
 import type * as React from 'react';

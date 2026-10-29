@@ -1,3 +1,4 @@
+import { renderToString } from 'react-dom/server';
 import { render } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 import { baselineComponent } from '../../../testing/utils';
@@ -23,6 +24,18 @@ describe(EllipsisText, () => {
     const text = result.getByTestId('text-wrapper').firstElementChild as HTMLElement;
     expect(text).not.toBeNull();
     expect(text).toHaveClass(styles.contentMultiline);
+  });
+
+  it('should include the line limit in server-rendered markup', () => {
+    const html = renderToString(<EllipsisText maxLines={3}>{mockText}</EllipsisText>);
+
+    expect(html).toContain('-webkit-line-clamp:3');
+  });
+
+  it('should not limit lines in single-line server-rendered markup', () => {
+    const html = renderToString(<EllipsisText>{mockText}</EllipsisText>);
+
+    expect(html).not.toContain('-webkit-line-clamp');
   });
 
   it('should not apply title attribute', () => {

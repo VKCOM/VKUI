@@ -1,4 +1,5 @@
 import * as path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import analyzer from '@next/bundle-analyzer';
 import { transformerNotationDiff } from '@shikijs/transformers';
 import browserslistGrammar from 'browserslist-vscode/syntaxes/browserslist.tmLanguage.json' with {
@@ -51,14 +52,8 @@ export default withBundleAnalyzer(
     trailingSlash: true,
     // ... your Next.js config
     transpilePackages: ['@vkontakte/vkui-docs-theme', '@vkontakte/vkui'],
-    modularizeImports: {
-      '@vkontakte/vkui': {
-        transform: '@vkontakte/vkui/dist/cssm',
-        skipDefaultConversion: true,
-      },
-    },
     experimental: {
-      optimizePackageImports: ['@vkontakte/icons'],
+      optimizePackageImports: ['@vkontakte/icons', '@vkontakte/vkui'],
     },
     basePath,
     output: 'export',
@@ -67,6 +62,11 @@ export default withBundleAnalyzer(
     },
     distDir,
     webpack: (config, { isServer }) => {
+      config.resolve.alias = {
+        ...config.resolve.alias,
+        '@vkontakte/vkui$': fileURLToPath(import.meta.resolve('@vkontakte/vkui/dist/cssm')),
+      };
+
       if (!isServer) {
         config.resolve = {
           ...config.resolve,
