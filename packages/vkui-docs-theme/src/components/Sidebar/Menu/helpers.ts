@@ -3,14 +3,19 @@ import type { Item, PageItem } from 'nextra/normalize-pages';
 export function filterDirectories(directories: Array<PageItem | Item>, search: string) {
   let lastSeparator: PageItem | Item | null = null;
   let itemsAfterSeparator = 0;
+  const normalizedSearch = search.toLowerCase();
 
   return directories.reduce<Array<PageItem | Item>>((data, item) => {
+    const keywords = 'frontMatter' in item ? item.frontMatter?.keywords : undefined;
+    const searchValues = [item.title, ...(Array.isArray(keywords) ? keywords : [keywords])];
+
     if (item.type === 'separator') {
       lastSeparator = item;
       itemsAfterSeparator = 0;
     } else if (
-      typeof item.title === 'string' &&
-      item.title.toLowerCase().includes(search.toLowerCase())
+      searchValues.some(
+        (value) => typeof value === 'string' && value.toLowerCase().includes(normalizedSearch),
+      )
     ) {
       ++itemsAfterSeparator;
       if (lastSeparator && itemsAfterSeparator === 1) {
