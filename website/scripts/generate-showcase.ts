@@ -1,7 +1,10 @@
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import remarkParse from 'remark-parse';
+import { unified } from 'unified';
 import { collectMdxFiles } from './common/collectMdxFiles.ts';
+import { getPreviewId } from './common/previewId.mjs';
 import { resolvePartials } from './common/resolvePartials.ts';
 import { runIfMain } from './common/runIfMain.ts';
 
@@ -61,7 +64,7 @@ interface ShowcaseItem {
   direction: string | undefined;
   wrapper: string | undefined;
   description: string;
-  code: string;
+  previewId: string;
   docsUrl: string;
 }
 
@@ -134,7 +137,7 @@ function slugFromPath(filePath: string): string {
   return relative.replace(/\\/g, '/').replace(/\.mdx$/, '');
 }
 
-function extractFirstPlayground(body: string): Playground | null {
+export function extractFirstPlayground(body: string): Playground | null {
   const regex =
     /<Playground\b([\s\S]*?)>\s*```jsx[^\n]*\r?\n([\s\S]*?)\r?\n\s*```\s*<\/Playground>/;
 
@@ -144,7 +147,17 @@ function extractFirstPlayground(body: string): Playground | null {
   }
 
   const attrsRaw = match[1] || '';
-  const code = match[2].trim();
+  const fenceStart = body.indexOf('```jsx', match.index);
+  const lineStart = body.lastIndexOf('\n', fenceStart) + 1;
+  const fenceEnd = (match.index || 0) + match[0].lastIndexOf('```') + 3;
+  const codeNode = unified()
+    .use(remarkParse)
+    .parse(body.slice(lineStart, fenceEnd))
+    .children.find((node) => node.type === 'code');
+  if (!codeNode || codeNode.type !== 'code') {
+    return null;
+  }
+  const code = codeNode.value.trim();
 
   const directionMatch = attrsRaw.match(/direction="([^"]+)"/);
   const wrapperMatch = attrsRaw.match(/Wrapper=\{([A-Za-z0-9_$]+)\}/);
@@ -182,9 +195,11 @@ function buildDocsUrl(name: string, parent?: string): string {
   return `/components/${toKebabCase(name)}`;
 }
 
-export async function generateShowcaseData() {
-  // eslint-disable-next-line no-console
-  console.log('🔄 Генерация данных витрины компонентов...');
+export async function generateShowcaseData({ silent = false }: { silent?: boolean } = {}) {
+  if (!silent) {
+    // eslint-disable-next-line no-console
+    console.log('🔄 Генерация данных витрины компонентов...');
+  }
 
   ensureDir(OUT_DIR);
 
@@ -237,7 +252,7 @@ export async function generateShowcaseData() {
       direction: playground.direction,
       wrapper: playground.wrapper,
       description,
-      code: playground.code,
+      previewId: getPreviewId(playground.code),
       docsUrl,
     });
   }
@@ -255,14 +270,19 @@ export async function generateShowcaseData() {
     groups,
   };
 
-  fs.writeFileSync(OUT_FILE, JSON.stringify(payload, null, 2));
+  const previous = fs.existsSync(OUT_FILE) ? JSON.parse(fs.readFileSync(OUT_FILE, 'utf8')) : null;
+  if (JSON.stringify(previous?.groups) !== JSON.stringify(groups)) {
+    fs.writeFileSync(OUT_FILE, JSON.stringify(payload, null, 2));
+  }
 
-  // eslint-disable-next-line no-console
-  console.log(
-    `✅ Витрина: ${items.length} компонентов, ${groups.length} групп. Пропущено: ${skipped.length}.`,
-  );
+  if (!silent) {
+    // eslint-disable-next-line no-console
+    console.log(
+      `✅ Витрина: ${items.length} компонентов, ${groups.length} групп. Пропущено: ${skipped.length}.`,
+    );
+  }
 
-  if (skipped.length > 0) {
+  if (!silent && skipped.length > 0) {
     // eslint-disable-next-line no-console
     console.log(
       `   Пропущенные: ${skipped.map((skip) => `${skip.slug} (${skip.reason})`).join(', ')}`,

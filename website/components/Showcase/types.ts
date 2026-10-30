@@ -5,7 +5,7 @@ export interface ShowcaseItem {
   direction?: 'row' | 'column';
   wrapper?: string;
   description?: string;
-  code: string;
+  previewId: string;
   docsUrl: string;
 }
 
