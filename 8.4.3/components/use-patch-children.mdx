@@ -1,0 +1,96 @@
+﻿---
+description: Хук для модификации дочерних элементов с возможностью получения ссылки на DOM-узел и инъекции дополнительных свойств.
+---
+
+<Overview type="hook">
+
+# usePatchChildren
+
+Хук для модификации дочерних элементов с возможностью получения ссылки на `DOM`-узел и инъекции дополнительных свойств.
+
+</Overview>
+
+## API
+
+### Параметры
+
+| Параметр      | Тип                                      | Описание                                                 |
+| ------------- | ---------------------------------------- | -------------------------------------------------------- |
+| `children`    | `ChildrenElement<ElementType>`           | Целевой React-элемент или произвольные дочерние элементы |
+| `injectProps` | `InjectProps<ElementType>` (опционально) | Дополнительные пропсы для инъекции в элемент             |
+| `externRef`   | `React.Ref<ElementType>` (опционально)   | Внешний ref для синхронизации с DOM-узлом                |
+
+### Возвращаемое значение
+
+Кортеж:
+
+1. `React.RefObject<ElementType | null>` - Ref на DOM-элемент.
+2. `ChildrenElement<ElementType> | undefined` - Модифицированный дочерний элемент.
+
+## Особенности работы
+
+- Работает только с элементами, принимающими стандартные `DOM`-свойства.
+- Автоматически мержит переданные `injectProps` с существующими свойствами элемента.
+- Гарантирует сохранение оригинальной функциональности `ref`.
+
+## Рекомендации
+
+Используйте для:
+
+- получения доступа к `DOM`-узлам в композитных компонентах;
+- добавления кастомных обработчиков событий;
+- динамической модификации стилей дочерних элементов;
+- интеграции с библиотеками, требующими `DOM`-ссылок.
+
+Избегайте:
+
+```tsx
+// ❌ Невалидно - текстовая нода
+usePatchChildren('Simple text');
+
+// ❌ Элемент без поддержки DOM-пропсов
+usePatchChildren(<MyCustomComponent />);
+```
+
+## Примеры использования
+
+{/* @example-description: Инъекция пропсов и ref. */}
+<Playground direction="column" align="stretch">
+  ```jsx
+  const [originClicks, setOriginClicks] = React.useState(0);
+  const [injectedClicks, setInjectedClicks] = React.useState(0);
+  const [isFocused, setIsFocused] = React.useState(false);
+  const externalRef = React.useRef(null);
+
+  const child = (
+    <Button onClick={() => setOriginClicks((value) => value + 1)}>
+      Кликни или сфокусируй меня
+    </Button>
+  );
+
+  const [, patchedChild] = usePatchChildren(
+    child,
+    {
+      tabIndex: 0,
+      "data-patched": "true",
+      onClick: () => setInjectedClicks((value) => value + 1),
+      onFocus: () => setIsFocused(true),
+      onBlur: () => setIsFocused(false),
+    },
+    externalRef,
+  );
+
+  return (
+    <Flex direction="column" align="start" gap="m">
+      {patchedChild}
+      <Caption level="1">
+        Оригинальный onClick: {originClicks} | Инъекция onClick: {injectedClicks}
+      </Caption>
+      <Caption level="1">Фокус: {isFocused ? "да" : "нет"}</Caption>
+      <Caption level="1">
+        Ref указывает на: {externalRef.current?.tagName ?? "не определен"}
+      </Caption>
+    </Flex>
+  );
+  ```
+</Playground>

@@ -1,5 +1,7 @@
 ﻿---
 description: Компонент для отображения списка действий в виде всплывающего меню.
+keywords:
+  - ActionSheetItem
 ---
 
 <Overview group="modals">
@@ -128,6 +130,25 @@ function handleClosed({ closedBy }) {
 ### `popupOffsetDistance`
 
 Свойство `popupOffsetDistance` позволяет задать отступ (в пикселях) от якорного элемента.
+
+## Стилизация всплывающей панели
+
+Используйте `slotProps.dropdown.style` и `slotProps.dropdown.className`, чтобы настроить панель
+с заголовком и списком действий в режимах `menu` и `sheet`:
+
+```jsx
+<ActionSheet
+  toggleRef={toggleRef}
+  onClosed={handleClosed}
+  slotProps={{ dropdown: { style: { maxWidth: 350 } } }}
+>
+  <ActionSheetItem>Действие</ActionSheetItem>
+</ActionSheet>
+```
+
+Ограничение ширины через `style` самого `ActionSheet` сужает также подложку и область клика снаружи.
+Перенесите такие стили в `slotProps.dropdown.style`, чтобы подложка занимала всю доступную область.
+В режиме `menu` стили слота имеют приоритет над одноимёнными стилями из `style`.
 
 ## Браузерные события
 
@@ -459,7 +480,7 @@ return ['0.25x', '0.5x', '0.75x', 'Нормальная', '1.25x', '1.5x', '2x',
 | `placement` | `PlacementWithAuto` | `-` | Позиционирование всплывающего окна для десктопа. Компонент выберет наилучшее расположение сам, но можно задать приоритетное направление с помощью этого свойства. |
 | `popupOffsetDistance` | `number` | `-` | Отступ, где заданное кол-во единиц равняется пикселям. |
 | `restoreFocus` | `boolean \| (() => boolean \| HTMLElement)` | `true` | Управление поведением возврата фокуса при закрытии всплывающего окна. |
-| `slotProps` | `{ iosCloseItem?: (Omit<ActionSheetItemProps, "mode" \| "isCancelItem"> & HasRootRef<HTMLElement>); } \| undefined` | `-` | Свойства, которые можно прокинуть внутрь компонента: - `iosCloseItem`: свойства для прокидывания в кнопку отмены на iOS. |
+| `slotProps` | `{ dropdown?: Pick<SharedDropdownProps, "className" \| "style">; iosCloseItem?: (Omit<ActionSheetItemProps, "mode" \| "isCancelItem"> & HasRootRef<...>) \| undefined; } \| undefined` | `-` | Свойства, которые можно прокинуть внутрь компонента: - `dropdown`: стили и класс всплывающей панели в режимах `menu` и `sheet`. - `iosCloseItem`: свойства для прокидывания в кнопку отмены на iOS. |
 | `timeout` | `number` | `0` | Время в миллисекундах после которого срабатывает автофокус при появлении всплывающего окна. |
 | `title` | `ReactNode` | `-` | Заголовок всплывающего окна. |
 | `**toggleRef** \*` | `ToggleRef` | `-` | Элемент, рядом с которым вылезает всплывающий элемент на десктопе. Лучше передавать `RefObject` c current. |

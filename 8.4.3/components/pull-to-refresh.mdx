@@ -1,0 +1,124 @@
+﻿---
+description: Компонент для обновления контента жестом "потянуть вниз".
+tags: loading
+---
+
+<Overview group="feedback">
+
+# PullToRefresh [tag:component]
+
+Компонент для обновления контента жестом "потянуть вниз".
+Работает на сенсорных устройствах и поддерживает управление состоянием загрузки.
+
+</Overview>
+
+{/* @example-description: Базовый `PullToRefresh` с жестом обновления и контролем состояния загрузки. */}
+<Playground style={{ userSelect: 'none', alignItems: 'unset', height: 150, overflow: 'auto' }}>
+
+```jsx
+const [users, setUsers] = React.useState([]);
+const [fetching, setFetching] = React.useState(false);
+
+const onRefresh = React.useCallback(() => {
+  setFetching(true);
+
+  setTimeout(() => {
+    setFetching(false);
+    setUsers(Array.from({ length: 20 }));
+  }, 2000);
+}, []);
+
+return (
+  <PullToRefresh onRefresh={onRefresh} isFetching={fetching}>
+    <Box padding="system">
+      {!users.length && <Text>Потяните вниз</Text>}
+      {users.map((_, i) => {
+        return (
+          <Cell key={i} before={<Avatar />}>
+            {i}
+          </Cell>
+        );
+      })}
+    </Box>
+  </PullToRefresh>
+);
+```
+
+</Playground>
+
+## Обязательные свойства
+
+### Обработчик `onRefresh`
+
+Функция обновления данных (прим.: функция должна быть мемоизированным обработчиком)
+
+## Особенности работы
+
+### Управление состоянием
+
+- Устанавливайте `isFetching={true}` при начале загрузки.
+- Устанавливайте `isFetching={false}` после завершения загрузки.
+
+## Доступность (a11y) [#a11y]
+
+Жест «потянуть вниз» недоступен пользователям ассистивных технологий: в VoiceOver смахивание
+тремя пальцами вниз не вызывает `PullToRefresh`.
+
+Вместо жеста компонент отрисовывает **скрытую кнопку «Обновить»**. Она в таб-фокусе, срабатывает
+с клавиатуры (Enter/Space) и объявляется скринридером. Кнопка вызывает тот же `onRefresh` и
+блокируется на время обновления. Состояние загрузки озвучивается через `aria-busy` и
+`aria-live="polite"`.
+
+Чтобы зрячий пользователь, навигирующийся с клавиатуры, видел, где оказался, кнопка (на базе
+`Button`) **раскрывается во всплывающую при фокусе** и скрывается при потере фокуса.
+
+Тексты для скринридера переопределяются свойствами:
+
+```jsx
+<PullToRefresh
+  onRefresh={onRefresh}
+  isFetching={fetching}
+  accessibilityLabel="Лента пользователей"
+  refreshLabel="Обновить ленту"
+>
+  {content}
+</PullToRefresh>
+```
+
+- `accessibilityLabel` — подпись области (по умолчанию «Обновление контента»).
+- `refreshLabel` — текст кнопки (по умолчанию «Обновить»).
+
+> Вне фокуса кнопка скрыта. Чтобы показывать её зрячим постоянно, добавьте отдельную кнопку
+> (например, в `PanelHeader`) с тем же `onRefresh`.
+
+## Свойства и методы [#api]
+
+| Свойство | Тип | По умолчанию | Описание |
+| --- | --- | --- | --- |
+| `accessibilityLabel` | `string` | `Обновление контента` | Текст, объявляемый скринридером для области обновления.  > ℹ️ Жест «потянуть вниз» недоступен для пользователей ассистивных технологий, поэтому компонент > предоставляет скрытую кнопку «Обновить», доступную с клавиатуры и скринридера. |
+| `Component` | `ElementType<any, keyof IntrinsicElements>` | `-` |  |
+| `document` | `Document` | `-` |  |
+| `getRootRef` | `Ref<HTMLElement>` | `-` |  |
+| `isFetching` | `boolean` | `-` | Определяет, выполняется ли обновление. Для скрытия спиннера после получения контента необходимо передать `false`. |
+| `noSlideClick` | `boolean` | `-` | Блокировать click-события после распознавания свайпа. |
+| `onEnd` | `CustomTouchEventHandler` | `-` | Общий обработчик завершения взаимодействия. |
+| `onEndX` | `CustomTouchEventHandler` | `-` | Обработчик завершения горизонтального свайпа. |
+| `onEndY` | `CustomTouchEventHandler` | `-` | Обработчик завершения вертикального свайпа. |
+| `onEnter` | `HoverHandler` | `-` | Обработчик входа курсора в область. |
+| `onLeave` | `HoverHandler` | `-` | Обработчик выхода курсора из области. |
+| `onMove` | `CustomTouchEventHandler` | `-` | Общий обработчик перемещения. |
+| `onMoveX` | `CustomTouchEventHandler` | `-` | Обработчик горизонтального перемещения. |
+| `onMoveY` | `CustomTouchEventHandler` | `-` | Обработчик вертикального перемещения. |
+| `**onRefresh** \*` | `AnyFunction` | `-` | Будет вызвана для обновления контента (прим.: функция должна быть мемоизированным обработчиком). |
+| `onStart` | `CustomTouchEventHandler` | `-` | Общий обработчик начала взаимодействия. |
+| `onStartX` | `CustomTouchEventHandler` | `-` | Обработчик начала горизонтального перемещения. |
+| `onStartY` | `CustomTouchEventHandler` | `-` | Обработчик начала вертикального перемещения. |
+| `refreshLabel` | `string` | `Обновить` | Текст скрытой кнопки, запускающей обновление для пользователей ассистивных технологий. |
+| `scroll` | `ScrollContextInterface` | `-` |  |
+| `slideThreshold` | `number` | `5` | Порог расстояния в пикселях для активации свайпа. |
+| `slotProps` | `{ controls?: Pick<CSSProperties, "zIndex">; } \| undefined` | `-` | Свойства, которые можно прокинуть внутрь компонента: - `controls`: свойства контейнера спиннера. |
+| `stopPropagation` | `boolean` | `-` | Останавливать всплытие событий. |
+| `useCapture` | `boolean` | `-` | Использовать фазу capture для событий. |
+| `usePointerHover` | `boolean` | `-` | Использовать pointer-events для hover-состояний. Работает на отключенных элементах (disabled inputs). |
+| `window` | `Window` | `-` |  |
+

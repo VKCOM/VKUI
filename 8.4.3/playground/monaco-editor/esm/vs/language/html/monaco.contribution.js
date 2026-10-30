@@ -1,0 +1,1 @@
+export { handlebarDefaults, handlebarLanguageService, htmlDefaults, htmlLanguageService, razorDefaults, razorLanguageService, registerHTMLLanguageService } from '../../languages/features/html/register.js';

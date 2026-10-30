@@ -1,0 +1,105 @@
+﻿---
+description: Компонент для создания визуально выделенных контейнеров с содержимым.
+tags: card
+---
+
+<Overview group="data-display">
+
+# Card [tag:component]
+
+Компонент для создания визуально выделенных контейнеров с содержимым. Обеспечивает семантически правильную
+разметку по умолчанию и различные варианты стилевого оформления.
+
+Связанные компоненты:
+
+- [CardGrid](/components/card-grid)
+- [CardScroll](/components/card-scroll)
+
+</Overview>
+
+{/* @example-description: Базовая карточка с текстовым содержимым внутри `Div`. */}
+<Playground>
+  ```jsx
+  <Card>
+    <Box padding="system">
+      <Text>Содержимое карточки</Text>
+    </Box>
+  </Card>
+  ```
+</Playground>
+
+## Основные возможности
+
+### Семантическая разметка
+
+Компонент поддерживает следующие возможности:
+
+- использование семантически правильного тега `<li>` по умолчанию;
+- возможность изменения тега через свойство `Component` для одиночных карточек вне списков;
+- поддержка `ARIA`-ролей для улучшения доступности.
+
+```jsx
+// Карточка в списке
+<Card>
+  <Text>Элемент списка</Text>
+</Card>
+
+// Одиночная карточка
+<Card Component="div">
+  <Text>Отдельная карточка</Text>
+</Card>
+```
+
+## Режимы отображения
+
+Задаётся свойством `mode`.
+
+{/* @example-description: Демонстрация всех вариантов `mode` для визуального оформления карточки. */}
+<Playground>
+  ```jsx
+  <Card mode="tint">
+    <Box padding="system">
+      <Text>mode="tint"</Text>
+    </Box>
+  </Card>
+  <Card mode="shadow">
+    <Box padding="system">
+      <Text>mode="shadow"</Text>
+    </Box>
+  </Card>
+  <Card mode="outline">
+    <Box padding="system">
+      <Text>mode="outline"</Text>
+    </Box>
+  </Card>
+  <Card mode="outline-tint">
+    <Box padding="system">
+      <Text>mode="outline-tint"</Text>
+    </Box>
+  </Card>
+  <Card mode="plain">
+    <Box padding="system">
+      <Text>mode="plain"</Text>
+    </Box>
+  </Card>
+  ```
+</Playground>
+
+## Доступность (a11y) [#a11y]
+
+Компонент обеспечивает базовую доступность через семантически правильную разметку.
+При необходимости можно:
+
+- изменить тег через свойство `Component`;
+- добавить ARIA-роли для улучшения доступности;
+- настроить дополнительные атрибуты для конкретных сценариев использования.
+
+## Свойства и методы [#api]
+
+| Свойство | Тип | По умолчанию | Описание |
+| --- | --- | --- | --- |
+| `Component` | `ElementType<any, keyof IntrinsicElements>` | `li` |  |
+| `getRootRef` | `Ref<HTMLDivElement>` | `-` |  |
+| `mode` | `"plain" \| "shadow" \| "tint" \| "outline" \| "outline-tint"` | `tint` | Внешний вид карточки. |
+| `render` | `((props: AllHTMLAttributes<HTMLDivElement> & HasRootRef<HTMLDivElement>) => ReactNode)` | `-` | Позволяет переопределить рендер компонента, получая собранные свойства (включая вычисленные `className` и `style`). Используется вместо `Component`.  Позволяет гибко объединять несколько компонентов без создания промежуточных DOM-узлов и без ремаунта поддерева на каждый рендер. |
+

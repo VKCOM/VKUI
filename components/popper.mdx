@@ -152,6 +152,6 @@ return (
 | `shown` | `boolean` | `-` | Если передан, то всплывающий элемент будет показано/скрыто в зависимости от значения свойства. |
 | `strategy` | `Strategy` | `-` | Стратегия позиционирования всплывающего элемента.  - `"fixed"` - позиционируется, используя `position: fixed`. Является значением по умолчанию - `"absolute"` - позиционируется, используя `position: absolute`, относительно ближайшего элемента с `position: relative`  > `strategy="absolute"` Рекомендуется использовать с `usePortal={false}`. И нужно не забыть обернуть в элемент с `position: relative` |
 | `**targetRef** \*` | `RefObject<HTMLElement \| null> \| VirtualElement` | `-` | Ref на якорный элемент. |
-| `usePortal` | `boolean \| HTMLElement \| RefObject<HTMLElement>` | `true` | По умолчанию используется document.body. |
+| `usePortal` | `boolean \| HTMLElement \| RefObject<HTMLElement \| null>` | `true` | По умолчанию используется document.body. |
 | `zIndex` | `string \| number` | `-` | Перебивает zIndex заданный по умолчанию. |
 

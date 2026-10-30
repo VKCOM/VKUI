@@ -160,7 +160,7 @@ return (
 | `strategy` | `Strategy` | `-` | Стратегия позиционирования всплывающего элемента.  - `"fixed"` - позиционируется, используя `position: fixed`. Является значением по умолчанию - `"absolute"` - позиционируется, используя `position: absolute`, относительно ближайшего элемента с `position: relative`  > `strategy="absolute"` Рекомендуется использовать с `usePortal={false}`. И нужно не забыть обернуть в элемент с `position: relative` |
 | `title` | `ReactNode` | `-` | Заголовок тултипа. |
 | `titleId` | `string` | `-` | [a11y] Id для заголовка тултипа. Можно использовать для связи элемента с `role="dialog"` и заголовка через `aria-labelledby`. |
-| `usePortal` | `boolean \| HTMLElement \| RefObject<HTMLElement>` | `-` | По умолчанию используется document.body. |
+| `usePortal` | `boolean \| HTMLElement \| RefObject<HTMLElement \| null>` | `-` | По умолчанию используется document.body. |
 | `zIndex` | `string \| number` | `-` | Перебивает zIndex заданный по умолчанию. |
 
 ### useTooltip
@@ -197,6 +197,6 @@ return (
 | `strategy` | `Strategy` | `-` | Стратегия позиционирования всплывающего элемента.  - `"fixed"` - позиционируется, используя `position: fixed`. Является значением по умолчанию - `"absolute"` - позиционируется, используя `position: absolute`, относительно ближайшего элемента с `position: relative`  > `strategy="absolute"` Рекомендуется использовать с `usePortal={false}`. И нужно не забыть обернуть в элемент с `position: relative` |
 | `title` | `ReactNode` | `-` | Заголовок тултипа. |
 | `titleId` | `string` | `-` | [a11y] Id для заголовка тултипа. Можно использовать для связи элемента с `role="dialog"` и заголовка через `aria-labelledby`. |
-| `usePortal` | `boolean \| HTMLElement \| RefObject<HTMLElement>` | `-` | По умолчанию используется document.body. |
+| `usePortal` | `boolean \| HTMLElement \| RefObject<HTMLElement \| null>` | `-` | По умолчанию используется document.body. |
 | `zIndex` | `string \| number` | `var(--vkui--z_index_popout)` | Перебивает zIndex заданный по умолчанию. |
 
