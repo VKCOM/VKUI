@@ -2,7 +2,7 @@
 
 import { PanelSpinner, Placeholder } from '@vkontakte/vkui';
 import dynamic from 'next/dynamic';
-import { useMounted } from 'nextra/hooks';
+import { useDeferredMount } from '@/components/useDeferredMount';
 import type { PlaygroundProps } from './Playground';
 import styles from './Playground.module.css';
 
@@ -16,11 +16,15 @@ const PlaygroundDynamic = dynamic(() => import('./Playground').then((mod) => mod
 });
 
 export function PlaygroundLazy(props: PlaygroundProps) {
-  const mounted = useMounted();
+  const [placeholderRef, shouldMount] = useDeferredMount<HTMLDivElement>(!props.hide);
 
   if (props.hide) {
     return null;
   }
 
-  return mounted ? <PlaygroundDynamic {...props} /> : <Placeholder className={styles.skeleton} />;
+  return shouldMount ? (
+    <PlaygroundDynamic {...props} />
+  ) : (
+    <Placeholder getRootRef={placeholderRef} className={styles.skeleton} />
+  );
 }
