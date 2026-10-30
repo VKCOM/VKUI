@@ -52,6 +52,10 @@ jobs:
       - name: Node setup
         uses: ./.github/actions/node-setup
 
+      # Finish rewriting generated CSS before Stylelint reads its custom media definitions.
+      - name: Check if the generated files have been updated
+        run: node --run lint:generated-files
+
       - parallel:
           - name: Run Biome format
             run: node --run lint:format
@@ -64,9 +68,6 @@ jobs:
 
           - name: Run ESLint
             run: node --run lint:es:ci
-
-          - name: Check if the generated files have been updated
-            run: node --run lint:generated-files
 
       - name: Report lint results
         if: ${{ !cancelled() }}
