@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { LiveError, LivePreview, LiveProvider } from 'react-live';
 import { scope } from './scope';
 
@@ -14,7 +15,7 @@ export function EditedPreview({ code }: { code: string }) {
   return (
     <LiveProvider code={code} scope={scope} transformCode={transformCode}>
       <LiveError />
-      <LivePreview />
+      <LivePreview Component={React.Fragment} />
     </LiveProvider>
   );
 }
