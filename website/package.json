@@ -10,6 +10,8 @@
     "pagefind": "pagefind --site out/ --output-path ./public/_pagefind && cp -r ./public/_pagefind ./out",
     "next-sitemap": "next-sitemap",
     "generate": "node ./scripts/index.ts",
+    "test": "node ./scripts/generate-previews.ts && yarn run -T vitest run",
+    "test:ci": "node --run test",
     "lint:types": "node ./scripts/generate-previews.ts && node ../node_modules/@typescript/native/bin/tsc"
   },
   "devDependencies": {
