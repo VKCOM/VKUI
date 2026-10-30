@@ -51,7 +51,7 @@ export const ShowcaseCard = React.memo(function ShowcaseCard({ item }: ShowcaseC
       >
         <ShowcaseCardPreview
           slug={item.slug}
-          code={item.code}
+          previewId={item.previewId}
           direction={item.direction}
           wrapper={item.wrapper}
         />

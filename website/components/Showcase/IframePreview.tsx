@@ -4,15 +4,14 @@ import * as React from 'react';
 import { createRoot, type Root } from 'react-dom/client';
 import { AppRoot, ConfigProvider, DOMContext } from '@vkontakte/vkui';
 import type { ColorSchemeType } from '@vkontakte/vkui';
-import { LiveContext, LiveError, LivePreview, LiveProvider } from 'react-live';
-import { scope } from '@/components/mdx/Playground/scope';
-import { transformCode } from './previewShared';
+import { CompiledPreview } from '@/components/mdx/Playground/CompiledPreview';
+import { syncPreviewStyles } from './syncPreviewStyles';
 import styles from './ShowcaseCard.module.css';
 
 const IFRAME_SIZE = 500;
 
 interface PreviewContentProps {
-  code: string;
+  previewId: string;
   colorScheme: ColorSchemeType;
   Wrapper: React.ComponentType<React.PropsWithChildren>;
   iframeWindow: Window;
@@ -20,7 +19,7 @@ interface PreviewContentProps {
 }
 
 function PreviewContent({
-  code,
+  previewId,
   colorScheme,
   Wrapper,
   iframeWindow,
@@ -31,9 +30,9 @@ function PreviewContent({
       <AppRoot mode="partial" scroll="contain" style={{ width: '100%' }}>
         <ConfigProvider colorScheme={colorScheme}>
           <div>
-            <LiveProvider code={code} scope={scope} transformCode={transformCode}>
-              <PreviewBody Wrapper={Wrapper} />
-            </LiveProvider>
+            <Wrapper>
+              <CompiledPreview previewId={previewId} />
+            </Wrapper>
           </div>
         </ConfigProvider>
       </AppRoot>
@@ -41,38 +40,9 @@ function PreviewContent({
   );
 }
 
-function PreviewBody({ Wrapper }: { Wrapper: React.ComponentType<React.PropsWithChildren> }) {
-  const { error } = React.useContext(LiveContext);
-  if (error) {
-    return null;
-  }
-  return (
-    <>
-      <LivePreview Component={Wrapper} />
-      <LiveError style={{ display: 'none' }} />
-    </>
-  );
-}
-
-/**
- * Копирует все `<link rel="stylesheet">` и `<style>` из родительского документа
- * в документ iframe — иначе VKUI и пользовательские стили там не применятся.
- */
-function copyStylesInto(targetDoc: Document): void {
-  document.querySelectorAll<HTMLLinkElement>('link[rel="stylesheet"]').forEach((link) => {
-    const clone = targetDoc.createElement('link');
-    clone.rel = 'stylesheet';
-    clone.href = link.href;
-    targetDoc.head.appendChild(clone);
-  });
-  document.querySelectorAll('style').forEach((style) => {
-    targetDoc.head.appendChild(style.cloneNode(true));
-  });
-}
-
 export interface IframePreviewContentProps {
   contentRef: React.RefObject<HTMLIFrameElement | null>;
-  code: string;
+  previewId: string;
   colorScheme: ColorSchemeType;
   Wrapper: React.ComponentType<React.PropsWithChildren>;
   mounted: boolean;
@@ -80,7 +50,7 @@ export interface IframePreviewContentProps {
 
 export function IframePreviewContent({
   contentRef,
-  code,
+  previewId,
   colorScheme,
   Wrapper,
   mounted,
@@ -114,14 +84,13 @@ export function IframePreviewContent({
     );
     doc.close();
 
-    copyStylesInto(doc);
-
     const rootEl = doc.getElementById('root');
     if (!rootEl) {
       return;
     }
 
     reactRootRef.current = createRoot(rootEl);
+    return syncPreviewStyles(doc);
   }, [mounted]);
 
   React.useEffect(() => {
@@ -147,14 +116,14 @@ export function IframePreviewContent({
 
     root.render(
       <PreviewContent
-        code={code}
+        previewId={previewId}
         colorScheme={colorScheme}
         Wrapper={Wrapper}
         iframeWindow={win}
         iframeDocument={doc}
       />,
     );
-  }, [code, colorScheme, Wrapper, mounted]);
+  }, [previewId, colorScheme, Wrapper, mounted]);
 
   React.useEffect(() => {
     return () => {
