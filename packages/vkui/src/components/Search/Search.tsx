@@ -12,6 +12,7 @@ import { useMergeProps } from '../../hooks/useMergeProps';
 import { useNativeFormResetListener } from '../../hooks/useNativeFormResetListener';
 import { usePlatform } from '../../hooks/usePlatform';
 import { callMultiple } from '../../lib/callMultiple';
+import { getActiveElementByAnotherElement } from '../../lib/dom';
 import { touchEnabled } from '../../lib/touch';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { warnOnce } from '../../lib/warnOnce';
@@ -241,10 +242,13 @@ export const Search = ({
   const {
     onClick: onClearButtonClick,
     onPointerDown: onClearButtonPointerDown,
+    getRootRef: getClearButtonRef,
     ...clearButtonRest
   } = useMergeProps({ className: styles.icon }, slotProps?.clearButton);
 
   const inputRef = useExternRef(getInputRef);
+  const clearButtonRef = useExternRef(getClearButtonRef);
+  const findButtonRef = React.useRef<HTMLElement>(null);
   const [isFocused, setFocusedTrue, setFocusedFalse] = useBooleanState(false);
   const generatedId = React.useId();
   const inputId = id ? id : `search-${generatedId}`;
@@ -297,6 +301,20 @@ export const Search = ({
   useNativeFormResetListener(inputRef, () => {
     setHasValue(Boolean(inputRest.defaultValue));
   });
+
+  // Без значения кнопки скрыты от скринридера, поэтому фокус с них переводим в поле
+  useIsomorphicLayoutEffect(() => {
+    if (hasValue) {
+      return;
+    }
+    const activeElement = getActiveElementByAnotherElement(inputRef.current);
+    if (
+      activeElement &&
+      (activeElement === clearButtonRef.current || activeElement === findButtonRef.current)
+    ) {
+      inputRef.current?.focus();
+    }
+  }, [hasValue]);
 
   const renderIconButton: RenderIconButtonFn = (icon, props = {}) => (
     <IconButton
@@ -389,8 +407,10 @@ export const Search = ({
               <IconButton
                 hoverMode="opacity"
                 onPointerDown={onClearPointerDown}
+                getRootRef={clearButtonRef}
                 onClick={onClearClick}
                 tabIndex={hasValue ? undefined : -1}
+                aria-hidden={hasValue ? undefined : true}
                 disabled={inputRest.disabled}
                 data-testid={clearButtonTestId}
                 {...clearButtonRest}
@@ -405,8 +425,10 @@ export const Search = ({
                 size="m"
                 className={classNames(styles.findButton, adaptiveDensity.compact.className)}
                 focusVisibleMode="inside"
+                getRootRef={findButtonRef}
                 onClick={onFindButtonClick}
                 tabIndex={hasValue ? undefined : -1}
+                aria-hidden={hasValue ? undefined : true}
                 data-testid={findButtonTestId}
               >
                 {findButtonText}
