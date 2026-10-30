@@ -1,8 +1,6 @@
 import { Icon20ArrowRightLeftCornersOutline, Icon20BracketsSlashOutline } from '@vkontakte/icons';
 import { AdaptivityProvider, Button, Flex } from '@vkontakte/vkui';
 import { CodeSandboxIcon, StackBlitzIcon } from '@vkontakte/vkui-docs-theme';
-import { openInCodeSandbox } from '../externalSandbox/codesandbox';
-import { openInStackBlitz } from '../externalSandbox/stackblitz';
 import { ColorSchemePicker } from './ColorSchemePicker';
 import { PlatformPicker } from './PlatformPicker/PlatformPicker';
 import { ThemePicker } from './ThemePicker/ThemePicker';
@@ -31,7 +29,9 @@ export function PlaygroundToolbar({ code, codeVisible, setCodeVisible }: Playgro
           size="s"
           mode="secondary"
           appearance="neutral"
-          onClick={() => void openInStackBlitz(code)}
+          onClick={() =>
+            void import('../externalSandbox/stackblitz').then((mod) => mod.openInStackBlitz(code))
+          }
           before={<StackBlitzIcon />}
           aria-label="Открыть в StackBlitz"
         />
@@ -39,7 +39,9 @@ export function PlaygroundToolbar({ code, codeVisible, setCodeVisible }: Playgro
           size="s"
           mode="secondary"
           appearance="neutral"
-          onClick={() => void openInCodeSandbox(code)}
+          onClick={() =>
+            void import('../externalSandbox/codesandbox').then((mod) => mod.openInCodeSandbox(code))
+          }
           before={<CodeSandboxIcon />}
           aria-label="Открыть в CodeSandbox"
         />
