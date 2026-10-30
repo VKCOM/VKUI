@@ -1,16 +1,15 @@
 'use client';
 
 import * as React from 'react';
-import { classNames, useColorScheme } from '@vkontakte/vkui';
+import { classNames, PanelSpinner } from '@vkontakte/vkui';
+import dynamic from 'next/dynamic';
 import { JetBrains_Mono } from 'next/font/google';
-import { LiveEditor, LiveProvider } from 'react-live';
+import { CompiledPreview } from './CompiledPreview';
 import {
   PlaygroundPreview,
   type PlaygroundPreviewProps,
 } from './PlaygroundPreview/PlaygroundPreview';
 import { PlaygroundToolbar } from './PlaygroundToolbar/PlaygroundToolbar';
-import { darkTheme, lightTheme } from './editorThemes';
-import { scope } from './scope';
 import styles from './Playground.module.css';
 
 // eslint-disable-next-line new-cap
@@ -18,54 +17,66 @@ const jetBrainsMono = JetBrains_Mono({
   subsets: ['latin', 'cyrillic'],
 });
 
+const LiveCodeEditor = dynamic(
+  () =>
+    Promise.all([import('./LiveCodeEditor'), import('./EditedPreview')]).then(
+      ([mod]) => mod.LiveCodeEditor,
+    ),
+  {
+    ssr: false,
+    loading: () => <PanelSpinner visibilityDelay={250} />,
+  },
+);
+const EditedPreview = dynamic(() => import('./EditedPreview').then((mod) => mod.EditedPreview), {
+  ssr: false,
+  loading: () => <PanelSpinner visibilityDelay={250} />,
+});
+
 export interface PlaygroundProps extends PlaygroundPreviewProps {
   hide?: boolean;
   code: string;
+  previewId: string;
   defaultExpanded?: boolean | undefined;
 }
 
 export function Playground({
   code: defaultCode = '',
   defaultExpanded = false,
+  previewId,
   ...restProps
 }: PlaygroundProps) {
-  const websiteColorScheme = useColorScheme();
   const [codeVisible, setCodeVisible] = React.useState(defaultExpanded);
   const [currentCode, setCurrentCode] = React.useState(defaultCode);
+  const [editorRequested, setEditorRequested] = React.useState(defaultExpanded);
+
+  const setExpanded = (expanded: boolean) => {
+    if (expanded) {
+      setEditorRequested(true);
+    }
+    setCodeVisible(expanded);
+  };
 
   return (
     <div className={classNames(styles.root, jetBrainsMono.className)}>
-      <LiveProvider
+      <PlaygroundPreview {...restProps}>
+        {currentCode === defaultCode ? (
+          <CompiledPreview previewId={previewId} />
+        ) : (
+          <EditedPreview code={currentCode} />
+        )}
+      </PlaygroundPreview>
+      <PlaygroundToolbar
+        setCodeVisible={setExpanded}
+        codeVisible={codeVisible}
         code={currentCode}
-        scope={scope}
-        theme={websiteColorScheme === 'dark' ? darkTheme : lightTheme}
-        transformCode={transformCode}
-      >
-        <PlaygroundPreview {...restProps} />
-        <PlaygroundToolbar
-          setCodeVisible={setCodeVisible}
-          codeVisible={codeVisible}
-          code={currentCode}
-        />
-        <React.Activity mode={codeVisible ? 'visible' : 'hidden'}>
+      />
+      {editorRequested && (
+        <div hidden={!codeVisible}>
           <div className={styles.codeBlock}>
-            <LiveEditor className={styles.code} onChange={setCurrentCode} />
+            <LiveCodeEditor code={defaultCode} onChange={setCurrentCode} />
           </div>
-        </React.Activity>
-      </LiveProvider>
+        </div>
+      )}
     </div>
   );
-}
-
-const IMPORT_REGEXP = /^import\s+(?:{[\s\S]*?}|\S+)\s+from\s+['"][^'"]+['"];?$\n?/gm;
-const JSX_START_REGEXP = /^</;
-
-function transformCode(code: string) {
-  code = code.replace(IMPORT_REGEXP, '');
-
-  if (!!code.trim().match(JSX_START_REGEXP)) {
-    return `<React.Fragment>\n${code}\n</React.Fragment>;`;
-  }
-
-  return `() => { ${code} }`;
 }

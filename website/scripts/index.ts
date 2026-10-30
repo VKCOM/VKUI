@@ -1,3 +1,4 @@
+import * as fs from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { Worker } from 'node:worker_threads';
 
@@ -31,9 +32,25 @@ async function main() {
 
   await Promise.all([
     propsChain,
-    runWorker(new URL('./generate-showcase.ts', import.meta.url)),
     runWorker(new URL('./generate-llms-txt.ts', import.meta.url)),
+    runWorker(new URL('./generate-previews.ts', import.meta.url)),
   ]);
+
+  const previewIds: string[] = JSON.parse(
+    fs.readFileSync(new URL('../generated/preview-ids.json', import.meta.url), 'utf8'),
+  );
+  const available = new Set(previewIds);
+  const showcase: { groups: Array<{ items: Array<{ name: string; previewId: string }> }> } =
+    JSON.parse(
+      fs.readFileSync(new URL('../generated/showcase-data.json', import.meta.url), 'utf8'),
+    );
+  for (const { items } of showcase.groups) {
+    for (const item of items) {
+      if (!available.has(item.previewId)) {
+        throw new Error(`Missing compiled Showcase preview: ${item.name} (${item.previewId})`);
+      }
+    }
+  }
 }
 
 await main();
