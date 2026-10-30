@@ -10,7 +10,7 @@
     "pagefind": "pagefind --site out/ --output-path ./public/_pagefind && cp -r ./public/_pagefind ./out",
     "next-sitemap": "next-sitemap",
     "generate": "node ./scripts/index.ts",
-    "lint:types": "node ../node_modules/@typescript/native/bin/tsc"
+    "lint:types": "node ./scripts/generate-previews.ts && node ../node_modules/@typescript/native/bin/tsc"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^16.4.2",
