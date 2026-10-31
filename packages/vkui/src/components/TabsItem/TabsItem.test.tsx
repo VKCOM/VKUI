@@ -5,6 +5,10 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { baselineComponent, setNodeEnv } from '../../testing/utils';
 import { Tabs } from '../Tabs/Tabs';
 import { TabsItem } from './TabsItem';
+import styles from './TabsItem.module.css';
+import subheadStyles from '../Typography/Subhead/Subhead.module.css';
+import typographyStyles from '../Typography/Typography.module.css';
+import visuallyHiddenStyles from '../VisuallyHidden/VisuallyHidden.module.css';
 
 const TestTabs = () => {
   const [currentTab, setCurrentTab] = React.useState('first');
@@ -45,6 +49,42 @@ describe('TabsItem', () => {
         'aria-required-parent': { enabled: false },
       },
     },
+  });
+
+  it.each(['99+', 'New', 0, 5])('renders primitive status %s with Subhead styling', (status) => {
+    render(<TabsItem status={status}>Tab</TabsItem>);
+
+    const statusElement = screen.getByText(String(status));
+    expect(statusElement.tagName).toBe('SPAN');
+    expect(statusElement).toHaveClass(
+      styles.status,
+      styles.statusCount,
+      subheadStyles.host,
+      typographyStyles.weight2,
+    );
+    expect(statusElement.firstElementChild).toHaveClass(visuallyHiddenStyles.host);
+    expect(statusElement.firstElementChild?.textContent).toBe('\u00a0');
+    expect(screen.getByRole('tab')).toHaveAccessibleName(`Tab ${status}`);
+  });
+
+  it('renders custom status in an ordinary span', () => {
+    render(<TabsItem status={<strong>New</strong>}>Tab</TabsItem>);
+
+    const statusElement = screen.getByText('New').parentElement;
+    expect(statusElement?.tagName).toBe('SPAN');
+    expect(statusElement).toHaveClass(styles.status);
+    expect(statusElement).not.toHaveClass(styles.statusCount);
+    expect(statusElement).not.toHaveClass(subheadStyles.host);
+    expect(statusElement?.firstElementChild).toHaveClass(visuallyHiddenStyles.host);
+    expect(statusElement?.firstElementChild?.textContent).toBe('\u00a0');
+    expect(screen.getByRole('tab')).toHaveAccessibleName('Tab New');
+  });
+
+  it.each([undefined, ''])('omits the status wrapper for status %s', (status) => {
+    const { container } = render(<TabsItem status={status}>Tab</TabsItem>);
+
+    expect(container.querySelector(`.${styles.status}`)).toBeNull();
+    expect(screen.getByRole('tab')).toHaveAccessibleName('Tab');
   });
 
   it('should scroll to tab', () => {
