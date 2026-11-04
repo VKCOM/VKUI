@@ -211,31 +211,33 @@ import { OverlayButtonWrapper } from '@/components/wrappers';
 
 ## Работа с иконками
 
-Используйте `ContentBadge.SlotIcon` для вставки одиночной иконки:
+Используйте `ContentBadge.IconSlot` для вставки одиночной иконки:
+
+> **@deprecated** Since 7.3.4. Используйте `ContentBadge.IconSlot`.
 
 - для `size="s"` - иконки не поддерживаются;
 - для `size="m"` — рекомендуемый размер `12px` при наличии текста, для одиночной иконки `16px`;
 - для `size="l"` — рекомендуемый размер `16px` при наличии текста, для одиночной иконки `20px`.
 
-{/* @example-description: Использование `ContentBadge.SlotIcon` с текстом и в формате иконки без текста. */}
+{/* @example-description: Использование `ContentBadge.IconSlot` с текстом и в формате иконки без текста. */}
 <Playground>
   ```jsx
   <ContentBadge size="m" appearance="accent-green">
-    <ContentBadge.SlotIcon>
+    <ContentBadge.IconSlot>
       <Icon12Tag />
-    </ContentBadge.SlotIcon>
+    </ContentBadge.IconSlot>
     Доступно по скидке
   </ContentBadge>
   <ContentBadge size="l" appearance="neutral">
     Заблокировано
-    <ContentBadge.SlotIcon>
+    <ContentBadge.IconSlot>
       <Icon16LockOutline />
-    </ContentBadge.SlotIcon>
+    </ContentBadge.IconSlot>
   </ContentBadge>
   <ContentBadge size="l" appearance="accent-red">
-    <ContentBadge.SlotIcon>
+    <ContentBadge.IconSlot>
       <Icon20CrownVerified />
-    </ContentBadge.SlotIcon>
+    </ContentBadge.IconSlot>
   </ContentBadge>
   ```
 </Playground>
@@ -245,6 +247,6 @@ import { OverlayButtonWrapper } from '@/components/wrappers';
 <PropsTable name="ContentBadge">
 ### ContentBadge [#content-badge-api]
 
-### ContentBadge.SlotIcon [#content-badge-slot-icon-api]
+### ContentBadge.IconSlot [#content-badge-icon-slot-api]
 
 </PropsTable>
