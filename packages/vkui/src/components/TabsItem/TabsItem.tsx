@@ -146,16 +146,12 @@ export const TabsItem = ({
 
   const rootRef = useExternRef(getRootRef, refProp);
 
-  const prevSelectedRef = React.useRef<boolean | undefined>(undefined);
+  const prevSelectedRef = React.useRef<boolean>(selected);
 
   React.useEffect(
     function scrollToSelectedItem() {
-      const isInitialRender = prevSelectedRef.current === undefined;
       const shouldScrollToSelected =
-        withScrollToSelectedTab &&
-        !isInitialRender &&
-        prevSelectedRef.current !== selected &&
-        selected;
+        withScrollToSelectedTab && prevSelectedRef.current !== selected && selected;
 
       prevSelectedRef.current = selected;
 
