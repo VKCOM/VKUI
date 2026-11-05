@@ -35,7 +35,7 @@ jobs:
     name: Cleanup
     steps:
       - name: Checkout
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        uses: actions/checkout@v7.0.1
 
       - name: Delete old artifacts for the next documentation version
         uses: VKCOM/gh-actions/VKUI/s3@main
@@ -54,10 +54,10 @@ jobs:
     needs: cleanup
     steps:
       - name: Checkout
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        uses: actions/checkout@v7.0.1
 
       - name: Node setup
-        uses: ./.github/actions/node-setup
+        uses: $/.github/actions/node-setup
 
       - name: Build
         run: node --run docs:storybook:build
@@ -88,10 +88,10 @@ jobs:
     needs: cleanup
     steps:
       - name: Checkout
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        uses: actions/checkout@v7.0.1
 
       - name: Node setup
-        uses: ./.github/actions/node-setup
+        uses: $/.github/actions/node-setup
 
       - name: Build VKUI
         run: node --run build:vkui

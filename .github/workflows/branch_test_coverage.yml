@@ -30,10 +30,10 @@ jobs:
     name: Create LFS cache
     steps:
       - name: Checkout
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        uses: actions/checkout@v7.0.1
 
       - name: Checkout LFS objects
-        uses: ./.github/actions/lfs
+        uses: $/.github/actions/lfs
         with:
           apt_mirror: ${{ vars.APT_MIRROR }}
 
@@ -62,15 +62,15 @@ jobs:
       contents: read
     steps:
       - name: Checkout
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        uses: actions/checkout@v7.0.1
 
       - name: Download test artifact
-        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        uses: actions/download-artifact@v8.0.2
         with:
           name: test-output
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7.1.1
+        uses: codecov/codecov-action@v7.1.1
         with:
           use_oidc: true
           flags: unittests
@@ -83,7 +83,7 @@ jobs:
         # но при прямом пуше в stable-ветку PR отсутствует, и загрузка падает с HTTP 400.
         # Поэтому загружаем coverage в GitHub только для дефолтной ветки (master).
         if: github.ref == 'refs/heads/master'
-        uses: actions/upload-code-coverage@2b21a77928be8d5168c2b9581a67f2adbebacc52 # v1.4.4
+        uses: actions/upload-code-coverage@v1.4.4
         with:
           file: .nyc_output/cobertura-coverage.xml
           language: TypeScript
