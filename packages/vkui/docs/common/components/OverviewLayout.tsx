@@ -7,11 +7,14 @@ import {
   memo,
   type RefObject,
   useCallback,
+  useEffect,
   useMemo,
   useRef,
   useState,
 } from 'react';
-import { Counter, Flex, Footer, Group, Search, Spinner, Title } from '../../../src';
+import { classNames } from '@vkontakte/vkjs';
+import { Box, Counter, Flex, Footer, Search, Separator, Spinner, Title } from '../../../src';
+import { useManualScroll } from '../../../src/components/AppRoot/ScrollContext';
 import { useStableCallback } from '../../../src/hooks/useStableCallback';
 import { filterObject } from '../../../src/lib/object';
 import type { HasChildren } from '../../../src/types';
@@ -29,39 +32,73 @@ interface Section<T> {
 }
 
 interface OverviewLayoutProps<CONFIG, ITEM> {
-  title: string;
+  title?: string | undefined;
   config: CONFIG;
   filterConfig: (config: CONFIG, query: string) => CONFIG;
+  normalizeQuery?: ((query: string) => string) | undefined;
   remapConfigToSections: (config: CONFIG) => Array<Section<ITEM>>;
   ItemsContainer: React.ComponentType<HasChildren>;
   renderSectionItem: (item: ITEM, section: Section<ITEM>) => React.ReactElement;
   additionalHeaderItem?: React.ReactElement | undefined;
+  headerClassName?: string | undefined;
+  contentClassName?: string | undefined;
+  loaderClassName?: string | undefined;
+  scrollable?: boolean | undefined;
+  initialSectionsCount?: number | undefined;
+  showSpinner?: boolean | undefined;
+  showSectionItemCount?: boolean | undefined;
 }
 
 export const OverviewLayout = <CONFIG, ITEM>({
   title,
   config: configProp,
   filterConfig,
+  normalizeQuery,
   remapConfigToSections: remapConfigToSectionsProp,
   ItemsContainer,
   renderSectionItem: renderSectionItemProp,
   additionalHeaderItem,
+  headerClassName,
+  contentClassName,
+  loaderClassName,
+  scrollable = false,
+  initialSectionsCount = 1,
+  showSpinner = true,
+  showSectionItemCount = true,
 }: OverviewLayoutProps<CONFIG, ITEM>) => {
   const sectionsContainerRef = useRef<HTMLElement | null>(null);
+  const scrollContainerRef = useRef<HTMLElement | null>(null);
   const [sectionsRefs, setSectionsRefs] = useState<
     Record<string, RefObject<HTMLDivElement | null>>
   >({});
   const remapConfigToSections = useStableCallback(remapConfigToSectionsProp);
   const renderSectionItem = useStableCallback(renderSectionItemProp);
 
-  const { config, loading, onUpdateQuery, query } = useGetConfigByQuery(configProp, filterConfig);
+  const { config, loading, onUpdateQuery, query } = useGetConfigByQuery(
+    configProp,
+    filterConfig,
+    normalizeQuery,
+  );
+
+  const { scrollTo } = useManualScroll();
+  useEffect(() => {
+    if (scrollable) {
+      if (scrollContainerRef.current) {
+        scrollContainerRef.current.scrollTop = 0;
+      }
+    } else {
+      scrollTo(0, 0);
+    }
+  }, [query, scrollable, scrollTo]);
 
   const sections = useMemo(() => remapConfigToSections(config), [config, remapConfigToSections]);
 
-  const { remappedSections, showMoreElement } = useInfiniteList(
+  const { remappedSections, hasMoreSections } = useInfiniteList(
     sections,
     sectionsRefs,
     sectionsContainerRef,
+    scrollable ? scrollContainerRef : undefined,
+    initialSectionsCount,
   );
 
   const onSectionRef = useCallback((element: HTMLElement | null, id: string) => {
@@ -76,41 +113,52 @@ export const OverviewLayout = <CONFIG, ITEM>({
     });
   }, []);
 
+  const renderItems = useCallback(
+    (section: Section<ITEM>) => (
+      <ItemsContainer>
+        {section.items.map((item) => renderSectionItem(item, section))}
+      </ItemsContainer>
+    ),
+    [ItemsContainer, renderSectionItem],
+  );
+
   return (
     <OverviewLayoutContext.Provider value={{ searchedQuery: query }}>
-      <Flex direction="column" gap="2xl" align="start" className={styles.header}>
-        <Title>{title}</Title>
+      <Box padding="system" className={classNames(styles.header, headerClassName)}>
+        {title && <Title>{title}</Title>}
 
-        <Group separator="hide">
-          <Search noPadding onChange={onUpdateQuery} />
-        </Group>
+        <Search noPadding onChange={onUpdateQuery} />
 
         {additionalHeaderItem}
-      </Flex>
+      </Box>
+      <Separator />
 
-      <Flex direction="column" gap="3xl">
-        {loading && <Spinner />}
+      <Flex
+        direction="column"
+        gap="3xl"
+        noWrap
+        className={contentClassName}
+        getRootRef={scrollContainerRef}
+      >
+        {loading && showSpinner && <Spinner />}
         {!loading && sections.length === 0 && <Footer>Ничего не найдено</Footer>}
-        <Flex direction="column" gap="3xl" getRootRef={sectionsContainerRef}>
+        <Flex direction="column" gap="3xl" noWrap getRootRef={sectionsContainerRef}>
           {remappedSections.map(({ minHeight, hidden, ...section }) => (
             <Section
               key={section.id}
               hidden={hidden}
+              showItemCount={showSectionItemCount}
               sectionData={section}
               onSectionRef={onSectionRef}
               style={{ minHeight }}
-              ItemsRenderer={({ section }) => (
-                <ItemsContainer>
-                  {section.items.map((item) => renderSectionItem(item, section))}
-                </ItemsContainer>
-              )}
+              renderItems={renderItems}
             />
           ))}
 
-          {showMoreElement}
+          {hasMoreSections && <div className={loaderClassName}>{showSpinner && <Spinner />}</div>}
         </Flex>
       </Flex>
-      <GoToUpButton />
+      {!scrollable && <GoToUpButton />}
     </OverviewLayoutContext.Provider>
   );
 };
@@ -119,10 +167,11 @@ const Section = memo<{
   style?: CSSProperties | undefined;
   sectionData: Section<any>;
   hidden?: boolean | undefined;
+  showItemCount: boolean;
   onSectionRef: (element: HTMLElement | null, id: string) => void;
-  ItemsRenderer: React.ComponentType<{ section: Section<any> }>;
+  renderItems: (section: Section<any>) => React.ReactNode;
 }>(
-  ({ style, hidden, sectionData, onSectionRef, ItemsRenderer }) => {
+  ({ style, hidden, showItemCount, sectionData, onSectionRef, renderItems }) => {
     const _onSectionRef = useCallback(
       (element: HTMLElement | null) => {
         onSectionRef(element, sectionData.id);
@@ -136,11 +185,13 @@ const Section = memo<{
           <>
             <Flex align="center" gap="m">
               <Title level="2">{sectionData.displayTitle}</Title>
-              <Counter size="m" mode="primary" appearance="accent-red">
-                {sectionData.items.length}
-              </Counter>
+              {showItemCount && (
+                <Counter size="m" mode="primary" appearance="accent-red">
+                  {sectionData.items.length}
+                </Counter>
+              )}
             </Flex>
-            <ItemsRenderer section={sectionData} />
+            {renderItems(sectionData)}
           </>
         )}
       </Flex>
@@ -150,7 +201,11 @@ const Section = memo<{
     // Добавляем кастомное сравнение пропов, чтобы максимально уменьшить количество перерисовок компонентов
     return (
       oldProps.sectionData.id === newProps.sectionData.id &&
-      oldProps.sectionData.items.length === newProps.sectionData.items.length &&
+      oldProps.sectionData.items === newProps.sectionData.items &&
+      oldProps.sectionData.displayTitle === newProps.sectionData.displayTitle &&
+      oldProps.sectionData.title === newProps.sectionData.title &&
+      oldProps.showItemCount === newProps.showItemCount &&
+      oldProps.renderItems === newProps.renderItems &&
       oldProps.onSectionRef === newProps.onSectionRef &&
       oldProps.hidden === newProps.hidden &&
       oldProps.style?.minHeight === newProps.style?.minHeight
