@@ -61,7 +61,7 @@ export default withBundleAnalyzer(
       unoptimized: true,
     },
     distDir,
-    webpack: (config, { isServer }) => {
+    webpack: (config, { isServer, dev }) => {
       config.resolve.alias = {
         ...config.resolve.alias,
         '@vkontakte/vkui$': fileURLToPath(import.meta.resolve('@vkontakte/vkui/dist/cssm')),
@@ -100,6 +100,8 @@ export default withBundleAnalyzer(
           enforce: 'pre',
           loader: 'swc-loader',
           options: {
+            // Next's SWC loader expects the preceding loader's source map to be an object.
+            parseMap: dev,
             swcrc: false,
             jsc: {
               target: 'esnext',
