@@ -6,7 +6,7 @@ export function transformer() {
     const promises = [];
 
     visit(tree, 'mdxJsxFlowElement', (jsxNode) => {
-      if (jsxNode.name && !componentName.includes(jsxNode.name)) {
+      if (jsxNode.name !== componentName) {
         return;
       }
 
@@ -27,6 +27,7 @@ async function transformCode(jsxNode) {
   });
 
   await appendProp(jsxNode, 'code', code);
+  await appendProp(jsxNode, 'previewId', getPreviewId(code));
 }
 
 async function appendProp(node, propName, propValue) {
@@ -57,3 +58,4 @@ async function appendProp(node, propName, propValue) {
     },
   });
 }
+import { getPreviewId } from '../scripts/common/previewId.mjs';

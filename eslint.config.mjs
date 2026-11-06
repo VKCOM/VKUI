@@ -348,6 +348,7 @@ export default [
       '**/vitest.d.ts',
       '**/_pagefind/**',
       '**/.docgen/**',
+      'website/generated/**',
     ],
     'vkui/global-ignores',
   ),
