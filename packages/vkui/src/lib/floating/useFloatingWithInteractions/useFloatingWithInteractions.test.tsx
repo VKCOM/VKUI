@@ -1,5 +1,5 @@
 import { act, type ComponentType, useRef, useState } from 'react';
-import { render, renderHook, waitFor } from '@testing-library/react';
+import { fireEvent, render, renderHook, waitFor } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import { FocusTrap } from '../../../components/FocusTrap/FocusTrap';
 import { useGlobalEscKeyDown } from '../../../hooks/useGlobalEscKeyDown';
@@ -560,6 +560,145 @@ describe(useFloatingWithInteractions, () => {
         await waitFor(() => expect(hookResultRef.current.shown).toBeFalsy());
       },
     );
+  });
+
+  describe('click inside iframe', () => {
+    const simulateClickInsideIframe = (iframe: HTMLIFrameElement) => {
+      iframe.focus();
+
+      if (document.activeElement !== iframe) {
+        Object.defineProperty(document, 'activeElement', {
+          configurable: true,
+          get: () => iframe,
+        });
+      }
+      fireEvent(window, new Event('blur'));
+
+      if (Object.getOwnPropertyDescriptor(document, 'activeElement')) {
+        delete (document as { activeElement?: unknown }).activeElement;
+      }
+    };
+
+    it('should close on click inside iframe outside of reference and floating elements (trigger: click)', async () => {
+      const onShownChange = vi.fn();
+      const { result } = renderHook(() =>
+        useFloatingWithInteractions<HTMLButtonElement>({
+          defaultShown: false,
+          trigger: 'click',
+          onShownChange,
+        }),
+      );
+      const renderTree = () => (
+        <div>
+          <iframe data-testid="iframe" title="iframe" />
+          <TestComponent hookResult={result.current} />
+        </div>
+      );
+      const view = render(renderTree());
+      await waitFor(() => expect(result.current.shown).toBeFalsy());
+
+      await fireEventPatch(result.current.refs.reference.current, 'click');
+      view.rerender(renderTree());
+      await waitFor(() => expect(result.current.shown).toBeTruthy());
+
+      simulateClickInsideIframe(view.getByTestId('iframe'));
+
+      await waitFor(() => {
+        expect(result.current.shown).toBeFalsy();
+        expect(onShownChange).toHaveBeenLastCalledWith(false, 'click-outside');
+      });
+    });
+
+    it('should stay shown if iframe is inside floating element (trigger: click)', async () => {
+      const { result } = renderHook(() =>
+        useFloatingWithInteractions<HTMLButtonElement>({
+          defaultShown: false,
+          trigger: 'click',
+        }),
+      );
+      const FloatingWithIframe = () => {
+        const {
+          shown,
+          refs: { reference, floating },
+          referenceProps,
+          floatingProps,
+        } = result.current;
+        return (
+          <>
+            <button ref={reference} {...referenceProps}>
+              Reference
+            </button>
+            {shown ? (
+              <span ref={floating} data-testid="floating" {...floatingProps}>
+                <iframe data-testid="iframe" title="iframe" />
+              </span>
+            ) : null}
+          </>
+        );
+      };
+      const view = render(<FloatingWithIframe />);
+      await waitFor(() => expect(result.current.shown).toBeFalsy());
+
+      await fireEventPatch(result.current.refs.reference.current, 'click');
+      view.rerender(<FloatingWithIframe />);
+      await waitFor(() => expect(result.current.shown).toBeTruthy());
+
+      simulateClickInsideIframe(view.getByTestId('iframe'));
+      view.rerender(<FloatingWithIframe />);
+
+      await waitFor(() => expect(result.current.shown).toBeTruthy());
+    });
+
+    it('should stay shown if window gets blurred without iframe focus (trigger: click)', async () => {
+      const { result } = renderHook(() =>
+        useFloatingWithInteractions<HTMLButtonElement>({
+          defaultShown: false,
+          trigger: 'click',
+        }),
+      );
+      const renderTree = () => (
+        <div>
+          <iframe data-testid="iframe" title="iframe" />
+          <TestComponent hookResult={result.current} />
+        </div>
+      );
+      const view = render(renderTree());
+      await waitFor(() => expect(result.current.shown).toBeFalsy());
+
+      await fireEventPatch(result.current.refs.reference.current, 'click');
+      view.rerender(renderTree());
+      await waitFor(() => expect(result.current.shown).toBeTruthy());
+
+      fireEvent(window, new Event('blur'));
+
+      await waitFor(() => expect(result.current.shown).toBeTruthy());
+    });
+
+    it('should stay shown on click inside iframe with disableCloseOnClickOutside (trigger: click)', async () => {
+      const { result } = renderHook(() =>
+        useFloatingWithInteractions<HTMLButtonElement>({
+          defaultShown: false,
+          trigger: 'click',
+          disableCloseOnClickOutside: true,
+        }),
+      );
+      const renderTree = () => (
+        <div>
+          <iframe data-testid="iframe" title="iframe" />
+          <TestComponent hookResult={result.current} />
+        </div>
+      );
+      const view = render(renderTree());
+      await waitFor(() => expect(result.current.shown).toBeFalsy());
+
+      await fireEventPatch(result.current.refs.reference.current, 'click');
+      view.rerender(renderTree());
+      await waitFor(() => expect(result.current.shown).toBeTruthy());
+
+      simulateClickInsideIframe(view.getByTestId('iframe'));
+
+      await waitFor(() => expect(result.current.shown).toBeTruthy());
+    });
   });
 
   describe('tests with snapshot', () => {

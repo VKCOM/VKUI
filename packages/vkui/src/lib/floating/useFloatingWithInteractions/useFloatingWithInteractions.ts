@@ -5,7 +5,7 @@ import { useNavTransition } from '../../../components/NavTransitionContext/NavTr
 import { useCustomEnsuredControl } from '../../../hooks/useEnsuredControl';
 import { useGlobalOnClickOutside } from '../../../hooks/useGlobalOnClickOutside';
 import { useStableCallback } from '../../../hooks/useStableCallback';
-import { contains, getActiveElementByAnotherElement } from '../../dom';
+import { contains, getActiveElementByAnotherElement, useDOM } from '../../dom';
 import { useIsomorphicLayoutEffect } from '../../useIsomorphicLayoutEffect';
 import { autoUpdateFloatingElement, useFloating } from '../adapters';
 import { convertFloatingDataToReactCSSProperties } from '../functions';
@@ -58,6 +58,7 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
     [shownProp],
   );
   const { entering, animating } = useNavTransition();
+  const { window: win } = useDOM();
   const [shownLocalState, setShownLocalState] = useCustomEnsuredControl<LocalState>({
     value: memoizedValue,
     disabled,
@@ -263,6 +264,47 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
     handleClickOutside,
     handleCloseOnReferenceClickOutsideDisabled ? null : refs.reference,
     handleCloseOnFloatingClickOutsideDisabled ? null : refs.floating,
+  );
+
+  useIsomorphicLayoutEffect(
+    function setGlobalBlurForIframeClickOutside() {
+      if (!win || !shownFinalState || triggerOnFocus || disabled || disableCloseOnClickOutside) {
+        return;
+      }
+
+      const handleGlobalBlurForIframeClick = () => {
+        const reference = refs.reference.current;
+        const floating = refs.floating.current;
+        const activeElement = win.document.activeElement;
+        if (
+          !floating ||
+          !activeElement ||
+          activeElement.tagName !== 'IFRAME' ||
+          contains(floating, activeElement) ||
+          (reference && contains(reference, activeElement))
+        ) {
+          return;
+        }
+
+        blockFocusRef.current = true;
+        commitShownLocalState(false, 'click-outside');
+      };
+
+      win.addEventListener('blur', handleGlobalBlurForIframeClick);
+      return () => {
+        win.removeEventListener('blur', handleGlobalBlurForIframeClick);
+      };
+    },
+    [
+      win,
+      shownFinalState,
+      triggerOnFocus,
+      disabled,
+      disableCloseOnClickOutside,
+      refs.reference,
+      refs.floating,
+      commitShownLocalState,
+    ],
   );
 
   useIsomorphicLayoutEffect(
