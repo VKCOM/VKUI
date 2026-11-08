@@ -5636,7 +5636,7 @@ __metadata:
     process: "npm:^0.11.10"
     react: "npm:^19.3.1"
     react-dom: "npm:^19.3.1"
-    semver: "npm:^7.8.5"
+    semver: "npm:^7.8.6"
     shx: "npm:^0.4.0"
     size-limit: "npm:^14.3.0"
     storybook: "npm:10.6.5"
@@ -15781,6 +15781,15 @@ __metadata:
   bin:
     semver: bin/semver.js
   checksum: 10/9b01d2ff11e6e4a4539b7ca3c5f280c8704cb397a28504469f2ed4f00ad2194748d756647362a9712fff30984d15772ab7f083108c2fb508e2096ae9e708f22c
+  languageName: node
+  linkType: hard
+
+"semver@npm:^7.8.6":
+  version: 7.8.6
+  resolution: "semver@npm:7.8.6"
+  bin:
+    semver: bin/semver.js
+  checksum: 10/76fd62a781a9c58464e4d4b1b9c99c404063d8133fff8a0753e66b1bd826bfb720d843664e7ab1268c0fb7134d04df9f3b8788eb2f1000c509648e0eeac03921
   languageName: node
   linkType: hard
 
