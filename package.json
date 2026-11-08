@@ -76,7 +76,7 @@
     "process": "^0.11.10",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
-    "semver": "^7.8.5",
+    "semver": "^7.8.6",
     "shx": "^0.4.0",
     "size-limit": "^14.3.0",
     "storybook": "10.6.5",
