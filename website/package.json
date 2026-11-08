@@ -13,12 +13,12 @@
     "lint:types": "node ../node_modules/@typescript/native/bin/tsc"
   },
   "devDependencies": {
-    "@next/bundle-analyzer": "^16.4.3",
+    "@next/bundle-analyzer": "^16.4.5",
     "@shikijs/transformers": "^4.5.0",
     "@vkontakte/vkui": "workspace:^",
     "@vkontakte/vkui-docs-theme": "workspace:^",
     "browserslist-vscode": "github:browserslist/browserslist-vscode",
-    "next": "^16.4.3",
+    "next": "^16.4.5",
     "next-sitemap": "^4.2.3",
     "nextra": "^4.6.1",
     "pagefind": "^1.5.2",
