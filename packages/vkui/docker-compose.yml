@@ -7,6 +7,9 @@ services:
     user: root
     working_dir: /repo/packages/vkui
     command: sh -c "
+      if ! command -v corepack > /dev/null 2>&1; then
+        npm install --global --force corepack@0.36.0;
+      fi &&
       corepack enable &&
       YARN_ENABLE_SCRIPTS=false yarn install --immutable &&
       node --run ${RUN_SCRIPT_COMMAND:-test:e2e:ci} ${UPDATE_SNAPSHOTS_FLAG:+-- }${UPDATE_SNAPSHOTS_FLAG:-}
