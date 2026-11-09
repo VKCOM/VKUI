@@ -133,7 +133,7 @@ export interface ContentBadgeProps
   /**
    * Определяет отступы и размер текста.
    *
-   * Соответствие размеров иконок в слоте `<ContentBadge.SlotIcon />`:
+   * Соответствие размеров иконок в слоте `<ContentBadge.IconSlot />`:
    *
    * - size="s" – ⚠️ не поддерживает иконки;
    * - size="m" – при **одиночной** иконке `16x16`, в остальных случаях `12x12`;
@@ -146,7 +146,7 @@ export interface ContentBadgeProps
  * Компонент, который позволяет добавить текстовые или иконочные бейджи. Как правило, используются
  * поверх других элементов или рядом с ними.
  *
- * Используйте `ContentBadge.SlotIcon` для размещения иконок внутри `ContentBadge`.
+ * Используйте `ContentBadge.IconSlot` для размещения иконок внутри `ContentBadge`.
  *
  * @since 6.1.0
  * @see https://vkui.io/components/content-badge
