@@ -228,7 +228,7 @@ export const PullToRefresh = ({
         iosRefreshStartedRef.current = true;
         runRefreshing();
       }
-    } else if (isY && pageYOffset === 0 && shiftY > 0 && !refreshing && touchDown) {
+    } else if (isY && pageYOffset <= 0 && shiftY > 0 && !refreshing && touchDown) {
       cancelEvent(event);
 
       touchY.current = shiftY;
