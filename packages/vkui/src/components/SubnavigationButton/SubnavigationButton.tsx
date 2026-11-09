@@ -17,6 +17,7 @@ const appearanceStyles = {
 
 const modeStyles = {
   primary: styles.modePrimary,
+  secondary: styles.modeSecondary,
   outline: styles.modeOutline,
   tertiary: styles.modeTertiary,
 };
@@ -36,7 +37,7 @@ export interface SubnavigationButtonProps extends Omit<TappableOmitProps, 'size'
   /**
    * Стиль отображения кнопки.
    */
-  mode?: 'primary' | 'outline' | 'tertiary' | undefined;
+  mode?: 'primary' | 'secondary' | 'outline' | 'tertiary' | undefined;
   /**
    * Тип внешнего вида кнопки.
    */

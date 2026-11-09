@@ -110,6 +110,10 @@
   box-shadow: var(--vkui--elevation3);
 }
 
+.modeSecondary {
+  background-color: var(--vkui--color_background_contrast_secondary_alpha);
+}
+
 .modeOutline {
   box-shadow: inset 0 0 0 var(--vkui--size_border--regular) var(--vkui--color_field_border_alpha);
 }
