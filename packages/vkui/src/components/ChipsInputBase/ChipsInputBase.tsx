@@ -6,7 +6,7 @@ import { isHTMLElement } from '@vkontakte/vkui-floating-ui/utils/dom';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useMergeProps } from '../../hooks/useMergeProps';
-import { getHorizontalFocusGoTo, Keys } from '../../lib/accessibility';
+import { getHorizontalFocusGoTo, isKeyboardEventComposing, Keys } from '../../lib/accessibility';
 import {
   contains as checkTargetIsInputEl,
   contains,
@@ -165,7 +165,12 @@ export const ChipsInputBase = <O extends ChipOption>({
   const handleListboxKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     const targetEl = event.target;
     /* istanbul ignore if: невозможный кейс (в SSR вызова этой функции не будет) */
-    if (event.defaultPrevented || !listboxRef.current || !isHTMLElement(targetEl)) {
+    if (
+      event.defaultPrevented ||
+      isKeyboardEventComposing(event) ||
+      !listboxRef.current ||
+      !isHTMLElement(targetEl)
+    ) {
       return;
     }
 
