@@ -129,3 +129,57 @@ scrollTest.describe('TabsItem scroll to selected', () => {
     }
   }
 });
+
+const scaledScrollTest = scrollTest.extend({
+  launchOptions: async ({ launchOptions, browserName }, use) => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    await use({
+      ...launchOptions,
+      args: [
+        ...(launchOptions.args || []),
+        ...(browserName === 'chromium' ? ['--force-device-scale-factor=1.25'] : []),
+      ],
+    });
+  },
+});
+
+scaledScrollTest.describe('TabsItem fractional borders at 125% scale', () => {
+  scaledScrollTest.use({
+    onlyForBrowsers: ['chromium'],
+    onlyForPlatforms: ['vkcom'],
+    onlyForColorSchemes: ['light'],
+    deviceScaleFactor: 1.25,
+  });
+
+  for (const direction of ['ltr', 'rtl'] as const) {
+    scaledScrollTest(
+      `scrolls to the initial tab in ${direction}`,
+      async ({ page, mountScrollPlayground }) => {
+        await page.addStyleTag({
+          content:
+            '[data-testid="horizontal-scroll"] > div { border-block: 1px solid transparent; }',
+        });
+        await mountScrollPlayground({ direction, selectedIndex: 5 });
+
+        const scroller = page.getByTestId('horizontal-scroll').locator('> div');
+        expect(
+          await scroller.evaluate((element) =>
+            parseFloat(getComputedStyle(element).borderTopWidth),
+          ),
+        ).toBeCloseTo(0.8);
+
+        await expect
+          .poll(async () => {
+            const tab = (await page.getByTestId('scroll-tab-5').boundingBox())!;
+            const bounds = (await scroller.boundingBox())!;
+            return tab.x >= bounds.x - 1 && tab.x + tab.width <= bounds.x + bounds.width + 1;
+          })
+          .toBe(true);
+
+        await expect(scroller).toHaveJSProperty('scrollTop', 0);
+        await expect(page.getByTestId('vertical-scroll')).toHaveJSProperty('scrollTop', 0);
+        expect(await page.evaluate(() => window.scrollY)).toBe(0);
+      },
+    );
+  }
+});

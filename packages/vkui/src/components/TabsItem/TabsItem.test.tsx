@@ -142,10 +142,15 @@ describe('TabsItem', () => {
           }
         };
         const tabs = (selected: boolean) => (
-          <div style={{ overflowY, overflowX: 'clip' }} ref={ancestorRef}>
+          <div
+            style={{ overflowY, overflowX: 'clip', borderWidth: 8, borderStyle: 'solid' }}
+            ref={ancestorRef}
+          >
             <div
               data-testid="inner"
-              style={nested ? { overflowY: 'auto' } : undefined}
+              style={
+                nested ? { overflowY: 'auto', borderWidth: 0, borderStyle: 'solid' } : undefined
+              }
               ref={nested ? ancestorRef : undefined}
             >
               <Tabs withScrollToSelectedTab>
@@ -172,28 +177,69 @@ describe('TabsItem', () => {
       { height: 48.5, tabHeight: 48.5, border: 0, scrollbar: 0, shouldScroll: true },
       { height: 48.75, tabHeight: 48.75, border: 0, scrollbar: 0, shouldScroll: true },
       { height: 48.25, tabHeight: 48.25, border: 8, scrollbar: 0, shouldScroll: true },
+      ...[0.8, 0.909091, 0.666667, 0.571429, 1.25, 0.6].map((border) => ({
+        height: 48.25,
+        tabHeight: 48.25,
+        border,
+        scrollbar: 0,
+        shouldScroll: true,
+      })),
+      { height: 48.4, tabHeight: 48.4, border: 0.6, scrollbar: 0, shouldScroll: true },
+      {
+        height: 48.25,
+        tabHeight: 48.25,
+        border: 0.8,
+        scrollbar: 0,
+        topOffset: -0.000002,
+        shouldScroll: true,
+      },
+      {
+        height: 48.25,
+        tabHeight: 48.250002,
+        border: 0.8,
+        scrollbar: 0,
+        shouldScroll: true,
+      },
+      {
+        height: 48.25,
+        tabHeight: 48.25,
+        border: 0.8,
+        scrollbar: 0,
+        topOffset: -0.25,
+        shouldScroll: false,
+      },
+      { height: 48.25, tabHeight: 48.5, border: 0.8, scrollbar: 0, shouldScroll: false },
       { height: 48.25, tabHeight: 48.5, border: 0, scrollbar: 0, shouldScroll: false },
       { height: 48.5, tabHeight: 48.75, border: 0, scrollbar: 0, shouldScroll: false },
       { height: 48.25, tabHeight: 48.25, border: 8, scrollbar: 15, shouldScroll: false },
+      { height: 48.25, tabHeight: 48.25, border: 0.8, scrollbar: 15, shouldScroll: false },
+      {
+        height: 48.6,
+        tabHeight: 34,
+        border: 0.6,
+        scrollbar: 15,
+        topOffset: 0.4,
+        shouldScroll: false,
+      },
     ])(
-      'height=$height tabHeight=$tabHeight border=$border scrollbar=$scrollbar shouldScroll=$shouldScroll',
-      ({ height, tabHeight, border, scrollbar, shouldScroll }) => {
+      'height=$height tabHeight=$tabHeight border=$border scrollbar=$scrollbar topOffset=$topOffset shouldScroll=$shouldScroll',
+      ({ height, tabHeight, border, scrollbar, topOffset = 0, shouldScroll }) => {
         const scrollIntoViewMock = mockScrollIntoView();
 
         render(
           <div
-            style={{ overflowY: 'auto' }}
+            style={{ overflowY: 'auto', borderWidth: border, borderStyle: 'solid' }}
             ref={(element) => {
               if (element) {
                 vi.spyOn(element, 'getBoundingClientRect').mockReturnValue(
                   new DOMRect(0, 100, 320, height + 2 * border),
                 );
-                vi.spyOn(element, 'clientTop', 'get').mockReturnValue(border);
+                vi.spyOn(element, 'clientTop', 'get').mockReturnValue(Math.round(border));
                 vi.spyOn(element, 'clientHeight', 'get').mockReturnValue(
                   Math.round(height) - scrollbar,
                 );
                 vi.spyOn(element, 'offsetHeight', 'get').mockReturnValue(
-                  Math.round(height) + 2 * border,
+                  Math.round(height + 2 * border),
                 );
               }
             }}
@@ -204,7 +250,7 @@ describe('TabsItem', () => {
                 getRootRef={(element) => {
                   if (element) {
                     vi.spyOn(element, 'getBoundingClientRect').mockReturnValue(
-                      new DOMRect(600, 100 + border, 100, tabHeight),
+                      new DOMRect(600, 100 + border + topOffset, 100, tabHeight),
                     );
                   }
                 }}

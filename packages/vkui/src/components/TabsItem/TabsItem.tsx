@@ -167,22 +167,40 @@ export const TabsItem = ({
 
       const isTabVerticallyOutsideOfOverflowAncestor = getOverflowAncestors(rootRef.current).some(
         (ancestor) => {
-          if (
-            !isHTMLElement(ancestor) ||
-            !/auto|scroll|overlay|hidden|clip/.test(
-              getWindow(ancestor).getComputedStyle(ancestor).overflowY,
-            )
-          ) {
+          if (!isHTMLElement(ancestor)) {
+            return false;
+          }
+
+          const ancestorStyle = getWindow(ancestor).getComputedStyle(ancestor);
+          if (!/auto|scroll|overlay|hidden|clip/.test(ancestorStyle.overflowY)) {
             return false;
           }
 
           const ancestorDOMRect = ancestor.getBoundingClientRect();
-          const ancestorTop = ancestorDOMRect.top + ancestor.clientTop;
-          // Сохраняем дробную высоту DOMRect: clientHeight и offsetHeight округляются.
-          const ancestorBottom =
-            ancestorDOMRect.bottom -
-            (ancestor.offsetHeight - ancestor.clientHeight - ancestor.clientTop);
-          return tabDOMRect.top < ancestorTop || tabDOMRect.bottom > ancestorBottom;
+          // При зуме границы могут быть дробными, а clientTop и размеры округляются.
+          const borderTop = parseFloat(ancestorStyle.borderTopWidth) || 0;
+          const borderBottom = parseFloat(ancestorStyle.borderBottomWidth) || 0;
+          // Погрешность округления границ не должна считаться полосой прокрутки.
+          const scrollbarHeight = Math.max(
+            0,
+            ancestor.offsetHeight - ancestor.clientHeight - Math.ceil(borderTop + borderBottom),
+          );
+          const ancestorTop = ancestorDOMRect.top + borderTop;
+          let ancestorBottom = ancestorDOMRect.bottom - borderBottom - scrollbarHeight;
+          if (scrollbarHeight > 0) {
+            // Для полосы прокрутки используем консервативную нижнюю границу.
+            ancestorBottom = Math.min(
+              ancestorBottom,
+              ancestorDOMRect.bottom -
+                (ancestor.offsetHeight - ancestor.clientHeight - ancestor.clientTop),
+            );
+          }
+          // DOMRect и вычисленные стили могут различаться на доли тысячной CSS-пикселя.
+          const precision = 0.0001;
+          return (
+            tabDOMRect.top < ancestorTop - precision ||
+            tabDOMRect.bottom > ancestorBottom + precision
+          );
         },
       );
 
