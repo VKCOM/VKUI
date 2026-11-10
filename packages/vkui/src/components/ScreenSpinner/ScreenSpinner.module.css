@@ -74,7 +74,14 @@
 }
 
 .stateCancelable .icon {
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: inherit;
   cursor: pointer;
+  background: transparent;
+  border: 0;
+  border-radius: inherit;
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
