@@ -31,6 +31,7 @@
 Задается свойством `mode`:
 
 - `primary` — первичный вид для привлечения внимания;
+- `secondary` — вторичный вид с полупрозрачным фоном;
 - `outline` — вид с обводкой;
 - `tertiary` — третичный вид без фона.
 
@@ -40,7 +41,7 @@
 
 #### `accent`
 
-{/* @example-description: Сравнение режимов `primary`, `outline` и `tertiary` в `appearance="accent"`. */}
+{/* @example-description: Сравнение режимов `primary`, `secondary`, `outline` и `tertiary` в `appearance="accent"`. */}
 <Playground style={{ width: 270 }}>
   ```jsx
   <SubnavigationBar>
@@ -49,6 +50,14 @@
     </SubnavigationButton>
     <SubnavigationButton mode="primary" appearance="accent" onClick={() => {}}>
       primary accent
+    </SubnavigationButton>
+  </SubnavigationBar>
+  <SubnavigationBar>
+    <SubnavigationButton mode="secondary" appearance="accent" selected onClick={() => {}}>
+      secondary accent selected
+    </SubnavigationButton>
+    <SubnavigationButton mode="secondary" appearance="accent" onClick={() => {}}>
+      secondary accent
     </SubnavigationButton>
   </SubnavigationBar>
   <SubnavigationBar>
@@ -72,7 +81,7 @@
 
 #### `neutral`
 
-{/* @example-description: Сравнение режимов `primary`, `outline` и `tertiary` в `appearance="neutral"`. */}
+{/* @example-description: Сравнение режимов `primary`, `secondary`, `outline` и `tertiary` в `appearance="neutral"`. */}
 <Playground style={{ width: 270 }}>
   ```jsx
   <SubnavigationBar>
@@ -81,6 +90,14 @@
     </SubnavigationButton>
     <SubnavigationButton mode="primary" appearance="neutral" onClick={() => {}}>
       primary neutral
+    </SubnavigationButton>
+  </SubnavigationBar>
+  <SubnavigationBar>
+    <SubnavigationButton mode="secondary" appearance="neutral" selected onClick={() => {}}>
+      secondary neutral selected
+    </SubnavigationButton>
+    <SubnavigationButton mode="secondary" appearance="neutral" onClick={() => {}}>
+      secondary neutral
     </SubnavigationButton>
   </SubnavigationBar>
   <SubnavigationBar>
