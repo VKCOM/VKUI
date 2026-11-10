@@ -32,7 +32,14 @@ Playground.args = {
 };
 
 export const InteractiveTooltipWithCloseAction: Story = (args: TooltipProps) => (
-  <Tooltip {...args}>
+  <Tooltip
+    {...args}
+    action={
+      <Button size="s" href="https://vkui.io/components/tooltip">
+        Подробнее
+      </Button>
+    }
+  >
     <Button
       style={{
         margin: 20,
@@ -44,7 +51,8 @@ export const InteractiveTooltipWithCloseAction: Story = (args: TooltipProps) => 
 );
 
 InteractiveTooltipWithCloseAction.args = {
-  description: 'Привет',
+  title: 'Как работают подсказки',
+  description: 'Узнайте больше о компоненте Tooltip и его возможностях.',
   enableInteractive: true,
   closable: true,
 };
