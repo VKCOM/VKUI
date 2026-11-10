@@ -13,7 +13,7 @@ interface LiveCodeEditorPanelProps {
 const resolveArgs = (args: any, argTypes: any) => {
   const mapValue = (key: string, value: any): any => {
     const argType = argTypes[key];
-    if (argType && argType.control.type === 'select' && argType.mapping) {
+    if (argType?.control?.type === 'select' && argType.mapping) {
       const resolvedValue = argType.mapping[value];
       return resolvedValue !== undefined ? resolvedValue : value;
     }
@@ -34,11 +34,12 @@ const LiveCodeEditorPanel = ({ api }: LiveCodeEditorPanelProps) => {
   const theme = useTheme();
   const { code, disabled } = useParameter<LiveCodeEditorParameters>(PARAM_ID, {});
   const { format } = getLiveCodeEditorConfig();
-  const originalSource = story.parameters?.docs.source.originalSource;
-  const source = code || originalSource;
   if (disabled || !story) {
     return null;
   }
+
+  const originalSource = story.parameters?.docs?.source?.originalSource;
+  const source = code || originalSource;
 
   if (!source) {
     return <Loader />;
