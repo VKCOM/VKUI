@@ -24,7 +24,7 @@ function runWorker(scriptUrl: URL): Promise<void> {
 
 // copy-mdx-to-public зависит от generate-props (читает .docgen/docgen.json),
 // поэтому запускаем их последовательно в одной цепочке.
-// generate-showcase и generate-llms-txt независимы — идут параллельно с остальными.
+// generate-llms-txt, generate-previews и generate-agent-skills запускаются параллельно с этой цепочкой.
 async function main() {
   const propsChain = runWorker(new URL('./generate-props/generate-props.ts', import.meta.url)).then(
     () => runWorker(new URL('./copy-mdx-to-public.ts', import.meta.url)),
@@ -34,6 +34,7 @@ async function main() {
     propsChain,
     runWorker(new URL('./generate-llms-txt.ts', import.meta.url)),
     runWorker(new URL('./generate-previews.ts', import.meta.url)),
+    runWorker(new URL('./generate-agent-skills.ts', import.meta.url)),
   ]);
 
   const previewIds: string[] = JSON.parse(
