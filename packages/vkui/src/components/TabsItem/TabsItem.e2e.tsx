@@ -1,5 +1,7 @@
-import { test } from '@vkui-e2e/test';
+import { expect, test } from '@vkui-e2e/test';
 import { ViewWidth } from '../../lib/adaptivity';
+import type { TabsItemScrollPlaygroundProps } from './TabsItem.e2e-playground';
+
 test.describe('TabsItem', () => {
   test.use({
     adaptivityProviderProps: {
@@ -10,4 +12,91 @@ test.describe('TabsItem', () => {
     await mount('TabsItemWithStatePlayground', componentPlaygroundProps);
     await expectScreenshotClippedToContent();
   });
+});
+
+const scrollTest = test.extend<{
+  mountScrollPlayground: (props: TabsItemScrollPlaygroundProps) => Promise<void>;
+}>({
+  mountScrollPlayground: async ({ page }, use) => {
+    await page.goto('/playwright/gallery/index.html');
+    await page.waitForFunction(() => 'mount' in window);
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    await use(async (props) => {
+      await page.evaluate(async (props) => {
+        const galleryWindow = window as unknown as {
+          mount: (params: { story: string; props: TabsItemScrollPlaygroundProps }) => Promise<void>;
+        };
+        await galleryWindow.mount({ story: 'TabsItemScrollPlayground', props });
+      }, props);
+    });
+  },
+});
+
+scrollTest.describe('TabsItem scroll to selected', () => {
+  scrollTest.use({ onlyForPlatforms: ['vkcom'], onlyForColorSchemes: ['light'] });
+
+  for (const clipping of ['below', 'above', 'partial-below', 'ancestor', 'border'] as const) {
+    scrollTest(
+      `preserves vertical scroll when clipped ${clipping}`,
+      async ({ page, mountScrollPlayground }) => {
+        await mountScrollPlayground({ clipping });
+
+        // A smooth scroll starts after mount; an immediate assertion could miss the regression.
+        await page.waitForTimeout(600);
+
+        expect(
+          await page
+            .locator('[data-scroll-container]')
+            .evaluateAll((elements) => elements.map((element) => element.scrollTop)),
+        ).toEqual(clipping === 'ancestor' ? [0, 0] : clipping === 'above' ? [20] : [0]);
+        expect(await page.evaluate(() => window.scrollY)).toBe(0);
+      },
+    );
+  }
+
+  for (const direction of ['ltr', 'rtl'] as const) {
+    scrollTest(
+      `keeps a visible tab in place in ${direction}`,
+      async ({ page, mountScrollPlayground }) => {
+        await mountScrollPlayground({ direction });
+        await page.waitForTimeout(600);
+
+        await expect(page.getByTestId('horizontal-scroll').locator('> div')).toHaveJSProperty(
+          'scrollLeft',
+          0,
+        );
+        await expect(page.getByTestId('vertical-scroll')).toHaveJSProperty('scrollTop', 0);
+        expect(await page.evaluate(() => window.scrollY)).toBe(0);
+      },
+    );
+
+    for (const alignment of ['nearest', 'start', 'center', 'end'] as const) {
+      scrollTest(
+        `scrolls to the initial tab with ${alignment} alignment in ${direction}`,
+        async ({ page, mountScrollPlayground }) => {
+          await mountScrollPlayground({ direction, alignment, selectedIndex: 5 });
+
+          await expect
+            .poll(async () => {
+              const tab = (await page.getByTestId('scroll-tab-5').boundingBox())!;
+              const scroller = (await page
+                .getByTestId('horizontal-scroll')
+                .locator('> div')
+                .boundingBox())!;
+              if (alignment === 'center') {
+                return Math.abs(tab.x + tab.width / 2 - scroller.x - scroller.width / 2);
+              }
+              const alignLeft = (direction === 'ltr') === (alignment === 'start');
+              return Math.abs(
+                alignLeft ? tab.x - scroller.x : tab.x + tab.width - scroller.x - scroller.width,
+              );
+            })
+            .toBeLessThanOrEqual(1);
+
+          await expect(page.getByTestId('vertical-scroll')).toHaveJSProperty('scrollTop', 0);
+          expect(await page.evaluate(() => window.scrollY)).toBe(0);
+        },
+      );
+    }
+  }
 });

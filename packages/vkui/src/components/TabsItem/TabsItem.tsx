@@ -4,6 +4,8 @@ import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
+import { getWindow, isHTMLElement } from '../../lib/dom';
+import { getOverflowAncestors } from '../../lib/floating';
 import { warnOnce } from '../../lib/warnOnce';
 import type { AnchorHTMLAttributesOnly, HTMLAttributesWithRootRef } from '../../types';
 import { TabsControllerContext } from '../Tabs/TabsControllerContext';
@@ -157,9 +159,30 @@ export const TabsItem = ({
         tabDOMRect.top < 0 ||
         tabDOMRect.bottom > rootRef.current.ownerDocument.documentElement.clientHeight;
 
-      /* проверяем, возможен ли вертикальный скролл, а он возможен для scrollIntoView если
-       * элемент вертикально вне зоны видимости */
+      /* scrollIntoView может прокрутить как страницу, так и вложенные контейнеры,
+       * если вкладка вертикально вне их видимой области. */
       if (isTabVerticallyOutsideOfViewport) {
+        return;
+      }
+
+      const isTabVerticallyOutsideOfOverflowAncestor = getOverflowAncestors(rootRef.current).some(
+        (ancestor) => {
+          if (
+            !isHTMLElement(ancestor) ||
+            !/auto|scroll|overlay|hidden|clip/.test(
+              getWindow(ancestor).getComputedStyle(ancestor).overflowY,
+            )
+          ) {
+            return false;
+          }
+
+          const ancestorTop = ancestor.getBoundingClientRect().top + ancestor.clientTop;
+          const ancestorBottom = ancestorTop + ancestor.clientHeight;
+          return tabDOMRect.top < ancestorTop || tabDOMRect.bottom > ancestorBottom;
+        },
+      );
+
+      if (isTabVerticallyOutsideOfOverflowAncestor) {
         return;
       }
 
