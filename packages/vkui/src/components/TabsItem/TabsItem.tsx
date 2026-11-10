@@ -57,9 +57,9 @@ export interface TabsItemProps
    *
    * - `React.ReactElement` – либо [`Badge`](https://vkui.io/components/badge) с параметром `mode="prominent"`.
    *   Либо [`Counter`](https://vkui.io/components/counter) с параметрами `mode="prominent" size="s"`.
-   * - `number` – для показа текстового блока с переданным числом.
+   * - `string | number` – для показа текстового блока с переданной строкой или числом.
    */
-  status?: React.ReactElement | number | undefined;
+  status?: React.ReactElement | string | number | undefined;
   /**
    * Добавляет иконку справа.
    *
@@ -111,7 +111,7 @@ export const TabsItem = ({
 
   if (hasReactNode(status)) {
     statusComponent =
-      typeof status === 'number' ? (
+      typeof status === 'string' || typeof status === 'number' ? (
         <Subhead
           Component="span"
           className={classNames(styles.status, styles.statusCount)}
