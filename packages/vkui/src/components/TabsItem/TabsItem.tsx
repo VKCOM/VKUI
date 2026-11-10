@@ -176,8 +176,12 @@ export const TabsItem = ({
             return false;
           }
 
-          const ancestorTop = ancestor.getBoundingClientRect().top + ancestor.clientTop;
-          const ancestorBottom = ancestorTop + ancestor.clientHeight;
+          const ancestorDOMRect = ancestor.getBoundingClientRect();
+          const ancestorTop = ancestorDOMRect.top + ancestor.clientTop;
+          // Сохраняем дробную высоту DOMRect: clientHeight и offsetHeight округляются.
+          const ancestorBottom =
+            ancestorDOMRect.bottom -
+            (ancestor.offsetHeight - ancestor.clientHeight - ancestor.clientTop);
           return tabDOMRect.top < ancestorTop || tabDOMRect.bottom > ancestorBottom;
         },
       );

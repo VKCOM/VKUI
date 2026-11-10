@@ -70,6 +70,35 @@ scrollTest.describe('TabsItem scroll to selected', () => {
       },
     );
 
+    for (const tabHeight of [48.25, 48.5, 48.75]) {
+      scrollTest(
+        `scrolls to the initial tab with fractional height ${tabHeight} in ${direction}`,
+        async ({ page, mountScrollPlayground }) => {
+          await mountScrollPlayground({ direction, selectedIndex: 5, tabHeight });
+
+          const tab = page.getByTestId('scroll-tab-5');
+          const scroller = page.getByTestId('horizontal-scroll').locator('> div');
+          expect((await tab.boundingBox())!.height).toBe(tabHeight);
+          expect((await scroller.boundingBox())!.height).toBe(tabHeight);
+
+          await expect
+            .poll(async () => {
+              const tabBounds = (await tab.boundingBox())!;
+              const scrollBounds = (await scroller.boundingBox())!;
+              return (
+                tabBounds.x >= scrollBounds.x - 1 &&
+                tabBounds.x + tabBounds.width <= scrollBounds.x + scrollBounds.width + 1
+              );
+            })
+            .toBe(true);
+
+          await expect(scroller).toHaveJSProperty('scrollTop', 0);
+          await expect(page.getByTestId('vertical-scroll')).toHaveJSProperty('scrollTop', 0);
+          expect(await page.evaluate(() => window.scrollY)).toBe(0);
+        },
+      );
+    }
+
     for (const alignment of ['nearest', 'start', 'center', 'end'] as const) {
       scrollTest(
         `scrolls to the initial tab with ${alignment} alignment in ${direction}`,

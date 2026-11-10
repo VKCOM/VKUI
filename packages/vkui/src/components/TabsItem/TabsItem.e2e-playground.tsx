@@ -41,6 +41,7 @@ export interface TabsItemScrollPlaygroundProps {
   direction?: 'ltr' | 'rtl';
   alignment?: TabsProps['scrollBehaviorToSelectedTab'];
   selectedIndex?: number;
+  tabHeight?: number;
 }
 
 export const TabsItemScrollPlayground = ({
@@ -48,6 +49,7 @@ export const TabsItemScrollPlayground = ({
   direction = 'ltr',
   alignment = 'nearest',
   selectedIndex = 0,
+  tabHeight,
 }: TabsItemScrollPlaygroundProps) => {
   const nested = clipping === 'ancestor';
   const spacerHeight =
@@ -95,7 +97,14 @@ export const TabsItemScrollPlayground = ({
                     aria-controls={`scroll-panel-${index}`}
                     data-testid={`scroll-tab-${index}`}
                     selected={index === selectedIndex}
-                    style={{ width: 120, minWidth: 120, maxWidth: 120, flex: '0 0 auto' }}
+                    style={{
+                      width: 120,
+                      minWidth: 120,
+                      maxWidth: 120,
+                      height: tabHeight,
+                      minHeight: tabHeight,
+                      flex: '0 0 auto',
+                    }}
                   >
                     Вкладка {index + 1}
                   </TabsItem>

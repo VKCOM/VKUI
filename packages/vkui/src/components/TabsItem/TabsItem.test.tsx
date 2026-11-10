@@ -131,6 +131,7 @@ describe('TabsItem', () => {
             );
             vi.spyOn(element, 'clientTop', 'get').mockReturnValue(isInner ? 0 : 8);
             vi.spyOn(element, 'clientHeight', 'get').mockReturnValue(isInner ? 768 : 80);
+            vi.spyOn(element, 'offsetHeight', 'get').mockReturnValue(isInner ? 768 : 96);
           }
         };
         const tabRef = (element: HTMLElement | null) => {
@@ -162,6 +163,58 @@ describe('TabsItem', () => {
         scrollIntoViewMock.mockClear();
         rerender(tabs(false));
         rerender(tabs(true));
+        expect(scrollIntoViewMock).toHaveBeenCalledTimes(shouldScroll ? 1 : 0);
+      },
+    );
+
+    it.each([
+      { height: 48.25, tabHeight: 48.25, border: 0, scrollbar: 0, shouldScroll: true },
+      { height: 48.5, tabHeight: 48.5, border: 0, scrollbar: 0, shouldScroll: true },
+      { height: 48.75, tabHeight: 48.75, border: 0, scrollbar: 0, shouldScroll: true },
+      { height: 48.25, tabHeight: 48.25, border: 8, scrollbar: 0, shouldScroll: true },
+      { height: 48.25, tabHeight: 48.5, border: 0, scrollbar: 0, shouldScroll: false },
+      { height: 48.5, tabHeight: 48.75, border: 0, scrollbar: 0, shouldScroll: false },
+      { height: 48.25, tabHeight: 48.25, border: 8, scrollbar: 15, shouldScroll: false },
+    ])(
+      'height=$height tabHeight=$tabHeight border=$border scrollbar=$scrollbar shouldScroll=$shouldScroll',
+      ({ height, tabHeight, border, scrollbar, shouldScroll }) => {
+        const scrollIntoViewMock = mockScrollIntoView();
+
+        render(
+          <div
+            style={{ overflowY: 'auto' }}
+            ref={(element) => {
+              if (element) {
+                vi.spyOn(element, 'getBoundingClientRect').mockReturnValue(
+                  new DOMRect(0, 100, 320, height + 2 * border),
+                );
+                vi.spyOn(element, 'clientTop', 'get').mockReturnValue(border);
+                vi.spyOn(element, 'clientHeight', 'get').mockReturnValue(
+                  Math.round(height) - scrollbar,
+                );
+                vi.spyOn(element, 'offsetHeight', 'get').mockReturnValue(
+                  Math.round(height) + 2 * border,
+                );
+              }
+            }}
+          >
+            <Tabs withScrollToSelectedTab>
+              <TabsItem
+                selected
+                getRootRef={(element) => {
+                  if (element) {
+                    vi.spyOn(element, 'getBoundingClientRect').mockReturnValue(
+                      new DOMRect(600, 100 + border, 100, tabHeight),
+                    );
+                  }
+                }}
+              >
+                First
+              </TabsItem>
+            </Tabs>
+          </div>,
+        );
+
         expect(scrollIntoViewMock).toHaveBeenCalledTimes(shouldScroll ? 1 : 0);
       },
     );
