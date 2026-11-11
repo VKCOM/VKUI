@@ -3,8 +3,6 @@
 
 import * as React from 'react';
 import { Icon24Cancel } from '@vkontakte/icons';
-import { mergeCalls } from '../../lib/mergeCalls';
-import { clickByKeyboardHandler } from '../../lib/utils';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Icon48CancelCircle } from './Icon48CancelCircle';
@@ -18,25 +16,17 @@ type ScreenSpinnerSwapIconProps = HTMLAttributesWithRootRef<HTMLElement> & {
 };
 
 const ScreenSpinnerCancelIcon = ({
-  onKeyDown,
   'aria-label': ariaLabel = 'Отменить',
   ...restProps
 }: ScreenSpinnerSwapIconProps) => {
-  const handlers = mergeCalls(
-    { onKeyDown: clickByKeyboardHandler },
-    {
-      onKeyDown,
-    },
-  );
-  let clickableProps: React.HTMLAttributes<HTMLSpanElement> = {
-    ...handlers,
-    'tabIndex': 0,
-    'role': 'button',
-    'aria-label': ariaLabel,
-  };
-
   return (
-    <RootComponent baseClassName={styles.icon} {...clickableProps} {...restProps}>
+    <RootComponent
+      Component="button"
+      type="button"
+      baseClassName={styles.icon}
+      aria-label={ariaLabel}
+      {...restProps}
+    >
       <Icon24Cancel />
     </RootComponent>
   );
