@@ -1,12 +1,13 @@
-import { onDidRegisterWindow, onWillUnregisterWindow, getWindow, EventType, addDisposableListener, append, $ as $$1, trackFocus, isAncestor, isHTMLElement, reset, isAncestorOfActiveElement, getActiveWindow, addDisposableGenericMouseUpListener, addDisposableGenericMouseDownListener, addDisposableGenericMouseMoveListener } from '../../../base/browser/dom.js';
+import { onDidRegisterWindow, onWillUnregisterWindow, getWindow, EventType, addDisposableListener, append, $ as $$1, trackFocus, isAncestor, isHTMLElement, reset, isAncestorOfActiveElement, hasParentWithClass, getActiveWindow, addDisposableGenericMouseUpListener, addDisposableGenericMouseDownListener, addDisposableGenericMouseMoveListener } from '../../../base/browser/dom.js';
 import { createStyleSheet } from '../../../base/browser/domStylesheets.js';
 import { ToolBar } from '../../../base/browser/ui/toolbar/toolbar.js';
 import { Button } from '../../../base/browser/ui/button/button.js';
 import { CountBadge } from '../../../base/browser/ui/countBadge/countBadge.js';
 import { ProgressBar } from '../../../base/browser/ui/progressbar/progressbar.js';
+import { disposableTimeout } from '../../../base/common/async.js';
 import { CancellationToken } from '../../../base/common/cancellation.js';
 import { Emitter, Event } from '../../../base/common/event.js';
-import { Disposable, dispose } from '../../../base/common/lifecycle.js';
+import { Disposable, MutableDisposable, dispose } from '../../../base/common/lifecycle.js';
 import Severity from '../../../base/common/severity.js';
 import { isString } from '../../../base/common/types.js';
 import { isModifierKey } from '../../../base/common/keyCodes.js';
@@ -53,6 +54,10 @@ var __param = (undefined && undefined.__param) || function (paramIndex, decorato
 var QuickInputController_1;
 const $ = $$1;
 const VIEWSTATE_STORAGE_KEY = 'workbench.quickInput.viewState';
+const QUICK_INPUT_MOTION_CLOSING_CLASS = 'quick-input-widget-closing';
+const QUICK_INPUT_OVERLAY_CLASS = 'quick-input-widget-overlay';
+const QUICK_INPUT_CLOSE_ANIMATION_DURATION = 150;
+const QUICK_INPUT_MOTION_ANCESTOR_CLASSES = ['modern-ui', 'monaco-enable-motion'];
 let QuickInputController = class QuickInputController extends Disposable {
     static { QuickInputController_1 = this; }
     static { this.MAX_WIDTH = 600; } // Max total width of quick input widget
@@ -75,6 +80,7 @@ let QuickInputController = class QuickInputController extends Disposable {
         this.onShow = this.onShowEmitter.event;
         this.onHideEmitter = this._register(new Emitter());
         this.onHide = this.onHideEmitter.event;
+        this.closeAnimation = this._register(new MutableDisposable());
         this._alignment = observableValue(this, 'top');
         this.alignment = this._alignment;
         this.inQuickInputContext = InQuickInputContextKey.bindTo(contextKeyService);
@@ -139,7 +145,7 @@ let QuickInputController = class QuickInputController extends Disposable {
         }));
         rightActionBar.getElement().classList.add('quick-input-right-action-bar');
         const headerContainer = append(container, $('.quick-input-header'));
-        const checkAll = this._register(new TriStateCheckbox(localize(1827, "Toggle all checkboxes"), false, { ...defaultCheckboxStyles, size: 15 }));
+        const checkAll = this._register(new TriStateCheckbox(localize(1860, "Toggle all checkboxes"), false, { ...defaultCheckboxStyles, size: 15 }));
         append(headerContainer, checkAll.domNode);
         this._register(checkAll.onChange(() => {
             const checked = checkAll.checked;
@@ -158,10 +164,10 @@ let QuickInputController = class QuickInputController extends Disposable {
         const visibleCountContainer = append(filterContainer, $('.quick-input-visible-count'));
         visibleCountContainer.setAttribute('aria-live', 'polite');
         visibleCountContainer.setAttribute('aria-atomic', 'true');
-        const visibleCount = this._register(new CountBadge(visibleCountContainer, { countFormat: localize(1828, "{0} Results") }, this.styles.countBadge));
+        const visibleCount = this._register(new CountBadge(visibleCountContainer, { countFormat: localize(1861, "{0} Results") }, this.styles.countBadge));
         const countContainer = append(filterContainer, $('.quick-input-count'));
         countContainer.setAttribute('aria-live', 'polite');
-        const count = this._register(new CountBadge(countContainer, { countFormat: localize(1829, "{0} Selected") }, this.styles.countBadge));
+        const count = this._register(new CountBadge(countContainer, { countFormat: localize(1862, "{0} Selected") }, this.styles.countBadge));
         const inlineActionBar = this._register(new ToolBar(headerContainer, this.contextMenuService, {
             hoverDelegate: this.options.hoverDelegate,
             actionViewItemProvider: createToggleActionViewItemProvider(this.styles.toggle),
@@ -171,13 +177,13 @@ let QuickInputController = class QuickInputController extends Disposable {
         inlineActionBar.getElement().classList.add('quick-input-inline-action-bar');
         const okContainer = append(headerContainer, $('.quick-input-action'));
         const ok = this._register(new Button(okContainer, this.styles.button));
-        ok.label = localize(1830, "OK");
+        ok.label = localize(1863, "OK");
         this._register(ok.onDidClick(e => {
             this.onDidAcceptEmitter.fire();
         }));
         const customButtonContainer = append(headerContainer, $('.quick-input-action'));
         const customButton = this._register(new Button(customButtonContainer, { ...this.styles.button, supportIcons: true }));
-        customButton.label = localize(1831, "Custom");
+        customButton.label = localize(1864, "Custom");
         this._register(customButton.onDidClick(e => {
             this.onDidCustomEmitter.fire();
         }));
@@ -590,6 +596,7 @@ let QuickInputController = class QuickInputController extends Disposable {
         return new InputBox(ui);
     }
     show(controller) {
+        this.completeCloseAnimation();
         const ui = this.getUI(true);
         const oldController = this.controller;
         this.controller = controller;
@@ -633,8 +640,11 @@ let QuickInputController = class QuickInputController extends Disposable {
         ui.ignoreFocusOut = false;
         ui.inputBox.toggles = undefined;
         ui.inputBox.actions = undefined;
+        ui.inputBox.setHeight(undefined);
         const backKeybindingLabel = this.options.backKeybindingLabel();
-        backButton.tooltip = backKeybindingLabel ? localize(1832, "Back ({0})", backKeybindingLabel) : localize(1833, "Back");
+        backButton.tooltip = backKeybindingLabel ? localize(1865, "Back ({0})", backKeybindingLabel) : localize(1866, "Back");
+        this.overlayLayoutCorrection = undefined;
+        ui.container.classList.toggle(QUICK_INPUT_OVERLAY_CLASS, controller.anchorPosition === 'overlay');
         ui.container.style.display = '';
         this.updateLayout();
         this.dndController?.setEnabled(!controller.anchor);
@@ -653,10 +663,11 @@ let QuickInputController = class QuickInputController extends Disposable {
         this.quickInputTypeContext.set(controller.type);
     }
     isVisible() {
-        return !!this.ui && this.ui.container.style.display !== 'none';
+        return !!this.controller;
     }
     setVisibilities(visibilities) {
         const ui = this.getUI();
+        ui.titleBar.style.display = visibilities.title ? '' : 'none';
         ui.title.style.display = visibilities.title ? '' : 'none';
         ui.description1.style.display = visibilities.description && (visibilities.inputBox || visibilities.checkAll) ? '' : 'none';
         ui.description2.style.display = visibilities.description && !(visibilities.inputBox || visibilities.checkAll) ? '' : 'none';
@@ -673,6 +684,7 @@ let QuickInputController = class QuickInputController extends Disposable {
         ui.tree.displayed = !!visibilities.tree;
         ui.container.classList.toggle('show-checkboxes', !!visibilities.checkBox);
         ui.container.classList.toggle('hidden-input', !visibilities.inputBox && !visibilities.description);
+        this.overlayLayoutCorrection = undefined;
         this.updateLayout(); // TODO
     }
     setEnabled(enabled) {
@@ -713,7 +725,14 @@ let QuickInputController = class QuickInputController extends Disposable {
         this.controller = null;
         this.onHideEmitter.fire();
         if (container) {
-            container.style.display = 'none';
+            if (!container.classList.contains(QUICK_INPUT_OVERLAY_CLASS) && hasParentWithClass(container, QUICK_INPUT_MOTION_ANCESTOR_CLASSES)) {
+                container.inert = true;
+                container.classList.add(QUICK_INPUT_MOTION_CLOSING_CLASS);
+                this.closeAnimation.value = disposableTimeout(() => this.completeCloseAnimation(), QUICK_INPUT_CLOSE_ANIMATION_DURATION);
+            }
+            else {
+                container.style.display = 'none';
+            }
         }
         if (!focusChanged) {
             let currentElement = this.previousFocusElement;
@@ -729,6 +748,22 @@ let QuickInputController = class QuickInputController extends Disposable {
             }
         }
         controller.didHide(reason);
+    }
+    completeCloseAnimation() {
+        if (!this.closeAnimation.value) {
+            return;
+        }
+        this.closeAnimation.clear();
+        const container = this.ui?.container;
+        if (container) {
+            container.inert = false;
+            container.classList.remove(QUICK_INPUT_MOTION_CLOSING_CLASS);
+            container.style.display = 'none';
+        }
+    }
+    dispose() {
+        this.completeCloseAnimation();
+        super.dispose();
     }
     toggle() {
         if (!this.isVisible()) {
@@ -749,6 +784,7 @@ let QuickInputController = class QuickInputController extends Disposable {
     layout(dimension, titleBarOffset) {
         this.dimension = dimension;
         this.titleBarOffset = titleBarOffset;
+        this.overlayLayoutCorrection = undefined;
         this.updateLayout();
     }
     updateLayout() {
@@ -757,6 +793,7 @@ let QuickInputController = class QuickInputController extends Disposable {
             let width = Math.min(this.dimension.width * 0.62 /* golden cut */, QuickInputController_1.MAX_WIDTH);
             style.width = width + 'px';
             let listHeight = this.dimension && this.dimension.height * 0.4;
+            let overlayAnchor;
             // Position
             if (this.controller?.anchor) {
                 const target = this.controller.anchor;
@@ -769,14 +806,11 @@ let QuickInputController = class QuickInputController extends Disposable {
                 let listHeightRatio = 0.2;
                 let maxListHeight = 200;
                 if (this.controller.anchorPosition === 'overlay') {
-                    width = anchor.width + 12;
+                    overlayAnchor = anchor;
+                    this.ui.inputBox.setHeight(anchor.height);
+                    width = anchor.width;
                     listHeightRatio = 0.4;
-                    anchor = {
-                        top: anchor.top - 7,
-                        left: anchor.left - 7,
-                        width: anchor.width,
-                        height: 0
-                    };
+                    anchor = { ...anchor, height: 0 };
                     maxListHeight = Math.min(400, container.bottom - anchor.top - verticalPadding);
                     preferredAnchorPosition = 0 /* AnchorPosition.BELOW */;
                 }
@@ -814,9 +848,41 @@ let QuickInputController = class QuickInputController extends Disposable {
                 style.bottom = '';
                 style.height = '';
             }
+            if (overlayAnchor) {
+                this.alignOverlayInput(overlayAnchor);
+            }
             this.ui.inputBox.layout();
             this.ui.list.layout(listHeight);
             this.ui.tree.layout(listHeight);
+        }
+    }
+    alignOverlayInput(anchor) {
+        const style = this.ui.container.style;
+        let correction = this.overlayLayoutCorrection;
+        if (!correction || correction.anchor.left !== anchor.left || correction.anchor.top !== anchor.top || correction.anchor.width !== anchor.width || correction.anchor.height !== anchor.height) {
+            this.ui.inputBox.layout();
+            const input = this.ui.filterContainer.getBoundingClientRect();
+            correction = this.overlayLayoutCorrection = {
+                anchor,
+                left: anchor.left - input.left,
+                right: input.right - (anchor.left + anchor.width),
+                top: anchor.top - input.top,
+                bottom: input.bottom - (anchor.top + anchor.height),
+                width: anchor.width - input.width,
+            };
+        }
+        style.width = `${parseFloat(style.width) + correction.width}px`;
+        if (style.left !== 'initial') {
+            style.left = `${parseFloat(style.left) + correction.left}px`;
+        }
+        else {
+            style.right = `${parseFloat(style.right) + correction.right}px`;
+        }
+        if (style.top !== 'initial') {
+            style.top = `${parseFloat(style.top) + correction.top}px`;
+        }
+        else {
+            style.bottom = `${parseFloat(style.bottom) + correction.bottom}px`;
         }
     }
     applyStyles(styles) {

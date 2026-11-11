@@ -108,6 +108,7 @@ let InlineEditsView = class InlineEditsView extends Disposable {
             if (longDistanceHint && longDistanceHint.isVisible) {
                 state.viewData.setLongDistanceViewData(longDistanceHint.lineNumber, inlineEdit.lineEdit.lineRange.startLineNumber);
             }
+            state.viewData.isForAnotherDocument = !inlineEdit.originalText.targets(textModel);
             if (state.kind === InlineCompletionViewKind.SideBySide) {
                 const indentationAdjustmentEdit = createReindentEdit(newText.getValue(), inlineEdit.modifiedLineRange, textModel.getOptions().tabSize);
                 newText = new StringText(indentationAdjustmentEdit.applyToString(newText.getValue()));
@@ -284,7 +285,8 @@ let InlineEditsView = class InlineEditsView extends Disposable {
         if (model.inlineEdit.action === undefined) {
             return undefined;
         }
-        if (model.inlineEdit.originalText.uri.toString() !== this._editorObs.model.read(reader)?.uri.toString()) {
+        const editorModel = this._editorObs.model.read(reader);
+        if (!editorModel || !model.inlineEdit.originalText.targets(editorModel)) {
             return {
                 isVisible: true,
                 lineNumber: model.inlineEdit.cursorPosition.lineNumber,
@@ -386,7 +388,7 @@ let InlineEditsView = class InlineEditsView extends Disposable {
             return {
                 kind: InlineCompletionViewKind.JumpTo,
                 position: model.inlineEdit.action.position,
-                viewData: emptyViewData,
+                viewData: createEmptyViewData(),
             };
         }
         const inlineEdit = model.inlineEdit;
@@ -491,10 +493,10 @@ let InlineEditsView = class InlineEditsView extends Disposable {
 InlineEditsView = __decorate([
     __param(5, IInstantiationService)
 ], InlineEditsView);
-const emptyViewData = new InlineCompletionViewData(-1, -1, -1, -1, -1, -1, -1, true);
+const createEmptyViewData = () => new InlineCompletionViewData(-1, -1, -1, -1, -1, -1, -1, true);
 function getViewData(inlineEdit, stringChanges, textModel) {
     if (!inlineEdit.edit) {
-        return emptyViewData;
+        return createEmptyViewData();
     }
     const cursorPosition = inlineEdit.cursorPosition;
     const startsWithEOL = stringChanges.length === 0 ? false : stringChanges[0].modified.startsWith(textModel.getEOL());

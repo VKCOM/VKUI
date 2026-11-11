@@ -41,8 +41,8 @@ var __param = (undefined && undefined.__param) || function (paramIndex, decorato
 };
 var ParameterHintsWidget_1;
 const $ = $$1;
-const parameterHintsNextIcon = registerIcon('parameter-hints-next', Codicon.chevronDown, localize(1358, 'Icon for show next parameter hint.'));
-const parameterHintsPreviousIcon = registerIcon('parameter-hints-previous', Codicon.chevronUp, localize(1359, 'Icon for show previous parameter hint.'));
+const parameterHintsNextIcon = registerIcon('parameter-hints-next', Codicon.chevronDown, localize(1378, 'Icon for show next parameter hint.'));
+const parameterHintsPreviousIcon = registerIcon('parameter-hints-previous', Codicon.chevronUp, localize(1379, 'Icon for show previous parameter hint.'));
 let ParameterHintsWidget = class ParameterHintsWidget extends Disposable {
     static { ParameterHintsWidget_1 = this; }
     static { this.ID = 'editor.widget.parameterHintsWidget'; }
@@ -215,7 +215,7 @@ let ParameterHintsWidget = class ParameterHintsWidget extends Disposable {
             // Select method gets called on every user type while parameter hints are visible.
             // We do not want to spam the user with same announcements, so we only announce if the current parameter changed.
             if (this.announcedLabel !== labelToAnnounce) {
-                alert(localize(1360, "{0}, hint", labelToAnnounce));
+                alert(localize(1380, "{0}, hint", labelToAnnounce));
                 this.announcedLabel = labelToAnnounce;
             }
         }
@@ -313,6 +313,6 @@ ParameterHintsWidget = ParameterHintsWidget_1 = __decorate([
     __param(2, IContextKeyService),
     __param(3, IMarkdownRendererService)
 ], ParameterHintsWidget);
-registerColor('editorHoverWidget.highlightForeground', listHighlightForeground, localize(1361, 'Foreground color of the active item in the parameter hint.'));
+registerColor('editorHoverWidget.highlightForeground', listHighlightForeground, localize(1381, 'Foreground color of the active item in the parameter hint.'));
 
 export { ParameterHintsWidget };

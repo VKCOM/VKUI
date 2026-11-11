@@ -742,7 +742,7 @@ class NextWordHighlightAction extends WordHighlightNavigationAction {
     constructor() {
         super(true, {
             id: 'editor.action.wordHighlight.next',
-            label: localize2(1624, "Go to Next Symbol Highlight"),
+            label: localize2(1646, "Go to Next Symbol Highlight"),
             precondition: ctxHasWordHighlights,
             kbOpts: {
                 kbExpr: EditorContextKeys.editorTextFocus,
@@ -756,7 +756,7 @@ class PrevWordHighlightAction extends WordHighlightNavigationAction {
     constructor() {
         super(false, {
             id: 'editor.action.wordHighlight.prev',
-            label: localize2(1625, "Go to Previous Symbol Highlight"),
+            label: localize2(1647, "Go to Previous Symbol Highlight"),
             precondition: ctxHasWordHighlights,
             kbOpts: {
                 kbExpr: EditorContextKeys.editorTextFocus,
@@ -770,7 +770,7 @@ class TriggerWordHighlightAction extends EditorAction {
     constructor() {
         super({
             id: 'editor.action.wordHighlight.trigger',
-            label: localize2(1626, "Trigger Symbol Highlight"),
+            label: localize2(1648, "Trigger Symbol Highlight"),
             precondition: undefined,
             kbOpts: {
                 kbExpr: EditorContextKeys.editorTextFocus,

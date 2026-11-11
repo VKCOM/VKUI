@@ -43,7 +43,10 @@ let LanguageConfigurationService = class LanguageConfigurationService extends Di
         this.configurationService = configurationService;
         this.languageService = languageService;
         this._registry = this._register(new LanguageConfigurationRegistry());
-        this.onDidChangeEmitter = this._register(new Emitter());
+        this.onDidChangeEmitter = this._register(new Emitter({
+            leakWarningThreshold: 500,
+            leakWarningName: 'LanguageConfigurationService.onDidChange' /* increased for multi-diff editors with hundreds of text models */
+        }));
         this.onDidChange = this.onDidChangeEmitter.event;
         this.configurations = new Map();
         const languageConfigKeys = new Set(Object.values(customizedLanguageConfigKeys));

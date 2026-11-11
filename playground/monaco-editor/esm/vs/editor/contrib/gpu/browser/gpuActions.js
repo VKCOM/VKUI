@@ -22,7 +22,7 @@ class DebugEditorGpuRendererAction extends EditorAction {
     constructor() {
         super({
             id: 'editor.action.debugEditorGpuRenderer',
-            label: localize2(1144, "Developer: Debug Editor GPU Renderer"),
+            label: localize2(1159, "Developer: Debug Editor GPU Renderer"),
             // TODO: Why doesn't `ContextKeyExpr.equals('config:editor.experimentalGpuAcceleration', 'on')` work?
             precondition: ContextKeyExpr.true(),
         });
@@ -32,15 +32,15 @@ class DebugEditorGpuRendererAction extends EditorAction {
         const quickInputService = accessor.get(IQuickInputService);
         const choice = await quickInputService.pick([
             {
-                label: localize(1141, "Log Texture Atlas Stats"),
+                label: localize(1156, "Log Texture Atlas Stats"),
                 id: 'logTextureAtlasStats',
             },
             {
-                label: localize(1142, "Save Texture Atlas"),
+                label: localize(1157, "Save Texture Atlas"),
                 id: 'saveTextureAtlas',
             },
             {
-                label: localize(1143, "Draw Glyph"),
+                label: localize(1158, "Draw Glyph"),
                 id: 'drawGlyph',
             },
         ], { canPickMany: false });

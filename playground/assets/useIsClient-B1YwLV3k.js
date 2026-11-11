@@ -1,0 +1,1 @@
+import{a as e,n as t}from"./rolldown-runtime-sJBDdmOt.js";import{t as n}from"./react-DlPsW1c0.js";import{n as r,t as i}from"./useIsomorphicLayoutEffect-CdgqMnUb.js";function a(e=!1){let[t,n]=o.useState(e);return r(()=>{n(!0)},[]),t}var o;function s(){return(s=t((()=>{o=e(n(),1),i()})))()}export{a as n,s as t};

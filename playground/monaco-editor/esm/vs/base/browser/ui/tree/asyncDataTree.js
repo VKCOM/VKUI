@@ -261,6 +261,7 @@ function asObjectTreeOptions(options) {
                 return options.keyboardNavigationLabelProvider.getKeyboardNavigationLabel(e.element);
             }
         },
+        stickyScrollNodeSourceRangeProvider: options.stickyScrollNodeSourceRangeProvider && ((e, defaultRange) => options.stickyScrollNodeSourceRangeProvider(e.element, defaultRange)),
         sorter: undefined,
         expandOnlyOnTwistieClick: typeof options.expandOnlyOnTwistieClick === 'undefined' ? undefined : (typeof options.expandOnlyOnTwistieClick !== 'function' ? options.expandOnlyOnTwistieClick : ((e) => options.expandOnlyOnTwistieClick(e.element))),
         twistieAdditionalCssClass: typeof options.twistieAdditionalCssClass === 'undefined' ? undefined : ((e) => options.twistieAdditionalCssClass(e.element)),

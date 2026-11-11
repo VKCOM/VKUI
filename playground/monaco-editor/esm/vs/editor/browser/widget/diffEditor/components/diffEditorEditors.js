@@ -28,6 +28,9 @@ var __param = (undefined && undefined.__param) || function (paramIndex, decorato
 };
 let DiffEditorEditors = class DiffEditorEditors extends Disposable {
     get onDidContentSizeChange() { return this._onDidContentSizeChange.event; }
+    getContentHeight() {
+        return Math.max(this.modified.getContentHeight(), this.original.getContentHeight());
+    }
     constructor(originalEditorElement, modifiedEditorElement, _options, _argCodeEditorWidgetOptions, _createInnerEditor, _contextKeyService, _instantiationService, _keybindingService) {
         super();
         this.originalEditorElement = originalEditorElement;
@@ -92,9 +95,8 @@ let DiffEditorEditors = class DiffEditorEditors extends Disposable {
         const editor = this._createInnerEditor(instantiationService, container, options, editorWidgetOptions);
         this._register(editor.onDidContentSizeChange(e => {
             const width = this.original.getContentWidth() + this.modified.getContentWidth() + OverviewRulerFeature.ENTIRE_DIFF_OVERVIEW_WIDTH;
-            const height = Math.max(this.modified.getContentHeight(), this.original.getContentHeight());
             this._onDidContentSizeChange.fire({
-                contentHeight: height,
+                contentHeight: this.getContentHeight(),
                 contentWidth: width,
                 contentHeightChanged: e.contentHeightChanged,
                 contentWidthChanged: e.contentWidthChanged

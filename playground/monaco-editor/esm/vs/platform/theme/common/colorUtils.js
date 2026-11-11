@@ -52,13 +52,13 @@ class ColorRegistry extends Disposable {
         }
         if (needsTransparency) {
             propertySchema.pattern = '^#(?:(?<rgba>[0-9a-fA-f]{3}[0-9a-eA-E])|(?:[0-9a-fA-F]{6}(?:(?![fF]{2})(?:[0-9a-fA-F]{2}))))?$';
-            propertySchema.patternErrorMessage = localize(2091, 'This color must be transparent or it will obscure content');
+            propertySchema.patternErrorMessage = localize(2124, 'This color must be transparent or it will obscure content');
         }
         this.colorSchema.properties[id] = {
             description,
             oneOf: [
                 propertySchema,
-                { type: 'string', const: DEFAULT_COLOR_CONFIG_VALUE, description: localize(2092, 'Use the default color.') }
+                { type: 'string', const: DEFAULT_COLOR_CONFIG_VALUE, description: localize(2125, 'Use the default color.') }
             ]
         };
         this.colorReferenceSchema.enum.push(id);

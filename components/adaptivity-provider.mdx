@@ -3,20 +3,16 @@ description: Переопределяет базовую адаптивност�
 tags: provider
 ---
 
-<Overview group="configuration">
-
-# AdaptivityProvider [tag:component]
+# AdaptivityProvider \[tag:component]
 
 Переопределяет базовую [адаптивность](/overview/adaptivity) компонента – глобально или локально. Принимает все доступные
 [параметры адаптивности](/overview/adaptivity#adaptivity-props).
 
-</Overview>
+## Когда использовать? \[#when-to-use]
 
-## Когда использовать? [#when-to-use]
-
-- Если вам нужно зафиксировать размер компонента на `compact` или `regular` (см. [Адаптивность | Размеры элементов интерфейса](/overview/adaptivity#density)).
-- Если вам нужно зафиксировать конкретный брейкпоинт на мобильный, планшетный, настольный и т.п. (см. [Адаптивность | Размеры экрана](/overview/adaptivity#breakpoints)).
-- Если вам нужно зафиксировать поведение компонента (см. [Адаптивность | Наличие точного указателя](/overview/adaptivity#pointer)).
+* Если вам нужно зафиксировать размер компонента на `compact` или `regular` (см. [Адаптивность | Размеры элементов интерфейса](/overview/adaptivity#density)).
+* Если вам нужно зафиксировать конкретный брейкпоинт на мобильный, планшетный, настольный и т.п. (см. [Адаптивность | Размеры экрана](/overview/adaptivity#breakpoints)).
+* Если вам нужно зафиксировать поведение компонента (см. [Адаптивность | Наличие точного указателя](/overview/adaptivity#pointer)).
 
 ## Логика работы
 
@@ -25,7 +21,7 @@ tags: provider
 Говоря о свойствах, по умолчанию они определяются как `undefined`. Автоматически определение есть только у свойства `density` при
 условии, что заданы `viewWidth` и `viewHeight` или `viewWidth` и `hasPointer` или только `viewHeight`.
 
-## Глобальное переопределение [#override-global]
+## Глобальное переопределение \[#override-global]
 
 Оборачиваем в `AdaptivityProvider` всё приложение.
 
@@ -46,7 +42,7 @@ export function AlwaysDesktopWithMouse() {
 }
 ```
 
-## Локальное переопределение [#override-local]
+## Локальное переопределение \[#override-local]
 
 В необходимом месте отдельно оборачиваем компонент или ряд компонентов в `AdaptivityProvider`.
 
@@ -65,7 +61,7 @@ export function ReallyBigButton() {
 }
 ```
 
-## Хук useAdaptivity [#use-adaptivity]
+## Хук useAdaptivity \[#use-adaptivity]
 
 Хук возвращает из контекста свойства, переданные в `AdaptivityProvider`.
 
@@ -100,26 +96,23 @@ export function App() {
 }
 ```
 
-<Callout>
-  Для создание адаптивных интерфейсов лучше использовать более гибкие утилиты (см. [Адаптивность |
-  Утилиты для создания адаптивных интерфейсов](/overview/adaptivity#utils)).
-</Callout>
+Для создание адаптивных интерфейсов лучше использовать более гибкие утилиты (см. [Адаптивность |
+Утилиты для создания адаптивных интерфейсов](/overview/adaptivity#utils)).
 
-## Свойства и методы [#api]
+## Свойства и методы \[#api]
 
 ### AdaptivityProvider
 
-| Свойство | Тип | По умолчанию | Описание |
-| --- | --- | --- | --- |
-| `density` | `DensityTypeValues` | `-` | Тип размера экрана. |
-| `hasHover` | `boolean` | `-` | **Deprecated**: Since 7.3.0. Будет удалено в **VKUI v9** (https://github.com/VKCOM/VKUI/pull/8490). |
-| `hasPointer` | `boolean` | `-` | Флаг наличия указателя (например, мыши) на устройстве. |
-| `sizeX` | `SizeTypeValues` | `-` | **Deprecated**: Since 8.0.0. Будет удалено в **VKUI v10** – используйте `sizeX="compact"` → `viewWidth={ViewWidth.MOBILE}` или `sizeX="compact"` → `viewWidth={ViewWidth.SMALL_TABLET}` (https://github.com/VKCOM/VKUI/issues/9015). |
-| `sizeY` | `SizeTypeValues` | `-` | **Deprecated**: Since 8.0.0. Будет удалено в **VKUI v10** – используйте `density` (https://github.com/VKCOM/VKUI/issues/9015). |
-| `viewHeight` | `number` | `-` | Тип высоты экрана для адаптивного отображения. |
-| `viewWidth` | `ViewWidthType` | `-` | Тип ширины экрана для адаптивного отображения. |
+| Свойство     | Тип                 | По умолчанию | Описание                                                                                                                                                                                                                                                                          |
+| ------------ | ------------------- | ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `density`    | `DensityTypeValues` | `-`          | Тип размера экрана.                                                                                                                                                                                                                                                               |
+| `hasHover`   | `boolean`           | `-`          | **Deprecated**: Since 7.3.0. Будет удалено в **VKUI v9** ([https://github.com/VKCOM/VKUI/pull/8490](https://github.com/VKCOM/VKUI/pull/8490)).                                                                                                                                    |
+| `hasPointer` | `boolean`           | `-`          | Флаг наличия указателя (например, мыши) на устройстве.                                                                                                                                                                                                                            |
+| `sizeX`      | `SizeTypeValues`    | `-`          | **Deprecated**: Since 8.0.0. Будет удалено в **VKUI v10** – используйте `sizeX="compact"` → `viewWidth={ViewWidth.MOBILE}` или `sizeX="compact"` → `viewWidth={ViewWidth.SMALL_TABLET}` ([https://github.com/VKCOM/VKUI/issues/9015](https://github.com/VKCOM/VKUI/issues/9015)). |
+| `sizeY`      | `SizeTypeValues`    | `-`          | **Deprecated**: Since 8.0.0. Будет удалено в **VKUI v10** – используйте `density` ([https://github.com/VKCOM/VKUI/issues/9015](https://github.com/VKCOM/VKUI/issues/9015)).                                                                                                       |
+| `viewHeight` | `number`            | `-`          | Тип высоты экрана для адаптивного отображения.                                                                                                                                                                                                                                    |
+| `viewWidth`  | `ViewWidthType`     | `-`          | Тип ширины экрана для адаптивного отображения.                                                                                                                                                                                                                                    |
 
 ### useAdaptivity
 
-_Не принимает свойств_
-
+*Не принимает свойств*

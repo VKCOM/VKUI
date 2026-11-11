@@ -35,7 +35,7 @@ var __param = (undefined && undefined.__param) || function (paramIndex, decorato
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 var ReferencesController_1;
-const ctxReferenceSearchVisible = new RawContextKey('referenceSearchVisible', false, localize(1121, "Whether reference peek is visible, like 'Peek References' or 'Peek Definition'"));
+const ctxReferenceSearchVisible = new RawContextKey('referenceSearchVisible', false, localize(1136, "Whether reference peek is visible, like 'Peek References' or 'Peek Definition'"));
 let ReferencesController = class ReferencesController {
     static { ReferencesController_1 = this; }
     static { this.ID = 'editor.contrib.referencesController'; }
@@ -85,7 +85,7 @@ let ReferencesController = class ReferencesController {
         const storageKey = 'peekViewLayout';
         const data = LayoutData.fromJSON(this._storageService.get(storageKey, 0 /* StorageScope.PROFILE */, '{}'));
         this._widget = this._instantiationService.createInstance(ReferenceWidget, this._editor, this._defaultTreeKeyboardSupport, data);
-        this._widget.setTitle(localize(1122, "Loading..."));
+        this._widget.setTitle(localize(1137, "Loading..."));
         this._widget.show(range);
         this._disposables.add(this._widget.onDidClose(() => {
             modelPromise.cancel();
@@ -141,7 +141,7 @@ let ReferencesController = class ReferencesController {
                 if (this._widget && this._model && this._editor.hasModel()) { // might have been closed
                     // set title
                     if (!this._model.isEmpty) {
-                        this._widget.setMetaTitle(localize(1123, "{0} ({1})", this._model.title, this._model.references.length));
+                        this._widget.setMetaTitle(localize(1138, "{0} ({1})", this._model.title, this._model.references.length));
                     }
                     else {
                         this._widget.setMetaTitle('');

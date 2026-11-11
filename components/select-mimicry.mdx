@@ -3,22 +3,15 @@ description: Компонент, который визуально имитир�
 tags: selection
 ---
 
-<Overview group="forms">
-
-# SelectMimicry [tag:component]
+# SelectMimicry \[tag:component]
 
 Компонент, который визуально имитирует компонент выбора из списка.
 Используется в случаях, когда нужно создать элемент, похожий на [`Select`](/components/select),
 но с пользовательским поведением при нажатии (например, вызов модального окна).
 
-</Overview>
-
-{/* @example-description: Базовый `SelectMimicry` с отображением выбранного значения. */}
-<Playground style={{ width: 270 }}>
-  ```jsx
-  <SelectMimicry>Значение</SelectMimicry>
-  ```
-</Playground>
+```jsx
+<SelectMimicry>Значение</SelectMimicry>
+```
 
 ## Состояния
 
@@ -26,12 +19,9 @@ tags: selection
 
 Свойство `disabled` блокирует взаимодействие с компонентом и добавляет визуальную индикацию недоступности.
 
-{/* @example-description: `SelectMimicry` в неактивном состоянии с плейсхолдером. */}
-<Playground style={{ maxWidth: 270 }}>
-  ```jsx
-  <SelectMimicry placeholder="Выберите значение" disabled />
-  ```
-</Playground>
+```jsx
+<SelectMimicry placeholder="Выберите значение" disabled />
+```
 
 ## Валидация
 
@@ -41,29 +31,26 @@ tags: selection
 > Если вы используете `SelectMimicry` вместе с [`FormItem`](/components/form-item), вам достаточно указать свойство `status` только у
 > [`FormItem`](/components/form-item).
 
-{/* @example-description: Валидационные состояния `SelectMimicry`: `error` и `valid`. */}
-<Playground style={{ maxWidth: 270 }}>
-  ```jsx
-  <SelectMimicry status="error">Значение</SelectMimicry>
-  <SelectMimicry status="valid">Значение</SelectMimicry>
-  ```
-</Playground>
+```jsx
+<SelectMimicry status="error">Значение</SelectMimicry>
+<SelectMimicry status="valid">Значение</SelectMimicry>
+```
 
-## Доступность (a11y) [#a11y]
+## Доступность (a11y) \[#a11y]
 
 Компонент поддерживает все стандартные `aria`-атрибуты, если вам необходимо переопределить
 стандартное поведение.
 
-## Свойства и методы [#api]
+## Свойства и методы \[#api]
 
-| Свойство | Тип | По умолчанию | Описание |
-| --- | --- | --- | --- |
-| `after` | `ReactNode` | `<DropdownIcon />` | Добавляет иконку справа.  Рекомендации:  - Используйте следующие размеры иконок `12` \| `16` \| `20` \| `24` \| `28`. - Используйте [IconButton](https://vkui.io/components/icon-button), если вам нужна иконка, реагируюущая на нажатие. |
-| `align` | `AlignType` | `-` |  |
-| `before` | `ReactNode` | `-` | Добавляет иконку слева.  Рекомендации:  - Используйте следующие размеры иконок `12` \| `16` \| `20` \| `24` \| `28`. - Используйте [IconButton](https://vkui.io/components/icon-button), если вам нужна иконка, реагирующая на нажатие. |
-| `disabled` | `boolean` | `-` | Блокировка взаимодействия с компонентом. |
-| `getRootRef` | `Ref<HTMLElement>` | `-` |  |
-| `multiline` | `boolean` | `-` | Включает многострочный режим отображения. |
-| `selectType` | `SelectType` | `default` | Тип селекта, влияющий на внешний вид компонента. |
-| `status` | `"default" \| "error" \| "valid"` | `-` | Статус отображения поля в форме. |
-
+| Свойство     | Тип                               | По умолчанию       | Описание                                                                                                                                                                                                                                  |
+| ------------ | --------------------------------- | ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `after`      | `ReactNode`                       | `<DropdownIcon />` | Добавляет иконку справа.  Рекомендации:  - Используйте следующие размеры иконок `12` \| `16` \| `20` \| `24` \| `28`. - Используйте [IconButton](https://vkui.io/components/icon-button), если вам нужна иконка, реагируюущая на нажатие. |
+| `align`      | `AlignType`                       | `-`                |                                                                                                                                                                                                                                           |
+| `before`     | `ReactNode`                       | `-`                | Добавляет иконку слева.  Рекомендации:  - Используйте следующие размеры иконок `12` \| `16` \| `20` \| `24` \| `28`. - Используйте [IconButton](https://vkui.io/components/icon-button), если вам нужна иконка, реагирующая на нажатие.   |
+| `disabled`   | `boolean`                         | `-`                | Блокировка взаимодействия с компонентом.                                                                                                                                                                                                  |
+| `getRootRef` | `Ref<HTMLElement>`                | `-`                |                                                                                                                                                                                                                                           |
+| `multiline`  | `boolean`                         | `-`                | Включает многострочный режим отображения.                                                                                                                                                                                                 |
+| `ref`        | `Ref<HTMLElement>`                | `-`                |                                                                                                                                                                                                                                           |
+| `selectType` | `SelectType`                      | `default`          | Тип селекта, влияющий на внешний вид компонента.                                                                                                                                                                                          |
+| `status`     | `"default" \| "error" \| "valid"` | `-`                | Статус отображения поля в форме.                                                                                                                                                                                                          |

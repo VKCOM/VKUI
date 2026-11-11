@@ -1,6 +1,6 @@
 import { illegalArgument } from './errors.js';
 import { escapeIcons } from './iconLabels.js';
-import { Schemas } from './network.js';
+import { matchesSomeScheme, Schemas } from './network.js';
 import { isEqual } from './resources.js';
 import { escapeRegExpCharacters } from './strings.js';
 import { URI } from './uri.js';
@@ -162,5 +162,17 @@ function createCommandUri(commandId, ...commandArgs) {
         query: commandArgs.length ? encodeURIComponent(JSON.stringify(commandArgs)) : undefined,
     });
 }
+/**
+ * VS Code addresses some content with placeholder `http` URLs whose authority is wrapped in
+ * underscores, such as `http://_vscodecontentref_/0`. Underscores are illegal in hostnames, so
+ * no real site collides with this shape.
+ */
+const placeholderAuthority = /^https?:\/\/_[^/?#]*_(?:[/?#]|$)/i;
+/** Whether a target still resolves once content is copied into another application. */
+function isPortableLinkTarget(target) {
+    const trimmed = target.trim();
+    return matchesSomeScheme(trimmed, Schemas.http, Schemas.https, Schemas.mailto)
+        && !placeholderAuthority.test(trimmed);
+}
 
-export { MarkdownString, appendEscapedMarkdownCodeBlockFence, createCommandUri, escapeDoubleQuotes, escapeMarkdownSyntaxTokens, isEmptyMarkdownString, isMarkdownString, markdownStringEqual, parseHrefAndDimensions, removeMarkdownEscapes };
+export { MarkdownString, appendEscapedMarkdownCodeBlockFence, createCommandUri, escapeDoubleQuotes, escapeMarkdownSyntaxTokens, isEmptyMarkdownString, isMarkdownString, isPortableLinkTarget, markdownStringEqual, parseHrefAndDimensions, removeMarkdownEscapes };

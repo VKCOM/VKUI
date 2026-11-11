@@ -108,7 +108,7 @@ class InPlaceReplaceUp extends EditorAction {
     constructor() {
         super({
             id: 'editor.action.inPlaceReplace.up',
-            label: localize2(1286, "Replace with Previous Value"),
+            label: localize2(1306, "Replace with Previous Value"),
             precondition: EditorContextKeys.writable,
             kbOpts: {
                 kbExpr: EditorContextKeys.editorTextFocus,
@@ -129,7 +129,7 @@ class InPlaceReplaceDown extends EditorAction {
     constructor() {
         super({
             id: 'editor.action.inPlaceReplace.down',
-            label: localize2(1287, "Replace with Next Value"),
+            label: localize2(1307, "Replace with Next Value"),
             precondition: EditorContextKeys.writable,
             kbOpts: {
                 kbExpr: EditorContextKeys.editorTextFocus,

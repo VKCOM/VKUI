@@ -25,7 +25,7 @@ class OverviewRuler extends ViewEventHandler {
         this._zoneManager.setDOMHeight(0);
         this._zoneManager.setOuterHeight(this._context.viewLayout.getScrollHeight());
         this._zoneManager.setLineHeight(options.get(75 /* EditorOption.lineHeight */));
-        this._zoneManager.setPixelRatio(options.get(163 /* EditorOption.pixelRatio */));
+        this._zoneManager.setPixelRatio(options.get(164 /* EditorOption.pixelRatio */));
         this._context.addEventHandler(this);
     }
     dispose() {
@@ -39,8 +39,8 @@ class OverviewRuler extends ViewEventHandler {
             this._zoneManager.setLineHeight(options.get(75 /* EditorOption.lineHeight */));
             this._render();
         }
-        if (e.hasChanged(163 /* EditorOption.pixelRatio */)) {
-            this._zoneManager.setPixelRatio(options.get(163 /* EditorOption.pixelRatio */));
+        if (e.hasChanged(164 /* EditorOption.pixelRatio */)) {
+            this._zoneManager.setPixelRatio(options.get(164 /* EditorOption.pixelRatio */));
             this._domNode.setWidth(this._zoneManager.getDOMWidth());
             this._domNode.setHeight(this._zoneManager.getDOMHeight());
             this._domNode.domNode.width = this._zoneManager.getCanvasWidth();

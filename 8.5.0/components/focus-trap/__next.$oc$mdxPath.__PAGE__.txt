@@ -1,0 +1,494 @@
+2:"$Sreact.fragment"
+3:I[91133,[],""]
+4:I[4297,[],""]
+9:"static/chunks/959-8ad25bff58b07415.js"
+a:"static/chunks/628-5716112b83fdd9d5.js"
+b:"static/chunks/app/%5B%5B...mdxPath%5D%5D/page-9e158cb4dcea1416.js"
+c:I[67042,["959","$9","628","$a","217","$b"],"Main"]
+12:"ViewportBoundary"
+13:I[31872,[],"$12"]
+14:"MetadataBoundary"
+15:I[31872,[],"$14"]
+16:"$Sreact.suspense"
+17:I[12569,[],"IconMark"]
+6:X
+6:C
+7:X
+d:T36be,---
+description: Компонент для управления фокусом внутри области, не позволяющий фокусу выходить за её пределы.
+tags: accessibility
+---
+import { BlockWrapper } from '@/components/wrappers';
+
+<Overview group="utils">
+
+# FocusTrap [tag:component]
+
+Компонент для управления фокусом, который зацикливает навигацию через `Tab` и `Shift` + `Tab`
+внутри определённой области. Используется для обеспечения доступности модальных окон, диалогов,
+всплывающих меню и других интерактивных элементов.
+
+</Overview>
+
+{/* @example-description: Базовый сценарий `FocusTrap` в модальном блоке с автофокусом и восстановлением фокуса. */}
+<Playground>
+
+```jsx
+const [open, setOpen] = React.useState(false);
+const focusTrapRef = React.useRef(null);
+
+return (
+  <>
+    <Button onClick={() => setOpen(true)}>Открыть область с захватом фокуса</Button>
+    {open && (
+      <FocusTrap rootRef={focusTrapRef} autoFocus restoreFocus>
+        <div
+          ref={focusTrapRef}
+          tabIndex={-1}
+          style={{
+            marginTop: 16,
+            padding: 16,
+            border: '2px solid var(--vkui--color_accent_blue)',
+            borderRadius: 8,
+          }}
+        >
+          <Flex direction="column" gap="m">
+            <FormItem top="Первое поле ввода" htmlFor="focus-trap-focus-trap-1">
+              <Input id="focus-trap-focus-trap-1" name="focus-trap-1" placeholder="Первое поле ввода" />
+            </FormItem>
+            <FormItem top="Второе поле ввода" htmlFor="focus-trap-focus-trap-2">
+              <Input id="focus-trap-focus-trap-2" name="focus-trap-2" placeholder="Второе поле ввода" />
+            </FormItem>
+            <ButtonGroup>
+              <Button>Действие</Button>
+              <Button mode="secondary" onClick={() => setOpen(false)}>
+                Закрыть
+              </Button>
+            </ButtonGroup>
+          </Flex>
+        </div>
+      </FocusTrap>
+    )}
+  </>
+);
+```
+
+</Playground>
+
+## Концепция
+
+`FocusTrap` — это вспомогательный компонент, который:
+
+- **Зацикливает фокус** — при нажатии `Tab` на последнем интерактивном элементе фокус переходит на первый,
+  а при `Shift` + `Tab` на первом — на последний;
+- **Автоматически устанавливает фокус** — при появлении области может автоматически установить фокус
+  на первый интерактивный элемент или на корневой элемент;
+- **Восстанавливает фокус** — при закрытии области возвращает фокус на элемент, который был в фокусе до открытия.
+
+## Использование
+
+`FocusTrap` широко используется внутри VKUI для компонентов модальных окон и всплывающих элементов:
+
+- [`ModalCard`](/components/modal-card)
+- [`ModalPage`](/components/modal-page)
+- [`Alert`](/components/alert)
+- [`ActionSheet`](/components/action-sheet)
+- [`Popover`](/components/popover)
+- [`OnboardingTooltip`](/components/onboarding-tooltip)
+- [`DateInput`](/components/date-input)
+
+### Базовый пример
+
+Для использования `FocusTrap` необходимо:
+
+1. Создать `ref` для корневого элемента области;
+2. Передать этот `ref` в свойство `rootRef` компонента `FocusTrap`;
+3. Передать этот же `ref` на корневой элемент контента;
+4. Добавить `tabIndex={-1}` на корневой элемент для возможности программной фокусировки.
+
+{/* @example-description: Минимальная настройка `FocusTrap` с передачей `rootRef` на корневой элемент области. */}
+<Playground>
+
+```jsx
+const focusTrapRef = React.useRef(null);
+
+return (
+  <FocusTrap rootRef={focusTrapRef} autoFocus restoreFocus>
+    <div ref={focusTrapRef} tabIndex={-1} style={{ padding: 16 }}>
+      <Flex direction="column" gap="m">
+        <FormItem top="Ввод текста" htmlFor="focus-trap-focus-trap-3">
+          <Input id="focus-trap-focus-trap-3" name="focus-trap-3" placeholder="Ввод текста" />
+        </FormItem>
+        <Button>Отправить</Button>
+      </Flex>
+    </div>
+  </FocusTrap>
+);
+```
+
+</Playground>
+
+## Автофокус
+
+Свойство `autoFocus` управляет поведением автоматической установки фокуса при появлении области.
+
+### `autoFocus={true}` (по умолчанию)
+
+Фокус автоматически устанавливается на первый интерактивный элемент внутри области.
+
+### `autoFocus="root"`
+
+Фокус устанавливается на корневой элемент области. Это полезно, когда нужно анонсировать
+содержимое области для скринридеров, но не переключать фокус на конкретный элемент.
+
+{/* @example-description: Переключение режимов `autoFocus`: `true`, `root` и `false` в интерактивном примере. */}
+<Playground Wrapper={BlockWrapper}>
+
+```jsx
+const [mode, setMode] = React.useState('true');
+const [show, setShow] = React.useState(false);
+const focusTrapRef = React.useRef(null);
+
+return (
+  <Flex direction="column" gap="l">
+      <SegmentedControl
+        value={mode}
+        onChange={setMode}
+        options={[
+          { label: 'true', value: 'true' },
+          { label: 'root', value: 'root' },
+          { label: 'false', value: 'false' },
+        ]}
+      />
+      <Button mode="secondary" onClick={() => setShow((prev) => !prev)}>
+        {show ? 'Скрыть' : 'Показать'}
+      </Button>
+    {show && (
+      <FocusTrap
+        key={mode}
+        rootRef={focusTrapRef}
+        autoFocus={mode === 'true' ? true : mode === 'root' ? 'root' : false}
+      >
+        <div
+          ref={focusTrapRef}
+          tabIndex={-1}
+          style={{
+            padding: 16,
+            border: '2px solid var(--vkui--color_accent_blue)',
+            borderRadius: 8,
+          }}
+        >
+          <Flex direction="column" gap="m">
+            <FormItem top="Поле ввода" htmlFor="focus-trap-focus-trap-4">
+              <Input id="focus-trap-focus-trap-4" name="focus-trap-4" placeholder="Поле ввода" />
+            </FormItem>
+            <Button>Кнопка</Button>
+          </Flex>
+        </div>
+      </FocusTrap>
+    )}
+  </Flex>
+);
+```
+
+</Playground>
+
+### `autoFocus={false}`
+
+Автофокус отключён. Используйте, когда фокус уже находится внутри области или управляется вручную.
+
+## Восстановление фокуса
+
+Свойство `restoreFocus` управляет возвратом фокуса на предыдущий элемент при закрытии области.
+
+- `true` (по умолчанию) — фокус возвращается на элемент, который был в фокусе до открытия области;
+- `false` — фокус не возвращается;
+- `() => boolean | HTMLElement` — функция, которая возвращает `boolean` или конкретный элемент для фокуса.
+
+{/* @example-description: Кастомное восстановление фокуса на альтернативный элемент при закрытии `FocusTrap`. */}
+<Playground>
+
+```jsx
+const [open, setOpen] = React.useState(false);
+const focusTrapRef = React.useRef(null);
+const alternativeRef = React.useRef(null);
+
+return (
+  <Flex direction="column" gap="m">
+    <Flex gap="m">
+      <Button onClick={() => setOpen(true)}>Открыть</Button>
+      <Button mode="secondary" getRootRef={alternativeRef}>
+        Альтернативный фокус
+      </Button>
+    </Flex>
+    {open && (
+      <FocusTrap rootRef={focusTrapRef} restoreFocus={() => alternativeRef.current}>
+        <div
+          ref={focusTrapRef}
+          tabIndex={-1}
+          style={{
+            padding: 16,
+            border: '2px solid var(--vkui--color_accent_blue)',
+            borderRadius: 8,
+          }}
+        >
+          <Flex direction="column" gap="m">
+            <Text>При закрытии фокус вернётся на кнопку «Альтернативный фокус»</Text>
+            <Button onClick={() => setOpen(false)}>Закрыть</Button>
+          </Flex>
+        </div>
+      </FocusTrap>
+    )}
+  </Flex>
+);
+```
+
+</Playground>
+
+## Отключение захвата фокуса
+
+Свойство `disabled` позволяет временно отключить захват фокуса.
+
+> При открытии модального окна поверх другого модального окна может возникнуть конфликт в управлении фокусом.
+> По умолчанию каждое модальное окно пытается удерживать фокус внутри себя, что может привести
+> к некорректной работе при наличии нескольких открытых модальных окон.
+>
+> Чтобы избежать этой проблемы, для первого (нижнего) модального окна необходимо отключить захват фокуса
+> с помощью свойства `disabled={true}`. Это позволит корректно управлять фокусом во втором (верхнем) модальном окне.
+
+{/* @example-description: Временное отключение захвата фокуса через `disabled` с визуальной индикацией состояния. */}
+<Playground>
+
+```jsx
+const [disabled, setDisabled] = React.useState(false);
+const focusTrapRef = React.useRef(null);
+
+return (
+  <Flex direction="column" gap="m">
+    <Checkbox checked={disabled} onChange={(e) => setDisabled(e.target.checked)}>
+      Отключить захват фокуса
+    </Checkbox>
+    <FocusTrap rootRef={focusTrapRef} disabled={disabled}>
+      <div
+        ref={focusTrapRef}
+        tabIndex={-1}
+        style={{
+          padding: 16,
+          border: disabled
+            ? '2px solid var(--vkui--color_icon_secondary)'
+            : '2px solid var(--vkui--color_accent_blue)',
+          borderRadius: 8,
+        }}
+      >
+        <Flex direction="column" gap="m">
+          <FormItem top="Поле ввода" htmlFor="focus-trap-focus-trap-5">
+            <Input id="focus-trap-focus-trap-5" name="focus-trap-5" placeholder="Поле ввода" />
+          </FormItem>
+          <Button>Кнопка</Button>
+        </Flex>
+      </div>
+    </FocusTrap>
+    <Button>Кнопка вне FocusTrap</Button>
+  </Flex>
+);
+```
+
+</Playground>
+
+## Задержка автофокуса
+
+Свойство `autoFocusDelay` позволяет задать задержку в миллисекундах перед автофокусом.
+Это полезно при использовании с анимациями, когда нужно дождаться завершения анимации появления.
+
+```jsx
+<FocusTrap rootRef={focusTrapRef} autoFocusDelay={300}>
+  {/* ... */}
+</FocusTrap>
+```
+
+## Рекомендации по использованию
+
+### Когда использовать FocusTrap
+
+- **Модальные окна и диалоги** — фокус должен оставаться внутри модального окна,
+  пока оно открыто;
+- **Всплывающие меню** — пользователь должен иметь возможность навигироваться
+  по пунктам меню с помощью клавиатуры;
+- **Формы в выпадающих панелях** — например, календарь в `DateInput`.
+
+### Когда НЕ использовать FocusTrap
+
+- **Для обычных секций страницы** — захват фокуса не нужен для стандартной навигации;
+- **Для тултипов с текстовым содержимым** — если тултип не содержит интерактивных элементов,
+  используйте свойство `disableFocusTrap` в компонентах типа `Tooltip`.
+
+### Доступность (a11y)
+
+При использовании `FocusTrap` для модальных окон не забывайте:
+
+1. Добавлять `role="dialog"` и `aria-modal="true"` на корневой элемент;
+2. Указывать `aria-label` или `aria-labelledby` для описания содержимого;
+3. Обеспечивать закрытие по клавише `Escape`.
+
+```jsx
+<FocusTrap rootRef={focusTrapRef}>
+  <div
+    ref={focusTrapRef}
+    tabIndex={-1}
+    role="dialog"
+    aria-modal="true"
+    aria-label="Название диалога"
+  >
+    {/* Содержимое */}
+  </div>
+</FocusTrap>
+```
+
+## Свойства и методы [#api]
+
+<PropsTable name="FocusTrap" />8:[["children",{"s":"__PAGE__","h":160,"d":{"r":["$","$2","c",{"children":[[["$","$Lc",null,{"metadata":{"description":"Компонент для управления фокусом внутри области, не позволяющий фокусу выходить за её пределы.","tags":"accessibility","title":"FocusTrap","filePath":"content/components/focus-trap.mdx","timestamp":1794400886000},"sourceCode":"$d","children":"$Le"}],"$Lf"],null,"$L10"]}],"p":"$@11","v":null,"s":"$7"}}]]
+1:[["children",{"s":{"n":"mdxPath","t":"oc","k":"components/focus-trap","s":["_not-found","_global-error","apple-icon.png","favicon.ico","icon.svg"]},"h":64,"d":{"r":["$","$2","c",{"children":[null,["$","$L3",null,{"parallelRouterKey":"children","template":["$","$L4",null,{}]}]]}],"p":"$@5","v":"$6","s":"$7"},"c":"$Q8"}]]
+0:{"t":{"t":{"s":"","h":16,"c":"$Q1"},"h":{"r":["$","$2","h",{"children":[null,["$","$L13",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]}],["$","$L15",null,{"children":[["$","div",null,{"hidden":true,"children":["$","$16",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"FocusTrap | VKUI"}],["$","meta","1",{"name":"description","content":"Компонент для управления фокусом внутри области, не позволяющий фокусу выходить за её пределы."}],["$","link","2",{"rel":"canonical","href":"https://vkui.io/components/focus-trap/"}],["$","meta","3",{"property":"og:title","content":"VKUI – React UI Kit"}],["$","meta","4",{"property":"og:description","content":"VKUI — библиотека адаптивных React-компонентов для создания мобильных и веб-приложений."}],["$","meta","5",{"property":"og:url","content":"https://vkui.io/"}],["$","meta","6",{"property":"og:site_name","content":"VKUI"}],["$","meta","7",{"property":"og:type","content":"website"}],["$","meta","8",{"name":"twitter:card","content":"summary"}],["$","meta","9",{"name":"twitter:title","content":"VKUI – React UI Kit"}],["$","meta","10",{"name":"twitter:description","content":"VKUI — библиотека адаптивных React-компонентов для создания мобильных и веб-приложений."}],["$","link","11",{"rel":"icon","href":"/8.5.0/favicon.ico?60dfc7274b0e657e","type":"image/x-icon","sizes":"48x48"}],["$","link","12",{"rel":"icon","href":"/8.5.0/icon.svg?01ea673639a821e1","type":"image/svg+xml","sizes":"any"}],["$","link","13",{"rel":"apple-touch-icon","href":"/8.5.0/apple-icon.png?131c1f3e67ede032","type":"image/png","sizes":"180x180"}],["$","$L17","14",{}]]}]}],null]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}],"p":"$@18","v":null,"s":"$7"}},"a":"$@19","u":"$@1a","b":"8PhKH7pImpc-E3HhVI1Ya"}
+1b:"OverviewHeaderLinks"
+1c:I[77539,["959","$9","628","$a","217","$b"],"$1b",1]
+1d:I[95540,["959","$9","628","$a","217","$b"],"PlaygroundLazy"]
+47:I[80784,["959","$9","628","$a","217","$b"],"TOC"]
+48:I[31872,[],"OutletBoundary"]
+1e:T557,const [open, setOpen] = React.useState(false);
+const focusTrapRef = React.useRef(null);
+
+return (
+  <>
+    <Button onClick={() => setOpen(true)}>Открыть область с захватом фокуса</Button>
+    {open && (
+      <FocusTrap rootRef={focusTrapRef} autoFocus restoreFocus>
+        <div
+          ref={focusTrapRef}
+          tabIndex={-1}
+          style={{
+            marginTop: 16,
+            padding: 16,
+            border: '2px solid var(--vkui--color_accent_blue)',
+            borderRadius: 8,
+          }}
+        >
+          <Flex direction="column" gap="m">
+            <FormItem top="Первое поле ввода" htmlFor="focus-trap-focus-trap-1">
+              <Input id="focus-trap-focus-trap-1" name="focus-trap-1" placeholder="Первое поле ввода" />
+            </FormItem>
+            <FormItem top="Второе поле ввода" htmlFor="focus-trap-focus-trap-2">
+              <Input id="focus-trap-focus-trap-2" name="focus-trap-2" placeholder="Второе поле ввода" />
+            </FormItem>
+            <ButtonGroup>
+              <Button>Действие</Button>
+              <Button mode="secondary" onClick={() => setOpen(false)}>
+                Закрыть
+              </Button>
+            </ButtonGroup>
+          </Flex>
+        </div>
+      </FocusTrap>
+    )}
+  </>
+);e:[["$","div",null,{"className":"Overview_root__nbCiB","children":[["$","$L1c",null,{"group":"utils"}],[["$","h1",null,{"className":"mdx_h1__1mgpN","data-pagefind-filter":"tag:component","children":"FocusTrap"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Компонент для управления фокусом, который зацикливает навигацию через ",["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"Tab"}]," и ",["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"Shift"}]," + ",["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"Tab"}],"\nвнутри определённой области. Используется для обеспечения доступности модальных окон, диалогов,\nвсплывающих меню и других интерактивных элементов."]}]]]}],"\n","\n",["$","$L1d",null,{"code":"$1e"}],"\n",["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"koncepciya","children":["$","a",null,{"href":"#koncepciya","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Концепция","children":["Концепция",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}],"\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"FocusTrap"}]," — это вспомогательный компонент, который:"]}],"\n",["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","strong",null,{"className":"mdx_strong__N7OUG","children":"Зацикливает фокус"}]," — при нажатии ",["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"Tab"}]," на последнем интерактивном элементе фокус переходит на первый,\nа при ",["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"Shift"}]," + ",["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"Tab"}]," на первом — на последний;"]}],"\n","$L1f","\n","$L20","\n"]}],"\n","$L21","\n","$L22","\n","$L23","\n","$L24","\n","$L25","\n","$L26","\n","\n","$L27","\n","$L28","\n","$L29","\n","$L2a","\n","$L2b","\n","$L2c","\n","$L2d","\n","\n","$L2e","\n","$L2f","\n","$L30","\n","$L31","\n","$L32","\n","$L33","\n","\n","$L34","\n","$L35","\n","$L36","\n","$L37","\n","\n","$L38","\n","$L39","\n","$L3a","\n","$L3b","\n","$L3c","\n","$L3d","\n","$L3e","\n","$L3f","\n","$L40","\n","$L41","\n","$L42","\n","$L43","\n","$L44","\n","$L45","\n","$L46"]
+f:["$","$L47",null,{"toc":[{"value":"Концепция","id":"koncepciya","depth":2},{"value":"Использование","id":"ispolzovanie","depth":2},{"value":"Базовый пример","id":"bazovyj-primer","depth":3},{"value":"Автофокус","id":"avtofokus","depth":2},{"value":[["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"autoFocus={true}"}]," (по умолчанию)"],"id":"po-umolchaniyu","depth":3},{"value":["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"autoFocus=\"root\""}],"id":"autofocusroot","depth":3},{"value":["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"autoFocus={false}"}],"id":"autofocusfalse","depth":3},{"value":"Восстановление фокуса","id":"vosstanovlenie-fokusa","depth":2},{"value":"Отключение захвата фокуса","id":"otklyuchenie-zahvata-fokusa","depth":2},{"value":"Задержка автофокуса","id":"zaderzhka-avtofokusa","depth":2},{"value":"Рекомендации по использованию","id":"rekomendacii-po-ispolzovaniyu","depth":2},{"value":"Когда использовать FocusTrap","id":"kogda-ispolzovat-focustrap","depth":3},{"value":"Когда НЕ использовать FocusTrap","id":"kogda-ne-ispolzovat-focustrap","depth":3},{"value":"Доступность (a11y)","id":"dostupnost-a11y","depth":3},{"value":"Свойства и методы","id":"api","depth":2}]}]
+10:["$","$L48",null,{"children":["$","$16",null,{"name":"Next.MetadataOutlet","children":"$@49"}]}]
+1a:true
+4a:I[13091,["959","$9","628","$a","217","$b"],"Anchor"]
+4b:I[38303,["959","$9","628","$a","217","$b"],"BlockWrapper"]
+4d:I[98982,["959","$9","628","$a","217","$b"],"PreContainer"]
+7:300
+1f:["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","strong",null,{"className":"mdx_strong__N7OUG","children":"Автоматически устанавливает фокус"}]," — при появлении области может автоматически установить фокус\nна первый интерактивный элемент или на корневой элемент;"]}]
+20:["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","strong",null,{"className":"mdx_strong__N7OUG","children":"Восстанавливает фокус"}]," — при закрытии области возвращает фокус на элемент, который был в фокусе до открытия."]}]
+21:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"ispolzovanie","children":["$","a",null,{"href":"#ispolzovanie","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Использование","children":["Использование",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+22:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"FocusTrap"}]," широко используется внутри VKUI для компонентов модальных окон и всплывающих элементов:"]}]
+23:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["$","$L4a",null,{"href":"/components/modal-card","children":["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"ModalCard"}]}]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["$","$L4a",null,{"href":"/components/modal-page","children":["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"ModalPage"}]}]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["$","$L4a",null,{"href":"/components/alert","children":["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"Alert"}]}]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["$","$L4a",null,{"href":"/components/action-sheet","children":["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"ActionSheet"}]}]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["$","$L4a",null,{"href":"/components/popover","children":["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"Popover"}]}]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["$","$L4a",null,{"href":"/components/onboarding-tooltip","children":["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"OnboardingTooltip"}]}]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["$","$L4a",null,{"href":"/components/date-input","children":["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"DateInput"}]}]}],"\n"]}]
+24:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"bazovyj-primer","children":["$","a",null,{"href":"#bazovyj-primer","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Базовый пример","children":["Базовый пример",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+25:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Для использования ",["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"FocusTrap"}]," необходимо:"]}]
+26:["$","ol",null,{"className":"mdx_ol__jzvNl","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["Создать ",["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"ref"}]," для корневого элемента области;"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["Передать этот ",["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"ref"}]," в свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"rootRef"}]," компонента ",["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"FocusTrap"}],";"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["Передать этот же ",["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"ref"}]," на корневой элемент контента;"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["Добавить ",["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"tabIndex={-1}"}]," на корневой элемент для возможности программной фокусировки."]}],"\n"]}]
+27:["$","$L1d",null,{"code":"const focusTrapRef = React.useRef(null);\n\nreturn (\n  <FocusTrap rootRef={focusTrapRef} autoFocus restoreFocus>\n    <div ref={focusTrapRef} tabIndex={-1} style={{ padding: 16 }}>\n      <Flex direction=\"column\" gap=\"m\">\n        <FormItem top=\"Ввод текста\" htmlFor=\"focus-trap-focus-trap-3\">\n          <Input id=\"focus-trap-focus-trap-3\" name=\"focus-trap-3\" placeholder=\"Ввод текста\" />\n        </FormItem>\n        <Button>Отправить</Button>\n      </Flex>\n    </div>\n  </FocusTrap>\n);"}]
+28:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"avtofokus","children":["$","a",null,{"href":"#avtofokus","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Автофокус","children":["Автофокус",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+29:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"autoFocus"}]," управляет поведением автоматической установки фокуса при появлении области."]}]
+2a:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"po-umolchaniyu","children":["$","a",null,{"href":"#po-umolchaniyu","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию [object Object]","children":["$f:props:toc:4:value",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+2b:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Фокус автоматически устанавливается на первый интерактивный элемент внутри области."}]
+2c:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"autofocusroot","children":["$","a",null,{"href":"#autofocusroot","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию [object Object]","children":["$f:props:toc:5:value",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+2d:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Фокус устанавливается на корневой элемент области. Это полезно, когда нужно анонсировать\nсодержимое области для скринридеров, но не переключать фокус на конкретный элемент."}]
+4c:T536,const [mode, setMode] = React.useState('true');
+const [show, setShow] = React.useState(false);
+const focusTrapRef = React.useRef(null);
+
+return (
+  <Flex direction="column" gap="l">
+      <SegmentedControl
+        value={mode}
+        onChange={setMode}
+        options={[
+          { label: 'true', value: 'true' },
+          { label: 'root', value: 'root' },
+          { label: 'false', value: 'false' },
+        ]}
+      />
+      <Button mode="secondary" onClick={() => setShow((prev) => !prev)}>
+        {show ? 'Скрыть' : 'Показать'}
+      </Button>
+    {show && (
+      <FocusTrap
+        key={mode}
+        rootRef={focusTrapRef}
+        autoFocus={mode === 'true' ? true : mode === 'root' ? 'root' : false}
+      >
+        <div
+          ref={focusTrapRef}
+          tabIndex={-1}
+          style={{
+            padding: 16,
+            border: '2px solid var(--vkui--color_accent_blue)',
+            borderRadius: 8,
+          }}
+        >
+          <Flex direction="column" gap="m">
+            <FormItem top="Поле ввода" htmlFor="focus-trap-focus-trap-4">
+              <Input id="focus-trap-focus-trap-4" name="focus-trap-4" placeholder="Поле ввода" />
+            </FormItem>
+            <Button>Кнопка</Button>
+          </Flex>
+        </div>
+      </FocusTrap>
+    )}
+  </Flex>
+);2e:["$","$L1d",null,{"Wrapper":"$4b","code":"$4c"}]
+2f:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"autofocusfalse","children":["$","a",null,{"href":"#autofocusfalse","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию [object Object]","children":["$f:props:toc:6:value",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+30:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Автофокус отключён. Используйте, когда фокус уже находится внутри области или управляется вручную."}]
+31:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"vosstanovlenie-fokusa","children":["$","a",null,{"href":"#vosstanovlenie-fokusa","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Восстановление фокуса","children":["Восстановление фокуса",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+32:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"restoreFocus"}]," управляет возвратом фокуса на предыдущий элемент при закрытии области."]}]
+33:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"true"}]," (по умолчанию) — фокус возвращается на элемент, который был в фокусе до открытия области;"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"false"}]," — фокус не возвращается;"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"() => boolean | HTMLElement"}]," — функция, которая возвращает ",["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"boolean"}]," или конкретный элемент для фокуса."]}],"\n"]}]
+34:["$","$L1d",null,{"code":"const [open, setOpen] = React.useState(false);\nconst focusTrapRef = React.useRef(null);\nconst alternativeRef = React.useRef(null);\n\nreturn (\n  <Flex direction=\"column\" gap=\"m\">\n    <Flex gap=\"m\">\n      <Button onClick={() => setOpen(true)}>Открыть</Button>\n      <Button mode=\"secondary\" getRootRef={alternativeRef}>\n        Альтернативный фокус\n      </Button>\n    </Flex>\n    {open && (\n      <FocusTrap rootRef={focusTrapRef} restoreFocus={() => alternativeRef.current}>\n        <div\n          ref={focusTrapRef}\n          tabIndex={-1}\n          style={{\n            padding: 16,\n            border: '2px solid var(--vkui--color_accent_blue)',\n            borderRadius: 8,\n          }}\n        >\n          <Flex direction=\"column\" gap=\"m\">\n            <Text>При закрытии фокус вернётся на кнопку «Альтернативный фокус»</Text>\n            <Button onClick={() => setOpen(false)}>Закрыть</Button>\n          </Flex>\n        </div>\n      </FocusTrap>\n    )}\n  </Flex>\n);"}]
+35:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"otklyuchenie-zahvata-fokusa","children":["$","a",null,{"href":"#otklyuchenie-zahvata-fokusa","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Отключение захвата фокуса","children":["Отключение захвата фокуса",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+36:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"disabled"}]," позволяет временно отключить захват фокуса."]}]
+37:["$","aside",null,{"className":"Callout_root__6UBFP","children":["$","div",null,{"className":"Callout_content__MYf_T","children":["\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"При открытии модального окна поверх другого модального окна может возникнуть конфликт в управлении фокусом.\nПо умолчанию каждое модальное окно пытается удерживать фокус внутри себя, что может привести\nк некорректной работе при наличии нескольких открытых модальных окон."}],"\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Чтобы избежать этой проблемы, для первого (нижнего) модального окна необходимо отключить захват фокуса\nс помощью свойства ",["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"disabled={true}"}],". Это позволит корректно управлять фокусом во втором (верхнем) модальном окне."]}],"\n"]}]}]
+38:["$","$L1d",null,{"code":"const [disabled, setDisabled] = React.useState(false);\nconst focusTrapRef = React.useRef(null);\n\nreturn (\n  <Flex direction=\"column\" gap=\"m\">\n    <Checkbox checked={disabled} onChange={(e) => setDisabled(e.target.checked)}>\n      Отключить захват фокуса\n    </Checkbox>\n    <FocusTrap rootRef={focusTrapRef} disabled={disabled}>\n      <div\n        ref={focusTrapRef}\n        tabIndex={-1}\n        style={{\n          padding: 16,\n          border: disabled\n            ? '2px solid var(--vkui--color_icon_secondary)'\n            : '2px solid var(--vkui--color_accent_blue)',\n          borderRadius: 8,\n        }}\n      >\n        <Flex direction=\"column\" gap=\"m\">\n          <FormItem top=\"Поле ввода\" htmlFor=\"focus-trap-focus-trap-5\">\n            <Input id=\"focus-trap-focus-trap-5\" name=\"focus-trap-5\" placeholder=\"Поле ввода\" />\n          </FormItem>\n          <Button>Кнопка</Button>\n        </Flex>\n      </div>\n    </FocusTrap>\n    <Button>Кнопка вне FocusTrap</Button>\n  </Flex>\n);"}]
+39:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"zaderzhka-avtofokusa","children":["$","a",null,{"href":"#zaderzhka-avtofokusa","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Задержка автофокуса","children":["Задержка автофокуса",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+3a:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"autoFocusDelay"}]," позволяет задать задержку в миллисекундах перед автофокусом.\nЭто полезно при использовании с анимациями, когда нужно дождаться завершения анимации появления."]}]
+3b:["$","$L4d",null,{"copy":true,"children":["$","pre",null,{"className":"Pre_pre__hY1fL","tabIndex":"0","data-language":"jsx","data-word-wrap":"","data-pagefind-ignore":"all","children":["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":[["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"<"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"FocusTrap"}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" rootRef"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"{focusTrapRef} "}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":"autoFocusDelay"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"{"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"300"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"}>"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  {"}],["$","span",null,{"style":{"--shiki-light":"#6A737D","--shiki-dark":"#6A737D"},"children":"/* ... */"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"}"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"</"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"FocusTrap"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}]]}]}]}]
+3c:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"rekomendacii-po-ispolzovaniyu","children":["$","a",null,{"href":"#rekomendacii-po-ispolzovaniyu","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Рекомендации по использованию","children":["Рекомендации по использованию",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+3d:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"kogda-ispolzovat-focustrap","children":["$","a",null,{"href":"#kogda-ispolzovat-focustrap","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Когда использовать FocusTrap","children":["Когда использовать FocusTrap",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+3e:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","strong",null,{"className":"mdx_strong__N7OUG","children":"Модальные окна и диалоги"}]," — фокус должен оставаться внутри модального окна,\nпока оно открыто;"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","strong",null,{"className":"mdx_strong__N7OUG","children":"Всплывающие меню"}]," — пользователь должен иметь возможность навигироваться\nпо пунктам меню с помощью клавиатуры;"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","strong",null,{"className":"mdx_strong__N7OUG","children":"Формы в выпадающих панелях"}]," — например, календарь в ",["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"DateInput"}],"."]}],"\n"]}]
+3f:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"kogda-ne-ispolzovat-focustrap","children":["$","a",null,{"href":"#kogda-ne-ispolzovat-focustrap","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Когда НЕ использовать FocusTrap","children":["Когда НЕ использовать FocusTrap",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+40:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","strong",null,{"className":"mdx_strong__N7OUG","children":"Для обычных секций страницы"}]," — захват фокуса не нужен для стандартной навигации;"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","strong",null,{"className":"mdx_strong__N7OUG","children":"Для тултипов с текстовым содержимым"}]," — если тултип не содержит интерактивных элементов,\nиспользуйте свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"disableFocusTrap"}]," в компонентах типа ",["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"Tooltip"}],"."]}],"\n"]}]
+41:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"dostupnost-a11y","children":["$","a",null,{"href":"#dostupnost-a11y","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Доступность (a11y)","children":["Доступность (a11y)",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+42:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["При использовании ",["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"FocusTrap"}]," для модальных окон не забывайте:"]}]
+43:["$","ol",null,{"className":"mdx_ol__jzvNl","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["Добавлять ",["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"role=\"dialog\""}]," и ",["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"aria-modal=\"true\""}]," на корневой элемент;"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["Указывать ",["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"aria-label"}]," или ",["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"aria-labelledby"}]," для описания содержимого;"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["Обеспечивать закрытие по клавише ",["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"Escape"}],"."]}],"\n"]}]
+44:["$","$L4d",null,{"copy":true,"children":["$","pre",null,{"className":"Pre_pre__hY1fL","tabIndex":"0","data-language":"jsx","data-word-wrap":"","data-pagefind-ignore":"all","children":["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":[["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"<"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"FocusTrap"}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" rootRef"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"{focusTrapRef}>"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  <"}],["$","span",null,{"style":{"--shiki-light":"#22863A","--shiki-dark":"#85E89D"},"children":"div"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":"    ref"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"{focusTrapRef}"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":"    tabIndex"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"{"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"-"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"1"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"}"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":"    role"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"dialog\""}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":"    aria-modal"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"true\""}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":"    aria-label"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"Название диалога\""}]]}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  >"}]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"    {"}],["$","span",null,{"style":{"--shiki-light":"#6A737D","--shiki-dark":"#6A737D"},"children":"/* Содержимое */"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"}"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  </"}],["$","span",null,{"style":{"--shiki-light":"#22863A","--shiki-dark":"#85E89D"},"children":"div"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"</"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"FocusTrap"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}]]}]}]}]
+45:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"api","children":["$","a",null,{"href":"#api","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Свойства и методы","children":["Свойства и методы",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+46:["$","div",null,{"className":"Table_root__0rGvK","children":["$","table",null,{"className":"Table_table__NzLHi PropsTable_root__O959b","children":[["$","thead",null,{"children":["$","tr",null,{"children":[["$","th",null,{"children":"Свойство","className":"Table_th__EHorR"}],["$","th",null,{"children":"Описание","className":"Table_th__EHorR"}]],"className":"Table_tr__SD2Ot"}]}],["$","tbody",null,{"children":["$@4e","$@4f","$@50","$@51","$@52"]}]]}]}]
+49:null
+7:C
+4e:["$","tr","autoFocus",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"autoFocus"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"boolean | \"root\""}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Управление поведением автофокуса при появлении всплывающего окна.\nПри прокидывании ",["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"true"}]," фокус будет установлен на первый элемент.\nПри прокидывании ",["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"root"}]," фокус будет установлен в корень."]}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"true"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+4f:["$","tr","autoFocusDelay",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"autoFocusDelay"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"number"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Время в миллисекундах после которого срабатывает автофокус при появлении всплывающего окна."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"0"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+50:["$","tr","disabled",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"disabled"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"boolean"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Форсированное отключение захвата фокуса"}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"false"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+51:["$","tr","restoreFocus",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"restoreFocus"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"boolean | (() => boolean | HTMLElement)"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Управление поведением возврата фокуса при закрытии всплывающего окна."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"true"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+52:["$","tr","rootRef",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ PropsTable_propRequired__6g8iy","children":["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"rootRef"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"RefObject<HTMLElement | null>"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Ref на корневой элемент."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+19:0
+5:"$undefined"
+18:"$undefined"
+11:"$undefined"

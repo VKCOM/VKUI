@@ -1,0 +1,127 @@
+﻿---
+description: Инструкция по запуску приложения с базовой структурой и навигацией на VKUI.
+---
+
+# Использование
+
+После шагов из [Установки](/overview/install) у вас должно запускаться минимально работающее приложение. Здесь разберём простой пример использования и рекомендации по дальнейшим шагам.
+
+Примеры продолжим на шаблоне [React + TypeScript + Vite](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts).
+
+## Быстрый старт \[#quick-start]
+
+Начнём с компонента [`Button`](/components/button):
+
+```jsx filename="src/App.tsx"
+import { Button } from '@vkontakte/vkui';
+
+export default function App() {
+  return (
+    <Button mode="outline" size="l">
+      Привет, мир!
+    </Button>
+  );
+}
+```
+
+На странице должно появиться что-то похожее:
+
+```jsx
+<Button mode="outline" size="l">
+  Привет, мир!
+</Button>
+```
+
+## Навигационные слои \[#navigation]
+
+Приложение состоит из набора экранов с информацией. В VKUI есть специальные компоненты для экранов и навигации между ними. Подробно — в разделе [Навигация](/overview/navigation). Ниже — базовый пример.
+
+```jsx
+import { useState } from 'react';
+import {
+  SplitLayout,
+  SplitCol,
+  View,
+  Panel,
+  PanelHeader,
+  Group,
+  CellButton,
+  usePlatform,
+} from '@vkontakte/vkui';
+
+const [activePanel, setActivePanel] = useState('feed-panel');
+const platform = usePlatform();
+
+return (
+  <SplitLayout header={platform !== 'vkcom' && <PanelHeader delimiter="none" />}>
+    <SplitCol width="100%" stretchedOnMobile autoSpaced>
+      <View activePanel={activePanel}>
+        <Panel id="feed-panel">
+          <PanelHeader>Лента</PanelHeader>
+          <Placeholder
+            action={
+              <Button onClick={() => setActivePanel('profile-panel')}>Перейти в Профиль</Button>
+            }
+            stretched
+          >
+            <Icon56NewsfeedOutline />
+          </Placeholder>
+        </Panel>
+        <Panel id="profile-panel">
+          <PanelHeader>Профиль</PanelHeader>
+          <Placeholder
+            action={<Button onClick={() => setActivePanel('feed-panel')}>Вернуться в Ленту</Button>}
+            stretched
+          >
+            <Icon56UserCircleOutline />
+          </Placeholder>
+        </Panel>
+      </View>
+    </SplitCol>
+  </SplitLayout>
+);
+```
+
+## Многоколоночный интерфейс \[#multiple-columns]
+
+На мобильных элементы приходится ограничивать, на настольных — можно размещать больше, разделяя интерфейс на колонки. Для этого есть [`SplitLayout`](/components/split-layout) с подкомпонентом [`SplitCol`](/components/split-layout#split-col). Подробнее — на странице [Навигация](/overview/navigation).
+
+Адаптивный пример работы `SplitLayout`:
+
+```jsx
+const { viewWidth } = useAdaptivityConditionalRender();
+
+return (
+  <SplitLayout>
+    {viewWidth.tabletPlus && (
+      <SplitCol fixed width={280} maxWidth={280} className={viewWidth.tabletPlus.className}>
+        <div
+          style={{
+            padding: 12,
+            color: 'white',
+            backgroundColor: 'tomato',
+          }}
+        >
+          Фиксированная колонка слева
+        </div>
+      </SplitCol>
+    )}
+    <SplitCol>
+      <div
+        style={{
+          padding: 12,
+          color: 'white',
+          backgroundColor: 'steelblue',
+        }}
+      >
+        Колонка справа
+        {viewWidth.tabletMinus && (
+          <p className={viewWidth.tabletMinus.className}>
+            ⚠️ колонка слева спрятана по условию адаптивности
+          </p>
+        )}
+      </div>
+    </SplitCol>
+  </SplitLayout>
+);
+```

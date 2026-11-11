@@ -23,7 +23,7 @@ class ShowOrFocusHoverAction extends EditorAction {
     constructor() {
         super({
             id: SHOW_OR_FOCUS_HOVER_ACTION_ID,
-            label: localize2(1150, "Show or Focus Hover"),
+            label: localize2(1165, "Show or Focus Hover"),
 
 
 
@@ -32,7 +32,7 @@ class ShowOrFocusHoverAction extends EditorAction {
 
 
             metadata: {
-                description: localize2(1151, 'Show or focus the editor hover which shows documentation, references, and other content for a symbol at the current cursor position.'),
+                description: localize2(1166, 'Show or focus the editor hover which shows documentation, references, and other content for a symbol at the current cursor position.'),
                 args: [{
                         name: 'args',
                         schema: {
@@ -42,9 +42,9 @@ class ShowOrFocusHoverAction extends EditorAction {
                                     description: 'Controls if and when the hover should take focus upon being triggered by this action.',
                                     enum: [HoverFocusBehavior.NoAutoFocus, HoverFocusBehavior.FocusIfVisible, HoverFocusBehavior.AutoFocusImmediately],
                                     enumDescriptions: [
-                                        localize(1147, 'The hover will not automatically take focus.'),
-                                        localize(1148, 'The hover will take focus only if it is already visible.'),
-                                        localize(1149, 'The hover will automatically take focus when it appears.'),
+                                        localize(1162, 'The hover will not automatically take focus.'),
+                                        localize(1163, 'The hover will take focus only if it is already visible.'),
+                                        localize(1164, 'The hover will automatically take focus when it appears.'),
                                     ],
                                     default: HoverFocusBehavior.FocusIfVisible,
                                 }
@@ -99,7 +99,7 @@ class ShowDefinitionPreviewHoverAction extends EditorAction {
     constructor() {
         super({
             id: SHOW_DEFINITION_PREVIEW_HOVER_ACTION_ID,
-            label: localize2(1152, "Show Definition Preview Hover"),
+            label: localize2(1167, "Show Definition Preview Hover"),
 
 
 
@@ -108,7 +108,7 @@ class ShowDefinitionPreviewHoverAction extends EditorAction {
 
             precondition: undefined,
             metadata: {
-                description: localize2(1153, 'Show the definition preview hover in the editor.'),
+                description: localize2(1168, 'Show the definition preview hover in the editor.'),
             },
         });
     }
@@ -136,7 +136,7 @@ class HideContentHoverAction extends EditorAction {
     constructor() {
         super({
             id: HIDE_HOVER_ACTION_ID,
-            label: localize2(1154, "Hide Hover"),
+            label: localize2(1169, "Hide Hover"),
 
 
 
@@ -152,7 +152,7 @@ class ScrollUpHoverAction extends EditorAction {
     constructor() {
         super({
             id: SCROLL_UP_HOVER_ACTION_ID,
-            label: localize2(1155, "Scroll Up Hover"),
+            label: localize2(1170, "Scroll Up Hover"),
 
 
 
@@ -165,7 +165,7 @@ class ScrollUpHoverAction extends EditorAction {
                 weight: 100 /* KeybindingWeight.EditorContrib */
             },
             metadata: {
-                description: localize2(1156, 'Scroll up the editor hover.')
+                description: localize2(1171, 'Scroll up the editor hover.')
             },
         });
     }
@@ -181,7 +181,7 @@ class ScrollDownHoverAction extends EditorAction {
     constructor() {
         super({
             id: SCROLL_DOWN_HOVER_ACTION_ID,
-            label: localize2(1157, "Scroll Down Hover"),
+            label: localize2(1172, "Scroll Down Hover"),
 
 
 
@@ -194,7 +194,7 @@ class ScrollDownHoverAction extends EditorAction {
                 weight: 100 /* KeybindingWeight.EditorContrib */
             },
             metadata: {
-                description: localize2(1158, 'Scroll down the editor hover.'),
+                description: localize2(1173, 'Scroll down the editor hover.'),
             },
         });
     }
@@ -210,7 +210,7 @@ class ScrollLeftHoverAction extends EditorAction {
     constructor() {
         super({
             id: SCROLL_LEFT_HOVER_ACTION_ID,
-            label: localize2(1159, "Scroll Left Hover"),
+            label: localize2(1174, "Scroll Left Hover"),
 
 
 
@@ -223,7 +223,7 @@ class ScrollLeftHoverAction extends EditorAction {
                 weight: 100 /* KeybindingWeight.EditorContrib */
             },
             metadata: {
-                description: localize2(1160, 'Scroll left the editor hover.'),
+                description: localize2(1175, 'Scroll left the editor hover.'),
             },
         });
     }
@@ -239,7 +239,7 @@ class ScrollRightHoverAction extends EditorAction {
     constructor() {
         super({
             id: SCROLL_RIGHT_HOVER_ACTION_ID,
-            label: localize2(1161, "Scroll Right Hover"),
+            label: localize2(1176, "Scroll Right Hover"),
 
 
 
@@ -252,7 +252,7 @@ class ScrollRightHoverAction extends EditorAction {
                 weight: 100 /* KeybindingWeight.EditorContrib */
             },
             metadata: {
-                description: localize2(1162, 'Scroll right the editor hover.')
+                description: localize2(1177, 'Scroll right the editor hover.')
             },
         });
     }
@@ -268,7 +268,7 @@ class PageUpHoverAction extends EditorAction {
     constructor() {
         super({
             id: PAGE_UP_HOVER_ACTION_ID,
-            label: localize2(1163, "Page Up Hover"),
+            label: localize2(1178, "Page Up Hover"),
 
 
 
@@ -282,7 +282,7 @@ class PageUpHoverAction extends EditorAction {
                 weight: 100 /* KeybindingWeight.EditorContrib */
             },
             metadata: {
-                description: localize2(1164, 'Page up the editor hover.'),
+                description: localize2(1179, 'Page up the editor hover.'),
             },
         });
     }
@@ -298,7 +298,7 @@ class PageDownHoverAction extends EditorAction {
     constructor() {
         super({
             id: PAGE_DOWN_HOVER_ACTION_ID,
-            label: localize2(1165, "Page Down Hover"),
+            label: localize2(1180, "Page Down Hover"),
 
 
 
@@ -312,7 +312,7 @@ class PageDownHoverAction extends EditorAction {
                 weight: 100 /* KeybindingWeight.EditorContrib */
             },
             metadata: {
-                description: localize2(1166, 'Page down the editor hover.'),
+                description: localize2(1181, 'Page down the editor hover.'),
             },
         });
     }
@@ -328,7 +328,7 @@ class GoToTopHoverAction extends EditorAction {
     constructor() {
         super({
             id: GO_TO_TOP_HOVER_ACTION_ID,
-            label: localize2(1167, "Go To Top Hover"),
+            label: localize2(1182, "Go To Top Hover"),
 
 
 
@@ -342,7 +342,7 @@ class GoToTopHoverAction extends EditorAction {
                 weight: 100 /* KeybindingWeight.EditorContrib */
             },
             metadata: {
-                description: localize2(1168, 'Go to the top of the editor hover.'),
+                description: localize2(1183, 'Go to the top of the editor hover.'),
             },
         });
     }
@@ -358,7 +358,7 @@ class GoToBottomHoverAction extends EditorAction {
     constructor() {
         super({
             id: GO_TO_BOTTOM_HOVER_ACTION_ID,
-            label: localize2(1169, "Go To Bottom Hover"),
+            label: localize2(1184, "Go To Bottom Hover"),
 
 
 
@@ -372,7 +372,7 @@ class GoToBottomHoverAction extends EditorAction {
                 weight: 100 /* KeybindingWeight.EditorContrib */
             },
             metadata: {
-                description: localize2(1170, 'Go to the bottom of the editor hover.')
+                description: localize2(1185, 'Go to the bottom of the editor hover.')
             },
         });
     }

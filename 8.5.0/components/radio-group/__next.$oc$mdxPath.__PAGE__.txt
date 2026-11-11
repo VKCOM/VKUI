@@ -1,0 +1,95 @@
+2:"$Sreact.fragment"
+3:I[91133,[],""]
+4:I[4297,[],""]
+9:"static/chunks/959-8ad25bff58b07415.js"
+a:"static/chunks/628-5716112b83fdd9d5.js"
+b:"static/chunks/app/%5B%5B...mdxPath%5D%5D/page-9e158cb4dcea1416.js"
+c:I[67042,["959","$9","628","$a","217","$b"],"Main"]
+e:"OverviewHeaderLinks"
+f:I[77539,["959","$9","628","$a","217","$b"],"$e",1]
+10:I[13091,["959","$9","628","$a","217","$b"],"Anchor"]
+11:I[95540,["959","$9","628","$a","217","$b"],"PlaygroundLazy"]
+1c:"ViewportBoundary"
+1d:I[31872,[],"$1c"]
+1e:"MetadataBoundary"
+1f:I[31872,[],"$1e"]
+20:"$Sreact.suspense"
+21:I[12569,[],"IconMark"]
+6:X
+6:C
+7:X
+d:T8e8,---
+description: Компонент для группировки переключателей Radio с возможностью задания горизонтального или вертикального расположения.
+tags: selection, forms
+---
+
+<Overview group="layout">
+
+# RadioGroup [tag:component]
+
+Компонент для группировки переключателей [`Radio`](/components/radio) с возможностью задания горизонтального или вертикального
+расположения. Обеспечивает правильную семантику и доступность.
+
+Связанные компоненты:
+
+- [`Radio`](/components/radio)
+
+</Overview>
+
+{/* @example-description: Базовая группа `RadioGroup` с несколькими вариантами выбора и неактивной опцией. */}
+<Playground>
+  ```jsx
+  <RadioGroup>
+    <Radio name="fit" value="classic">
+      Classic
+    </Radio>
+    <Radio name="fit" value="regular">
+      Regular
+    </Radio>
+    <Radio name="fit" value="slim" disabled description="Нет в наличии">
+      Slim
+    </Radio>
+  </RadioGroup>
+  ```
+</Playground>
+
+## Доступность (a11y) [#a11y]
+
+Компонент реализован с учётом требований доступности:
+
+- использует атрибут `role="radiogroup"`;
+- поддерживает управление с клавиатуры (стрелки влево/вправо/вверх/вниз для изменения значения);
+- поддерживает все стандартные `aria`-атрибуты.
+
+Для корректной работы скринридеров необходимо вручную передавать некоторые параметры:
+
+- атрибуты `aria-labelledby`, `aria-label` и `aria-describedby` для предоставления дополнительной информации об элементе;
+- атрибут `aria-required=true`, для того чтобы указать, что хотя бы один элемент `Radio` должен быть выбран.
+
+## Свойства и методы [#api]
+
+<PropsTable name="RadioGroup" />8:[["children",{"s":"__PAGE__","h":160,"d":{"r":["$","$2","c",{"children":[[["$","$Lc",null,{"metadata":{"description":"Компонент для группировки переключателей Radio с возможностью задания горизонтального или вертикального расположения.","tags":"selection, forms","title":"RadioGroup","filePath":"content/components/radio-group.mdx","timestamp":1794400886000},"sourceCode":"$d","children":[["$","div",null,{"className":"Overview_root__nbCiB","children":[["$","$Lf",null,{"group":"layout"}],[["$","h1",null,{"className":"mdx_h1__1mgpN","data-pagefind-filter":"tag:component","children":"RadioGroup"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Компонент для группировки переключателей ",["$","$L10",null,{"href":"/components/radio","children":["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"Radio"}]}]," с возможностью задания горизонтального или вертикального\nрасположения. Обеспечивает правильную семантику и доступность."]}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Связанные компоненты:"}],["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["$","$L10",null,{"href":"/components/radio","children":["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"Radio"}]}]}],"\n"]}]]]}],"\n","\n",["$","$L11",null,{"code":"<RadioGroup>\n  <Radio name=\"fit\" value=\"classic\">\n    Classic\n  </Radio>\n  <Radio name=\"fit\" value=\"regular\">\n    Regular\n  </Radio>\n  <Radio name=\"fit\" value=\"slim\" disabled description=\"Нет в наличии\">\n    Slim\n  </Radio>\n</RadioGroup>"}],"\n",["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"a11y","children":["$","a",null,{"href":"#a11y","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Доступность (a11y)","children":["Доступность (a11y)",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined","$L12"]]}]]}]}],"\n","$L13","\n","$L14","\n","$L15","\n","$L16","\n","$L17","\n","$L18"]}],"$L19"],null,"$L1a"]}],"p":"$@1b","v":null,"s":"$7"}}]]
+1:[["children",{"s":{"n":"mdxPath","t":"oc","k":"components/radio-group","s":["_not-found","_global-error","apple-icon.png","favicon.ico","icon.svg"]},"h":64,"d":{"r":["$","$2","c",{"children":[null,["$","$L3",null,{"parallelRouterKey":"children","template":["$","$L4",null,{}]}]]}],"p":"$@5","v":"$6","s":"$7"},"c":"$Q8"}]]
+0:{"t":{"t":{"s":"","h":16,"c":"$Q1"},"h":{"r":["$","$2","h",{"children":[null,["$","$L1d",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]}],["$","$L1f",null,{"children":[["$","div",null,{"hidden":true,"children":["$","$20",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"RadioGroup | VKUI"}],["$","meta","1",{"name":"description","content":"Компонент для группировки переключателей Radio с возможностью задания горизонтального или вертикального расположения."}],["$","link","2",{"rel":"canonical","href":"https://vkui.io/components/radio-group/"}],["$","meta","3",{"property":"og:title","content":"VKUI – React UI Kit"}],["$","meta","4",{"property":"og:description","content":"VKUI — библиотека адаптивных React-компонентов для создания мобильных и веб-приложений."}],["$","meta","5",{"property":"og:url","content":"https://vkui.io/"}],["$","meta","6",{"property":"og:site_name","content":"VKUI"}],["$","meta","7",{"property":"og:type","content":"website"}],["$","meta","8",{"name":"twitter:card","content":"summary"}],["$","meta","9",{"name":"twitter:title","content":"VKUI – React UI Kit"}],["$","meta","10",{"name":"twitter:description","content":"VKUI — библиотека адаптивных React-компонентов для создания мобильных и веб-приложений."}],["$","link","11",{"rel":"icon","href":"/8.5.0/favicon.ico?60dfc7274b0e657e","type":"image/x-icon","sizes":"48x48"}],["$","link","12",{"rel":"icon","href":"/8.5.0/icon.svg?01ea673639a821e1","type":"image/svg+xml","sizes":"any"}],["$","link","13",{"rel":"apple-touch-icon","href":"/8.5.0/apple-icon.png?131c1f3e67ede032","type":"image/png","sizes":"180x180"}],["$","$L21","14",{}]]}]}],null]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}],"p":"$@22","v":null,"s":"$7"}},"a":"$@23","u":"$@24","b":"8PhKH7pImpc-E3HhVI1Ya"}
+28:I[80784,["959","$9","628","$a","217","$b"],"TOC"]
+29:I[31872,[],"OutletBoundary"]
+12:["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]
+13:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Компонент реализован с учётом требований доступности:"}]
+14:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["использует атрибут ",["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"role=\"radiogroup\""}],";"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":"поддерживает управление с клавиатуры (стрелки влево/вправо/вверх/вниз для изменения значения);"}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["поддерживает все стандартные ",["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"aria"}],"-атрибуты."]}],"\n"]}]
+15:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Для корректной работы скринридеров необходимо вручную передавать некоторые параметры:"}]
+16:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["атрибуты ",["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"aria-labelledby"}],", ",["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"aria-label"}]," и ",["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"aria-describedby"}]," для предоставления дополнительной информации об элементе;"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["атрибут ",["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"aria-required=true"}],", для того чтобы указать, что хотя бы один элемент ",["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"Radio"}]," должен быть выбран."]}],"\n"]}]
+17:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"api","children":["$","a",null,{"href":"#api","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Свойства и методы","children":["Свойства и методы",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+18:["$","div",null,{"className":"Table_root__0rGvK","children":["$","table",null,{"className":"Table_table__NzLHi PropsTable_root__O959b","children":[["$","thead",null,{"children":["$","tr",null,{"children":[["$","th",null,{"children":"Свойство","className":"Table_th__EHorR"}],["$","th",null,{"children":"Описание","className":"Table_th__EHorR"}]],"className":"Table_tr__SD2Ot"}]}],["$","tbody",null,{"children":["$@25","$@26","$@27"]}]]}]}]
+19:["$","$L28",null,{"toc":[{"value":"Доступность (a11y)","id":"a11y","depth":2},{"value":"Свойства и методы","id":"api","depth":2}]}]
+1a:["$","$L29",null,{"children":["$","$20",null,{"name":"Next.MetadataOutlet","children":"$@2a"}]}]
+24:true
+7:300
+25:["$","tr","getRootRef",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"getRootRef"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"Ref<HTMLDivElement>"}],"$undefined",["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+26:["$","tr","mode",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"mode"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"\"horizontal\" | \"vertical\""}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Режим расположения элементов."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"vertical"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+27:["$","tr","ref",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"ref"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"Ref<HTMLDivElement>"}],"$undefined",["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+2a:null
+7:C
+23:0
+5:"$undefined"
+22:"$undefined"
+1b:"$undefined"

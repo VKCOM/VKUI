@@ -2,24 +2,15 @@
 description: Компонент для создания набора экранов из Panel и возможностью переключаться между ними.
 ---
 
-<Overview group="navigation">
-
-# View [tag:component]
+# View \[tag:component]
 
 Компонент для создания набора экранов из [`Panel`](/components/panel) и возможностью переключаться между ними.
 
 Связанные страницы:
 
-- [Root](/components/root)
-- [Epic](/components/epic)
-- [Навигация](/overview/navigation)
-
-</Overview>
-
-import { FixedLayoutWrapper } from '@/components/wrappers';
-
-{/* @example-description: Базовая навигация во `View` с переключением между несколькими `Panel`. */}
-<Playground Wrapper={FixedLayoutWrapper} style={{ maxWidth: 320, height: 415, overflow: 'hidden' }}>
+* [Root](/components/root)
+* [Epic](/components/epic)
+* [Навигация](/overview/navigation)
 
 ```jsx
 const [activePanel, setActivePanel] = useState('panel-1');
@@ -62,8 +53,6 @@ return (
   </View>
 );
 ```
-
-</Playground>
 
 ## Применение компонента
 
@@ -140,18 +129,18 @@ function transitionHandler({
 > свойство [animate](/components/split-layout#animation) компонента `SplitCol`
 > или [transitionMotionEnabled](/components/config-provider#animation) компонента `ConfigProvider`.
 
-- `onSwipeBack` – обработчик свайпа назад.
-- `onSwipeBackCancel` – обработчик завершения анимации отмененного пользователем свайпа.
-- `onSwipeBackStart` – обработчик начала анимации свайпа назад. Чтобы остановить свайп назад, возвращайте `"prevent"`.
+* `onSwipeBack` – обработчик свайпа назад.
+* `onSwipeBackCancel` – обработчик завершения анимации отмененного пользователем свайпа.
+* `onSwipeBackStart` – обработчик начала анимации свайпа назад. Чтобы остановить свайп назад, возвращайте `"prevent"`.
 
 В iOS можно свайпнуть от левого края назад, чтобы перейти на предыдущий экран. Чтобы повторить такое поведение
 в VKUI, нужно:
 
-- передать во `View` коллбек `onSwipeBack` — он сработает при завершении анимации свайпа. Поменяйте в нем `activePanel` и обновите
+* передать во `View` коллбек `onSwipeBack` — он сработает при завершении анимации свайпа. Поменяйте в нем `activePanel` и обновите
   `history`;
-- передать во `View` проп `history` — массив из id панелей в порядке открытия. Например, если пользователь из `main` перешел
+* передать во `View` проп `history` — массив из id панелей в порядке открытия. Например, если пользователь из `main` перешел
   в `profile`, а оттуда попал в `education`, то `history=['main', 'profile', 'education']`;
-- обернуть ваше приложение в [`ConfigProvider`](/components/config-provider) — он определит, открыто приложение в `webview` клиента
+* обернуть ваше приложение в [`ConfigProvider`](/components/config-provider) — он определит, открыто приложение в `webview` клиента
   VK или в браузере (там есть свой swipe back, который будет конфликтовать с нашим). Для проверки в браузере форсируйте определение
   `webview`: `<ConfigProvider isWebView>`.
 
@@ -160,8 +149,8 @@ function transitionHandler({
 Компоненты, которые сами обрабатывают жесты (например, карта или кастомный компонент по типу карусели), могут конфликтовать со
 свайпбеком. Вот как можно это решить:
 
-- либо повесьте на них свойство `data-vkui-swipe-back={false}`;
-- либо вызывайте `event.stopPropagation()` на событие `onStartX` компонента [Touch](/components/touch).
+* либо повесьте на них свойство `data-vkui-swipe-back={false}`;
+* либо вызывайте `event.stopPropagation()` на событие `onStartX` компонента [Touch](/components/touch).
 
 #### Блокировка свайпа (вариант #2)
 
@@ -362,13 +351,14 @@ export default function Root() {
 }
 ```
 
-## Свойства и методы [#api]
+## Свойства и методы \[#api]
 
-| Свойство | Тип | По умолчанию | Описание |
-| --- | --- | --- | --- |
-| `centered` | `boolean` | `false` | Центрирование содержимого. |
-| `disableBackground` | `boolean` | `-` | Отключает задний фон. |
-| `getRootRef` | `Ref<HTMLDivElement>` | `-` |  |
-| `mode` | `"card" \| "plain"` | `-` | Тип оформления панели.  Позволяет переопределить тип оформления панели, заданный через адаптивность или свойство layout у [AppRoot](https://vkui.io/components/app-root), глобально задающим тип оформления макета.  Если установлен `card` - Panel имеет фон отличный от фона контента. Позволяет компоненту [Group](https://vkui.io/components/group) со свойством mode='card' точечно выглядеть как карточка. Тип `plain` — соответствует фону по умолчанию. |
-| `nav` | `string` | `-` | Уникальный идентификатор навигационного элемента (вместо id) |
-
+| Свойство            | Тип                   | По умолчанию | Описание                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| ------------------- | --------------------- | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `centered`          | `boolean`             | `false`      | Центрирование содержимого.                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| `disableBackground` | `boolean`             | `-`          | Отключает задний фон.                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| `getRootRef`        | `Ref<HTMLDivElement>` | `-`          |                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| `layoutMode`        | `"card" \| "plain"`   | `-`          | Тип оформления панели.  Позволяет переопределить тип оформления панели, заданный через адаптивность или свойство layoutMode у [AppRoot](https://vkui.io/components/app-root), глобально задающим тип оформления макета.  Если установлен `card` - Panel имеет фон отличный от фона контента. Позволяет компоненту [Group](https://vkui.io/components/group) со свойством layoutMode='card' точечно выглядеть как карточка. Тип `plain` — соответствует фону по умолчанию. |
+| `mode`              | `"card" \| "plain"`   | `-`          | **Deprecated**: Используйте `layoutMode`.                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| `nav`               | `string`              | `-`          | Уникальный идентификатор навигационного элемента (вместо id)                                                                                                                                                                                                                                                                                                                                                                                                              |
+| `ref`               | `Ref<HTMLDivElement>` | `-`          |                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |

@@ -21,13 +21,19 @@ class ConfigurationRegistry extends Disposable {
     constructor() {
         super();
         this.registeredConfigurationDefaults = [];
+        /**
+         * Agent-host-mirrored setting keys per node that were hidden with
+         * `included: false`. Registration deletes those keys from the node's
+         * `properties`, so deregistration has no other way to find them.
+         */
+        this.excludedAgentHostSyncKeys = new Map();
         this.overrideIdentifiers = new Set();
         this._onDidSchemaChange = this._register(new Emitter());
         this._onDidUpdateConfiguration = this._register(new Emitter());
         this.configurationDefaultsOverrides = new Map();
         this.defaultLanguageConfigurationOverridesNode = {
             id: 'defaultOverrides',
-            title: localize(1725, "Default Language Configuration Overrides"),
+            title: localize(1756, "Default Language Configuration Overrides"),
             properties: {}
         };
         this.configurationContributors = [this.defaultLanguageConfigurationOverridesNode];
@@ -41,6 +47,7 @@ class ConfigurationRegistry extends Disposable {
         this.configurationProperties = {};
         this.policyConfigurations = new Map();
         this.policyReferenceConfigurations = new Map();
+        this.agentHostSyncConfigurations = new Map();
         this.excludedConfigurationProperties = {};
         contributionRegistry.registerSchema(resourceLanguageSettingsSchemaId, this.resourceLanguageSettingsSchema);
         this.registerOverridePropertyPatternKey();
@@ -109,7 +116,7 @@ class ConfigurationRegistry extends Disposable {
             },
             type: 'object',
             default: newDefaultOverride.value,
-            description: localize(1726, "Configure settings to be overridden for {0}.", getLanguageTagSettingPlainKey(key)),
+            description: localize(1757, "Configure settings to be overridden for {0}.", getLanguageTagSettingPlainKey(key)),
             $ref: resourceLanguageSettingsSchemaId,
             defaultDefaultValue: newDefaultOverride.value,
             source,
@@ -235,6 +242,10 @@ class ConfigurationRegistry extends Disposable {
                 const excluded = properties[key].hasOwnProperty('included') && !properties[key].included;
                 const policyName = properties[key].policy?.name;
                 const policyReferenceName = properties[key].policyReference?.name;
+                const agentHostSync = properties[key].agentHost;
+                if (agentHostSync) {
+                    this.agentHostSyncConfigurations.set(key, agentHostSync);
+                }
                 if (excluded) {
                     this.excludedConfigurationProperties[key] = properties[key];
                     if (policyName) {
@@ -244,6 +255,19 @@ class ConfigurationRegistry extends Disposable {
                     if (policyReferenceName) {
                         this.addPolicyReferenceConfiguration(policyReferenceName, key);
                         bucket.add(key);
+                    }
+                    if (agentHostSync) {
+                        // Hidden settings still mirror to the agent host; the bucket
+                        // entry is what makes the change observable to the syncer.
+                        bucket.add(key);
+                        // `delete properties[key]` below erases the only link back to
+                        // this node, so remember the key for deregistration.
+                        let excludedSyncKeys = this.excludedAgentHostSyncKeys.get(configuration);
+                        if (!excludedSyncKeys) {
+                            excludedSyncKeys = new Set();
+                            this.excludedAgentHostSyncKeys.set(configuration, excludedSyncKeys);
+                        }
+                        excludedSyncKeys.add(key);
                     }
                     delete properties[key];
                 }
@@ -283,6 +307,9 @@ class ConfigurationRegistry extends Disposable {
     }
     getPolicyConfigurations() {
         return this.policyConfigurations;
+    }
+    getAgentHostSyncConfigurations() {
+        return this.agentHostSyncConfigurations;
     }
     getExcludedConfigurationProperties() {
         return this.excludedConfigurationProperties;
@@ -324,8 +351,8 @@ class ConfigurationRegistry extends Disposable {
             const overrideIdentifierProperty = `[${overrideIdentifier}]`;
             const resourceLanguagePropertiesSchema = {
                 type: 'object',
-                description: localize(1727, "Configure editor settings to be overridden for a language."),
-                errorMessage: localize(1728, "This setting does not support per-language configuration."),
+                description: localize(1758, "Configure editor settings to be overridden for a language."),
+                errorMessage: localize(1759, "This setting does not support per-language configuration."),
                 $ref: resourceLanguageSettingsSchemaId,
             };
             this.updatePropertyDefaultValue(overrideIdentifierProperty, resourceLanguagePropertiesSchema);
@@ -333,8 +360,8 @@ class ConfigurationRegistry extends Disposable {
     }
     registerOverridePropertyPatternKey() {
         ({
-            description: localize(1729, "Configure editor settings to be overridden for a language."),
-            errorMessage: localize(1730, "This setting does not support per-language configuration.")});
+            description: localize(1760, "Configure editor settings to be overridden for a language."),
+            errorMessage: localize(1761, "This setting does not support per-language configuration.")});
         this._onDidSchemaChange.fire();
     }
     updatePropertyDefaultValue(key, property) {
@@ -398,19 +425,26 @@ const configurationRegistry = new ConfigurationRegistry();
 Registry.add(Extensions.Configuration, configurationRegistry);
 function validateProperty(property, schema, extensionId) {
     if (!property.trim()) {
-        return localize(1731, "Cannot register an empty property");
+        return localize(1762, "Cannot register an empty property");
     }
     if (OVERRIDE_PROPERTY_REGEX.test(property)) {
-        return localize(1732, "Cannot register '{0}'. This matches property pattern '\\\\[.*\\\\]$' for describing language specific editor settings. Use 'configurationDefaults' contribution.", property);
+        return localize(1763, "Cannot register '{0}'. This matches property pattern '\\\\[.*\\\\]$' for describing language specific editor settings. Use 'configurationDefaults' contribution.", property);
     }
     if (configurationRegistry.getConfigurationProperties()[property] !== undefined && (!extensionId || !EXTENSION_UNIFICATION_EXTENSION_IDS.has(extensionId.toLowerCase()))) {
-        return localize(1733, "Cannot register '{0}'. This property is already registered.", property);
+        return localize(1764, "Cannot register '{0}'. This property is already registered.", property);
     }
     if (schema.policy && schema.policyReference) {
-        return localize(1734, "Cannot register '{0}'. A setting must not declare both 'policy' and 'policyReference'.", property);
+        return localize(1765, "Cannot register '{0}'. A setting must not declare both 'policy' and 'policyReference'.", property);
     }
     if (schema.policy?.name && configurationRegistry.getPolicyConfigurations().get(schema.policy?.name) !== undefined) {
-        return localize(1735, "Cannot register '{0}'. The associated policy {1} is already registered with {2}. To attach another setting to the same policy, use 'policyReference'.", property, schema.policy?.name, configurationRegistry.getPolicyConfigurations().get(schema.policy?.name));
+        return localize(1766, "Cannot register '{0}'. The associated policy {1} is already registered with {2}. To attach another setting to the same policy, use 'policyReference'.", property, schema.policy?.name, configurationRegistry.getPolicyConfigurations().get(schema.policy?.name));
+    }
+    if (schema.agentHost) {
+        for (const [owner, sync] of configurationRegistry.getAgentHostSyncConfigurations()) {
+            if (sync.key === schema.agentHost.key && owner !== property) {
+                return localize(1767, "Cannot register '{0}'. The agent host configuration key '{1}' is already mirrored from '{2}'.", property, schema.agentHost.key, owner);
+            }
+        }
     }
     return null;
 }

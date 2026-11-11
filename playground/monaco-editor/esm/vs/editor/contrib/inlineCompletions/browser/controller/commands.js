@@ -27,7 +27,7 @@ class ShowNextInlineSuggestionAction extends EditorAction {
     constructor() {
         super({
             id: ShowNextInlineSuggestionAction.ID,
-            label: localize2(1224, "Show Next Inline Suggestion"),
+            label: localize2(1239, "Show Next Inline Suggestion"),
             precondition: ContextKeyExpr.and(EditorContextKeys.writable, InlineCompletionContextKeys.inlineSuggestionVisible),
             kbOpts: {
                 weight: 100,
@@ -45,7 +45,7 @@ class ShowPreviousInlineSuggestionAction extends EditorAction {
     constructor() {
         super({
             id: ShowPreviousInlineSuggestionAction.ID,
-            label: localize2(1225, "Show Previous Inline Suggestion"),
+            label: localize2(1240, "Show Previous Inline Suggestion"),
             precondition: ContextKeyExpr.and(EditorContextKeys.writable, InlineCompletionContextKeys.inlineSuggestionVisible),
             kbOpts: {
                 weight: 100,
@@ -77,13 +77,13 @@ class TriggerInlineSuggestionAction extends EditorAction {
     constructor() {
         super({
             id: 'editor.action.inlineSuggest.trigger',
-            label: localize2(1226, "Trigger Inline Suggestion"),
+            label: localize2(1241, "Trigger Inline Suggestion"),
             precondition: EditorContextKeys.writable,
             metadata: {
-                description: localize(1213, "Triggers an inline suggestion in the editor."),
+                description: localize(1228, "Triggers an inline suggestion in the editor."),
                 args: [{
                         name: 'args',
-                        description: localize(1214, "Options for triggering inline suggestions."),
+                        description: localize(1229, "Options for triggering inline suggestions."),
                         isOptional: true,
                         schema: argsValidator.getJSONSchema(),
                     }]
@@ -112,7 +112,7 @@ class TriggerInlineSuggestionAction extends EditorAction {
             if (!controller?.model.get()?.state.get()) {
                 notificationService.notify({
                     severity: Severity.Info,
-                    message: localize(1215, "No inline suggestion is available.")
+                    message: localize(1230, "No inline suggestion is available.")
                 });
             }
         }
@@ -122,7 +122,7 @@ class AcceptNextWordOfInlineCompletion extends EditorAction {
     constructor() {
         super({
             id: 'editor.action.inlineSuggest.acceptNextWord',
-            label: localize2(1227, "Accept Next Word Of Inline Suggestion"),
+            label: localize2(1242, "Accept Next Word Of Inline Suggestion"),
             precondition: ContextKeyExpr.and(EditorContextKeys.writable, InlineCompletionContextKeys.inlineSuggestionVisible),
             kbOpts: {
                 weight: 100 /* KeybindingWeight.EditorContrib */ + 1,
@@ -131,7 +131,7 @@ class AcceptNextWordOfInlineCompletion extends EditorAction {
             },
             menuOpts: [{
                     menuId: MenuId.InlineSuggestionToolbar,
-                    title: localize(1216, 'Accept Word'),
+                    title: localize(1231, 'Accept Word'),
                     group: 'primary',
                     order: 2,
                 }],
@@ -146,14 +146,14 @@ class AcceptNextLineOfInlineCompletion extends EditorAction {
     constructor() {
         super({
             id: 'editor.action.inlineSuggest.acceptNextLine',
-            label: localize2(1228, "Accept Next Line Of Inline Suggestion"),
+            label: localize2(1243, "Accept Next Line Of Inline Suggestion"),
             precondition: ContextKeyExpr.and(EditorContextKeys.writable, InlineCompletionContextKeys.inlineSuggestionVisible),
             kbOpts: {
                 weight: 100 /* KeybindingWeight.EditorContrib */ + 1,
             },
             menuOpts: [{
                     menuId: MenuId.InlineSuggestionToolbar,
-                    title: localize(1217, 'Accept Line'),
+                    title: localize(1232, 'Accept Line'),
                     group: 'secondary',
                     order: 2,
                 }],
@@ -168,16 +168,16 @@ class AcceptInlineCompletion extends EditorAction {
     constructor() {
         super({
             id: inlineSuggestCommitId,
-            label: localize2(1229, "Accept Inline Suggestion"),
+            label: localize2(1244, "Accept Inline Suggestion"),
             precondition: ContextKeyExpr.or(InlineCompletionContextKeys.inlineSuggestionVisible, InlineCompletionContextKeys.inlineEditVisible),
             menuOpts: [{
                     menuId: MenuId.InlineSuggestionToolbar,
-                    title: localize(1218, "Accept"),
+                    title: localize(1233, "Accept"),
                     group: 'primary',
                     order: 2,
                 }, {
                     menuId: MenuId.InlineEditsActions,
-                    title: localize(1219, "Accept"),
+                    title: localize(1234, "Accept"),
                     group: 'primary',
                     order: 2,
                 }],
@@ -208,7 +208,7 @@ class AcceptInlineCompletionAlternativeAction extends EditorAction {
     constructor() {
         super({
             id: inlineSuggestCommitAlternativeActionId,
-            label: localize2(1230, "Accept Inline Suggestion Alternative Action"),
+            label: localize2(1245, "Accept Inline Suggestion Alternative Action"),
             precondition: ContextKeyExpr.and(InlineCompletionContextKeys.inlineSuggestionAlternativeActionVisible, InlineCompletionContextKeys.inlineEditVisible),
             menuOpts: [],
             kbOpts: [
@@ -237,11 +237,11 @@ class JumpToNextInlineEdit extends EditorAction {
     constructor() {
         super({
             id: jumpToNextInlineEditId,
-            label: localize2(1231, "Jump to next inline edit"),
+            label: localize2(1246, "Jump to next inline edit"),
             precondition: InlineCompletionContextKeys.inlineEditVisible,
             menuOpts: [{
                     menuId: MenuId.InlineEditsActions,
-                    title: localize(1220, "Jump"),
+                    title: localize(1235, "Jump"),
                     group: 'primary',
                     order: 1,
                     when: InlineCompletionContextKeys.cursorAtInlineEdit.toNegated(),
@@ -265,7 +265,7 @@ class HideInlineCompletion extends EditorAction {
     constructor() {
         super({
             id: HideInlineCompletion.ID,
-            label: localize2(1232, "Hide Inline Suggestion"),
+            label: localize2(1247, "Hide Inline Suggestion"),
             precondition: ContextKeyExpr.or(InlineCompletionContextKeys.inlineSuggestionVisible, InlineCompletionContextKeys.inlineEditVisible),
             kbOpts: {
                 kbExpr: EditorContextKeys.editorTextFocus,
@@ -274,7 +274,7 @@ class HideInlineCompletion extends EditorAction {
             },
             menuOpts: [{
                     menuId: MenuId.InlineEditsActions,
-                    title: localize(1221, "Reject"),
+                    title: localize(1236, "Reject"),
                     group: 'primary',
                     order: 3,
                 }]
@@ -293,7 +293,7 @@ class ToggleInlineCompletionShowCollapsed extends EditorAction {
     constructor() {
         super({
             id: ToggleInlineCompletionShowCollapsed.ID,
-            label: localize2(1233, "Toggle Inline Suggestions Show Collapsed"),
+            label: localize2(1248, "Toggle Inline Suggestions Show Collapsed"),
             precondition: ContextKeyExpr.true(),
         });
     }
@@ -315,7 +315,7 @@ class ToggleAlwaysShowInlineSuggestionToolbar extends Action2 {
     constructor() {
         super({
             id: ToggleAlwaysShowInlineSuggestionToolbar.ID,
-            title: localize(1222, "Always Show Toolbar"),
+            title: localize(1237, "Always Show Toolbar"),
             f1: false,
             precondition: undefined,
             menu: [{
@@ -337,7 +337,7 @@ class DevExtractReproSample extends EditorAction {
     constructor() {
         super({
             id: 'editor.action.inlineSuggest.dev.extractRepro',
-            label: localize(1223, "Developer: Extract Inline Suggest State"),
+            label: localize(1238, "Developer: Extract Inline Suggest State"),
             alias: 'Developer: Inline Suggest Extract Repro',
             precondition: ContextKeyExpr.or(InlineCompletionContextKeys.inlineEditVisible, InlineCompletionContextKeys.inlineSuggestionVisible),
         });

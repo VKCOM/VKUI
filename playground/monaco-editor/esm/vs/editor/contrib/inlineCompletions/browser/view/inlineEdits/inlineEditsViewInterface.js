@@ -46,6 +46,11 @@ class InlineCompletionViewData {
         this.sameShapeReplacements = sameShapeReplacements;
         this.longDistanceHintVisible = undefined;
         this.longDistanceHintDistance = undefined;
+        /**
+         * Whether the suggestion targets a different text model (URI) than the active editor's,
+         * i.e. a cross-document Next Edit Suggestion. `undefined` for inline completions / ghost text.
+         */
+        this.isForAnotherDocument = undefined;
     }
     setLongDistanceViewData(lineNumber, inlineEditLineNumber) {
         this.longDistanceHintVisible = true;
@@ -62,7 +67,8 @@ class InlineCompletionViewData {
             disjointReplacements: this.disjointReplacements,
             sameShapeReplacements: this.sameShapeReplacements,
             longDistanceHintVisible: this.longDistanceHintVisible,
-            longDistanceHintDistance: this.longDistanceHintDistance
+            longDistanceHintDistance: this.longDistanceHintDistance,
+            isForAnotherDocument: this.isForAnotherDocument
         };
     }
 }

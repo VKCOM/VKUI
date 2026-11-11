@@ -200,10 +200,6 @@ let GhostTextView = class GhostTextView extends Disposable {
             }
             return this._isInlineTextHovered.read(reader) || this._additionalLinesWidget.isHovered.read(reader);
         });
-        this.height = derived(this, reader => {
-            const lineHeight = this._editorObs.getOption(75 /* EditorOption.lineHeight */).read(reader);
-            return lineHeight + (this._additionalLinesWidget.viewZoneHeight.read(reader) ?? 0);
-        });
         this._extraClasses = options.extraClasses ?? [];
         this._isClickable = options.isClickable ?? false;
         this._shouldKeepCursorStable = options.shouldKeepCursorStable ?? false;
@@ -335,7 +331,6 @@ class AdditionalLinesData {
 }
 class AdditionalLinesWidget extends Disposable {
     get viewZoneId() { return this._viewZoneInfo?.viewZoneId; }
-    get viewZoneHeight() { return this._viewZoneHeight; }
     constructor(_editor, _lines, _shouldKeepCursorStable, _isClickable) {
         super();
         this._editor = _editor;
@@ -349,14 +344,15 @@ class AdditionalLinesWidget extends Disposable {
             || e.hasChanged(108 /* EditorOption.renderControlCharacters */)
             || e.hasChanged(60 /* EditorOption.fontLigatures */)
             || e.hasChanged(59 /* EditorOption.fontInfo */)
-            || e.hasChanged(75 /* EditorOption.lineHeight */)));
+            || e.hasChanged(75 /* EditorOption.lineHeight */)
+            || e.hasChanged(176 /* EditorOption.effectiveFullwidthCharacterWidth */)));
         this._onDidClick = this._register(new Emitter());
         this.onDidClick = this._onDidClick.event;
         this._viewZoneListener = this._register(new MutableDisposable());
         this.isHovered = observableCodeEditor(this._editor).isTargetHovered(p => isTargetGhostText(p.target.element), this._store);
         this.hasBeenAccepted = false;
         if (this._editor instanceof CodeEditorWidget && this._shouldKeepCursorStable) {
-            this._register(this._editor.onBeforeExecuteEdit(e => this.hasBeenAccepted = e.source === 'inlineSuggestion.accept'));
+            this._register(this._editor.onBeforeExecuteEdit(e => this.hasBeenAccepted = e.source === 'inlineCompletionAccept'));
         }
         this._register(autorun(reader => {
             /** @description update view zone */
@@ -469,6 +465,7 @@ function renderLines(domNode, tabSize, lines, opts, isClickable) {
     const fontLigatures = opts.get(60 /* EditorOption.fontLigatures */);
     const fontInfo = opts.get(59 /* EditorOption.fontInfo */);
     const lineHeight = opts.get(75 /* EditorOption.lineHeight */);
+    const useTwoCellFullwidthCharacters = opts.get(176 /* EditorOption.effectiveFullwidthCharacterWidth */) === 'twoCells';
     let classNames = 'suggest-preview-text';
     if (isClickable) {
         classNames += ' clickable';
@@ -485,7 +482,7 @@ function renderLines(domNode, tabSize, lines, opts, isClickable) {
         const line = lineTokens.getLineContent();
         const isBasicASCII$1 = isBasicASCII(line);
         const containsRTL$1 = containsRTL(line);
-        renderViewLine(new RenderLineInput((fontInfo.isMonospace && !disableMonospaceOptimizations), fontInfo.canUseHalfwidthRightwardsArrow, line, false, isBasicASCII$1, containsRTL$1, 0, lineTokens, lineData.decorations.slice(), tabSize, 0, fontInfo.spaceWidth, fontInfo.middotWidth, fontInfo.wsmiddotWidth, stopRenderingLineAfter, renderWhitespace, renderControlCharacters, fontLigatures !== EditorFontLigatures.OFF, null, null, 0), sb);
+        renderViewLine(new RenderLineInput((fontInfo.isMonospace && !disableMonospaceOptimizations), fontInfo.canUseHalfwidthRightwardsArrow, line, false, isBasicASCII$1, containsRTL$1, 0, lineTokens, lineData.decorations.slice(), tabSize, 0, fontInfo.spaceWidth, fontInfo.middotWidth, fontInfo.wsmiddotWidth, stopRenderingLineAfter, renderWhitespace, renderControlCharacters, fontLigatures !== EditorFontLigatures.OFF, null, null, 0, false, useTwoCellFullwidthCharacters), sb);
         sb.appendString('</div>');
     }
     sb.appendString('</div>');

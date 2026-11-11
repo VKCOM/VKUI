@@ -13,7 +13,7 @@ import { IdentityCoordinatesConverter } from '../coordinatesConverter.js';
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 class ViewModelLinesFromProjectedModel {
-    constructor(editorId, model, domLineBreaksComputerFactory, monospaceLineBreaksComputerFactory, fontInfo, tabSize, wrappingStrategy, wrappingColumn, wrappingIndent, wordBreak, wrapOnEscapedLineFeeds) {
+    constructor(editorId, model, domLineBreaksComputerFactory, monospaceLineBreaksComputerFactory, fontInfo, tabSize, wrappingStrategy, wrappingColumn, wrappingIndent, wordBreak, wrapOnEscapedLineFeeds, useTwoCellFullwidthCharacters) {
         this._editorId = editorId;
         this.model = model;
         this._validModelVersionId = -1;
@@ -26,6 +26,7 @@ class ViewModelLinesFromProjectedModel {
         this.wrappingIndent = wrappingIndent;
         this.wordBreak = wordBreak;
         this.wrapOnEscapedLineFeeds = wrapOnEscapedLineFeeds;
+        this.useTwoCellFullwidthCharacters = useTwoCellFullwidthCharacters;
         this._constructLines(/*resetHiddenAreas*/ true, null);
     }
     dispose() {
@@ -156,21 +157,23 @@ class ViewModelLinesFromProjectedModel {
         this._constructLines(/*resetHiddenAreas*/ false, null);
         return true;
     }
-    setWrappingSettings(fontInfo, wrappingStrategy, wrappingColumn, wrappingIndent, wordBreak) {
+    setWrappingSettings(fontInfo, wrappingStrategy, wrappingColumn, wrappingIndent, wordBreak, useTwoCellFullwidthCharacters) {
         const equalFontInfo = this.fontInfo.equals(fontInfo);
         const equalWrappingStrategy = (this.wrappingStrategy === wrappingStrategy);
         const equalWrappingColumn = (this.wrappingColumn === wrappingColumn);
         const equalWrappingIndent = (this.wrappingIndent === wrappingIndent);
         const equalWordBreak = (this.wordBreak === wordBreak);
-        if (equalFontInfo && equalWrappingStrategy && equalWrappingColumn && equalWrappingIndent && equalWordBreak) {
+        const equalUseTwoCellFullwidthCharacters = (this.useTwoCellFullwidthCharacters === useTwoCellFullwidthCharacters);
+        if (equalFontInfo && equalWrappingStrategy && equalWrappingColumn && equalWrappingIndent && equalWordBreak && equalUseTwoCellFullwidthCharacters) {
             return false;
         }
-        const onlyWrappingColumnChanged = (equalFontInfo && equalWrappingStrategy && !equalWrappingColumn && equalWrappingIndent && equalWordBreak);
+        const onlyWrappingColumnChanged = (equalFontInfo && equalWrappingStrategy && !equalWrappingColumn && equalWrappingIndent && equalWordBreak && equalUseTwoCellFullwidthCharacters);
         this.fontInfo = fontInfo;
         this.wrappingStrategy = wrappingStrategy;
         this.wrappingColumn = wrappingColumn;
         this.wrappingIndent = wrappingIndent;
         this.wordBreak = wordBreak;
+        this.useTwoCellFullwidthCharacters = useTwoCellFullwidthCharacters;
         let previousLineBreaks = null;
         if (onlyWrappingColumnChanged) {
             previousLineBreaks = [];
@@ -193,7 +196,7 @@ class ViewModelLinesFromProjectedModel {
                 return this.model.getLineInjectedText(lineNumber, this._editorId);
             }
         };
-        return lineBreaksComputerFactory.createLineBreaksComputer(context, this.fontInfo, this.tabSize, this.wrappingColumn, this.wrappingIndent, this.wordBreak, this.wrapOnEscapedLineFeeds);
+        return lineBreaksComputerFactory.createLineBreaksComputer(context, this.fontInfo, this.tabSize, this.wrappingColumn, this.wrappingIndent, this.wordBreak, this.wrapOnEscapedLineFeeds, this.useTwoCellFullwidthCharacters);
     }
     onModelFlushed() {
         this._constructLines(/*resetHiddenAreas*/ true, null);
@@ -527,6 +530,10 @@ class ViewModelLinesFromProjectedModel {
     getViewLineMaxColumn(viewLineNumber) {
         const info = this.getViewLineInfo(viewLineNumber);
         return this.modelLineProjections[info.modelLineNumber - 1].getViewLineMaxColumn(this.model, info.modelLineNumber, info.modelLineWrappedLineIdx);
+    }
+    getViewLineContinuesWithWrappedLine(viewLineNumber) {
+        const info = this.getViewLineInfo(viewLineNumber);
+        return this.modelLineProjections[info.modelLineNumber - 1].getViewLineContinuesWithWrappedLine(info.modelLineWrappedLineIdx);
     }
     getViewLineData(viewLineNumber) {
         const info = this.getViewLineInfo(viewLineNumber);
@@ -912,6 +919,9 @@ class ViewModelLinesFromModelAsIs {
     }
     getViewLineMaxColumn(viewLineNumber) {
         return this.model.getLineMaxColumn(viewLineNumber);
+    }
+    getViewLineContinuesWithWrappedLine(_viewLineNumber) {
+        return false;
     }
     getViewLineData(viewLineNumber) {
         const lineTokens = this.model.tokenization.getLineTokens(viewLineNumber);

@@ -10,6 +10,7 @@ import { IAccessibilityService } from '../../../../../platform/accessibility/com
 import { ICommandService } from '../../../../../platform/commands/common/commands.js';
 import { IInstantiationService } from '../../../../../platform/instantiation/common/instantiation.js';
 import { observableCodeEditor } from '../../../../browser/observableCodeEditor.js';
+import product from '../../../../../platform/product/common/product.js';
 import { CursorColumns } from '../../../../common/core/cursorColumns.js';
 import { LineRange } from '../../../../common/core/ranges/lineRange.js';
 import { Position } from '../../../../common/core/position.js';
@@ -66,7 +67,7 @@ let InlineCompletionsModel = class InlineCompletionsModel extends Disposable {
     get editor() {
         return this._editor;
     }
-    constructor(textModel, _selectedSuggestItem, _textModelVersionId, _positions, _debounceValue, _enabled, _editor, _instantiationService, _commandService, _languageConfigurationService, _accessibilityService, _languageFeaturesService, _codeEditorService, _inlineCompletionsService, defaultAccountService) {
+    constructor(textModel, _selectedSuggestItem, _textModelVersionId, _positions, _debounceValue, _enabled, _isSuppressed, _editor, _instantiationService, _commandService, _languageConfigurationService, _accessibilityService, _languageFeaturesService, _codeEditorService, _inlineCompletionsService, defaultAccountService) {
         super();
         this.textModel = textModel;
         this._selectedSuggestItem = _selectedSuggestItem;
@@ -74,6 +75,7 @@ let InlineCompletionsModel = class InlineCompletionsModel extends Disposable {
         this._positions = _positions;
         this._debounceValue = _debounceValue;
         this._enabled = _enabled;
+        this._isSuppressed = _isSuppressed;
         this._editor = _editor;
         this._instantiationService = _instantiationService;
         this._commandService = _commandService;
@@ -179,7 +181,8 @@ let InlineCompletionsModel = class InlineCompletionsModel extends Disposable {
             this._onlyRequestInlineEditsSignal.read(reader);
             this._forceUpdateExplicitlySignal.read(reader);
             this._fetchSpecificProviderSignal.read(reader);
-            const shouldUpdate = ((this._enabled.read(reader) && this._selectedSuggestItem.read(reader)) || this._isActive.read(reader))
+            const shouldUpdate = !this._isSuppressed()
+                && ((this._enabled.read(reader) && this._selectedSuggestItem.read(reader)) || this._isActive.read(reader))
                 && (!this._inlineCompletionsService.isSnoozing() || changeSummary.inlineCompletionTriggerKind === InlineCompletionTriggerKind.Explicit);
             if (!shouldUpdate) {
                 this._source.cancelUpdate();
@@ -546,7 +549,7 @@ let InlineCompletionsModel = class InlineCompletionsModel extends Disposable {
         this._jumpedToId = observableValue(this, undefined);
         this._inAcceptFlow = observableValue(this, false);
         this.inAcceptFlow = this._inAcceptFlow;
-        this._source = this._register(this._instantiationService.createInstance(InlineCompletionsSource, this.textModel, this._textModelVersionId, this._debounceValue, this.primaryPosition));
+        this._source = this._register(this._instantiationService.createInstance(InlineCompletionsSource, this.textModel, this._textModelVersionId, this._debounceValue, this.primaryPosition, product.defaultChatAgent?.completionsEnablementSetting));
         this.lastTriggerKind = this._source.inlineCompletions.map(this, v => v?.request?.context.triggerKind);
         this._editorObs = observableCodeEditor(this._editor);
         const suggest = this._editorObs.getOption(134 /* EditorOption.suggest */);
@@ -958,7 +961,7 @@ let InlineCompletionsModel = class InlineCompletionsModel extends Disposable {
                 const primaryEdit = new TextReplacement(replaceRange, newText);
                 const edits = [primaryEdit, ...getSecondaryEdits(this.textModel, positions, primaryEdit)].filter(isDefined);
                 const selections = getEndPositionsAfterApplying(edits).map(p => Selection.fromPositions(p));
-                editor.edit(TextEdit.fromParallelReplacementsUnsorted(edits), this._getMetadata(completion, type));
+                editor.edit(TextEdit.fromParallelReplacementsUnsorted(edits), this._getMetadata(completion, this.textModel.getLanguageId(), type));
                 editor.setSelections(selections, 'inlineCompletionPartialAccept');
                 editor.revealPositionInCenterIfOutsideViewport(editor.getPosition(), 0 /* ScrollType.Smooth */);
             }
@@ -1059,14 +1062,14 @@ let InlineCompletionsModel = class InlineCompletionsModel extends Disposable {
     }
 };
 InlineCompletionsModel = __decorate([
-    __param(7, IInstantiationService),
-    __param(8, ICommandService),
-    __param(9, ILanguageConfigurationService),
-    __param(10, IAccessibilityService),
-    __param(11, ILanguageFeaturesService),
-    __param(12, ICodeEditorService),
-    __param(13, IInlineCompletionsService),
-    __param(14, IDefaultAccountService)
+    __param(8, IInstantiationService),
+    __param(9, ICommandService),
+    __param(10, ILanguageConfigurationService),
+    __param(11, IAccessibilityService),
+    __param(12, ILanguageFeaturesService),
+    __param(13, ICodeEditorService),
+    __param(14, IInlineCompletionsService),
+    __param(15, IDefaultAccountService)
 ], InlineCompletionsModel);
 var VersionIdChangeReason;
 (function (VersionIdChangeReason) {

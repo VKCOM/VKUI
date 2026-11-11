@@ -2,21 +2,13 @@
 description: Компонент для создания набора сценариев из View и возможностью переключаться между ними.
 ---
 
-<Overview group="navigation">
-
-# Root [tag:component]
+# Root \[tag:component]
 
 Компонент для создания набора сценариев из [`View`](/components/view) и возможностью переключаться между ними.
 
 Связанные страницы:
 
-- [Навигация](/overview/navigation)
-
-</Overview>
-
-import { FixedLayoutWrapper } from '@/components/wrappers';
-
-<Playground hide Wrapper={FixedLayoutWrapper} style={{ maxWidth: 320, height: 415, overflow: 'hidden' }}>
+* [Навигация](/overview/navigation)
 
 ```jsx
 return (
@@ -34,11 +26,6 @@ return (
   </Root>
 );
 ```
-
-</Playground>
-
-{/* @example-description: Базовый `Root` с переключением между двумя сценариями (`View`) по кнопке. */}
-<Playground Wrapper={FixedLayoutWrapper} style={{ maxWidth: 320, height: 415, overflow: 'hidden' }}>
 
 ```jsx
 const [activeView, setActiveView] = useState('view-1');
@@ -67,8 +54,6 @@ return (
   </Root>
 );
 ```
-
-</Playground>
 
 ## Применение компонента
 
@@ -129,13 +114,13 @@ function transitionHandler({
 <Root onTransition={transitionHandler}>{/* views */}</Root>;
 ```
 
-## Свойства и методы [#api]
+## Свойства и методы \[#api]
 
-| Свойство | Тип | По умолчанию | Описание |
-| --- | --- | --- | --- |
-| `**activeView** \*` | `string` | `-` | `id` активной `View`. |
-| `**children** \*` | `ReactElement<unknown, string \| JSXElementConstructor<any>> \| Iterable<ReactElement<unknown, string \| JSXElementConstructor<any>>>` | `-` | Коллекция `View`. У каждой `View` должен быть `id`. |
-| `getRootRef` | `Ref<HTMLDivElement>` | `-` |  |
-| `nav` | `string` | `-` | Уникальный идентификатор навигационного элемента (вместо id) |
-| `onTransition` | `((params: { isBack: boolean; from: string; to: string; }) => void)` | `-` | Обработчик, который вызывается при завершении анимации смены активной `View`. |
-
+| Свойство            | Тип                                                                                                                                    | По умолчанию | Описание                                                                      |
+| ------------------- | -------------------------------------------------------------------------------------------------------------------------------------- | ------------ | ----------------------------------------------------------------------------- |
+| `**activeView** \*` | `string`                                                                                                                               | `-`          | `id` активной `View`.                                                         |
+| `**children** \*`   | `ReactElement<unknown, string \| JSXElementConstructor<any>> \| Iterable<ReactElement<unknown, string \| JSXElementConstructor<any>>>` | `-`          | Коллекция `View`. У каждой `View` должен быть `id`.                           |
+| `getRootRef`        | `Ref<HTMLDivElement>`                                                                                                                  | `-`          |                                                                               |
+| `nav`               | `string`                                                                                                                               | `-`          | Уникальный идентификатор навигационного элемента (вместо id)                  |
+| `onTransition`      | `((params: { isBack: boolean; from: string; to: string; }) => void)`                                                                   | `-`          | Обработчик, который вызывается при завершении анимации смены активной `View`. |
+| `ref`               | `Ref<HTMLDivElement>`                                                                                                                  | `-`          |                                                                               |

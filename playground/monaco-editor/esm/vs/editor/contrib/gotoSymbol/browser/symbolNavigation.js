@@ -25,7 +25,7 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var __param = (undefined && undefined.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-const ctxHasSymbols = new RawContextKey('hasSymbols', false, localize(1138, "Whether there are symbol locations that can be navigated via keyboard-only."));
+const ctxHasSymbols = new RawContextKey('hasSymbols', false, localize(1153, "Whether there are symbol locations that can be navigated via keyboard-only."));
 const ISymbolNavigationService = createDecorator('ISymbolNavigationService');
 let SymbolNavigationService = class SymbolNavigationService {
     constructor(contextKeyService, _editorService, _notificationService, _keybindingService) {
@@ -111,8 +111,8 @@ let SymbolNavigationService = class SymbolNavigationService {
         this._currentMessage?.close();
         const kb = this._keybindingService.lookupKeybinding('editor.gotoNextSymbolFromResult');
         const message = kb
-            ? localize(1139, "Symbol {0} of {1}, {2} for next", this._currentIdx + 1, this._currentModel.references.length, kb.getLabel())
-            : localize(1140, "Symbol {0} of {1}", this._currentIdx + 1, this._currentModel.references.length);
+            ? localize(1154, "Symbol {0} of {1}, {2} for next", this._currentIdx + 1, this._currentModel.references.length, kb.getLabel())
+            : localize(1155, "Symbol {0} of {1}", this._currentIdx + 1, this._currentModel.references.length);
         this._currentMessage = this._notificationService.status(message);
     }
 };

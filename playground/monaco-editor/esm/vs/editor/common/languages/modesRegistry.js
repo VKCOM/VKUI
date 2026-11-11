@@ -45,7 +45,7 @@ const PLAINTEXT_EXTENSION = '.txt';
 ModesRegistry.registerLanguage({
     id: PLAINTEXT_LANGUAGE_ID,
     extensions: [PLAINTEXT_EXTENSION],
-    aliases: [localize(819, "Plain Text"), 'text'],
+    aliases: [localize(834, "Plain Text"), 'text'],
     mimetypes: [Mimes.text]
 });
 Registry.as(Extensions$1.Configuration)

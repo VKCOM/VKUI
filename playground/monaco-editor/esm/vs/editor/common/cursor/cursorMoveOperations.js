@@ -95,7 +95,7 @@ class MoveOperations {
             lineNumber = lineNumber + 1;
             column = model.getLineMinColumn(lineNumber);
         }
-        return new Position(lineNumber, column);
+        return model.normalizePosition(new Position(lineNumber, column), 1 /* PositionAffinity.Right */);
     }
     static rightPositionAtomicSoftTabs(model, lineNumber, column, tabSize, indentSize) {
         if (column < model.getLineIndentColumn(lineNumber)) {

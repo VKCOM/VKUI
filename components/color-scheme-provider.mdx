@@ -3,20 +3,16 @@ description: Компонент, позволяющий переопредели
 tags: provider
 ---
 
-<Overview group="configuration">
-
-# ColorSchemeProvider [tag:component]
+# ColorSchemeProvider \[tag:component]
 
 Компонент, позволяющий переопределить цветовую схему сайта.
-
-</Overview>
 
 ## Цветовая схема
 
 Задаётся свойством `value`.
 
-- `"light"` — светлая схема;
-- `"dark"` — тёмная схема.
+* `"light"` — светлая схема;
+* `"dark"` — тёмная схема.
 
 ```jsx
 <ColorSchemeProvider value="dark">
@@ -58,7 +54,7 @@ tags: provider
 > }
 > ```
 
-## Хук useColorScheme [#use-color-scheme]
+## Хук useColorScheme \[#use-color-scheme]
 
 Для получения значения текущей цветовой схемы используйте хук `useColorScheme`:
 
@@ -70,16 +66,15 @@ import { useColorScheme } from '@vkontakte/vkui';
 const colorScheme = useColorScheme();
 ```
 
-## Свойства и методы [#api]
+## Свойства и методы \[#api]
 
 ### ColorSchemeProvider
 
-| Свойство | Тип | По умолчанию | Описание |
-| --- | --- | --- | --- |
-| `**children** \*` | `ReactNode` | `-` | Содержимое. |
-| `**value** \*` | `ColorSchemeType` | `-` | Цветовая схема. |
+| Свойство          | Тип               | По умолчанию | Описание        |
+| ----------------- | ----------------- | ------------ | --------------- |
+| `**children** \*` | `ReactNode`       | `-`          | Содержимое.     |
+| `**value** \*`    | `ColorSchemeType` | `-`          | Цветовая схема. |
 
 ### useColorScheme
 
-_Не принимает свойств_
-
+*Не принимает свойств*

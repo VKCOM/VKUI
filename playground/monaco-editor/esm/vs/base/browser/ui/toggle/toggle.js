@@ -160,7 +160,12 @@ class Toggle extends Widget {
     }
     applyStyles() {
         if (this.domNode) {
-            this.domNode.style.borderColor = (this._checked && this._opts.inputActiveOptionBorder) || '';
+            if (this._checked && this._opts.inputActiveOptionBorder) {
+                this.domNode.style.setProperty('--monaco-custom-toggle-border-color', this._opts.inputActiveOptionBorder);
+            }
+            else {
+                this.domNode.style.removeProperty('--monaco-custom-toggle-border-color');
+            }
             this.domNode.style.color = (this._checked && this._opts.inputActiveOptionForeground) || 'inherit';
             this.domNode.style.backgroundColor = (this._checked && this._opts.inputActiveOptionBackground) || '';
         }

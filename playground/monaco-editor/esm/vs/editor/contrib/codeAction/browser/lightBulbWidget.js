@@ -33,11 +33,11 @@ var __param = (undefined && undefined.__param) || function (paramIndex, decorato
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 var LightBulbWidget_1;
-const GUTTER_LIGHTBULB_ICON = registerIcon('gutter-lightbulb', Codicon.lightBulb, localize(910, 'Icon which spawns code actions menu from the gutter when there is no space in the editor.'));
-const GUTTER_LIGHTBULB_AUTO_FIX_ICON = registerIcon('gutter-lightbulb-auto-fix', Codicon.lightbulbAutofix, localize(911, 'Icon which spawns code actions menu from the gutter when there is no space in the editor and a quick fix is available.'));
-const GUTTER_LIGHTBULB_AIFIX_ICON = registerIcon('gutter-lightbulb-sparkle', Codicon.lightbulbSparkle, localize(912, 'Icon which spawns code actions menu from the gutter when there is no space in the editor and an AI fix is available.'));
-const GUTTER_LIGHTBULB_AIFIX_AUTO_FIX_ICON = registerIcon('gutter-lightbulb-aifix-auto-fix', Codicon.lightbulbSparkleAutofix, localize(913, 'Icon which spawns code actions menu from the gutter when there is no space in the editor and an AI fix and a quick fix is available.'));
-const GUTTER_SPARKLE_FILLED_ICON = registerIcon('gutter-lightbulb-sparkle-filled', Codicon.sparkleFilled, localize(914, 'Icon which spawns code actions menu from the gutter when there is no space in the editor and an AI fix and a quick fix is available.'));
+const GUTTER_LIGHTBULB_ICON = registerIcon('gutter-lightbulb', Codicon.lightBulb, localize(925, 'Icon which spawns code actions menu from the gutter when there is no space in the editor.'));
+const GUTTER_LIGHTBULB_AUTO_FIX_ICON = registerIcon('gutter-lightbulb-auto-fix', Codicon.lightbulbAutofix, localize(926, 'Icon which spawns code actions menu from the gutter when there is no space in the editor and a quick fix is available.'));
+const GUTTER_LIGHTBULB_AIFIX_ICON = registerIcon('gutter-lightbulb-sparkle', Codicon.lightbulbSparkle, localize(927, 'Icon which spawns code actions menu from the gutter when there is no space in the editor and an AI fix is available.'));
+const GUTTER_LIGHTBULB_AIFIX_AUTO_FIX_ICON = registerIcon('gutter-lightbulb-aifix-auto-fix', Codicon.lightbulbSparkleAutofix, localize(928, 'Icon which spawns code actions menu from the gutter when there is no space in the editor and an AI fix and a quick fix is available.'));
+const GUTTER_SPARKLE_FILLED_ICON = registerIcon('gutter-lightbulb-sparkle-filled', Codicon.sparkleFilled, localize(929, 'Icon which spawns code actions menu from the gutter when there is no space in the editor and an AI fix and a quick fix is available.'));
 var LightBulbState;
 (function (LightBulbState) {
     LightBulbState.Hidden = { type: 0 /* Type.Hidden */ };
@@ -80,16 +80,16 @@ function computeLightBulbInfo(actions, trigger, preferredKbLabel, quickFixKbLabe
     }
     let title;
     if (autoRun) {
-        title = localize(915, "Run: {0}", actions.validActions[0].action.title);
+        title = localize(930, "Run: {0}", actions.validActions[0].action.title);
     }
     else if (actions.hasAutoFix && preferredKbLabel) {
-        title = localize(916, "Show Code Actions. Preferred Quick Fix Available ({0})", preferredKbLabel);
+        title = localize(931, "Show Code Actions. Preferred Quick Fix Available ({0})", preferredKbLabel);
     }
     else if (!actions.hasAutoFix && quickFixKbLabel) {
-        title = localize(917, "Show Code Actions ({0})", quickFixKbLabel);
+        title = localize(932, "Show Code Actions ({0})", quickFixKbLabel);
     }
     else {
-        title = localize(918, "Show Code Actions");
+        title = localize(933, "Show Code Actions");
     }
     return { actions, trigger, icon, autoRun, title, isGutter: forGutter };
 }

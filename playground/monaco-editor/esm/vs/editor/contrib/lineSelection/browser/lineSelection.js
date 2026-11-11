@@ -11,7 +11,7 @@ class ExpandLineSelectionAction extends EditorAction {
     constructor() {
         super({
             id: 'expandLineSelection',
-            label: localize2(1289, "Expand Line Selection"),
+            label: localize2(1309, "Expand Line Selection"),
             precondition: undefined,
             kbOpts: {
                 weight: 0 /* KeybindingWeight.EditorCore */,

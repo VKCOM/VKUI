@@ -98,8 +98,8 @@ class RevertButton extends Disposable {
         this._id = `revertButton${RevertButton.counter++}`;
         this._domNode = h('div.revertButton', {
             title: this._revertSelection
-                ? localize(151, 'Revert Selected Changes')
-                : localize(152, 'Revert Change')
+                ? localize(154, 'Revert Selected Changes')
+                : localize(155, 'Revert Change')
         }, [renderIcon(Codicon.arrowRight)]).root;
         this._register(addDisposableListener(this._domNode, EventType.MOUSE_DOWN, e => {
             // don't prevent context menu from showing up

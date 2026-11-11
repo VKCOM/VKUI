@@ -57,7 +57,7 @@ class ToggleCommentLineAction extends CommentLineAction {
     constructor() {
         super(0 /* Type.Toggle */, {
             id: 'editor.action.commentLine',
-            label: localize2(933, "Toggle Line Comment"),
+            label: localize2(948, "Toggle Line Comment"),
             precondition: EditorContextKeys.writable,
             kbOpts: {
                 kbExpr: EditorContextKeys.editorTextFocus,
@@ -67,7 +67,7 @@ class ToggleCommentLineAction extends CommentLineAction {
             menuOpts: {
                 menuId: MenuId.MenubarEditMenu,
                 group: '5_insert',
-                title: localize(931, "&&Toggle Line Comment"),
+                title: localize(946, "&&Toggle Line Comment"),
                 order: 1
             },
             canTriggerInlineEdits: true,
@@ -78,7 +78,7 @@ class AddLineCommentAction extends CommentLineAction {
     constructor() {
         super(1 /* Type.ForceAdd */, {
             id: 'editor.action.addCommentLine',
-            label: localize2(934, "Add Line Comment"),
+            label: localize2(949, "Add Line Comment"),
             precondition: EditorContextKeys.writable,
             kbOpts: {
                 kbExpr: EditorContextKeys.editorTextFocus,
@@ -93,7 +93,7 @@ class RemoveLineCommentAction extends CommentLineAction {
     constructor() {
         super(2 /* Type.ForceRemove */, {
             id: 'editor.action.removeCommentLine',
-            label: localize2(935, "Remove Line Comment"),
+            label: localize2(950, "Remove Line Comment"),
             precondition: EditorContextKeys.writable,
             kbOpts: {
                 kbExpr: EditorContextKeys.editorTextFocus,
@@ -108,7 +108,7 @@ class BlockCommentAction extends EditorAction {
     constructor() {
         super({
             id: 'editor.action.blockComment',
-            label: localize2(936, "Toggle Block Comment"),
+            label: localize2(951, "Toggle Block Comment"),
             precondition: EditorContextKeys.writable,
             kbOpts: {
                 kbExpr: EditorContextKeys.editorTextFocus,
@@ -119,7 +119,7 @@ class BlockCommentAction extends EditorAction {
             menuOpts: {
                 menuId: MenuId.MenubarEditMenu,
                 group: '5_insert',
-                title: localize(932, "Toggle &&Block Comment"),
+                title: localize(947, "Toggle &&Block Comment"),
                 order: 2
             },
             canTriggerInlineEdits: true,

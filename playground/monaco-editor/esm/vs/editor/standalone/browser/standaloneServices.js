@@ -8,11 +8,12 @@ import './standaloneCodeEditorService.js';
 import './standaloneLayoutService.js';
 import { addDisposableListener, EventType } from '../../../base/browser/dom.js';
 import { StandardKeyboardEvent } from '../../../base/browser/keyboardEvent.js';
+import { renderAsPlaintext } from '../../../base/browser/markdownRenderer.js';
 import { mainWindow } from '../../../base/browser/window.js';
 import { onUnexpectedError } from '../../../base/common/errors.js';
 import { Emitter, Event } from '../../../base/common/event.js';
 import { decodeKeybinding, KeyCodeChord } from '../../../base/common/keybindings.js';
-import { ImmortalReference, combinedDisposable, toDisposable, Disposable, DisposableStore } from '../../../base/common/lifecycle.js';
+import { combinedDisposable, toDisposable, Disposable, DisposableStore } from '../../../base/common/lifecycle.js';
 import { ResourceMap } from '../../../base/common/map.js';
 import { OS, isLinux, isMacintosh } from '../../../base/common/platform.js';
 import { basename } from '../../../base/common/resources.js';
@@ -88,6 +89,7 @@ import { ITextResourceConfigurationService, ITextResourcePropertiesService } fro
 import { ITreeSitterLibraryService } from '../../common/services/treeSitter/treeSitterLibraryService.js';
 import { StandaloneServicesNLS } from '../../common/standaloneStrings.js';
 import { IStandaloneThemeService } from '../common/standaloneTheme.js';
+import { InMemoryTextModelService } from '../../common/services/inMemoryTextModelService.js';
 import { StandaloneQuickInputService } from './quickInput/standaloneQuickInputService.js';
 import { StandaloneWebWorkerService } from './services/standaloneWebWorkerService.js';
 import { StandaloneThemeService } from './standaloneThemeService.js';
@@ -106,35 +108,6 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var __param = (undefined && undefined.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-class SimpleModel {
-    constructor(model) {
-        this.disposed = false;
-        this.model = model;
-        this._onWillDispose = new Emitter();
-    }
-    get textEditorModel() {
-        return this.model;
-    }
-    dispose() {
-        this.disposed = true;
-        this._onWillDispose.fire();
-    }
-}
-let StandaloneTextModelService = class StandaloneTextModelService {
-    constructor(modelService) {
-        this.modelService = modelService;
-    }
-    createModelReference(resource) {
-        const model = this.modelService.getModel(resource);
-        if (!model) {
-            return Promise.reject(new Error(`Model not found`));
-        }
-        return Promise.resolve(new ImmortalReference(new SimpleModel(model)));
-    }
-};
-StandaloneTextModelService = __decorate([
-    __param(0, IModelService)
-], StandaloneTextModelService);
 class StandaloneEditorProgressService {
     static { this.NULL_PROGRESS_RUNNER = {
         done: () => { },
@@ -172,7 +145,7 @@ class StandaloneDialogService {
     doConfirm(message, detail) {
         let messageText = message;
         if (detail) {
-            messageText = messageText + '\n\n' + detail;
+            messageText = messageText + '\n\n' + (typeof detail === 'object' ? renderAsPlaintext(detail) : detail);
         }
         return mainWindow.confirm(messageText);
     }
@@ -600,14 +573,14 @@ let StandaloneContextViewService = class StandaloneContextViewService extends Co
         super(layoutService);
         this._codeEditorService = _codeEditorService;
     }
-    showContextView(delegate, container, shadowRoot) {
+    showContextView(delegate, container, shadowRoot, useWindowContainerForShadowRoot) {
         if (!container) {
             const codeEditor = this._codeEditorService.getFocusedCodeEditor() || this._codeEditorService.getActiveCodeEditor();
             if (codeEditor) {
                 container = codeEditor.getContainerDomNode();
             }
         }
-        return super.showContextView(delegate, container, shadowRoot);
+        return super.showContextView(delegate, container, shadowRoot, useWindowContainerForShadowRoot);
     }
 };
 StandaloneContextViewService = __decorate([
@@ -681,7 +654,7 @@ registerSingleton(IEditorProgressService, StandaloneEditorProgressService, 0 /* 
 registerSingleton(IStorageService, InMemoryStorageService, 0 /* InstantiationType.Eager */);
 registerSingleton(IBulkEditService, StandaloneBulkEditService, 0 /* InstantiationType.Eager */);
 registerSingleton(IWorkspaceTrustManagementService, StandaloneWorkspaceTrustManagementService, 0 /* InstantiationType.Eager */);
-registerSingleton(ITextModelService, StandaloneTextModelService, 0 /* InstantiationType.Eager */);
+registerSingleton(ITextModelService, InMemoryTextModelService, 0 /* InstantiationType.Eager */);
 registerSingleton(IAccessibilityService, AccessibilityService, 0 /* InstantiationType.Eager */);
 registerSingleton(IListService, ListService, 0 /* InstantiationType.Eager */);
 registerSingleton(ICommandService, StandaloneCommandService, 0 /* InstantiationType.Eager */);

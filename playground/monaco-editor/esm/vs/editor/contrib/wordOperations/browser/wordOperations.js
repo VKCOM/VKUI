@@ -396,9 +396,9 @@ class DeleteInsideWord extends EditorAction {
         super({
             id: 'deleteInsideWord',
             precondition: EditorContextKeys.writable,
-            label: localize2(1628, "Delete Word"),
+            label: localize2(1650, "Delete Word"),
             metadata: {
-                description: localize2(1629, "Delete the word at the cursor"),
+                description: localize2(1651, "Delete the word at the cursor"),
                 args: [{
                         name: 'args',
                         schema: {
@@ -407,7 +407,7 @@ class DeleteInsideWord extends EditorAction {
                                 'onlyWord': {
                                     type: 'boolean',
                                     default: false,
-                                    description: localize(1627, "Delete only the word and leave surrounding whitespace")
+                                    description: localize(1649, "Delete only the word and leave surrounding whitespace")
                                 }
                             }
                         }

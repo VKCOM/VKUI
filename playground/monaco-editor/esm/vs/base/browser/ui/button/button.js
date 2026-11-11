@@ -245,6 +245,9 @@ class Button extends Disposable {
             this._hover.update(title);
         }
     }
+    focus() {
+        this._element.focus();
+    }
 }
 
 export { Button };

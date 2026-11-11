@@ -11,4 +11,4 @@ import { wrapInReloadableClass1 } from '../../../../platform/observable/common/w
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 registerEditorContribution(PlaceholderTextContribution.ID, wrapInReloadableClass1(() => PlaceholderTextContribution), 0 /* EditorContributionInstantiation.Eager */);
-registerColor('editor.placeholder.foreground', ghostTextForeground, localize(1380, 'Foreground color of the placeholder text in the editor.'));
+registerColor('editor.placeholder.foreground', ghostTextForeground, localize(1400, 'Foreground color of the placeholder text in the editor.'));

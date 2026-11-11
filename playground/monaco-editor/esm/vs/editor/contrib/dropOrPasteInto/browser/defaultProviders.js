@@ -73,7 +73,7 @@ class DefaultTextPasteOrDropEditProvider extends SimplePasteAndDropProvider {
         const insertText = await textEntry.asString();
         return {
             handledMimeType: Mimes.text,
-            title: localize(965, "Insert Plain Text"),
+            title: localize(980, "Insert Plain Text"),
             insertText,
             kind: this.kind,
         };
@@ -106,14 +106,14 @@ class PathProvider extends SimplePasteAndDropProvider {
         if (uriCount > 0) {
             // Dropping at least one generic uri (such as https) so use most generic label
             label = entries.length > 1
-                ? localize(966, "Insert Uris")
-                : localize(967, "Insert Uri");
+                ? localize(981, "Insert Uris")
+                : localize(982, "Insert Uri");
         }
         else {
             // All the paths are file paths
             label = entries.length > 1
-                ? localize(968, "Insert Paths")
-                : localize(969, "Insert Path");
+                ? localize(983, "Insert Paths")
+                : localize(984, "Insert Path");
         }
         return {
             handledMimeType: Mimes.uriList,
@@ -146,8 +146,8 @@ let RelativePathProvider = class RelativePathProvider extends SimplePasteAndDrop
             handledMimeType: Mimes.uriList,
             insertText: relativeUris.join(' '),
             title: entries.length > 1
-                ? localize(970, "Insert Relative Paths")
-                : localize(971, "Insert Relative Path"),
+                ? localize(985, "Insert Relative Paths")
+                : localize(986, "Insert Relative Path"),
             kind: this.kind,
         };
     }
@@ -177,7 +177,7 @@ class PasteHtmlProvider {
             edits: [{
                     insertText: htmlText,
                     yieldTo: this._yieldTo,
-                    title: localize(972, 'Insert HTML'),
+                    title: localize(987, 'Insert HTML'),
                     kind: this.kind,
                 }],
         };

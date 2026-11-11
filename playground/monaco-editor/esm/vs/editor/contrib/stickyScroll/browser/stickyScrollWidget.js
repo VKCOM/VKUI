@@ -131,7 +131,11 @@ class StickyScrollWidget extends Disposable {
         }
         let totalHeight = 0;
         for (let i = 0; i < candidateLineNumbers.length; i++) {
-            totalHeight += this._editor.getLineHeightForPosition(new Position(candidateLineNumbers[i], 1));
+            const position = new Position(candidateLineNumbers[i], 1);
+            const viewModel = this._editor._getViewModel();
+            if (viewModel && position.lineNumber <= viewModel.getLineCount()) {
+                totalHeight += this._editor.getLineHeightForPosition(new Position(candidateLineNumbers[i], 1));
+            }
         }
         if (totalHeight === 0) {
             return { lineNumbers: [], lastLineRelativePosition: 0 };
@@ -194,7 +198,11 @@ class StickyScrollWidget extends Disposable {
         }
         const layoutInfo = this._editor.getLayoutInfo();
         for (let i = rebuildFromIndex; i < lineNumbers.length; i++) {
-            const stickyLine = this._renderChildNode(viewModel, i, lineNumbers[i], top, lastLineNumber === lineNumbers[i], foldingModel, layoutInfo);
+            const lineNumber = lineNumbers[i];
+            if (lineNumber > viewModel.getLineCount()) {
+                continue;
+            }
+            const stickyLine = this._renderChildNode(viewModel, i, lineNumber, top, lastLineNumber === lineNumber, foldingModel, layoutInfo);
             top += stickyLine.height;
             this._linesDomNode.appendChild(stickyLine.lineDomNode);
             this._lineNumbersDomNode.appendChild(stickyLine.lineNumberDomNode);
@@ -375,7 +383,8 @@ class RenderedStickyLine {
         }
         const lineHeight = editor.getLineHeightForPosition(new Position(lineNumber, 1));
         const textDirection = viewModel.getTextDirection(lineNumber);
-        const renderLineInput = new RenderLineInput(true, true, lineRenderingData.content, lineRenderingData.continuesWithWrappedLine, lineRenderingData.isBasicASCII, lineRenderingData.containsRTL, 0, lineRenderingData.tokens, actualInlineDecorations, lineRenderingData.tabSize, lineRenderingData.startVisibleColumn, 1, 1, 1, 500, 'none', true, true, null, textDirection, verticalScrollbarSize);
+        const fontInfo = editor.getOption(59 /* EditorOption.fontInfo */);
+        const renderLineInput = new RenderLineInput(true, true, lineRenderingData.content, lineRenderingData.continuesWithWrappedLine, lineRenderingData.isBasicASCII, lineRenderingData.containsRTL, 0, lineRenderingData.tokens, actualInlineDecorations, lineRenderingData.tabSize, lineRenderingData.startVisibleColumn, fontInfo.spaceWidth, 1, 1, 500, 'none', true, true, null, textDirection, verticalScrollbarSize, false, editor.getOption(176 /* EditorOption.effectiveFullwidthCharacterWidth */) === 'twoCells');
         const sb = new StringBuilder(2000);
         const renderOutput = renderViewLine(renderLineInput, sb);
         this.characterMapping = renderOutput.characterMapping;

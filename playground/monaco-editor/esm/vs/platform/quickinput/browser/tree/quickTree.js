@@ -13,7 +13,7 @@ import { autorun } from '../../../../base/common/observableInternal/reactions/au
  *--------------------------------------------------------------------------------------------*/
 // Contains the API
 class QuickTree extends QuickInput {
-    static { this.DEFAULT_ARIA_LABEL = localize(1837, "Type to narrow down results."); }
+    static { this.DEFAULT_ARIA_LABEL = localize(1870, "Type to narrow down results."); }
     constructor(ui) {
         super(ui);
         this.type = "quickTree" /* QuickInputType.QuickTree */;

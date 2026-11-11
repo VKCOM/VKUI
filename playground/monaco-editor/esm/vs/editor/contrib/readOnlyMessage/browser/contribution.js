@@ -21,10 +21,10 @@ class ReadOnlyMessageController extends Disposable {
             let message = this.editor.getOptions().get(105 /* EditorOption.readOnlyMessage */);
             if (!message) {
                 if (this.editor.isSimpleWidget) {
-                    message = new MarkdownString(localize(1427, "Cannot edit in read-only input"));
+                    message = new MarkdownString(localize(1447, "Cannot edit in read-only input"));
                 }
                 else {
-                    message = new MarkdownString(localize(1428, "Cannot edit in read-only editor"));
+                    message = new MarkdownString(localize(1448, "Cannot edit in read-only editor"));
                 }
             }
             messageController.showMessage(message, this.editor.getPosition());

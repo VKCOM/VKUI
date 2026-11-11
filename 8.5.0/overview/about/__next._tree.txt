@@ -1,0 +1,13 @@
+:HL["/8.5.0/_next/static/media/0aa834ed78bf6d07-s.p.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/8.5.0/_next/static/media/bb3ef058b751a6ad-s.p.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/8.5.0/_next/static/css/9a4e46abd17be6e1.css","style"]
+:HL["/8.5.0/_next/static/css/b0904892b39b3302.css","style"]
+:HL["/8.5.0/_next/static/css/2a367cf58a87c3ee.css","style"]
+:HL["/8.5.0/_next/static/css/a28a3bd0d0ecd240.css","style"]
+:HL["/8.5.0/_next/static/css/bdd67574ac4a2321.css","style"]
+:HL["/8.5.0/_next/static/css/650d3323204b8040.css","style"]
+:HL["/8.5.0/_next/static/css/80b9beaa2b3b67dc.css","style"]
+:HL["/8.5.0/_next/static/css/c725fc0605ad406a.css","style"]
+2:[["children",{"s":"__PAGE__","h":160}]]
+1:[["children",{"s":{"n":"mdxPath","t":"oc","k":"overview/about","s":["_not-found","_global-error","apple-icon.png","favicon.ico","icon.svg"]},"h":64,"c":"$Q2"}]]
+0:{"b":"8PhKH7pImpc-E3HhVI1Ya","t":{"t":{"s":"","h":16,"c":"$Q1"}}}

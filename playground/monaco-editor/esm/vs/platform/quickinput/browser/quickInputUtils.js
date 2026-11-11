@@ -108,7 +108,7 @@ function renderQuickInputDescription(description, container, actionHandler) {
         else {
             let title = node.title;
             if (!title && node.href.startsWith('command:')) {
-                title = localize(1835, "Click to execute command '{0}'", node.href.substring('command:'.length));
+                title = localize(1868, "Click to execute command '{0}'", node.href.substring('command:'.length));
             }
             else if (!title) {
                 title = node.href;

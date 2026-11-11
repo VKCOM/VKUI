@@ -16,7 +16,7 @@ function _format(message, args) {
     }
     else {
         result = message.replace(/\{(\d+)\}/g, (match, rest) => {
-            const index = rest[0];
+            const index = parseInt(rest, 10);
             const arg = args[index];
             let result = match;
             if (typeof arg === 'string') {

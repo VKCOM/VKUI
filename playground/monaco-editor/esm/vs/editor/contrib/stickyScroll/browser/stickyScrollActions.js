@@ -16,17 +16,17 @@ class ToggleStickyScroll extends EditorAction2 {
         super({
             id: 'editor.action.toggleStickyScroll',
             title: {
-                ...localize2(1498, "Toggle Editor Sticky Scroll"),
-                mnemonicTitle: localize(1494, "&&Toggle Editor Sticky Scroll"),
+                ...localize2(1518, "Toggle Editor Sticky Scroll"),
+                mnemonicTitle: localize(1514, "&&Toggle Editor Sticky Scroll"),
             },
             metadata: {
-                description: localize2(1499, "Toggle/enable the editor sticky scroll which shows the nested scopes at the top of the viewport"),
+                description: localize2(1519, "Toggle/enable the editor sticky scroll which shows the nested scopes at the top of the viewport"),
             },
             category: Categories.View,
             toggled: {
                 condition: ContextKeyExpr.equals('config.editor.stickyScroll.enabled', true),
-                title: localize(1495, "Sticky Scroll"),
-                mnemonicTitle: localize(1496, "&&Sticky Scroll"),
+                title: localize(1515, "Sticky Scroll"),
+                mnemonicTitle: localize(1516, "&&Sticky Scroll"),
             },
             menu: [
                 { id: MenuId.CommandPalette },
@@ -51,8 +51,8 @@ class FocusStickyScroll extends EditorAction2 {
         super({
             id: 'editor.action.focusStickyScroll',
             title: {
-                ...localize2(1500, "Focus Editor Sticky Scroll"),
-                mnemonicTitle: localize(1497, "&&Focus Editor Sticky Scroll"),
+                ...localize2(1520, "Focus Editor Sticky Scroll"),
+                mnemonicTitle: localize(1517, "&&Focus Editor Sticky Scroll"),
             },
             precondition: ContextKeyExpr.and(ContextKeyExpr.has('config.editor.stickyScroll.enabled'), EditorContextKeys.stickyScrollVisible),
             menu: [
@@ -68,7 +68,7 @@ class SelectNextStickyScrollLine extends EditorAction2 {
     constructor() {
         super({
             id: 'editor.action.selectNextStickyScrollLine',
-            title: localize2(1501, "Select the next editor sticky scroll line"),
+            title: localize2(1521, "Select the next editor sticky scroll line"),
             precondition: EditorContextKeys.stickyScrollFocused.isEqualTo(true),
             keybinding: {
                 weight,
@@ -84,7 +84,7 @@ class SelectPreviousStickyScrollLine extends EditorAction2 {
     constructor() {
         super({
             id: 'editor.action.selectPreviousStickyScrollLine',
-            title: localize2(1502, "Select the previous sticky scroll line"),
+            title: localize2(1522, "Select the previous sticky scroll line"),
             precondition: EditorContextKeys.stickyScrollFocused.isEqualTo(true),
             keybinding: {
                 weight,
@@ -100,7 +100,7 @@ class GoToStickyScrollLine extends EditorAction2 {
     constructor() {
         super({
             id: 'editor.action.goToFocusedStickyScrollLine',
-            title: localize2(1503, "Go to the focused sticky scroll line"),
+            title: localize2(1523, "Go to the focused sticky scroll line"),
             precondition: EditorContextKeys.stickyScrollFocused.isEqualTo(true),
             keybinding: {
                 weight,
@@ -116,7 +116,7 @@ class SelectEditor extends EditorAction2 {
     constructor() {
         super({
             id: 'editor.action.selectEditor',
-            title: localize2(1504, "Select Editor"),
+            title: localize2(1524, "Select Editor"),
             precondition: EditorContextKeys.stickyScrollFocused.isEqualTo(true),
             keybinding: {
                 weight,

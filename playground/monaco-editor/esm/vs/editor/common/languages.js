@@ -76,7 +76,6 @@ var CompletionItemKinds;
     byKind.set(13 /* CompletionItemKind.Value */, Codicon.symbolValue);
     byKind.set(15 /* CompletionItemKind.Enum */, Codicon.symbolEnum);
     byKind.set(14 /* CompletionItemKind.Constant */, Codicon.symbolConstant);
-    byKind.set(15 /* CompletionItemKind.Enum */, Codicon.symbolEnum);
     byKind.set(16 /* CompletionItemKind.EnumMember */, Codicon.symbolEnumMember);
     byKind.set(17 /* CompletionItemKind.Keyword */, Codicon.symbolKeyword);
     byKind.set(28 /* CompletionItemKind.Snippet */, Codicon.symbolSnippet);
@@ -107,35 +106,35 @@ var CompletionItemKinds;
      */
     function toLabel(kind) {
         switch (kind) {
-            case 0 /* CompletionItemKind.Method */: return localize(763, 'Method');
-            case 1 /* CompletionItemKind.Function */: return localize(764, 'Function');
-            case 2 /* CompletionItemKind.Constructor */: return localize(765, 'Constructor');
-            case 3 /* CompletionItemKind.Field */: return localize(766, 'Field');
-            case 4 /* CompletionItemKind.Variable */: return localize(767, 'Variable');
-            case 5 /* CompletionItemKind.Class */: return localize(768, 'Class');
-            case 6 /* CompletionItemKind.Struct */: return localize(769, 'Struct');
-            case 7 /* CompletionItemKind.Interface */: return localize(770, 'Interface');
-            case 8 /* CompletionItemKind.Module */: return localize(771, 'Module');
-            case 9 /* CompletionItemKind.Property */: return localize(772, 'Property');
-            case 10 /* CompletionItemKind.Event */: return localize(773, 'Event');
-            case 11 /* CompletionItemKind.Operator */: return localize(774, 'Operator');
-            case 12 /* CompletionItemKind.Unit */: return localize(775, 'Unit');
-            case 13 /* CompletionItemKind.Value */: return localize(776, 'Value');
-            case 14 /* CompletionItemKind.Constant */: return localize(777, 'Constant');
-            case 15 /* CompletionItemKind.Enum */: return localize(778, 'Enum');
-            case 16 /* CompletionItemKind.EnumMember */: return localize(779, 'Enum Member');
-            case 17 /* CompletionItemKind.Keyword */: return localize(780, 'Keyword');
-            case 18 /* CompletionItemKind.Text */: return localize(781, 'Text');
-            case 19 /* CompletionItemKind.Color */: return localize(782, 'Color');
-            case 20 /* CompletionItemKind.File */: return localize(783, 'File');
-            case 21 /* CompletionItemKind.Reference */: return localize(784, 'Reference');
-            case 22 /* CompletionItemKind.Customcolor */: return localize(785, 'Custom Color');
-            case 23 /* CompletionItemKind.Folder */: return localize(786, 'Folder');
-            case 24 /* CompletionItemKind.TypeParameter */: return localize(787, 'Type Parameter');
-            case 25 /* CompletionItemKind.User */: return localize(788, 'User');
-            case 26 /* CompletionItemKind.Issue */: return localize(789, 'Issue');
-            case 27 /* CompletionItemKind.Tool */: return localize(790, 'Tool');
-            case 28 /* CompletionItemKind.Snippet */: return localize(791, 'Snippet');
+            case 0 /* CompletionItemKind.Method */: return localize(778, 'Method');
+            case 1 /* CompletionItemKind.Function */: return localize(779, 'Function');
+            case 2 /* CompletionItemKind.Constructor */: return localize(780, 'Constructor');
+            case 3 /* CompletionItemKind.Field */: return localize(781, 'Field');
+            case 4 /* CompletionItemKind.Variable */: return localize(782, 'Variable');
+            case 5 /* CompletionItemKind.Class */: return localize(783, 'Class');
+            case 6 /* CompletionItemKind.Struct */: return localize(784, 'Struct');
+            case 7 /* CompletionItemKind.Interface */: return localize(785, 'Interface');
+            case 8 /* CompletionItemKind.Module */: return localize(786, 'Module');
+            case 9 /* CompletionItemKind.Property */: return localize(787, 'Property');
+            case 10 /* CompletionItemKind.Event */: return localize(788, 'Event');
+            case 11 /* CompletionItemKind.Operator */: return localize(789, 'Operator');
+            case 12 /* CompletionItemKind.Unit */: return localize(790, 'Unit');
+            case 13 /* CompletionItemKind.Value */: return localize(791, 'Value');
+            case 14 /* CompletionItemKind.Constant */: return localize(792, 'Constant');
+            case 15 /* CompletionItemKind.Enum */: return localize(793, 'Enum');
+            case 16 /* CompletionItemKind.EnumMember */: return localize(794, 'Enum Member');
+            case 17 /* CompletionItemKind.Keyword */: return localize(795, 'Keyword');
+            case 18 /* CompletionItemKind.Text */: return localize(796, 'Text');
+            case 19 /* CompletionItemKind.Color */: return localize(797, 'Color');
+            case 20 /* CompletionItemKind.File */: return localize(798, 'File');
+            case 21 /* CompletionItemKind.Reference */: return localize(799, 'Reference');
+            case 22 /* CompletionItemKind.Customcolor */: return localize(800, 'Custom Color');
+            case 23 /* CompletionItemKind.Folder */: return localize(801, 'Folder');
+            case 24 /* CompletionItemKind.TypeParameter */: return localize(802, 'Type Parameter');
+            case 25 /* CompletionItemKind.User */: return localize(803, 'User');
+            case 26 /* CompletionItemKind.Issue */: return localize(804, 'Issue');
+            case 27 /* CompletionItemKind.Tool */: return localize(805, 'Tool');
+            case 28 /* CompletionItemKind.Snippet */: return localize(806, 'Snippet');
             default: return '';
         }
     }
@@ -307,38 +306,38 @@ function isLocationLink(thing) {
  * @internal
  */
 const symbolKindNames = {
-    [17 /* SymbolKind.Array */]: localize(792, "array"),
-    [16 /* SymbolKind.Boolean */]: localize(793, "boolean"),
-    [4 /* SymbolKind.Class */]: localize(794, "class"),
-    [13 /* SymbolKind.Constant */]: localize(795, "constant"),
-    [8 /* SymbolKind.Constructor */]: localize(796, "constructor"),
-    [9 /* SymbolKind.Enum */]: localize(797, "enumeration"),
-    [21 /* SymbolKind.EnumMember */]: localize(798, "enumeration member"),
-    [23 /* SymbolKind.Event */]: localize(799, "event"),
-    [7 /* SymbolKind.Field */]: localize(800, "field"),
-    [0 /* SymbolKind.File */]: localize(801, "file"),
-    [11 /* SymbolKind.Function */]: localize(802, "function"),
-    [10 /* SymbolKind.Interface */]: localize(803, "interface"),
-    [19 /* SymbolKind.Key */]: localize(804, "key"),
-    [5 /* SymbolKind.Method */]: localize(805, "method"),
-    [1 /* SymbolKind.Module */]: localize(806, "module"),
-    [2 /* SymbolKind.Namespace */]: localize(807, "namespace"),
-    [20 /* SymbolKind.Null */]: localize(808, "null"),
-    [15 /* SymbolKind.Number */]: localize(809, "number"),
-    [18 /* SymbolKind.Object */]: localize(810, "object"),
-    [24 /* SymbolKind.Operator */]: localize(811, "operator"),
-    [3 /* SymbolKind.Package */]: localize(812, "package"),
-    [6 /* SymbolKind.Property */]: localize(813, "property"),
-    [14 /* SymbolKind.String */]: localize(814, "string"),
-    [22 /* SymbolKind.Struct */]: localize(815, "struct"),
-    [25 /* SymbolKind.TypeParameter */]: localize(816, "type parameter"),
-    [12 /* SymbolKind.Variable */]: localize(817, "variable"),
+    [17 /* SymbolKind.Array */]: localize(807, "array"),
+    [16 /* SymbolKind.Boolean */]: localize(808, "boolean"),
+    [4 /* SymbolKind.Class */]: localize(809, "class"),
+    [13 /* SymbolKind.Constant */]: localize(810, "constant"),
+    [8 /* SymbolKind.Constructor */]: localize(811, "constructor"),
+    [9 /* SymbolKind.Enum */]: localize(812, "enumeration"),
+    [21 /* SymbolKind.EnumMember */]: localize(813, "enumeration member"),
+    [23 /* SymbolKind.Event */]: localize(814, "event"),
+    [7 /* SymbolKind.Field */]: localize(815, "field"),
+    [0 /* SymbolKind.File */]: localize(816, "file"),
+    [11 /* SymbolKind.Function */]: localize(817, "function"),
+    [10 /* SymbolKind.Interface */]: localize(818, "interface"),
+    [19 /* SymbolKind.Key */]: localize(819, "key"),
+    [5 /* SymbolKind.Method */]: localize(820, "method"),
+    [1 /* SymbolKind.Module */]: localize(821, "module"),
+    [2 /* SymbolKind.Namespace */]: localize(822, "namespace"),
+    [20 /* SymbolKind.Null */]: localize(823, "null"),
+    [15 /* SymbolKind.Number */]: localize(824, "number"),
+    [18 /* SymbolKind.Object */]: localize(825, "object"),
+    [24 /* SymbolKind.Operator */]: localize(826, "operator"),
+    [3 /* SymbolKind.Package */]: localize(827, "package"),
+    [6 /* SymbolKind.Property */]: localize(828, "property"),
+    [14 /* SymbolKind.String */]: localize(829, "string"),
+    [22 /* SymbolKind.Struct */]: localize(830, "struct"),
+    [25 /* SymbolKind.TypeParameter */]: localize(831, "type parameter"),
+    [12 /* SymbolKind.Variable */]: localize(832, "variable"),
 };
 /**
  * @internal
  */
 function getAriaLabelForSymbol(symbolName, kind) {
-    return localize(818, '{0} ({1})', symbolName, symbolKindNames[kind]);
+    return localize(833, '{0} ({1})', symbolName, symbolKindNames[kind]);
 }
 /**
  * @internal

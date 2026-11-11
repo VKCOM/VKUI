@@ -324,7 +324,7 @@ function getIndentActionForType(cursorConfig, model, range, ch, indentConverter,
         return indentation;
     }
     const previousLineNumber = range.startLineNumber - 1;
-    if (previousLineNumber > 0) {
+    if (range.isEmpty() && previousLineNumber > 0) {
         const previousLine = model.getLineContent(previousLineNumber);
         if (indentRulesSupport.shouldIndentNextLine(previousLine) && indentRulesSupport.shouldIncrease(textAroundRangeWithCharacter)) {
             const inheritedIndentationData = getInheritIndentForLine(autoIndent, model, range.startLineNumber, false, languageConfigurationService);

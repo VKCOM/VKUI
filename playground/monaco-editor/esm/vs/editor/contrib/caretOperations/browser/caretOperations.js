@@ -30,7 +30,7 @@ class MoveCaretLeftAction extends MoveCaretAction {
     constructor() {
         super(true, {
             id: 'editor.action.moveCarretLeftAction',
-            label: localize2(846, "Move Selected Text Left"),
+            label: localize2(861, "Move Selected Text Left"),
             precondition: EditorContextKeys.writable
         });
     }
@@ -39,7 +39,7 @@ class MoveCaretRightAction extends MoveCaretAction {
     constructor() {
         super(false, {
             id: 'editor.action.moveCarretRightAction',
-            label: localize2(847, "Move Selected Text Right"),
+            label: localize2(862, "Move Selected Text Right"),
             precondition: EditorContextKeys.writable
         });
     }

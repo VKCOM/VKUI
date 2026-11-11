@@ -43,7 +43,7 @@ var __param = (undefined && undefined.__param) || function (paramIndex, decorato
 var CopyPasteController_1;
 const changePasteTypeCommandId = 'editor.changePasteType';
 const pasteAsPreferenceConfig = 'editor.pasteAs.preferences';
-const pasteWidgetVisibleCtx = new RawContextKey('pasteWidgetVisible', false, localize(956, "Whether the paste widget is showing"));
+const pasteWidgetVisibleCtx = new RawContextKey('pasteWidgetVisible', false, localize(971, "Whether the paste widget is showing"));
 const vscodeClipboardMime = 'application/vnd.code.copymetadata';
 let CopyPasteController = class CopyPasteController extends Disposable {
     static { CopyPasteController_1 = this; }
@@ -66,7 +66,7 @@ let CopyPasteController = class CopyPasteController extends Disposable {
         this._register(editor.onWillCut(e => this.handleCopy(e)));
         this._register(editor.onWillPaste(e => this.handlePaste(e)));
         this._pasteProgressManager = this._register(new InlineProgressManager('pasteIntoEditor', editor, instantiationService));
-        this._postPasteWidgetManager = this._register(instantiationService.createInstance(PostEditWidgetManager, 'pasteIntoEditor', editor, pasteWidgetVisibleCtx, { id: changePasteTypeCommandId, label: localize(957, "Show paste options...") }, () => CopyPasteController_1._configureDefaultAction ? [CopyPasteController_1._configureDefaultAction] : []));
+        this._postPasteWidgetManager = this._register(instantiationService.createInstance(PostEditWidgetManager, 'pasteIntoEditor', editor, pasteWidgetVisibleCtx, { id: changePasteTypeCommandId, label: localize(972, "Show paste options...") }, () => CopyPasteController_1._configureDefaultAction ? [CopyPasteController_1._configureDefaultAction] : []));
     }
     changePasteType() {
         this._postPasteWidgetManager.tryShowSelector();
@@ -215,9 +215,9 @@ let CopyPasteController = class CopyPasteController extends Disposable {
         const kindLabel = 'only' in preference
             ? preference.only.value
             : 'preferences' in preference
-                ? (preference.preferences.length ? preference.preferences.map(preference => preference.value).join(', ') : localize(958, "empty"))
+                ? (preference.preferences.length ? preference.preferences.map(preference => preference.value).join(', ') : localize(973, "empty"))
                 : preference.providerId;
-        MessageController.get(this._editor)?.showMessage(localize(959, "No paste edits for '{0}' found", kindLabel), selections[0].getStartPosition());
+        MessageController.get(this._editor)?.showMessage(localize(974, "No paste edits for '{0}' found", kindLabel), selections[0].getStartPosition());
     }
     doPasteInline(allProviders, selections, dataTransfer, metadata, clipboardEvent) {
         this._logService.trace('CopyPasteController#doPasteInline');
@@ -267,7 +267,7 @@ let CopyPasteController = class CopyPasteController extends Disposable {
                         }
                         const resolveP = edit.provider.resolveDocumentPasteEdit(edit, resolveToken);
                         const showP = new DeferredPromise();
-                        const resolved = await this._pasteProgressManager.showWhile(selections[0].getEndPosition(), localize(960, "Resolving paste edit for '{0}'. Click to cancel", edit.title), raceCancellation(Promise.race([showP.p, resolveP]), resolveToken), {
+                        const resolved = await this._pasteProgressManager.showWhile(selections[0].getEndPosition(), localize(975, "Resolving paste edit for '{0}'. Click to cancel", edit.title), raceCancellation(Promise.race([showP.p, resolveP]), resolveToken), {
                             cancel: () => showP.cancel()
                         }, 0);
                         if (resolved) {
@@ -286,7 +286,7 @@ let CopyPasteController = class CopyPasteController extends Disposable {
                 }
             }
         });
-        this._pasteProgressManager.showWhile(selections[0].getEndPosition(), localize(961, "Running paste handlers. Click to cancel and do basic paste"), p, {
+        this._pasteProgressManager.showWhile(selections[0].getEndPosition(), localize(976, "Running paste handlers. Click to cancel and do basic paste"), p, {
             cancel: async () => {
                 p.cancel();
                 if (editorStateCts.token.isCancellationRequested) {
@@ -358,7 +358,7 @@ let CopyPasteController = class CopyPasteController extends Disposable {
                 else {
                     const configureDefaultItem = {
                         id: 'editor.pasteAs.default',
-                        label: localize(962, "Configure default paste action"),
+                        label: localize(977, "Configure default paste action"),
                         edit: undefined,
                     };
                     const selected = await this._quickInputService.pick([
@@ -375,7 +375,7 @@ let CopyPasteController = class CopyPasteController extends Disposable {
                             }
                         ] : [])
                     ], {
-                        placeHolder: localize(963, "Select Paste Action"),
+                        placeHolder: localize(978, "Select Paste Action"),
                     });
                     if (selected === configureDefaultItem) {
                         CopyPasteController_1._configureDefaultAction?.run();
@@ -398,7 +398,7 @@ let CopyPasteController = class CopyPasteController extends Disposable {
         });
         this._progressService.withProgress({
             location: 10 /* ProgressLocation.Window */,
-            title: localize(964, "Running paste handlers"),
+            title: localize(979, "Running paste handlers"),
         }, () => p);
     }
     setCopyMetadata(clipboardData, metadata) {

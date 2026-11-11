@@ -64,7 +64,7 @@ class CopyLinesUpAction extends AbstractCopyLinesAction {
     constructor() {
         super(false, {
             id: 'editor.action.copyLinesUpAction',
-            label: localize2(1295, "Copy Line Up"),
+            label: localize2(1315, "Copy Line Up"),
             precondition: EditorContextKeys.writable,
             kbOpts: {
                 kbExpr: EditorContextKeys.editorTextFocus,
@@ -75,7 +75,7 @@ class CopyLinesUpAction extends AbstractCopyLinesAction {
             menuOpts: {
                 menuId: MenuId.MenubarSelectionMenu,
                 group: '2_line',
-                title: localize(1290, "&&Copy Line Up"),
+                title: localize(1310, "&&Copy Line Up"),
                 order: 1
             },
             canTriggerInlineEdits: true,
@@ -86,7 +86,7 @@ class CopyLinesDownAction extends AbstractCopyLinesAction {
     constructor() {
         super(true, {
             id: 'editor.action.copyLinesDownAction',
-            label: localize2(1296, "Copy Line Down"),
+            label: localize2(1316, "Copy Line Down"),
             precondition: EditorContextKeys.writable,
             kbOpts: {
                 kbExpr: EditorContextKeys.editorTextFocus,
@@ -97,7 +97,7 @@ class CopyLinesDownAction extends AbstractCopyLinesAction {
             menuOpts: {
                 menuId: MenuId.MenubarSelectionMenu,
                 group: '2_line',
-                title: localize(1291, "Co&&py Line Down"),
+                title: localize(1311, "Co&&py Line Down"),
                 order: 2
             },
             canTriggerInlineEdits: true,
@@ -108,12 +108,12 @@ class DuplicateSelectionAction extends EditorAction {
     constructor() {
         super({
             id: 'editor.action.duplicateSelection',
-            label: localize2(1297, "Duplicate Selection"),
+            label: localize2(1317, "Duplicate Selection"),
             precondition: EditorContextKeys.writable,
             menuOpts: {
                 menuId: MenuId.MenubarSelectionMenu,
                 group: '2_line',
-                title: localize(1292, "&&Duplicate Selection"),
+                title: localize(1312, "&&Duplicate Selection"),
                 order: 5
             },
             canTriggerInlineEdits: true,
@@ -163,7 +163,7 @@ class MoveLinesUpAction extends AbstractMoveLinesAction {
     constructor() {
         super(false, {
             id: 'editor.action.moveLinesUpAction',
-            label: localize2(1298, "Move Line Up"),
+            label: localize2(1318, "Move Line Up"),
             precondition: EditorContextKeys.writable,
             kbOpts: {
                 kbExpr: EditorContextKeys.editorTextFocus,
@@ -174,7 +174,7 @@ class MoveLinesUpAction extends AbstractMoveLinesAction {
             menuOpts: {
                 menuId: MenuId.MenubarSelectionMenu,
                 group: '2_line',
-                title: localize(1293, "Mo&&ve Line Up"),
+                title: localize(1313, "Mo&&ve Line Up"),
                 order: 3
             },
             canTriggerInlineEdits: true,
@@ -185,7 +185,7 @@ class MoveLinesDownAction extends AbstractMoveLinesAction {
     constructor() {
         super(true, {
             id: 'editor.action.moveLinesDownAction',
-            label: localize2(1299, "Move Line Down"),
+            label: localize2(1319, "Move Line Down"),
             precondition: EditorContextKeys.writable,
             kbOpts: {
                 kbExpr: EditorContextKeys.editorTextFocus,
@@ -196,7 +196,7 @@ class MoveLinesDownAction extends AbstractMoveLinesAction {
             menuOpts: {
                 menuId: MenuId.MenubarSelectionMenu,
                 group: '2_line',
-                title: localize(1294, "Move &&Line Down"),
+                title: localize(1314, "Move &&Line Down"),
                 order: 4
             },
             canTriggerInlineEdits: true,
@@ -236,7 +236,7 @@ class SortLinesAscendingAction extends AbstractSortLinesAction {
     constructor() {
         super(false, {
             id: 'editor.action.sortLinesAscending',
-            label: localize2(1300, "Sort Lines Ascending"),
+            label: localize2(1320, "Sort Lines Ascending"),
             precondition: EditorContextKeys.writable,
             canTriggerInlineEdits: true,
         });
@@ -246,7 +246,7 @@ class SortLinesDescendingAction extends AbstractSortLinesAction {
     constructor() {
         super(true, {
             id: 'editor.action.sortLinesDescending',
-            label: localize2(1301, "Sort Lines Descending"),
+            label: localize2(1321, "Sort Lines Descending"),
             precondition: EditorContextKeys.writable,
             canTriggerInlineEdits: true,
         });
@@ -256,7 +256,7 @@ class DeleteDuplicateLinesAction extends EditorAction {
     constructor() {
         super({
             id: 'editor.action.removeDuplicateLines',
-            label: localize2(1302, "Delete Duplicate Lines"),
+            label: localize2(1322, "Delete Duplicate Lines"),
             precondition: EditorContextKeys.writable,
             canTriggerInlineEdits: true,
         });
@@ -306,7 +306,7 @@ class ReverseLinesAction extends EditorAction {
     constructor() {
         super({
             id: 'editor.action.reverseLines',
-            label: localize2(1303, "Reverse lines"),
+            label: localize2(1323, "Reverse lines"),
             precondition: EditorContextKeys.writable,
             canTriggerInlineEdits: true
         });
@@ -373,7 +373,7 @@ class TrimTrailingWhitespaceAction extends EditorAction {
     constructor() {
         super({
             id: TrimTrailingWhitespaceAction.ID,
-            label: localize2(1304, "Trim Trailing Whitespace"),
+            label: localize2(1324, "Trim Trailing Whitespace"),
             precondition: EditorContextKeys.writable,
             kbOpts: {
                 kbExpr: EditorContextKeys.editorTextFocus,
@@ -407,7 +407,7 @@ class DeleteLinesAction extends EditorAction {
     constructor() {
         super({
             id: 'editor.action.deleteLines',
-            label: localize2(1305, "Delete Line"),
+            label: localize2(1325, "Delete Line"),
             precondition: EditorContextKeys.writable,
             kbOpts: {
                 kbExpr: EditorContextKeys.textInputFocus,
@@ -497,7 +497,7 @@ class IndentLinesAction extends EditorAction {
     constructor() {
         super({
             id: 'editor.action.indentLines',
-            label: localize2(1306, "Indent Line"),
+            label: localize2(1326, "Indent Line"),
             precondition: EditorContextKeys.writable,
             kbOpts: {
                 kbExpr: EditorContextKeys.editorTextFocus,
@@ -521,7 +521,7 @@ class OutdentLinesAction extends EditorAction {
     constructor() {
         super({
             id: 'editor.action.outdentLines',
-            label: localize2(1307, "Outdent Line"),
+            label: localize2(1327, "Outdent Line"),
             precondition: EditorContextKeys.writable,
             kbOpts: {
                 kbExpr: EditorContextKeys.editorTextFocus,
@@ -540,7 +540,7 @@ class InsertLineBeforeAction extends EditorAction {
     constructor() {
         super({
             id: InsertLineBeforeAction.ID,
-            label: localize2(1308, "Insert Line Above"),
+            label: localize2(1328, "Insert Line Above"),
             precondition: EditorContextKeys.writable,
             kbOpts: {
                 kbExpr: EditorContextKeys.editorTextFocus,
@@ -564,7 +564,7 @@ class InsertLineAfterAction extends EditorAction {
     constructor() {
         super({
             id: InsertLineAfterAction.ID,
-            label: localize2(1309, "Insert Line Below"),
+            label: localize2(1329, "Insert Line Below"),
             precondition: EditorContextKeys.writable,
             kbOpts: {
                 kbExpr: EditorContextKeys.editorTextFocus,
@@ -616,7 +616,7 @@ class DeleteAllLeftAction extends AbstractDeleteAllToBoundaryAction {
     constructor() {
         super({
             id: 'deleteAllLeft',
-            label: localize2(1310, "Delete All Left"),
+            label: localize2(1330, "Delete All Left"),
             precondition: EditorContextKeys.writable,
             kbOpts: {
                 kbExpr: EditorContextKeys.textInputFocus,
@@ -686,7 +686,7 @@ class DeleteAllRightAction extends AbstractDeleteAllToBoundaryAction {
     constructor() {
         super({
             id: 'deleteAllRight',
-            label: localize2(1311, "Delete All Right"),
+            label: localize2(1331, "Delete All Right"),
             precondition: EditorContextKeys.writable,
             kbOpts: {
                 kbExpr: EditorContextKeys.textInputFocus,
@@ -744,7 +744,7 @@ class JoinLinesAction extends EditorAction {
     constructor() {
         super({
             id: 'editor.action.joinLines',
-            label: localize2(1312, "Join Lines"),
+            label: localize2(1332, "Join Lines"),
             precondition: EditorContextKeys.writable,
             kbOpts: {
                 kbExpr: EditorContextKeys.editorTextFocus,
@@ -886,7 +886,7 @@ class TransposeAction extends EditorAction {
     constructor() {
         super({
             id: 'editor.action.transpose',
-            label: localize2(1313, "Transpose Characters around the Cursor"),
+            label: localize2(1333, "Transpose Characters around the Cursor"),
             precondition: EditorContextKeys.writable,
             canTriggerInlineEdits: true,
         });
@@ -966,7 +966,7 @@ class UpperCaseAction extends AbstractCaseAction {
     constructor() {
         super({
             id: 'editor.action.transformToUppercase',
-            label: localize2(1314, "Transform to Uppercase"),
+            label: localize2(1334, "Transform to Uppercase"),
             precondition: EditorContextKeys.writable,
             canTriggerInlineEdits: true,
         });
@@ -979,7 +979,7 @@ class LowerCaseAction extends AbstractCaseAction {
     constructor() {
         super({
             id: 'editor.action.transformToLowercase',
-            label: localize2(1315, "Transform to Lowercase"),
+            label: localize2(1335, "Transform to Lowercase"),
             precondition: EditorContextKeys.writable,
             canTriggerInlineEdits: true
         });
@@ -1016,7 +1016,7 @@ class TitleCaseAction extends AbstractCaseAction {
     constructor() {
         super({
             id: 'editor.action.transformToTitlecase',
-            label: localize2(1316, "Transform to Title Case"),
+            label: localize2(1336, "Transform to Title Case"),
             precondition: EditorContextKeys.writable,
             canTriggerInlineEdits: true
         });
@@ -1038,7 +1038,7 @@ class SnakeCaseAction extends AbstractCaseAction {
     constructor() {
         super({
             id: 'editor.action.transformToSnakecase',
-            label: localize2(1317, "Transform to Snake Case"),
+            label: localize2(1337, "Transform to Snake Case"),
             precondition: EditorContextKeys.writable,
             canTriggerInlineEdits: true,
         });
@@ -1063,7 +1063,7 @@ class CamelCaseAction extends AbstractCaseAction {
     constructor() {
         super({
             id: 'editor.action.transformToCamelcase',
-            label: localize2(1318, "Transform to Camel Case"),
+            label: localize2(1338, "Transform to Camel Case"),
             precondition: EditorContextKeys.writable,
             canTriggerInlineEdits: true
         });
@@ -1088,7 +1088,7 @@ class PascalCaseAction extends AbstractCaseAction {
     constructor() {
         super({
             id: 'editor.action.transformToPascalcase',
-            label: localize2(1319, "Transform to Pascal Case"),
+            label: localize2(1339, "Transform to Pascal Case"),
             precondition: EditorContextKeys.writable,
             canTriggerInlineEdits: true,
         });
@@ -1128,7 +1128,7 @@ class KebabCaseAction extends AbstractCaseAction {
     constructor() {
         super({
             id: 'editor.action.transformToKebabcase',
-            label: localize2(1320, 'Transform to Kebab Case'),
+            label: localize2(1340, 'Transform to Kebab Case'),
             precondition: EditorContextKeys.writable,
             canTriggerInlineEdits: true,
         });

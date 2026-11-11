@@ -52,7 +52,7 @@ registerEditorAction(class PasteAsAction extends EditorAction {
                 properties: {
                     kind: {
                         type: 'string',
-                        description: localize(952, "The kind of the paste edit to try pasting with.\nIf there are multiple edits for this kind, the editor will show a picker. If there are no edits of this kind, the editor will show an error message."),
+                        description: localize(967, "The kind of the paste edit to try pasting with.\nIf there are multiple edits for this kind, the editor will show a picker. If there are no edits of this kind, the editor will show an error message."),
                     }
                 },
             },
@@ -62,7 +62,7 @@ registerEditorAction(class PasteAsAction extends EditorAction {
                 properties: {
                     preferences: {
                         type: 'array',
-                        description: localize(953, "List of preferred paste edit kind to try applying.\nThe first edit matching the preferences will be applied."),
+                        description: localize(968, "List of preferred paste edit kind to try applying.\nThe first edit matching the preferences will be applied."),
                         items: { type: 'string' }
                     }
                 },
@@ -72,7 +72,7 @@ registerEditorAction(class PasteAsAction extends EditorAction {
     constructor() {
         super({
             id: pasteAsCommandId,
-            label: localize2(954, "Paste As..."),
+            label: localize2(969, "Paste As..."),
             precondition: EditorContextKeys.writable,
             metadata: {
                 description: 'Paste as',
@@ -101,7 +101,7 @@ registerEditorAction(class extends EditorAction {
     constructor() {
         super({
             id: 'editor.action.pasteAsText',
-            label: localize2(955, "Paste as Text"),
+            label: localize2(970, "Paste as Text"),
             precondition: EditorContextKeys.writable,
             canTriggerInlineEdits: true,
         });

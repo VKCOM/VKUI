@@ -1,6 +1,7 @@
 import { scheduleAtNextAnimationFrame, getWindow } from '../../../base/browser/dom.js';
 import { Disposable } from '../../../base/common/lifecycle.js';
 import { Position } from '../../common/core/position.js';
+import { TextDirection } from '../../common/model.js';
 import { createEditorPagePosition, PageCoordinates, createCoordinatesRelativeToEditor } from '../editorDom.js';
 import { MouseTarget } from './mouseTarget.js';
 
@@ -77,7 +78,7 @@ class TopBottomDragScrollingOperation extends DragScrollingOperation {
      */
     _getScrollSpeed() {
         const lineHeight = this._context.configuration.options.get(75 /* EditorOption.lineHeight */);
-        const viewportInLines = this._context.configuration.options.get(165 /* EditorOption.layoutInfo */).height / lineHeight;
+        const viewportInLines = this._context.configuration.options.get(166 /* EditorOption.layoutInfo */).height / lineHeight;
         const outsideDistanceInLines = this._position.outsideDistance / lineHeight;
         if (outsideDistanceInLines <= 1.5) {
             return Math.max(30, viewportInLines * (1 + outsideDistanceInLines));
@@ -102,7 +103,7 @@ class TopBottomDragScrollingOperation extends DragScrollingOperation {
         let mouseTarget;
         {
             const editorPos = createEditorPagePosition(this._viewHelper.viewDomNode);
-            const horizontalScrollbarHeight = this._context.configuration.options.get(165 /* EditorOption.layoutInfo */).horizontalScrollbarHeight;
+            const horizontalScrollbarHeight = this._context.configuration.options.get(166 /* EditorOption.layoutInfo */).horizontalScrollbarHeight;
             const pos = new PageCoordinates(this._mouseEvent.pos.x, editorPos.y + editorPos.height - horizontalScrollbarHeight - 0.1);
             const relativePos = createCoordinatesRelativeToEditor(this._viewHelper.viewDomNode, editorPos, pos);
             mouseTarget = this._mouseTargetFactory.createMouseTarget(this._viewHelper.getLastRenderData(), editorPos, pos, relativePos, null);
@@ -130,7 +131,7 @@ class LeftRightDragScrollingOperation extends DragScrollingOperation {
      */
     _getScrollSpeed() {
         const charWidth = this._context.configuration.options.get(59 /* EditorOption.fontInfo */).typicalFullwidthCharacterWidth;
-        const viewportInChars = this._context.configuration.options.get(165 /* EditorOption.layoutInfo */).contentWidth / charWidth;
+        const viewportInChars = this._context.configuration.options.get(166 /* EditorOption.layoutInfo */).contentWidth / charWidth;
         const outsideDistanceInChars = this._position.outsideDistance / charWidth;
         if (outsideDistanceInChars <= 1.5) {
             return Math.max(30, viewportInChars * (1 + outsideDistanceInChars));
@@ -152,20 +153,18 @@ class LeftRightDragScrollingOperation extends DragScrollingOperation {
             return;
         }
         const edgeLineNumber = this._position.position.lineNumber;
-        // First, try to find a position that matches the horizontal position of the mouse
         let mouseTarget;
-        {
-            const editorPos = createEditorPagePosition(this._viewHelper.viewDomNode);
-            const horizontalScrollbarHeight = this._context.configuration.options.get(165 /* EditorOption.layoutInfo */).horizontalScrollbarHeight;
-            const pos = new PageCoordinates(this._mouseEvent.pos.x, editorPos.y + editorPos.height - horizontalScrollbarHeight - 0.1);
-            const relativePos = createCoordinatesRelativeToEditor(this._viewHelper.viewDomNode, editorPos, pos);
-            mouseTarget = this._mouseTargetFactory.createMouseTarget(this._viewHelper.getLastRenderData(), editorPos, pos, relativePos, null);
-        }
-        if (this._position.outsidePosition === 'left') {
-            mouseTarget = MouseTarget.createOutsideEditor(mouseTarget.mouseColumn, new Position(edgeLineNumber, mouseTarget.mouseColumn), 'left', this._position.outsideDistance);
+        // In case of RTL, the line is exceeded on the left. Otherwise on the right.
+        const isRtl = this._context.viewModel.getTextDirection(edgeLineNumber) === TextDirection.RTL;
+        const exceedingPosition = isRtl ? 'left' : 'right';
+        if (this._position.outsidePosition === exceedingPosition) {
+            // Move the selection to the far end of the line.
+            const lineWidth = this._context.viewModel.getLineMaxColumn(edgeLineNumber);
+            mouseTarget = MouseTarget.createOutsideEditor(lineWidth, new Position(edgeLineNumber, lineWidth), 'right', this._position.outsideDistance);
         }
         else {
-            mouseTarget = MouseTarget.createOutsideEditor(mouseTarget.mouseColumn, new Position(edgeLineNumber, mouseTarget.mouseColumn), 'right', this._position.outsideDistance);
+            // Move the selection to the beginning of the line.
+            mouseTarget = MouseTarget.createOutsideEditor(1, new Position(edgeLineNumber, 1), 'left', this._position.outsideDistance);
         }
         this._dispatchMouse(mouseTarget, true, 2 /* NavigationCommandRevealType.None */);
         this._animationFrameDisposable = scheduleAtNextAnimationFrame(getWindow(mouseTarget.element), () => this._execute());

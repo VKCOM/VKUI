@@ -2,21 +2,14 @@
 description: Компонент, позволяющий реализовать всплывающее меню при нажатии на шапку.
 ---
 
-<Overview group="navigation">
-# PanelHeaderContext [tag:component]
+# PanelHeaderContext \[tag:component]
 
 Компонент, позволяющий реализовать всплывающее меню при нажатии на шапку. Может быть полезен для реализации дополнительной навигации
-по разделам приложения. Размещайте данный компонент _рядом_ с компонентом [`PanelHeader`](/components/panel-header).
+по разделам приложения. Размещайте данный компонент *рядом* с компонентом [`PanelHeader`](/components/panel-header).
 
 Связанные компоненты:
 
-- [`PanelHeader`](/components/panel-header)
-
-</Overview>
-
-import { FixedLayoutWrapper } from '@/components/wrappers';
-
-<Playground hide>
+* [`PanelHeader`](/components/panel-header)
 
 ```jsx
 <AdaptivityProvider sizeX="regular">
@@ -31,11 +24,6 @@ import { FixedLayoutWrapper } from '@/components/wrappers';
   </Panel>
 </AdaptivityProvider>
 ```
-
-</Playground>
-
-{/* @example-description: Базовый `PanelHeaderContext` с открытием/закрытием контекстного меню из шапки. */}
-<Playground Wrapper={FixedLayoutWrapper}>
 
 ```jsx
 const [contextOpened, setContextOpened] = React.useState(false);
@@ -60,8 +48,6 @@ return (
 );
 ```
 
-</Playground>
-
 ## Контент
 
 Содержимое меню передавайте в свойство `children`. Несмотря на то, что вы можете передать любые компоненты,
@@ -73,8 +59,8 @@ return (
 
 Свойство `opened` позволяет показывать и скрывать компонент.
 
-- `false` — компонент скрыт (по умолчанию);
-- `true` — компонент раскрыт.
+* `false` — компонент скрыт (по умолчанию);
+* `true` — компонент раскрыт.
 
 ## Обработчики событий
 
@@ -82,11 +68,11 @@ return (
 
 Компонент обрабатывает любые нажатия внутри своей области. Если нажатие на элементы внутри меню не должно скрывать его, останавливайте всплытие через [`event.stopPropagation()`](https://developer.mozilla.org/ru/docs/Web/API/Event/stopPropagation).
 
-## Свойства и методы [#api]
+## Свойства и методы \[#api]
 
-| Свойство | Тип | По умолчанию | Описание |
-| --- | --- | --- | --- |
-| `getRootRef` | `Ref<HTMLDivElement>` | `-` |  |
-| `**onClose** \*` | `VoidFunction` | `-` | Обработчик закрытия всплывающего элемента. |
-| `opened` | `boolean` | `false` | Управление состоянием всплывающего элемента true - элемент открыт, false - элемент закрыт. |
-
+| Свойство         | Тип                   | По умолчанию | Описание                                                                                   |
+| ---------------- | --------------------- | ------------ | ------------------------------------------------------------------------------------------ |
+| `getRootRef`     | `Ref<HTMLDivElement>` | `-`          |                                                                                            |
+| `**onClose** \*` | `VoidFunction`        | `-`          | Обработчик закрытия всплывающего элемента.                                                 |
+| `opened`         | `boolean`             | `false`      | Управление состоянием всплывающего элемента true - элемент открыт, false - элемент закрыт. |
+| `ref`            | `Ref<HTMLDivElement>` | `-`          |                                                                                            |

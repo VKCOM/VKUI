@@ -416,11 +416,11 @@ let RenameSymbolProcessor = class RenameSymbolProcessor extends Disposable {
         });
         const command = {
             id: renameSymbolCommandId,
-            title: localize(1254, "Rename"),
+            title: localize(1274, "Rename"),
             arguments: [source, this._renameRunnable],
         };
         const alternativeAction = {
-            label: localize(1255, "Rename"),
+            label: localize(1275, "Rename"),
             icon: Codicon.replaceAll,
             command,
             count: this._renameRunnable.getCount(),

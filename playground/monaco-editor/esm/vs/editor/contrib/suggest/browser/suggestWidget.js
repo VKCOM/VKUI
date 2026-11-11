@@ -54,15 +54,16 @@ var SuggestWidget_1;
 /**
  * Suggest widget colors
  */
-registerColor('editorSuggestWidget.background', editorWidgetBackground, localize(1525, 'Background color of the suggest widget.'));
-registerColor('editorSuggestWidget.border', editorWidgetBorder, localize(1526, 'Border color of the suggest widget.'));
-const editorSuggestWidgetForeground = registerColor('editorSuggestWidget.foreground', editorForeground, localize(1527, 'Foreground color of the suggest widget.'));
-registerColor('editorSuggestWidget.selectedForeground', quickInputListFocusForeground, localize(1528, 'Foreground color of the selected entry in the suggest widget.'));
-registerColor('editorSuggestWidget.selectedIconForeground', quickInputListFocusIconForeground, localize(1529, 'Icon foreground color of the selected entry in the suggest widget.'));
-const editorSuggestWidgetSelectedBackground = registerColor('editorSuggestWidget.selectedBackground', quickInputListFocusBackground, localize(1530, 'Background color of the selected entry in the suggest widget.'));
-registerColor('editorSuggestWidget.highlightForeground', listHighlightForeground, localize(1531, 'Color of the match highlights in the suggest widget.'));
-registerColor('editorSuggestWidget.focusHighlightForeground', listFocusHighlightForeground, localize(1532, 'Color of the match highlights in the suggest widget when an item is focused.'));
-registerColor('editorSuggestWidgetStatus.foreground', transparent(editorSuggestWidgetForeground, .5), localize(1533, 'Foreground color of the suggest widget status.'));
+const editorSuggestWidgetBackground = registerColor('editorSuggestWidget.background', editorWidgetBackground, localize(1545, 'Background color of the suggest widget.'));
+registerColor('editorSuggestWidget.border', editorWidgetBorder, localize(1546, 'Border color of the suggest widget.'));
+const editorSuggestWidgetForeground = registerColor('editorSuggestWidget.foreground', editorForeground, localize(1547, 'Foreground color of the suggest widget.'));
+const editorSuggestWidgetSelectedForeground = registerColor('editorSuggestWidget.selectedForeground', { dark: quickInputListFocusForeground, light: quickInputListFocusForeground, hcDark: editorSuggestWidgetBackground, hcLight: editorSuggestWidgetBackground }, localize(1548, 'Foreground color of the selected entry in the suggest widget.'));
+registerColor('editorSuggestWidget.selectedIconForeground', { dark: quickInputListFocusIconForeground, light: quickInputListFocusIconForeground, hcDark: editorSuggestWidgetBackground, hcLight: editorSuggestWidgetBackground }, localize(1549, 'Icon foreground color of the selected entry in the suggest widget.'));
+const editorSuggestWidgetSelectedBackground = registerColor('editorSuggestWidget.selectedBackground', { dark: quickInputListFocusBackground, light: quickInputListFocusBackground, hcDark: editorSuggestWidgetForeground, hcLight: editorSuggestWidgetForeground }, localize(1550, 'Background color of the selected entry in the suggest widget.'));
+const editorSuggestWidgetFocusOutline = registerColor('editorSuggestWidget.focusOutline', activeContrastBorder, localize(1551, 'Outline color of the focused (keyboard-navigated) entry in the suggest widget.'));
+registerColor('editorSuggestWidget.highlightForeground', listHighlightForeground, localize(1552, 'Color of the match highlights in the suggest widget.'));
+registerColor('editorSuggestWidget.focusHighlightForeground', { dark: listFocusHighlightForeground, light: listFocusHighlightForeground, hcDark: editorSuggestWidgetSelectedForeground, hcLight: editorSuggestWidgetSelectedForeground }, localize(1553, 'Color of the match highlights in the suggest widget when an item is focused.'));
+registerColor('editorSuggestWidgetStatus.foreground', transparent(editorSuggestWidgetForeground, .5), localize(1554, 'Foreground color of the suggest widget status.'));
 class PersistedWidgetSize {
     constructor(_service, editor) {
         this._service = _service;
@@ -90,8 +91,8 @@ class PersistedWidgetSize {
 }
 let SuggestWidget = class SuggestWidget {
     static { SuggestWidget_1 = this; }
-    static { this.LOADING_MESSAGE = localize(1534, "Loading..."); }
-    static { this.NO_SUGGESTIONS_MESSAGE = localize(1535, "No suggestions."); }
+    static { this.LOADING_MESSAGE = localize(1555, "Loading..."); }
+    static { this.NO_SUGGESTIONS_MESSAGE = localize(1556, "No suggestions."); }
     constructor(editor, _storageService, _contextKeyService, _themeService, instantiationService) {
         this.editor = editor;
         this._storageService = _storageService;
@@ -165,6 +166,8 @@ let SuggestWidget = class SuggestWidget {
         this._details = new SuggestDetailsOverlay(details, this.editor);
         const applyIconStyle = () => this.element.domNode.classList.toggle('no-icons', !this.editor.getOption(134 /* EditorOption.suggest */).showIcons);
         applyIconStyle();
+        const applyFitWidthStyle = () => this.element.domNode.classList.toggle('fit-width-to-details', this.editor.getOption(134 /* EditorOption.suggest */).fitWidthToDetails);
+        applyFitWidthStyle();
         const renderer = instantiationService.createInstance(ItemRenderer, this.editor);
         this._disposables.add(renderer);
         this._disposables.add(renderer.onDidToggleDetails(() => this.toggleDetails()));
@@ -178,7 +181,7 @@ let SuggestWidget = class SuggestWidget {
             multipleSelectionSupport: false,
             accessibilityProvider: {
                 getRole: () => isWindows ? 'listitem' : 'option',
-                getWidgetAriaLabel: () => localize(1536, "Suggest"),
+                getWidgetAriaLabel: () => localize(1557, "Suggest"),
                 getWidgetRole: () => 'listbox',
                 getAriaLabel: (item) => {
                     let label = item.textLabel;
@@ -186,30 +189,30 @@ let SuggestWidget = class SuggestWidget {
                     if (typeof item.completion.label !== 'string') {
                         const { detail, description } = item.completion.label;
                         if (detail && description) {
-                            label = localize(1537, '{0} {1}, {2}, {3}', label, detail, description, kindLabel);
+                            label = localize(1558, '{0} {1}, {2}, {3}', label, detail, description, kindLabel);
                         }
                         else if (detail) {
-                            label = localize(1538, '{0} {1}, {2}', label, detail, kindLabel);
+                            label = localize(1559, '{0} {1}, {2}', label, detail, kindLabel);
                         }
                         else if (description) {
-                            label = localize(1539, '{0}, {1}, {2}', label, description, kindLabel);
+                            label = localize(1560, '{0}, {1}, {2}', label, description, kindLabel);
                         }
                     }
                     else {
-                        label = localize(1540, '{0}, {1}', label, kindLabel);
+                        label = localize(1561, '{0}, {1}', label, kindLabel);
                     }
                     if (!item.isResolved || !this._isDetailsVisible()) {
                         return label;
                     }
                     const { documentation, detail } = item.completion;
                     const docs = format('{0}{1}', detail || '', documentation ? (typeof documentation === 'string' ? documentation : documentation.value) : '');
-                    return localize(1541, "{0}, docs: {1}", label, docs);
+                    return localize(1562, "{0}, docs: {1}", label, docs);
                 },
             }
         });
         this._list.style(getListStyles({
             listInactiveFocusBackground: editorSuggestWidgetSelectedBackground,
-            listInactiveFocusOutline: activeContrastBorder
+            listInactiveFocusOutline: editorSuggestWidgetFocusOutline
         }));
         this._status = instantiationService.createInstance(SuggestWidgetStatus, this.element.domNode, suggestWidgetStatusbarMenu, undefined);
         const applyStatusBarStyle = () => this.element.domNode.classList.toggle('with-status-bar', this.editor.getOption(134 /* EditorOption.suggest */).showStatusBar);
@@ -223,6 +226,7 @@ let SuggestWidget = class SuggestWidget {
             if (e.hasChanged(134 /* EditorOption.suggest */)) {
                 applyStatusBarStyle();
                 applyIconStyle();
+                applyFitWidthStyle();
             }
             if (this._completionModel && (e.hasChanged(59 /* EditorOption.fontInfo */) || e.hasChanged(135 /* EditorOption.suggestFontSize */) || e.hasChanged(136 /* EditorOption.suggestLineHeight */))) {
                 this._list.splice(0, this._list.length, this._completionModel.items);
@@ -726,7 +730,14 @@ let SuggestWidget = class SuggestWidget {
             if (width > maxWidth) {
                 width = maxWidth;
             }
-            const preferredWidth = this._completionModel ? this._completionModel.stats.pLabelLen * info.typicalHalfwidthCharacterWidth : width;
+            let preferredWidth = this._completionModel ? this._completionModel.stats.pLabelLen * info.typicalHalfwidthCharacterWidth : width;
+            if (this.editor.getOption(134 /* EditorOption.suggest */).fitWidthToDetails && this._completionModel && !this._persistedSize.restore()) {
+                // Grow to fit the inline detail text, capped at the editor widget's width. Respects a user-dragged size.
+                const cap = Math.min(maxWidth, this.editor.getLayoutInfo().width);
+                const fitWidth = Math.min(cap, this._measureContentWidth(info));
+                width = Math.max(width, fitWidth);
+                preferredWidth = Math.max(preferredWidth, fitWidth);
+            }
             // height math
             const fullHeight = info.statusBarHeight + this._list.contentHeight + info.borderHeight;
             const minHeight = info.itemHeight + info.statusBarHeight;
@@ -786,6 +797,52 @@ let SuggestWidget = class SuggestWidget {
         if (this._isDetailsVisible()) {
             this._details.placeAtAnchor(this.element.domNode, this._contentWidget.getPosition()?.preference[0] === 2 /* ContentWidgetPositionPreference.BELOW */);
         }
+    }
+    /**
+     * Measures the pixel width needed to show the widest item's label together with
+     * its inline detail text (signature + description), plus the surrounding chrome
+     * (icon, inter-column gap, read-more affordance, padding and scrollbar). Cached
+     * per completion model.
+     */
+    _measureContentWidth(info) {
+        const model = this._completionModel;
+        if (!model) {
+            return 0;
+        }
+        if (this._fitContentWidth?.model === model) {
+            return this._fitContentWidth.width;
+        }
+        if (this._measureContext === undefined) {
+            this._measureContext = $('canvas').getContext('2d');
+        }
+        let maxTextWidth;
+        if (this._measureContext) {
+            const options = this.editor.getOptions();
+            const fontInfo = options.get(59 /* EditorOption.fontInfo */);
+            const fontSize = options.get(135 /* EditorOption.suggestFontSize */) || fontInfo.fontSize;
+            this._measureContext.font = `${fontInfo.fontWeight} ${fontSize}px ${fontInfo.getMassagedFontFamily()}`;
+            maxTextWidth = 0;
+            for (const item of model.items) {
+                const { completion } = item;
+                let text = item.textLabel;
+                if (typeof completion.label === 'string') {
+                    text += completion.detail ?? '';
+                }
+                else {
+                    text += (completion.label.detail ?? '') + (completion.label.description ?? '');
+                }
+                maxTextWidth = Math.max(maxTextWidth, this._measureContext.measureText(text).width);
+            }
+        }
+        else {
+            // Canvas is unavailable (e.g. some test environments): fall back to a char-count estimate.
+            maxTextWidth = model.stats.pLabelLen * info.typicalHalfwidthCharacterWidth;
+        }
+        // Chrome around the text: icon, read-more affordance, inter-column gap, horizontal padding and scrollbar.
+        const chrome = 2 * info.itemHeight + 2 * info.horizontalPadding + 20;
+        const width = maxTextWidth + chrome;
+        this._fitContentWidth = { model, width };
+        return width;
     }
     getLayoutInfo() {
         const fontInfo = this.editor.getOption(59 /* EditorOption.fontInfo */);
@@ -897,4 +954,4 @@ class SuggestContentWidget {
     }
 }
 
-export { SuggestContentWidget, SuggestWidget, editorSuggestWidgetForeground, editorSuggestWidgetSelectedBackground };
+export { SuggestContentWidget, SuggestWidget, editorSuggestWidgetFocusOutline, editorSuggestWidgetForeground, editorSuggestWidgetSelectedBackground };

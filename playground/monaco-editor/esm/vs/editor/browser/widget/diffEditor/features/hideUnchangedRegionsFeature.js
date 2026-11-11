@@ -1,4 +1,4 @@
-import { h, $, reset, addDisposableListener, getWindow } from '../../../../../base/browser/dom.js';
+import { h, $, reset, addDisposableListener, EventType, getWindow } from '../../../../../base/browser/dom.js';
 import { renderLabelWithIcons, renderIcon } from '../../../../../base/browser/ui/iconLabel/iconLabels.js';
 import { Codicon } from '../../../../../base/common/codicons.js';
 import { MarkdownString } from '../../../../../base/common/htmlContent.js';
@@ -8,6 +8,7 @@ import { ThemeIcon } from '../../../../../base/common/themables.js';
 import { isDefined } from '../../../../../base/common/types.js';
 import { localize } from '../../../../../nls.js';
 import { IInstantiationService } from '../../../../../platform/instantiation/common/instantiation.js';
+import { IHoverService } from '../../../../../platform/hover/browser/hover.js';
 import { LineRange } from '../../../../common/core/ranges/lineRange.js';
 import { Position } from '../../../../common/core/position.js';
 import { Range } from '../../../../common/core/range.js';
@@ -50,11 +51,14 @@ let HideUnchangedRegionsFeature = class HideUnchangedRegionsFeature extends Disp
         this._breadcrumbsSourceFactory.set(factory, undefined);
     }
     get isUpdatingHiddenAreas() { return this._isUpdatingHiddenAreas; }
-    constructor(_editors, _diffModel, _options, _instantiationService) {
+    constructor(_editors, _diffModel, _options, _runWithOriginalEditorScrollAnchor, _runWithModifiedEditorScrollAnchor, _variant, _instantiationService) {
         super();
         this._editors = _editors;
         this._diffModel = _diffModel;
         this._options = _options;
+        this._runWithOriginalEditorScrollAnchor = _runWithOriginalEditorScrollAnchor;
+        this._runWithModifiedEditorScrollAnchor = _runWithModifiedEditorScrollAnchor;
+        this._variant = _variant;
         this._instantiationService = _instantiationService;
         this._modifiedOutlineSource = derivedDisposable(this, (reader) => {
             const m = this._editors.modifiedModel.read(reader);
@@ -102,11 +106,12 @@ let HideUnchangedRegionsFeature = class HideUnchangedRegionsFeature extends Disp
             const origViewZones = [];
             const modViewZones = [];
             const sideBySide = this._options.renderSideBySide.read(reader);
-            const compactMode = this._options.compactMode.read(reader);
+            const compactControl = this._variant === 'compact';
+            const compactMode = !compactControl && this._options.compactMode.read(reader);
             const curUnchangedRegions = unchangedRegions.read(reader);
             for (let i = 0; i < curUnchangedRegions.length; i++) {
                 const r = curUnchangedRegions[i];
-                if (r.shouldHideControls(reader)) {
+                if (!compactControl && r.shouldHideControls(reader)) {
                     continue;
                 }
                 if (compactMode && (i === 0 || i === curUnchangedRegions.length - 1)) {
@@ -129,15 +134,15 @@ let HideUnchangedRegionsFeature = class HideUnchangedRegionsFeature extends Disp
                 else {
                     {
                         const d = derived(this, reader => /** @description hiddenOriginalRangeStart */ r.getHiddenOriginalRange(reader).startLineNumber - 1);
-                        const origVz = new PlaceholderViewZone(d, 24);
+                        const origVz = new PlaceholderViewZone(d, compactControl ? 40 : 24);
                         origViewZones.push(origVz);
-                        reader.store.add(new CollapsedCodeOverlayWidget(this._editors.original, origVz, r, r.originalUnchangedRange, !sideBySide, modifiedOutlineSource, l => this._diffModel.get().ensureModifiedLineIsVisible(l, 2 /* RevealPreference.FromBottom */, undefined), this._options));
+                        reader.store.add(this._instantiationService.createInstance(CollapsedCodeOverlayWidget, this._editors.original, origVz, r, r.originalUnchangedRange, !sideBySide, modifiedOutlineSource, l => this._diffModel.get().ensureModifiedLineIsVisible(l, 2 /* RevealPreference.FromBottom */, undefined), this._options, this._runWithOriginalEditorScrollAnchor, compactControl));
                     }
                     {
                         const d = derived(this, reader => /** @description hiddenModifiedRangeStart */ r.getHiddenModifiedRange(reader).startLineNumber - 1);
-                        const modViewZone = new PlaceholderViewZone(d, 24);
+                        const modViewZone = new PlaceholderViewZone(d, compactControl ? 40 : 24);
                         modViewZones.push(modViewZone);
-                        reader.store.add(new CollapsedCodeOverlayWidget(this._editors.modified, modViewZone, r, r.modifiedUnchangedRange, false, modifiedOutlineSource, l => this._diffModel.get().ensureModifiedLineIsVisible(l, 2 /* RevealPreference.FromBottom */, undefined), this._options));
+                        reader.store.add(this._instantiationService.createInstance(CollapsedCodeOverlayWidget, this._editors.modified, modViewZone, r, r.modifiedUnchangedRange, false, modifiedOutlineSource, l => this._diffModel.get().ensureModifiedLineIsVisible(l, 2 /* RevealPreference.FromBottom */, undefined), this._options, this._runWithModifiedEditorScrollAnchor, compactControl));
                     }
                 }
             }
@@ -151,7 +156,7 @@ let HideUnchangedRegionsFeature = class HideUnchangedRegionsFeature extends Disp
         const unchangedLinesDecorationShow = {
             description: 'Fold Unchanged',
             glyphMarginHoverMessage: new MarkdownString(undefined, { isTrusted: true, supportThemeIcons: true })
-                .appendMarkdown(localize(140, 'Fold Unchanged Region')),
+                .appendMarkdown(localize(139, 'Fold Unchanged Region')),
             glyphMarginClassName: 'fold-unchanged ' + ThemeIcon.asClassName(Codicon.fold),
             zIndex: 10001,
         };
@@ -163,7 +168,7 @@ let HideUnchangedRegionsFeature = class HideUnchangedRegionsFeature extends Disp
                 options: unchangedLinesDecoration,
             }));
             for (const r of curUnchangedRegions) {
-                if (r.shouldHideControls(reader)) {
+                if (this._variant !== 'compact' && r.shouldHideControls(reader)) {
                     result.push({
                         range: Range.fromPositions(new Position(r.originalLineNumber, 1)),
                         options: unchangedLinesDecorationShow,
@@ -180,7 +185,7 @@ let HideUnchangedRegionsFeature = class HideUnchangedRegionsFeature extends Disp
                 options: unchangedLinesDecoration,
             }));
             for (const r of curUnchangedRegions) {
-                if (r.shouldHideControls(reader)) {
+                if (this._variant !== 'compact' && r.shouldHideControls(reader)) {
                     result.push({
                         range: LineRange.ofLength(r.modifiedLineNumber, 1).toInclusiveRange(),
                         options: unchangedLinesDecorationShow,
@@ -236,7 +241,7 @@ let HideUnchangedRegionsFeature = class HideUnchangedRegionsFeature extends Disp
     }
 };
 HideUnchangedRegionsFeature = HideUnchangedRegionsFeature_1 = __decorate([
-    __param(3, IInstantiationService)
+    __param(6, IInstantiationService)
 ], HideUnchangedRegionsFeature);
 class CompactCollapsedCodeOverlayWidget extends ViewZoneOverlayWidget {
     constructor(editor, _viewZone, _unchangedRegion, _hide = false) {
@@ -257,14 +262,14 @@ class CompactCollapsedCodeOverlayWidget extends ViewZoneOverlayWidget {
             /** @description update labels */
             if (!this._hide) {
                 const lineCount = this._unchangedRegion.getHiddenModifiedRange(reader).length;
-                const linesHiddenText = localize(141, '{0} hidden lines', lineCount);
+                const linesHiddenText = localize(140, '{0} hidden lines', lineCount);
                 this._nodes.text.innerText = linesHiddenText;
             }
         }));
     }
 }
-class CollapsedCodeOverlayWidget extends ViewZoneOverlayWidget {
-    constructor(_editor, _viewZone, _unchangedRegion, _unchangedRegionRange, _hide, _modifiedOutlineSource, _revealModifiedHiddenLine, _options) {
+let CollapsedCodeOverlayWidget = class CollapsedCodeOverlayWidget extends ViewZoneOverlayWidget {
+    constructor(_editor, _viewZone, _unchangedRegion, _unchangedRegionRange, _hide, _modifiedOutlineSource, _revealModifiedHiddenLine, _options, _runWithScrollAnchor, _compactControl, _hoverService) {
         const root = h('div.diff-hidden-lines-widget');
         super(_editor, _viewZone, root.root);
         this._editor = _editor;
@@ -274,24 +279,65 @@ class CollapsedCodeOverlayWidget extends ViewZoneOverlayWidget {
         this._modifiedOutlineSource = _modifiedOutlineSource;
         this._revealModifiedHiddenLine = _revealModifiedHiddenLine;
         this._options = _options;
+        this._runWithScrollAnchor = _runWithScrollAnchor;
+        this._compactControl = _compactControl;
+        this._hoverService = _hoverService;
         this._nodes = h('div.diff-hidden-lines', [
-            h('div.top@top', { title: localize(142, 'Click or drag to show more above') }),
+            h('div.top@top', { title: localize(141, 'Click or drag to show more above') }),
             h('div.center@content', { style: { display: 'flex' } }, [
-                h('div@first', { style: { display: 'flex', justifyContent: 'center', alignItems: 'center', flexShrink: '0' } }, [$('a', { title: localize(143, 'Show Unchanged Region'), role: 'button', onclick: () => { this._unchangedRegion.showAll(undefined); } }, ...renderLabelWithIcons('$(unfold)'))]),
-                h('div@others', { style: { display: 'flex', justifyContent: 'center', alignItems: 'center' } }),
+                h('div.disclosure-toggle@toggle'),
+                h('div.first@first', { style: { display: 'flex', alignItems: 'center', flexShrink: '0' } }, [
+                    h('span.line-number-control@lineNumberControl', { 'aria-hidden': 'true' }),
+                    $('a.default-control', { title: localize(142, 'Show Unchanged Region'), role: 'button', onclick: () => { this._unchangedRegion.showAll(undefined); } }, ...renderLabelWithIcons('$(unfold)'))
+                ]),
+                h('div.content-row@others', { style: { display: 'flex', justifyContent: 'center', alignItems: 'center' } }),
             ]),
-            h('div.bottom@bottom', { title: localize(144, 'Click or drag to show more below'), role: 'button' }),
+            h('div.bottom@bottom', { title: localize(143, 'Click or drag to show more below'), role: 'button' }),
         ]);
         root.root.appendChild(this._nodes.root);
+        this._nodes.root.classList.toggle('diff-hidden-lines-disclosure', this._compactControl);
         if (!this._hide) {
-            this._register(applyStyle(this._nodes.first, { width: observableCodeEditor(this._editor).layoutInfoContentLeft }));
+            const editorLayout = observableCodeEditor(this._editor);
+            this._register(applyStyle(this._nodes.first, { width: editorLayout.layoutInfoContentLeft }));
+            if (this._compactControl) {
+                this._register(autorun(reader => {
+                    const layoutInfo = editorLayout.layoutInfo.read(reader);
+                    this._nodes.lineNumberControl.style.left = `${layoutInfo.lineNumbersLeft}px`;
+                    this._nodes.lineNumberControl.style.width = `${layoutInfo.lineNumbersWidth}px`;
+                }));
+            }
         }
         else {
             reset(this._nodes.first);
         }
+        if (this._compactControl && !this._hide) {
+            this._nodes.toggle.tabIndex = 0;
+            this._nodes.toggle.setAttribute('role', 'button');
+            this._register(this._hoverService.setupDelayedHover(this._nodes.toggle, () => ({
+                content: this._nodes.toggle.getAttribute('aria-label'),
+            })));
+            this._register(addDisposableListener(this._nodes.toggle, EventType.CLICK, () => this._toggleAll()));
+            this._register(addDisposableListener(this._nodes.toggle, EventType.KEY_DOWN, e => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    if (!e.repeat) {
+                        this._toggleAll();
+                    }
+                }
+            }));
+        }
         this._register(autorun(reader => {
             /** @description Update CollapsedCodeOverlayWidget canMove* css classes */
             const isFullyRevealed = this._unchangedRegion.visibleLineCountTop.read(reader) + this._unchangedRegion.visibleLineCountBottom.read(reader) === this._unchangedRegion.lineCount;
+            if (this._compactControl && !this._hide) {
+                const actionLabel = isFullyRevealed
+                    ? localize(144, 'Collapse unchanged lines')
+                    : localize(145, 'Show {0} hidden lines', this._unchangedRegion.getHiddenModifiedRange(reader).length);
+                this._nodes.toggle.setAttribute('aria-expanded', String(isFullyRevealed));
+                this._nodes.toggle.setAttribute('aria-label', actionLabel);
+                reset(this._nodes.lineNumberControl, ...renderLabelWithIcons(isFullyRevealed ? '$(fold)' : '$(unfold)'));
+            }
             this._nodes.bottom.classList.toggle('canMoveTop', !isFullyRevealed);
             this._nodes.bottom.classList.toggle('canMoveBottom', this._unchangedRegion.visibleLineCountBottom.read(reader) > 0);
             this._nodes.top.classList.toggle('canMoveTop', this._unchangedRegion.visibleLineCountTop.read(reader) > 0);
@@ -337,7 +383,12 @@ class CollapsedCodeOverlayWidget extends ViewZoneOverlayWidget {
             });
             const mouseUpListener = addDisposableListener(window, 'mouseup', e => {
                 if (!didMove) {
-                    this._unchangedRegion.showMoreAbove(this._options.hideUnchangedRegionsRevealLineCount.get(), undefined);
+                    if (this._compactControl && this._isFullyRevealed()) {
+                        this._unchangedRegion.collapseAll(undefined);
+                    }
+                    else {
+                        this._unchangedRegion.showMoreAbove(this._options.hideUnchangedRegionsRevealLineCount.get(), undefined);
+                    }
                 }
                 this._nodes.top.classList.toggle('dragging', false);
                 this._nodes.root.classList.toggle('dragging', false);
@@ -364,22 +415,20 @@ class CollapsedCodeOverlayWidget extends ViewZoneOverlayWidget {
                 didMove = didMove || Math.abs(delta) > 2;
                 const lineDelta = Math.round(delta / editor.getOption(75 /* EditorOption.lineHeight */));
                 const newVal = Math.max(0, Math.min(cur - lineDelta, this._unchangedRegion.getMaxVisibleLineCountBottom()));
-                const top = this._unchangedRegionRange.endLineNumberExclusive > editor.getModel().getLineCount()
-                    ? editor.getContentHeight()
-                    : editor.getTopForLineNumber(this._unchangedRegionRange.endLineNumberExclusive);
-                this._unchangedRegion.visibleLineCountBottom.set(newVal, undefined);
-                const top2 = this._unchangedRegionRange.endLineNumberExclusive > editor.getModel().getLineCount()
-                    ? editor.getContentHeight()
-                    : editor.getTopForLineNumber(this._unchangedRegionRange.endLineNumberExclusive);
-                editor.setScrollTop(editor.getScrollTop() + (top2 - top));
+                if (newVal === this._unchangedRegion.visibleLineCountBottom.get()) {
+                    return;
+                }
+                this._runWithLowerScrollAnchor(() => this._unchangedRegion.visibleLineCountBottom.set(newVal, undefined));
             });
             const mouseUpListener = addDisposableListener(window, 'mouseup', e => {
                 this._unchangedRegion.isDragged.set(undefined, undefined);
                 if (!didMove) {
-                    const top = editor.getTopForLineNumber(this._unchangedRegionRange.endLineNumberExclusive);
-                    this._unchangedRegion.showMoreBelow(this._options.hideUnchangedRegionsRevealLineCount.get(), undefined);
-                    const top2 = editor.getTopForLineNumber(this._unchangedRegionRange.endLineNumberExclusive);
-                    editor.setScrollTop(editor.getScrollTop() + (top2 - top));
+                    if (this._compactControl && this._isFullyRevealed()) {
+                        this._unchangedRegion.collapseAll(undefined);
+                    }
+                    else {
+                        this._runWithLowerScrollAnchor(() => this._unchangedRegion.showMoreBelow(this._options.hideUnchangedRegionsRevealLineCount.get(), undefined));
+                    }
                 }
                 this._nodes.bottom.classList.toggle('dragging', false);
                 this._nodes.root.classList.toggle('dragging', false);
@@ -391,21 +440,24 @@ class CollapsedCodeOverlayWidget extends ViewZoneOverlayWidget {
             /** @description update labels */
             const children = [];
             if (!this._hide) {
+                const isFullyRevealed = this._isFullyRevealed(reader);
                 const lineCount = _unchangedRegion.getHiddenModifiedRange(reader).length;
-                const linesHiddenText = localize(145, '{0} hidden lines', lineCount);
-                const span = $('span', { title: localize(146, 'Double click to unfold') }, linesHiddenText);
-                span.addEventListener('dblclick', e => {
-                    if (e.button !== 0) {
-                        return;
-                    }
-                    e.preventDefault();
-                    this._unchangedRegion.showAll(undefined);
-                });
+                const linesHiddenText = localize(146, '{0} hidden lines', lineCount);
+                const span = $('span', this._compactControl ? undefined : { title: localize(147, 'Double click to unfold') }, this._compactControl && isFullyRevealed ? localize(148, 'Collapse unchanged lines') : linesHiddenText);
+                if (!this._compactControl) {
+                    reader.store.add(addDisposableListener(span, EventType.DBLCLICK, e => {
+                        if (e.button !== 0) {
+                            return;
+                        }
+                        e.preventDefault();
+                        this._unchangedRegion.showAll(undefined);
+                    }));
+                }
                 children.push(span);
                 const range = this._unchangedRegion.getHiddenModifiedRange(reader);
-                const items = this._modifiedOutlineSource.getBreadcrumbItems(range, reader);
+                const items = isFullyRevealed ? [] : this._modifiedOutlineSource.getBreadcrumbItems(range, reader);
                 if (items.length > 0) {
-                    children.push($('span', undefined, '\u00a0\u00a0|\u00a0\u00a0'));
+                    children.push($('span', undefined, this._compactControl ? '\u00a0\u00b7\u00a0' : '\u00a0\u00a0|\u00a0\u00a0'));
                     for (let i = 0; i < items.length; i++) {
                         const item = items[i];
                         const icon = SymbolKinds.toIcon(item.kind);
@@ -414,21 +466,75 @@ class CollapsedCodeOverlayWidget extends ViewZoneOverlayWidget {
                         }, [
                             renderIcon(icon),
                             '\u00a0',
-                            item.name,
+                            h('span.breadcrumb-label', [item.name]).root,
                             ...(i === items.length - 1
                                 ? []
                                 : [renderIcon(Codicon.chevronRight)])
                         ]).root;
                         children.push(divItem);
-                        divItem.onclick = () => {
+                        const revealBreadcrumb = (event) => {
+                            event.stopPropagation();
                             this._revealModifiedHiddenLine(item.startLineNumber);
                         };
+                        reader.store.add(addDisposableListener(divItem, EventType.CLICK, revealBreadcrumb));
+                        if (this._compactControl) {
+                            const label = localize(149, 'Go to {0}', item.name);
+                            divItem.tabIndex = 0;
+                            divItem.setAttribute('role', 'button');
+                            divItem.setAttribute('aria-label', label);
+                            reader.store.add(this._hoverService.setupDelayedHover(divItem, { content: label }));
+                            reader.store.add(addDisposableListener(divItem, EventType.KEY_DOWN, e => {
+                                if (e.key === 'Enter' || e.key === ' ') {
+                                    e.preventDefault();
+                                    revealBreadcrumb(e);
+                                }
+                            }));
+                        }
                     }
                 }
             }
-            reset(this._nodes.others, ...children);
+            if (this._compactControl && children.length > 0) {
+                const content = h('div.disclosure-content', children).root;
+                reader.store.add(this._hoverService.setupDelayedHover(content, { content: content.textContent ?? '' }));
+                reset(this._nodes.others, h('div.line-left').root, content, h('div.line-right').root);
+            }
+            else {
+                reset(this._nodes.others, ...children);
+            }
         }));
     }
-}
+    _toggleAll() {
+        if (this._isFullyRevealed()) {
+            this._unchangedRegion.collapseAll(undefined);
+        }
+        else {
+            this._unchangedRegion.showAll(undefined);
+        }
+    }
+    _isFullyRevealed(reader) {
+        return this._unchangedRegion.visibleLineCountTop.read(reader)
+            + this._unchangedRegion.visibleLineCountBottom.read(reader)
+            === this._unchangedRegion.lineCount;
+    }
+    _runWithLowerScrollAnchor(update) {
+        const anchorLineNumber = this._unchangedRegionRange.endLineNumberExclusive;
+        if (this._runWithScrollAnchor) {
+            this._runWithScrollAnchor(anchorLineNumber, update);
+            return;
+        }
+        const scrollTop = this._editor.getScrollTop();
+        const top = this._getTopForLineNumber(anchorLineNumber);
+        update();
+        this._editor.setScrollTop(scrollTop + this._getTopForLineNumber(anchorLineNumber) - top);
+    }
+    _getTopForLineNumber(lineNumber) {
+        return lineNumber > this._editor.getModel().getLineCount()
+            ? this._editor.getContentHeight()
+            : this._editor.getTopForLineNumber(lineNumber);
+    }
+};
+CollapsedCodeOverlayWidget = __decorate([
+    __param(10, IHoverService)
+], CollapsedCodeOverlayWidget);
 
 export { HideUnchangedRegionsFeature };

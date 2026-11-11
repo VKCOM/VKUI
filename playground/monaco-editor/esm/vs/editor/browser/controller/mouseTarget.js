@@ -178,7 +178,7 @@ class HitTestContext {
     constructor(context, viewHelper, lastRenderData) {
         this.viewModel = context.viewModel;
         const options = context.configuration.options;
-        this.layoutInfo = options.get(165 /* EditorOption.layoutInfo */);
+        this.layoutInfo = options.get(166 /* EditorOption.layoutInfo */);
         this.viewDomNode = viewHelper.viewDomNode;
         this.viewLinesGpu = viewHelper.viewLinesGpu;
         this.lineHeight = options.get(75 /* EditorOption.lineHeight */);
@@ -679,7 +679,7 @@ class MouseTargetFactory {
     }
     getMouseColumn(relativePos) {
         const options = this._context.configuration.options;
-        const layoutInfo = options.get(165 /* EditorOption.layoutInfo */);
+        const layoutInfo = options.get(166 /* EditorOption.layoutInfo */);
         const mouseContentHorizontalOffset = this._context.viewLayout.getCurrentScrollLeft() + relativePos.x - layoutInfo.contentLeft;
         return MouseTargetFactory._getMouseColumn(mouseContentHorizontalOffset, options.get(59 /* EditorOption.fontInfo */).typicalHalfwidthCharacterWidth);
     }

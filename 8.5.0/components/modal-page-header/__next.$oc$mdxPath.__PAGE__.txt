@@ -1,0 +1,97 @@
+2:"$Sreact.fragment"
+3:I[91133,[],""]
+4:I[4297,[],""]
+9:"static/chunks/959-8ad25bff58b07415.js"
+a:"static/chunks/628-5716112b83fdd9d5.js"
+b:"static/chunks/app/%5B%5B...mdxPath%5D%5D/page-9e158cb4dcea1416.js"
+c:I[67042,["959","$9","628","$a","217","$b"],"Main"]
+e:"OverviewHeaderLinks"
+f:I[77539,["959","$9","628","$a","217","$b"],"$e",1]
+10:I[13091,["959","$9","628","$a","217","$b"],"Anchor"]
+11:I[95540,["959","$9","628","$a","217","$b"],"PlaygroundLazy"]
+12:I[38303,["959","$9","628","$a","217","$b"],"BlockWrapper"]
+1b:"ViewportBoundary"
+1c:I[31872,[],"$1b"]
+1d:"MetadataBoundary"
+1e:I[31872,[],"$1d"]
+1f:"$Sreact.suspense"
+20:I[12569,[],"IconMark"]
+6:X
+6:C
+7:X
+d:T7c7,---
+description: Шапка для модальных страниц.
+tags: navigation
+---
+
+<Overview group="modals">
+
+# ModalPageHeader [tag:component]
+
+Шапка в модальных страницах.
+Имеет очень похожую логику на [`PanelHeader`](/components/panel-header): два свойства `before` и `after` для иконок и
+название модальной страницы, передаваемое как `children`.
+
+</Overview>
+
+import { BlockWrapper } from '@/components/wrappers';
+
+{/* @example-description: Базовый `ModalPageHeader` с кнопками в `before/after` и заголовком страницы. */}
+<Playground Wrapper={BlockWrapper}>
+
+```jsx
+const platform = usePlatform();
+
+return (
+  <ModalPageHeader
+    before={platform !== 'ios' && <PanelHeaderClose />}
+    after={<PanelHeaderSubmit />}
+  >
+    Заголовок модальной страницы
+  </ModalPageHeader>
+);
+```
+
+</Playground>
+
+## Требования по расположению кнопок
+
+- На Android **слева** может быть [`PanelHeaderClose`](/components/panel-header#panel-header-close).
+- На iOS **справа** должна быть кнопка закрытия. Это может быть либо [`PanelHeaderButton`](/components/panel-header#panel-header-button)
+  с иконкой `<Icon24Dismiss />`, либо [`PanelHeaderClose`](/components/panel-header#panel-header-close)
+  или [`PanelHeaderSubmit`](/components/panel-header#panel-header-submit).
+- Если произойдёт навигация вперёд внутри модального окна, то **слева** в шапке останется **только** кнопка назад.
+
+Также на Android могут быть какие-то дополнительные кнопки-иконки справа, а на iOS – слева.
+
+## Свойства и методы [#api]
+
+<PropsTable name="ModalPageHeader" />8:[["children",{"s":"__PAGE__","h":160,"d":{"r":["$","$2","c",{"children":[[["$","$Lc",null,{"metadata":{"description":"Шапка для модальных страниц.","tags":"navigation","title":"ModalPageHeader","filePath":"content/components/modal-page-header.mdx","timestamp":1794400886000},"sourceCode":"$d","children":[["$","div",null,{"className":"Overview_root__nbCiB","children":[["$","$Lf",null,{"group":"modals"}],[["$","h1",null,{"className":"mdx_h1__1mgpN","data-pagefind-filter":"tag:component","children":"ModalPageHeader"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Шапка в модальных страницах.\nИмеет очень похожую логику на ",["$","$L10",null,{"href":"/components/panel-header","children":["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"PanelHeader"}]}],": два свойства ",["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"before"}]," и ",["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"after"}]," для иконок и\nназвание модальной страницы, передаваемое как ",["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"children"}],"."]}]]]}],"\n","\n","\n",["$","$L11",null,{"Wrapper":"$12","code":"const platform = usePlatform();\n\nreturn (\n  <ModalPageHeader\n    before={platform !== 'ios' && <PanelHeaderClose />}\n    after={<PanelHeaderSubmit />}\n  >\n    Заголовок модальной страницы\n  </ModalPageHeader>\n);"}],"\n",["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"trebovaniya-po-raspolozheniyu-knopok","children":["$","a",null,{"href":"#trebovaniya-po-raspolozheniyu-knopok","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Требования по расположению кнопок","children":["Требования по расположению кнопок",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined","$L13"]]}]]}]}],"\n","$L14","\n","$L15","\n","$L16","\n","$L17"]}],"$L18"],null,"$L19"]}],"p":"$@1a","v":null,"s":"$7"}}]]
+1:[["children",{"s":{"n":"mdxPath","t":"oc","k":"components/modal-page-header","s":["_not-found","_global-error","apple-icon.png","favicon.ico","icon.svg"]},"h":64,"d":{"r":["$","$2","c",{"children":[null,["$","$L3",null,{"parallelRouterKey":"children","template":["$","$L4",null,{}]}]]}],"p":"$@5","v":"$6","s":"$7"},"c":"$Q8"}]]
+0:{"t":{"t":{"s":"","h":16,"c":"$Q1"},"h":{"r":["$","$2","h",{"children":[null,["$","$L1c",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]}],["$","$L1e",null,{"children":[["$","div",null,{"hidden":true,"children":["$","$1f",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"ModalPageHeader | VKUI"}],["$","meta","1",{"name":"description","content":"Шапка для модальных страниц."}],["$","link","2",{"rel":"canonical","href":"https://vkui.io/components/modal-page-header/"}],["$","meta","3",{"property":"og:title","content":"VKUI – React UI Kit"}],["$","meta","4",{"property":"og:description","content":"VKUI — библиотека адаптивных React-компонентов для создания мобильных и веб-приложений."}],["$","meta","5",{"property":"og:url","content":"https://vkui.io/"}],["$","meta","6",{"property":"og:site_name","content":"VKUI"}],["$","meta","7",{"property":"og:type","content":"website"}],["$","meta","8",{"name":"twitter:card","content":"summary"}],["$","meta","9",{"name":"twitter:title","content":"VKUI – React UI Kit"}],["$","meta","10",{"name":"twitter:description","content":"VKUI — библиотека адаптивных React-компонентов для создания мобильных и веб-приложений."}],["$","link","11",{"rel":"icon","href":"/8.5.0/favicon.ico?60dfc7274b0e657e","type":"image/x-icon","sizes":"48x48"}],["$","link","12",{"rel":"icon","href":"/8.5.0/icon.svg?01ea673639a821e1","type":"image/svg+xml","sizes":"any"}],["$","link","13",{"rel":"apple-touch-icon","href":"/8.5.0/apple-icon.png?131c1f3e67ede032","type":"image/png","sizes":"180x180"}],["$","$L20","14",{}]]}]}],null]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}],"p":"$@21","v":null,"s":"$7"}},"a":"$@22","u":"$@23","b":"8PhKH7pImpc-E3HhVI1Ya"}
+2d:I[80784,["959","$9","628","$a","217","$b"],"TOC"]
+2e:I[31872,[],"OutletBoundary"]
+13:["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]
+14:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["На Android ",["$","strong",null,{"className":"mdx_strong__N7OUG","children":"слева"}]," может быть ",["$","$L10",null,{"href":"/components/panel-header#panel-header-close","children":["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"PanelHeaderClose"}]}],"."]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["На iOS ",["$","strong",null,{"className":"mdx_strong__N7OUG","children":"справа"}]," должна быть кнопка закрытия. Это может быть либо ",["$","$L10",null,{"href":"/components/panel-header#panel-header-button","children":["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"PanelHeaderButton"}]}],"\nс иконкой ",["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"<Icon24Dismiss />"}],", либо ",["$","$L10",null,{"href":"/components/panel-header#panel-header-close","children":["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"PanelHeaderClose"}]}],"\nили ",["$","$L10",null,{"href":"/components/panel-header#panel-header-submit","children":["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"PanelHeaderSubmit"}]}],"."]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["Если произойдёт навигация вперёд внутри модального окна, то ",["$","strong",null,{"className":"mdx_strong__N7OUG","children":"слева"}]," в шапке останется ",["$","strong",null,{"className":"mdx_strong__N7OUG","children":"только"}]," кнопка назад."]}],"\n"]}]
+15:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Также на Android могут быть какие-то дополнительные кнопки-иконки справа, а на iOS – слева."}]
+16:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"api","children":["$","a",null,{"href":"#api","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Свойства и методы","children":["Свойства и методы",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+17:["$","div",null,{"className":"Table_root__0rGvK","children":["$","table",null,{"className":"Table_table__NzLHi PropsTable_root__O959b","children":[["$","thead",null,{"children":["$","tr",null,{"children":[["$","th",null,{"children":"Свойство","className":"Table_th__EHorR"}],["$","th",null,{"children":"Описание","className":"Table_th__EHorR"}]],"className":"Table_tr__SD2Ot"}]}],["$","tbody",null,{"children":["$@24","$@25","$@26","$@27","$@28","$@29","$@2a","$@2b","$@2c"]}]]}]}]
+18:["$","$L2d",null,{"toc":[{"value":"Требования по расположению кнопок","id":"trebovaniya-po-raspolozheniyu-knopok","depth":2},{"value":"Свойства и методы","id":"api","depth":2}]}]
+19:["$","$L2e",null,{"children":["$","$1f",null,{"name":"Next.MetadataOutlet","children":"$@2f"}]}]
+23:true
+7:300
+24:["$","tr","after",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"after"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"ReactNode"}],[["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Добавляет элемент справа."}],"\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"При передаче нескольких элементов, расставляет отступы между ними."}]],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+25:["$","tr","before",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"before"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"ReactNode"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Добавляет элемент слева."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+26:["$","tr","float",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"float"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"boolean"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Высота шапки будет игнорироваться контентом панели."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+27:["$","tr","getRef",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"getRef"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"Ref<HTMLDivElement>"}],"$undefined",["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+28:["$","tr","getRootRef",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"getRootRef"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"Ref<HTMLDivElement>"}],"$undefined",["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+29:["$","tr","noSeparator",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"noSeparator"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"boolean"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Отключение разделителя."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"false"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+2a:["$","tr","ref",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"ref"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"Ref<HTMLDivElement>"}],"$undefined",["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+2b:["$","tr","transparent",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"transparent"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"boolean"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Прозрачный фон компонента."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+2c:["$","tr","typographyProps",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"typographyProps"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"(HasComponent & HTMLAttributes<HTMLElement> & HasDataAttribute)"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["По умолчанию как ",["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"Component"}]," используется ",["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"span"}],"."]}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_8c4671","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+2f:null
+7:C
+22:0
+5:"$undefined"
+21:"$undefined"
+1a:"$undefined"

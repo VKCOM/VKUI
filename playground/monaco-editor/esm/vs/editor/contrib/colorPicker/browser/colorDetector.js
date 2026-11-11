@@ -2,7 +2,7 @@ import { TimeoutTimer, createCancelablePromise } from '../../../../base/common/a
 import { RGBA } from '../../../../base/common/color.js';
 import { onUnexpectedError } from '../../../../base/common/errors.js';
 import { Emitter } from '../../../../base/common/event.js';
-import { Disposable, DisposableStore } from '../../../../base/common/lifecycle.js';
+import { Disposable, DisposableStore, toDisposable } from '../../../../base/common/lifecycle.js';
 import { StopWatch } from '../../../../base/common/stopwatch.js';
 import { noBreakWhitespace } from '../../../../base/common/strings.js';
 import { DynamicCssRules } from '../../../browser/editorDom.js';
@@ -32,6 +32,8 @@ let ColorDetector = class ColorDetector extends Disposable {
     static { ColorDetector_1 = this; }
     static { this.ID = 'editor.contrib.colorDetector'; }
     static { this.RECOMPUTE_TIME = 1000; } // ms
+    static { this.colorDecoratorInnerWidthInEm = 0.8; }
+    static { this.colorDecoratorMarginInEm = 0.2; }
     constructor(_editor, _configurationService, _languageFeaturesService, languageFeatureDebounceService) {
         super();
         this._editor = _editor;
@@ -44,6 +46,13 @@ let ColorDetector = class ColorDetector extends Disposable {
         this._colorDecorationClassRefs = this._register(new DisposableStore());
         this._colorDecoratorIds = this._editor.createDecorationsCollection();
         this._ruleFactory = this._register(new DynamicCssRules(this._editor));
+        const editorDomNode = this._editor.getContainerDomNode();
+        editorDomNode.style.setProperty('--vscode-colorPicker-colorDecoratorWidth', `${ColorDetector_1.colorDecoratorInnerWidthInEm}em`);
+        editorDomNode.style.setProperty('--vscode-colorPicker-colorDecoratorMargin', `${ColorDetector_1.colorDecoratorMarginInEm}em`);
+        this._register(toDisposable(() => {
+            editorDomNode.style.removeProperty('--vscode-colorPicker-colorDecoratorWidth');
+            editorDomNode.style.removeProperty('--vscode-colorPicker-colorDecoratorMargin');
+        }));
         this._debounceInformation = languageFeatureDebounceService.for(_languageFeaturesService.colorProvider, 'Document Colors', { min: ColorDetector_1.RECOMPUTE_TIME });
         this._register(_editor.onDidChangeModel(() => {
             this._isColorDecoratorsEnabled = this.isEnabled();
@@ -54,9 +63,9 @@ let ColorDetector = class ColorDetector extends Disposable {
         this._register(_editor.onDidChangeConfiguration((e) => {
             const prevIsEnabled = this._isColorDecoratorsEnabled;
             this._isColorDecoratorsEnabled = this.isEnabled();
-            this._defaultColorDecoratorsEnablement = this._editor.getOption(167 /* EditorOption.defaultColorDecorators */);
+            this._defaultColorDecoratorsEnablement = this._editor.getOption(168 /* EditorOption.defaultColorDecorators */);
             const updatedColorDecoratorsSetting = prevIsEnabled !== this._isColorDecoratorsEnabled || e.hasChanged(27 /* EditorOption.colorDecoratorsLimit */);
-            const updatedDefaultColorDecoratorsSetting = e.hasChanged(167 /* EditorOption.defaultColorDecorators */);
+            const updatedDefaultColorDecoratorsSetting = e.hasChanged(168 /* EditorOption.defaultColorDecorators */);
             if (updatedColorDecoratorsSetting || updatedDefaultColorDecoratorsSetting) {
                 if (this._isColorDecoratorsEnabled) {
                     this.updateColors();
@@ -69,7 +78,7 @@ let ColorDetector = class ColorDetector extends Disposable {
         this._timeoutTimer = null;
         this._computePromise = null;
         this._isColorDecoratorsEnabled = this.isEnabled();
-        this._defaultColorDecoratorsEnablement = this._editor.getOption(167 /* EditorOption.defaultColorDecorators */);
+        this._defaultColorDecoratorsEnablement = this._editor.getOption(168 /* EditorOption.defaultColorDecorators */);
         this.updateColors();
     }
     isEnabled() {
@@ -100,6 +109,7 @@ let ColorDetector = class ColorDetector extends Disposable {
     updateColors() {
         this.stop();
         if (!this._isColorDecoratorsEnabled) {
+            this.removeAllDecorations();
             return;
         }
         const model = this._editor.getModel();
@@ -168,6 +178,7 @@ let ColorDetector = class ColorDetector extends Disposable {
     updateColorDecorators(colorData) {
         this._colorDecorationClassRefs.clear();
         const decorations = [];
+        const widthInEm = ColorDetector_1.colorDecoratorInnerWidthInEm + 2 * ColorDetector_1.colorDecoratorMarginInEm;
         const limit = this._editor.getOption(27 /* EditorOption.colorDecoratorsLimit */);
         for (let i = 0; i < colorData.length && decorations.length < limit; i++) {
             const { red, green, blue, alpha } = colorData[i].colorInfo.color;
@@ -189,7 +200,8 @@ let ColorDetector = class ColorDetector extends Disposable {
                         content: noBreakWhitespace,
                         inlineClassName: `${ref.className} colorpicker-color-decoration`,
                         inlineClassNameAffectsLetterSpacing: true,
-                        attachedData: ColorDecorationInjectedTextMarker
+                        attachedData: ColorDecorationInjectedTextMarker,
+                        widthInEm,
                     }
                 }
             });

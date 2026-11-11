@@ -12,7 +12,7 @@ class InsertFinalNewLineAction extends EditorAction {
     constructor() {
         super({
             id: InsertFinalNewLineAction.ID,
-            label: localize2(1288, "Insert Final New Line"),
+            label: localize2(1308, "Insert Final New Line"),
             precondition: EditorContextKeys.writable
         });
     }

@@ -13,7 +13,7 @@ class TransposeLettersAction extends EditorAction {
     constructor() {
         super({
             id: 'editor.action.transposeLetters',
-            label: localize2(848, "Transpose Letters"),
+            label: localize2(863, "Transpose Letters"),
             precondition: EditorContextKeys.writable,
             kbOpts: {
                 kbExpr: EditorContextKeys.textInputFocus,

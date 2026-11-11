@@ -7,6 +7,7 @@ import { derivedConstOnceDefined } from '../../../../base/common/observableInter
 import { observableValue } from '../../../../base/common/observableInternal/observables/observableValue.js';
 import { observableFromEvent } from '../../../../base/common/observableInternal/observables/observableFromEvent.js';
 import { derived } from '../../../../base/common/observableInternal/observables/derived.js';
+import { transaction } from '../../../../base/common/observableInternal/transaction.js';
 
 /*---------------------------------------------------------------------------------------------
  *  Copyright (c) Microsoft Corporation. All rights reserved.
@@ -25,10 +26,19 @@ let DiffEditorOptions = class DiffEditorOptions {
     get editorOptions() { return this._options; }
     constructor(options, _accessibilityService) {
         this._accessibilityService = _accessibilityService;
+        this._widthBasedLayout = observableValue(this, 'auto');
+        this.temporaryInlineMode = this._widthBasedLayout.map(this, layout => layout === 'inline');
         this._diffEditorWidth = observableValue(this, 0);
         this._screenReaderMode = observableFromEvent(this, this._accessibilityService.onDidChangeScreenReaderOptimized, () => this._accessibilityService.isScreenReaderOptimized());
         this.couldShowInlineViewBecauseOfSize = derived(this, reader => this._options.read(reader).renderSideBySide && this._diffEditorWidth.read(reader) <= this._options.read(reader).renderSideBySideInlineBreakpoint);
         this.renderOverviewRuler = derived(this, reader => this._options.read(reader).renderOverviewRuler);
+        this.renderSideBySideInAutomaticMode = derived(this, reader => {
+            if (this.compactMode.read(reader) && this.shouldRenderInlineViewInSmartMode.read(reader)) {
+                return false;
+            }
+            return this._diffEditorWidth.read(reader) > this._options.read(reader).renderSideBySideInlineBreakpoint
+                || this._screenReaderMode.read(reader);
+        });
         this.renderSideBySide = derived(this, reader => {
             if (this.compactMode.read(reader)) {
                 if (this.shouldRenderInlineViewInSmartMode.read(reader)) {
@@ -36,6 +46,7 @@ let DiffEditorOptions = class DiffEditorOptions {
                 }
             }
             return this._options.read(reader).renderSideBySide
+                && this._widthBasedLayout.read(reader) === 'auto'
                 && !(this._options.read(reader).useInlineViewWhenSpaceIsLimited && this.couldShowInlineViewBecauseOfSize.read(reader) && !this._screenReaderMode.read(reader));
         });
         this.readOnly = derived(this, reader => this._options.read(reader).readOnly);
@@ -84,17 +95,44 @@ let DiffEditorOptions = class DiffEditorOptions {
         }))
             .flatten()
             .map(this, v => !!v);
-        this.inlineViewHideOriginalLineNumbers = this.compactMode;
+        this.inlineViewHideOriginalLineNumbers = derived(this, reader => this._options.read(reader).hideOriginalLineNumbers || this.compactMode.read(reader));
         const optionsCopy = { ...options, ...validateDiffEditorOptions(options, diffEditorDefaultOptions) };
         this._options = observableValue(this, optionsCopy);
     }
     updateOptions(changedOptions) {
+        const currentOptions = this._options.get();
         const newDiffEditorOptions = validateDiffEditorOptions(changedOptions, this._options.get());
-        const newOptions = { ...this._options.get(), ...changedOptions, ...newDiffEditorOptions };
-        this._options.set(newOptions, undefined, { changedOptions: changedOptions });
+        const newOptions = { ...currentOptions, ...changedOptions, ...newDiffEditorOptions };
+        transaction(tx => {
+            if (currentOptions.renderSideBySide !== newOptions.renderSideBySide
+                || currentOptions.useInlineViewWhenSpaceIsLimited !== newOptions.useInlineViewWhenSpaceIsLimited
+                || currentOptions.renderSideBySideInlineBreakpoint !== newOptions.renderSideBySideInlineBreakpoint) {
+                this._widthBasedLayout.set('auto', tx);
+            }
+            this._options.set(newOptions, tx, { changedOptions: changedOptions });
+        });
     }
-    setWidth(width) {
-        this._diffEditorWidth.set(width, undefined);
+    setWidth(width, smoothResizeStartWidth) {
+        const options = this._options.get();
+        transaction(tx => {
+            this._diffEditorWidth.set(width, tx);
+            if (width <= options.renderSideBySideInlineBreakpoint) {
+                this._widthBasedLayout.set('auto', tx);
+            }
+            else if (smoothResizeStartWidth !== undefined
+                && this._widthBasedLayout.get() === 'auto'
+                && options.renderSideBySide
+                && options.useInlineViewWhenSpaceIsLimited
+                && smoothResizeStartWidth <= options.renderSideBySideInlineBreakpoint
+                && width > options.renderSideBySideInlineBreakpoint
+                && !this._screenReaderMode.get()
+                && !(this.compactMode.get() && this.shouldRenderInlineViewInSmartMode.get())) {
+                this._widthBasedLayout.set('inline', tx);
+            }
+        });
+    }
+    resetWidthBasedLayout(tx) {
+        this._widthBasedLayout.set('auto', tx);
     }
     setModel(model) {
         this._model.set(model, undefined);
@@ -146,6 +184,7 @@ function validateDiffEditorOptions(options, defaults) {
         useInlineViewWhenSpaceIsLimited: boolean(options.useInlineViewWhenSpaceIsLimited, defaults.useInlineViewWhenSpaceIsLimited),
         renderGutterMenu: boolean(options.renderGutterMenu, defaults.renderGutterMenu),
         compactMode: boolean(options.compactMode, defaults.compactMode),
+        hideOriginalLineNumbers: boolean(options.hideOriginalLineNumbers, defaults.hideOriginalLineNumbers),
     };
 }
 

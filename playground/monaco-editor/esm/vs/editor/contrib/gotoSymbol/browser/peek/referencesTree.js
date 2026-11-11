@@ -114,10 +114,10 @@ let FileReferencesTemplate = class FileReferencesTemplate extends Disposable {
         const len = element.children.length;
         this.badge.setCount(len);
         if (len > 1) {
-            this.badge.setTitleFormat(localize(1124, "{0} references", len));
+            this.badge.setTitleFormat(localize(1139, "{0} references", len));
         }
         else {
-            this.badge.setTitleFormat(localize(1125, "{0} reference", len));
+            this.badge.setTitleFormat(localize(1140, "{0} reference", len));
         }
     }
 };
@@ -190,7 +190,7 @@ class OneReferenceRenderer {
 //#endregion
 class AccessibilityProvider {
     getWidgetAriaLabel() {
-        return localize(1126, "References");
+        return localize(1141, "References");
     }
     getAriaLabel(element) {
         return element.ariaMessage;

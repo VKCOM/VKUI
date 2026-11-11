@@ -102,7 +102,11 @@ let MarkerHoverParticipant = class MarkerHoverParticipant {
         return new RenderedHoverParts(renderedHoverParts, disposables);
     }
     getAccessibleContent(hoverPart) {
-        return hoverPart.marker.message;
+        const { marker } = hoverPart;
+        const relatedInformation = isNonEmptyArray(marker.relatedInformation)
+            ? marker.relatedInformation.map(related => `${basename(related.resource)}(${related.startLineNumber}, ${related.startColumn}): ${related.message}`).join('\n')
+            : undefined;
+        return [marker.message, relatedInformation].filter(value => !!value).join('\n');
     }
     _renderMarkerHover(markerHover) {
         const disposables = new DisposableStore();
@@ -124,7 +128,7 @@ let MarkerHoverParticipant = class MarkerHoverParticipant {
                 const codeLink = append(sourceAndCodeElement, $('a.code-link'));
                 codeLink.setAttribute('href', code.target.toString(true));
                 disposables.add(addDisposableListener(codeLink, 'click', (e) => {
-                    this._openerService.open(code.target, { allowCommands: true });
+                    this._openerService.open(code.target);
                     e.preventDefault();
                     e.stopPropagation();
                 }));
@@ -177,7 +181,7 @@ let MarkerHoverParticipant = class MarkerHoverParticipant {
             const markerController = MarkerController.get(this._editor);
             if (markerController) {
                 context.statusBar.addAction({
-                    label: localize(1180, "View Problem"),
+                    label: localize(1195, "View Problem"),
                     commandId: NextMarkerAction.ID,
                     run: () => {
                         context.hide();
@@ -216,7 +220,7 @@ let MarkerHoverParticipant = class MarkerHoverParticipant {
                 if (IMarkerData.makeKey(this.recentMarkerCodeActionsInfo.marker) === IMarkerData.makeKey(markerHover.marker)) {
                     if (!this.recentMarkerCodeActionsInfo.hasCodeActions) {
                         if (menuActions.length === 0) {
-                            quickfixPlaceholderElement.textContent = localize(1181, "No quick fixes available");
+                            quickfixPlaceholderElement.textContent = localize(1196, "No quick fixes available");
                         }
                     }
                 }
@@ -224,7 +228,7 @@ let MarkerHoverParticipant = class MarkerHoverParticipant {
                     this.recentMarkerCodeActionsInfo = undefined;
                 }
             }
-            const updatePlaceholderDisposable = this.recentMarkerCodeActionsInfo && !this.recentMarkerCodeActionsInfo.hasCodeActions ? Disposable.None : disposableTimeout(() => quickfixPlaceholderElement.textContent = localize(1182, "Checking for quick fixes..."), 200, disposables);
+            const updatePlaceholderDisposable = this.recentMarkerCodeActionsInfo && !this.recentMarkerCodeActionsInfo.hasCodeActions ? Disposable.None : disposableTimeout(() => quickfixPlaceholderElement.textContent = localize(1197, "Checking for quick fixes..."), 200, disposables);
             if (!quickfixPlaceholderElement.textContent) {
                 // Have some content in here to avoid flickering
                 quickfixPlaceholderElement.textContent = String.fromCharCode(0xA0); // &nbsp;
@@ -237,7 +241,7 @@ let MarkerHoverParticipant = class MarkerHoverParticipant {
                 if (!this.recentMarkerCodeActionsInfo.hasCodeActions) {
                     actions.dispose();
                     if (menuActions.length === 0) {
-                        quickfixPlaceholderElement.textContent = localize(1183, "No quick fixes available");
+                        quickfixPlaceholderElement.textContent = localize(1198, "No quick fixes available");
                     }
                     else {
                         quickfixPlaceholderElement.style.display = 'none';
@@ -253,15 +257,12 @@ let MarkerHoverParticipant = class MarkerHoverParticipant {
                     }
                 }));
                 context.statusBar.addAction({
-                    label: localize(1184, "Quick Fix..."),
+                    label: localize(1199, "Quick Fix..."),
                     commandId: quickFixCommandId,
                     run: (target) => {
                         showing = true;
                         const controller = CodeActionController.get(this._editor);
                         const elementPosition = getDomNodePagePosition(target);
-                        // Hide the hover pre-emptively, otherwise the editor can close the code actions
-                        // context menu as well when using keyboard navigation
-                        context.hide();
                         controller?.showCodeActions(markerCodeActionTrigger, actions, {
                             x: elementPosition.left,
                             y: elementPosition.top,

@@ -139,7 +139,7 @@ class MessageWidget {
                     this._codeLink = $('a.code-link');
                     this._codeLink.setAttribute('href', `${code.target.toString()}`);
                     this._codeLink.onclick = (e) => {
-                        this._openerService.open(code.target, { allowCommands: true });
+                        this._openerService.open(code.target);
                         e.preventDefault();
                         e.stopPropagation();
                     };
@@ -187,19 +187,19 @@ class MessageWidget {
         let severityLabel = '';
         switch (marker.severity) {
             case MarkerSeverity.Error:
-                severityLabel = localize(1067, "Error");
+                severityLabel = localize(1082, "Error");
                 break;
             case MarkerSeverity.Warning:
-                severityLabel = localize(1068, "Warning");
+                severityLabel = localize(1083, "Warning");
                 break;
             case MarkerSeverity.Info:
-                severityLabel = localize(1069, "Info");
+                severityLabel = localize(1084, "Info");
                 break;
             case MarkerSeverity.Hint:
-                severityLabel = localize(1070, "Hint");
+                severityLabel = localize(1085, "Hint");
                 break;
         }
-        let ariaLabel = localize(1071, "{0}: {1} at {2}. ", severityLabel, marker.message, marker.startLineNumber + ':' + marker.startColumn);
+        let ariaLabel = localize(1086, "{0}: {1} at {2}. ", severityLabel, marker.message, marker.startLineNumber + ':' + marker.startColumn);
         const model = this._editor.getModel();
         if (model && (marker.startLineNumber <= model.getLineCount()) && (marker.startLineNumber >= 1)) {
             const lineContent = model.getLineContent(marker.startLineNumber);
@@ -300,8 +300,8 @@ let MarkerNavigationWidget = class MarkerNavigationWidget extends PeekViewWidget
         const model = this.editor.getModel();
         if (model) {
             const detail = markerCount > 1
-                ? localize(1072, "{0} of {1} problems", markerIdx, markerCount)
-                : localize(1073, "{0} of {1} problem", markerIdx, markerCount);
+                ? localize(1087, "{0} of {1} problems", markerIdx, markerCount)
+                : localize(1088, "{0} of {1} problem", markerIdx, markerCount);
             this.setTitle(basename(model.uri), detail);
         }
         this._icon.className = `codicon ${SeverityIcon.className(MarkerSeverity.toSeverity(this._severity))}`;
@@ -344,12 +344,12 @@ MarkerNavigationWidget = MarkerNavigationWidget_1 = __decorate([
 const errorDefault = oneOf(editorErrorForeground, editorErrorBorder);
 const warningDefault = oneOf(editorWarningForeground, editorWarningBorder);
 const infoDefault = oneOf(editorInfoForeground, editorInfoBorder);
-const editorMarkerNavigationError = registerColor('editorMarkerNavigationError.background', { dark: errorDefault, light: errorDefault, hcDark: contrastBorder, hcLight: contrastBorder }, localize(1074, 'Editor marker navigation widget error color.'));
-const editorMarkerNavigationErrorHeader = registerColor('editorMarkerNavigationError.headerBackground', { dark: transparent(editorMarkerNavigationError, .1), light: transparent(editorMarkerNavigationError, .1), hcDark: null, hcLight: null }, localize(1075, 'Editor marker navigation widget error heading background.'));
-const editorMarkerNavigationWarning = registerColor('editorMarkerNavigationWarning.background', { dark: warningDefault, light: warningDefault, hcDark: contrastBorder, hcLight: contrastBorder }, localize(1076, 'Editor marker navigation widget warning color.'));
-const editorMarkerNavigationWarningHeader = registerColor('editorMarkerNavigationWarning.headerBackground', { dark: transparent(editorMarkerNavigationWarning, .1), light: transparent(editorMarkerNavigationWarning, .1), hcDark: '#0C141F', hcLight: transparent(editorMarkerNavigationWarning, .2) }, localize(1077, 'Editor marker navigation widget warning heading background.'));
-const editorMarkerNavigationInfo = registerColor('editorMarkerNavigationInfo.background', { dark: infoDefault, light: infoDefault, hcDark: contrastBorder, hcLight: contrastBorder }, localize(1078, 'Editor marker navigation widget info color.'));
-const editorMarkerNavigationInfoHeader = registerColor('editorMarkerNavigationInfo.headerBackground', { dark: transparent(editorMarkerNavigationInfo, .1), light: transparent(editorMarkerNavigationInfo, .1), hcDark: null, hcLight: null }, localize(1079, 'Editor marker navigation widget info heading background.'));
-const editorMarkerNavigationBackground = registerColor('editorMarkerNavigation.background', editorBackground, localize(1080, 'Editor marker navigation widget background.'));
+const editorMarkerNavigationError = registerColor('editorMarkerNavigationError.background', { dark: errorDefault, light: errorDefault, hcDark: contrastBorder, hcLight: contrastBorder }, localize(1089, 'Editor marker navigation widget error color.'));
+const editorMarkerNavigationErrorHeader = registerColor('editorMarkerNavigationError.headerBackground', { dark: transparent(editorMarkerNavigationError, .1), light: transparent(editorMarkerNavigationError, .1), hcDark: null, hcLight: null }, localize(1090, 'Editor marker navigation widget error heading background.'));
+const editorMarkerNavigationWarning = registerColor('editorMarkerNavigationWarning.background', { dark: warningDefault, light: warningDefault, hcDark: contrastBorder, hcLight: contrastBorder }, localize(1091, 'Editor marker navigation widget warning color.'));
+const editorMarkerNavigationWarningHeader = registerColor('editorMarkerNavigationWarning.headerBackground', { dark: transparent(editorMarkerNavigationWarning, .1), light: transparent(editorMarkerNavigationWarning, .1), hcDark: '#0C141F', hcLight: transparent(editorMarkerNavigationWarning, .2) }, localize(1092, 'Editor marker navigation widget warning heading background.'));
+const editorMarkerNavigationInfo = registerColor('editorMarkerNavigationInfo.background', { dark: infoDefault, light: infoDefault, hcDark: contrastBorder, hcLight: contrastBorder }, localize(1093, 'Editor marker navigation widget info color.'));
+const editorMarkerNavigationInfoHeader = registerColor('editorMarkerNavigationInfo.headerBackground', { dark: transparent(editorMarkerNavigationInfo, .1), light: transparent(editorMarkerNavigationInfo, .1), hcDark: null, hcLight: null }, localize(1094, 'Editor marker navigation widget info heading background.'));
+const editorMarkerNavigationBackground = registerColor('editorMarkerNavigation.background', editorBackground, localize(1095, 'Editor marker navigation widget background.'));
 
 export { MarkerNavigationWidget };

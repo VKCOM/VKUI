@@ -221,10 +221,10 @@ let LinkDetector = class LinkDetector extends Disposable {
             const messageOrError = err instanceof Error ? err.message : err;
             // different error cases
             if (messageOrError === 'invalid') {
-                this.notificationService.warn(localize(1323, 'Failed to open this link because it is not well-formed: {0}', link.url.toString()));
+                this.notificationService.warn(localize(1343, 'Failed to open this link because it is not well-formed: {0}', link.url.toString()));
             }
             else if (messageOrError === 'missing') {
-                this.notificationService.warn(localize(1324, 'Failed to open this link because its target is missing.'));
+                this.notificationService.warn(localize(1344, 'Failed to open this link because its target is missing.'));
             }
             else {
                 onUnexpectedError(err);
@@ -317,15 +317,15 @@ function getHoverMessage(link, useMetaKey) {
     const label = link.tooltip
         ? link.tooltip
         : executeCmd
-            ? localize(1325, 'Execute command')
-            : localize(1326, 'Follow link');
+            ? localize(1345, 'Execute command')
+            : localize(1346, 'Follow link');
     const kb = useMetaKey
         ? isMacintosh
-            ? localize(1327, "cmd + click")
-            : localize(1328, "ctrl + click")
+            ? localize(1347, "cmd + click")
+            : localize(1348, "ctrl + click")
         : isMacintosh
-            ? localize(1329, "option + click")
-            : localize(1330, "alt + click");
+            ? localize(1349, "option + click")
+            : localize(1350, "alt + click");
     if (link.url) {
         let nativeLabel = '';
         if (/^command:/i.test(link.url.toString())) {
@@ -333,7 +333,7 @@ function getHoverMessage(link, useMetaKey) {
             const match = link.url.toString().match(/^command:([^?#]+)/);
             if (match) {
                 const commandId = match[1];
-                nativeLabel = localize(1331, "Execute command {0}", commandId);
+                nativeLabel = localize(1351, "Execute command {0}", commandId);
             }
         }
         const hoverMessage = new MarkdownString('', true)
@@ -349,7 +349,7 @@ class OpenLinkAction extends EditorAction {
     constructor() {
         super({
             id: 'editor.action.openLink',
-            label: localize2(1332, "Open Link"),
+            label: localize2(1352, "Open Link"),
             precondition: undefined
         });
     }

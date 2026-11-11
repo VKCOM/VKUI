@@ -438,7 +438,11 @@ let StickyScrollController = class StickyScrollController extends Disposable {
             || event.hasChanged(76 /* EditorOption.lineNumbers */)) {
             this._readConfiguration();
         }
-        if (event.hasChanged(76 /* EditorOption.lineNumbers */) || event.hasChanged(52 /* EditorOption.folding */) || event.hasChanged(126 /* EditorOption.showFoldingControls */)) {
+        if (event.hasChanged(76 /* EditorOption.lineNumbers */)
+            || event.hasChanged(52 /* EditorOption.folding */)
+            || event.hasChanged(126 /* EditorOption.showFoldingControls */)
+            || event.hasChanged(59 /* EditorOption.fontInfo */)
+            || event.hasChanged(176 /* EditorOption.effectiveFullwidthCharacterWidth */)) {
             this._renderStickyScroll(0);
         }
     }

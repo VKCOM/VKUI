@@ -4,6 +4,7 @@ import { SelectedSuggestionInfo, FoldingRangeKind, TokenizationRegistry, LazyTok
 import { ILanguageService } from '../../common/languages/language.js';
 import { ILanguageConfigurationService } from '../../common/languages/languageConfigurationRegistry.js';
 import { ModesRegistry } from '../../common/languages/modesRegistry.js';
+import { score as score$1 } from '../../common/languageSelector.js';
 import { ILanguageFeaturesService } from '../../common/services/languageFeatures.js';
 import { InlineCompletionHintStyle, InlineCompletionEndOfLifeReasonKind, HoverVerbosityAction, PartialAcceptTriggerKind, NewSymbolNameTriggerKind, NewSymbolNameTag, CodeActionTriggerType, InlineCompletionTriggerKind, InlayHintKind, SignatureHelpTriggerKind, CompletionTriggerKind, IndentAction, SymbolTag, SymbolKind, CompletionItemInsertTextRule, CompletionItemTag, CompletionItemKind, DocumentHighlightKind } from '../../common/standalone/standaloneEnums.js';
 import { StandaloneServices } from './standaloneServices.js';
@@ -37,6 +38,12 @@ function getLanguages() {
 function getEncodedLanguageId(languageId) {
     const languageService = StandaloneServices.get(ILanguageService);
     return languageService.languageIdCodec.encodeLanguageId(languageId);
+}
+/**
+ * Compute the score of a language selector against a candidate URI and language.
+ */
+function score(selector, candidateUri, candidateLanguage) {
+    return score$1(selector, candidateUri, candidateLanguage, true, undefined, undefined);
 }
 /**
  * An event emitted when a language is associated for the first time with a text model.
@@ -528,6 +535,8 @@ function createMonacoLanguagesAPI() {
         onLanguageEncountered: onLanguageEncountered,
         // eslint-disable-next-line local/code-no-any-casts
         getEncodedLanguageId: getEncodedLanguageId,
+        // eslint-disable-next-line local/code-no-any-casts
+        score: score,
         // provider methods
         // eslint-disable-next-line local/code-no-any-casts
         setLanguageConfiguration: setLanguageConfiguration,
@@ -618,4 +627,4 @@ function createMonacoLanguagesAPI() {
     };
 }
 
-export { EncodedTokenizationSupportAdapter, TokenizationSupportAdapter, createMonacoLanguagesAPI, getEncodedLanguageId, getLanguages, onLanguage, onLanguageEncountered, register, registerCodeActionProvider, registerCodeLensProvider, registerColorProvider, registerCompletionItemProvider, registerDeclarationProvider, registerDefinitionProvider, registerDocumentFormattingEditProvider, registerDocumentHighlightProvider, registerDocumentRangeFormattingEditProvider, registerDocumentRangeSemanticTokensProvider, registerDocumentSemanticTokensProvider, registerDocumentSymbolProvider, registerFoldingRangeProvider, registerHoverProvider, registerImplementationProvider, registerInlayHintsProvider, registerInlineCompletionsProvider, registerLinkProvider, registerLinkedEditingRangeProvider, registerNewSymbolNameProvider, registerOnTypeFormattingEditProvider, registerReferenceProvider, registerRenameProvider, registerSelectionRangeProvider, registerSignatureHelpProvider, registerTokensProviderFactory, registerTypeDefinitionProvider, setColorMap, setLanguageConfiguration, setMonarchTokensProvider, setTokensProvider };
+export { EncodedTokenizationSupportAdapter, TokenizationSupportAdapter, createMonacoLanguagesAPI, getEncodedLanguageId, getLanguages, onLanguage, onLanguageEncountered, register, registerCodeActionProvider, registerCodeLensProvider, registerColorProvider, registerCompletionItemProvider, registerDeclarationProvider, registerDefinitionProvider, registerDocumentFormattingEditProvider, registerDocumentHighlightProvider, registerDocumentRangeFormattingEditProvider, registerDocumentRangeSemanticTokensProvider, registerDocumentSemanticTokensProvider, registerDocumentSymbolProvider, registerFoldingRangeProvider, registerHoverProvider, registerImplementationProvider, registerInlayHintsProvider, registerInlineCompletionsProvider, registerLinkProvider, registerLinkedEditingRangeProvider, registerNewSymbolNameProvider, registerOnTypeFormattingEditProvider, registerReferenceProvider, registerRenameProvider, registerSelectionRangeProvider, registerSignatureHelpProvider, registerTokensProviderFactory, registerTypeDefinitionProvider, score, setColorMap, setLanguageConfiguration, setMonarchTokensProvider, setTokensProvider };

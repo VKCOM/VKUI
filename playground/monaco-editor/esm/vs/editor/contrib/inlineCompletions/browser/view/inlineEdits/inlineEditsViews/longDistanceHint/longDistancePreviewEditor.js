@@ -33,6 +33,16 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var __param = (undefined && undefined.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
+/**
+ * Widens the previewed range around `targetLineNumber` by `contextLineCount` lines on each side,
+ * clamped to the model bounds. With `contextLineCount === 0` this returns just the target line.
+ */
+function expandLineRangeWithContext(targetLineNumber, contextLineCount, lineCount) {
+    const clampedTarget = Math.max(1, Math.min(lineCount, targetLineNumber));
+    const startLineNumber = Math.max(1, clampedTarget - contextLineCount);
+    const endLineNumberExclusive = Math.min(lineCount + 1, clampedTarget + contextLineCount + 1);
+    return new LineRange(startLineNumber, endLineNumberExclusive);
+}
 let LongDistancePreviewEditor = class LongDistancePreviewEditor extends Disposable {
     constructor(_previewTextModel, _properties, _parentEditor, _tabAction, _instantiationService) {
         super();
@@ -49,27 +59,32 @@ let LongDistancePreviewEditor = class LongDistancePreviewEditor extends Disposab
                 return undefined;
             }
             let mode;
-            let visibleRange;
+            let targetLineNumber;
             if (props.nextCursorPosition !== null) {
                 mode = 'original';
-                visibleRange = LineRange.ofLength(props.nextCursorPosition.lineNumber, 1);
+                targetLineNumber = props.nextCursorPosition.lineNumber;
             }
             else {
                 if (props.diff[0].innerChanges?.every(c => c.modifiedRange.isEmpty())) {
                     mode = 'original';
-                    visibleRange = LineRange.ofLength(props.diff[0].original.startLineNumber, 1);
+                    targetLineNumber = props.diff[0].original.startLineNumber;
                 }
                 else {
                     mode = 'modified';
-                    visibleRange = LineRange.ofLength(props.diff[0].modified.startLineNumber, 1);
+                    targetLineNumber = props.diff[0].modified.startLineNumber;
                 }
             }
             const textModel = mode === 'modified'
                 ? TextModelValueReference.snapshot(this._previewTextModel)
                 : props.target;
+            // Optionally widen the previewed range with surrounding context lines (e.g. when the target line is empty).
+            const contextLineCount = this._parentEditorObs.getOption(71 /* EditorOption.inlineSuggest */).read(reader).edits.longDistanceHintContextLineCount;
+            const displayModel = mode === 'modified' ? this._previewTextModel : props.target.dangerouslyGetUnderlyingModel();
+            const visibleLineRange = expandLineRangeWithContext(targetLineNumber, contextLineCount, displayModel.getLineCount());
             return {
                 mode,
-                visibleLineRange: visibleRange,
+                targetLineNumber,
+                visibleLineRange,
                 textModel,
                 diff: props.diff,
             };
@@ -98,8 +113,8 @@ let LongDistancePreviewEditor = class LongDistancePreviewEditor extends Disposab
             if (!viewState) {
                 return constObservable(null);
             }
-            const previewEditorHeight = this._previewEditorObs.observeLineHeightForLine(viewState.visibleLineRange.startLineNumber);
-            return previewEditorHeight;
+            return this._previewEditorObs.observeLineHeightsForLineRange(viewState.visibleLineRange)
+                .map(heights => heights.reduce((sum, height) => sum + height, 0));
         }).flatten();
         this._editorDecorations = derived(this, reader => {
             const state = this._state.read(reader);
@@ -194,7 +209,7 @@ let LongDistancePreviewEditor = class LongDistancePreviewEditor extends Disposab
                 return;
             }
             // Ensure there is enough space to the left of the line number for the gutter indicator to fits.
-            const lineNumberDigets = state.visibleLineRange.startLineNumber.toString().length;
+            const lineNumberDigets = (state.visibleLineRange.endLineNumberExclusive - 1).toString().length;
             this.previewEditor.updateOptions({ lineNumbersMinChars: lineNumberDigets + 1 });
         }));
         this._register(this._instantiationService.createInstance(InlineEditsGutterIndicator, this._previewEditorObs, derived(reader => {
@@ -206,7 +221,7 @@ let LongDistancePreviewEditor = class LongDistancePreviewEditor extends Disposab
             if (!props) {
                 return undefined;
             }
-            return new InlineEditsGutterIndicatorData(props.inlineSuggestInfo, LineRange.ofLength(state.visibleLineRange.startLineNumber, 1), props.model, undefined);
+            return new InlineEditsGutterIndicatorData(props.inlineSuggestInfo, LineRange.ofLength(state.targetLineNumber, 1), props.model, undefined);
         }), this._tabAction, constObservable(0), constObservable(false), observableValue(this, false)));
         this.updatePreviewEditorEffect.recomputeInitiallyAndOnChange(this._store);
     }
@@ -321,7 +336,7 @@ function growUntilVariableBoundaries(textModel, range, maxGrow) {
     while (endColumn <= line.length && isVariableNameCharacter(endColumn) && !isWhitespace(endColumn + 1) && endColumn - endPosition.column < maxGrow) {
         endColumn++;
     }
-    return new Range(startPosition.lineNumber, startPosition.column, endPosition.lineNumber, endColumn + 1);
+    return new Range(startPosition.lineNumber, startColumn, endPosition.lineNumber, endColumn + 1);
 }
 
 export { LongDistancePreviewEditor };

@@ -37,28 +37,28 @@ import { defaultToggleStyles, defaultInputBoxStyles } from '../../../../platform
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-const findCollapsedIcon = registerIcon('find-collapsed', Codicon.chevronRight, localize(996, 'Icon to indicate that the editor find widget is collapsed.'));
-const findExpandedIcon = registerIcon('find-expanded', Codicon.chevronDown, localize(997, 'Icon to indicate that the editor find widget is expanded.'));
-const findSelectionIcon = registerIcon('find-selection', Codicon.selection, localize(998, 'Icon for \'Find in Selection\' in the editor find widget.'));
-const findReplaceIcon = registerIcon('find-replace', Codicon.replace, localize(999, 'Icon for \'Replace\' in the editor find widget.'));
-const findReplaceAllIcon = registerIcon('find-replace-all', Codicon.replaceAll, localize(1000, 'Icon for \'Replace All\' in the editor find widget.'));
-const findPreviousMatchIcon = registerIcon('find-previous-match', Codicon.arrowUp, localize(1001, 'Icon for \'Find Previous\' in the editor find widget.'));
-const findNextMatchIcon = registerIcon('find-next-match', Codicon.arrowDown, localize(1002, 'Icon for \'Find Next\' in the editor find widget.'));
-const NLS_FIND_DIALOG_LABEL = localize(1003, "Find / Replace");
-const NLS_FIND_INPUT_LABEL = localize(1004, "Find");
-const NLS_FIND_INPUT_PLACEHOLDER = localize(1005, "Find");
-const NLS_PREVIOUS_MATCH_BTN_LABEL = localize(1006, "Previous Match");
-const NLS_NEXT_MATCH_BTN_LABEL = localize(1007, "Next Match");
-const NLS_TOGGLE_SELECTION_FIND_TITLE = localize(1008, "Find in Selection");
-const NLS_CLOSE_BTN_LABEL = localize(1009, "Close");
-const NLS_REPLACE_INPUT_LABEL = localize(1010, "Replace");
-const NLS_REPLACE_INPUT_PLACEHOLDER = localize(1011, "Replace");
-const NLS_REPLACE_BTN_LABEL = localize(1012, "Replace");
-const NLS_REPLACE_ALL_BTN_LABEL = localize(1013, "Replace All");
-const NLS_TOGGLE_REPLACE_MODE_BTN_LABEL = localize(1014, "Toggle Replace");
-const NLS_MATCHES_COUNT_LIMIT_TITLE = localize(1015, "Only the first {0} results are highlighted, but all find operations work on the entire text.", MATCHES_LIMIT);
-const NLS_MATCHES_LOCATION = localize(1016, "{0} of {1}");
-const NLS_NO_RESULTS = localize(1017, "No results");
+const findCollapsedIcon = registerIcon('find-collapsed', Codicon.chevronRight, localize(1011, 'Icon to indicate that the editor find widget is collapsed.'));
+const findExpandedIcon = registerIcon('find-expanded', Codicon.chevronDown, localize(1012, 'Icon to indicate that the editor find widget is expanded.'));
+const findSelectionIcon = registerIcon('find-selection', Codicon.selection, localize(1013, 'Icon for \'Find in Selection\' in the editor find widget.'));
+const findReplaceIcon = registerIcon('find-replace', Codicon.replace, localize(1014, 'Icon for \'Replace\' in the editor find widget.'));
+const findReplaceAllIcon = registerIcon('find-replace-all', Codicon.replaceAll, localize(1015, 'Icon for \'Replace All\' in the editor find widget.'));
+const findPreviousMatchIcon = registerIcon('find-previous-match', Codicon.arrowUp, localize(1016, 'Icon for \'Find Previous\' in the editor find widget.'));
+const findNextMatchIcon = registerIcon('find-next-match', Codicon.arrowDown, localize(1017, 'Icon for \'Find Next\' in the editor find widget.'));
+const NLS_FIND_DIALOG_LABEL = localize(1018, "Find / Replace");
+const NLS_FIND_INPUT_LABEL = localize(1019, "Find");
+const NLS_FIND_INPUT_PLACEHOLDER = localize(1020, "Find");
+const NLS_PREVIOUS_MATCH_BTN_LABEL = localize(1021, "Previous Match");
+const NLS_NEXT_MATCH_BTN_LABEL = localize(1022, "Next Match");
+const NLS_TOGGLE_SELECTION_FIND_TITLE = localize(1023, "Find in Selection");
+const NLS_CLOSE_BTN_LABEL = localize(1024, "Close");
+const NLS_REPLACE_INPUT_LABEL = localize(1025, "Replace");
+const NLS_REPLACE_INPUT_PLACEHOLDER = localize(1026, "Replace");
+const NLS_REPLACE_BTN_LABEL = localize(1027, "Replace");
+const NLS_REPLACE_ALL_BTN_LABEL = localize(1028, "Replace All");
+const NLS_TOGGLE_REPLACE_MODE_BTN_LABEL = localize(1029, "Toggle Replace");
+const NLS_MATCHES_COUNT_LIMIT_TITLE = localize(1030, "Only the first {0} results are highlighted, but all find operations work on the entire text.", MATCHES_LIMIT);
+const NLS_MATCHES_LOCATION = localize(1031, "{0} of {1}");
+const NLS_NO_RESULTS = localize(1032, "No results");
 const FIND_WIDGET_INITIAL_WIDTH = 419;
 const PART_WIDTH = 275;
 const FIND_INPUT_AREA_WIDTH = PART_WIDTH - 54;
@@ -127,7 +127,7 @@ class FindWidget extends Widget {
                 }
                 this._updateButtons();
             }
-            if (e.hasChanged(165 /* EditorOption.layoutInfo */)) {
+            if (e.hasChanged(166 /* EditorOption.layoutInfo */)) {
                 this._tryUpdateWidgetWidth();
             }
             if (e.hasChanged(2 /* EditorOption.accessibilitySupport */)) {
@@ -358,11 +358,11 @@ class FindWidget extends Widget {
         let result;
         if (label === NLS_NO_RESULTS) {
             result = searchString === ''
-                ? localize(1018, "{0} found", label)
-                : localize(1019, "{0} found for '{1}'", label, searchString);
+                ? localize(1033, "{0} found", label)
+                : localize(1034, "{0} found for '{1}'", label, searchString);
         }
         else if (currentMatch) {
-            const ariaLabel = localize(1020, "{0} found for '{1}', at {2}", label, searchString, currentMatch.startLineNumber + ':' + currentMatch.startColumn);
+            const ariaLabel = localize(1035, "{0} found for '{1}', at {2}", label, searchString, currentMatch.startLineNumber + ':' + currentMatch.startColumn);
             const model = this._codeEditor.getModel();
             if (model && (currentMatch.startLineNumber <= model.getLineCount()) && (currentMatch.startLineNumber >= 1)) {
                 const lineContent = model.getLineContent(currentMatch.startLineNumber);
@@ -373,7 +373,7 @@ class FindWidget extends Widget {
             }
         }
         else {
-            result = localize(1021, "{0} found for '{1}'", label, searchString);
+            result = localize(1036, "{0} found for '{1}'", label, searchString);
         }
         return result;
     }
@@ -1095,9 +1095,9 @@ class FindWidget extends Widget {
         if (!this._accessibilityHelpHintAnnounced && this._configurationService.getValue('accessibility.verbosity.find') && this._accessibilityService.isScreenReaderOptimized()) {
             const accessibilityHelpKeybinding = this._keybindingService.lookupKeybinding('editor.action.accessibilityHelp')?.getAriaLabel();
             if (accessibilityHelpKeybinding) {
-                const hint = localize(1022, "Press {0} for accessibility help", accessibilityHelpKeybinding);
-                findLabel = localize(1023, "{0}, {1}", findLabel, hint);
-                replaceLabel = localize(1024, "{0}, {1}", replaceLabel, hint);
+                const hint = localize(1037, "Press {0} for accessibility help", accessibilityHelpKeybinding);
+                findLabel = localize(1038, "{0}, {1}", findLabel, hint);
+                replaceLabel = localize(1039, "{0}, {1}", replaceLabel, hint);
             }
             this._accessibilityHelpHintAnnounced = true;
             // Schedule reset to plain labels after initial announcement

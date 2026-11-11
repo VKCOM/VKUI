@@ -93,7 +93,7 @@ class AbstractEditorNavigationQuickAccessProvider {
         const model = this.getModel(editor);
         if (model) {
             const lineContent = model.getLineContent(options.range.startLineNumber);
-            status(localize(1381, "Line {0}, column {1}: {2}", options.range.startLineNumber, options.range.startColumn, lineContent));
+            status(localize(1401, "Line {0}, column {1}: {2}", options.range.startLineNumber, options.range.startColumn, lineContent));
         }
     }
     getModel(editor) {

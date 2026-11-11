@@ -2,14 +2,10 @@
 description: Хук предоставляет единый API для чтения и управления прокруткой из контекста `AppRoot`. Корректно работает с режимами `scroll="contain"` и `scroll="global"`, а также с блокировкой через `useScrollLock`.
 ---
 
-<Overview type="hook" forcedPath="components/AppRoot/ScrollContext.tsx">
-
 # useScroll
 
 Хук предоставляет единый API для чтения и управления прокруткой из контекста `AppRoot`.
 Корректно работает с режимами `scroll="contain"` и `scroll="global"`, а также с блокировкой через `useScrollLock`.
-
-</Overview>
 
 ## Обязательные условия
 
@@ -40,54 +36,50 @@ description: Хук предоставляет единый API для чтен�
 
 ## Практический пример
 
-{/* @example-description: Программная прокрутка через useScroll. */}
-<Playground direction="column" align="stretch" scroll="global">
-  ```jsx
-  const [opened, setOpened] = React.useState(false);
-  const { getScroll, scrollTo } = useScroll();
+```jsx
+const [opened, setOpened] = React.useState(false);
+const { getScroll, scrollTo } = useScroll();
 
-  // Блокируем прокрутку, пока открыт popout.
-  useScrollLock(opened);
+// Блокируем прокрутку, пока открыт popout.
+useScrollLock(opened);
 
-  const scrollDown = () => {
-    const currentY = getScroll().y;
-    scrollTo(0, currentY + 120);
-  };
+const scrollDown = () => {
+  const currentY = getScroll().y;
+  scrollTo(0, currentY + 120);
+};
 
-  const scrollUp = () => {
-    const currentY = getScroll().y;
-    scrollTo(0, currentY - 120);
-  };
+const scrollUp = () => {
+  const currentY = getScroll().y;
+  scrollTo(0, currentY - 120);
+};
 
-  return (
-    <Box position="relative" inlineSize="100%">
-      <Flex direction="column" align="start" gap="m">
-        <Button onClick={() => setOpened(true)}>Открыть popout</Button>
-      </Flex>
+return (
+  <Box position="relative" inlineSize="100%">
+    <Flex direction="column" align="start" gap="m">
+      <Button onClick={() => setOpened(true)}>Открыть popout</Button>
+    </Flex>
 
-      {opened && (
-        <PopoutWrapper onClick={() => setOpened(false)}>
-          <Card>
-            <Flex direction="column" gap="xl" padding="system">
-              <Title level="3">
-                Popout
-              </Title>
-              <Caption level="1">
-                Во время блокировки можно программно прокручивать контент через useScroll.
-              </Caption>
-              <Flex gap="s">
-                <Button onClick={scrollDown}>Скролл вниз</Button>
-                <Button onClick={scrollUp}>Скролл вверх</Button>
-                <Button mode="secondary" onClick={() => setOpened(false)}>
-                  Закрыть
-                </Button>
-              </Flex>
-            </Box>
-          </Card>
-        </PopoutWrapper>
-      )}
-    </Box>
-  );
-  ```
-</Playground>
-
+    {opened && (
+      <PopoutWrapper onClick={() => setOpened(false)}>
+        <Card>
+          <Flex direction="column" gap="xl" padding="system">
+            <Title level="3">
+              Popout
+            </Title>
+            <Caption level="1">
+              Во время блокировки можно программно прокручивать контент через useScroll.
+            </Caption>
+            <Flex gap="s">
+              <Button onClick={scrollDown}>Скролл вниз</Button>
+              <Button onClick={scrollUp}>Скролл вверх</Button>
+              <Button mode="secondary" onClick={() => setOpened(false)}>
+                Закрыть
+              </Button>
+            </Flex>
+          </Box>
+        </Card>
+      </PopoutWrapper>
+    )}
+  </Box>
+);
+```

@@ -2,20 +2,12 @@
 description: Компонент для управления фокусом внутри области, не позволяющий фокусу выходить за её пределы.
 tags: accessibility
 ---
-import { BlockWrapper } from '@/components/wrappers';
 
-<Overview group="utils">
-
-# FocusTrap [tag:component]
+# FocusTrap \[tag:component]
 
 Компонент для управления фокусом, который зацикливает навигацию через `Tab` и `Shift` + `Tab`
 внутри определённой области. Используется для обеспечения доступности модальных окон, диалогов,
 всплывающих меню и других интерактивных элементов.
-
-</Overview>
-
-{/* @example-description: Базовый сценарий `FocusTrap` в модальном блоке с автофокусом и восстановлением фокуса. */}
-<Playground>
 
 ```jsx
 const [open, setOpen] = React.useState(false);
@@ -37,8 +29,12 @@ return (
           }}
         >
           <Flex direction="column" gap="m">
-            <Input placeholder="Первое поле ввода" />
-            <Input placeholder="Второе поле ввода" />
+            <FormItem top="Первое поле ввода" htmlFor="focus-trap-focus-trap-1">
+              <Input id="focus-trap-focus-trap-1" name="focus-trap-1" placeholder="Первое поле ввода" />
+            </FormItem>
+            <FormItem top="Второе поле ввода" htmlFor="focus-trap-focus-trap-2">
+              <Input id="focus-trap-focus-trap-2" name="focus-trap-2" placeholder="Второе поле ввода" />
+            </FormItem>
             <ButtonGroup>
               <Button>Действие</Button>
               <Button mode="secondary" onClick={() => setOpen(false)}>
@@ -53,29 +49,27 @@ return (
 );
 ```
 
-</Playground>
-
 ## Концепция
 
 `FocusTrap` — это вспомогательный компонент, который:
 
-- **Зацикливает фокус** — при нажатии `Tab` на последнем интерактивном элементе фокус переходит на первый,
+* **Зацикливает фокус** — при нажатии `Tab` на последнем интерактивном элементе фокус переходит на первый,
   а при `Shift` + `Tab` на первом — на последний;
-- **Автоматически устанавливает фокус** — при появлении области может автоматически установить фокус
+* **Автоматически устанавливает фокус** — при появлении области может автоматически установить фокус
   на первый интерактивный элемент или на корневой элемент;
-- **Восстанавливает фокус** — при закрытии области возвращает фокус на элемент, который был в фокусе до открытия.
+* **Восстанавливает фокус** — при закрытии области возвращает фокус на элемент, который был в фокусе до открытия.
 
 ## Использование
 
 `FocusTrap` широко используется внутри VKUI для компонентов модальных окон и всплывающих элементов:
 
-- [`ModalCard`](/components/modal-card)
-- [`ModalPage`](/components/modal-page)
-- [`Alert`](/components/alert)
-- [`ActionSheet`](/components/action-sheet)
-- [`Popover`](/components/popover)
-- [`OnboardingTooltip`](/components/onboarding-tooltip)
-- [`DateInput`](/components/date-input)
+* [`ModalCard`](/components/modal-card)
+* [`ModalPage`](/components/modal-page)
+* [`Alert`](/components/alert)
+* [`ActionSheet`](/components/action-sheet)
+* [`Popover`](/components/popover)
+* [`OnboardingTooltip`](/components/onboarding-tooltip)
+* [`DateInput`](/components/date-input)
 
 ### Базовый пример
 
@@ -86,9 +80,6 @@ return (
 3. Передать этот же `ref` на корневой элемент контента;
 4. Добавить `tabIndex={-1}` на корневой элемент для возможности программной фокусировки.
 
-{/* @example-description: Минимальная настройка `FocusTrap` с передачей `rootRef` на корневой элемент области. */}
-<Playground>
-
 ```jsx
 const focusTrapRef = React.useRef(null);
 
@@ -96,15 +87,15 @@ return (
   <FocusTrap rootRef={focusTrapRef} autoFocus restoreFocus>
     <div ref={focusTrapRef} tabIndex={-1} style={{ padding: 16 }}>
       <Flex direction="column" gap="m">
-        <Input placeholder="Ввод текста" />
+        <FormItem top="Ввод текста" htmlFor="focus-trap-focus-trap-3">
+          <Input id="focus-trap-focus-trap-3" name="focus-trap-3" placeholder="Ввод текста" />
+        </FormItem>
         <Button>Отправить</Button>
       </Flex>
     </div>
   </FocusTrap>
 );
 ```
-
-</Playground>
 
 ## Автофокус
 
@@ -118,9 +109,6 @@ return (
 
 Фокус устанавливается на корневой элемент области. Это полезно, когда нужно анонсировать
 содержимое области для скринридеров, но не переключать фокус на конкретный элемент.
-
-{/* @example-description: Переключение режимов `autoFocus`: `true`, `root` и `false` в интерактивном примере. */}
-<Playground Wrapper={BlockWrapper}>
 
 ```jsx
 const [mode, setMode] = React.useState('true');
@@ -157,7 +145,9 @@ return (
           }}
         >
           <Flex direction="column" gap="m">
-            <Input placeholder="Поле ввода" />
+            <FormItem top="Поле ввода" htmlFor="focus-trap-focus-trap-4">
+              <Input id="focus-trap-focus-trap-4" name="focus-trap-4" placeholder="Поле ввода" />
+            </FormItem>
             <Button>Кнопка</Button>
           </Flex>
         </div>
@@ -167,8 +157,6 @@ return (
 );
 ```
 
-</Playground>
-
 ### `autoFocus={false}`
 
 Автофокус отключён. Используйте, когда фокус уже находится внутри области или управляется вручную.
@@ -177,12 +165,9 @@ return (
 
 Свойство `restoreFocus` управляет возвратом фокуса на предыдущий элемент при закрытии области.
 
-- `true` (по умолчанию) — фокус возвращается на элемент, который был в фокусе до открытия области;
-- `false` — фокус не возвращается;
-- `() => boolean | HTMLElement` — функция, которая возвращает `boolean` или конкретный элемент для фокуса.
-
-{/* @example-description: Кастомное восстановление фокуса на альтернативный элемент при закрытии `FocusTrap`. */}
-<Playground>
+* `true` (по умолчанию) — фокус возвращается на элемент, который был в фокусе до открытия области;
+* `false` — фокус не возвращается;
+* `() => boolean | HTMLElement` — функция, которая возвращает `boolean` или конкретный элемент для фокуса.
 
 ```jsx
 const [open, setOpen] = React.useState(false);
@@ -219,8 +204,6 @@ return (
 );
 ```
 
-</Playground>
-
 ## Отключение захвата фокуса
 
 Свойство `disabled` позволяет временно отключить захват фокуса.
@@ -231,9 +214,6 @@ return (
 >
 > Чтобы избежать этой проблемы, для первого (нижнего) модального окна необходимо отключить захват фокуса
 > с помощью свойства `disabled={true}`. Это позволит корректно управлять фокусом во втором (верхнем) модальном окне.
-
-{/* @example-description: Временное отключение захвата фокуса через `disabled` с визуальной индикацией состояния. */}
-<Playground>
 
 ```jsx
 const [disabled, setDisabled] = React.useState(false);
@@ -257,7 +237,9 @@ return (
         }}
       >
         <Flex direction="column" gap="m">
-          <Input placeholder="Поле ввода" />
+          <FormItem top="Поле ввода" htmlFor="focus-trap-focus-trap-5">
+            <Input id="focus-trap-focus-trap-5" name="focus-trap-5" placeholder="Поле ввода" />
+          </FormItem>
           <Button>Кнопка</Button>
         </Flex>
       </div>
@@ -266,8 +248,6 @@ return (
   </Flex>
 );
 ```
-
-</Playground>
 
 ## Задержка автофокуса
 
@@ -284,16 +264,16 @@ return (
 
 ### Когда использовать FocusTrap
 
-- **Модальные окна и диалоги** — фокус должен оставаться внутри модального окна,
+* **Модальные окна и диалоги** — фокус должен оставаться внутри модального окна,
   пока оно открыто;
-- **Всплывающие меню** — пользователь должен иметь возможность навигироваться
+* **Всплывающие меню** — пользователь должен иметь возможность навигироваться
   по пунктам меню с помощью клавиатуры;
-- **Формы в выпадающих панелях** — например, календарь в `DateInput`.
+* **Формы в выпадающих панелях** — например, календарь в `DateInput`.
 
 ### Когда НЕ использовать FocusTrap
 
-- **Для обычных секций страницы** — захват фокуса не нужен для стандартной навигации;
-- **Для тултипов с текстовым содержимым** — если тултип не содержит интерактивных элементов,
+* **Для обычных секций страницы** — захват фокуса не нужен для стандартной навигации;
+* **Для тултипов с текстовым содержимым** — если тултип не содержит интерактивных элементов,
   используйте свойство `disableFocusTrap` в компонентах типа `Tooltip`.
 
 ### Доступность (a11y)
@@ -318,14 +298,12 @@ return (
 </FocusTrap>
 ```
 
-## Свойства и методы [#api]
+## Свойства и методы \[#api]
 
-| Свойство | Тип | По умолчанию | Описание |
-| --- | --- | --- | --- |
-| `autoFocus` | `boolean \| "root"` | `true` | Управление поведением автофокуса при появлении всплывающего окна. При прокидывании `true` фокус будет установлен на первый элемент. При прокидывании `root` фокус будет установлен в корень. |
-| `autoFocusDelay` | `number` | `0` | Время в миллисекундах после которого срабатывает автофокус при появлении всплывающего окна. |
-| `disabled` | `boolean` | `false` | Форсированное отключение захвата фокуса |
-| `restoreFocus` | `boolean \| (() => boolean \| HTMLElement)` | `true` | Управление поведением возврата фокуса при закрытии всплывающего окна. |
-| `**rootRef** \*` | `RefObject<HTMLElement \| null>` | `-` | Ref на корневой элемент. |
-
-
+| Свойство         | Тип                                         | По умолчанию | Описание                                                                                                                                                                                     |
+| ---------------- | ------------------------------------------- | ------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `autoFocus`      | `boolean \| "root"`                         | `true`       | Управление поведением автофокуса при появлении всплывающего окна. При прокидывании `true` фокус будет установлен на первый элемент. При прокидывании `root` фокус будет установлен в корень. |
+| `autoFocusDelay` | `number`                                    | `0`          | Время в миллисекундах после которого срабатывает автофокус при появлении всплывающего окна.                                                                                                  |
+| `disabled`       | `boolean`                                   | `false`      | Форсированное отключение захвата фокуса                                                                                                                                                      |
+| `restoreFocus`   | `boolean \| (() => boolean \| HTMLElement)` | `true`       | Управление поведением возврата фокуса при закрытии всплывающего окна.                                                                                                                        |
+| `**rootRef** \*` | `RefObject<HTMLElement \| null>`            | `-`          | Ref на корневой элемент.                                                                                                                                                                     |

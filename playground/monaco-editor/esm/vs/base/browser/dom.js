@@ -3,13 +3,14 @@ import { BrowserFeatures } from './canIUse.js';
 import { StandardKeyboardEvent } from './keyboardEvent.js';
 import { StandardMouseEvent } from './mouseEvent.js';
 import { IntervalTimer, _runWhenIdle, AbstractIdleValue } from '../common/async.js';
-import { BugIndicatingError, onUnexpectedError } from '../common/errors.js';
+import { onUnexpectedError, BugIndicatingError } from '../common/errors.js';
 import { Emitter, Event } from '../common/event.js';
-import { DisposableStore, Disposable, toDisposable } from '../common/lifecycle.js';
+import { DisposableStore, Disposable, toDisposable, markAsSingleton } from '../common/lifecycle.js';
 import { RemoteAuthorities } from '../common/network.js';
 import { isIOS } from '../common/platform.js';
 import { hash } from '../common/hash.js';
 import { ensureCodeWindow, mainWindow } from './window.js';
+import { isPointWithinTriangle } from '../common/numbers.js';
 import '../common/observableInternal/index.js';
 import { derived, derivedOpts } from '../common/observableInternal/observables/derived.js';
 import { isObservable } from '../common/observableInternal/utils/utils.js';
@@ -519,7 +520,7 @@ function isAncestor(testChild, testAncestor) {
 }
 function findParentWithClass(node, clazz, stopAtClazzOrNode) {
     while (node && node.nodeType === node.ELEMENT_NODE) {
-        if (node.classList.contains(clazz)) {
+        if (typeof clazz === 'string' ? node.classList.contains(clazz) : clazz.every(candidate => node.classList.contains(candidate))) {
             return node;
         }
         if (stopAtClazzOrNode) {
@@ -697,6 +698,7 @@ const EventType = {
     KEY_UP: 'keyup',
     BEFORE_UNLOAD: 'beforeunload',
     RESIZE: 'resize',
+    SCROLL: 'scroll',
     FOCUS: 'focus',
     FOCUS_IN: 'focusin',
     FOCUS_OUT: 'focusout',
@@ -944,7 +946,10 @@ RemoteAuthorities.setPreferredWebSchema(/^https:/.test(mainWindow.location.href)
 class ModifierKeyEmitter extends Emitter {
     constructor() {
         super();
-        this._subscriptions = new DisposableStore();
+        // This emitter is a lazily created singleton (see `getInstance`) that is allowed
+        // to outlive the test that happens to create it first. `Emitter` itself is not
+        // tracked, so the store has to be marked to keep it out of leak detection.
+        this._subscriptions = markAsSingleton(new DisposableStore());
         this._keyStatus = {
             altKey: false,
             shiftKey: false,
@@ -1119,6 +1124,94 @@ class DragAndDropObserver extends Disposable {
         }));
     }
 }
+/**
+ * A wrapper around `ResizeObserver` that is disposable.
+ *
+ * Behavior is intentionally identical to using `new ResizeObserver(callback)`
+ * directly: the user-supplied callback runs synchronously inside the
+ * browser's resize-observation phase, with the entries the browser delivered.
+ * The wrapper adds three things on top:
+ *
+ * 1. Lifetime management: `dispose()` disconnects the underlying observer.
+ * 2. Auxiliary-window support: pass `targetWindow` so the observer is
+ *    constructed in the realm of the element being observed.
+ * 3. Context for the
+ *    `ResizeObserver loop completed with undelivered notifications` warning:
+ *    each instance carries a stable `name`, and just before invoking the user
+ *    callback we add that name to a bounded, per-window set that is cleared
+ *    at the next animation frame. The warning is delivered as a stackless
+ *    `ErrorEvent` on `window` after callbacks run, so error telemetry can
+ *    include the wrapped observers that recently ran in that window (see
+ *    {@link getRecentDisposableResizeObserverContextForLoopError}). This is
+ *    delivery context, not causal attribution: the browser does not expose
+ *    which observer or skipped target caused the warning.
+ *
+ * @param name Stable identifier used in loop-warning context. Prefer one that
+ * survives minification and refactors (e.g. the consumer class + purpose)
+ * since callstacks change across releases.
+ * @param callback Invoked synchronously when the browser delivers resize
+ * notifications, with the same entries the native `ResizeObserver` would
+ * have delivered.
+ * @param targetWindow The window whose `ResizeObserver` constructor should
+ * be used. Defaults to `mainWindow`. Pass the containing window when
+ * creating an observer for elements that live in an auxiliary window.
+ * @param options Optional configuration. `resizeObserverCtor` is a test
+ * seam that defaults to `targetWindow.ResizeObserver`.
+ */
+class DisposableResizeObserver extends Disposable {
+    constructor(name, callback, targetWindow = mainWindow, options) {
+        super();
+        this.name = name;
+        const ctor = options?.resizeObserverCtor ?? targetWindow.ResizeObserver;
+        this.observer = new ctor((entries, observer) => {
+            recordDisposableResizeObserverInvocation(targetWindow, this.name);
+            try {
+                callback(entries, observer);
+            }
+            catch (e) {
+                onUnexpectedError(e);
+            }
+        });
+        this._register(toDisposable(() => this.observer.disconnect()));
+    }
+    observe(target, options) {
+        this.observer.observe(target, options);
+        return toDisposable(() => this.observer.unobserve(target));
+    }
+}
+/**
+ * Keep the context bounded so a large delivery phase cannot create an
+ * unbounded telemetry value. Names are static component identifiers, and are
+ * sorted when read so equivalent phases share a stable bucket.
+ */
+const maxRecentDisposableResizeObservers = 8;
+const recentDisposableResizeObserverContexts = new WeakMap();
+function recordDisposableResizeObserverInvocation(targetWindow, name) {
+    let context = recentDisposableResizeObserverContexts.get(targetWindow);
+    if (!context) {
+        context = { names: new Set(), overflow: false };
+        recentDisposableResizeObserverContexts.set(targetWindow, context);
+        // ResizeObserver callbacks and the synthetic loop error are delivered
+        // after requestAnimationFrame callbacks in the rendering update. A
+        // request made here therefore clears this context at the next frame,
+        // after telemetry has observed any warning from the current update.
+        targetWindow.requestAnimationFrame(() => recentDisposableResizeObserverContexts.delete(targetWindow));
+    }
+    if (context.names.has(name)) {
+        return;
+    }
+    if (context.names.size < maxRecentDisposableResizeObservers) {
+        context.names.add(name);
+    }
+    else {
+        context.overflow = true;
+        const largestName = Array.from(context.names).sort().at(-1);
+        if (name < largestName) {
+            context.names.delete(largestName);
+            context.names.add(name);
+        }
+    }
+}
 const H_REGEX = /(?<tag>[\w\-]+)?(?:#(?<id>[\w\-]+))?(?<class>(?:\.(?:[\w\-]+))*)(?:@(?<name>(?:[\w\_])+))?/;
 function h(tag, ...args) {
     let attributes;
@@ -1199,8 +1292,49 @@ function h(tag, ...args) {
 function camelCaseToHyphenCase(str) {
     return str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
 }
+function copyAttributes(from, to, filter) {
+    for (const { name, value } of from.attributes) {
+        {
+            to.setAttribute(name, value);
+        }
+    }
+}
 function isEditableElement(element) {
     return element.tagName.toLowerCase() === 'input' || element.tagName.toLowerCase() === 'textarea' || isHTMLElement(element) && !!element.editContext;
+}
+/**
+ * Helper for calculating the "safe triangle" occluded by hovers to avoid early dismissal.
+ * @see https://www.smashingmagazine.com/2023/08/better-context-menus-safe-triangles/ for example
+ */
+class SafeTriangle {
+    constructor(originX, originY, target) {
+        this.originX = originX;
+        this.originY = originY;
+        // 4 points (x, y), 8 length
+        this.points = new Int16Array(8);
+        const { top, left, right, bottom } = target.getBoundingClientRect();
+        const t = this.points;
+        let i = 0;
+        t[i++] = left;
+        t[i++] = top;
+        t[i++] = right;
+        t[i++] = top;
+        t[i++] = left;
+        t[i++] = bottom;
+        t[i++] = right;
+        t[i++] = bottom;
+    }
+    contains(x, y) {
+        const { points, originX, originY } = this;
+        for (let i = 0; i < 4; i++) {
+            const p1 = 2 * i;
+            const p2 = 2 * ((i + 1) % 4);
+            if (isPointWithinTriangle(x, y, originX, originY, points[p1], points[p1 + 1], points[p2], points[p2 + 1])) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
 var n;
 (function (n) {
@@ -1502,4 +1636,4 @@ if (!customElements.get('connection-observer')) {
     customElements.define('connection-observer', ConnectionObserverElement);
 }
 
-export { $, ConnectionObserverElement, Dimension, DragAndDropObserver, EventHelper, EventType, LiveElement, ModifierKeyEmitter, Namespace, ObserverNode, ObserverNodeWithElement, WindowIdleValue, WindowIntervalTimer, addDisposableGenericMouseDownListener, addDisposableGenericMouseMoveListener, addDisposableGenericMouseUpListener, addDisposableListener, addStandardDisposableGenericMouseDownListener, addStandardDisposableListener, after, animate, append, clearNode, computeScreenAwareSize, findParentWithClass, getActiveDocument, getActiveElement, getActiveWindow, getClientArea, getComputedStyle, getContentHeight, getContentWidth, getDocument, getDomNodePagePosition, getDomNodeZoomLevel, getExternalFocusWindow, getShadowRoot, getTopLeftOffset, getTotalHeight, getTotalWidth, getWindow, getWindowById, getWindowId, getWindows, getWindowsCount, h, hasParentWithClass, hide, isActiveElement, isAncestor, isAncestorOfActiveElement, isEditableElement, isEventLike, isHTMLAnchorElement, isHTMLElement, isInShadowDOM, isKeyboardEvent, isMouseEvent, isSVGElement, isShadowRoot, n, onDidRegisterWindow, onDidUnregisterWindow, onWillUnregisterWindow, prepend, reset, restoreParentsScrollTop, runAtThisOrScheduleAtNextAnimationFrame, runWhenWindowIdle, saveParentsScrollTop, scheduleAtNextAnimationFrame, setVisibility, sharedMutationObserver, show, size, trackFocus, windowOpenNoOpener };
+export { $, ConnectionObserverElement, Dimension, DisposableResizeObserver, DragAndDropObserver, EventHelper, EventType, LiveElement, ModifierKeyEmitter, Namespace, ObserverNode, ObserverNodeWithElement, SafeTriangle, WindowIdleValue, WindowIntervalTimer, addDisposableGenericMouseDownListener, addDisposableGenericMouseMoveListener, addDisposableGenericMouseUpListener, addDisposableListener, addStandardDisposableGenericMouseDownListener, addStandardDisposableListener, after, animate, append, clearNode, computeScreenAwareSize, copyAttributes, findParentWithClass, getActiveDocument, getActiveElement, getActiveWindow, getClientArea, getComputedStyle, getContentHeight, getContentWidth, getDocument, getDomNodePagePosition, getDomNodeZoomLevel, getExternalFocusWindow, getShadowRoot, getTopLeftOffset, getTotalHeight, getTotalWidth, getWindow, getWindowById, getWindowId, getWindows, getWindowsCount, h, hasParentWithClass, hide, isActiveElement, isAncestor, isAncestorOfActiveElement, isEditableElement, isEventLike, isHTMLAnchorElement, isHTMLElement, isInShadowDOM, isKeyboardEvent, isMouseEvent, isSVGElement, isShadowRoot, n, onDidRegisterWindow, onDidUnregisterWindow, onWillUnregisterWindow, prepend, reset, restoreParentsScrollTop, runAtThisOrScheduleAtNextAnimationFrame, runWhenWindowIdle, saveParentsScrollTop, scheduleAtNextAnimationFrame, setVisibility, sharedMutationObserver, show, size, trackFocus, windowOpenNoOpener };

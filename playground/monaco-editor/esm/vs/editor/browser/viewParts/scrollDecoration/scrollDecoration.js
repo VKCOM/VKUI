@@ -33,7 +33,7 @@ class ScrollDecorationViewPart extends ViewPart {
     }
     _updateWidth() {
         const options = this._context.configuration.options;
-        const layoutInfo = options.get(165 /* EditorOption.layoutInfo */);
+        const layoutInfo = options.get(166 /* EditorOption.layoutInfo */);
         if (layoutInfo.minimap.renderMinimap === 0 /* RenderMinimap.None */ || (layoutInfo.minimap.minimapWidth > 0 && layoutInfo.minimap.minimapLeft === 0)) {
             this._width = layoutInfo.width;
         }

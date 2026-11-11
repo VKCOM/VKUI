@@ -101,8 +101,8 @@ let InlineCompletionsHintsWidget = class InlineCompletionsHintsWidget extends Di
 InlineCompletionsHintsWidget = __decorate([
     __param(2, IInstantiationService)
 ], InlineCompletionsHintsWidget);
-const inlineSuggestionHintsNextIcon = registerIcon('inline-suggestion-hints-next', Codicon.chevronRight, localize(1250, 'Icon for show next parameter hint.'));
-const inlineSuggestionHintsPreviousIcon = registerIcon('inline-suggestion-hints-previous', Codicon.chevronLeft, localize(1251, 'Icon for show previous parameter hint.'));
+const inlineSuggestionHintsNextIcon = registerIcon('inline-suggestion-hints-next', Codicon.chevronRight, localize(1270, 'Icon for show next parameter hint.'));
+const inlineSuggestionHintsPreviousIcon = registerIcon('inline-suggestion-hints-previous', Codicon.chevronLeft, localize(1271, 'Icon for show previous parameter hint.'));
 let InlineSuggestionHintsContentWidget = class InlineSuggestionHintsContentWidget extends Disposable {
     static { InlineSuggestionHintsContentWidget_1 = this; }
     static { this.hot = createHotClass(this); }
@@ -157,9 +157,9 @@ let InlineSuggestionHintsContentWidget = class InlineSuggestionHintsContentWidge
             this._warningMessageNode.element,
             h('div@toolBar'),
         ]);
-        this.previousAction = this._register(this.createCommandAction(showPreviousInlineSuggestionActionId, localize(1252, 'Previous'), ThemeIcon.asClassName(inlineSuggestionHintsPreviousIcon)));
+        this.previousAction = this._register(this.createCommandAction(showPreviousInlineSuggestionActionId, localize(1272, 'Previous'), ThemeIcon.asClassName(inlineSuggestionHintsPreviousIcon)));
         this.availableSuggestionCountAction = this._register(new Action('inlineSuggestionHints.availableSuggestionCount', '', undefined, false));
-        this.nextAction = this._register(this.createCommandAction(showNextInlineSuggestionActionId, localize(1253, 'Next'), ThemeIcon.asClassName(inlineSuggestionHintsNextIcon)));
+        this.nextAction = this._register(this.createCommandAction(showNextInlineSuggestionActionId, localize(1273, 'Next'), ThemeIcon.asClassName(inlineSuggestionHintsNextIcon)));
         this.inlineCompletionsActionsMenus = this._register(this._menuService.createMenu(MenuId.InlineCompletionsActions, this._contextKeyService));
         this.clearAvailableSuggestionCountLabelDebounced = this._register(new RunOnceScheduler(() => {
             this.availableSuggestionCountAction.label = '';

@@ -65,7 +65,7 @@ let HelpQuickAccessProvider = class HelpQuickAccessProvider {
                 prefix,
                 label,
                 keybinding: helpEntry.commandId ? this.keybindingService.lookupKeybinding(helpEntry.commandId) : undefined,
-                ariaLabel: localize(1811, "{0}, {1}", label, helpEntry.description),
+                ariaLabel: localize(1844, "{0}, {1}", label, helpEntry.description),
                 description: helpEntry.description
             };
         });

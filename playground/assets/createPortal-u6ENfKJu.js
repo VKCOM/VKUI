@@ -1,0 +1,1 @@
+import{a as e,n as t}from"./rolldown-runtime-sJBDdmOt.js";import{m as n,o as r}from"./dom-DJYkITju.js";import{t as i}from"./react-dom-B2lTHb2f.js";var a,o;function s(){return(s=t((()=>{a=e(i(),1),n(),o=(e,t,n)=>{let i=t||r();return i&&a.createPortal(e,i,n)}})))()}export{s as n,o as t};

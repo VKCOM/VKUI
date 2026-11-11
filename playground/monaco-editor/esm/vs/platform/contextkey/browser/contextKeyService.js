@@ -451,7 +451,7 @@ CommandsRegistry.registerCommand({
         return [...RawContextKey.all()].sort((a, b) => a.key.localeCompare(b.key));
     },
     metadata: {
-        description: localize(1736, "A command that returns information about context keys"),
+        description: localize(1768, "A command that returns information about context keys"),
         args: []
     }
 });

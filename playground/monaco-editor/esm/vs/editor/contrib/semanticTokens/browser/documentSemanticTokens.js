@@ -285,9 +285,17 @@ let ModelSemanticColoring = class ModelSemanticColoring extends Disposable {
             return;
         }
         if (isSemanticTokensEdits(tokens)) {
+            const resultId = tokens.resultId;
+            const rejectInvalidEdits = (requestFullRefresh) => {
+                provider.releaseDocumentSemanticTokens(resultId);
+                this._model.tokenization.setSemanticTokens(null, true);
+                if (requestFullRefresh) {
+                    this._fetchDocumentSemanticTokens.schedule(0);
+                }
+            };
             if (!currentResponse) {
                 // not possible!
-                this._model.tokenization.setSemanticTokens(null, true);
+                rejectInvalidEdits(false);
                 return;
             }
             if (tokens.edits.length === 0) {
@@ -303,15 +311,20 @@ let ModelSemanticColoring = class ModelSemanticColoring extends Disposable {
                     deltaLength += (edit.data ? edit.data.length : 0) - edit.deleteCount;
                 }
                 const srcData = currentResponse.data;
-                const destData = new Uint32Array(srcData.length + deltaLength);
+                const destDataLength = srcData.length + deltaLength;
+                if (destDataLength < 0) {
+                    styling.warnInvalidEditDeleteCount(currentResponse.resultId, resultId, srcData.length, deltaLength);
+                    rejectInvalidEdits(true);
+                    return;
+                }
+                const destData = new Uint32Array(destDataLength);
                 let srcLastStart = srcData.length;
                 let destLastStart = destData.length;
                 for (let i = tokens.edits.length - 1; i >= 0; i--) {
                     const edit = tokens.edits[i];
                     if (edit.start > srcData.length) {
-                        styling.warnInvalidEditStart(currentResponse.resultId, tokens.resultId, i, edit.start, srcData.length);
-                        // The edits are invalid and there's no way to recover
-                        this._model.tokenization.setSemanticTokens(null, true);
+                        styling.warnInvalidEditStart(currentResponse.resultId, resultId, i, edit.start, srcData.length);
+                        rejectInvalidEdits(true);
                         return;
                     }
                     const copyCount = srcLastStart - (edit.start + edit.deleteCount);

@@ -21,6 +21,7 @@ class ViewLineOptions {
         this.fontLigatures = options.get(60 /* EditorOption.fontLigatures */);
         this.verticalScrollbarSize = options.get(117 /* EditorOption.scrollbar */).verticalScrollbarSize;
         this.useGpu = options.get(46 /* EditorOption.experimentalGpuAcceleration */) === 'on';
+        this.useTwoCellFullwidthCharacters = options.get(176 /* EditorOption.effectiveFullwidthCharacterWidth */) === 'twoCells';
     }
     equals(other) {
         return (this.themeType === other.themeType
@@ -36,7 +37,8 @@ class ViewLineOptions {
             && this.stopRenderingLineAfter === other.stopRenderingLineAfter
             && this.fontLigatures === other.fontLigatures
             && this.verticalScrollbarSize === other.verticalScrollbarSize
-            && this.useGpu === other.useGpu);
+            && this.useGpu === other.useGpu
+            && this.useTwoCellFullwidthCharacters === other.useTwoCellFullwidthCharacters);
     }
 }
 

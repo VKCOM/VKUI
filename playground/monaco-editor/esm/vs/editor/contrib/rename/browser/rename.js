@@ -100,7 +100,7 @@ class RenameSkeleton {
         }
         const result = await provider.provideRenameEdits(this.model, this.position, newName, token);
         if (!result) {
-            return this._provideRenameEdits(newName, i + 1, rejects.concat(localize(1429, "No result.")), token);
+            return this._provideRenameEdits(newName, i + 1, rejects.concat(localize(1449, "No result.")), token);
         }
         else if (result.rejectReason) {
             return this._provideRenameEdits(newName, i + 1, rejects.concat(result.rejectReason), token);
@@ -181,7 +181,7 @@ let RenameController = class RenameController {
             else {
                 trace('resolve rename location failed', e instanceof Error ? e : JSON.stringify(e, null, '\t'));
                 if (typeof e === 'string' || isMarkdownString(e)) {
-                    MessageController.get(this.editor)?.showMessage(e || localize(1430, "An unknown error occurred while resolving rename location"), position);
+                    MessageController.get(this.editor)?.showMessage(e || localize(1450, "An unknown error occurred while resolving rename location"), position);
                 }
             }
             return undefined;
@@ -249,24 +249,24 @@ let RenameController = class RenameController {
             this._bulkEditService.apply(renameResult, {
                 editor: this.editor,
                 showPreview: inputFieldResult.wantsPreview,
-                label: localize(1431, "Renaming '{0}' to '{1}'", loc?.text, inputFieldResult.newName),
+                label: localize(1451, "Renaming '{0}' to '{1}'", loc?.text, inputFieldResult.newName),
                 code: 'undoredo.rename',
-                quotableLabel: localize(1432, "Renaming {0} to {1}", loc?.text, inputFieldResult.newName),
+                quotableLabel: localize(1452, "Renaming {0} to {1}", loc?.text, inputFieldResult.newName),
                 respectAutoSaveConfig: true,
                 reason: EditSources.rename(loc?.text, inputFieldResult.newName),
             }).then(result => {
                 trace('edits applied');
                 if (result.ariaSummary) {
-                    alert(localize(1433, "Successfully renamed '{0}' to '{1}'. Summary: {2}", loc.text, inputFieldResult.newName, result.ariaSummary));
+                    alert(localize(1453, "Successfully renamed '{0}' to '{1}'. Summary: {2}", loc.text, inputFieldResult.newName, result.ariaSummary));
                 }
             }).catch(err => {
                 trace(`error when applying edits ${JSON.stringify(err, null, '\t')}`);
-                this._notificationService.error(localize(1434, "Rename failed to apply edits"));
+                this._notificationService.error(localize(1454, "Rename failed to apply edits"));
                 this._logService.error(err);
             });
         }, err => {
             trace('error when providing rename edits', JSON.stringify(err, null, '\t'));
-            this._notificationService.error(localize(1435, "Rename failed to compute edits"));
+            this._notificationService.error(localize(1455, "Rename failed to compute edits"));
             this._logService.error(err);
         }).finally(() => {
             cts2.dispose();
@@ -302,7 +302,7 @@ class RenameAction extends EditorAction {
     constructor() {
         super({
             id: 'editor.action.rename',
-            label: localize2(1437, "Rename Symbol"),
+            label: localize2(1457, "Rename Symbol"),
             precondition: ContextKeyExpr.and(EditorContextKeys.writable, EditorContextKeys.hasRenameProvider),
             kbOpts: {
                 kbExpr: EditorContextKeys.editorTextFocus,
@@ -353,7 +353,7 @@ registerEditorCommand(new RenameCommand({
     handler: x => x.acceptRenameInput(false),
     kbOpts: {
         weight: 100 /* KeybindingWeight.EditorContrib */ + 99,
-        kbExpr: ContextKeyExpr.and(EditorContextKeys.focus, ContextKeyExpr.not('isComposing')),
+        kbExpr: EditorContextKeys.focus,
         primary: 3 /* KeyCode.Enter */
     }
 }));
@@ -363,7 +363,7 @@ registerEditorCommand(new RenameCommand({
     handler: x => x.acceptRenameInput(true),
     kbOpts: {
         weight: 100 /* KeybindingWeight.EditorContrib */ + 99,
-        kbExpr: ContextKeyExpr.and(EditorContextKeys.focus, ContextKeyExpr.not('isComposing')),
+        kbExpr: EditorContextKeys.focus,
         primary: 2048 /* KeyMod.CtrlCmd */ + 3 /* KeyCode.Enter */
     }
 }));
@@ -383,7 +383,7 @@ registerAction2(class FocusNextRenameSuggestion extends Action2 {
         super({
             id: 'focusNextRenameSuggestion',
             title: {
-                ...localize2(1438, "Focus Next Rename Suggestion"),
+                ...localize2(1458, "Focus Next Rename Suggestion"),
             },
             precondition: CONTEXT_RENAME_INPUT_VISIBLE,
             keybinding: [
@@ -411,7 +411,7 @@ registerAction2(class FocusPreviousRenameSuggestion extends Action2 {
         super({
             id: 'focusPreviousRenameSuggestion',
             title: {
-                ...localize2(1439, "Focus Previous Rename Suggestion"),
+                ...localize2(1459, "Focus Previous Rename Suggestion"),
             },
             precondition: CONTEXT_RENAME_INPUT_VISIBLE,
             keybinding: [
@@ -456,7 +456,7 @@ Registry.as(Extensions.Configuration).registerConfiguration({
     properties: {
         'editor.rename.enablePreview': {
             scope: 6 /* ConfigurationScope.LANGUAGE_OVERRIDABLE */,
-            description: localize(1436, "Enable/disable the ability to preview changes before renaming"),
+            description: localize(1456, "Enable/disable the ability to preview changes before renaming"),
             default: true,
             type: 'boolean'
         }

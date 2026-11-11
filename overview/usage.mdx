@@ -2,16 +2,13 @@
 description: Инструкция по запуску приложения с базовой структурой и навигацией на VKUI.
 ---
 
-<Overview type="doc">
 # Использование
 
 После шагов из [Установки](/overview/install) у вас должно запускаться минимально работающее приложение. Здесь разберём простой пример использования и рекомендации по дальнейшим шагам.
 
 Примеры продолжим на шаблоне [React + TypeScript + Vite](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts).
 
-</Overview>
-
-## Быстрый старт [#quick-start]
+## Быстрый старт \[#quick-start]
 
 Начнём с компонента [`Button`](/components/button):
 
@@ -29,21 +26,15 @@ export default function App() {
 
 На странице должно появиться что-то похожее:
 
-import { BlockWrapper } from '@/components/wrappers';
+```jsx
+<Button mode="outline" size="l">
+  Привет, мир!
+</Button>
+```
 
-<Playground Wrapper={BlockWrapper}>
-  ```jsx
-  <Button mode="outline" size="l">
-    Привет, мир!
-  </Button>
-  ```
-</Playground>
-
-## Навигационные слои [#navigation]
+## Навигационные слои \[#navigation]
 
 Приложение состоит из набора экранов с информацией. В VKUI есть специальные компоненты для экранов и навигации между ними. Подробно — в разделе [Навигация](/overview/navigation). Ниже — базовый пример.
-
-<Playground Wrapper={FixedLayoutWrapper} style={{ maxWidth: 320, height: 415, overflow: 'hidden' }}>
 
 ```jsx
 import { useState } from 'react';
@@ -91,17 +82,11 @@ return (
 );
 ```
 
-</Playground>
-
-## Многоколоночный интерфейс [#multiple-columns]
+## Многоколоночный интерфейс \[#multiple-columns]
 
 На мобильных элементы приходится ограничивать, на настольных — можно размещать больше, разделяя интерфейс на колонки. Для этого есть [`SplitLayout`](/components/split-layout) с подкомпонентом [`SplitCol`](/components/split-layout#split-col). Подробнее — на странице [Навигация](/overview/navigation).
 
 Адаптивный пример работы `SplitLayout`:
-
-import { FixedLayoutWrapper } from '@/components/wrappers';
-
-<Playground Wrapper={FixedLayoutWrapper}>
 
 ```jsx
 const { viewWidth } = useAdaptivityConditionalRender();
@@ -140,5 +125,3 @@ return (
   </SplitLayout>
 );
 ```
-
-</Playground>

@@ -37,7 +37,7 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var __param = (undefined && undefined.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-const warningIcon = registerIcon('extensions-warning-message', Codicon.warning, localize(1586, 'Icon shown with a warning message in the extensions editor.'));
+const warningIcon = registerIcon('extensions-warning-message', Codicon.warning, localize(1608, 'Icon shown with a warning message in the extensions editor.'));
 let UnicodeHighlighter = class UnicodeHighlighter extends Disposable {
     static { this.ID = 'editor.contrib.unicodeHighlighter'; }
     constructor(_editor, _editorWorkerService, _workspaceTrustService, instantiationService) {
@@ -57,19 +57,19 @@ let UnicodeHighlighter = class UnicodeHighlighter extends Disposable {
                 let data;
                 if (state.nonBasicAsciiCharacterCount >= max) {
                     data = {
-                        message: localize(1587, 'This document contains many non-basic ASCII unicode characters'),
+                        message: localize(1609, 'This document contains many non-basic ASCII unicode characters'),
                         command: new DisableHighlightingOfNonBasicAsciiCharactersAction(),
                     };
                 }
                 else if (state.ambiguousCharacterCount >= max) {
                     data = {
-                        message: localize(1588, 'This document contains many ambiguous unicode characters'),
+                        message: localize(1610, 'This document contains many ambiguous unicode characters'),
                         command: new DisableHighlightingOfAmbiguousCharactersAction(),
                     };
                 }
                 else if (state.invisibleCharacterCount >= max) {
                     data = {
-                        message: localize(1589, 'This document contains many invisible unicode characters'),
+                        message: localize(1611, 'This document contains many invisible unicode characters'),
                         command: new DisableHighlightingOfInvisibleCharactersAction(),
                     };
                 }
@@ -337,7 +337,7 @@ class ViewportUnicodeHighlighter extends Disposable {
         };
     }
 }
-const configureUnicodeHighlightOptionsStr = localize(1590, 'Configure Unicode Highlight Options');
+const configureUnicodeHighlightOptionsStr = localize(1612, 'Configure Unicode Highlight Options');
 let UnicodeHighlighterHoverParticipant = class UnicodeHighlighterHoverParticipant {
     constructor(_editor, _markdownRendererService) {
         this._editor = _editor;
@@ -369,18 +369,18 @@ let UnicodeHighlighterHoverParticipant = class UnicodeHighlighterHoverParticipan
             switch (highlightInfo.reason.kind) {
                 case 0 /* UnicodeHighlighterReasonKind.Ambiguous */: {
                     if (isBasicASCII(highlightInfo.reason.confusableWith)) {
-                        reason = localize(1591, 'The character {0} could be confused with the ASCII character {1}, which is more common in source code.', codePointStr, formatCodePointMarkdown(highlightInfo.reason.confusableWith.codePointAt(0)));
+                        reason = localize(1613, 'The character {0} could be confused with the ASCII character {1}, which is more common in source code.', codePointStr, formatCodePointMarkdown(highlightInfo.reason.confusableWith.codePointAt(0)));
                     }
                     else {
-                        reason = localize(1592, 'The character {0} could be confused with the character {1}, which is more common in source code.', codePointStr, formatCodePointMarkdown(highlightInfo.reason.confusableWith.codePointAt(0)));
+                        reason = localize(1614, 'The character {0} could be confused with the character {1}, which is more common in source code.', codePointStr, formatCodePointMarkdown(highlightInfo.reason.confusableWith.codePointAt(0)));
                     }
                     break;
                 }
                 case 1 /* UnicodeHighlighterReasonKind.Invisible */:
-                    reason = localize(1593, 'The character {0} is invisible.', codePointStr);
+                    reason = localize(1615, 'The character {0} is invisible.', codePointStr);
                     break;
                 case 2 /* UnicodeHighlighterReasonKind.NonBasicAscii */:
-                    reason = localize(1594, 'The character {0} is not a basic ASCII character.', codePointStr);
+                    reason = localize(1616, 'The character {0} is not a basic ASCII character.', codePointStr);
                     break;
             }
             if (existedReason.has(reason)) {
@@ -393,7 +393,7 @@ let UnicodeHighlighterHoverParticipant = class UnicodeHighlighterHoverParticipan
                 inComment: highlightInfo.inComment,
                 inString: highlightInfo.inString,
             };
-            const adjustSettings = localize(1595, 'Adjust settings');
+            const adjustSettings = localize(1617, 'Adjust settings');
             const uri = createCommandUri(ShowExcludeOptions.ID, adjustSettingsArgs);
             const markdown = new MarkdownString('', true)
                 .appendMarkdown(reason)
@@ -464,10 +464,10 @@ class DisableHighlightingInCommentsAction extends EditorAction {
     constructor() {
         super({
             id: DisableHighlightingOfAmbiguousCharactersAction.ID,
-            label: localize2(1604, "Disable highlighting of characters in comments"),
+            label: localize2(1626, "Disable highlighting of characters in comments"),
             precondition: undefined
         });
-        this.shortLabel = localize(1596, 'Disable Highlight In Comments');
+        this.shortLabel = localize(1618, 'Disable Highlight In Comments');
     }
     async run(accessor, editor) {
         const configurationService = accessor.get(IConfigurationService);
@@ -483,10 +483,10 @@ class DisableHighlightingInStringsAction extends EditorAction {
     constructor() {
         super({
             id: DisableHighlightingOfAmbiguousCharactersAction.ID,
-            label: localize2(1605, "Disable highlighting of characters in strings"),
+            label: localize2(1627, "Disable highlighting of characters in strings"),
             precondition: undefined
         });
-        this.shortLabel = localize(1597, 'Disable Highlight In Strings');
+        this.shortLabel = localize(1619, 'Disable Highlight In Strings');
     }
     async run(accessor, editor) {
         const configurationService = accessor.get(IConfigurationService);
@@ -503,11 +503,11 @@ class DisableHighlightingOfAmbiguousCharactersAction extends Action2 {
     constructor() {
         super({
             id: DisableHighlightingOfAmbiguousCharactersAction.ID,
-            title: localize2(1606, "Disable highlighting of ambiguous characters"),
+            title: localize2(1628, "Disable highlighting of ambiguous characters"),
             precondition: undefined,
             f1: false,
         });
-        this.shortLabel = localize(1598, 'Disable Ambiguous Highlight');
+        this.shortLabel = localize(1620, 'Disable Ambiguous Highlight');
     }
     async run(accessor, editor) {
         const configurationService = accessor.get(IConfigurationService);
@@ -524,11 +524,11 @@ class DisableHighlightingOfInvisibleCharactersAction extends Action2 {
     constructor() {
         super({
             id: DisableHighlightingOfInvisibleCharactersAction.ID,
-            title: localize2(1607, "Disable highlighting of invisible characters"),
+            title: localize2(1629, "Disable highlighting of invisible characters"),
             precondition: undefined,
             f1: false,
         });
-        this.shortLabel = localize(1599, 'Disable Invisible Highlight');
+        this.shortLabel = localize(1621, 'Disable Invisible Highlight');
     }
     async run(accessor, editor) {
         const configurationService = accessor.get(IConfigurationService);
@@ -545,11 +545,11 @@ class DisableHighlightingOfNonBasicAsciiCharactersAction extends Action2 {
     constructor() {
         super({
             id: DisableHighlightingOfNonBasicAsciiCharactersAction.ID,
-            title: localize2(1608, "Disable highlighting of non basic ASCII characters"),
+            title: localize2(1630, "Disable highlighting of non basic ASCII characters"),
             precondition: undefined,
             f1: false,
         });
-        this.shortLabel = localize(1600, 'Disable Non ASCII Highlight');
+        this.shortLabel = localize(1622, 'Disable Non ASCII Highlight');
     }
     async run(accessor, editor) {
         const configurationService = accessor.get(IConfigurationService);
@@ -566,7 +566,7 @@ class ShowExcludeOptions extends Action2 {
     constructor() {
         super({
             id: ShowExcludeOptions.ID,
-            title: localize2(1609, "Show Exclude Options"),
+            title: localize2(1631, "Show Exclude Options"),
             precondition: undefined,
             f1: false,
         });
@@ -578,15 +578,15 @@ class ShowExcludeOptions extends Action2 {
         const configurationService = accessor.get(IConfigurationService);
         function getExcludeCharFromBeingHighlightedLabel(codePoint) {
             if (InvisibleCharacters.isInvisibleCharacter(codePoint)) {
-                return localize(1601, 'Exclude {0} (invisible character) from being highlighted', codePointToHex(codePoint));
+                return localize(1623, 'Exclude {0} (invisible character) from being highlighted', codePointToHex(codePoint));
             }
-            return localize(1602, 'Exclude {0} from being highlighted', `${codePointToHex(codePoint)} "${char}"`);
+            return localize(1624, 'Exclude {0} from being highlighted', `${codePointToHex(codePoint)} "${char}"`);
         }
         const options = [];
         if (reason.kind === 0 /* UnicodeHighlighterReasonKind.Ambiguous */) {
             for (const locale of reason.notAmbiguousInLocales) {
                 options.push({
-                    label: localize(1603, "Allow unicode characters that are more common in the language \"{0}\".", locale),
+                    label: localize(1625, "Allow unicode characters that are more common in the language \"{0}\".", locale),
                     run: async () => {
                         excludeLocaleFromBeingHighlighted(configurationService, [locale]);
                     },

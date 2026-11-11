@@ -10,15 +10,15 @@ import { HierarchicalKind } from '../../../../base/common/hierarchicalKind.js';
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-const uncategorizedCodeActionGroup = Object.freeze({ kind: HierarchicalKind.Empty, title: localize(902, 'More Actions...') });
+const uncategorizedCodeActionGroup = Object.freeze({ kind: HierarchicalKind.Empty, title: localize(917, 'More Actions...') });
 const codeActionGroups = Object.freeze([
-    { kind: CodeActionKind.QuickFix, title: localize(903, 'Quick Fix') },
-    { kind: CodeActionKind.RefactorExtract, title: localize(904, 'Extract'), icon: Codicon.wrench },
-    { kind: CodeActionKind.RefactorInline, title: localize(905, 'Inline'), icon: Codicon.wrench },
-    { kind: CodeActionKind.RefactorRewrite, title: localize(906, 'Rewrite'), icon: Codicon.wrench },
-    { kind: CodeActionKind.RefactorMove, title: localize(907, 'Move'), icon: Codicon.wrench },
-    { kind: CodeActionKind.SurroundWith, title: localize(908, 'Surround With'), icon: Codicon.surroundWith },
-    { kind: CodeActionKind.Source, title: localize(909, 'Source Action'), icon: Codicon.symbolFile },
+    { kind: CodeActionKind.QuickFix, title: localize(918, 'Quick Fix') },
+    { kind: CodeActionKind.RefactorExtract, title: localize(919, 'Extract'), icon: Codicon.wrench },
+    { kind: CodeActionKind.RefactorInline, title: localize(920, 'Inline'), icon: Codicon.wrench },
+    { kind: CodeActionKind.RefactorRewrite, title: localize(921, 'Rewrite'), icon: Codicon.wrench },
+    { kind: CodeActionKind.RefactorMove, title: localize(922, 'Move'), icon: Codicon.wrench },
+    { kind: CodeActionKind.SurroundWith, title: localize(923, 'Surround With'), icon: Codicon.surroundWith },
+    { kind: CodeActionKind.Source, title: localize(924, 'Source Action'), icon: Codicon.symbolFile },
     uncategorizedCodeActionGroup,
 ]);
 function toMenuItems(inputCodeActions, showHeaders, keybindingResolver) {

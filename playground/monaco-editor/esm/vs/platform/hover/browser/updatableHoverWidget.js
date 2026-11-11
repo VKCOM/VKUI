@@ -1,5 +1,5 @@
 import { isHTMLElement } from '../../../base/browser/dom.js';
-import { isManagedHoverTooltipMarkdownString } from '../../../base/browser/ui/hover/hover.js';
+import { isManagedHoverTooltipHTMLElement, isManagedHoverTooltipMarkdownString } from '../../../base/browser/ui/hover/hover.js';
 import { CancellationTokenSource } from '../../../base/common/cancellation.js';
 import { isMarkdownString } from '../../../base/common/htmlContent.js';
 import { isString, isFunction } from '../../../base/common/types.js';
@@ -24,6 +24,7 @@ class ManagedHoverWidget {
         if (this.isDisposed) {
             return;
         }
+        const contentOwnsPadding = isManagedHoverTooltipHTMLElement(content) && content.contentOwnsPadding === true;
         let resolvedContent;
         if (isString(content) || isHTMLElement(content) || content === undefined) {
             resolvedContent = content;
@@ -48,7 +49,7 @@ class ManagedHoverWidget {
             if (managedContent instanceof Promise) {
                 // show 'Loading' if no hover is up yet
                 if (!this._hoverWidget) {
-                    this.show(localize(1762, "Loading..."), focus, options);
+                    this.show(localize(1795, "Loading..."), focus, options, false);
                 }
                 resolvedContent = await managedContent;
             }
@@ -61,9 +62,9 @@ class ManagedHoverWidget {
                 return;
             }
         }
-        this.show(resolvedContent, focus, options);
+        this.show(resolvedContent, focus, options, contentOwnsPadding);
     }
-    show(content, focus, options) {
+    show(content, focus, options, contentOwnsPadding) {
         const oldHoverWidget = this._hoverWidget;
         if (this.hasContent(content)) {
             const hoverOptions = {
@@ -72,6 +73,10 @@ class ManagedHoverWidget {
                 actions: options?.actions,
                 linkHandler: options?.linkHandler,
                 trapFocus: options?.trapFocus,
+                additionalClasses: [
+                    ...(options?.additionalClasses ?? []),
+                    ...(contentOwnsPadding ? ['managed-hover-content-owns-padding'] : []),
+                ],
                 appearance: {
                     showPointer: this.hoverDelegate.placement === 'element',
                     skipFadeInAnimation: !this.fadeInAnimation || !!oldHoverWidget, // do not fade in if the hover is already showing
@@ -79,6 +84,7 @@ class ManagedHoverWidget {
                 },
                 position: {
                     hoverPosition: 2 /* HoverPosition.BELOW */,
+                    anchorAlignment: options?.position?.anchorAlignment,
                 },
             };
             this._hoverWidget = this.hoverDelegate.showHover(hoverOptions, focus);

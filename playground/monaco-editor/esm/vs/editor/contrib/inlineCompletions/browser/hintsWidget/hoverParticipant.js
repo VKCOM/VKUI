@@ -119,7 +119,7 @@ let InlineCompletionsHoverParticipant = class InlineCompletionsHoverParticipant 
         return new RenderedHoverParts([renderedHoverPart]);
     }
     getAccessibleContent(hoverPart) {
-        return localize(1248, 'There are inline completions here');
+        return localize(1268, 'There are inline completions here');
     }
     renderScreenReaderText(context, part) {
         const disposables = new DisposableStore();
@@ -127,7 +127,7 @@ let InlineCompletionsHoverParticipant = class InlineCompletionsHoverParticipant 
         const markdownHoverElement = $$1('div.hover-row.markdown-hover');
         const hoverContentsElement = append(markdownHoverElement, $$1('div.hover-contents', { ['aria-live']: 'assertive' }));
         const render = (code) => {
-            const inlineSuggestionAvailable = localize(1249, "Suggestion:");
+            const inlineSuggestionAvailable = localize(1269, "Suggestion:");
             const renderedContents = disposables.add(this._markdownRendererService.render(new MarkdownString().appendText(inlineSuggestionAvailable).appendCodeblock('text', code), {
                 context: this._editor,
                 asyncRenderCallback: () => {

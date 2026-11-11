@@ -182,6 +182,7 @@ let ContextMenuController = class ContextMenuController {
         this._contextMenuIsBeingShownCount++;
         this._contextMenuService.showContextMenu({
             domForShadowRoot: useShadowDOM ? this._editor.getOverflowWidgetsDomNode() ?? this._editor.getDomNode() : undefined,
+            useWindowContainerForShadowRoot: useShadowDOM && this._editor.getOption(51 /* EditorOption.fixedOverflowWidgets */),
             getAnchor: () => anchor,
             getActions: () => actions,
             getActionViewItem: (action) => {
@@ -248,7 +249,7 @@ let ContextMenuController = class ContextMenuController {
         };
         const actions = [];
         actions.push(createAction({
-            label: localize(937, "Minimap"),
+            label: localize(952, "Minimap"),
             checked: minimapOptions.enabled,
             run: () => {
                 this._configurationService.updateValue(`editor.minimap.enabled`, !minimapOptions.enabled);
@@ -256,41 +257,42 @@ let ContextMenuController = class ContextMenuController {
         }));
         actions.push(new Separator());
         actions.push(createAction({
-            label: localize(938, "Render Characters"),
+            label: localize(953, "Render Characters"),
             enabled: minimapOptions.enabled,
             checked: minimapOptions.renderCharacters,
             run: () => {
                 this._configurationService.updateValue(`editor.minimap.renderCharacters`, !minimapOptions.renderCharacters);
             }
         }));
-        actions.push(createEnumAction(localize(939, "Vertical size"), minimapOptions.enabled, 'editor.minimap.size', minimapOptions.size, [{
-                label: localize(940, "Proportional"),
+        actions.push(createEnumAction(localize(954, "Vertical size"), minimapOptions.enabled, 'editor.minimap.size', minimapOptions.size, [{
+                label: localize(955, "Proportional"),
                 value: 'proportional'
             }, {
-                label: localize(941, "Fill"),
+                label: localize(956, "Fill"),
                 value: 'fill'
             }, {
-                label: localize(942, "Fit"),
+                label: localize(957, "Fit"),
                 value: 'fit'
             }]));
-        actions.push(createEnumAction(localize(943, "Slider"), minimapOptions.enabled, 'editor.minimap.showSlider', minimapOptions.showSlider, [{
-                label: localize(944, "Mouse Over"),
+        actions.push(createEnumAction(localize(958, "Slider"), minimapOptions.enabled, 'editor.minimap.showSlider', minimapOptions.showSlider, [{
+                label: localize(959, "Mouse Over"),
                 value: 'mouseover'
             }, {
-                label: localize(945, "Always"),
+                label: localize(960, "Always"),
                 value: 'always'
             }]));
-        actions.push(createEnumAction(localize(946, "Side"), minimapOptions.enabled, 'editor.minimap.side', minimapOptions.side, [{
-                label: localize(947, "Right"),
+        actions.push(createEnumAction(localize(961, "Side"), minimapOptions.enabled, 'editor.minimap.side', minimapOptions.side, [{
+                label: localize(962, "Right"),
                 value: 'right'
             }, {
-                label: localize(948, "Left"),
+                label: localize(963, "Left"),
                 value: 'left'
             }]));
         const useShadowDOM = this._editor.getOption(144 /* EditorOption.useShadowDOM */) && !isIOS; // Do not use shadow dom on IOS #122035
         this._contextMenuIsBeingShownCount++;
         this._contextMenuService.showContextMenu({
             domForShadowRoot: useShadowDOM ? this._editor.getDomNode() : undefined,
+            useWindowContainerForShadowRoot: useShadowDOM && this._editor.getOption(51 /* EditorOption.fixedOverflowWidgets */),
             getAnchor: () => anchor,
             getActions: () => actions,
             onHide: (wasCancelled) => {
@@ -322,7 +324,7 @@ class ShowContextMenu extends EditorAction {
     constructor() {
         super({
             id: 'editor.action.showContextMenu',
-            label: localize2(949, "Show Editor Context Menu"),
+            label: localize2(964, "Show Editor Context Menu"),
             precondition: undefined,
             kbOpts: {
                 kbExpr: EditorContextKeys.textInputFocus,

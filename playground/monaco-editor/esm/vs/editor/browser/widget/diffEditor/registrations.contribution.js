@@ -19,11 +19,11 @@ import { registerIcon } from '../../../../platform/theme/common/iconRegistry.js'
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-registerColor('diffEditor.move.border', '#8b8b8b9c', localize(153, 'The border color for text that got moved in the diff editor.'));
-registerColor('diffEditor.moveActive.border', '#FFA500', localize(154, 'The active border color for text that got moved in the diff editor.'));
-registerColor('diffEditor.unchangedRegionShadow', { dark: '#000000', light: '#737373BF', hcDark: '#000000', hcLight: '#737373BF', }, localize(155, 'The color of the shadow around unchanged region widgets.'));
-const diffInsertIcon = registerIcon('diff-insert', Codicon.add, localize(156, 'Line decoration for inserts in the diff editor.'));
-const diffRemoveIcon = registerIcon('diff-remove', Codicon.remove, localize(157, 'Line decoration for removals in the diff editor.'));
+registerColor('diffEditor.move.border', '#8b8b8b9c', localize(156, 'The border color for text that got moved in the diff editor.'));
+registerColor('diffEditor.moveActive.border', '#FFA500', localize(157, 'The active border color for text that got moved in the diff editor.'));
+registerColor('diffEditor.unchangedRegionShadow', { dark: '#000000', light: '#737373BF', hcDark: '#000000', hcLight: '#737373BF', }, localize(158, 'The color of the shadow around unchanged region widgets.'));
+const diffInsertIcon = registerIcon('diff-insert', Codicon.add, localize(159, 'Line decoration for inserts in the diff editor.'));
+const diffRemoveIcon = registerIcon('diff-remove', Codicon.remove, localize(160, 'Line decoration for removals in the diff editor.'));
 const diffLineAddDecorationBackgroundWithIndicator = ModelDecorationOptions.register({
     className: 'line-insert',
     description: 'line-insert',

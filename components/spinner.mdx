@@ -3,24 +3,17 @@ description: Компонент для отображения индикатор
 tags: loading
 ---
 
-<Overview group="feedback">
-
-# Spinner [tag:component]
+# Spinner \[tag:component]
 
 Компонент для отображения индикатора загрузки. Используется во время выполнения асинхронных операций.
 
 Связанные компоненты:
 
-- [`ScreenSpinner`](/components/screen-spinner)
+* [`ScreenSpinner`](/components/screen-spinner)
 
-</Overview>
-
-{/* @example-description: Базовый индикатор загрузки `Spinner`. */}
-<Playground>
-  ```jsx
-  <Spinner />
-  ```
-</Playground>
+```jsx
+<Spinner />
+```
 
 ## Настройка отображения
 
@@ -28,26 +21,20 @@ tags: loading
 
 Задаются свойством `size`:
 
-{/* @example-description: Сравнение размеров `Spinner`: `xl`, `l`, `m`, `s`. */}
-<Playground aria-busy={true} aria-live="polite">
-  ```jsx
-  <Spinner size="xl" />
-  <Spinner size="l" />
-  <Spinner size="m" />
-  <Spinner size="s" />
-  ```
-</Playground>
+```jsx
+<Spinner size="xl" />
+<Spinner size="l" />
+<Spinner size="m" />
+<Spinner size="s" />
+```
 
 ### Анимация
 
 Можно отключить анимацию с помощью свойства `disableAnimation`:
 
-{/* @example-description: `Spinner` с отключенной анимацией через `disableAnimation`. */}
-<Playground>
-  ```jsx
-  <Spinner disableAnimation />
-  ```
-</Playground>
+```jsx
+<Spinner disableAnimation />
+```
 
 ### Цвет
 
@@ -55,20 +42,17 @@ tags: loading
 
 Для ручного управления цветом используйте свойство `noColor`:
 
-{/* @example-description: `Spinner` с пользовательским цветом контейнера и `noColor`. */}
-<Playground>
-  ```jsx
-  <div style={{ color: "#FF0000" }}>
-    <Spinner noColor />
-  </div>
-  ```
-</Playground>
+```jsx
+<div style={{ color: "#FF0000" }}>
+  <Spinner noColor />
+</div>
+```
 
 ## Когда использовать
 
-- Во время загрузки данных.
-- При выполнении фоновых операций.
-- В сочетании с кнопками/формами.
+* Во время загрузки данных.
+* При выполнении фоновых операций.
+* В сочетании с кнопками/формами.
 
 ## Альтернатива
 
@@ -78,7 +62,7 @@ tags: loading
 <ScreenSpinner state="loading" />
 ```
 
-## Доступность (a11y) [#a11y]
+## Доступность (a11y) \[#a11y]
 
 ### Базовые требования
 
@@ -102,28 +86,26 @@ tags: loading
 </Spinner>
 ```
 
-## unstable_ExpressiveSpinner
+## unstable\_ExpressiveSpinner
 
 Нестабильный компонент индикации загрузки в стиле
 [M3 Expressive](https://m3.material.io/components/loading-indicator/overview).
 Принимает все свойства, которые принимает компонент `Spinner`.
 Для платформы `ios` используется обычный `Spinner`.
 
-<Playground>
-  ```jsx
-  import { unstable_ExpressiveSpinner as ExpressiveSpinner} from "@vkontakte/vkui";
+```jsx
+import { unstable_ExpressiveSpinner as ExpressiveSpinner} from "@vkontakte/vkui";
 
-  <ExpressiveSpinner size="xl" />
-  ```
-</Playground>
+<ExpressiveSpinner size="xl" />
+```
 
-## Свойства и методы [#api]
+## Свойства и методы \[#api]
 
-| Свойство | Тип | По умолчанию | Описание |
-| --- | --- | --- | --- |
-| `disableAnimation` | `boolean` | `-` | Отключение анимации. |
-| `getRootRef` | `Ref<HTMLSpanElement>` | `-` |  |
-| `noColor` | `boolean` | `-` | Задать цвет можно будет через свойство color родителя. |
-| `size` | `"s" \| "m" \| "l" \| "xl"` | `-` | Размер спиннера. |
-| `visibilityDelay` | `number` | `-` | Задерживает отрисовку элемента на заданное количество миллисекунд. |
-
+| Свойство           | Тип                         | По умолчанию | Описание                                                           |
+| ------------------ | --------------------------- | ------------ | ------------------------------------------------------------------ |
+| `disableAnimation` | `boolean`                   | `-`          | Отключение анимации.                                               |
+| `getRootRef`       | `Ref<HTMLSpanElement>`      | `-`          |                                                                    |
+| `noColor`          | `boolean`                   | `-`          | Задать цвет можно будет через свойство color родителя.             |
+| `ref`              | `Ref<HTMLSpanElement>`      | `-`          |                                                                    |
+| `size`             | `"s" \| "m" \| "l" \| "xl"` | `-`          | Размер спиннера.                                                   |
+| `visibilityDelay`  | `number`                    | `-`          | Задерживает отрисовку элемента на заданное количество миллисекунд. |

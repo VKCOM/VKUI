@@ -1,9 +1,10 @@
 import { onUnexpectedError } from '../common/errors.js';
-import { removeMarkdownEscapes, escapeDoubleQuotes, parseHrefAndDimensions } from '../common/htmlContent.js';
+import { isUNC } from '../common/extpath.js';
+import { isPortableLinkTarget, parseHrefAndDimensions, escapeDoubleQuotes, removeMarkdownEscapes } from '../common/htmlContent.js';
 import { markdownEscapeEscapedIcons } from '../common/iconLabels.js';
 import { defaultGenerator } from '../common/idGenerator.js';
 import { DisposableStore } from '../common/lifecycle.js';
-import { Marked, lexer, parse as parse$1, Renderer as _Renderer } from '../common/marked/marked.js';
+import { Marked, lexer, Lexer as _Lexer, parse as parse$1, Renderer as _Renderer } from '../common/marked/marked.js';
 import { parse } from '../common/marshalling.js';
 import { Schemas, FileAccess } from '../common/network.js';
 import { cloneAndChange } from '../common/objects.js';
@@ -11,7 +12,7 @@ import '../common/path.js';
 import { resolvePath, dirname } from '../common/resources.js';
 import { escape } from '../common/strings.js';
 import { URI } from '../common/uri.js';
-import { reset, addDisposableListener, $, getWindow, isHTMLElement } from './dom.js';
+import { reset, addDisposableListener, getWindow, isHTMLElement, copyAttributes } from './dom.js';
 import { basicMarkupHtmlTags, safeSetInnerHtml, convertTagToPlaintext, sanitizeHtml } from './domSanitize.js';
 import { StandardKeyboardEvent } from './keyboardEvent.js';
 import { StandardMouseEvent } from './mouseEvent.js';
@@ -40,25 +41,27 @@ function getLinkTitle(href) {
     }
     return '';
 }
+function renderImage({ href, title, text }, transformUri) {
+    let dimensions = [];
+    let attributes = [];
+    if (href) {
+        ({ href, dimensions } = parseHrefAndDimensions(href));
+        href = transformUri?.(href) ?? href;
+        attributes.push(`src="${escapeDoubleQuotes(href)}"`);
+    }
+    if (text) {
+        attributes.push(`alt="${escapeDoubleQuotes(text)}"`);
+    }
+    if (title) {
+        attributes.push(`title="${escapeDoubleQuotes(title)}"`);
+    }
+    if (dimensions.length) {
+        attributes = attributes.concat(dimensions);
+    }
+    return '<img ' + attributes.join(' ') + '>';
+}
 const defaultMarkedRenderers = Object.freeze({
-    image: ({ href, title, text }) => {
-        let dimensions = [];
-        let attributes = [];
-        if (href) {
-            ({ href, dimensions } = parseHrefAndDimensions(href));
-            attributes.push(`src="${escapeDoubleQuotes(href)}"`);
-        }
-        if (text) {
-            attributes.push(`alt="${escapeDoubleQuotes(text)}"`);
-        }
-        if (title) {
-            attributes.push(`title="${escapeDoubleQuotes(title)}"`);
-        }
-        if (dimensions.length) {
-            attributes = attributes.concat(dimensions);
-        }
-        return '<img ' + attributes.join(' ') + '>';
-    },
+    image: renderImage,
     paragraph({ tokens }) {
         return `<p>${this.parser.parseInline(tokens)}</p>`;
     },
@@ -179,7 +182,12 @@ function renderMarkdown(markdown, options = {}, target) {
     let outElement;
     if (target) {
         outElement = target;
-        reset(target, ...renderedContent.childNodes);
+        if (syncCodeBlocks.some(([, element]) => target.contains(element))) {
+            replaceChildrenPreservingCodeBlocks(target, renderedContent, syncCodeBlocks);
+        }
+        else {
+            reset(target, ...renderedContent.childNodes);
+        }
     }
     else {
         outElement = renderedContent;
@@ -207,7 +215,7 @@ function renderMarkdown(markdown, options = {}, target) {
         const placeholderElements = outElement.querySelectorAll(`div[data-code]`);
         for (const placeholderElement of placeholderElements) {
             const renderedElement = renderedElements.get(placeholderElement.dataset['code'] ?? '');
-            if (renderedElement) {
+            if (renderedElement && (placeholderElement.childNodes.length !== 1 || placeholderElement.firstChild !== renderedElement)) {
                 reset(placeholderElement, renderedElement);
             }
         }
@@ -270,6 +278,82 @@ function renderMarkdown(markdown, options = {}, target) {
         }
     };
 }
+/** Keeps reused code blocks and their matching ancestors connected so embedded iframes do not reload. */
+function replaceChildrenPreservingCodeBlocks(target, source, codeBlocks) {
+    const renderedElements = new Map(codeBlocks);
+    const replacements = new Map();
+    const existingToNew = new Map();
+    const preservedCodeBlocks = new Set();
+    // eslint-disable-next-line no-restricted-syntax
+    for (const placeholder of source.querySelectorAll('div[data-code]')) {
+        const renderedElement = renderedElements.get(placeholder.dataset.code ?? '');
+        if (!renderedElement || !target.contains(renderedElement)) {
+            continue;
+        }
+        let existing = renderedElement.parentElement;
+        if (!existing?.hasAttribute('data-code') || existing.childNodes.length !== 1) {
+            continue;
+        }
+        let incoming = placeholder;
+        const ancestors = [];
+        while (existing && incoming && existing !== target && incoming !== source
+            && existing.tagName === incoming.tagName
+            && (!replacements.has(incoming) || replacements.get(incoming) === existing)
+            && (!existingToNew.has(existing) || existingToNew.get(existing) === incoming)) {
+            ancestors.push([incoming, existing]);
+            existing = existing.parentElement;
+            incoming = incoming.parentElement;
+        }
+        if (existing === target && incoming === source) {
+            for (const [newElement, existingElement] of ancestors) {
+                replacements.set(newElement, existingElement);
+                existingToNew.set(existingElement, newElement);
+            }
+            preservedCodeBlocks.add(placeholder);
+        }
+    }
+    if (replacements.size === 0) {
+        reset(target, ...source.childNodes);
+        return;
+    }
+    const updateChildren = (parent, newParent) => {
+        const children = Array.from(newParent.childNodes, child => {
+            if (!isHTMLElement(child)) {
+                return child;
+            }
+            const replacement = replacements.get(child);
+            if (!replacement) {
+                return child;
+            }
+            for (const name of replacement.getAttributeNames()) {
+                if (!child.hasAttribute(name)) {
+                    replacement.removeAttribute(name);
+                }
+            }
+            copyAttributes(child, replacement);
+            if (!preservedCodeBlocks.has(child)) {
+                updateChildren(replacement, child);
+            }
+            return replacement;
+        });
+        const retainedChildren = new Set(children);
+        for (const child of Array.from(parent.childNodes)) {
+            if (!retainedChildren.has(child)) {
+                parent.removeChild(child);
+            }
+        }
+        let cursor = parent.firstChild;
+        for (const child of children) {
+            if (cursor === child) {
+                cursor = cursor.nextSibling;
+            }
+            else {
+                parent.insertBefore(child, cursor);
+            }
+        }
+    };
+    updateChildren(target, source);
+}
 function rewriteRenderedLinks(markdown, options, root) {
     // eslint-disable-next-line no-restricted-syntax
     for (const el of root.querySelectorAll('img, audio, video, source')) {
@@ -283,12 +367,6 @@ function rewriteRenderedLinks(markdown, options, root) {
             }
             catch (err) { }
             el.setAttribute('src', massageHref(markdown, href, true));
-            if (options.sanitizerConfig?.remoteImageIsAllowed) {
-                const uri = URI.parse(href);
-                if (uri.scheme !== Schemas.file && uri.scheme !== Schemas.data && !options.sanitizerConfig.remoteImageIsAllowed(uri)) {
-                    el.replaceWith($('', undefined, el.outerHTML));
-                }
-            }
         }
     }
     // eslint-disable-next-line no-restricted-syntax
@@ -308,13 +386,23 @@ function rewriteRenderedLinks(markdown, options, root) {
                 resolvedHref = resolveWithBaseUri(URI.from(markdown.baseUri), href);
             }
             el.dataset.href = resolvedHref;
+            // Leaving `href` empty makes the browser resolve it against the workbench document
+            // when serializing a copy, so every pasted link became a `workbench.html` URL. Only
+            // restore it where an action handler intercepts clicks and routes them through the
+            // opener; without one the anchor would navigate natively.
+            if (options.actionHandler && isPortableLinkTarget(resolvedHref)) {
+                el.setAttribute('href', resolvedHref);
+            }
         }
     }
 }
 function createMarkdownRenderer(marked, options, markdown) {
     const renderer = new marked.Renderer(options.markedOptions);
-    renderer.image = defaultMarkedRenderers.image;
-    renderer.link = defaultMarkedRenderers.link;
+    renderer.image = token => renderImage(token, href => options.transformUri?.(href, 'image') ?? href);
+    renderer.link = token => defaultMarkedRenderers.link.call(renderer, {
+        ...token,
+        href: options.transformUri?.(token.href, 'link') ?? token.href,
+    });
     renderer.paragraph = defaultMarkedRenderers.paragraph;
     if (markdown.supportAlertSyntax) {
         renderer.blockquote = createAlertBlockquoteRenderer(renderer.blockquote);
@@ -455,6 +543,25 @@ function resolveWithBaseUri(baseUri, href) {
         return resolvePath(dirname(baseUri), href).toString();
     }
 }
+function isLocalFileUri(uri) {
+    return uri.scheme === Schemas.file && !uri.authority && !isUNC(uri.fsPath);
+}
+function isMediaSourceAllowed(mdStrConfig, source, remoteImageIsAllowed) {
+    let uri;
+    try {
+        const baseUri = mdStrConfig.baseUri ? URI.from(mdStrConfig.baseUri) : undefined;
+        const hasScheme = /^\w[\w\d+.-]*:/.test(source);
+        if (!hasScheme && baseUri?.scheme === Schemas.file && !isLocalFileUri(baseUri)) {
+            return false;
+        }
+        const href = baseUri ? resolveWithBaseUri(baseUri, source) : source;
+        uri = URI.parse(href);
+    }
+    catch {
+        return false;
+    }
+    return isLocalFileUri(uri) || uri.scheme === Schemas.data || remoteImageIsAllowed(uri);
+}
 function sanitizeRenderedMarkdown(renderedMarkdown, originalMdStrConfig, options = {}) {
     const sanitizerConfig = getDomSanitizerConfig(originalMdStrConfig, options);
     return sanitizeHtml(renderedMarkdown, sanitizerConfig);
@@ -497,7 +604,7 @@ const allowedMarkdownHtmlAttributes = Object.freeze([
         shouldKeep: (element, data) => {
             if (element.tagName === 'SPAN') {
                 if (data.attrName === 'style') {
-                    return /^(color\:(#[0-9a-fA-F]+|var\(--vscode(-[a-zA-Z0-9]+)+\));)?(background-color\:(#[0-9a-fA-F]+|var\(--vscode(-[a-zA-Z0-9]+)+\));)?(border-radius:[0-9]+px;)?$/.test(data.attrValue);
+                    return /^(color\:(#[0-9a-fA-F]+|var\(--vscode(-[a-zA-Z0-9]+)+\));)?(background-color\:(#[0-9a-fA-F]+|var\(--vscode(-[a-zA-Z0-9]+)+\));)?(display\:inline-block;)?(border-radius:[0-9]+px;)?$/.test(data.attrValue);
                 }
             }
             return false;
@@ -518,6 +625,7 @@ const allowedMarkdownHtmlAttributes = Object.freeze([
 ]);
 function getDomSanitizerConfig(mdStrConfig, options) {
     const isTrusted = mdStrConfig.isTrusted ?? false;
+    const remoteImageIsAllowed = options.remoteImageIsAllowed;
     const allowedLinkSchemes = [
         Schemas.http,
         Schemas.https,
@@ -563,6 +671,7 @@ function getDomSanitizerConfig(mdStrConfig, options) {
             ]
         },
         allowRelativeMediaPaths: !!mdStrConfig.baseUri,
+        mediaSourceIsAllowed: remoteImageIsAllowed ? source => isMediaSourceAllowed(mdStrConfig, source, remoteImageIsAllowed) : undefined,
         replaceWithPlaintext: options.replaceWithPlaintext,
     };
 }
@@ -672,22 +781,10 @@ function completeSingleLinePattern(token) {
         if (subtoken.type === 'text') {
             const lines = subtoken.raw.split('\n');
             const lastLine = lines[lines.length - 1];
-            if (lastLine.includes('`')) {
-                return completeCodespan(token);
-            }
-            else if (lastLine.includes('**')) {
-                return completeDoublestar(token);
-            }
-            else if (lastLine.match(/\*\w/)) {
-                return completeStar(token);
-            }
-            else if (lastLine.match(/(^|\s)__\w/)) {
-                return completeDoubleUnderscore(token);
-            }
-            else if (lastLine.match(/(^|\s)_\w/)) {
-                return completeUnderscore(token);
-            }
-            else if (
+            // An incomplete link target must be completed before emphasis/codespan. The link is the
+            // innermost unfinished construct, so any emphasis marker (e.g. the `**` in `**[text](htt`)
+            // belongs to an enclosing span. Completing the emphasis first would leave the link broken.
+            if (
             // Text with start of link target
             hasLinkTextAndStartOfLinkTarget(lastLine) ||
                 // This token doesn't have the link text, eg if it contains other markdown constructs that are in other subtokens.
@@ -706,6 +803,21 @@ function completeSingleLinePattern(token) {
                 }
                 return completeLinkTarget(token);
             }
+            else if (lastLine.includes('`')) {
+                return completeCodespan(token);
+            }
+            else if (lastLine.includes('**')) {
+                return completeDoublestar(token);
+            }
+            else if (lastLine.match(/\*\w/)) {
+                return completeStar(token);
+            }
+            else if (lastLine.match(/(^|\s)__\w/)) {
+                return completeDoubleUnderscore(token);
+            }
+            else if (lastLine.match(/(^|\s)_\w/)) {
+                return completeUnderscore(token);
+            }
             // Contains the start of link text, and no following tokens contain the link target
             else if (lastLine.match(/(^|\s)\[\w*[^\]]*$/)) {
                 return completeLinkText(token);
@@ -715,10 +827,36 @@ function completeSingleLinePattern(token) {
     return undefined;
 }
 function hasLinkTextAndStartOfLinkTarget(str) {
-    return !!str.match(/(^|\s)\[.*\]\(\w*/);
+    // Allow links after opening parentheses and emphasis/strikethrough markers, such as `**[text](htt`.
+    return !!str.match(/(?:^|[\s(*_~])\[.*\]\(\w*/);
 }
 function hasStartOfLinkTargetAndNoLinkText(str) {
     return !!str.match(/^[^\[]*\]\([^\)]*$/);
+}
+function completeBlockquotePattern(blockquote, links) {
+    let lastInterestingIndex = blockquote.tokens.length - 1;
+    while (lastInterestingIndex >= 0 && blockquote.tokens[lastInterestingIndex].type === 'space') {
+        lastInterestingIndex--;
+    }
+    const lastToken = blockquote.tokens[lastInterestingIndex];
+    if (lastToken?.type !== 'paragraph') {
+        return undefined;
+    }
+    const completedToken = completeSingleLinePattern(lastToken);
+    if (!completedToken) {
+        return undefined;
+    }
+    const completion = completedToken.raw.slice(lastToken.raw.trimEnd().length);
+    const trailingQuoteOnlyLines = blockquote.raw.match(/(?:\n[ \t]*>[ \t]*(?=\n|$))+\n?$/)?.[0] ?? '';
+    const insertionIndex = blockquote.raw.length - trailingQuoteOnlyLines.length;
+    const completedRaw = blockquote.raw.slice(0, insertionIndex) + completion + trailingQuoteOnlyLines;
+    const lexer = new _Lexer();
+    lexer.tokens.links = links;
+    const completedBlockquote = lexer.lex(completedRaw)[0];
+    if (completedBlockquote.type === 'blockquote') {
+        return completedBlockquote;
+    }
+    return undefined;
 }
 function completeListItemPattern(list) {
     // Patch up this one list item
@@ -837,6 +975,13 @@ function fillInIncompleteTokensOnce(tokens) {
         const newListToken = completeListItemPattern(lastInterestingToken);
         if (newListToken) {
             newTokens = [newListToken, ...trailingTokens];
+            i = lastInterestingIdx;
+        }
+    }
+    if (!newTokens && lastInterestingToken?.type === 'blockquote') {
+        const newBlockquoteToken = completeBlockquotePattern(lastInterestingToken, tokens.links);
+        if (newBlockquoteToken) {
+            newTokens = [newBlockquoteToken, ...trailingTokens];
             i = lastInterestingIdx;
         }
     }

@@ -1,6 +1,7 @@
 import { Emitter } from '../../../../base/common/event.js';
 import { FoldingRegions } from './foldingRanges.js';
 import { hash } from '../../../../base/common/hash.js';
+import { Range } from '../../../common/core/range.js';
 
 /*---------------------------------------------------------------------------------------------
  *  Copyright (c) Microsoft Corporation. All rights reserved.
@@ -57,10 +58,26 @@ class FoldingModel {
         this._updateEventEmitter.fire({ model: this, collapseStateChanged: toggledRegions });
     }
     removeManualRanges(ranges) {
+        const rangeIndexesToRemove = new Set();
+        let removeAll = false;
+        for (const range of ranges) {
+            if (Range.isEmpty(range)) {
+                let index = this._regions.findRange(range.startLineNumber);
+                while (index !== -1 && this._regions.getSource(index) === 0 /* FoldSource.provider */) {
+                    index = this._regions.getParentIndex(index);
+                }
+                if (index === -1) {
+                    removeAll = true;
+                }
+                else {
+                    rangeIndexesToRemove.add(index);
+                }
+            }
+        }
         const newFoldingRanges = new Array();
-        const intersects = (foldRange) => {
+        const intersectsSelection = (foldRange) => {
             for (const range of ranges) {
-                if (!(range.startLineNumber > foldRange.endLineNumber || foldRange.startLineNumber > range.endLineNumber)) {
+                if (!Range.isEmpty(range) && !(range.startLineNumber > foldRange.endLineNumber || foldRange.startLineNumber > range.endLineNumber)) {
                     return true;
                 }
             }
@@ -68,7 +85,7 @@ class FoldingModel {
         };
         for (let i = 0; i < this._regions.length; i++) {
             const foldRange = this._regions.toFoldRange(i);
-            if (foldRange.source === 0 /* FoldSource.provider */ || !intersects(foldRange)) {
+            if (foldRange.source === 0 /* FoldSource.provider */ || (!removeAll && !rangeIndexesToRemove.has(i) && !intersectsSelection(foldRange))) {
                 newFoldingRanges.push(foldRange);
             }
         }

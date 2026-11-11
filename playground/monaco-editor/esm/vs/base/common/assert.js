@@ -56,8 +56,6 @@ function softAssert(condition, message = 'Soft Assertion Failed') {
  */
 function assertFn(condition) {
     if (!condition()) {
-        // eslint-disable-next-line no-debugger
-        debugger;
         // Reevaluate `condition` again to make debugging easier
         condition();
         onUnexpectedError(new BugIndicatingError('Assertion Failed'));

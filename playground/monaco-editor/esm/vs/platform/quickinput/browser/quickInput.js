@@ -32,20 +32,20 @@ var __param = (undefined && undefined.__param) || function (paramIndex, decorato
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 const inQuickInputContextKeyValue = 'inQuickInput';
-const InQuickInputContextKey = new RawContextKey(inQuickInputContextKeyValue, false, localize(1812, "Whether keyboard focus is inside the quick input control"));
+const InQuickInputContextKey = new RawContextKey(inQuickInputContextKeyValue, false, localize(1845, "Whether keyboard focus is inside the quick input control"));
 const inQuickInputContext = ContextKeyExpr.has(inQuickInputContextKeyValue);
 const quickInputAlignmentContextKeyValue = 'quickInputAlignment';
-const QuickInputAlignmentContextKey = new RawContextKey(quickInputAlignmentContextKeyValue, 'top', localize(1813, "The alignment of the quick input"));
+const QuickInputAlignmentContextKey = new RawContextKey(quickInputAlignmentContextKeyValue, 'top', localize(1846, "The alignment of the quick input"));
 const quickInputTypeContextKeyValue = 'quickInputType';
-const QuickInputTypeContextKey = new RawContextKey(quickInputTypeContextKeyValue, undefined, localize(1814, "The type of the currently visible quick input"));
+const QuickInputTypeContextKey = new RawContextKey(quickInputTypeContextKeyValue, undefined, localize(1847, "The type of the currently visible quick input"));
 const endOfQuickInputBoxContextKeyValue = 'cursorAtEndOfQuickInputBox';
-const EndOfQuickInputBoxContextKey = new RawContextKey(endOfQuickInputBoxContextKeyValue, false, localize(1815, "Whether the cursor in the quick input is at the end of the input box"));
+const EndOfQuickInputBoxContextKey = new RawContextKey(endOfQuickInputBoxContextKeyValue, false, localize(1848, "Whether the cursor in the quick input is at the end of the input box"));
 const endOfQuickInputBoxContext = ContextKeyExpr.has(endOfQuickInputBoxContextKeyValue);
 const backButton = {
     iconClass: ThemeIcon.asClassName(Codicon.quickInputBack),
-    tooltip: localize(1816, "Back")};
+    tooltip: localize(1849, "Back")};
 class QuickInput extends Disposable {
-    static { this.noPromptMessage = localize(1817, "Press 'Enter' to confirm your input or 'Escape' to cancel"); }
+    static { this.noPromptMessage = localize(1850, "Press 'Enter' to confirm your input or 'Escape' to cancel"); }
     constructor(ui) {
         super();
         this.ui = ui;
@@ -309,7 +309,7 @@ class QuickInput extends Disposable {
     }
     getSteps() {
         if (this.step && this.totalSteps) {
-            return localize(1818, "{0}/{1}", this.step, this.totalSteps);
+            return localize(1851, "{0}/{1}", this.step, this.totalSteps);
         }
         if (this.step) {
             return String(this.step);
@@ -339,7 +339,7 @@ class QuickInput extends Disposable {
     }
 }
 class QuickPick extends QuickInput {
-    static { this.DEFAULT_ARIA_LABEL = localize(1819, "Type to narrow down results."); }
+    static { this.DEFAULT_ARIA_LABEL = localize(1852, "Type to narrow down results."); }
     constructor(ui) {
         super(ui);
         this._value = '';
@@ -581,7 +581,7 @@ class QuickPick extends QuickInput {
         this.update();
     }
     get okLabel() {
-        return this._okLabel ?? localize(1820, "OK");
+        return this._okLabel ?? localize(1853, "OK");
     }
     set okLabel(okLabel) {
         this._okLabel = okLabel;
@@ -928,7 +928,7 @@ class InputBox extends QuickInput {
     set prompt(prompt) {
         this._prompt = prompt;
         this.noValidationMessage = prompt
-            ? localize(1821, "{0} (Press 'Enter' to confirm or 'Escape' to cancel)", prompt)
+            ? localize(1854, "{0} (Press 'Enter' to confirm or 'Escape' to cancel)", prompt)
             : QuickInput.noPromptMessage;
         this.update();
     }

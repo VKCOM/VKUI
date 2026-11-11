@@ -135,6 +135,9 @@ class QuickInputBox extends Disposable {
     layout() {
         this.findInput.inputBox.layout();
     }
+    setHeight(height) {
+        this.findInput.inputBox.element.style.height = height === undefined ? '' : `${height}px`;
+    }
 }
 
 export { QuickInputBox };

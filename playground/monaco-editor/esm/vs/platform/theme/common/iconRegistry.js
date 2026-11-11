@@ -59,7 +59,7 @@ var IconFontDefinition;
 })(IconFontDefinition || (IconFontDefinition = {}));
 // regexes for validation of font properties
 const fontIdRegex = /^([\w_-]+)$/;
-const fontIdErrorMessage = localize(2093, 'The font ID must only contain letters, numbers, underscores and dashes.');
+const fontIdErrorMessage = localize(2126, 'The font ID must only contain letters, numbers, underscores and dashes.');
 class IconRegistry extends Disposable {
     constructor() {
         super();
@@ -70,8 +70,8 @@ class IconRegistry extends Disposable {
                 icons: {
                     type: 'object',
                     properties: {
-                        fontId: { type: 'string', description: localize(2094, 'The id of the font to use. If not set, the font that is defined first is used.'), pattern: fontIdRegex.source, patternErrorMessage: fontIdErrorMessage },
-                        fontCharacter: { type: 'string', description: localize(2095, 'The font character associated with the icon definition.') }
+                        fontId: { type: 'string', description: localize(2127, 'The id of the font to use. If not set, the font that is defined first is used.'), pattern: fontIdRegex.source, patternErrorMessage: fontIdErrorMessage },
+                        fontCharacter: { type: 'string', description: localize(2128, 'The font character associated with the icon definition.') }
                     },
                     additionalProperties: false,
                     defaultSnippets: [{ body: { fontCharacter: '\\\\e030' } }]
@@ -174,9 +174,9 @@ iconRegistry.onDidChange(() => {
 });
 //setTimeout(_ => console.log(iconRegistry.toString()), 5000);
 // common icons
-const widgetClose = registerIcon('widget-close', Codicon.close, localize(2096, 'Icon for the close action in widgets.'));
-registerIcon('goto-previous-location', Codicon.arrowUp, localize(2097, 'Icon for goto previous editor location.'));
-registerIcon('goto-next-location', Codicon.arrowDown, localize(2098, 'Icon for goto next editor location.'));
+const widgetClose = registerIcon('widget-close', Codicon.close, localize(2129, 'Icon for the close action in widgets.'));
+registerIcon('goto-previous-location', Codicon.arrowUp, localize(2130, 'Icon for goto previous editor location.'));
+registerIcon('goto-next-location', Codicon.arrowDown, localize(2131, 'Icon for goto next editor location.'));
 ThemeIcon.modify(Codicon.sync, 'spin');
 ThemeIcon.modify(Codicon.loading, 'spin');
 

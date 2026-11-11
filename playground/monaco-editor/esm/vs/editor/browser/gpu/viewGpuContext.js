@@ -5,6 +5,7 @@ import { Color } from '../../../base/common/color.js';
 import { BugIndicatingError } from '../../../base/common/errors.js';
 import { Disposable } from '../../../base/common/lifecycle.js';
 import '../../../base/common/observableInternal/index.js';
+import { isFullWidthCharacter } from '../../../base/common/strings.js';
 import { IInstantiationService } from '../../../platform/instantiation/common/instantiation.js';
 import { TextureAtlas } from './atlas/textureAtlas.js';
 import { IConfigurationService } from '../../../platform/configuration/common/configuration.js';
@@ -121,7 +122,7 @@ let ViewGpuContext = class ViewGpuContext extends Disposable {
         this.canvasDevicePixelDimensions = canvasDevicePixelDimensions;
         const contentLeft = observableValue(this, 0);
         this._register(this.configurationService.onDidChangeConfiguration(e => {
-            contentLeft.set(context.configuration.options.get(165 /* EditorOption.layoutInfo */).contentLeft, undefined);
+            contentLeft.set(context.configuration.options.get(166 /* EditorOption.layoutInfo */).contentLeft, undefined);
         }));
         this.contentLeft = contentLeft;
         this.rectangleRenderer = this._register(this._instantiationService.createInstance(RectangleRenderer, context, this.contentLeft, this.devicePixelRatio, this.canvas.domNode, this.ctx, ViewGpuContext_1.device));
@@ -135,7 +136,8 @@ let ViewGpuContext = class ViewGpuContext extends Disposable {
         const data = viewportData.getViewLineRenderingData(lineNumber);
         // Check if the line has simple attributes that aren't supported
         if (data.containsRTL ||
-            data.maxColumn > this.maxGpuCols) {
+            data.maxColumn > this.maxGpuCols ||
+            requiresDomFullwidthCharacterRendering(options, data.content)) {
             return false;
         }
         // Check if all inline decorations are supported
@@ -178,6 +180,9 @@ let ViewGpuContext = class ViewGpuContext extends Disposable {
         }
         if (data.maxColumn > this.maxGpuCols) {
             reasons.push('maxColumn > maxGpuCols');
+        }
+        if (requiresDomFullwidthCharacterRendering(options, data.content)) {
+            reasons.push('useTwoCellFullwidthCharacters');
         }
         if (data.inlineDecorations.length > 0) {
             let supported = true;
@@ -229,6 +234,18 @@ ViewGpuContext = ViewGpuContext_1 = __decorate([
     __param(3, IConfigurationService),
     __param(4, IThemeService)
 ], ViewGpuContext);
+function requiresDomFullwidthCharacterRendering(options, content) {
+    if (!options.useTwoCellFullwidthCharacters) {
+        return false;
+    }
+    const limit = options.stopRenderingLineAfter === -1 ? content.length : Math.min(options.stopRenderingLineAfter, content.length);
+    for (let offset = 0; offset < limit; offset++) {
+        if (isFullWidthCharacter(content.charCodeAt(offset))) {
+            return true;
+        }
+    }
+    return false;
+}
 /**
  * A list of supported decoration CSS rules that can be used in the GPU renderer.
  */

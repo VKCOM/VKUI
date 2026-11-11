@@ -157,7 +157,11 @@ let InlineEditsLongDistanceHint = class InlineEditsLongDistanceHint extends Disp
             }
             const rectAvailableSpace = Rect.fromRanges(possibleWidgetOutline.horizontalWidgetRange, possibleWidgetOutline.verticalWidgetRange).translateX(-editorScrollLeft).translateY(-editorScrollTop);
             const { previewEditorMargin, widgetPadding, widgetBorder, lowerBarHeight } = layoutConstants;
-            const maxWidgetWidth = Math.min(position === 'overlay' ? MAX_WIDGET_WIDTH.OVERLAY : MAX_WIDGET_WIDTH.EMPTY_SPACE, previewEditorContentLayout.maxEditorWidth + previewEditorMargin + widgetPadding);
+            const maxWidgetWidthUpperBound = position === 'overlay' ? MAX_WIDGET_WIDTH.OVERLAY : MAX_WIDGET_WIDTH.EMPTY_SPACE;
+            // Honor the same `minWidgetWidth` the placement logic guarantees, so a short/empty preview line
+            // (e.g. a jump onto an empty line) can't collapse the widget below its reserved space.
+            const contentBasedWidgetWidth = previewEditorContentLayout.maxEditorWidth + previewEditorMargin + widgetPadding;
+            const maxWidgetWidth = Math.min(maxWidgetWidthUpperBound, Math.max(contentBasedWidgetWidth, layoutConstants.minWidgetWidth));
             const layout = distributeFlexBoxLayout(rectAvailableSpace.width, {
                 spaceBefore: { min: 0, max: 10, priority: 1 },
                 content: { min: 50, rules: [{ max: 150, priority: 2 }, { max: maxWidgetWidth, priority: 1 }] },
@@ -243,9 +247,9 @@ let InlineEditsLongDistanceHint = class InlineEditsLongDistanceHint extends Disp
                         return children;
                     }
                     // Check if this is a cross-file edit
-                    const currentUri = this._editorObs.model.read(reader)?.uri;
+                    const currentModel = this._editorObs.model.read(reader);
                     const targetUri = viewState.target.uri;
-                    const isCrossFileEdit = targetUri && (!currentUri || targetUri.toString() !== currentUri.toString());
+                    const isCrossFileEdit = !currentModel || !viewState.target.targets(currentModel);
                     if (isCrossFileEdit) {
                         // For cross-file edits, show target filename instead of outline
                         const fileName = basename(targetUri);

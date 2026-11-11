@@ -151,7 +151,7 @@ let GotoDefinitionAtPositionEditorContribution = class GotoDefinitionAtPositionE
                     combinedRange = Range.plusRange(combinedRange, originSelectionRange);
                 }
             }
-            this.addDecoration(combinedRange, new MarkdownString().appendText(localize(1120, "Click to show {0} definitions.", results.length)));
+            this.addDecoration(combinedRange, new MarkdownString().appendText(localize(1135, "Click to show {0} definitions.", results.length)));
         }
         else {
             // Single result

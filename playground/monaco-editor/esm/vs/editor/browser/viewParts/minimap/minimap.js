@@ -43,8 +43,8 @@ const GUTTER_DECORATION_WIDTH = 2;
 class MinimapOptions {
     constructor(configuration, theme, tokensColorTracker) {
         const options = configuration.options;
-        const pixelRatio = options.get(163 /* EditorOption.pixelRatio */);
-        const layoutInfo = options.get(165 /* EditorOption.layoutInfo */);
+        const pixelRatio = options.get(164 /* EditorOption.pixelRatio */);
+        const layoutInfo = options.get(166 /* EditorOption.layoutInfo */);
         const minimapLayout = layoutInfo.minimap;
         const fontInfo = options.get(59 /* EditorOption.fontInfo */);
         const minimapOpts = options.get(81 /* EditorOption.minimap */);

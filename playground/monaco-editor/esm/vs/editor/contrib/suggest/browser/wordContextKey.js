@@ -17,7 +17,7 @@ var __param = (undefined && undefined.__param) || function (paramIndex, decorato
 var WordContextKey_1;
 let WordContextKey = class WordContextKey {
     static { WordContextKey_1 = this; }
-    static { this.AtEnd = new RawContextKey('atEndOfWord', false, { type: 'boolean', description: localize(1546, "A context key that is true when at the end of a word. Note that this is only defined when tab-completions are enabled") }); }
+    static { this.AtEnd = new RawContextKey('atEndOfWord', false, { type: 'boolean', description: localize(1568, "A context key that is true when at the end of a word. Note that this is only defined when tab-completions are enabled") }); }
     constructor(_editor, contextKeyService) {
         this._editor = _editor;
         this._enabled = false;

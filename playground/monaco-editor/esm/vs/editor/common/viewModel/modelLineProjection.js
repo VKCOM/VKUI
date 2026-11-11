@@ -81,6 +81,9 @@ class ModelLineProjection {
         this._assertVisible();
         return this._projectionData.getMaxOutputOffset(outputLineIndex) + 1;
     }
+    getViewLineContinuesWithWrappedLine(outputLineIndex) {
+        return outputLineIndex + 1 < this.getViewLineCount();
+    }
     /**
      * Try using {@link getViewLinesData} instead.
     */
@@ -127,7 +130,7 @@ class ModelLineProjection {
         }
         const minColumn = this._projectionData.getMinOutputOffset(outputLineIndex) + 1;
         const maxColumn = lineContent.length + 1;
-        const continuesWithWrappedLine = (outputLineIndex + 1 < this.getViewLineCount());
+        const continuesWithWrappedLine = this.getViewLineContinuesWithWrappedLine(outputLineIndex);
         const startVisibleColumn = (outputLineIndex === 0 ? 0 : lineBreakData.breakOffsetsVisibleColumn[outputLineIndex - 1]);
         return new ViewLineData(lineContent, continuesWithWrappedLine, minColumn, maxColumn, startVisibleColumn, tokens, inlineDecorations);
     }
@@ -193,6 +196,9 @@ class IdentityModelLineProjection {
     getViewLineMaxColumn(model, modelLineNumber, _outputLineIndex) {
         return model.getLineMaxColumn(modelLineNumber);
     }
+    getViewLineContinuesWithWrappedLine(_outputLineIndex) {
+        return false;
+    }
     getViewLineData(model, modelLineNumber, _outputLineIndex, _baseViewLineNumber) {
         const lineTokens = model.tokenization.getLineTokens(modelLineNumber);
         const lineContent = lineTokens.getLineContent();
@@ -252,6 +258,9 @@ class HiddenModelLineProjection {
         throw new Error('Not supported');
     }
     getViewLineMaxColumn(_model, _modelLineNumber, _outputLineIndex) {
+        throw new Error('Not supported');
+    }
+    getViewLineContinuesWithWrappedLine(_outputLineIndex) {
         throw new Error('Not supported');
     }
     getViewLineData(_model, _modelLineNumber, _outputLineIndex, _baseViewLineNumber) {

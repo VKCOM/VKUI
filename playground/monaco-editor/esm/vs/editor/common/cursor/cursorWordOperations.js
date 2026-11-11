@@ -493,7 +493,7 @@ class WordOperations {
         const lineContent = model.getLineContent(position.lineNumber);
         const startIndex = position.column - 1;
         const firstNonWhitespace = this._findFirstNonWhitespaceChar(lineContent, startIndex);
-        if (startIndex + 1 < firstNonWhitespace) {
+        if (startIndex < firstNonWhitespace) {
             // bingo
             return new Range(position.lineNumber, position.column, position.lineNumber, firstNonWhitespace + 1);
         }

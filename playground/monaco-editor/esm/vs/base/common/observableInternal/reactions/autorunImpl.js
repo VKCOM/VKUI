@@ -202,6 +202,16 @@ class AutorunObserver {
         }
         return this._store;
     }
+    get delayedStore() {
+        this._ensureNoRunning();
+        if (this._disposed) {
+            throw new BugIndicatingError('Cannot access store after dispose');
+        }
+        if (this._delayedStore === undefined) {
+            this._delayedStore = new DisposableStore();
+        }
+        return this._delayedStore;
+    }
     debugGetState() {
         return {
             isRunning: this._isRunning,

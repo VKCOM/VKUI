@@ -161,6 +161,9 @@ class BaseActionViewItem extends Disposable {
     getHoverContents() {
         return this.getTooltip();
     }
+    getHoverOptions() {
+        return undefined;
+    }
     updateTooltip() {
         if (!this.element) {
             return;
@@ -169,10 +172,10 @@ class BaseActionViewItem extends Disposable {
         this.updateAriaLabel();
         if (!this.customHover && title !== '') {
             const hoverDelegate = this.options.hoverDelegate ?? getDefaultHoverDelegate('element');
-            this.customHover = this._store.add(getBaseLayerHoverDelegate().setupManagedHover(hoverDelegate, this.element, title));
+            this.customHover = this._store.add(getBaseLayerHoverDelegate().setupManagedHover(hoverDelegate, this.element, title, this.getHoverOptions()));
         }
         else if (this.customHover) {
-            this.customHover.update(title);
+            this.customHover.update(title, this.getHoverOptions());
         }
     }
     updateAriaLabel() {

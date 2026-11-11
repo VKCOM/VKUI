@@ -18,7 +18,7 @@ class HoverColorPickerContribution extends Disposable {
         super.dispose();
     }
     onMouseDown(mouseEvent) {
-        const colorDecoratorsActivatedOn = this._editor.getOption(168 /* EditorOption.colorDecoratorsActivatedOn */);
+        const colorDecoratorsActivatedOn = this._editor.getOption(169 /* EditorOption.colorDecoratorsActivatedOn */);
         if (colorDecoratorsActivatedOn !== 'click' && colorDecoratorsActivatedOn !== 'clickAndHover') {
             return;
         }

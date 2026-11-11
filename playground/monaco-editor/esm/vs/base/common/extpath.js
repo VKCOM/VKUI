@@ -101,6 +101,47 @@ function getRoot(path, sep = posix.sep) {
     return '';
 }
 /**
+ * Check if the path follows this pattern: `\\hostname\sharename`.
+ *
+ * @see https://msdn.microsoft.com/en-us/library/gg465305.aspx
+ * @return A boolean indication if the path is a UNC path, on none-windows
+ * always false.
+ */
+function isUNC(path) {
+    if (!isWindows) {
+        // UNC is a windows concept
+        return false;
+    }
+    if (!path || path.length < 5) {
+        // at least \\a\b
+        return false;
+    }
+    let code = path.charCodeAt(0);
+    if (code !== 92 /* CharCode.Backslash */) {
+        return false;
+    }
+    code = path.charCodeAt(1);
+    if (code !== 92 /* CharCode.Backslash */) {
+        return false;
+    }
+    let pos = 2;
+    const start = pos;
+    for (; pos < path.length; pos++) {
+        code = path.charCodeAt(pos);
+        if (code === 92 /* CharCode.Backslash */) {
+            break;
+        }
+    }
+    if (start === pos) {
+        return false;
+    }
+    code = path.charCodeAt(pos + 1);
+    if (isNaN(code) || code === 92 /* CharCode.Backslash */) {
+        return false;
+    }
+    return true;
+}
+/**
  * @deprecated please use `IUriIdentityService.extUri.isEqualOrParent` instead. If
  * you are in a context without services, consider to pass down the `extUri` from the
  * outside, or use `extUriBiasedIgnorePathCase` if you know what you are doing.
@@ -150,4 +191,4 @@ function hasDriveLetter(path, isWindowsOS = isWindows) {
     return false;
 }
 
-export { getRoot, hasDriveLetter, isEqualOrParent, isPathSeparator, isWindowsDriveLetter, toPosixPath, toSlashes };
+export { getRoot, hasDriveLetter, isEqualOrParent, isPathSeparator, isUNC, isWindowsDriveLetter, toPosixPath, toSlashes };

@@ -25,7 +25,7 @@ class AbstractGotoLineQuickAccessProvider extends AbstractEditorNavigationQuickA
         this.storageService.store(AbstractGotoLineQuickAccessProvider.ZERO_BASED_OFFSET_STORAGE_KEY, value, -1 /* StorageScope.APPLICATION */, 0 /* StorageTarget.USER */);
     }
     provideWithoutTextEditor(picker) {
-        const label = localize(1382, "Open a text editor first to go to a line or an offset.");
+        const label = localize(1402, "Open a text editor first to go to a line or an offset.");
         picker.items = [{ label }];
         picker.ariaLabel = label;
         return Disposable.None;
@@ -34,7 +34,7 @@ class AbstractGotoLineQuickAccessProvider extends AbstractEditorNavigationQuickA
         const editor = context.editor;
         const disposables = new DisposableStore();
         // Set initial ariaLabel for screen readers
-        picker.ariaLabel = localize(1383, "Go to line. Type a line number, optionally followed by colon and column number.");
+        picker.ariaLabel = localize(1403, "Go to line. Type a line number, optionally followed by colon and column number.");
         // Goto line once picked
         disposables.add(picker.onDidAccept(event => {
             const [item] = picker.selectedItems;
@@ -51,7 +51,7 @@ class AbstractGotoLineQuickAccessProvider extends AbstractEditorNavigationQuickA
         // Add a toggle to switch between 1- and 0-based offsets.
         const offsetButton = {
             iconClass: ThemeIcon.asClassName(Codicon.indexZero),
-            tooltip: localize(1384, "Toggle Zero-Based Offset"),
+            tooltip: localize(1404, "Toggle Zero-Based Offset"),
             location: QuickInputButtonLocation.Input,
             toggle: { checked: this.useZeroBasedOffset }
         };
@@ -67,7 +67,7 @@ class AbstractGotoLineQuickAccessProvider extends AbstractEditorNavigationQuickA
                     column,
                     label,
                     ariaLabel: lineNumber
-                        ? localize(1385, "Go to line {0}, column {1}. Press Enter to navigate.", lineNumber, column || 1)
+                        ? localize(1405, "Go to line {0}, column {1}. Press Enter to navigate.", lineNumber, column || 1)
                         : label,
                 }];
             // Clear decorations for invalid range
@@ -113,7 +113,7 @@ class AbstractGotoLineQuickAccessProvider extends AbstractEditorNavigationQuickA
         const model = this.getModel(editor);
         if (!model) {
             return {
-                label: localize(1386, "Open a text editor first to go to a line or an offset.")
+                label: localize(1406, "Open a text editor first to go to a line or an offset.")
             };
         }
         // Support ::<offset> notation to navigate to a specific offset in the model.
@@ -125,8 +125,8 @@ class AbstractGotoLineQuickAccessProvider extends AbstractEditorNavigationQuickA
                 return {
                     inOffsetMode: true,
                     label: this.useZeroBasedOffset ?
-                        localize(1387, "Type a character position to go to (from 0 to {0}).", maxOffset - 1) :
-                        localize(1388, "Type a character position to go to (from 1 to {0}).", maxOffset)
+                        localize(1407, "Type a character position to go to (from 0 to {0}).", maxOffset - 1) :
+                        localize(1408, "Type a character position to go to (from 1 to {0}).", maxOffset)
                 };
             }
             else {
@@ -144,7 +144,7 @@ class AbstractGotoLineQuickAccessProvider extends AbstractEditorNavigationQuickA
                 return {
                     ...pos,
                     inOffsetMode: true,
-                    label: localize(1389, "Press 'Enter' to go to line {0} at column {1}.", pos.lineNumber, visibleColumn)
+                    label: localize(1409, "Press 'Enter' to go to line {0} at column {1}.", pos.lineNumber, visibleColumn)
                 };
             }
         }
@@ -155,7 +155,7 @@ class AbstractGotoLineQuickAccessProvider extends AbstractEditorNavigationQuickA
             let lineNumber = parseInt(parts[0]?.trim(), 10);
             if (parts.length < 1 || isNaN(lineNumber)) {
                 return {
-                    label: localize(1390, "Type a line number to go to (from 1 to {0}).", maxLine)
+                    label: localize(1410, "Type a line number to go to (from 1 to {0}).", maxLine)
                 };
             }
             // Handle negative line numbers and clip to valid range.
@@ -171,8 +171,8 @@ class AbstractGotoLineQuickAccessProvider extends AbstractEditorNavigationQuickA
                     lineNumber,
                     column: 1,
                     label: parts.length < 2 ?
-                        localize(1391, "Press 'Enter' to go to line {0} or enter colon : to add a column number.", lineNumber) :
-                        localize(1392, "Press 'Enter' to go to line {0} or enter a column number (from 1 to {1}).", lineNumber, maxColumn)
+                        localize(1411, "Press 'Enter' to go to line {0} or enter colon : to add a column number.", lineNumber) :
+                        localize(1412, "Press 'Enter' to go to line {0} or enter a column number (from 1 to {1}).", lineNumber, maxColumn)
                 };
             }
             // Handle negative column numbers and clip to valid range.
@@ -182,7 +182,7 @@ class AbstractGotoLineQuickAccessProvider extends AbstractEditorNavigationQuickA
             return {
                 lineNumber,
                 column: realColumn,
-                label: localize(1393, "Press 'Enter' to go to line {0} at column {1}.", lineNumber, column)
+                label: localize(1413, "Press 'Enter' to go to line {0} at column {1}.", lineNumber, column)
             };
         }
     }

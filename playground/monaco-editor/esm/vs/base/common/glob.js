@@ -3,7 +3,7 @@ import { isEqualOrParent } from './extpath.js';
 import { LRUCache } from './map.js';
 import { sep, posix, basename, extname } from './path.js';
 import { isLinux } from './platform.js';
-import { ltrim, escapeRegExpCharacters, endsWithIgnoreCase, equalsIgnoreCase } from './strings.js';
+import { ltrim, escapeRegExpCharacters, equalsIgnoreCase, endsWithIgnoreCase } from './strings.js';
 
 const GLOBSTAR = '**';
 const GLOB_SPLIT = '/';
@@ -185,7 +185,7 @@ const FALSE = function () {
 const NULL = function () {
     return null;
 };
-function parsePattern(arg1, options) {
+function parsePattern(arg1, options, cacheKey) {
     if (!arg1) {
         return NULL;
     }
@@ -207,7 +207,7 @@ function parsePattern(arg1, options) {
         isEqualOrParent: (base, candidate) => isEqualOrParent(base, candidate, options.ignoreCase ?? !isLinux /* preserve old behaviour for when option is not adopted */)
     };
     // Check cache
-    const patternKey = `${ignoreCase ? pattern.toLowerCase() : pattern}_${!!options.trimForExclusions}_${ignoreCase}`;
+    const patternKey = `${cacheKey === undefined ? `default:${ignoreCase ? pattern.toLowerCase() : pattern}` : `custom:${cacheKey}`}_${!!options.trimForExclusions}_${ignoreCase}`;
     let parsedPattern = CACHE.get(patternKey);
     if (parsedPattern) {
         return wrapRelativePattern(parsedPattern, arg1, internalOptions);
@@ -295,7 +295,7 @@ function trivia3(pattern, options) {
     const parsedPatterns = aggregateBasenameMatches(pattern.slice(1, -1)
         .split(',')
         .map(pattern => parsePattern(pattern, options))
-        .filter(pattern => pattern !== NULL), pattern);
+        .filter(pattern => pattern !== NULL), pattern, options.ignoreCase);
     const patternsLength = parsedPatterns.length;
     if (!patternsLength) {
         return NULL;
@@ -394,7 +394,7 @@ function isRelativePattern(obj) {
 function parsedExpression(expression, options) {
     const parsedPatterns = aggregateBasenameMatches(Object.getOwnPropertyNames(expression)
         .map(pattern => parseExpressionPattern(pattern, expression[pattern], options))
-        .filter(pattern => pattern !== NULL));
+        .filter(pattern => pattern !== NULL), undefined, options.ignoreCase);
     const patternsLength = parsedPatterns.length;
     if (!patternsLength) {
         return NULL;
@@ -500,7 +500,7 @@ function parseExpressionPattern(pattern, value, options) {
     if (value === false) {
         return NULL; // pattern is disabled
     }
-    const parsedPattern = parsePattern(pattern, options);
+    const parsedPattern = parsePattern(pattern, options, pattern);
     if (parsedPattern === NULL) {
         return NULL;
     }
@@ -529,7 +529,7 @@ function parseExpressionPattern(pattern, value, options) {
     // Expression is anything
     return parsedPattern;
 }
-function aggregateBasenameMatches(parsedPatterns, result) {
+function aggregateBasenameMatches(parsedPatterns, result, ignoreCase) {
     const basenamePatterns = parsedPatterns.filter(parsedPattern => !!parsedPattern.basenames);
     if (basenamePatterns.length < 2) {
         return parsedPatterns;
@@ -565,7 +565,7 @@ function aggregateBasenameMatches(parsedPatterns, result) {
             }
             basename = path.substring(i);
         }
-        const index = basenames.indexOf(basename);
+        const index = ignoreCase ? basenames.findIndex(candidate => equalsIgnoreCase(candidate, basename)) : basenames.indexOf(basename);
         return index !== -1 ? patterns[index] : null;
     };
     aggregate.basenames = basenames;

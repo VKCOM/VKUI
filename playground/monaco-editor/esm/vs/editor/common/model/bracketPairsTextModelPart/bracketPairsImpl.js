@@ -87,6 +87,19 @@ class BracketPairsTextModelPart extends Disposable {
         this.updateBracketPairsTree();
         return this.bracketPairsTree.value?.object.getBracketsInRange(range, onlyColorizedBrackets) || CallbackIterable.empty;
     }
+    hasUnmatchedClosingBracketAfter(_position, openingBracket) {
+        const position = this.textModel.validatePosition(_position);
+        const languageId = this.textModel.getLanguageIdAtPosition(position.lineNumber, position.column);
+        const openingBracketInfo = this.languageConfigurationService
+            .getLanguageConfiguration(languageId)
+            .bracketsNew.getOpeningBracketInfo(openingBracket);
+        if (!openingBracketInfo) {
+            return false;
+        }
+        this.bracketsRequested = true;
+        this.updateBracketPairsTree();
+        return this.bracketPairsTree.value?.object.hasUnmatchedClosingBracketAfter(position, openingBracketInfo) ?? false;
+    }
     findMatchingBracketUp(_bracket, _position, maxDuration) {
         const position = this.textModel.validatePosition(_position);
         const languageId = this.textModel.getLanguageIdAtPosition(position.lineNumber, position.column);

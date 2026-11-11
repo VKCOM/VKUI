@@ -1,5 +1,5 @@
-import { EventHelper } from '../../dom.js';
 import { Toggle } from '../toggle/toggle.js';
+import { navigateToggles } from './findInputToggles.js';
 import { HistoryInputBox } from '../inputbox/inputBox.js';
 import { Widget } from '../widget.js';
 import { Codicon } from '../../../common/codicons.js';
@@ -91,31 +91,7 @@ class ReplaceInput extends Widget {
         // Arrow-Key support to navigate between options
         const indexes = [this.preserveCase.domNode];
         this.onkeydown(this.domNode, (event) => {
-            if (event.equals(15 /* KeyCode.LeftArrow */) || event.equals(17 /* KeyCode.RightArrow */) || event.equals(9 /* KeyCode.Escape */)) {
-                const index = indexes.indexOf(this.domNode.ownerDocument.activeElement);
-                if (index >= 0) {
-                    let newIndex = -1;
-                    if (event.equals(17 /* KeyCode.RightArrow */)) {
-                        newIndex = (index + 1) % indexes.length;
-                    }
-                    else if (event.equals(15 /* KeyCode.LeftArrow */)) {
-                        if (index === 0) {
-                            newIndex = indexes.length - 1;
-                        }
-                        else {
-                            newIndex = index - 1;
-                        }
-                    }
-                    if (event.equals(9 /* KeyCode.Escape */)) {
-                        indexes[index].blur();
-                        this.inputBox.focus();
-                    }
-                    else if (newIndex >= 0) {
-                        indexes[newIndex].focus();
-                    }
-                    EventHelper.stop(event, true);
-                }
-            }
+            navigateToggles(event, this.domNode, () => indexes, () => this.inputBox.focus());
         });
         const controls = document.createElement('div');
         controls.className = 'controls';

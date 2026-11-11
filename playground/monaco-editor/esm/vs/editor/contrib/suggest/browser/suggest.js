@@ -22,15 +22,15 @@ import { historyNavigationVisible } from '../../../../platform/history/browser/c
  *--------------------------------------------------------------------------------------------*/
 const Context = {
     Visible: historyNavigationVisible,
-    HasFocusedSuggestion: new RawContextKey('suggestWidgetHasFocusedSuggestion', false, localize(1505, "Whether any suggestion is focused")),
-    DetailsVisible: new RawContextKey('suggestWidgetDetailsVisible', false, localize(1506, "Whether suggestion details are visible")),
-    DetailsFocused: new RawContextKey('suggestWidgetDetailsFocused', false, localize(1507, "Whether the details pane of the suggest widget has focus")),
-    MultipleSuggestions: new RawContextKey('suggestWidgetMultipleSuggestions', false, localize(1508, "Whether there are multiple suggestions to pick from")),
-    MakesTextEdit: new RawContextKey('suggestionMakesTextEdit', true, localize(1509, "Whether inserting the current suggestion yields in a change or has everything already been typed")),
-    AcceptSuggestionsOnEnter: new RawContextKey('acceptSuggestionOnEnter', true, localize(1510, "Whether suggestions are inserted when pressing Enter")),
-    HasInsertAndReplaceRange: new RawContextKey('suggestionHasInsertAndReplaceRange', false, localize(1511, "Whether the current suggestion has insert and replace behaviour")),
-    InsertMode: new RawContextKey('suggestionInsertMode', undefined, { type: 'string', description: localize(1512, "Whether the default behaviour is to insert or replace") }),
-    CanResolve: new RawContextKey('suggestionCanResolve', false, localize(1513, "Whether the current suggestion supports to resolve further details")),
+    HasFocusedSuggestion: new RawContextKey('suggestWidgetHasFocusedSuggestion', false, localize(1525, "Whether any suggestion is focused")),
+    DetailsVisible: new RawContextKey('suggestWidgetDetailsVisible', false, localize(1526, "Whether suggestion details are visible")),
+    DetailsFocused: new RawContextKey('suggestWidgetDetailsFocused', false, localize(1527, "Whether the details pane of the suggest widget has focus")),
+    MultipleSuggestions: new RawContextKey('suggestWidgetMultipleSuggestions', false, localize(1528, "Whether there are multiple suggestions to pick from")),
+    MakesTextEdit: new RawContextKey('suggestionMakesTextEdit', true, localize(1529, "Whether inserting the current suggestion yields in a change or has everything already been typed")),
+    AcceptSuggestionsOnEnter: new RawContextKey('acceptSuggestionOnEnter', true, localize(1530, "Whether suggestions are inserted when pressing Enter")),
+    HasInsertAndReplaceRange: new RawContextKey('suggestionHasInsertAndReplaceRange', false, localize(1531, "Whether the current suggestion has insert and replace behaviour")),
+    InsertMode: new RawContextKey('suggestionInsertMode', undefined, { type: 'string', description: localize(1532, "Whether the default behaviour is to insert or replace") }),
+    CanResolve: new RawContextKey('suggestionCanResolve', false, localize(1533, "Whether the current suggestion supports to resolve further details")),
 };
 const suggestWidgetStatusbarMenu = new MenuId('suggestWidgetStatusBar');
 class CompletionItem {

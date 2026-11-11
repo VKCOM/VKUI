@@ -63,7 +63,7 @@ class RectangleRenderer extends ViewEventHandler {
             const updateBufferValues = (canvasDevicePixelWidth = this._canvas.width, canvasDevicePixelHeight = this._canvas.height) => {
                 bufferValues[0 /* Info.Offset_CanvasWidth____ */] = canvasDevicePixelWidth;
                 bufferValues[1 /* Info.Offset_CanvasHeight___ */] = canvasDevicePixelHeight;
-                bufferValues[2 /* Info.Offset_ViewportOffsetX */] = Math.ceil(this._context.configuration.options.get(165 /* EditorOption.layoutInfo */).contentLeft * getActiveWindow().devicePixelRatio);
+                bufferValues[2 /* Info.Offset_ViewportOffsetX */] = Math.ceil(this._context.configuration.options.get(166 /* EditorOption.layoutInfo */).contentLeft * getActiveWindow().devicePixelRatio);
                 bufferValues[3 /* Info.Offset_ViewportOffsetY */] = 0;
                 bufferValues[4 /* Info.Offset_ViewportWidth__ */] = bufferValues[0 /* Info.Offset_CanvasWidth____ */] - bufferValues[2 /* Info.Offset_ViewportOffsetX */];
                 bufferValues[5 /* Info.Offset_ViewportHeight_ */] = bufferValues[1 /* Info.Offset_CanvasHeight___ */] - bufferValues[3 /* Info.Offset_ViewportOffsetY */];

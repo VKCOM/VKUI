@@ -326,7 +326,7 @@ class EditStack {
         if (isEditStackElement(lastElement) && lastElement.canAppend(this._model)) {
             return lastElement;
         }
-        const newElement = new SingleModelEditStackElement(localize(820, "Typing"), 'undoredo.textBufferEdit', this._model, beforeCursorState);
+        const newElement = new SingleModelEditStackElement(localize(835, "Typing"), 'undoredo.textBufferEdit', this._model, beforeCursorState);
         this._undoRedoService.pushElement(newElement, group);
         return newElement;
     }

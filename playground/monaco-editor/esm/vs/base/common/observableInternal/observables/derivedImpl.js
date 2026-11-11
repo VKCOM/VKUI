@@ -291,6 +291,13 @@ class Derived extends BaseObservable {
         }
         return this._store;
     }
+    get delayedStore() {
+        this._ensureReaderValid();
+        if (this._delayedStore === undefined) {
+            this._delayedStore = new DisposableStore();
+        }
+        return this._delayedStore;
+    }
     addObserver(observer) {
         const shouldCallBeginUpdate = !this._observers.has(observer) && this._updateCount > 0;
         super.addObserver(observer);

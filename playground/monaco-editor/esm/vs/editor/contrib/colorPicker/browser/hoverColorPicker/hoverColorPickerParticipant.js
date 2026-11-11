@@ -79,7 +79,7 @@ let HoverColorPickerParticipant = class HoverColorPickerParticipant {
         return [];
     }
     _isValidRequest(source) {
-        const decoratorActivatedOn = this._editor.getOption(168 /* EditorOption.colorDecoratorsActivatedOn */);
+        const decoratorActivatedOn = this._editor.getOption(169 /* EditorOption.colorDecoratorsActivatedOn */);
         switch (source) {
             case 0 /* HoverStartSource.Mouse */:
                 return decoratorActivatedOn === 'hover' || decoratorActivatedOn === 'clickAndHover';
@@ -100,7 +100,7 @@ let HoverColorPickerParticipant = class HoverColorPickerParticipant {
         const colorHover = hoverParts[0];
         const editorModel = editor.getModel();
         const model = colorHover.model;
-        this._colorPicker = disposables.add(new ColorPickerWidget(context.fragment, model, editor.getOption(163 /* EditorOption.pixelRatio */), this._themeService, "hover" /* ColorPickerWidgetType.Hover */));
+        this._colorPicker = disposables.add(new ColorPickerWidget(context.fragment, model, editor.getOption(164 /* EditorOption.pixelRatio */), this._themeService, "hover" /* ColorPickerWidgetType.Hover */));
         let editorUpdatedByColorPicker = false;
         let range = new Range(colorHover.range.startLineNumber, colorHover.range.startColumn, colorHover.range.endLineNumber, colorHover.range.endColumn);
         disposables.add(model.onColorFlushed(async (color) => {
@@ -128,7 +128,7 @@ let HoverColorPickerParticipant = class HoverColorPickerParticipant {
         return new RenderedHoverParts([renderedHoverPart]);
     }
     getAccessibleContent(hoverPart) {
-        return localize(923, 'There is a color picker here.');
+        return localize(938, 'There is a color picker here.');
     }
     handleResize() {
         this._colorPicker?.layout();

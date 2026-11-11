@@ -38,7 +38,7 @@ class StandaloneColorPickerRenderedParts extends Disposable {
         const editorModel = editor.getModel();
         const colorPickerModel = colorHover.model;
         this.color = colorHover.model.color;
-        this.colorPicker = this._register(new ColorPickerWidget(context.fragment, colorPickerModel, editor.getOption(163 /* EditorOption.pixelRatio */), themeService, "standalone" /* ColorPickerWidgetType.Standalone */));
+        this.colorPicker = this._register(new ColorPickerWidget(context.fragment, colorPickerModel, editor.getOption(164 /* EditorOption.pixelRatio */), themeService, "standalone" /* ColorPickerWidgetType.Standalone */));
         this._register(colorPickerModel.onColorFlushed((color) => {
             this.color = color;
         }));
@@ -83,7 +83,7 @@ let StandaloneColorPickerParticipant = class StandaloneColorPickerParticipant {
         const colorHover = StandaloneColorPickerHover.fromBaseColor(this, await createColorHover(this._editor.getModel(), colorInfo, colorProvider));
         return { colorHover, foundInEditor };
     }
-    async updateEditorModel(colorHoverData) {
+    async updateEditorModel(colorHoverData, insertionRanges) {
         if (!this._editor.hasModel()) {
             return;
         }
@@ -91,7 +91,7 @@ let StandaloneColorPickerParticipant = class StandaloneColorPickerParticipant {
         let range = new Range(colorHoverData.range.startLineNumber, colorHoverData.range.startColumn, colorHoverData.range.endLineNumber, colorHoverData.range.endColumn);
         if (this._color) {
             await updateColorPresentations(this._editor.getModel(), colorPickerModel, this._color, range, colorHoverData);
-            range = updateEditorModel(this._editor, range, colorPickerModel);
+            range = updateEditorModel(this._editor, range, colorPickerModel, insertionRanges);
         }
     }
     renderHoverParts(context, hoverParts) {

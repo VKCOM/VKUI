@@ -405,7 +405,7 @@ registerEditorAction(class ShowLensesInCurrentLine extends EditorAction {
         super({
             id: 'codelens.showLensesInCurrentLine',
             precondition: EditorContextKeys.hasCodeLensProvider,
-            label: localize2(920, "Show CodeLens Commands for Current Line"),
+            label: localize2(935, "Show CodeLens Commands for Current Line"),
         });
     }
     async run(accessor, editor) {
@@ -440,7 +440,7 @@ registerEditorAction(class ShowLensesInCurrentLine extends EditorAction {
         }
         const item = await quickInputService.pick(items, {
             canPickMany: false,
-            placeHolder: localize(919, "Select a command")
+            placeHolder: localize(934, "Select a command")
         });
         if (!item) {
             // Nothing picked

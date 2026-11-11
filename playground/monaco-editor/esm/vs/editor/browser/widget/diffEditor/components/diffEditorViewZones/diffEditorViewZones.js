@@ -73,12 +73,12 @@ let DiffEditorViewZones = class DiffEditorViewZones extends Disposable {
             updateImmediately.schedule();
         } }));
         this._register(this._editors.original.onDidChangeConfiguration((args) => {
-            if (args.hasChanged(166 /* EditorOption.wrappingInfo */) || args.hasChanged(75 /* EditorOption.lineHeight */)) {
+            if (args.hasChanged(167 /* EditorOption.wrappingInfo */) || args.hasChanged(75 /* EditorOption.lineHeight */)) {
                 updateImmediately.schedule();
             }
         }));
         this._register(this._editors.modified.onDidChangeConfiguration((args) => {
-            if (args.hasChanged(166 /* EditorOption.wrappingInfo */) || args.hasChanged(75 /* EditorOption.lineHeight */)) {
+            if (args.hasChanged(167 /* EditorOption.wrappingInfo */) || args.hasChanged(75 /* EditorOption.lineHeight */)) {
                 updateImmediately.schedule();
             }
         }));
@@ -498,7 +498,7 @@ function computeRangeAlignment(originalEditor, modifiedEditor, diffs, originalEd
 function getAdditionalLineHeights(editor, viewZonesToIgnore) {
     const viewZoneHeights = [];
     const wrappingZoneHeights = [];
-    const hasWrapping = editor.getOption(166 /* EditorOption.wrappingInfo */).wrappingColumn !== -1;
+    const hasWrapping = editor.getOption(167 /* EditorOption.wrappingInfo */).wrappingColumn !== -1;
     const coordinatesConverter = editor._getViewModel().coordinatesConverter;
     const editorLineHeight = editor.getOption(75 /* EditorOption.lineHeight */);
     if (hasWrapping) {

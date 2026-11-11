@@ -3,24 +3,17 @@ description: Компонент, который представляет соб�
 tags: selection
 ---
 
-<Overview group="utils">
-
-# SelectionControl [tag:component]
+# SelectionControl \[tag:component]
 
 Компонент, который представляет собой базовую обертку для переключателей (`checkbox`, `radio`, `switch`).
 Лежит в основе таких компонентов как [`Radio`](/components/radio), [`Checkbox`](/components/checkbox) и [`Switch`](/components/switch).
 
-</Overview>
-
-{/* @example-description: Базовый `SelectionControl` с `Checkbox.Input` и текстовой меткой. */}
-<Playground>
-  ```jsx
-  <SelectionControl>
-    <Checkbox.Input />
-    <SelectionControl.Label>Согласен</SelectionControl.Label>
-  </SelectionControl>
-  ```
-</Playground>
+```jsx
+<SelectionControl>
+  <Checkbox.Input name="selection" />
+  <SelectionControl.Label>Согласен</SelectionControl.Label>
+</SelectionControl>
+```
 
 ## Применение компонента
 
@@ -45,45 +38,39 @@ tags: selection
 
 Переключатели и подкомпонент `SelectionControl.Label` можно располагать в любом порядке.
 
-import { BlockWrapper } from '@/components/wrappers';
+```jsx
+<SelectionControl>
+  <Checkbox.Input />
+  <SelectionControl.Label titleAfter={<Icon12Lock />}>Заголовок</SelectionControl.Label>
+</SelectionControl>
+<SelectionControl>
+  <Radio.Input />
+  <SelectionControl.Label description="Описание">Заголовок</SelectionControl.Label>
+</SelectionControl>
+<SelectionControl>
+  <SelectionControl.Label description="Описание">Заголовок</SelectionControl.Label>
+  <Switch />
+</SelectionControl>
+```
 
-{/* @example-description: Варианты `SelectionControl` с `Checkbox`, `Radio` и `Switch` в разных компоновках. */}
-<Playground Wrapper={BlockWrapper} style={{ width: 270 }}>
-  ```jsx
-  <SelectionControl>
-    <Checkbox.Input />
-    <SelectionControl.Label titleAfter={<Icon12Lock />}>Заголовок</SelectionControl.Label>
-  </SelectionControl>
-  <SelectionControl>
-    <Radio.Input />
-    <SelectionControl.Label description="Описание">Заголовок</SelectionControl.Label>
-  </SelectionControl>
-  <SelectionControl>
-    <SelectionControl.Label description="Описание">Заголовок</SelectionControl.Label>
-    <Switch />
-  </SelectionControl>
-  ```
-</Playground>
-
-## Свойства и методы [#api]
+## Свойства и методы \[#api]
 
 ### SelectionControl
 
-| Свойство | Тип | По умолчанию | Описание |
-| --- | --- | --- | --- |
-| `activeMode` | `StateModeLiteral` | `-` | Стиль подсветки active-состояния. Если передать произвольную строку, она добавится как css-класс во время active. |
-| `Component` | `ElementType<any, keyof IntrinsicElements>` | `-` |  |
-| `focusVisibleMode` | `FocusVisibleMode` | `-` | Стиль аутлайна focus visible. Если передать произвольную строку, она добавится как css-класс при :focus-visible |
-| `getRootRef` | `Ref<HTMLLabelElement>` | `-` |  |
-| `hasActive` | `boolean` | `-` | Указывает, должен ли компонент реагировать на `active`-состояние. |
-| `hasHover` | `boolean` | `-` | Указывает, должен ли компонент реагировать на `hover`-состояние. |
-| `hoverMode` | `StateModeLiteral` | `-` | Стиль подсветки hover-состояния. Если передать произвольную строку, она добавится как css-класс во время hover. |
-| `noPadding` | `boolean` | `false` | Отключает отступы. При использовании этого свойства, значение по умолчанию для свойств `hoverMode` и `activeMode` становится `"opacity"`. |
+| Свойство           | Тип                                         | По умолчанию | Описание                                                                                                                                  |
+| ------------------ | ------------------------------------------- | ------------ | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| `activeMode`       | `StateModeLiteral`                          | `-`          | Стиль подсветки active-состояния. Если передать произвольную строку, она добавится как css-класс во время active.                         |
+| `Component`        | `ElementType<any, keyof IntrinsicElements>` | `-`          |                                                                                                                                           |
+| `focusVisibleMode` | `FocusVisibleMode`                          | `-`          | Стиль аутлайна focus visible. Если передать произвольную строку, она добавится как css-класс при :focus-visible                           |
+| `getRootRef`       | `Ref<HTMLLabelElement>`                     | `-`          |                                                                                                                                           |
+| `hasActive`        | `boolean`                                   | `-`          | Указывает, должен ли компонент реагировать на `active`-состояние.                                                                         |
+| `hasHover`         | `boolean`                                   | `-`          | Указывает, должен ли компонент реагировать на `hover`-состояние.                                                                          |
+| `hoverMode`        | `StateModeLiteral`                          | `-`          | Стиль подсветки hover-состояния. Если передать произвольную строку, она добавится как css-класс во время hover.                           |
+| `noPadding`        | `boolean`                                   | `false`      | Отключает отступы. При использовании этого свойства, значение по умолчанию для свойств `hoverMode` и `activeMode` становится `"opacity"`. |
 
 ### SelectionControl.Label
 
-| Свойство | Тип | По умолчанию | Описание |
-| --- | --- | --- | --- |
-| `description` | `ReactNode` | `-` |  |
-| `titleAfter` | `ReactNode` | `-` |  |
-
+| Свойство      | Тип         | По умолчанию | Описание |
+| ------------- | ----------- | ------------ | -------- |
+| `description` | `ReactNode` | `-`          |          |
+| `titleAfter`  | `ReactNode` | `-`          |          |

@@ -162,7 +162,7 @@ let PostEditWidgetManager = class PostEditWidgetManager extends Disposable {
             resolvedEdit = await raceCancellationError(resolve(edit, editorStateCts.token), editorStateCts.token);
         }
         catch (e) {
-            return handleError(e, localize(976, "Error resolving edit '{0}':\n{1}", edit.title, toErrorMessage(e)));
+            return handleError(e, localize(991, "Error resolving edit '{0}':\n{1}", edit.title, toErrorMessage(e)));
         }
         finally {
             editorStateCts.dispose();
@@ -185,7 +185,7 @@ let PostEditWidgetManager = class PostEditWidgetManager extends Disposable {
             editRange = model.getDecorationRange(editTrackingDecoration[0]);
         }
         catch (e) {
-            return handleError(e, localize(977, "Error applying edit '{0}':\n{1}", edit.title, toErrorMessage(e)));
+            return handleError(e, localize(992, "Error applying edit '{0}':\n{1}", edit.title, toErrorMessage(e)));
         }
         finally {
             model.deltaDecorations(editTrackingDecoration, []);

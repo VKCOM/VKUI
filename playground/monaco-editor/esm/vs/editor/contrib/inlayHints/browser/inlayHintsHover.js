@@ -83,7 +83,7 @@ let InlayHintsHover = class InlayHintsHover extends MarkdownHoverParticipant {
             }
             // (1.2) Inlay dbl-click gesture
             if (isNonEmptyArray(part.item.hint.textEdits)) {
-                executor.emitOne(new MarkdownHover(this, anchor.range, [new MarkdownString().appendText(localize(1205, "Double-click to insert"))], false, 10001));
+                executor.emitOne(new MarkdownHover(this, anchor.range, [new MarkdownString().appendText(localize(1220, "Double-click to insert"))], false, 10001));
             }
             // (2) Inlay Label Part Tooltip
             let partTooltip;
@@ -102,19 +102,19 @@ let InlayHintsHover = class InlayHintsHover extends MarkdownHoverParticipant {
                 const useMetaKey = this._editor.getOption(86 /* EditorOption.multiCursorModifier */) === 'altKey';
                 const kb = useMetaKey
                     ? isMacintosh
-                        ? localize(1206, "cmd + click")
-                        : localize(1207, "ctrl + click")
+                        ? localize(1221, "cmd + click")
+                        : localize(1222, "ctrl + click")
                     : isMacintosh
-                        ? localize(1208, "option + click")
-                        : localize(1209, "alt + click");
+                        ? localize(1223, "option + click")
+                        : localize(1224, "alt + click");
                 if (part.part.location && part.part.command) {
-                    linkHint = new MarkdownString().appendText(localize(1210, 'Go to Definition ({0}), right click for more', kb));
+                    linkHint = new MarkdownString().appendText(localize(1225, 'Go to Definition ({0}), right click for more', kb));
                 }
                 else if (part.part.location) {
-                    linkHint = new MarkdownString().appendText(localize(1211, 'Go to Definition ({0})', kb));
+                    linkHint = new MarkdownString().appendText(localize(1226, 'Go to Definition ({0})', kb));
                 }
                 else if (part.part.command) {
-                    linkHint = new MarkdownString(`[${localize(1212, "Execute Command")}](${asCommandLink(part.part.command)} "${part.part.command.title}") (${kb})`, { isTrusted: true });
+                    linkHint = new MarkdownString(`[${localize(1227, "Execute Command")}](${asCommandLink(part.part.command)} "${part.part.command.title}") (${kb})`, { isTrusted: true });
                 }
                 if (linkHint) {
                     executor.emitOne(new MarkdownHover(this, anchor.range, [linkHint], false, 10000));

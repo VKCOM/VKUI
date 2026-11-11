@@ -97,13 +97,13 @@ let GutterIndicatorMenuContent = class GutterIndicatorMenuContent {
         const title = header(this._data.displayName);
         const gotoAndAccept = option(createOptionArgs({
             id: 'gotoAndAccept',
-            title: localize(1256, "Go To / Accept"),
+            title: localize(1276, "Go To / Accept"),
             icon: Codicon.check,
             commandId: inlineSuggestCommitId,
         }));
         const reject = option(createOptionArgs({
             id: 'reject',
-            title: localize(1257, "Reject"),
+            title: localize(1277, "Reject"),
             icon: Codicon.close,
             commandId: hideInlineCompletionId
         }));
@@ -117,25 +117,25 @@ let GutterIndicatorMenuContent = class GutterIndicatorMenuContent {
         const toggleCollapsedMode = this._inlineEditsShowCollapsed.map(showCollapsed => showCollapsed ?
             option(createOptionArgs({
                 id: 'showExpanded',
-                title: localize(1258, "Show Expanded"),
+                title: localize(1278, "Show Expanded"),
                 icon: Codicon.expandAll,
                 commandId: toggleShowCollapsedId
             }))
             : option(createOptionArgs({
                 id: 'showCollapsed',
-                title: localize(1259, "Show Collapsed"),
+                title: localize(1279, "Show Collapsed"),
                 icon: Codicon.collapseAll,
                 commandId: toggleShowCollapsedId
             })));
         const snooze = option(createOptionArgs({
             id: 'snooze',
-            title: localize(1260, "Snooze"),
+            title: localize(1280, "Snooze"),
             icon: Codicon.bellSlash,
             commandId: 'editor.action.inlineSuggest.snooze'
         }));
         const settings = option(createOptionArgs({
             id: 'settings',
-            title: localize(1261, "Settings"),
+            title: localize(1281, "Settings"),
             icon: Codicon.gear,
             commandId: 'workbench.action.openSettings',
             commandArgs: ['@tag:nextEditSuggestions']

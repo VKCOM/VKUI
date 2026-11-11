@@ -49,7 +49,8 @@ let SuggestDetailsWidget = class SuggestDetailsWidget {
         this._disposables.add(this._scrollbar);
         this._header = append(this._body, $('.header'));
         this._close = append(this._header, $('span' + ThemeIcon.asCSSSelector(Codicon.close)));
-        this._close.title = localize(1542, "Close");
+        this._close.title = localize(1563, "Close");
+        this._close.ariaLabel = localize(1564, "Close");
         this._close.role = 'button';
         this._close.tabIndex = -1;
         this._type = append(this._header, $('p.type'));
@@ -97,7 +98,7 @@ let SuggestDetailsWidget = class SuggestDetailsWidget {
         };
     }
     renderLoading() {
-        this._type.textContent = localize(1543, "Loading...");
+        this._type.textContent = localize(1565, "Loading...");
         this._docs.textContent = '';
         this.domNode.classList.remove('no-docs', 'no-type');
         this.layout(this.size.width, this.getLayoutInfo().lineHeight * 2);

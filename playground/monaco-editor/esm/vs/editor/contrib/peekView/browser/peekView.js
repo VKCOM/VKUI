@@ -64,7 +64,7 @@ registerSingleton(IPeekViewService, class {
 }, 1 /* InstantiationType.Delayed */);
 var PeekContext;
 (function (PeekContext) {
-    PeekContext.inPeekEditor = new RawContextKey('inReferenceSearchEditor', true, localize(1362, "Whether the current code editor is embedded inside peek"));
+    PeekContext.inPeekEditor = new RawContextKey('inReferenceSearchEditor', true, localize(1382, "Whether the current code editor is embedded inside peek"));
     PeekContext.notInPeekEditor = PeekContext.inPeekEditor.toNegated();
 })(PeekContext || (PeekContext = {}));
 let PeekContextController = class PeekContextController {
@@ -161,7 +161,7 @@ let PeekViewWidget = class PeekViewWidget extends ZoneWidget {
         this._actionbarWidget = new ActionBar(actionsContainer, actionBarOptions);
         this._disposables.add(this._actionbarWidget);
         if (!noCloseAction) {
-            this._actionbarWidget.push(this._disposables.add(new Action('peekview.close', localize(1363, "Close"), ThemeIcon.asClassName(Codicon.close), true, () => {
+            this._actionbarWidget.push(this._disposables.add(new Action('peekview.close', localize(1383, "Close"), ThemeIcon.asClassName(Codicon.close), true, () => {
                 this.dispose();
                 return Promise.resolve();
             })), { label: false, icon: true });
@@ -227,21 +227,21 @@ let PeekViewWidget = class PeekViewWidget extends ZoneWidget {
 PeekViewWidget = __decorate([
     __param(2, IInstantiationService)
 ], PeekViewWidget);
-const peekViewTitleBackground = registerColor('peekViewTitle.background', { dark: '#252526', light: '#F3F3F3', hcDark: Color.black, hcLight: Color.white }, localize(1364, 'Background color of the peek view title area.'));
-const peekViewTitleForeground = registerColor('peekViewTitleLabel.foreground', { dark: Color.white, light: Color.black, hcDark: Color.white, hcLight: editorForeground }, localize(1365, 'Color of the peek view title.'));
-const peekViewTitleInfoForeground = registerColor('peekViewTitleDescription.foreground', { dark: '#ccccccb3', light: '#616161', hcDark: '#FFFFFF99', hcLight: '#292929' }, localize(1366, 'Color of the peek view title info.'));
-const peekViewBorder = registerColor('peekView.border', { dark: editorInfoForeground, light: editorInfoForeground, hcDark: contrastBorder, hcLight: contrastBorder }, localize(1367, 'Color of the peek view borders and arrow.'));
-const peekViewResultsBackground = registerColor('peekViewResult.background', { dark: '#252526', light: '#F3F3F3', hcDark: Color.black, hcLight: Color.white }, localize(1368, 'Background color of the peek view result list.'));
-registerColor('peekViewResult.lineForeground', { dark: '#bbbbbb', light: '#646465', hcDark: Color.white, hcLight: editorForeground }, localize(1369, 'Foreground color for line nodes in the peek view result list.'));
-registerColor('peekViewResult.fileForeground', { dark: Color.white, light: '#1E1E1E', hcDark: Color.white, hcLight: editorForeground }, localize(1370, 'Foreground color for file nodes in the peek view result list.'));
-registerColor('peekViewResult.selectionBackground', { dark: '#3399ff33', light: '#3399ff33', hcDark: null, hcLight: null }, localize(1371, 'Background color of the selected entry in the peek view result list.'));
-registerColor('peekViewResult.selectionForeground', { dark: Color.white, light: '#6C6C6C', hcDark: Color.white, hcLight: editorForeground }, localize(1372, 'Foreground color of the selected entry in the peek view result list.'));
-const peekViewEditorBackground = registerColor('peekViewEditor.background', { dark: '#001F33', light: '#F2F8FC', hcDark: Color.black, hcLight: Color.white }, localize(1373, 'Background color of the peek view editor.'));
-registerColor('peekViewEditorGutter.background', peekViewEditorBackground, localize(1374, 'Background color of the gutter in the peek view editor.'));
-registerColor('peekViewEditorStickyScroll.background', peekViewEditorBackground, localize(1375, 'Background color of sticky scroll in the peek view editor.'));
-registerColor('peekViewEditorStickyScrollGutter.background', peekViewEditorBackground, localize(1376, 'Background color of the gutter part of sticky scroll in the peek view editor.'));
-registerColor('peekViewResult.matchHighlightBackground', { dark: '#ea5c004d', light: '#ea5c004d', hcDark: null, hcLight: null }, localize(1377, 'Match highlight color in the peek view result list.'));
-registerColor('peekViewEditor.matchHighlightBackground', { dark: '#ff8f0099', light: '#f5d802de', hcDark: null, hcLight: null }, localize(1378, 'Match highlight color in the peek view editor.'));
-registerColor('peekViewEditor.matchHighlightBorder', { dark: null, light: null, hcDark: activeContrastBorder, hcLight: activeContrastBorder }, localize(1379, 'Match highlight border in the peek view editor.'));
+const peekViewTitleBackground = registerColor('peekViewTitle.background', { dark: '#252526', light: '#F3F3F3', hcDark: Color.black, hcLight: Color.white }, localize(1384, 'Background color of the peek view title area.'));
+const peekViewTitleForeground = registerColor('peekViewTitleLabel.foreground', { dark: Color.white, light: Color.black, hcDark: Color.white, hcLight: editorForeground }, localize(1385, 'Color of the peek view title.'));
+const peekViewTitleInfoForeground = registerColor('peekViewTitleDescription.foreground', { dark: '#ccccccb3', light: '#616161', hcDark: '#FFFFFF99', hcLight: '#292929' }, localize(1386, 'Color of the peek view title info.'));
+const peekViewBorder = registerColor('peekView.border', { dark: editorInfoForeground, light: editorInfoForeground, hcDark: contrastBorder, hcLight: contrastBorder }, localize(1387, 'Color of the peek view borders and arrow.'));
+const peekViewResultsBackground = registerColor('peekViewResult.background', { dark: '#252526', light: '#F3F3F3', hcDark: Color.black, hcLight: Color.white }, localize(1388, 'Background color of the peek view result list.'));
+registerColor('peekViewResult.lineForeground', { dark: '#bbbbbb', light: '#646465', hcDark: Color.white, hcLight: editorForeground }, localize(1389, 'Foreground color for line nodes in the peek view result list.'));
+registerColor('peekViewResult.fileForeground', { dark: Color.white, light: '#1E1E1E', hcDark: Color.white, hcLight: editorForeground }, localize(1390, 'Foreground color for file nodes in the peek view result list.'));
+registerColor('peekViewResult.selectionBackground', { dark: '#3399ff33', light: '#3399ff33', hcDark: null, hcLight: null }, localize(1391, 'Background color of the selected entry in the peek view result list.'));
+registerColor('peekViewResult.selectionForeground', { dark: Color.white, light: '#6C6C6C', hcDark: Color.white, hcLight: editorForeground }, localize(1392, 'Foreground color of the selected entry in the peek view result list.'));
+const peekViewEditorBackground = registerColor('peekViewEditor.background', { dark: '#001F33', light: '#F2F8FC', hcDark: Color.black, hcLight: Color.white }, localize(1393, 'Background color of the peek view editor.'));
+registerColor('peekViewEditorGutter.background', peekViewEditorBackground, localize(1394, 'Background color of the gutter in the peek view editor.'));
+registerColor('peekViewEditorStickyScroll.background', peekViewEditorBackground, localize(1395, 'Background color of sticky scroll in the peek view editor.'));
+registerColor('peekViewEditorStickyScrollGutter.background', peekViewEditorBackground, localize(1396, 'Background color of the gutter part of sticky scroll in the peek view editor.'));
+registerColor('peekViewResult.matchHighlightBackground', { dark: '#ea5c004d', light: '#ea5c004d', hcDark: null, hcLight: null }, localize(1397, 'Match highlight color in the peek view result list.'));
+registerColor('peekViewEditor.matchHighlightBackground', { dark: '#ff8f0099', light: '#f5d802de', hcDark: null, hcLight: null }, localize(1398, 'Match highlight color in the peek view editor.'));
+registerColor('peekViewEditor.matchHighlightBorder', { dark: null, light: null, hcDark: activeContrastBorder, hcLight: activeContrastBorder }, localize(1399, 'Match highlight border in the peek view editor.'));
 
 export { IPeekViewService, PeekContext, PeekViewWidget, peekViewBorder, peekViewEditorBackground, peekViewResultsBackground, peekViewTitleBackground, peekViewTitleForeground, peekViewTitleInfoForeground };

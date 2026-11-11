@@ -35,7 +35,7 @@ import { IsWebContext } from '../../../../platform/contextkey/common/contextkeys
  *--------------------------------------------------------------------------------------------*/
 MenuRegistry.appendMenuItem(MenuId.EditorContext, {
     submenu: MenuId.EditorContextPeek,
-    title: localize(1081, "Peek"),
+    title: localize(1096, "Peek"),
     group: 'navigation',
     order: 100
 });
@@ -204,12 +204,12 @@ class SymbolNavigationAction extends EditorAction2 {
 //#region --- DEFINITION
 class DefinitionAction extends SymbolNavigationAction {
     async _getLocationModel(languageFeaturesService, model, position, token) {
-        return new ReferencesModel(await getDefinitionsAtPosition(languageFeaturesService.definitionProvider, model, position, false, token), localize(1082, 'Definitions'));
+        return new ReferencesModel(await getDefinitionsAtPosition(languageFeaturesService.definitionProvider, model, position, false, token), localize(1097, 'Definitions'));
     }
     _getNoResultFoundMessage(info) {
         return info && info.word
-            ? localize(1083, "No definition found for '{0}'", info.word)
-            : localize(1084, "No definition found");
+            ? localize(1098, "No definition found for '{0}'", info.word)
+            : localize(1099, "No definition found");
     }
     _getAlternativeCommand(editor) {
         return editor.getOption(67 /* EditorOption.gotoLocation */).alternativeDefinitionCommand;
@@ -228,8 +228,8 @@ registerAction2(class GoToDefinitionAction extends DefinitionAction {
         }, {
             id: GoToDefinitionAction.id,
             title: {
-                ...localize2(1108, "Go to Definition"),
-                mnemonicTitle: localize(1085, "Go to &&Definition"),
+                ...localize2(1123, "Go to Definition"),
+                mnemonicTitle: localize(1100, "Go to &&Definition"),
             },
             precondition: EditorContextKeys.hasDefinitionProvider,
             keybinding: [{
@@ -264,7 +264,7 @@ registerAction2(class OpenDefinitionToSideAction extends DefinitionAction {
             muteMessage: false
         }, {
             id: OpenDefinitionToSideAction.id,
-            title: localize2(1109, "Open Definition to the Side"),
+            title: localize2(1124, "Open Definition to the Side"),
             precondition: ContextKeyExpr.and(EditorContextKeys.hasDefinitionProvider, EditorContextKeys.isInEmbeddedEditor.toNegated()),
             keybinding: [{
                     when: EditorContextKeys.editorTextFocus,
@@ -288,7 +288,7 @@ registerAction2(class PeekDefinitionAction extends DefinitionAction {
             muteMessage: false
         }, {
             id: PeekDefinitionAction.id,
-            title: localize2(1110, "Peek Definition"),
+            title: localize2(1125, "Peek Definition"),
             precondition: ContextKeyExpr.and(EditorContextKeys.hasDefinitionProvider, PeekContext.notInPeekEditor, EditorContextKeys.isInEmbeddedEditor.toNegated()),
             keybinding: {
                 when: EditorContextKeys.editorTextFocus,
@@ -309,12 +309,12 @@ registerAction2(class PeekDefinitionAction extends DefinitionAction {
 //#region --- DECLARATION
 class DeclarationAction extends SymbolNavigationAction {
     async _getLocationModel(languageFeaturesService, model, position, token) {
-        return new ReferencesModel(await getDeclarationsAtPosition(languageFeaturesService.declarationProvider, model, position, false, token), localize(1086, 'Declarations'));
+        return new ReferencesModel(await getDeclarationsAtPosition(languageFeaturesService.declarationProvider, model, position, false, token), localize(1101, 'Declarations'));
     }
     _getNoResultFoundMessage(info) {
         return info && info.word
-            ? localize(1087, "No declaration found for '{0}'", info.word)
-            : localize(1088, "No declaration found");
+            ? localize(1102, "No declaration found for '{0}'", info.word)
+            : localize(1103, "No declaration found");
     }
     _getAlternativeCommand(editor) {
         return editor.getOption(67 /* EditorOption.gotoLocation */).alternativeDeclarationCommand;
@@ -333,8 +333,8 @@ registerAction2(class GoToDeclarationAction extends DeclarationAction {
         }, {
             id: GoToDeclarationAction.id,
             title: {
-                ...localize2(1111, "Go to Declaration"),
-                mnemonicTitle: localize(1089, "Go to &&Declaration"),
+                ...localize2(1126, "Go to Declaration"),
+                mnemonicTitle: localize(1104, "Go to &&Declaration"),
             },
             precondition: ContextKeyExpr.and(EditorContextKeys.hasDeclarationProvider, EditorContextKeys.isInEmbeddedEditor.toNegated()),
             menu: [{
@@ -351,8 +351,8 @@ registerAction2(class GoToDeclarationAction extends DeclarationAction {
     }
     _getNoResultFoundMessage(info) {
         return info && info.word
-            ? localize(1090, "No declaration found for '{0}'", info.word)
-            : localize(1091, "No declaration found");
+            ? localize(1105, "No declaration found for '{0}'", info.word)
+            : localize(1106, "No declaration found");
     }
 });
 registerAction2(class PeekDeclarationAction extends DeclarationAction {
@@ -363,7 +363,7 @@ registerAction2(class PeekDeclarationAction extends DeclarationAction {
             muteMessage: false
         }, {
             id: 'editor.action.peekDeclaration',
-            title: localize2(1112, "Peek Declaration"),
+            title: localize2(1127, "Peek Declaration"),
             precondition: ContextKeyExpr.and(EditorContextKeys.hasDeclarationProvider, PeekContext.notInPeekEditor, EditorContextKeys.isInEmbeddedEditor.toNegated()),
             menu: {
                 id: MenuId.EditorContextPeek,
@@ -377,12 +377,12 @@ registerAction2(class PeekDeclarationAction extends DeclarationAction {
 //#region --- TYPE DEFINITION
 class TypeDefinitionAction extends SymbolNavigationAction {
     async _getLocationModel(languageFeaturesService, model, position, token) {
-        return new ReferencesModel(await getTypeDefinitionsAtPosition(languageFeaturesService.typeDefinitionProvider, model, position, false, token), localize(1092, 'Type Definitions'));
+        return new ReferencesModel(await getTypeDefinitionsAtPosition(languageFeaturesService.typeDefinitionProvider, model, position, false, token), localize(1107, 'Type Definitions'));
     }
     _getNoResultFoundMessage(info) {
         return info && info.word
-            ? localize(1093, "No type definition found for '{0}'", info.word)
-            : localize(1094, "No type definition found");
+            ? localize(1108, "No type definition found for '{0}'", info.word)
+            : localize(1109, "No type definition found");
     }
     _getAlternativeCommand(editor) {
         return editor.getOption(67 /* EditorOption.gotoLocation */).alternativeTypeDefinitionCommand;
@@ -401,8 +401,8 @@ registerAction2(class GoToTypeDefinitionAction extends TypeDefinitionAction {
         }, {
             id: GoToTypeDefinitionAction.ID,
             title: {
-                ...localize2(1113, "Go to Type Definition"),
-                mnemonicTitle: localize(1095, "Go to &&Type Definition"),
+                ...localize2(1128, "Go to Type Definition"),
+                mnemonicTitle: localize(1110, "Go to &&Type Definition"),
             },
             precondition: EditorContextKeys.hasTypeDefinitionProvider,
             keybinding: {
@@ -432,7 +432,7 @@ registerAction2(class PeekTypeDefinitionAction extends TypeDefinitionAction {
             muteMessage: false
         }, {
             id: PeekTypeDefinitionAction.ID,
-            title: localize2(1114, "Peek Type Definition"),
+            title: localize2(1129, "Peek Type Definition"),
             precondition: ContextKeyExpr.and(EditorContextKeys.hasTypeDefinitionProvider, PeekContext.notInPeekEditor, EditorContextKeys.isInEmbeddedEditor.toNegated()),
             menu: {
                 id: MenuId.EditorContextPeek,
@@ -446,12 +446,12 @@ registerAction2(class PeekTypeDefinitionAction extends TypeDefinitionAction {
 //#region --- IMPLEMENTATION
 class ImplementationAction extends SymbolNavigationAction {
     async _getLocationModel(languageFeaturesService, model, position, token) {
-        return new ReferencesModel(await getImplementationsAtPosition(languageFeaturesService.implementationProvider, model, position, false, token), localize(1096, 'Implementations'));
+        return new ReferencesModel(await getImplementationsAtPosition(languageFeaturesService.implementationProvider, model, position, false, token), localize(1111, 'Implementations'));
     }
     _getNoResultFoundMessage(info) {
         return info && info.word
-            ? localize(1097, "No implementation found for '{0}'", info.word)
-            : localize(1098, "No implementation found");
+            ? localize(1112, "No implementation found for '{0}'", info.word)
+            : localize(1113, "No implementation found");
     }
     _getAlternativeCommand(editor) {
         return editor.getOption(67 /* EditorOption.gotoLocation */).alternativeImplementationCommand;
@@ -470,8 +470,8 @@ registerAction2(class GoToImplementationAction extends ImplementationAction {
         }, {
             id: GoToImplementationAction.ID,
             title: {
-                ...localize2(1115, "Go to Implementations"),
-                mnemonicTitle: localize(1099, "Go to &&Implementations"),
+                ...localize2(1130, "Go to Implementations"),
+                mnemonicTitle: localize(1114, "Go to &&Implementations"),
             },
             precondition: EditorContextKeys.hasImplementationProvider,
             keybinding: {
@@ -501,7 +501,7 @@ registerAction2(class PeekImplementationAction extends ImplementationAction {
             muteMessage: false
         }, {
             id: PeekImplementationAction.ID,
-            title: localize2(1116, "Peek Implementations"),
+            title: localize2(1131, "Peek Implementations"),
             precondition: ContextKeyExpr.and(EditorContextKeys.hasImplementationProvider, PeekContext.notInPeekEditor, EditorContextKeys.isInEmbeddedEditor.toNegated()),
             keybinding: {
                 when: EditorContextKeys.editorTextFocus,
@@ -521,8 +521,8 @@ registerAction2(class PeekImplementationAction extends ImplementationAction {
 class ReferencesAction extends SymbolNavigationAction {
     _getNoResultFoundMessage(info) {
         return info
-            ? localize(1100, "No references found for '{0}'", info.word)
-            : localize(1101, "No references found");
+            ? localize(1115, "No references found for '{0}'", info.word)
+            : localize(1116, "No references found");
     }
     _getAlternativeCommand(editor) {
         return editor.getOption(67 /* EditorOption.gotoLocation */).alternativeReferenceCommand;
@@ -540,8 +540,8 @@ registerAction2(class GoToReferencesAction extends ReferencesAction {
         }, {
             id: 'editor.action.goToReferences',
             title: {
-                ...localize2(1117, "Go to References"),
-                mnemonicTitle: localize(1102, "Go to &&References"),
+                ...localize2(1132, "Go to References"),
+                mnemonicTitle: localize(1117, "Go to &&References"),
             },
             precondition: ContextKeyExpr.and(EditorContextKeys.hasReferenceProvider, PeekContext.notInPeekEditor, EditorContextKeys.isInEmbeddedEditor.toNegated()),
             keybinding: {
@@ -562,7 +562,7 @@ registerAction2(class GoToReferencesAction extends ReferencesAction {
         });
     }
     async _getLocationModel(languageFeaturesService, model, position, token) {
-        return new ReferencesModel(await getReferencesAtPosition(languageFeaturesService.referenceProvider, model, position, true, false, token), localize(1103, 'References'));
+        return new ReferencesModel(await getReferencesAtPosition(languageFeaturesService.referenceProvider, model, position, true, false, token), localize(1118, 'References'));
     }
 });
 registerAction2(class PeekReferencesAction extends ReferencesAction {
@@ -573,7 +573,7 @@ registerAction2(class PeekReferencesAction extends ReferencesAction {
             muteMessage: false
         }, {
             id: 'editor.action.referenceSearch.trigger',
-            title: localize2(1118, "Peek References"),
+            title: localize2(1133, "Peek References"),
             precondition: ContextKeyExpr.and(EditorContextKeys.hasReferenceProvider, PeekContext.notInPeekEditor, EditorContextKeys.isInEmbeddedEditor.toNegated()),
             menu: {
                 id: MenuId.EditorContextPeek,
@@ -583,7 +583,7 @@ registerAction2(class PeekReferencesAction extends ReferencesAction {
         });
     }
     async _getLocationModel(languageFeaturesService, model, position, token) {
-        return new ReferencesModel(await getReferencesAtPosition(languageFeaturesService.referenceProvider, model, position, false, false, token), localize(1104, 'References'));
+        return new ReferencesModel(await getReferencesAtPosition(languageFeaturesService.referenceProvider, model, position, false, false, token), localize(1119, 'References'));
     }
 });
 //#endregion
@@ -592,17 +592,17 @@ class GenericGoToLocationAction extends SymbolNavigationAction {
     constructor(config, _references, _gotoMultipleBehaviour) {
         super(config, {
             id: 'editor.action.goToLocation',
-            title: localize2(1119, "Go to Any Symbol"),
+            title: localize2(1134, "Go to Any Symbol"),
             precondition: ContextKeyExpr.and(PeekContext.notInPeekEditor, EditorContextKeys.isInEmbeddedEditor.toNegated()),
         });
         this._references = _references;
         this._gotoMultipleBehaviour = _gotoMultipleBehaviour;
     }
     async _getLocationModel(languageFeaturesService, _model, _position, _token) {
-        return new ReferencesModel(this._references, localize(1105, 'Locations'));
+        return new ReferencesModel(this._references, localize(1120, 'Locations'));
     }
     _getNoResultFoundMessage(info) {
-        return info && localize(1106, "No results for '{0}'", info.word) || '';
+        return info && localize(1121, "No results for '{0}'", info.word) || '';
     }
     _getGoToPreference(editor) {
         return this._gotoMultipleBehaviour ?? editor.getOption(67 /* EditorOption.gotoLocation */).multipleReferences;
@@ -681,7 +681,7 @@ CommandsRegistry.registerCommand({
             if (!controller) {
                 return undefined;
             }
-            const references = createCancelablePromise(token => getReferencesAtPosition(languageFeaturesService.referenceProvider, control.getModel(), Position.lift(position), false, false, token).then(references => new ReferencesModel(references, localize(1107, 'References'))));
+            const references = createCancelablePromise(token => getReferencesAtPosition(languageFeaturesService.referenceProvider, control.getModel(), Position.lift(position), false, false, token).then(references => new ReferencesModel(references, localize(1122, 'References'))));
             const range = new Range(position.lineNumber, position.column, position.lineNumber, position.column);
             return Promise.resolve(controller.toggleWidget(range, references, false));
         });

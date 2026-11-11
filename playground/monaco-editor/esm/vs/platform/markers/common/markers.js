@@ -19,17 +19,17 @@ var MarkerSeverity;
     }
     MarkerSeverity.compare = compare;
     const _displayStrings = Object.create(null);
-    _displayStrings[MarkerSeverity.Error] = localize(1795, "Error");
-    _displayStrings[MarkerSeverity.Warning] = localize(1796, "Warning");
-    _displayStrings[MarkerSeverity.Info] = localize(1797, "Info");
+    _displayStrings[MarkerSeverity.Error] = localize(1828, "Error");
+    _displayStrings[MarkerSeverity.Warning] = localize(1829, "Warning");
+    _displayStrings[MarkerSeverity.Info] = localize(1830, "Info");
     function toString(a) {
         return _displayStrings[a] || '';
     }
     MarkerSeverity.toString = toString;
     const _displayStringsPlural = Object.create(null);
-    _displayStringsPlural[MarkerSeverity.Error] = localize(1798, "Errors");
-    _displayStringsPlural[MarkerSeverity.Warning] = localize(1799, "Warnings");
-    _displayStringsPlural[MarkerSeverity.Info] = localize(1800, "Infos");
+    _displayStringsPlural[MarkerSeverity.Error] = localize(1831, "Errors");
+    _displayStringsPlural[MarkerSeverity.Warning] = localize(1832, "Warnings");
+    _displayStringsPlural[MarkerSeverity.Info] = localize(1833, "Infos");
     function toStringPlural(a) {
         return _displayStringsPlural[a] || '';
     }

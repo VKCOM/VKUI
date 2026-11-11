@@ -59,6 +59,7 @@ let StandaloneColorPickerWidget = class StandaloneColorPickerWidget extends Disp
         this._standaloneColorPickerParticipant = _instantiationService.createInstance(StandaloneColorPickerParticipant, this._editor);
         this._position = this._editor._getViewModel()?.getPrimaryCursorState().modelState.position;
         const editorSelection = this._editor.getSelection();
+        this._selections = this._editor.getSelections() ?? [];
         const selection = editorSelection ?
             {
                 startLineNumber: editorSelection.startLineNumber,
@@ -82,6 +83,7 @@ let StandaloneColorPickerWidget = class StandaloneColorPickerWidget extends Disp
             else {
                 this._selectionSetInEditor = false;
             }
+            this._selections = this._editor.getSelections() ?? [];
         }));
         this._register(this._editor.onMouseMove((e) => {
             const classList = e.target.element?.classList;
@@ -98,7 +100,7 @@ let StandaloneColorPickerWidget = class StandaloneColorPickerWidget extends Disp
     }
     updateEditor() {
         if (this._colorHover) {
-            this._standaloneColorPickerParticipant.updateEditorModel(this._colorHover);
+            this._standaloneColorPickerParticipant.updateEditorModel(this._colorHover, this._selections);
         }
     }
     getId() {

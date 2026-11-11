@@ -147,7 +147,7 @@ class ViewController {
         const options = this.configuration.options;
         const selectionClipboardIsOn = (isLinux && options.get(121 /* EditorOption.selectionClipboard */));
         const columnSelection = options.get(28 /* EditorOption.columnSelection */);
-        const scrollOnMiddleClick = options.get(171 /* EditorOption.scrollOnMiddleClick */);
+        const scrollOnMiddleClick = options.get(172 /* EditorOption.scrollOnMiddleClick */);
         if (data.middleButton && !selectionClipboardIsOn) {
             if (scrollOnMiddleClick) ;
             else {
@@ -205,7 +205,7 @@ class ViewController {
                     }
                     else {
                         let selection;
-                        if (options.get(173 /* EditorOption.doubleClickSelectsBlock */)) {
+                        if (options.get(174 /* EditorOption.doubleClickSelectsBlock */)) {
                             const model = this.viewModel.model;
                             const modelPos = this._convertViewToModelPosition(data.position);
                             selection = ViewController._trySelectBracketContent(model, modelPos) || ViewController._trySelectStringContent(model, modelPos);

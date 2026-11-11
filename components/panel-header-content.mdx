@@ -5,34 +5,25 @@ other:
 description: Подкомпонент PanelHeader для сложного контента с аватаром и подзаголовком.
 ---
 
-<Overview group="navigation">
-
-# PanelHeaderContent [tag:component]
+# PanelHeaderContent \[tag:component]
 
 Подкомпонент [`PanelHeader`](/components/panel-header), предназначенный для создания сложного заголовка с аватаром и подзаголовком.
 
-</Overview>
-
 Подкомпонент, предназначенный для создания сложного контента в [`PanelHeader`](/components/panel-header), включая добавление аватаров и подзаголовков.
 
-<Playground hide>
-  ```jsx
-  <Box inlineSize={270}>
-    <PanelHeaderContent subtitle="был в сети сегодня, в 18:46" before={<Avatar size={36} />}>
-      Жук Петрович
-    </PanelHeaderContent>
-  </Box>
-  ```
-</Playground>
-
-{/* @example-description: `PanelHeaderContent` с аватаром и подзаголовком в составе шапки. */}
-<Playground style={{ width: 270 }}>
-  ```jsx
+```jsx
+<Box inlineSize={270}>
   <PanelHeaderContent subtitle="был в сети сегодня, в 18:46" before={<Avatar size={36} />}>
     Жук Петрович
   </PanelHeaderContent>
-  ```
-</Playground>
+</Box>
+```
+
+```jsx
+<PanelHeaderContent subtitle="был в сети сегодня, в 18:46" before={<Avatar size={36} />}>
+  Жук Петрович
+</PanelHeaderContent>
+```
 
 ### Текстовые элементы
 
@@ -56,8 +47,8 @@ description: Подкомпонент PanelHeader для сложного кон
 
 Следует руководствоваться следующими правилами:
 
-- на мобильных устройствах старайтесь использовать аватары размером `36px`;
-- на планшетах и десктопах аватары размером `32px`.
+* на мобильных устройствах старайтесь использовать аватары размером `36px`;
+* на планшетах и десктопах аватары размером `32px`.
 
 ### Обработчики событий
 
@@ -65,14 +56,14 @@ description: Подкомпонент PanelHeader для сложного кон
 элементом (`role="button"`), поэтому старайтесь не вкладывать другие интерактивные элементы (кнопки, ссылки), чтобы
 не нарушать `a11y`.
 
-## Свойства и методы [#api]
+## Свойства и методы \[#api]
 
 ### PanelHeaderContent
 
-| Свойство | Тип | По умолчанию | Описание |
-| --- | --- | --- | --- |
-| `aside` | `ReactNode` | `-` | Компонент отображаемый после содержимого. |
-| `before` | `ReactNode` | `-` | Компонент отображаемый до содержимого. |
-| `getRootRef` | `Ref<HTMLDivElement>` | `-` |  |
-| `subtitle` | `ReactNode` | `-` | Подпись под основным текстом. |
-
+| Свойство     | Тип                   | По умолчанию | Описание                                  |
+| ------------ | --------------------- | ------------ | ----------------------------------------- |
+| `aside`      | `ReactNode`           | `-`          | Компонент отображаемый после содержимого. |
+| `before`     | `ReactNode`           | `-`          | Компонент отображаемый до содержимого.    |
+| `getRootRef` | `Ref<HTMLDivElement>` | `-`          |                                           |
+| `ref`        | `Ref<HTMLDivElement>` | `-`          |                                           |
+| `subtitle`   | `ReactNode`           | `-`          | Подпись под основным текстом.             |

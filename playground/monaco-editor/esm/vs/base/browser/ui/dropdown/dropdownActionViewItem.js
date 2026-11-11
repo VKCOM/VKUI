@@ -30,9 +30,13 @@ class DropdownMenuActionViewItem extends BaseActionViewItem {
         const options = {
             contextMenuProvider: this.contextMenuProvider,
             labelRenderer: labelRenderer,
+            isEnabled: () => this.action.enabled,
             menuAsChild: this.options.menuAsChild,
             actions: isActionsArray ? this.menuActionsOrProvider : undefined,
             actionProvider: isActionsArray ? undefined : this.menuActionsOrProvider,
+            menuClassName: this.options.menuClassName,
+            closeAnimation: this.options.closeAnimation,
+            getAnchor: this.options.getAnchor,
             skipTelemetry: this.options.skipTelemetry
         };
         this.dropdownMenu = this._register(new DropdownMenu(container, options));
@@ -110,6 +114,7 @@ class DropdownMenuActionViewItem extends BaseActionViewItem {
         const disabled = !this.action.enabled;
         this.actionItem?.classList.toggle('disabled', disabled);
         this.element?.classList.toggle('disabled', disabled);
+        this.element?.setAttribute('aria-disabled', String(disabled));
     }
 }
 

@@ -49,12 +49,27 @@ function stringHash(s, hashVal) {
     }
     return hashVal;
 }
+/** Precomputes the affine transform of {@link stringHash} for a fixed string and int32 accumulators. */
+class ConstantStringHash {
+    constructor(value) {
+        let multiplier = 31; // accounts for the seed step of `stringHash`
+        for (let i = 0; i < value.length; i++) {
+            multiplier = Math.imul(multiplier, 31);
+        }
+        this.multiplier = multiplier;
+        this.addend = stringHash(value, 0);
+    }
+}
+/** Seed mixed in by {@link arrayHash} before hashing the array elements. */
+const ARRAY_HASH_SEED = 104579;
+/** Seed mixed in by {@link objectHash} before hashing the object entries. */
+const OBJECT_HASH_SEED = 181387;
 function arrayHash(arr, initialHashVal) {
-    initialHashVal = numberHash(104579, initialHashVal);
+    initialHashVal = numberHash(ARRAY_HASH_SEED, initialHashVal);
     return arr.reduce((hashVal, item) => doHash(item, hashVal), initialHashVal);
 }
 function objectHash(obj, initialHashVal) {
-    initialHashVal = numberHash(181387, initialHashVal);
+    initialHashVal = numberHash(OBJECT_HASH_SEED, initialHashVal);
     return Object.keys(obj).sort().reduce((hashVal, key) => {
         hashVal = stringHash(key, hashVal);
         return doHash(obj[key], hashVal);
@@ -253,4 +268,4 @@ class StringSHA1 {
     }
 }
 
-export { StringSHA1, doHash, hash, numberHash, stringHash };
+export { ARRAY_HASH_SEED, ConstantStringHash, OBJECT_HASH_SEED, StringSHA1, doHash, hash, numberHash, stringHash };

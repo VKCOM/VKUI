@@ -253,7 +253,7 @@ async function applyCodeAction(accessor, item, codeActionReason, options, token 
             const message = asMessage(err);
             notificationService.error(typeof message === 'string'
                 ? message
-                : localize(866, "An unknown error occurred while applying the code action"));
+                : localize(881, "An unknown error occurred while applying the code action"));
         }
     }
     // ensure the start sound and end sound do not overlap

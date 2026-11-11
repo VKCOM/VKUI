@@ -414,7 +414,7 @@ class ArrayQueue {
         // P(k) := k <= this.lastIdx && predicate(this.items[k])
         // Find s := min { k | k >= this.firstIdx && !P(k) } and return this.data[this.firstIdx...s)
         let startIdx = this.firstIdx;
-        while (startIdx < this.items.length && predicate(this.items[startIdx])) {
+        while (startIdx <= this.lastIdx && predicate(this.items[startIdx])) {
             startIdx++;
         }
         const result = startIdx === this.firstIdx ? null : this.items.slice(this.firstIdx, startIdx);

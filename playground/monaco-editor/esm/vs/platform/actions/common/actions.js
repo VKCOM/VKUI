@@ -67,6 +67,7 @@ class MenuId {
     static { this.EditorTabsBarShowTabsSubmenu = new MenuId('EditorTabsBarShowTabsSubmenu'); }
     static { this.EditorTabsBarShowTabsZenModeSubmenu = new MenuId('EditorTabsBarShowTabsZenModeSubmenu'); }
     static { this.EditorActionsPositionSubmenu = new MenuId('EditorActionsPositionSubmenu'); }
+    static { this.DiffEditorViewSubmenu = new MenuId('DiffEditorViewSubmenu'); }
     static { this.EditorRenderWhitespaceSubmenu = new MenuId('EditorRenderWhitespaceSubmenu'); }
     static { this.EditorSplitMoveSubmenu = new MenuId('EditorSplitMoveSubmenu'); }
     static { this.ExplorerContext = new MenuId('ExplorerContext'); }
@@ -139,6 +140,7 @@ class MenuId {
     static { this.TouchBarContext = new MenuId('TouchBarContext'); }
     static { this.TitleBar = new MenuId('TitleBar'); }
     static { this.TitleBarAdjacentCenter = new MenuId('TitleBarAdjacentCenter'); }
+    static { this.TitleBarUpdate = new MenuId('TitleBarUpdate'); }
     static { this.TitleBarContext = new MenuId('TitleBarContext'); }
     static { this.TitleBarTitleContext = new MenuId('TitleBarTitleContext'); }
     static { this.TunnelContext = new MenuId('TunnelContext'); }
@@ -222,12 +224,14 @@ class MenuId {
     static { this.ChatMessageTitle = new MenuId('ChatMessageTitle'); }
     static { this.ChatWelcomeContext = new MenuId('ChatWelcomeContext'); }
     static { this.ChatMessageFooter = new MenuId('ChatMessageFooter'); }
+    static { this.ChatSubagentContent = new MenuId('ChatSubagentContent'); }
     static { this.ChatExecute = new MenuId('ChatExecute'); }
     static { this.ChatExecuteQueue = new MenuId('ChatExecuteQueue'); }
     static { this.ChatInput = new MenuId('ChatInput'); }
     static { this.ChatInputSecondary = new MenuId('ChatInputSecondary'); }
     static { this.ChatInputStatus = new MenuId('ChatInputStatus'); }
     static { this.ChatInputSide = new MenuId('ChatInputSide'); }
+    static { this.AutomationsDialogInput = new MenuId('AutomationsDialogInput'); }
     static { this.ChatModePicker = new MenuId('ChatModePicker'); }
     static { this.ChatEditingWidgetToolbar = new MenuId('ChatEditingWidgetToolbar'); }
     static { this.ChatEditingSessionChangesToolbar = new MenuId('ChatEditingSessionChangesToolbar'); }
@@ -271,6 +275,7 @@ class MenuId {
     static { this.BrowserChatActionsMenu = new MenuId('BrowserChatActionsMenu'); }
     static { this.BrowserEmulationToolbar = new MenuId('BrowserEmulationToolbar'); }
     static { this.AgentSessionsViewerFilterSubMenu = new MenuId('AgentSessionsViewerFilterSubMenu'); }
+    static { this.AgentSessionsExternalFilterSubMenu = new MenuId('AgentSessionsExternalFilterSubMenu'); }
     static { this.AgentSessionsContext = new MenuId('AgentSessionsContext'); }
     static { this.AgentSessionSectionContext = new MenuId('AgentSessionSectionContext'); }
     static { this.AgentSessionsCreateSubMenu = new MenuId('AgentSessionsCreateSubMenu'); }

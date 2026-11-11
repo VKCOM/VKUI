@@ -67,7 +67,7 @@ class TriggerParameterHintsAction extends EditorAction {
     constructor() {
         super({
             id: 'editor.action.triggerParameterHints',
-            label: localize2(1357, "Trigger Parameter Hints"),
+            label: localize2(1377, "Trigger Parameter Hints"),
             precondition: EditorContextKeys.hasSignatureHelpProvider,
             kbOpts: {
                 kbExpr: EditorContextKeys.editorTextFocus,

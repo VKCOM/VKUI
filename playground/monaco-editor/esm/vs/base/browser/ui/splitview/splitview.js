@@ -454,7 +454,11 @@ class SplitView extends Disposable {
         }
         else {
             item.size = size;
-            this.relayout([index], undefined);
+            // Absorb the change by layout priority, like `resizeView` does, so a neighbour with a size of its own is not squeezed (see #334167)
+            const indexes = range(this.viewItems.length).filter(i => i !== index);
+            const lowPriorityIndexes = [...indexes.filter(i => this.viewItems[i].priority === 1 /* LayoutPriority.Low */), index];
+            const highPriorityIndexes = indexes.filter(i => this.viewItems[i].priority === 2 /* LayoutPriority.High */);
+            this.relayout(lowPriorityIndexes, highPriorityIndexes);
         }
     }
     /**

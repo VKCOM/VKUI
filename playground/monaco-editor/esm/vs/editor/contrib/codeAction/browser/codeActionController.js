@@ -150,17 +150,22 @@ let CodeActionController = class CodeActionController extends Disposable {
         }
         let actions;
         try {
-            actions = await newState.actions;
+            actions = this._model.takeCodeActions(await newState.actions);
         }
         catch (e) {
             onUnexpectedError(e);
             return;
         }
+        if (!actions) {
+            return;
+        }
         if (this._disposed) {
+            actions.dispose();
             return;
         }
         const selection = this._editor.getSelection();
         if (selection?.startLineNumber !== newState.position.lineNumber) {
+            actions.dispose();
             return;
         }
         this._lightBulbWidget.value?.update(actions, newState.trigger, newState.position);
@@ -294,7 +299,7 @@ let CodeActionController = class CodeActionController extends Disposable {
                         const diagnostic = diagnostics[0];
                         if (diagnostic.startLineNumber && diagnostic.startColumn) {
                             const selectionText = this._editor.getModel()?.getWordAtPosition({ lineNumber: diagnostic.startLineNumber, column: diagnostic.startColumn })?.word;
-                            status(localize(899, "Context: {0} at line {1} and column {2}.", selectionText, diagnostic.startLineNumber, diagnostic.startColumn));
+                            status(localize(914, "Context: {0} at line {1} and column {2}.", selectionText, diagnostic.startLineNumber, diagnostic.startColumn));
                         }
                     }
                 }
@@ -337,7 +342,7 @@ let CodeActionController = class CodeActionController extends Disposable {
         if (options.includeDisabledActions && actions.validActions.length > 0 && actions.allActions.length !== actions.validActions.length) {
             resultActions.push(this._showDisabled ? {
                 id: 'hideMoreActions',
-                label: localize(900, 'Hide Disabled'),
+                label: localize(915, 'Hide Disabled'),
                 enabled: true,
                 tooltip: '',
                 class: undefined,
@@ -347,7 +352,7 @@ let CodeActionController = class CodeActionController extends Disposable {
                 }
             } : {
                 id: 'showMoreActions',
-                label: localize(901, 'Show Disabled'),
+                label: localize(916, 'Show Disabled'),
                 enabled: true,
                 tooltip: '',
                 class: undefined,

@@ -2,19 +2,16 @@
 description: Организация навигации внутри приложений, построенных на основе VKUI.
 ---
 
-<Overview type="doc">
 # Навигация
 
 Почти любое приложение — это набор экранов. Переходы между ними бывают плоскими и вложенными, с возвратом на предыдущий экран. Есть и платформенные различия в анимации и стилях элементов навигации.
 
 VKUI предоставляет компоненты для организации экранов, абстрагируя платформенные различия. На этой странице рассмотрим, как с их помощью:
 
-- построить иерархию экранов внутри одного сценария;
-- разделить приложение на независимые сценарии (например, по разделам или фичам).
+* построить иерархию экранов внутри одного сценария;
+* разделить приложение на независимые сценарии (например, по разделам или фичам).
 
 В завершение соберём адаптивный пример со всеми навигационными компонентами.
-
-</Overview>
 
 ## Предисловие
 
@@ -26,14 +23,14 @@ VKUI предоставляет компоненты для организаци
 
 **Раздел** — крупная часть приложения со своими сценариями. Например, «Профиль» или «Сообщения».
 
-### Предварительная настройка [#initial-setup]
+### Предварительная настройка \[#initial-setup]
 
 Для безопасных боковых отступов и корректной анимации навигационных компонентов оберните приложение в:
 
-- [`SplitLayout`](/components/split-layout) с `header` в виде заглушки [`PanelHeader`](/components/panel-header) — она компенсирует боковые отступы для видимых [`PanelHeader`](/components/panel-header) (на платформе vkcom заглушка не нужна).
-- [`SplitCol`](/components/split-layout#split-col) со свойствами `stretchedOnMobile` и `autoSpaced`:
-  - `stretchedOnMobile` растягивает колонку на всю ширину на мобильных;
-  - `autoSpaced` включает автоматические боковые отступы на широких экранах — это нужно, в частности, при использовании [`Group`](/components/group).
+* [`SplitLayout`](/components/split-layout) с `header` в виде заглушки [`PanelHeader`](/components/panel-header) — она компенсирует боковые отступы для видимых [`PanelHeader`](/components/panel-header) (на платформе vkcom заглушка не нужна).
+* [`SplitCol`](/components/split-layout#split-col) со свойствами `stretchedOnMobile` и `autoSpaced`:
+  * `stretchedOnMobile` растягивает колонку на всю ширину на мобильных;
+  * `autoSpaced` включает автоматические боковые отступы на широких экранах — это нужно, в частности, при использовании [`Group`](/components/group).
 
 Обёртка одна на всё приложение, поэтому разместите её ближе к корню — в точке входа приложения.
 
@@ -198,9 +195,9 @@ export const Router = () => {
 
 Отличия от [`Root`](/components/root):
 
-- принимает [`Tabbar`](/components/tabbar) через свойство `tabbar`;
-- потомками могут быть не только [`View`](/components/view), но и [`Root`](/components/root) — для более глубокой иерархии сценариев;
-- переключает разделы без анимаций.
+* принимает [`Tabbar`](/components/tabbar) через свойство `tabbar`;
+* потомками могут быть не только [`View`](/components/view), но и [`Root`](/components/root) — для более глубокой иерархии сценариев;
+* переключает разделы без анимаций.
 
 Принимает любое количество [`View`](/components/view) и/или [`Root`](/components/root) с уникальным `id`, а в свойство `activeStory` передаётся `id` нужного сценария.
 
@@ -302,7 +299,7 @@ export const Router = () => {
 };
 ```
 
-## Интерактивный пример [#example-app]
+## Интерактивный пример \[#example-app]
 
 Создадим приложение вот с такой структурой:
 
@@ -325,10 +322,6 @@ app (Epic)
 ```
 
 Для навигации по основным разделам на мобильных используется [`Tabbar`](/components/tabbar), на настольных — [`SplitCol`](/components/split-layout#split-col) с [`Cell`](/components/cell) в роли бокового меню.
-
-import { FixedLayoutWrapper } from '@/components/wrappers';
-
-<Playground Wrapper={FixedLayoutWrapper} style={{ minHeight: 440, overflow: 'hidden' }}>
 
 ```jsx showLineNumbers filename="src/App.tsx"
 import { useState } from 'react';
@@ -466,7 +459,7 @@ const AboutScenario = ({ id, goBack }) => {
       <Panel id="about-version-panel">
         <PanelHeader before={<PanelHeaderBack onClick={goBack} />}>О приложении</PanelHeader>
         <Group>
-          <Group mode="plain">
+          <Group layoutMode="plain">
             <SimpleCell indicator="0.0.0">Версия</SimpleCell>
             <SimpleCell indicator="Русский">Язык приложения</SimpleCell>
             <Footer Component="div">Все права защищены.</Footer>
@@ -579,5 +572,3 @@ return (
   </SplitLayout>
 );
 ```
-
-</Playground>

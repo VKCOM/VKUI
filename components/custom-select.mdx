@@ -5,47 +5,42 @@ keywords:
   - CustomSelectOption
 ---
 
-<Overview group="forms">
-
-# CustomSelect [tag:component]
+# CustomSelect \[tag:component]
 
 Компонент для выбора значения из выпадающего списка.
 Поддерживает широкие возможности по изменению внешнего вида, поиск по опциям и пользовательский рендеринг опций.
 
 Связанные компоненты:
 
-- [`Select`](/components/select)
-
-</Overview>
+* [`Select`](/components/select)
 
 > Важно: для отображения невыбранного состояния нужно использовать `value=null` вместо `undefined`.
 >
 > `undefined` ипользуется только для неконтролируемого компонента.
 
-{/* @example-description: Базовый `CustomSelect` с набором опций и кнопкой очистки выбора. */}
-<Playground style={{ maxWidth: 270 }}>
-
 ```jsx
-<CustomSelect
-  options={[
-    { value: 0, label: 'Москва' },
-    { value: 1, label: 'Санкт-Петербург' },
-    { value: 2, label: 'Новосибирск' },
-    { value: 3, label: 'Йошкар-Ола' },
-  ]}
-  placeholder="Выберите город"
-  allowClearButton
-/>
+<FormItem top="Город" htmlFor="custom-select-input-1">
+  <CustomSelect
+    id="custom-select-input-1"
+    name="city"
+    options={[
+      { value: 0, label: 'Москва' },
+      { value: 1, label: 'Санкт-Петербург' },
+      { value: 2, label: 'Новосибирск' },
+      { value: 3, label: 'Йошкар-Ола' },
+    ]}
+    placeholder="Выберите город"
+    allowClearButton
+  />
+</FormItem>
 ```
-
-</Playground>
 
 ## Режим работы
 
 Компонент поддерживает работу как в неконтролируемом режиме, так и контролируемом. Это стандартное поведение
 React-компонентов, прочитать про это можно в [документации React](https://react.dev/reference/react-dom/components/input#controlling-an-input-with-a-state-variable).
 
-Для использования неконтролируемого режима достаточно просто _не_ передавать `value` или передавать `defaultValue`, если
+Для использования неконтролируемого режима достаточно просто *не* передавать `value` или передавать `defaultValue`, если
 требуется задать значение по умолчанию.
 Для контролируемого режима используйте связку свойств `value`/`onChange` для задания значения и его изменения.
 
@@ -80,14 +75,17 @@ const [color, setColor] = React.useState('red');
 
 Свойство `disabled` блокирует взаимодействие с компонентом и добавляет визуальную индикацию недоступности.
 
-{/* @example-description: `CustomSelect` в неактивном состоянии с предвыбранным значением. */}
-<Playground style={{ maxWidth: 270 }}>
-
 ```jsx
-<CustomSelect options={[{ value: 'red', label: 'Красный' }]} defaultValue="red" disabled />
+<FormItem top="Цвет" htmlFor="custom-select-input-2" disabled>
+  <CustomSelect
+    name="custom-select-option-2"
+    id="custom-select-input-2"
+    options={[{ value: 'red', label: 'Красный' }]}
+    defaultValue="red"
+    disabled
+  />
+</FormItem>
 ```
-
-</Playground>
 
 ## Валидация
 
@@ -97,19 +95,24 @@ const [color, setColor] = React.useState('red');
 > Если вы используете `CustomSelect` вместе с [`FormItem`](/components/form-item), вам достаточно указать свойство `status` только у
 > [`FormItem`](/components/form-item).
 
-{/* @example-description: Варианты валидации `CustomSelect` со статусами `error` и `valid`. */}
-<Playground style={{ maxWidth: 270 }}>
-
 ```jsx
-<CustomSelect options={[{ value: 'red', label: 'Красный' }]} defaultValue="red" status="error" />
-<CustomSelect
-  options={[{ value: 'green', label: 'Зеленый' }]}
-  defaultValue="green"
-  status="valid"
-/>
+<FormItem top="Цвет" htmlFor="custom-select-input-3" status="error">
+  <CustomSelect
+    name="custom-select-option-3"
+    id="custom-select-input-3"
+    options={[{ value: 'red', label: 'Красный' }]}
+    defaultValue="red"
+  />
+</FormItem>
+<FormItem top="Цвет" htmlFor="custom-select-input-4" status="valid">
+  <CustomSelect
+    name="custom-select-option-4"
+    id="custom-select-input-4"
+    options={[{ value: 'green', label: 'Зеленый' }]}
+    defaultValue="green"
+  />
+</FormItem>
 ```
-
-</Playground>
 
 ## Кастомизация
 
@@ -118,34 +121,30 @@ const [color, setColor] = React.useState('red');
 С помощью свойства `renderOption` можно влиять на отображение конкретного элемента выпадающего списка.
 Вы можете изменить стандартный компонент [`CustomSelectOption`](#customselectoption) или использовать свой компонент.
 
-{/* @example-description: Кастомный рендер опций `CustomSelect` с дополнительным описанием города. */}
-<Playground style={{ maxWidth: 270 }}>
-
 ```jsx
-<CustomSelect
-  options={[
-    { value: 0, label: 'Москва', country: 'Россия' },
-    { value: 1, label: 'Санкт-Петербург', country: 'Россия' },
-    { value: 2, label: 'Новосибирск', country: 'Россия' },
-    { value: 3, label: 'Йошкар-Ола', country: 'Россия' },
-  ]}
-  placeholder="Выберите город"
-  allowClearButton
-  renderOption={({ option, ...restProps }) => (
-    <CustomSelectOption {...restProps} description={option.country} />
-  )}
-/>
+<FormItem top="Город" htmlFor="custom-select-input-5">
+  <CustomSelect
+    name="custom-select-option-5"
+    id="custom-select-input-5"
+    options={[
+      { value: 0, label: 'Москва', country: 'Россия' },
+      { value: 1, label: 'Санкт-Петербург', country: 'Россия' },
+      { value: 2, label: 'Новосибирск', country: 'Россия' },
+      { value: 3, label: 'Йошкар-Ола', country: 'Россия' },
+    ]}
+    placeholder="Выберите город"
+    allowClearButton
+    renderOption={({ option, ...restProps }) => (
+      <CustomSelectOption {...restProps} description={option.country} />
+    )}
+  />
+</FormItem>
 ```
-
-</Playground>
 
 ## Кастомное поведение при поиске
 
 Пример показывает, как реализовать кастомное поведение поиска: при вводе сохраняется локальный `query`, при отсутствии совпадений в списке появляется опция «Добавить пользователя …»,
 её выбор добавляет новый элемент в `options` — вместе с пользовательским рендером опций это даёт удобный UX для создания элементов на лету.
-
-{/* @example-description: Кастомный поиск с возможностью добавления новой опции прямо из выпадающего списка. */}
-<Playground style={{ maxWidth: 270 }}>
 
 ```jsx
 const users = [
@@ -224,34 +223,33 @@ const onCustomSearchInputChange = (e) => {
 };
 
 return (
-  <CustomSelect
-    value={value}
-    placeholder="Введите имя пользователя"
-    searchable
-    options={customSearchOptions()}
-    onInputChange={onCustomSearchInputChange}
-    renderOption={({ option, ...restProps }) => (
-      <CustomSelectOption
-        style={option.value === '0' ? { color: 'var(--vkui--color_text_accent)' } : {}}
-        {...restProps}
-      >
-        {option.label}
-      </CustomSelectOption>
-    )}
-    onChange={onCustomSearchChange}
-  />
+  <FormItem top="Пользователь" htmlFor="custom-select-input-6">
+    <CustomSelect
+      name="custom-select-option-6"
+      id="custom-select-input-6"
+      value={value}
+      placeholder="Введите имя пользователя"
+      searchable
+      options={customSearchOptions()}
+      onInputChange={onCustomSearchInputChange}
+      renderOption={({ option, ...restProps }) => (
+        <CustomSelectOption
+          style={option.value === '0' ? { color: 'var(--vkui--color_text_accent)' } : {}}
+          {...restProps}
+        >
+          {option.label}
+        </CustomSelectOption>
+      )}
+      onChange={onCustomSearchChange}
+    />
+  </FormItem>
 );
 ```
-
-</Playground>
 
 ## Кастомный алгоритм поиска
 
 Демонстрация кастомного алгоритма поиска иллюстрирует передачу `filterFn` для гибкого соответствия (по `label` и `description`),
 поддержку `searchable` и кастомного рендера опций — полезно, когда нужно искать по нескольким полям или использовать нестандартные критерии.
-
-{/* @example-description: Кастомный алгоритм фильтрации опций через `filterFn` по нескольким полям. */}
-<Playground style={{ maxWidth: 270 }}>
 
 ```jsx
 const cities = [
@@ -288,28 +286,26 @@ const customSearchFilter = (value, option) =>
   option.description.toLowerCase().includes(value.toLowerCase());
 
 return (
-  <CustomSelect
-    id="custom-search-algo-select-id"
-    placeholder="Введите название города или страны"
-    searchable
-    filterFn={customSearchFilter}
-    renderOption={({ option, ...restProps }) => (
-      <CustomSelectOption {...restProps} description={option.description} />
-    )}
-    options={cities}
-  />
+  <FormItem top="Город или страна" htmlFor="custom-search-algo-select-id">
+    <CustomSelect
+      name="custom-select-option-7"
+      id="custom-search-algo-select-id"
+      placeholder="Введите название города или страны"
+      searchable
+      filterFn={customSearchFilter}
+      renderOption={({ option, ...restProps }) => (
+        <CustomSelectOption {...restProps} description={option.description} />
+      )}
+      options={cities}
+    />
+  </FormItem>
 );
 ```
-
-</Playground>
 
 ## Асинхронная загрузка списка
 
 Асинхронный пример показывает подгрузку опций с задержкой/дебаунсом, управление состояниями `fetching`/`remoteQuery`,
 минимальную длину запроса, очистку таймаутов и возможность заменить содержимое выпадающего списка (например, подсказкой «введите хотя бы три символа») — стандартный шаблон для работы с удалёнными API.
-
-{/* @example-description: Асинхронная подгрузка опций `CustomSelect` с поиском, дебаунсом и состоянием загрузки. */}
-<Playground style={{ maxWidth: 600 }}>
 
 ```jsx
 const users = [
@@ -416,8 +412,10 @@ React.useEffect(() => {
 
 return (
   <FormLayoutGroup mode="horizontal" style={{ width: '100%' }}>
-    <FormItem style={{ flexGrow: 1, flexShrink: 1 }}>
+    <FormItem top="Пользователь" htmlFor="custom-select-input-8" style={{ flexGrow: 1, flexShrink: 1 }}>
       <CustomSelect
+        name="custom-select-option-8"
+        id="custom-select-input-8"
         aria-label="Пользователь"
         options={remoteUsers}
         searchable={searchable}
@@ -447,39 +445,31 @@ return (
 );
 ```
 
-</Playground>
-
-## CustomSelectOption [#custom-select-option]
+## CustomSelectOption \[#custom-select-option]
 
 Универсальный компонент для отрисовки одного из значений в выпадающем списке.
 Передавайте данный компонент в свойство `renderOption`, для кастомизации значений выпадающего списка.
 Помимо `CustomSelect` используется и в `ChipsSelect`.
 
-{/* @example-description: Базовый пример `CustomSelectOption` с иконками в `before` и `after`. */}
-<Playground style={{ maxWidth: 270 }}>
-  ```jsx
-  <CustomSelectOption before={<Avatar initials="ИИ" size={20} aria-hidden />} after={<Icon16Pin />}>
-    Иван Иванов
-  </CustomSelectOption>
-  ```
-</Playground>
+```jsx
+<CustomSelectOption before={<Avatar initials="ИИ" size={20} aria-hidden />} after={<Icon16Pin />}>
+  Иван Иванов
+</CustomSelectOption>
+```
 
 Для реализации многоуровневых `CustomSelectOption` используйте свойство `hierarchy`,
 которое позволяет создать нужный отступ в зависимости от уровня вложенности.
 
-{/* @example-description: Многоуровневые опции с отступами через свойство `hierarchy`. */}
-<Playground style={{ maxWidth: 270 }}>
-  ```jsx
-  <CustomSelectOption>Диск</CustomSelectOption>
-  <CustomSelectOption hierarchy={1}>Папка</CustomSelectOption>
-  <CustomSelectOption hierarchy={2}>Файл 1</CustomSelectOption>
-  <CustomSelectOption hierarchy={2} selected>
-    Файл 2
-  </CustomSelectOption>
-  ```
-</Playground>
+```jsx
+<CustomSelectOption>Диск</CustomSelectOption>
+<CustomSelectOption hierarchy={1}>Папка</CustomSelectOption>
+<CustomSelectOption hierarchy={2}>Файл 1</CustomSelectOption>
+<CustomSelectOption hierarchy={2} selected>
+  Файл 2
+</CustomSelectOption>
+```
 
-## Тестирование (e2e) [#e2e]
+## Тестирование (e2e) \[#e2e]
 
 Для поиска компонента и его элементов на странице cуществует ряд вспомогательных свойств:
 
@@ -487,14 +477,14 @@ return (
 `data-testid` или `data-test-id` идентификатор попадёт `<input>`.
 Доступ к полю ввода может быть полезен для:
 
-- получения текста, введённого пользователем при поиске опций, в режиме `searchable`;
-- получения информации о наличии фокуса на компоненте;
-- симуляции работы с компонентом с клавиатуры.
+* получения текста, введённого пользователем при поиске опций, в режиме `searchable`;
+* получения информации о наличии фокуса на компоненте;
+* симуляции работы с компонентом с клавиатуры.
 
 Используйте `labelTextTestId`:
 
-- для симуляции работы с компонентом с помощью мыши, тач-устройства;
-- для получения текста выбранной в данный момент опции.
+* для симуляции работы с компонентом с помощью мыши, тач-устройства;
+* для получения текста выбранной в данный момент опции.
 
 Для взаимодействия с кнопкой очистки состояния компонента, которая появляется,
 если `CustomSelect` имеет свойство `searchable` и пользователь выбрал опцию, используйте свойство `clearButtonTestId`.
@@ -510,14 +500,14 @@ return (
 Через свойство `slotProps` можно прокинуть свойства во внутренние элементы.
 Это удобно для добавления кастомных классов, data-атрибутов, aria-атрибутов, обработчиков событий, доступов к элементам через `getRootRef` и других расширений, не влияя на внешний API компонента.
 
-{/* @example-description: Настройка внутренних слотов `CustomSelect` через `slotProps` и ссылки на DOM-элементы. */}
-<Playground style={{ maxWidth: 270 }}>
-  ```jsx
-  const inputRef = React.useRef();
-  const selectRef = React.useRef();
+```jsx
+const inputRef = React.useRef();
+const selectRef = React.useRef();
 
-  return (
+return (
+  <FormItem top="Город" htmlFor="custom-select-input-id">
     <CustomSelect
+      name="custom-select-option-9"
       options={[
         { value: 0, label: 'Москва' },
         { value: 1, label: 'Санкт-Петербург' },
@@ -543,11 +533,11 @@ return (
         }
       }}
     />
-  )
-  ```
-</Playground>
+  </FormItem>
+)
+```
 
-## Доступность (a11y) [#a11y]
+## Доступность (a11y) \[#a11y]
 
 Следуйте рекомендациям [доступности компонента `Select`](/components/select#a11y).
 
@@ -571,68 +561,69 @@ return (
 
 С `v8` этот флаг теперь включен по умолчанию. Не рекомендуется отключать этот флаг, так как с `v9` этот флаг будет удален.
 
-## Свойства и методы [#api]
+## Свойства и методы \[#api]
 
 ### CustomSelect
 
-| Свойство | Тип | По умолчанию | Описание |
-| --- | --- | --- | --- |
-| `accessible` | `boolean` | `-` | **Deprecated**: Since 8.0.0. Будет удалено в 9.0.0.  Включает режим в котором выбранное значение `CustomSelect` читается скринридерами корректно. В данном режиме введенное в поле ввода значение не сбрасывается при потере фокуса. |
-| `after` | `ReactNode` | `-` | Добавляет иконку справа.  Рекомендации:  - Используйте следующие размеры иконок `12` \| `16` \| `20` \| `24` \| `28`. - Используйте [IconButton](https://vkui.io/components/icon-button), если вам нужна иконка, реагируюущая на нажатие. |
-| `afterAlign` | `FieldIconsAlign` | `-` | Вертикальное выравнивание иконки справа. |
-| `align` | `AlignType` | `-` |  |
-| `allowClearButton` | `boolean` | `-` | Если `true`, то справа будет отображаться кнопка для очистки значения. |
-| `before` | `ReactNode` | `-` | Добавляет иконку слева.  Рекомендации:  - Используйте следующие размеры иконок `12` \| `16` \| `20` \| `24` \| `28`. - Используйте [IconButton](https://vkui.io/components/icon-button), если вам нужна иконка, реагирующая на нажатие. |
-| `beforeAlign` | `FieldIconsAlign` | `-` | Вертикальное выравнивание иконки слева. |
-| `ClearButton` | `ComponentType<CustomSelectClearButtonProps>` | `-` | Кастомная кнопка для очистки значения. Должна принимать обязательное свойство `onClick`. |
-| `clearButtonTestId` | `string` | `-` | Передает атрибут `data-testid` для кнопки очистки. |
-| `defaultValue` | `SelectValue` | `-` | См. `value`. |
-| `dropdownAutoWidth` | `boolean` | `-` | Ширина раскрывающегося списка зависит от контента. |
-| `dropdownOffsetDistance` | `number` | `-` | Отступ от выпадающего списка. |
-| `emptyText` | `string` | `-` | Текст, который будет отображен, если приходит пустой `options`. |
-| `fetching` | `boolean` | `false` | Если `true`, то в дропдауне вместо списка опций рисуется спиннер. При переданных `renderDropdown` и `fetching: true` "победит" `renderDropdown`. |
-| `fetchingCompletedLabel` | `string \| ((optionsCount: number) => string)` | ``Загружено опций: ${options.length}`` | Текстовая метка для индикации завершения процесса загрузки данных для пользователей скринридерами. По умолчанию: `"Загружено опций: ${options.length}"`. |
-| `fetchingInProgressLabel` | `string` | `Список опций загружается...` | Текстовая метка для индикации процесса загрузки данных для пользователей скринридерами. По умолчанию: `"Список опций загружается..."`. |
-| `filterFn` | `false \| FilterFn<OptionInterfaceT>` | `-` | Функция для кастомной фильтрации. По умолчанию поиск производится по `option.label`. |
-| `forceDropdownPortal` | `boolean` | `-` | Использовать Portal для рендеринга выпадающего списка. |
-| `getRef` | `Ref<HTMLSelectElement>` | `-` | **Deprecated**: Since 7.9.0. Вместо этого используйте `slotProps={ select: { getRootRef: ... } }`. |
-| `getRootRef` | `Ref<HTMLDivElement>` | `-` |  |
-| `getSelectInputRef` | `Ref<HTMLInputElement>` | `-` | **Deprecated**: Since 7.9.0. Вместо этого используйте `slotProps={ input: { getRootRef: ... } }`.  Ref на внутрений компонент input. |
-| `icon` | `ReactNode` | `-` | Иконка раскрывающегося списка. |
-| `labelTextTestId` | `string` | `-` | Передает атрибут `data-testid` для элемента, внутри которого отображается текст выбранной опции `CustomSelect` или плейсхолдер. |
-| `mode` | `"default" \| "plain"` | `-` | **Deprecated**: Будет удалено в 10.0.0, используйте `selectType`.  Режим отображения.  - `default` — показывает фон, обводку и, при наличии, текст-подсказку. - `plain` — показывает только текст-подсказку. |
-| `multiline` | `boolean` | `-` | Флаг для включения многострочного режима. |
-| `nativeSelectTestId` | `string` | `-` | **Deprecated**: Since 7.9.0. Вместо этого используйте `slotProps={ select: { 'data-testid': ... } }`.  Передает атрибут `data-testid` для нативного элемента `select`. |
-| `noMaxHeight` | `boolean` | `-` | Отключает максимальную высоту по умолчанию. |
-| `onChange` | `((e: ChangeEvent<HTMLSelectElement, Element>, newValue: SelectValue) => void)` | `-` | Обработчик, срабатывающий при изменении выбранного значения. Вторым параметром прокидывается новое значение.  > ⚠️ Лучше использовать второй параметр при работе с компонентом. |
-| `onClose` | `VoidFunction` | `-` | Обработчик закрытия выпадающего списка. |
-| `onInputChange` | `((e: ChangeEvent<HTMLInputElement, Element>) => void)` | `-` | Событие изменения текстового поля. |
-| `onInputKeyDown` | `((e: KeyboardEvent<Element>, isOpen: boolean) => void)` | `-` | Обработчик события `keyDown` в поле ввода. |
-| `onOpen` | `VoidFunction` | `-` | Обработчик открытия выпадающего списка. |
-| `**options** \*` | `OptionInterfaceT[]` | `-` | Список опций в списке. |
-| `overscrollBehavior` | `"none" \| "auto" \| "contain"` | `-` | Поведение overscroll, подробнее можно почитать в [документации](https://developer.mozilla.org/en-US/docs/Web/CSS/overscroll-behavior). |
-| `placeholder` | `string` | `-` | Текст-подсказка при отсутствии выбранного значения. |
-| `popupDirection` | `PopupDirection` | `-` | Направление раскрытия выпадающего списка. |
-| `renderDropdown` | `({ defaultDropdownContent, }: { defaultDropdownContent: ReactNode; }) => ReactNode` | `-` | Рендер-проп для кастомного рендера содержимого дропдауна. В `defaultDropdownContent` содержится список опций в виде скроллящегося блока. |
-| `renderOption` | `(props: CustomSelectRenderOption<OptionInterfaceT>) => ReactNode` | `-` | Рендер-проп для кастомного рендера опции. В объекте аргумента приходят [свойства опции](https://vkui.io/components/custom-select#custom-select-option-api).  > ⚠️  Важно: свойство опции `disabled` должно выставляться только через проп `options`. > Запрещается выставлять `disabled` проп опциям в обход `options`, иначе `CustomSelect` не будет знать об актуальном состоянии опции. |
-| `searchable` | `boolean` | `-` | Если `true`, то при нажатии на `CustomSelect` в нём появится текстовое поле для поиска по `options`. По умолчанию поиск производится по `option.label`. |
-| `selectType` | `SelectType` | `-` | Тип селекта, влияющий на отображение. |
-| `slotProps` | `({ root?: (Omit<HTMLAttributes<HTMLDivElement>, "children"> & HasDataAttribute & HasRootRef<HTMLDivElement>); select?: (NativeHTMLSelectProps & ... 1 more ... & HasDataAttribute) \| undefined; } & { ...; }) \| undefined` | `-` | Свойства, которые можно прокинуть внутрь компонента: - `root`: свойства для прокидывания в корень компонента; - `select`: свойства для прокидывания в нативный `select`; - `input`: свойства для прокидывания в нативный `input`. |
-| `status` | `"default" \| "error" \| "valid"` | `-` | Статус отображения поля в форме. |
-| `value` | `SelectValue` | `-` | Выбранное значение.  > ⚠️  Важно: При прокидывании `undefined` компонент будет считаться `Uncontrolled`. > > Не используйте `undefined`, чтобы показать невыбранное состояние. Вместо этого используйте `null`. |
+| Свойство                  | Тип                                                                                                                                                                                                                           | По умолчанию                         | Описание                                                                                                                                                                                                                                                                                                                                                                                   |
+| ------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `accessible`              | `boolean`                                                                                                                                                                                                                     | `-`                                  | **Deprecated**: Since 8.0.0. Будет удалено в 9.0.0.  Включает режим в котором выбранное значение `CustomSelect` читается скринридерами корректно. В данном режиме введенное в поле ввода значение не сбрасывается при потере фокуса.                                                                                                                                                       |
+| `after`                   | `ReactNode`                                                                                                                                                                                                                   | `-`                                  | Добавляет иконку справа.  Рекомендации:  - Используйте следующие размеры иконок `12` \| `16` \| `20` \| `24` \| `28`. - Используйте [IconButton](https://vkui.io/components/icon-button), если вам нужна иконка, реагируюущая на нажатие.                                                                                                                                                  |
+| `afterAlign`              | `FieldIconsAlign`                                                                                                                                                                                                             | `-`                                  | Вертикальное выравнивание иконки справа.                                                                                                                                                                                                                                                                                                                                                   |
+| `align`                   | `AlignType`                                                                                                                                                                                                                   | `-`                                  |                                                                                                                                                                                                                                                                                                                                                                                            |
+| `allowClearButton`        | `boolean`                                                                                                                                                                                                                     | `-`                                  | Если `true`, то справа будет отображаться кнопка для очистки значения.                                                                                                                                                                                                                                                                                                                     |
+| `before`                  | `ReactNode`                                                                                                                                                                                                                   | `-`                                  | Добавляет иконку слева.  Рекомендации:  - Используйте следующие размеры иконок `12` \| `16` \| `20` \| `24` \| `28`. - Используйте [IconButton](https://vkui.io/components/icon-button), если вам нужна иконка, реагирующая на нажатие.                                                                                                                                                    |
+| `beforeAlign`             | `FieldIconsAlign`                                                                                                                                                                                                             | `-`                                  | Вертикальное выравнивание иконки слева.                                                                                                                                                                                                                                                                                                                                                    |
+| `ClearButton`             | `ComponentType<CustomSelectClearButtonProps>`                                                                                                                                                                                 | `-`                                  | Кастомная кнопка для очистки значения. Должна принимать обязательное свойство `onClick`.                                                                                                                                                                                                                                                                                                   |
+| `clearButtonTestId`       | `string`                                                                                                                                                                                                                      | `-`                                  | Передает атрибут `data-testid` для кнопки очистки.                                                                                                                                                                                                                                                                                                                                         |
+| `defaultValue`            | `SelectValue`                                                                                                                                                                                                                 | `-`                                  | См. `value`.                                                                                                                                                                                                                                                                                                                                                                               |
+| `dropdownAutoWidth`       | `boolean`                                                                                                                                                                                                                     | `-`                                  | Ширина раскрывающегося списка зависит от контента.                                                                                                                                                                                                                                                                                                                                         |
+| `dropdownOffsetDistance`  | `number`                                                                                                                                                                                                                      | `-`                                  | Отступ от выпадающего списка.                                                                                                                                                                                                                                                                                                                                                              |
+| `emptyText`               | `string`                                                                                                                                                                                                                      | `-`                                  | Текст, который будет отображен, если приходит пустой `options`.                                                                                                                                                                                                                                                                                                                            |
+| `fetching`                | `boolean`                                                                                                                                                                                                                     | `false`                              | Если `true`, то в дропдауне вместо списка опций рисуется спиннер. При переданных `renderDropdown` и `fetching: true` "победит" `renderDropdown`.                                                                                                                                                                                                                                           |
+| `fetchingCompletedLabel`  | `string \| ((optionsCount: number) => string)`                                                                                                                                                                                | `Загружено опций: ${options.length}` | Текстовая метка для индикации завершения процесса загрузки данных для пользователей скринридерами. По умолчанию: `"Загружено опций: ${options.length}"`.                                                                                                                                                                                                                                   |
+| `fetchingInProgressLabel` | `string`                                                                                                                                                                                                                      | `Список опций загружается...`        | Текстовая метка для индикации процесса загрузки данных для пользователей скринридерами. По умолчанию: `"Список опций загружается..."`.                                                                                                                                                                                                                                                     |
+| `filterFn`                | `false \| FilterFn<OptionInterfaceT>`                                                                                                                                                                                         | `-`                                  | Функция для кастомной фильтрации. По умолчанию поиск производится по `option.label`.                                                                                                                                                                                                                                                                                                       |
+| `forceDropdownPortal`     | `boolean`                                                                                                                                                                                                                     | `-`                                  | Использовать Portal для рендеринга выпадающего списка.                                                                                                                                                                                                                                                                                                                                     |
+| `getRef`                  | `Ref<HTMLSelectElement>`                                                                                                                                                                                                      | `-`                                  | **Deprecated**: Since 7.9.0. Вместо этого используйте `slotProps={ select: { getRootRef: ... } }`.                                                                                                                                                                                                                                                                                         |
+| `getRootRef`              | `Ref<HTMLDivElement>`                                                                                                                                                                                                         | `-`                                  |                                                                                                                                                                                                                                                                                                                                                                                            |
+| `getSelectInputRef`       | `Ref<HTMLInputElement>`                                                                                                                                                                                                       | `-`                                  | **Deprecated**: Since 7.9.0. Вместо этого используйте `slotProps={ input: { getRootRef: ... } }`.  Ref на внутрений компонент input.                                                                                                                                                                                                                                                       |
+| `icon`                    | `ReactNode`                                                                                                                                                                                                                   | `-`                                  | Иконка раскрывающегося списка.                                                                                                                                                                                                                                                                                                                                                             |
+| `labelTextTestId`         | `string`                                                                                                                                                                                                                      | `-`                                  | Передает атрибут `data-testid` для элемента, внутри которого отображается текст выбранной опции `CustomSelect` или плейсхолдер.                                                                                                                                                                                                                                                            |
+| `mode`                    | `"default" \| "plain"`                                                                                                                                                                                                        | `-`                                  | **Deprecated**: Будет удалено в 10.0.0, используйте `selectType`.  Режим отображения.  - `default` — показывает фон, обводку и, при наличии, текст-подсказку. - `plain` — показывает только текст-подсказку.                                                                                                                                                                               |
+| `multiline`               | `boolean`                                                                                                                                                                                                                     | `-`                                  | Флаг для включения многострочного режима.                                                                                                                                                                                                                                                                                                                                                  |
+| `nativeSelectTestId`      | `string`                                                                                                                                                                                                                      | `-`                                  | **Deprecated**: Since 7.9.0. Вместо этого используйте `slotProps={ select: { 'data-testid': ... } }`.  Передает атрибут `data-testid` для нативного элемента `select`.                                                                                                                                                                                                                     |
+| `noMaxHeight`             | `boolean`                                                                                                                                                                                                                     | `-`                                  | Отключает максимальную высоту по умолчанию.                                                                                                                                                                                                                                                                                                                                                |
+| `onChange`                | `((e: ChangeEvent<HTMLSelectElement, Element>, newValue: SelectValue) => void)`                                                                                                                                               | `-`                                  | Обработчик, срабатывающий при изменении выбранного значения. Вторым параметром прокидывается новое значение.  > ⚠️ Лучше использовать второй параметр при работе с компонентом.                                                                                                                                                                                                            |
+| `onClose`                 | `VoidFunction`                                                                                                                                                                                                                | `-`                                  | Обработчик закрытия выпадающего списка.                                                                                                                                                                                                                                                                                                                                                    |
+| `onInputChange`           | `((e: ChangeEvent<HTMLInputElement, Element>) => void)`                                                                                                                                                                       | `-`                                  | Событие изменения текстового поля.                                                                                                                                                                                                                                                                                                                                                         |
+| `onInputKeyDown`          | `((e: KeyboardEvent<Element>, isOpen: boolean) => void)`                                                                                                                                                                      | `-`                                  | Обработчик события `keyDown` в поле ввода.                                                                                                                                                                                                                                                                                                                                                 |
+| `onOpen`                  | `VoidFunction`                                                                                                                                                                                                                | `-`                                  | Обработчик открытия выпадающего списка.                                                                                                                                                                                                                                                                                                                                                    |
+| `**options** \*`          | `OptionInterfaceT[]`                                                                                                                                                                                                          | `-`                                  | Список опций в списке.                                                                                                                                                                                                                                                                                                                                                                     |
+| `overscrollBehavior`      | `"none" \| "auto" \| "contain"`                                                                                                                                                                                               | `-`                                  | Поведение overscroll, подробнее можно почитать в [документации](https://developer.mozilla.org/en-US/docs/Web/CSS/overscroll-behavior).                                                                                                                                                                                                                                                     |
+| `placeholder`             | `string`                                                                                                                                                                                                                      | `-`                                  | Текст-подсказка при отсутствии выбранного значения.                                                                                                                                                                                                                                                                                                                                        |
+| `popupDirection`          | `PopupDirection`                                                                                                                                                                                                              | `-`                                  | Направление раскрытия выпадающего списка.                                                                                                                                                                                                                                                                                                                                                  |
+| `ref`                     | `Ref<HTMLDivElement>`                                                                                                                                                                                                         | `-`                                  |                                                                                                                                                                                                                                                                                                                                                                                            |
+| `renderDropdown`          | `({ defaultDropdownContent, }: { defaultDropdownContent: ReactNode; }) => ReactNode`                                                                                                                                          | `-`                                  | Рендер-проп для кастомного рендера содержимого дропдауна. В `defaultDropdownContent` содержится список опций в виде скроллящегося блока.                                                                                                                                                                                                                                                   |
+| `renderOption`            | `(props: CustomSelectRenderOption<OptionInterfaceT>) => ReactNode`                                                                                                                                                            | `-`                                  | Рендер-проп для кастомного рендера опции. В объекте аргумента приходят [свойства опции](https://vkui.io/components/custom-select#custom-select-option-api).  > ⚠️  Важно: свойство опции `disabled` должно выставляться только через проп `options`. > Запрещается выставлять `disabled` проп опциям в обход `options`, иначе `CustomSelect` не будет знать об актуальном состоянии опции. |
+| `searchable`              | `boolean`                                                                                                                                                                                                                     | `-`                                  | Если `true`, то при нажатии на `CustomSelect` в нём появится текстовое поле для поиска по `options`. По умолчанию поиск производится по `option.label`.                                                                                                                                                                                                                                    |
+| `selectType`              | `SelectType`                                                                                                                                                                                                                  | `-`                                  | Тип селекта, влияющий на отображение.                                                                                                                                                                                                                                                                                                                                                      |
+| `slotProps`               | `({ root?: (Omit<HTMLAttributes<HTMLDivElement>, "children"> & HasDataAttribute & HasRootRef<HTMLDivElement>); select?: (NativeHTMLSelectProps & ... 1 more ... & HasDataAttribute) \| undefined; } & { ...; }) \| undefined` | `-`                                  | Свойства, которые можно прокинуть внутрь компонента: - `root`: свойства для прокидывания в корень компонента; - `select`: свойства для прокидывания в нативный `select`; - `input`: свойства для прокидывания в нативный `input`.                                                                                                                                                          |
+| `status`                  | `"default" \| "error" \| "valid"`                                                                                                                                                                                             | `-`                                  | Статус отображения поля в форме.                                                                                                                                                                                                                                                                                                                                                           |
+| `value`                   | `SelectValue`                                                                                                                                                                                                                 | `-`                                  | Выбранное значение.  > ⚠️  Важно: При прокидывании `undefined` компонент будет считаться `Uncontrolled`. > > Не используйте `undefined`, чтобы показать невыбранное состояние. Вместо этого используйте `null`.                                                                                                                                                                            |
 
 ### CustomSelectOption
 
-| Свойство | Тип | По умолчанию | Описание |
-| --- | --- | --- | --- |
-| `after` | `ReactNode` | `-` | Вставляет элемент в конец блока после основного контента. Например, можно передать компонент `Avatar`, `Icon<Name>` или другие изображения. |
-| `before` | `ReactNode` | `-` | Вставляет элемент в начало блока перед основным контентом. Например, можно передать компонент `Avatar`, `Icon<Name>` или другие изображения. |
-| `description` | `ReactNode` | `-` | Добавляет описание под основным блоком. |
-| `disabled` | `boolean` | `-` | Блокирует весь блок.  > ⚠️  Важно: если CustomSelectOption используется внутри [Select](https://vkui.io/components/select), [CustomSelect](https://vkui.io/components/custom-select) или [ChipsSelect](https://vkui.io/components/chips-select), то свойство явно должно выставляться только через структуру `options`. > Запрещается выставлять `disabled` проп опциям в обход `options`, иначе [CustomSelect](https://vkui.io/components/custom-select) и [ChipsSelect](https://vkui.io/components/chips-select) не будут знать об актуальном состоянии опции. |
-| `focused` | `boolean` | `-` | Включает состояние фокуса. |
-| `getRootRef` | `Ref<HTMLDivElement>` | `-` |  |
-| `hierarchy` | `number` | `0` | Позволяет создавать вложенность. |
-| `hovered` | `boolean` | `-` | Включает состояние наведения. |
-| `selected` | `boolean` | `-` | Включает состояние выбранного элемента списка. |
-| `textNoWrap` | `boolean` | `-` | Предотвращает перенос текста внутри опции. |
-
+| Свойство      | Тип                   | По умолчанию | Описание                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| ------------- | --------------------- | ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `after`       | `ReactNode`           | `-`          | Вставляет элемент в конец блока после основного контента. Например, можно передать компонент `Avatar`, `Icon<Name>` или другие изображения.                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| `before`      | `ReactNode`           | `-`          | Вставляет элемент в начало блока перед основным контентом. Например, можно передать компонент `Avatar`, `Icon<Name>` или другие изображения.                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| `description` | `ReactNode`           | `-`          | Добавляет описание под основным блоком.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| `disabled`    | `boolean`             | `-`          | Блокирует весь блок.  > ⚠️  Важно: если CustomSelectOption используется внутри [Select](https://vkui.io/components/select), [CustomSelect](https://vkui.io/components/custom-select) или [ChipsSelect](https://vkui.io/components/chips-select), то свойство явно должно выставляться только через структуру `options`. > Запрещается выставлять `disabled` проп опциям в обход `options`, иначе [CustomSelect](https://vkui.io/components/custom-select) и [ChipsSelect](https://vkui.io/components/chips-select) не будут знать об актуальном состоянии опции. |
+| `focused`     | `boolean`             | `-`          | Включает состояние фокуса.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| `getRootRef`  | `Ref<HTMLDivElement>` | `-`          |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| `hierarchy`   | `number`              | `0`          | Позволяет создавать вложенность.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| `hovered`     | `boolean`             | `-`          | Включает состояние наведения.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| `ref`         | `Ref<HTMLDivElement>` | `-`          |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| `selected`    | `boolean`             | `-`          | Включает состояние выбранного элемента списка.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| `textNoWrap`  | `boolean`             | `-`          | Предотвращает перенос текста внутри опции.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |

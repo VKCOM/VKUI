@@ -70,10 +70,10 @@ class RemovedResources {
         }
         const messages = [];
         if (externalRemoval.length > 0) {
-            messages.push(localize(2099, "The following files have been closed and modified on disk: {0}.", externalRemoval.join(', ')));
+            messages.push(localize(2132, "The following files have been closed and modified on disk: {0}.", externalRemoval.join(', ')));
         }
         if (noParallelUniverses.length > 0) {
-            messages.push(localize(2100, "The following files have been modified in an incompatible way: {0}.", noParallelUniverses.join(', ')));
+            messages.push(localize(2133, "The following files have been modified in an incompatible way: {0}.", noParallelUniverses.join(', ')));
         }
         return messages.join('\n');
     }
@@ -645,10 +645,10 @@ let UndoRedoService = class UndoRedoService {
     }
     _checkWorkspaceUndo(strResource, element, editStackSnapshot, checkInvalidatedResources) {
         if (element.removedResources) {
-            return this._tryToSplitAndUndo(strResource, element, element.removedResources, localize(2101, "Could not undo '{0}' across all files. {1}", element.label, element.removedResources.createMessage()));
+            return this._tryToSplitAndUndo(strResource, element, element.removedResources, localize(2134, "Could not undo '{0}' across all files. {1}", element.label, element.removedResources.createMessage()));
         }
         if (checkInvalidatedResources && element.invalidatedResources) {
-            return this._tryToSplitAndUndo(strResource, element, element.invalidatedResources, localize(2102, "Could not undo '{0}' across all files. {1}", element.label, element.invalidatedResources.createMessage()));
+            return this._tryToSplitAndUndo(strResource, element, element.invalidatedResources, localize(2135, "Could not undo '{0}' across all files. {1}", element.label, element.invalidatedResources.createMessage()));
         }
         // this must be the last past element in all the impacted resources!
         const cannotUndoDueToResources = [];
@@ -658,7 +658,7 @@ let UndoRedoService = class UndoRedoService {
             }
         }
         if (cannotUndoDueToResources.length > 0) {
-            return this._tryToSplitAndUndo(strResource, element, null, localize(2103, "Could not undo '{0}' across all files because changes were made to {1}", element.label, cannotUndoDueToResources.join(', ')));
+            return this._tryToSplitAndUndo(strResource, element, null, localize(2136, "Could not undo '{0}' across all files because changes were made to {1}", element.label, cannotUndoDueToResources.join(', ')));
         }
         const cannotLockDueToResources = [];
         for (const editStack of editStackSnapshot.editStacks) {
@@ -667,11 +667,11 @@ let UndoRedoService = class UndoRedoService {
             }
         }
         if (cannotLockDueToResources.length > 0) {
-            return this._tryToSplitAndUndo(strResource, element, null, localize(2104, "Could not undo '{0}' across all files because there is already an undo or redo operation running on {1}", element.label, cannotLockDueToResources.join(', ')));
+            return this._tryToSplitAndUndo(strResource, element, null, localize(2137, "Could not undo '{0}' across all files because there is already an undo or redo operation running on {1}", element.label, cannotLockDueToResources.join(', ')));
         }
         // check if new stack elements were added in the meantime...
         if (!editStackSnapshot.isValid()) {
-            return this._tryToSplitAndUndo(strResource, element, null, localize(2105, "Could not undo '{0}' across all files because an undo or redo operation occurred in the meantime", element.label));
+            return this._tryToSplitAndUndo(strResource, element, null, localize(2138, "Could not undo '{0}' across all files because an undo or redo operation occurred in the meantime", element.label));
         }
         return null;
     }
@@ -718,14 +718,14 @@ let UndoRedoService = class UndoRedoService {
             })(UndoChoice || (UndoChoice = {}));
             const { result } = await this._dialogService.prompt({
                 type: Severity.Info,
-                message: localize(2106, "Would you like to undo '{0}' across all files?", element.label),
+                message: localize(2139, "Would you like to undo '{0}' across all files?", element.label),
                 buttons: [
                     {
-                        label: localize(2107, "&&Undo in {0} Files", editStackSnapshot.editStacks.length),
+                        label: localize(2140, "&&Undo in {0} Files", editStackSnapshot.editStacks.length),
                         run: () => UndoChoice.All
                     },
                     {
-                        label: localize(2108, "Undo this &&File"),
+                        label: localize(2141, "Undo this &&File"),
                         run: () => UndoChoice.This
                     }
                 ],
@@ -776,7 +776,7 @@ let UndoRedoService = class UndoRedoService {
             return;
         }
         if (editStack.locked) {
-            const message = localize(2109, "Could not undo '{0}' because there is already an undo or redo operation running.", element.label);
+            const message = localize(2142, "Could not undo '{0}' because there is already an undo or redo operation running.", element.label);
             this._notificationService.warn(message);
             return;
         }
@@ -860,9 +860,9 @@ let UndoRedoService = class UndoRedoService {
     }
     async _confirmAndContinueUndo(strResource, sourceId, element) {
         const result = await this._dialogService.confirm({
-            message: localize(2110, "Would you like to undo '{0}'?", element.label),
-            primaryButton: localize(2111, "&&Yes"),
-            cancelButton: localize(2112, "No")
+            message: localize(2143, "Would you like to undo '{0}'?", element.label),
+            primaryButton: localize(2144, "&&Yes"),
+            cancelButton: localize(2145, "No")
         });
         if (!result.confirmed) {
             return;
@@ -919,10 +919,10 @@ let UndoRedoService = class UndoRedoService {
     }
     _checkWorkspaceRedo(strResource, element, editStackSnapshot, checkInvalidatedResources) {
         if (element.removedResources) {
-            return this._tryToSplitAndRedo(strResource, element, element.removedResources, localize(2113, "Could not redo '{0}' across all files. {1}", element.label, element.removedResources.createMessage()));
+            return this._tryToSplitAndRedo(strResource, element, element.removedResources, localize(2146, "Could not redo '{0}' across all files. {1}", element.label, element.removedResources.createMessage()));
         }
         if (checkInvalidatedResources && element.invalidatedResources) {
-            return this._tryToSplitAndRedo(strResource, element, element.invalidatedResources, localize(2114, "Could not redo '{0}' across all files. {1}", element.label, element.invalidatedResources.createMessage()));
+            return this._tryToSplitAndRedo(strResource, element, element.invalidatedResources, localize(2147, "Could not redo '{0}' across all files. {1}", element.label, element.invalidatedResources.createMessage()));
         }
         // this must be the last future element in all the impacted resources!
         const cannotRedoDueToResources = [];
@@ -932,7 +932,7 @@ let UndoRedoService = class UndoRedoService {
             }
         }
         if (cannotRedoDueToResources.length > 0) {
-            return this._tryToSplitAndRedo(strResource, element, null, localize(2115, "Could not redo '{0}' across all files because changes were made to {1}", element.label, cannotRedoDueToResources.join(', ')));
+            return this._tryToSplitAndRedo(strResource, element, null, localize(2148, "Could not redo '{0}' across all files because changes were made to {1}", element.label, cannotRedoDueToResources.join(', ')));
         }
         const cannotLockDueToResources = [];
         for (const editStack of editStackSnapshot.editStacks) {
@@ -941,11 +941,11 @@ let UndoRedoService = class UndoRedoService {
             }
         }
         if (cannotLockDueToResources.length > 0) {
-            return this._tryToSplitAndRedo(strResource, element, null, localize(2116, "Could not redo '{0}' across all files because there is already an undo or redo operation running on {1}", element.label, cannotLockDueToResources.join(', ')));
+            return this._tryToSplitAndRedo(strResource, element, null, localize(2149, "Could not redo '{0}' across all files because there is already an undo or redo operation running on {1}", element.label, cannotLockDueToResources.join(', ')));
         }
         // check if new stack elements were added in the meantime...
         if (!editStackSnapshot.isValid()) {
-            return this._tryToSplitAndRedo(strResource, element, null, localize(2117, "Could not redo '{0}' across all files because an undo or redo operation occurred in the meantime", element.label));
+            return this._tryToSplitAndRedo(strResource, element, null, localize(2150, "Could not redo '{0}' across all files because an undo or redo operation occurred in the meantime", element.label));
         }
         return null;
     }
@@ -984,7 +984,7 @@ let UndoRedoService = class UndoRedoService {
             return;
         }
         if (editStack.locked) {
-            const message = localize(2118, "Could not redo '{0}' because there is already an undo or redo operation running.", element.label);
+            const message = localize(2151, "Could not redo '{0}' because there is already an undo or redo operation running.", element.label);
             this._notificationService.warn(message);
             return;
         }

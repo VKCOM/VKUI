@@ -468,7 +468,7 @@ let SuggestController = class SuggestController {
     }
     _alertCompletionItem(item) {
         if (isNonEmptyArray(item.completion.additionalTextEdits)) {
-            const msg = localize(1514, "Accepting '{0}' made {1} additional edits", item.textLabel, item.completion.additionalTextEdits.length);
+            const msg = localize(1534, "Accepting '{0}' made {1} additional edits", item.textLabel, item.completion.additionalTextEdits.length);
             alert(msg);
         }
     }
@@ -654,7 +654,7 @@ class TriggerSuggestAction extends EditorAction {
     constructor() {
         super({
             id: TriggerSuggestAction.id,
-            label: localize2(1523, "Trigger Suggest"),
+            label: localize2(1543, "Trigger Suggest"),
             precondition: ContextKeyExpr.and(EditorContextKeys.writable, EditorContextKeys.hasCompletionItemProvider, Context.Visible.toNegated()),
             kbOpts: {
                 kbExpr: EditorContextKeys.textInputFocus,
@@ -702,19 +702,19 @@ registerEditorCommand(new SuggestCommand({
         }],
     menuOpts: [{
             menuId: suggestWidgetStatusbarMenu,
-            title: localize(1515, "Insert"),
+            title: localize(1535, "Insert"),
             group: 'left',
             order: 1,
             when: ContextKeyExpr.and(Context.HasFocusedSuggestion, Context.HasInsertAndReplaceRange.toNegated())
         }, {
             menuId: suggestWidgetStatusbarMenu,
-            title: localize(1516, "Insert"),
+            title: localize(1536, "Insert"),
             group: 'left',
             order: 1,
             when: ContextKeyExpr.and(Context.HasFocusedSuggestion, Context.HasInsertAndReplaceRange, Context.InsertMode.isEqualTo('insert'))
         }, {
             menuId: suggestWidgetStatusbarMenu,
-            title: localize(1517, "Replace"),
+            title: localize(1537, "Replace"),
             group: 'left',
             order: 1,
             when: ContextKeyExpr.and(Context.HasFocusedSuggestion, Context.HasInsertAndReplaceRange, Context.InsertMode.isEqualTo('replace'))
@@ -737,13 +737,13 @@ registerEditorCommand(new SuggestCommand({
             group: 'left',
             order: 2,
             when: ContextKeyExpr.and(Context.HasFocusedSuggestion, Context.HasInsertAndReplaceRange, Context.InsertMode.isEqualTo('insert')),
-            title: localize(1518, "Replace")
+            title: localize(1538, "Replace")
         }, {
             menuId: suggestWidgetStatusbarMenu,
             group: 'left',
             order: 2,
             when: ContextKeyExpr.and(Context.HasFocusedSuggestion, Context.HasInsertAndReplaceRange, Context.InsertMode.isEqualTo('replace')),
-            title: localize(1519, "Insert")
+            title: localize(1539, "Insert")
         }]
 }));
 // continue to support the old command
@@ -775,7 +775,7 @@ registerEditorCommand(new SuggestCommand({
         group: 'left',
         order: 0,
         when: Context.HasFocusedSuggestion.toNegated(),
-        title: localize(1520, "Select")
+        title: localize(1540, "Select")
     }
 }));
 registerEditorCommand(new SuggestCommand({
@@ -858,13 +858,13 @@ registerEditorCommand(new SuggestCommand({
             group: 'right',
             order: 1,
             when: ContextKeyExpr.and(Context.DetailsVisible, Context.CanResolve),
-            title: localize(1521, "Show Less")
+            title: localize(1541, "Show Less")
         }, {
             menuId: suggestWidgetStatusbarMenu,
             group: 'right',
             order: 1,
             when: ContextKeyExpr.and(Context.DetailsVisible.toNegated(), Context.CanResolve),
-            title: localize(1522, "Show More")
+            title: localize(1542, "Show More")
         }]
 }));
 registerEditorCommand(new SuggestCommand({
@@ -940,7 +940,7 @@ registerEditorAction(class extends EditorAction {
     constructor() {
         super({
             id: 'editor.action.resetSuggestSize',
-            label: localize2(1524, "Reset Suggest Widget Size"),
+            label: localize2(1544, "Reset Suggest Widget Size"),
             precondition: undefined
         });
     }

@@ -1,0 +1,5 @@
+import{n as e}from"./rolldown-runtime-sJBDdmOt.js";import{t}from"./jsx-runtime-MKhVqBIO.js";import{n,r}from"./ConfigProviderContext-DftbJltQ.js";import{n as i,t as a}from"./ConfigProvider-BJQxD-0J.js";import{i as o,n as s,t as c}from"./constants-BWBR8eWE.js";var l,u,d,f,p;function m(){return(m=e((()=>{o(),i(),n(),l=t(),u={title:`Configuration/ConfigProvider`,component:a,parameters:{...c,...s},tags:[`Конфигурация`]},d=()=>{let e=r();return(0,l.jsx)(`div`,{style:{padding:5},children:JSON.stringify(e,void 0,2)})},f=e=>(0,l.jsx)(a,{...e,children:(0,l.jsx)(d,{})}),f.parameters={liveCodeEditor:{scope:{DisplayConfigProvider:d}}},p=[`Playground`],f.parameters={...f.parameters,docs:{...f.parameters?.docs,source:{originalSource:`(args: ConfigProviderProps) => {
+  return <ConfigProvider {...args}>
+      <DisplayConfigProvider />
+    </ConfigProvider>;
+}`,...f.parameters?.docs?.source}}}})))()}m();export{f as Playground,p as __namedExportsOrder,u as default};

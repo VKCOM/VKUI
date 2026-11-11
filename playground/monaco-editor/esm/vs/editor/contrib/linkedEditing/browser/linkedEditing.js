@@ -309,7 +309,7 @@ class LinkedEditingAction extends EditorAction {
     constructor() {
         super({
             id: 'editor.action.linkedEditing',
-            label: localize2(1322, "Start Linked Editing"),
+            label: localize2(1342, "Start Linked Editing"),
             precondition: ContextKeyExpr.and(EditorContextKeys.writable, EditorContextKeys.hasRenameProvider),
             kbOpts: {
                 kbExpr: EditorContextKeys.editorTextFocus,
@@ -370,7 +370,7 @@ function getLinkedEditingRanges(providers, model, position, token) {
         }
     }), result => !!result && isNonEmptyArray(result?.ranges));
 }
-registerColor('editor.linkedEditingBackground', { dark: Color.fromHex('#f00').transparent(0.3), light: Color.fromHex('#f00').transparent(0.3), hcDark: Color.fromHex('#f00').transparent(0.3), hcLight: Color.white }, localize(1321, 'Background color when the editor auto renames on type.'));
+registerColor('editor.linkedEditingBackground', { dark: Color.fromHex('#f00').transparent(0.3), light: Color.fromHex('#f00').transparent(0.3), hcDark: Color.fromHex('#f00').transparent(0.3), hcLight: Color.white }, localize(1341, 'Background color when the editor auto renames on type.'));
 registerModelAndPositionCommand('_executeLinkedEditingProvider', (_accessor, model, position) => {
     const { linkedEditingRangeProvider } = _accessor.get(ILanguageFeaturesService);
     return getLinkedEditingRanges(linkedEditingRangeProvider, model, position, CancellationToken.None);

@@ -194,7 +194,7 @@ class VisibleLinesCollection {
     }
     // ---- begin view event handlers
     onConfigurationChanged(e) {
-        if (e.hasChanged(165 /* EditorOption.layoutInfo */)) {
+        if (e.hasChanged(166 /* EditorOption.layoutInfo */)) {
             return true;
         }
         return false;

@@ -35,7 +35,7 @@ var __param = (undefined && undefined.__param) || function (paramIndex, decorato
 var DropIntoEditorController_1;
 const dropAsPreferenceConfig = 'editor.dropIntoEditor.preferences';
 const changeDropTypeCommandId = 'editor.changeDropType';
-const dropWidgetVisibleCtx = new RawContextKey('dropWidgetVisible', false, localize(973, "Whether the drop widget is showing"));
+const dropWidgetVisibleCtx = new RawContextKey('dropWidgetVisible', false, localize(988, "Whether the drop widget is showing"));
 let DropIntoEditorController = class DropIntoEditorController extends Disposable {
     static { DropIntoEditorController_1 = this; }
     static { this.ID = 'editor.contrib.dropIntoEditorController'; }
@@ -49,7 +49,7 @@ let DropIntoEditorController = class DropIntoEditorController extends Disposable
         this._treeViewsDragAndDropService = _treeViewsDragAndDropService;
         this.treeItemsTransfer = LocalSelectionTransfer.getInstance();
         this._dropProgressManager = this._register(instantiationService.createInstance(InlineProgressManager, 'dropIntoEditor', editor));
-        this._postDropWidgetManager = this._register(instantiationService.createInstance(PostEditWidgetManager, 'dropIntoEditor', editor, dropWidgetVisibleCtx, { id: changeDropTypeCommandId, label: localize(974, "Show drop options...") }, () => DropIntoEditorController_1._configureDefaultAction ? [DropIntoEditorController_1._configureDefaultAction] : []));
+        this._postDropWidgetManager = this._register(instantiationService.createInstance(PostEditWidgetManager, 'dropIntoEditor', editor, dropWidgetVisibleCtx, { id: changeDropTypeCommandId, label: localize(989, "Show drop options...") }, () => DropIntoEditorController_1._configureDefaultAction ? [DropIntoEditorController_1._configureDefaultAction] : []));
         this._register(editor.onDropIntoEditor(e => this.onDropIntoEditor(editor, e.position, e.event)));
     }
     clearWidgets() {
@@ -104,7 +104,7 @@ let DropIntoEditorController = class DropIntoEditorController extends Disposable
                 }
             }
         });
-        this._dropProgressManager.showWhile(position, localize(975, "Running drop handlers. Click to cancel"), p, { cancel: () => p.cancel() });
+        this._dropProgressManager.showWhile(position, localize(990, "Running drop handlers. Click to cancel"), p, { cancel: () => p.cancel() });
         DropIntoEditorController_1._currentDropOperation = p;
     }
     async getDropEdits(providers, model, position, dataTransfer, token) {

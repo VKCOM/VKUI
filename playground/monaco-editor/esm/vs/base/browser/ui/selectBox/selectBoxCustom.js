@@ -2,7 +2,7 @@ import { localize } from '../../../../nls.js';
 import { equals } from '../../../common/arrays.js';
 import { Emitter, Event } from '../../../common/event.js';
 import { KeyCodeUtils } from '../../../common/keyCodes.js';
-import { Disposable, DisposableStore } from '../../../common/lifecycle.js';
+import { Disposable, DisposableStore, MutableDisposable } from '../../../common/lifecycle.js';
 import { isMacintosh } from '../../../common/platform.js';
 import { asCssValueWithDefault } from '../../cssValue.js';
 import { $ as $$1, append, addDisposableListener, EventHelper, EventType, addStandardDisposableListener, getWindow, getDomNodePagePosition, getTotalWidth, isAncestor } from '../../dom.js';
@@ -21,7 +21,11 @@ import './selectBoxCustom.css';
  *--------------------------------------------------------------------------------------------*/
 const $ = $$1;
 const SELECT_OPTION_ENTRY_TEMPLATE_ID = 'selectOption.entry.template';
+const SELECT_OPTION_HEIGHT = 22;
 class SelectListRenderer {
+    constructor() {
+        this.elements = new Map();
+    }
     get templateId() { return SELECT_OPTION_ENTRY_TEMPLATE_ID; }
     renderTemplate(container) {
         const data = Object.create(null);
@@ -33,6 +37,11 @@ class SelectListRenderer {
     }
     renderElement(element, index, templateData) {
         const data = templateData;
+        if (data.element) {
+            this.elements.delete(data.element);
+        }
+        data.element = element;
+        this.elements.set(element, data.root);
         const text = element.text;
         const detail = element.detail;
         const decoratorRight = element.decoratorRight;
@@ -57,8 +66,13 @@ class SelectListRenderer {
             data.root.classList.remove('option-separator');
         }
     }
-    disposeTemplate(_templateData) {
-        // noop
+    disposeTemplate(templateData) {
+        if (templateData.element) {
+            this.elements.delete(templateData.element);
+        }
+    }
+    getElement(element) {
+        return this.elements.get(element);
     }
 }
 class SelectBoxList extends Disposable {
@@ -68,9 +82,11 @@ class SelectBoxList extends Disposable {
     constructor(options, selected, contextViewProvider, styles, selectBoxOptions) {
         super();
         this.options = [];
+        this.listOptionIndexes = [];
         this._currentSelection = 0;
         this._hasDetails = false;
         this._selectionDetailsDisposables = this._register(new DisposableStore());
+        this._optionDescriptionHover = this._register(new MutableDisposable());
         this._skipLayout = false;
         this._sticky = false; // for dev purposes only
         this._isVisible = false;
@@ -109,8 +125,8 @@ class SelectBoxList extends Disposable {
         }
     }
     // IDelegate - List renderer
-    getHeight() {
-        return 22;
+    getHeight(_element) {
+        return SELECT_OPTION_HEIGHT;
     }
     getTemplateId() {
         return SELECT_OPTION_ENTRY_TEMPLATE_ID;
@@ -154,7 +170,7 @@ class SelectBoxList extends Disposable {
         this._register(addDisposableListener(this.selectElement, EventType.CLICK, (e) => {
             EventHelper.stop(e);
             if (this._isVisible) {
-                this.hideSelectDropDown(true);
+                this.cancelSelectDropDown(true);
             }
             else {
                 this.showSelectDropDown();
@@ -173,7 +189,7 @@ class SelectBoxList extends Disposable {
         this._register(addDisposableListener(this.selectElement, 'touchend', (e) => {
             EventHelper.stop(e);
             if (listIsVisibleOnTouchStart) {
-                this.hideSelectDropDown(true);
+                this.cancelSelectDropDown(true);
             }
             else {
                 this.showSelectDropDown();
@@ -211,7 +227,7 @@ class SelectBoxList extends Disposable {
             this._cachedMaxDetailsHeight = undefined;
             this.options.forEach((option, index) => {
                 this.selectElement.add(this.createOption(option.text, index, option.isDisabled));
-                if (typeof option.description === 'string') {
+                if (typeof option.description === 'string' && !this.selectBoxOptions.showOptionDescriptionHovers) {
                     this._hasDetails = true;
                 }
             });
@@ -225,7 +241,26 @@ class SelectBoxList extends Disposable {
     setOptionsList() {
         // Mirror options in drop-down
         // Populate select list for non-native select mode
-        this.selectList?.splice(0, this.selectList.length, this.options);
+        this.listOptionIndexes = [];
+        for (let index = 0; index < this.options.length; index++) {
+            if (!this.selectBoxOptions.hideDisabledOptions || !this.options[index].isDisabled) {
+                this.listOptionIndexes.push(index);
+            }
+        }
+        this.selectList?.splice(0, this.selectList.length, this.listOptionIndexes.map(index => this.options[index]));
+    }
+    getListIndex(optionIndex) {
+        return this.listOptionIndexes.indexOf(optionIndex);
+    }
+    getOptionIndex(listIndex) {
+        return this.listOptionIndexes[listIndex];
+    }
+    focusOption(optionIndex) {
+        const listIndex = this.getListIndex(optionIndex);
+        if (listIndex >= 0) {
+            this.selectList.reveal(listIndex);
+            this.selectList.setFocus([listIndex]);
+        }
     }
     select(index) {
         if (index >= 0 && index < this.options.length) {
@@ -338,6 +373,7 @@ class SelectBoxList extends Disposable {
         // Lazily create and populate list only at open, moved from constructor
         this.createSelectList(this.selectDropDownContainer);
         this.setOptionsList();
+        this._currentSelection = this.selected;
         // This allows us to flip the position based on measurement
         // Set drop-down position above/below from required height and margins
         // If pre-layout cannot fit at least one option do not show drop-down
@@ -364,21 +400,28 @@ class SelectBoxList extends Disposable {
             },
             anchorPosition: this._dropDownPosition
         }, this.selectBoxOptions.optionsAsChildren ? this.container : undefined);
-        // Track initial selection the case user escape, blur
-        this._currentSelection = this.selected;
         this._isVisible = true;
         this.selectElement.setAttribute('aria-expanded', 'true');
+        const focusedListIndex = this.selectList.getFocus()[0];
+        if (focusedListIndex !== undefined) {
+            this.showOptionDescriptionHover(focusedListIndex);
+        }
     }
     hideSelectDropDown(focusSelect) {
         if (!this.contextViewProvider || !this._isVisible) {
             return;
         }
         this._isVisible = false;
+        this._optionDescriptionHover.clear();
         this.selectElement.setAttribute('aria-expanded', 'false');
         if (focusSelect) {
             this.selectElement.focus();
         }
         this.contextViewProvider.hideContextView();
+    }
+    cancelSelectDropDown(focusSelect) {
+        this.select(this._currentSelection);
+        this.hideSelectDropDown(focusSelect);
     }
     renderSelectDropDown(container, preLayoutPosition) {
         container.appendChild(this.selectDropDownContainer);
@@ -436,8 +479,8 @@ class SelectBoxList extends Disposable {
             }
             const maxDetailsPaneHeight = this._hasDetails ? this._cachedMaxDetailsHeight : 0;
             const minRequiredDropDownHeight = listHeight + maxDetailsPaneHeight;
-            const maxVisibleOptionsBelow = ((Math.floor((maxSelectDropDownHeightBelow - maxDetailsPaneHeight) / this.getHeight())));
-            const maxVisibleOptionsAbove = ((Math.floor((maxSelectDropDownHeightAbove - maxDetailsPaneHeight) / this.getHeight())));
+            const maxVisibleOptionsBelow = ((Math.floor((maxSelectDropDownHeightBelow - maxDetailsPaneHeight) / SELECT_OPTION_HEIGHT)));
+            const maxVisibleOptionsAbove = ((Math.floor((maxSelectDropDownHeightAbove - maxDetailsPaneHeight) / SELECT_OPTION_HEIGHT)));
             // If we are only doing pre-layout check/adjust position only
             // Calculate vertical space available, flip up if insufficient
             // Use reflected padding on parent select, ContextView style
@@ -455,7 +498,7 @@ class SelectBoxList extends Disposable {
                 // Always show complete list items - never more than Max available vertical height
                 if (maxVisibleOptionsBelow < SelectBoxList.DEFAULT_MINIMUM_VISIBLE_OPTIONS
                     && maxVisibleOptionsAbove > maxVisibleOptionsBelow
-                    && this.options.length > maxVisibleOptionsBelow) {
+                    && this.selectList.length > maxVisibleOptionsBelow) {
                     this._dropDownPosition = 1 /* AnchorPosition.ABOVE */;
                     this.selectDropDownListContainer.remove();
                     this.selectionDetailsPane.remove();
@@ -496,12 +539,12 @@ class SelectBoxList extends Disposable {
                 }
                 // Adjust list height to max from select bottom to margin (default/minBottomMargin)
                 if (minRequiredDropDownHeight > maxSelectDropDownHeightBelow) {
-                    listHeight = (maxVisibleOptionsBelow * this.getHeight());
+                    listHeight = (maxVisibleOptionsBelow * SELECT_OPTION_HEIGHT);
                 }
             }
             else {
                 if (minRequiredDropDownHeight > maxSelectDropDownHeightAbove) {
-                    listHeight = (maxVisibleOptionsAbove * this.getHeight());
+                    listHeight = (maxVisibleOptionsAbove * SELECT_OPTION_HEIGHT);
                 }
             }
             // Set adjusted list height and relayout
@@ -509,8 +552,14 @@ class SelectBoxList extends Disposable {
             this.selectList.domFocus();
             // Finally set focus on selected item
             if (this.selectList.length > 0) {
-                this.selectList.setFocus([this.selected || 0]);
-                this.selectList.reveal(this.selectList.getFocus()[0] || 0);
+                let selectedListIndex = this.getListIndex(this.selected);
+                if (selectedListIndex < 0) {
+                    selectedListIndex = 0;
+                    this.selected = this.getOptionIndex(selectedListIndex);
+                    this.select(this.selected);
+                }
+                this.selectList.reveal(selectedListIndex);
+                this.selectList.setFocus([selectedListIndex]);
             }
             if (this._hasDetails) {
                 // Leave the selectDropDownContainer to size itself according to children (list + details) - #57447
@@ -520,7 +569,12 @@ class SelectBoxList extends Disposable {
             else {
                 this.selectDropDownContainer.style.height = `${listHeight}px`;
             }
-            this.updateDetail(this.selected);
+            if (this._hasDetails) {
+                this.updateDetail(this.selected);
+            }
+            else {
+                this.selectionDetailsPane.style.display = 'none';
+            }
             this.selectDropDownContainer.style.width = selectOptimalWidth;
             this.selectDropDownListContainer.setAttribute('tabindex', '0');
             return true;
@@ -602,7 +656,7 @@ class SelectBoxList extends Disposable {
         this._register(Event.chain(onSelectDropDownKeyDown, $ => $.filter(e => (e.keyCode >= 21 /* KeyCode.Digit0 */ && e.keyCode <= 56 /* KeyCode.KeyZ */) || (e.keyCode >= 85 /* KeyCode.Semicolon */ && e.keyCode <= 113 /* KeyCode.NumpadDivide */)))(this.onCharacter, this));
         // SetUp list mouse controller - control navigation, disabled items, focus
         this._register(addDisposableListener(this.selectList.getHTMLElement(), EventType.POINTER_UP, e => this.onPointerUp(e)));
-        this._register(this.selectList.onMouseOver(e => typeof e.index !== 'undefined' && !this.options[e.index]?.isDisabled && this.selectList.setFocus([e.index])));
+        this._register(this.selectList.onMouseOver(e => typeof e.index !== 'undefined' && !e.element?.isDisabled && this.selectList.setFocus([e.index])));
         this._register(this.selectList.onDidChangeFocus(e => this.onListFocus(e)));
         this._register(addDisposableListener(this.selectDropDownContainer, EventType.FOCUS_OUT, e => {
             if (!this._isVisible || isAncestor(e.relatedTarget, this.selectDropDownContainer)) {
@@ -634,14 +688,13 @@ class SelectBoxList extends Disposable {
         if (!listRowElement) {
             return;
         }
-        const index = Number(listRowElement.getAttribute('data-index'));
+        const index = this.getOptionIndex(Number(listRowElement.getAttribute('data-index')));
         const disabled = listRowElement.classList.contains('option-disabled');
         // Ignore mouse selection of disabled options
         if (index >= 0 && index < this.options.length && !disabled) {
             this.selected = index;
             this.select(this.selected);
-            this.selectList.setFocus([this.selected]);
-            this.selectList.reveal(this.selectList.getFocus()[0]);
+            this.focusOption(this.selected);
             // Only fire if selection change
             if (this.selected !== this._currentSelection) {
                 // Set current = selected
@@ -662,11 +715,7 @@ class SelectBoxList extends Disposable {
         if (this._sticky) {
             return;
         }
-        if (this.selected !== this._currentSelection) {
-            // Reset selected to current if no change
-            this.select(this._currentSelection);
-        }
-        this.hideSelectDropDown(false);
+        this.cancelSelectDropDown(false);
     }
     renderDescriptionMarkdown(text, actionHandler) {
         const cleanRenderedMarkdown = (element) => {
@@ -689,10 +738,30 @@ class SelectBoxList extends Disposable {
     // List Focus Change - passive - update details pane with newly focused element's data
     onListFocus(e) {
         // Skip during initial layout
-        if (!this._isVisible || !this._hasDetails) {
+        if (!this._isVisible) {
             return;
         }
-        this.updateDetail(e.indexes[0]);
+        const listIndex = e.indexes[0];
+        const optionIndex = this.getOptionIndex(listIndex);
+        if (this._hasDetails) {
+            this.updateDetail(optionIndex);
+        }
+        this.showOptionDescriptionHover(listIndex);
+    }
+    showOptionDescriptionHover(listIndex) {
+        if (!this.selectBoxOptions.showOptionDescriptionHovers) {
+            return;
+        }
+        const option = this.options[this.getOptionIndex(listIndex)];
+        const description = option?.description;
+        const target = option ? this.listRenderer.getElement(option) : undefined;
+        this._optionDescriptionHover.value = description && target
+            ? getBaseLayerHoverDelegate().showDelayedHover({
+                content: description,
+                target,
+                position: { hoverPosition: 1 /* HoverPosition.RIGHT */ },
+            }, { groupId: 'select-box-option-description' })
+            : undefined;
     }
     updateDetail(selectedIndex) {
         // Reset
@@ -725,8 +794,7 @@ class SelectBoxList extends Disposable {
     onEscape(e) {
         EventHelper.stop(e);
         // Reset selection to value when opened
-        this.select(this._currentSelection);
-        this.hideSelectDropDown(true);
+        this.cancelSelectDropDown(true);
     }
     // List exit - active - hide ContextView dropdown, return focus to parent select, fire onDidSelect if change
     onEnter(e) {
@@ -764,8 +832,7 @@ class SelectBoxList extends Disposable {
             this.selected = next;
             // Set focus/selection - only fire event when closing drop-down or on blur
             this.select(this.selected);
-            this.selectList.setFocus([this.selected]);
-            this.selectList.reveal(this.selectList.getFocus()[0]);
+            this.focusOption(this.selected);
         }
     }
     onUpArrow(e) {
@@ -782,8 +849,7 @@ class SelectBoxList extends Disposable {
             this.selected = prev;
             // Set focus/selection - only fire event when closing drop-down or on blur
             this.select(this.selected);
-            this.selectList.setFocus([this.selected]);
-            this.selectList.reveal(this.selectList.getFocus()[0]);
+            this.focusOption(this.selected);
         }
     }
     onPageUp(e) {
@@ -793,15 +859,16 @@ class SelectBoxList extends Disposable {
         setTimeout(() => {
             let candidate = this.selectList.getFocus()[0];
             // Shift selection up if we land on a disabled option
-            while (candidate > 0 && this.options[candidate].isDisabled) {
+            while (candidate > 0 && this.options[this.getOptionIndex(candidate)].isDisabled) {
                 candidate--;
             }
-            if (this.options[candidate].isDisabled) {
+            const optionIndex = this.getOptionIndex(candidate);
+            if (this.options[optionIndex].isDisabled) {
                 return;
             }
-            this.selected = candidate;
-            this.selectList.setFocus([this.selected]);
-            this.selectList.reveal(this.selected);
+            this.selected = optionIndex;
+            this.selectList.reveal(candidate);
+            this.selectList.setFocus([candidate]);
             this.select(this.selected);
         }, 1);
     }
@@ -812,15 +879,16 @@ class SelectBoxList extends Disposable {
         setTimeout(() => {
             let candidate = this.selectList.getFocus()[0];
             // Shift selection down if we land on a disabled option
-            while (candidate < this.options.length - 1 && this.options[candidate].isDisabled) {
+            while (candidate < this.selectList.length - 1 && this.options[this.getOptionIndex(candidate)].isDisabled) {
                 candidate++;
             }
-            if (this.options[candidate].isDisabled) {
+            const optionIndex = this.getOptionIndex(candidate);
+            if (this.options[optionIndex].isDisabled) {
                 return;
             }
-            this.selected = candidate;
-            this.selectList.setFocus([this.selected]);
-            this.selectList.reveal(this.selected);
+            this.selected = optionIndex;
+            this.selectList.reveal(candidate);
+            this.selectList.setFocus([candidate]);
             this.select(this.selected);
         }, 1);
     }
@@ -837,8 +905,7 @@ class SelectBoxList extends Disposable {
             return;
         }
         this.selected = candidate;
-        this.selectList.setFocus([this.selected]);
-        this.selectList.reveal(this.selected);
+        this.focusOption(this.selected);
         this.select(this.selected);
     }
     onEnd(e) {
@@ -854,8 +921,7 @@ class SelectBoxList extends Disposable {
             return;
         }
         this.selected = candidate;
-        this.selectList.setFocus([this.selected]);
-        this.selectList.reveal(this.selected);
+        this.focusOption(this.selected);
         this.select(this.selected);
     }
     // Mimic option first character navigation of native select
@@ -866,8 +932,7 @@ class SelectBoxList extends Disposable {
             optionIndex = (i + this.selected + 1) % this.options.length;
             if (this.options[optionIndex].text.charAt(0).toUpperCase() === ch && !this.options[optionIndex].isDisabled) {
                 this.select(optionIndex);
-                this.selectList.setFocus([optionIndex]);
-                this.selectList.reveal(this.selectList.getFocus()[0]);
+                this.focusOption(optionIndex);
                 EventHelper.stop(e);
                 break;
             }

@@ -22,6 +22,9 @@ class ViewportData {
     getViewLineRenderingData(lineNumber) {
         return this._model.getViewportViewLineRenderingData(this.visibleRange, lineNumber);
     }
+    getViewLineContinuesWithWrappedLine(lineNumber) {
+        return this._model.getViewLineContinuesWithWrappedLine(lineNumber);
+    }
     getDecorationsInViewport() {
         return this._model.getDecorationsInViewport(this.visibleRange);
     }

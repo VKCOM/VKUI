@@ -3,106 +3,83 @@ description: Компонент для создания адаптивного �
 tags: media
 ---
 
-<Overview group="data-display">
-
-# Gallery [tag:component]
+# Gallery \[tag:component]
 
 Компонент для создания адаптивного слайдера изображений с поддержкой жестов и автоматической прокрутки.
 
-</Overview>
-
-import { BlockWrapper } from '@/components/wrappers';
-
-{/* @example-description: Базовая галерея со слайдами фиксированной ширины и центрированием активного слайда. */}
-<Playground Wrapper={BlockWrapper}>
-  ```jsx
-  <Gallery slideWidth="90%" align="center">
-    <div style={{ backgroundColor: 'var(--vkui--color_background_negative)' }} />
-    <div style={{ backgroundColor: 'var(--vkui--color_background_positive)' }} />
-    <div style={{ backgroundColor: 'var(--vkui--color_background_accent)' }} />
-  </Gallery>
-  ```
-</Playground>
+```jsx
+<Gallery slideWidth="90%" align="center">
+  <div style={{ backgroundColor: 'var(--vkui--color_background_negative)' }} />
+  <div style={{ backgroundColor: 'var(--vkui--color_background_positive)' }} />
+  <div style={{ backgroundColor: 'var(--vkui--color_background_accent)' }} />
+</Gallery>
+```
 
 ## Автопрокрутка
 
 Компонент поддерживает автопрокрутку слайдов. Для этого нужно использовать свойство `timeout` (в миллисекундах)
 отличное от нуля.
 
-{/* @example-description: Автоматическая смена слайдов в `Gallery` через свойство `timeout`. */}
-<Playground Wrapper={BlockWrapper}>
-  ```jsx
-  <Gallery slideWidth="90%" align="center" timeout={3000}>
-    <div style={{ backgroundColor: 'var(--vkui--color_background_negative)' }} />
-    <div style={{ backgroundColor: 'var(--vkui--color_background_positive)' }} />
-    <div style={{ backgroundColor: 'var(--vkui--color_background_accent)' }} />
-  </Gallery>
-  ```
-</Playground>
+```jsx
+<Gallery slideWidth="90%" align="center" timeout={3000}>
+  <div style={{ backgroundColor: 'var(--vkui--color_background_negative)' }} />
+  <div style={{ backgroundColor: 'var(--vkui--color_background_positive)' }} />
+  <div style={{ backgroundColor: 'var(--vkui--color_background_accent)' }} />
+</Gallery>
+```
 
 ## Зацикленная галерея
 
 Используйте свойство `looped`, чтобы список слайдов прокручивался зацикленно.
 
-{/* @example-description: Зацикленная галерея `looped` с буллетами и стрелками навигации. */}
-<Playground Wrapper={BlockWrapper}>
-  ```jsx
-  <Gallery slideWidth="90%" bullets="dark" showArrows looped>
-    <Placeholder style={{ backgroundColor: 'var(--vkui--color_background_negative)' }} title="1" />
-    <Placeholder style={{ backgroundColor: 'var(--vkui--color_background_positive)' }} title="2" />
-    <Placeholder style={{ backgroundColor: 'var(--vkui--color_background_accent)' }} title="3" />
-    <Placeholder style={{ backgroundColor: 'var(--vkui--color_background_negative)' }} title="4" />
-    <Placeholder style={{ backgroundColor: 'var(--vkui--color_background_positive)' }} title="5" />
-  </Gallery>
-  ```
-</Playground>
+```jsx
+<Gallery slideWidth="90%" bullets="overlay" showArrows looped>
+  <Placeholder style={{ backgroundColor: 'var(--vkui--color_background_negative)' }} title="1" />
+  <Placeholder style={{ backgroundColor: 'var(--vkui--color_background_positive)' }} title="2" />
+  <Placeholder style={{ backgroundColor: 'var(--vkui--color_background_accent)' }} title="3" />
+  <Placeholder style={{ backgroundColor: 'var(--vkui--color_background_negative)' }} title="4" />
+  <Placeholder style={{ backgroundColor: 'var(--vkui--color_background_positive)' }} title="5" />
+</Gallery>
+```
 
 ## Кастомизация стрелок навигации
 
 Для кастомизации стрелок навигации используйте следующие свойства:
 
-- `arrowSize` - контролирует размер стрелки;
-- `arrowAreaHeight` - размер активной зоны стрелок. Определяет область вокруг стрелок, реагирующую на взаимодействие пользователя:
-  - `stretch` - на всю высоту галереи
-  - `fit` - фиксированная высота
-- `showArrows` - флаг, определяющий нужно ли показывать стрелки при наведении.
+* `arrowSize` - контролирует размер стрелки;
+* `arrowAreaHeight` - размер активной зоны стрелок. Определяет область вокруг стрелок, реагирующую на взаимодействие пользователя:
+  * `stretch` - на всю высоту галереи
+  * `fit` - фиксированная высота
+* `showArrows` - флаг, определяющий нужно ли показывать стрелки при наведении.
 
-{/* @example-description: Кастомизация стрелок `Gallery` через `arrowSize` и `arrowAreaHeight`. */}
-<Playground Wrapper={BlockWrapper}>
-  ```jsx
-  <Gallery slideWidth="90%" showArrows arrowAreaHeight="fit" arrowSize="s">
-    <div style={{ backgroundColor: 'var(--vkui--color_background_negative)' }} />
-    <div style={{ backgroundColor: 'var(--vkui--color_background_positive)' }} />
-    <div style={{ backgroundColor: 'var(--vkui--color_background_accent)' }} />
-  </Gallery>
-  ```
-</Playground>
+```jsx
+<Gallery slideWidth="90%" showArrows arrowAreaHeight="fit" arrowSize="s">
+  <div style={{ backgroundColor: 'var(--vkui--color_background_negative)' }} />
+  <div style={{ backgroundColor: 'var(--vkui--color_background_positive)' }} />
+  <div style={{ backgroundColor: 'var(--vkui--color_background_accent)' }} />
+</Gallery>
+```
 
 ## Индикатор прогресса
 
 Для более удобного использования компонента можно включить индикатор прогресса с помощью свойства `bullets`:
 
-- `false` - значение по умолчанию, индикатор скрыт;
-- `light` - включает отображение в светлом варианте;
-- `dark` - включает отображение в светлом варианте.
+* `false` - значение по умолчанию, индикатор скрыт;
+* `light` - включает отображение в светлом варианте;
+* `dark` - включает отображение в темном варианте;
+* `overlay` - отображает светлые буллеты на подложке.
 
-{/* @example-description: Включенный индикатор прогресса `bullets` для навигации по слайдам. */}
-<Playground Wrapper={BlockWrapper}>
-  ```jsx
-  <Gallery slideWidth="90%" bullets="dark" showArrows>
-    <div style={{ backgroundColor: 'var(--vkui--color_background_negative)' }} />
-    <div style={{ backgroundColor: 'var(--vkui--color_background_positive)' }} />
-    <div style={{ backgroundColor: 'var(--vkui--color_background_accent)' }} />
-  </Gallery>
-  ```
-</Playground>
+```jsx
+<Gallery slideWidth="90%" bullets="overlay" showArrows>
+  <div style={{ backgroundColor: 'var(--vkui--color_background_negative)' }} />
+  <div style={{ backgroundColor: 'var(--vkui--color_background_positive)' }} />
+  <div style={{ backgroundColor: 'var(--vkui--color_background_accent)' }} />
+</Gallery>
+```
 
 ## Контролируемое состояние
 
 Используйте `slideIndex` и `onChange` для ручного управления состоянием.
-
-{/* @example-description: Контролируемая галерея с внешним управлением текущим слайдом. */}
-<Playground Wrapper={BlockWrapper}>
 
 ```jsx
 const [slideIndex, setSlideIndex] = React.useState(0);
@@ -125,43 +102,38 @@ return (
 );
 ```
 
-</Playground>
-
 ## Слайды разных размеров
 
 Если необходимо сделать так, чтобы у каждого слайда была своя ширина, необходимо задать свойство `slideWidth="custom"`:
 
-{/* @example-description: Галерея слайдов произвольной ширины через `slideWidth="custom"`. */}
-<Playground Wrapper={BlockWrapper}>
-  ```jsx
-  <Gallery slideWidth="custom">
-    <div
-      style={{
-        width: 200,
-        backgroundColor: 'var(--vkui--color_background_negative)',
-      }}
-    />
-    <div
-      style={{
-        width: 120,
-        backgroundColor: 'var(--vkui--color_background_positive)',
-      }}
-    />
-    <div
-      style={{
-        width: 70,
-        backgroundColor: 'var(--vkui--color_background_accent)',
-      }}
-    />
-    <div
-      style={{
-        width: 220,
-        backgroundColor: 'var(--vkui--color_icon_secondary)',
-      }}
-    />
-  </Gallery>
-  ```
-</Playground>
+```jsx
+<Gallery slideWidth="custom">
+  <div
+    style={{
+      width: 200,
+      backgroundColor: 'var(--vkui--color_background_negative)',
+    }}
+  />
+  <div
+    style={{
+      width: 120,
+      backgroundColor: 'var(--vkui--color_background_positive)',
+    }}
+  />
+  <div
+    style={{
+      width: 70,
+      backgroundColor: 'var(--vkui--color_background_accent)',
+    }}
+  />
+  <div
+    style={{
+      width: 220,
+      backgroundColor: 'var(--vkui--color_icon_secondary)',
+    }}
+  />
+</Gallery>
+```
 
 ## Параметры анимации
 
@@ -169,31 +141,28 @@ return (
 и функция анимации соответственно. Свойство `animationEasing` принимает одно из предопределенных значений анимации или позволяет
 задать пользовательское значение через массив, элементы которого соответствуют параметрам аналогичной CSS-функции [cubic-bezier](https://developer.mozilla.org/en-US/docs/Web/CSS/easing-function/cubic-bezier).
 
-{/* @example-description: Настройка параметров анимации смены слайдов через `animationDuration` и `animationEasing`. */}
-<Playground Wrapper={BlockWrapper}>
-  ```jsx
-  <Gallery
-    slideWidth="90%"
-    bullets="dark"
-    showArrows
-    animationDuration={1000}
-    animationEasing={[0, 0, 0.2, 1]}
-  >
-    <Placeholder style={{ backgroundColor: 'var(--vkui--color_background_negative)' }} title="1" />
-    <Placeholder style={{ backgroundColor: 'var(--vkui--color_background_positive)' }} title="2" />
-    <Placeholder style={{ backgroundColor: 'var(--vkui--color_background_accent)' }} title="3" />
-    <Placeholder style={{ backgroundColor: 'var(--vkui--color_background_negative)' }} title="4" />
-    <Placeholder style={{ backgroundColor: 'var(--vkui--color_background_positive)' }} title="5" />
-  </Gallery>
-  ```
-</Playground>
+```jsx
+<Gallery
+  slideWidth="90%"
+  bullets="overlay"
+  showArrows
+  animationDuration={1000}
+  animationEasing={[0, 0, 0.2, 1]}
+>
+  <Placeholder style={{ backgroundColor: 'var(--vkui--color_background_negative)' }} title="1" />
+  <Placeholder style={{ backgroundColor: 'var(--vkui--color_background_positive)' }} title="2" />
+  <Placeholder style={{ backgroundColor: 'var(--vkui--color_background_accent)' }} title="3" />
+  <Placeholder style={{ backgroundColor: 'var(--vkui--color_background_negative)' }} title="4" />
+  <Placeholder style={{ backgroundColor: 'var(--vkui--color_background_positive)' }} title="5" />
+</Gallery>
+```
 
-## Доступность (a11y) [#a11y]
+## Доступность (a11y) \[#a11y]
 
 ### 1. Навигация
 
-- По возможности не оставляйте пользователя без возможности навигации по галерее вручную. Не полагайтесь только на автоматическую прокрутку
-- **Кастомизируйте подписи кнопок:** Задавайте понятные метки через свойства:
+* По возможности не оставляйте пользователя без возможности навигации по галерее вручную. Не полагайтесь только на автоматическую прокрутку
+* **Кастомизируйте подписи кнопок:** Задавайте понятные метки через свойства:
   ```jsx
   arrowPrevLabel = 'Предыдущий слайд';
   arrowNextLabel = 'Следующий слайд';
@@ -244,38 +213,38 @@ aria-roledescription="Карусель" // Для галереи
 slideRoleDescription="Изображение продукта" // Для слайда
 ```
 
-## Свойства и методы [#api]
+## Свойства и методы \[#api]
 
-| Свойство | Тип | По умолчанию | Описание |
-| --- | --- | --- | --- |
-| `align` | `AlignType` | `-` |  |
-| `animationDuration` | `number` | `-` | Длительность анимации смены слайда в миллисекундах. |
-| `animationEasing` | `PredefinedEasingType \| CubicBezierEasingType` | `-` | Функция для анимации.  Принимает одно из предопределённых значений или параметры функции [cubic-bezier](https://developer.mozilla.org/en-US/docs/Web/CSS/easing-function/cubic-bezier). |
-| `arrowAreaHeight` | `"stretch" \| "fit"` | `-` | Размер активной зоны стрелок (в пикселях). Определяет область вокруг стрелок, реагирующую на взаимодействие пользователя. В дизайне свойство называется `arrowArea`. |
-| `arrowNextLabel` | `string` | `-` | Текст для кнопки-стрелки вправо (вперед). Делает ее доступной для ассистивных технологий. |
-| `arrowPrevLabel` | `string` | `-` | Текст для кнопки-стрелки влево (назад). Делает ее доступной для ассистивных технологий. |
-| `arrowSize` | `"s" \| "m"` | `-` |  |
-| `bullets` | `false \| "dark" \| "light"` | `-` |  |
-| `bulletTestId` | `((index: number, active: boolean) => string)` | `-` | Передает атрибут `data-testid` для bullets. |
-| `dragDisabled` | `boolean` | `-` | Позволяет отключить реагирование на тач-события. |
-| `getRef` | `Ref<HTMLElement>` | `-` |  |
-| `getRootRef` | `Ref<HTMLDivElement>` | `-` |  |
-| `hasPointer` | `boolean` | `-` |  |
-| `initialSlideIndex` | `number` | `0` | Индекс слайда по умолчанию. |
-| `looped` | `boolean` | `-` | Включает зацикленность слайдов. |
-| `nextArrowTestId` | `string` | `-` | Передает атрибут `data-testid` для кнопки перехода к следующему слайду. |
-| `onChange` | `((current: number) => void)` | `-` |  |
-| `onDragEnd` | `((e: CustomTouchEvent, targetIndex: number) => void) \| undefined` | `-` |  |
-| `onDragStart` | `CustomTouchEventHandler` | `-` |  |
-| `onNextClick` | `((event: MouseEvent<Element, MouseEvent>) => void)` | `-` | Будет вызвано при нажатии на кнопку-стрелку вправо. |
-| `onPrevClick` | `((event: MouseEvent<Element, MouseEvent>) => void)` | `-` | Будет вызвано при нажатии на кнопку-стрелку влево. |
-| `prevArrowTestId` | `string` | `-` | Передает атрибут `data-testid` для кнопки перехода к предыдущему слайду. |
-| `resizeSource` | `"window" \| "element"` | `-` | Тип источника для отслеживания размера: - `window`: пересчет позиции слайдов будет происходить при изменении размеров `window` - `element`: пересчет позиции слайдов будет происходить при изменении размеров компонента. |
-| `showArrows` | `boolean \| "always"` | `-` |  |
-| `slideIndex` | `number` | `-` |  |
-| `slideLabel` | `string \| ((index: number, slidesCount: number) => string)` | `-` | Текст для слайда. Делает его доступным для ассистивных технологий. Может быть функцией. По умолчанию устанавливает `aria-label` вида `${Номер слайда} из ${Количества слайдов}`. |
-| `slideRoleDescription` | `string` | `-` | Описание роли для слайда, для лучше понимания пользователей скринридеров. По умолчанию - `Слайд`. |
-| `slideTestId` | `((index: number) => string)` | `-` | Передает атрибут `data-testid` для слайда. |
-| `slideWidth` | `number \| LiteralUnion<"custom", string>` | `-` | Размер слайда.  Значение `"custom"` используется, если ширина у слайдов разная. |
-| `timeout` | `number` | `0` | При передаче происходит автоматический переход к следующему слайду через переданное время в ms. Автоматический переход будет ставиться на паузу при: - начале свайпа для переключения слайда; - фокусе на любой элемент внутри компонента; - при наведении мыши на компонент. |
-
+| Свойство               | Тип                                                                 | По умолчанию | Описание                                                                                                                                                                                                                                                                      |
+| ---------------------- | ------------------------------------------------------------------- | ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `align`                | `AlignType`                                                         | `-`          |                                                                                                                                                                                                                                                                               |
+| `animationDuration`    | `number`                                                            | `-`          | Длительность анимации смены слайда в миллисекундах.                                                                                                                                                                                                                           |
+| `animationEasing`      | `PredefinedEasingType \| CubicBezierEasingType`                     | `-`          | Функция для анимации.  Принимает одно из предопределённых значений или параметры функции [cubic-bezier](https://developer.mozilla.org/en-US/docs/Web/CSS/easing-function/cubic-bezier).                                                                                       |
+| `arrowAreaHeight`      | `"stretch" \| "fit"`                                                | `-`          | Размер активной зоны стрелок (в пикселях). Определяет область вокруг стрелок, реагирующую на взаимодействие пользователя. В дизайне свойство называется `arrowArea`.                                                                                                          |
+| `arrowNextLabel`       | `string`                                                            | `-`          | Текст для кнопки-стрелки вправо (вперед). Делает ее доступной для ассистивных технологий.                                                                                                                                                                                     |
+| `arrowPrevLabel`       | `string`                                                            | `-`          | Текст для кнопки-стрелки влево (назад). Делает ее доступной для ассистивных технологий.                                                                                                                                                                                       |
+| `arrowSize`            | `"s" \| "m"`                                                        | `-`          |                                                                                                                                                                                                                                                                               |
+| `bullets`              | `false \| "dark" \| "light" \| "overlay"`                           | `-`          |                                                                                                                                                                                                                                                                               |
+| `bulletTestId`         | `((index: number, active: boolean) => string)`                      | `-`          | Передает атрибут `data-testid` для bullets.                                                                                                                                                                                                                                   |
+| `dragDisabled`         | `boolean`                                                           | `-`          | Позволяет отключить реагирование на тач-события.                                                                                                                                                                                                                              |
+| `getRef`               | `Ref<HTMLElement>`                                                  | `-`          |                                                                                                                                                                                                                                                                               |
+| `getRootRef`           | `Ref<HTMLDivElement>`                                               | `-`          |                                                                                                                                                                                                                                                                               |
+| `hasPointer`           | `boolean`                                                           | `-`          |                                                                                                                                                                                                                                                                               |
+| `initialSlideIndex`    | `number`                                                            | `0`          | Индекс слайда по умолчанию.                                                                                                                                                                                                                                                   |
+| `looped`               | `boolean`                                                           | `-`          | Включает зацикленность слайдов.                                                                                                                                                                                                                                               |
+| `nextArrowTestId`      | `string`                                                            | `-`          | Передает атрибут `data-testid` для кнопки перехода к следующему слайду.                                                                                                                                                                                                       |
+| `onChange`             | `((current: number) => void)`                                       | `-`          |                                                                                                                                                                                                                                                                               |
+| `onDragEnd`            | `((e: CustomTouchEvent, targetIndex: number) => void) \| undefined` | `-`          |                                                                                                                                                                                                                                                                               |
+| `onDragStart`          | `CustomTouchEventHandler`                                           | `-`          |                                                                                                                                                                                                                                                                               |
+| `onNextClick`          | `((event: MouseEvent<Element, MouseEvent>) => void)`                | `-`          | Будет вызвано при нажатии на кнопку-стрелку вправо.                                                                                                                                                                                                                           |
+| `onPrevClick`          | `((event: MouseEvent<Element, MouseEvent>) => void)`                | `-`          | Будет вызвано при нажатии на кнопку-стрелку влево.                                                                                                                                                                                                                            |
+| `prevArrowTestId`      | `string`                                                            | `-`          | Передает атрибут `data-testid` для кнопки перехода к предыдущему слайду.                                                                                                                                                                                                      |
+| `ref`                  | `Ref<HTMLDivElement>`                                               | `-`          |                                                                                                                                                                                                                                                                               |
+| `resizeSource`         | `"window" \| "element"`                                             | `-`          | Тип источника для отслеживания размера: - `window`: пересчет позиции слайдов будет происходить при изменении размеров `window` - `element`: пересчет позиции слайдов будет происходить при изменении размеров компонента.                                                     |
+| `showArrows`           | `boolean \| "always"`                                               | `-`          |                                                                                                                                                                                                                                                                               |
+| `slideIndex`           | `number`                                                            | `-`          |                                                                                                                                                                                                                                                                               |
+| `slideLabel`           | `string \| ((index: number, slidesCount: number) => string)`        | `-`          | Текст для слайда. Делает его доступным для ассистивных технологий. Может быть функцией. По умолчанию устанавливает `aria-label` вида `${Номер слайда} из ${Количества слайдов}`.                                                                                              |
+| `slideRoleDescription` | `string`                                                            | `-`          | Описание роли для слайда, для лучше понимания пользователей скринридеров. По умолчанию - `Слайд`.                                                                                                                                                                             |
+| `slideTestId`          | `((index: number) => string)`                                       | `-`          | Передает атрибут `data-testid` для слайда.                                                                                                                                                                                                                                    |
+| `slideWidth`           | `number \| LiteralUnion<"custom", string>`                          | `-`          | Размер слайда.  Значение `"custom"` используется, если ширина у слайдов разная.                                                                                                                                                                                               |
+| `timeout`              | `number`                                                            | `0`          | При передаче происходит автоматический переход к следующему слайду через переданное время в ms. Автоматический переход будет ставиться на паузу при: - начале свайпа для переключения слайда; - фокусе на любой элемент внутри компонента; - при наведении мыши на компонент. |

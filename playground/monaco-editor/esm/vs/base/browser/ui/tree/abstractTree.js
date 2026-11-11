@@ -283,6 +283,9 @@ class TreeRenderer {
         }
     }
     renderTemplate(container) {
+        if (this.renderer.rowClassName) {
+            container.classList.add(this.renderer.rowClassName);
+        }
         const el = append(container, $('.monaco-tl-row'));
         const indent = append(el, $('.monaco-tl-indent'));
         const twistie = append(el, $('.monaco-tl-twistie'));
@@ -300,9 +303,11 @@ class TreeRenderer {
     disposeElement(node, index, templateData, details) {
         templateData.indentGuidesDisposable.dispose();
         this.renderer.disposeElement?.(node, index, templateData.templateData, { ...details, indent: templateData.indentSize });
-        if (typeof details?.height === 'number') {
+        if (typeof details?.height === 'number' && this.renderedNodes.get(node) === templateData) {
             this.renderedNodes.delete(node);
-            this.renderedElements.delete(node.element);
+            if (this.renderedElements.get(node.element) === node) {
+                this.renderedElements.delete(node.element);
+            }
         }
     }
     disposeTemplate(templateData) {
@@ -707,7 +712,10 @@ function stickyScrollNodeEquals(node1, node2) {
     return node1.node.element === node2.node.element &&
         node1.startIndex === node2.startIndex &&
         node1.height === node2.height &&
-        node1.endIndex === node2.endIndex;
+        node1.endIndex === node2.endIndex &&
+        node1.sourceNodeEnd === node2.sourceNodeEnd &&
+        node1.sourceNodePartiallyVisible === node2.sourceNodePartiallyVisible &&
+        node1.hasExplicitHeight === node2.hasExplicitHeight;
 }
 class StickyScrollState {
     constructor(stickyNodes = []) {
@@ -756,6 +764,9 @@ class DefaultStickyScrollDelegate {
     }
 }
 class StickyScrollController extends Disposable {
+    get domNode() {
+        return this._widget.domNode;
+    }
     constructor(tree, model, view, renderers, treeDelegate, options = {}) {
         super();
         this.tree = tree;
@@ -773,6 +784,12 @@ class StickyScrollController extends Disposable {
         this._register(view.onDidScroll(() => this.update()));
         this._register(view.onDidChangeContentHeight(() => this.update()));
         this._register(tree.onDidChangeCollapseState(() => this.update()));
+        this._register(this._widget.onDidChangeHeight(heightChanges => {
+            // Update the list's tracked element heights with the measured values
+            for (const { index, height } of heightChanges) {
+                this.view.updateElementHeight(index, height);
+            }
+        }));
         this._register(model.onDidSpliceRenderedNodes((e) => {
             const state = this._widget.state;
             if (!state) {
@@ -848,27 +865,54 @@ class StickyScrollController extends Disposable {
         if (!nextStickyNode) {
             return undefined;
         }
-        if (nextStickyNode === firstVisibleNodeUnderWidget) {
-            if (!this.nodeIsUncollapsedParent(firstVisibleNodeUnderWidget)) {
-                return undefined;
-            }
-            if (this.nodeTopAlignsWithStickyNodesBottom(firstVisibleNodeUnderWidget, stickyNodesHeight)) {
-                return undefined;
-            }
+        if (nextStickyNode === firstVisibleNodeUnderWidget && !this.nodeIsUncollapsedParent(firstVisibleNodeUnderWidget)) {
+            return undefined;
         }
-        return this.createStickyScrollNode(nextStickyNode, stickyNodesHeight);
+        const sourceRange = this.getStickyScrollNodeSourceRange(nextStickyNode);
+        if (!sourceRange || !Number.isFinite(sourceRange.start) || !Number.isFinite(sourceRange.end) || sourceRange.end <= sourceRange.start) {
+            return undefined;
+        }
+        const sourceNodeTop = this.view.getElementTop(this.getNodeIndex(nextStickyNode));
+        const stickyViewportBottom = this.view.scrollTop + stickyNodesHeight;
+        if (stickyViewportBottom <= sourceNodeTop + sourceRange.start) {
+            return undefined;
+        }
+        const height = this.getStickyScrollNodeHeight(sourceRange, stickyNodesHeight);
+        const sourceNodePartiallyVisible = stickyViewportBottom + height < sourceNodeTop + sourceRange.end;
+        return this.createStickyScrollNode(nextStickyNode, stickyNodesHeight, height, sourceRange.end, sourceNodePartiallyVisible, sourceRange.stickyNodeHeight !== undefined);
     }
-    nodeTopAlignsWithStickyNodesBottom(node, stickyNodesHeight) {
-        const nodeIndex = this.getNodeIndex(node);
-        const elementTop = this.view.getElementTop(nodeIndex);
-        const stickyPosition = stickyNodesHeight;
-        return this.view.scrollTop === elementTop - stickyPosition;
+    getStickyScrollNodeSourceRange(node) {
+        const defaultRange = { start: 0, end: this.getNodeHeight(node) };
+        const sourceRangeProvider = this.tree.options.stickyScrollNodeSourceRangeProvider;
+        if (sourceRangeProvider) {
+            return sourceRangeProvider(node.element, defaultRange);
+        }
+        return defaultRange;
     }
-    createStickyScrollNode(node, currentStickyNodesHeight) {
-        const height = this.treeDelegate.getHeight(node);
+    getStickyScrollNodeHeight(sourceRange, currentStickyNodesHeight) {
+        const height = this.clampNodeHeight(sourceRange.stickyNodeHeight ?? sourceRange.end - sourceRange.start);
+        if (!sourceRange.estimated) {
+            return height;
+        }
+        const availableHeight = Math.max(1, this.view.renderHeight * this.maxWidgetViewRatio - currentStickyNodesHeight);
+        return Math.min(height, availableHeight);
+    }
+    getNodeHeight(node) {
+        const nodeLocation = this.model.getNodeLocation(node);
+        const index = this.model.getListIndex(nodeLocation);
+        if (index >= 0) {
+            return this.view.getElementHeight(index);
+        }
+        return this.treeDelegate.getHeight(node);
+    }
+    clampNodeHeight(height) {
+        const max = this.tree.options.stickyScrollMaxNodeHeight;
+        return max !== undefined ? Math.min(height, max) : height;
+    }
+    createStickyScrollNode(node, currentStickyNodesHeight, height, sourceNodeEnd, sourceNodePartiallyVisible, hasExplicitHeight) {
         const { startIndex, endIndex } = this.getNodeRange(node);
         const position = this.calculateStickyNodePosition(endIndex, currentStickyNodesHeight, height);
-        return { node, position, height, startIndex, endIndex };
+        return { node, position, height, startIndex, endIndex, sourceNodeEnd, sourceNodePartiallyVisible, hasExplicitHeight };
     }
     getAncestorUnderPrevious(node, previousAncestor = undefined) {
         let currentAncestor = node;
@@ -886,21 +930,8 @@ class StickyScrollController extends Disposable {
         return undefined;
     }
     calculateStickyNodePosition(lastDescendantIndex, stickyRowPositionTop, stickyNodeHeight) {
-        let lastChildRelativeTop = this.view.getRelativeTop(lastDescendantIndex);
-        // If the last descendant is only partially visible at the top of the view, getRelativeTop() returns null
-        // In that case, utilize the next node's relative top to calculate the sticky node's position
-        if (lastChildRelativeTop === null && this.view.firstVisibleIndex === lastDescendantIndex && lastDescendantIndex + 1 < this.view.length) {
-            const nodeHeight = this.treeDelegate.getHeight(this.view.element(lastDescendantIndex));
-            const nextNodeRelativeTop = this.view.getRelativeTop(lastDescendantIndex + 1);
-            lastChildRelativeTop = nextNodeRelativeTop ? nextNodeRelativeTop - nodeHeight / this.view.renderHeight : null;
-        }
-        if (lastChildRelativeTop === null) {
-            return stickyRowPositionTop;
-        }
-        const lastChildNode = this.view.element(lastDescendantIndex);
-        const lastChildHeight = this.treeDelegate.getHeight(lastChildNode);
-        const topOfLastChild = lastChildRelativeTop * this.view.renderHeight;
-        const bottomOfLastChild = topOfLastChild + lastChildHeight;
+        const lastChildHeight = this.view.getElementHeight(lastDescendantIndex);
+        const bottomOfLastChild = this.view.getElementTop(lastDescendantIndex) + lastChildHeight - this.view.scrollTop;
         if (stickyRowPositionTop + stickyNodeHeight > bottomOfLastChild && stickyRowPositionTop <= bottomOfLastChild) {
             return bottomOfLastChild - stickyNodeHeight;
         }
@@ -961,7 +992,10 @@ class StickyScrollController extends Disposable {
         }
         let widgetHeight = 0;
         for (let i = 0; i < ancestors.length && i < this.stickyScrollMaxItemCount; i++) {
-            widgetHeight += this.treeDelegate.getHeight(ancestors[i]);
+            const sourceRange = this.getStickyScrollNodeSourceRange(ancestors[i]);
+            if (sourceRange) {
+                widgetHeight += this.getStickyScrollNodeHeight(sourceRange, widgetHeight);
+            }
         }
         return widgetHeight;
     }
@@ -1001,7 +1035,10 @@ class StickyScrollWidget {
         this.treeDelegate = treeDelegate;
         this.accessibilityProvider = accessibilityProvider;
         this._previousElements = [];
+        this._previousElementHeights = [];
         this._previousStateDisposables = new DisposableStore();
+        this._onDidChangeHeight = new Emitter();
+        this.onDidChangeHeight = this._onDidChangeHeight.event;
         this._rootDomNode = $('.monaco-tree-sticky-container.empty');
         container.appendChild(this._rootDomNode);
         const shadow = $('.monaco-tree-sticky-container-shadow');
@@ -1014,14 +1051,17 @@ class StickyScrollWidget {
         if (!this._previousState) {
             return 0;
         }
-        const lastElement = this._previousState.stickyNodes[this._previousState.count - 1];
-        return lastElement.position + lastElement.height;
+        return this.getRootHeight(this._previousState);
+    }
+    get domNode() {
+        return this._rootDomNode;
     }
     setState(state) {
         const wasVisible = !!this._previousState && this._previousState.count > 0;
         const isVisible = !!state && state.count > 0;
         // If state has not changed, do nothing
         if ((!wasVisible && !isVisible) || (wasVisible && isVisible && this._previousState.equal(state))) {
+            this.updateSourceNodeVisibility(state);
             return;
         }
         // Update visibility of the widget if changed
@@ -1029,8 +1069,10 @@ class StickyScrollWidget {
             this.setVisible(isVisible);
         }
         if (!isVisible) {
+            this.updateSourceNodeVisibility(undefined);
             this._previousState = undefined;
             this._previousElements = [];
+            this._previousElementHeights = [];
             this._previousStateDisposables.clear();
             return;
         }
@@ -1044,8 +1086,25 @@ class StickyScrollWidget {
             this.renderState(state);
         }
         this._previousState = state;
-        // Set the height of the widget to the bottom of the last sticky node
-        this._rootDomNode.style.height = `${lastStickyNode.position + lastStickyNode.height}px`;
+        this.updateSourceNodeVisibility(state);
+        this.updateRootHeight(state);
+    }
+    updateSourceNodeVisibility(state) {
+        let sourceNodePartiallyVisible = false;
+        for (let i = 0; state && i < state.count; i++) {
+            const stickyNode = state.stickyNodes[i];
+            const stickyElement = this._previousElements[i];
+            let nodePartiallyVisible = stickyNode.sourceNodePartiallyVisible;
+            if (stickyElement) {
+                const sourceNodeBottom = this.view.getElementTop(stickyNode.startIndex) + stickyNode.sourceNodeEnd;
+                const stickyElementHeight = this.getRenderedNodeHeight(stickyNode, i);
+                const stickyNodeBottom = this.view.scrollTop + stickyNode.position + stickyElementHeight;
+                nodePartiallyVisible = stickyNodeBottom < sourceNodeBottom;
+            }
+            stickyElement?.classList.toggle('source-node-partially-visible', nodePartiallyVisible);
+            sourceNodePartiallyVisible ||= nodePartiallyVisible;
+        }
+        this._rootDomNode.classList.toggle('source-node-partially-visible', sourceNodePartiallyVisible);
     }
     renderState(state) {
         this._previousStateDisposables.clear();
@@ -1059,25 +1118,85 @@ class StickyScrollWidget {
         }
         this.stickyScrollFocus.updateElements(elements, state);
         this._previousElements = elements;
+        this._previousElementHeights = this.probeDynamicHeights(state, elements);
     }
     rerender() {
         if (this._previousState) {
             this.renderState(this._previousState);
+            this.updateSourceNodeVisibility(this._previousState);
+            this.updateRootHeight(this._previousState);
         }
+    }
+    updateRootHeight(state) {
+        this._rootDomNode.style.height = `${this.getRootHeight(state)}px`;
+    }
+    getRootHeight(state) {
+        const lastStickyNode = state.stickyNodes[state.count - 1];
+        const lastStickyElementHeight = this.getRenderedNodeHeight(lastStickyNode, state.count - 1);
+        return Math.max(0, lastStickyNode.position + lastStickyElementHeight);
+    }
+    getRenderedNodeHeight(stickyNode, index) {
+        return Math.min(this._previousElementHeights[index] ?? stickyNode.height, stickyNode.height);
+    }
+    probeDynamicHeights(state, elements) {
+        const heightChanges = [];
+        const elementHeights = state.stickyNodes.map(node => node.height);
+        for (let i = 0; i < state.count; i++) {
+            const stickyNode = state.stickyNodes[i];
+            if (!this.treeDelegate.hasDynamicHeight || !this.treeDelegate.hasDynamicHeight(stickyNode.node)) {
+                const measuredHeight = elements[i].offsetHeight;
+                if (measuredHeight > 0) {
+                    elementHeights[i] = measuredHeight;
+                }
+                continue;
+            }
+            const element = elements[i];
+            // Temporarily clear the explicit height to allow the element to size naturally
+            const previousHeight = element.style.height;
+            element.style.height = '';
+            const measuredHeight = element.offsetHeight;
+            if (measuredHeight <= 0) {
+                element.style.height = previousHeight;
+                continue;
+            }
+            const maxNodeHeight = this.tree.options.stickyScrollMaxNodeHeight;
+            const clampedMeasuredHeight = maxNodeHeight !== undefined ? Math.min(measuredHeight, maxNodeHeight) : measuredHeight;
+            const renderedHeight = stickyNode.hasExplicitHeight ? stickyNode.height : clampedMeasuredHeight;
+            elementHeights[i] = renderedHeight;
+            // Always update the sticky element's visual height to match the measured content
+            if (this.tree.options.setRowHeight !== false) {
+                element.style.height = `${renderedHeight}px`;
+            }
+            if (this.tree.options.setRowLineHeight !== false) {
+                element.style.lineHeight = `${renderedHeight}px`;
+            }
+            // A sticky row may represent only part of its source, so never shrink the source row.
+            if (!stickyNode.hasExplicitHeight && clampedMeasuredHeight > this.view.getElementHeight(stickyNode.startIndex)) {
+                heightChanges.push({ index: stickyNode.startIndex, height: clampedMeasuredHeight });
+            }
+        }
+        if (heightChanges.length > 0) {
+            this._onDidChangeHeight.fire(heightChanges);
+        }
+        return elementHeights;
     }
     createElement(stickyNode, stickyIndex, stickyNodesTotal) {
         const nodeIndex = stickyNode.startIndex;
         // Sticky element container
         const stickyElement = document.createElement('div');
         stickyElement.style.top = `${stickyNode.position}px`;
+        const maxNodeHeight = this.tree.options.stickyScrollMaxNodeHeight;
+        const clampedHeight = maxNodeHeight !== undefined ? Math.min(stickyNode.height, maxNodeHeight) : stickyNode.height;
         if (this.tree.options.setRowHeight !== false) {
-            stickyElement.style.height = `${stickyNode.height}px`;
+            stickyElement.style.height = `${clampedHeight}px`;
         }
         if (this.tree.options.setRowLineHeight !== false) {
-            stickyElement.style.lineHeight = `${stickyNode.height}px`;
+            stickyElement.style.lineHeight = `${clampedHeight}px`;
         }
+        stickyElement.style.overflow = 'hidden';
         stickyElement.classList.add('monaco-tree-sticky-row');
         stickyElement.classList.add('monaco-list-row');
+        stickyElement.classList.toggle('source-node-partially-visible', stickyNode.sourceNodePartiallyVisible);
         stickyElement.setAttribute('data-index', `${nodeIndex}`);
         stickyElement.setAttribute('data-parity', nodeIndex % 2 === 0 ? 'even' : 'odd');
         stickyElement.setAttribute('id', this.view.getElementID(nodeIndex));
@@ -1138,8 +1257,6 @@ class StickyScrollWidget {
         if (typeof ariaLevel === 'number') {
             container.setAttribute('aria-level', `${ariaLevel}`);
         }
-        // Sticky Scroll elements can not be selected
-        container.setAttribute('aria-selected', String(false));
         return result;
     }
     setVisible(visible) {
@@ -1155,6 +1272,7 @@ class StickyScrollWidget {
         return this.stickyScrollFocus.focusedLast();
     }
     dispose() {
+        this._onDidChangeHeight.dispose();
         this.stickyScrollFocus.dispose();
         this._previousStateDisposables.dispose();
         this._rootDomNode.remove();
@@ -1691,6 +1809,7 @@ class AbstractTree {
         this.onDidChangeFindOpenState = Event.None;
         this.onDidChangeStickyScrollFocused = Event.None;
         this.disposables = new DisposableStore();
+        this._onDidChangeStickyScrollDomNode = this.disposables.add(new Emitter());
         this.onDidSwapModel = this.disposables.add(new Emitter());
         this.onDidChangeModelRelay = this.disposables.add(new Relay());
         this.onDidSpliceModelRelay = this.disposables.add(new Relay());
@@ -1769,11 +1888,13 @@ class AbstractTree {
         if (!this.stickyScrollController && this._options.enableStickyScroll) {
             this.stickyScrollController = new StickyScrollController(this, this.model, this.view, this.renderers, this.treeDelegate, this._options);
             this.onDidChangeStickyScrollFocused = this.stickyScrollController.onDidChangeHasFocus;
+            this._onDidChangeStickyScrollDomNode.fire(this.stickyScrollController.domNode);
         }
         else if (this.stickyScrollController && !this._options.enableStickyScroll) {
             this.onDidChangeStickyScrollFocused = Event.None;
             this.stickyScrollController.dispose();
             this.stickyScrollController = undefined;
+            this._onDidChangeStickyScrollDomNode.fire(undefined);
         }
         this.stickyScrollController?.updateOptions(optionsUpdate);
     }

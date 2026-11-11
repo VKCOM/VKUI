@@ -181,7 +181,7 @@ let WorkbenchToolBar = class WorkbenchToolBar extends ToolBar {
                     else {
                         primaryActions.push(toAction({
                             id: 'label',
-                            label: localize(1701, "Hide"),
+                            label: localize(1727, "Hide"),
                             enabled: false,
                             run() { }
                         }));
@@ -196,7 +196,7 @@ let WorkbenchToolBar = class WorkbenchToolBar extends ToolBar {
                     actions.push(new Separator());
                     actions.push(toAction({
                         id: 'resetThisMenu',
-                        label: localize(1702, "Reset Menu"),
+                        label: localize(1728, "Reset Menu"),
                         run: () => this._menuService.resetHiddenStates(menuIds)
                     }));
                 }

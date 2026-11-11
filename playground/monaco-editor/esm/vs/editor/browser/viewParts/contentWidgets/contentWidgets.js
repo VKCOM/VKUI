@@ -135,7 +135,7 @@ class Widget {
         this._viewDomNode = viewDomNode;
         this._actual = actual;
         const options = this._context.configuration.options;
-        const layoutInfo = options.get(165 /* EditorOption.layoutInfo */);
+        const layoutInfo = options.get(166 /* EditorOption.layoutInfo */);
         const allowOverflow = options.get(4 /* EditorOption.allowOverflow */);
         this.domNode = createFastDomNode(this._actual.getDomNode());
         this.id = this._actual.getId();
@@ -160,8 +160,8 @@ class Widget {
     }
     onConfigurationChanged(e) {
         const options = this._context.configuration.options;
-        if (e.hasChanged(165 /* EditorOption.layoutInfo */)) {
-            const layoutInfo = options.get(165 /* EditorOption.layoutInfo */);
+        if (e.hasChanged(166 /* EditorOption.layoutInfo */)) {
+            const layoutInfo = options.get(166 /* EditorOption.layoutInfo */);
             this._contentLeft = layoutInfo.contentLeft;
             this._contentWidth = layoutInfo.contentWidth;
             this._maxWidth = this._getMaxWidth();

@@ -1,4 +1,4 @@
-import { addDisposableListener, getShadowRoot, getActiveElement } from '../../../../../base/browser/dom.js';
+import { addDisposableListener, getShadowRoot } from '../../../../../base/browser/dom.js';
 import { Disposable } from '../../../../../base/common/lifecycle.js';
 import { ILogService } from '../../../../../platform/log/common/log.js';
 
@@ -60,7 +60,7 @@ let FocusTracker = class FocusTracker extends Disposable {
     }
     refreshFocusState() {
         const shadowRoot = getShadowRoot(this._domNode);
-        const activeElement = shadowRoot ? shadowRoot.activeElement : getActiveElement();
+        const activeElement = shadowRoot ? shadowRoot.activeElement : this._domNode.ownerDocument.activeElement;
         const focused = this._domNode === activeElement;
         this._handleFocusedChanged(focused);
     }

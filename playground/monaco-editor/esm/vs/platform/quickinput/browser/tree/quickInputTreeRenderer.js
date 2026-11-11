@@ -11,6 +11,7 @@ import { defaultCheckboxStyles } from '../../../theme/browser/defaultStyles.js';
 import { isDark } from '../../../theme/common/theme.js';
 import { escape } from '../../../../base/common/strings.js';
 import { IThemeService } from '../../../theme/common/themeService.js';
+import { asCssVariable } from '../../../theme/common/colorUtils.js';
 import { quickInputButtonsToActionArrays } from '../quickInputUtils.js';
 
 /*---------------------------------------------------------------------------------------------
@@ -122,6 +123,7 @@ let QuickInputTreeRenderer = class QuickInputTreeRenderer extends Disposable {
             templateData.icon.style.backgroundImage = '';
             templateData.icon.className = quickTreeItem.iconClass ? `quick-input-tree-icon ${quickTreeItem.iconClass}` : '';
         }
+        templateData.icon.style.color = quickTreeItem.iconColor ? asCssVariable(quickTreeItem.iconColor.id) : '';
         const { labelHighlights: matches, descriptionHighlights: descriptionMatches } = node.filterData || {};
         // Label and Description
         let descriptionTitle;

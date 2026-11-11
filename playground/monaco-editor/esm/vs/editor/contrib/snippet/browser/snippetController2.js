@@ -43,10 +43,10 @@ let SnippetController2 = class SnippetController2 {
     static get(editor) {
         return editor.getContribution(SnippetController2_1.ID);
     }
-    static { this.InSnippetMode = new RawContextKey('inSnippetMode', false, localize(1451, "Whether the editor in current in snippet mode")); }
-    static { this.HasNextTabstop = new RawContextKey('hasNextTabstop', false, localize(1452, "Whether there is a next tab stop when in snippet mode")); }
-    static { this.HasPrevTabstop = new RawContextKey('hasPrevTabstop', false, localize(1453, "Whether there is a previous tab stop when in snippet mode")); }
-    static { this.InSnippetChoice = new RawContextKey('inSnippetChoice', false, localize(1454, "Whether the current snippet tab stop is a choice")); }
+    static { this.InSnippetMode = new RawContextKey('inSnippetMode', false, localize(1471, "Whether the editor in current in snippet mode")); }
+    static { this.HasNextTabstop = new RawContextKey('hasNextTabstop', false, localize(1472, "Whether there is a next tab stop when in snippet mode")); }
+    static { this.HasPrevTabstop = new RawContextKey('hasPrevTabstop', false, localize(1473, "Whether there is a previous tab stop when in snippet mode")); }
+    static { this.InSnippetChoice = new RawContextKey('inSnippetChoice', false, localize(1474, "Whether the current snippet tab stop is a choice")); }
     constructor(_editor, _logService, _languageFeaturesService, contextKeyService, _languageConfigurationService) {
         this._editor = _editor;
         this._logService = _logService;
@@ -134,7 +134,7 @@ let SnippetController2 = class SnippetController2 {
                             sortText: 'a'.repeat(i + 1),
                             range: activeChoice.range,
                             filterText: isAnyOfOptions ? `${word}_${option.value}` : undefined,
-                            command: { id: 'jumpToNextSnippetPlaceholder', title: localize(1455, 'Go to next placeholder...') }
+                            command: { id: 'jumpToNextSnippetPlaceholder', title: localize(1475, 'Go to next placeholder...') }
                         });
                     }
                     return { suggestions };

@@ -2,42 +2,30 @@
 description: Компонент для визуального разделения контента.
 ---
 
-<Overview group="layout">
-
-# Separator [tag:component]
+# Separator \[tag:component]
 
 Компонент для визуального разделения контента. Поддерживает горизонтальное и вертикальное расположение,
 различные стили оформления и настройку отступов.
-
-</Overview>
 
 ## Основное использование
 
 ### Горизонтальный разделитель
 
-import { BlockWrapper } from "@/components/wrappers";
-
-{/* @example-description: Базовый горизонтальный разделитель `Separator` между блоками контента. */}
-<Playground Wrapper={BlockWrapper}>
-  ```jsx
-  <Separator />
-  ```
-</Playground>
+```jsx
+<Separator />
+```
 
 ### Вертикальный разделитель
 
-Для использования вертикального разделителя необходимо _обязательно_ обернуть в `flex`-контейнер
+Для использования вертикального разделителя необходимо *обязательно* обернуть в `flex`-контейнер
 
-{/* @example-description: Вертикальные разделители `Separator` между элементами в строке. */}
-<Playground>
-  ```jsx
-  <Link href="#news">Новости</Link>
-  <Separator direction="vertical" size="xl" />
-  <Link href="#calls">Звонки</Link>
-  <Separator direction="vertical" size="xl" />
-  <Link href="#friends">Друзья</Link>
-  ```
-</Playground>
+```jsx
+<Link href="#news">Новости</Link>
+<Separator direction="vertical" size="xl" />
+<Link href="#calls">Звонки</Link>
+<Separator direction="vertical" size="xl" />
+<Link href="#friends">Друзья</Link>
+```
 
 ## Отступы
 
@@ -54,17 +42,17 @@ import { BlockWrapper } from "@/components/wrappers";
 
 > Компонент `Separator` обладает flex-свойствами, подробнее про которые можно почитать на соответствующей странице [`Box`](/components/box/#flex-props).
 
-## Свойства и методы [#api]
+## Свойства и методы \[#api]
 
-| Свойство | Тип | По умолчанию | Описание |
-| --- | --- | --- | --- |
-| `align` | `"start" \| "center" \| "end"` | `center` | Выравнивание разделителя в контейнере. |
-| `appearance` | `"primary" \| "secondary" \| "primary-alpha"` | `primary` | Стиль отображения разделителя. |
-| `direction` | `"horizontal" \| "vertical"` | `horizontal` | Направление отображения разделителя. |
-| `flexBasis` | `FlexBasisProp` | `-` | Определяет начальный размер flex-элемента. |
-| `flexGrow` | `FlexGrowProp` | `-` | Определяет, насколько элемент будет расти относительно остальных flex-элементов. |
-| `flexShrink` | `FlexShrinkProp` | `-` | Определяет, насколько элемент будет сжиматься относительно остальных flex-элементов. |
-| `getRootRef` | `Ref<HTMLDivElement>` | `-` |  |
-| `padding` | `boolean` | `false` | Добавляет стандартные отступы у разделителя. |
-| `size` | `SpacingSizeProp` | `-` | Размер контейнера, в который вложен разделитель.  Принимает значения дизайн-системы, числовые значения и css-переменные. |
-
+| Свойство     | Тип                                           | По умолчанию | Описание                                                                                                                 |
+| ------------ | --------------------------------------------- | ------------ | ------------------------------------------------------------------------------------------------------------------------ |
+| `align`      | `"start" \| "center" \| "end"`                | `center`     | Выравнивание разделителя в контейнере.                                                                                   |
+| `appearance` | `"primary" \| "secondary" \| "primary-alpha"` | `primary`    | Стиль отображения разделителя.                                                                                           |
+| `direction`  | `"horizontal" \| "vertical"`                  | `horizontal` | Направление отображения разделителя.                                                                                     |
+| `flexBasis`  | `FlexBasisProp`                               | `-`          | Определяет начальный размер flex-элемента.                                                                               |
+| `flexGrow`   | `FlexGrowProp`                                | `-`          | Определяет, насколько элемент будет расти относительно остальных flex-элементов.                                         |
+| `flexShrink` | `FlexShrinkProp`                              | `-`          | Определяет, насколько элемент будет сжиматься относительно остальных flex-элементов.                                     |
+| `getRootRef` | `Ref<HTMLDivElement>`                         | `-`          |                                                                                                                          |
+| `padding`    | `boolean`                                     | `false`      | Добавляет стандартные отступы у разделителя.                                                                             |
+| `ref`        | `Ref<HTMLDivElement>`                         | `-`          |                                                                                                                          |
+| `size`       | `SpacingSizeProp`                             | `-`          | Размер контейнера, в который вложен разделитель.  Принимает значения дизайн-системы, числовые значения и css-переменные. |

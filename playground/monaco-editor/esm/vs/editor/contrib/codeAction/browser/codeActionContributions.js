@@ -27,7 +27,7 @@ Registry.as(Extensions.Configuration).registerConfiguration({
         'editor.codeActionWidget.showHeaders': {
             type: 'boolean',
             scope: 6 /* ConfigurationScope.LANGUAGE_OVERRIDABLE */,
-            description: localize(896, "Enable/disable showing group headers in the Code Action menu."),
+            description: localize(911, "Enable/disable showing group headers in the Code Action menu."),
             default: true,
         },
     }
@@ -38,7 +38,7 @@ Registry.as(Extensions.Configuration).registerConfiguration({
         'editor.codeActionWidget.includeNearbyQuickFixes': {
             type: 'boolean',
             scope: 6 /* ConfigurationScope.LANGUAGE_OVERRIDABLE */,
-            description: localize(897, "Enable/disable showing nearest Quick Fix within a line when not currently on a diagnostic."),
+            description: localize(912, "Enable/disable showing nearest Quick Fix within a line when not currently on a diagnostic."),
             default: true,
         },
     }
@@ -49,7 +49,7 @@ Registry.as(Extensions.Configuration).registerConfiguration({
         'editor.codeActions.triggerOnFocusChange': {
             type: 'boolean',
             scope: 6 /* ConfigurationScope.LANGUAGE_OVERRIDABLE */,
-            markdownDescription: localize(898, 'Enable triggering {0} when {1} is set to {2}. Code Actions must be set to {3} to be triggered for window and focus changes.', '`#editor.codeActionsOnSave#`', '`#files.autoSave#`', '`afterDelay`', '`always`'),
+            markdownDescription: localize(913, 'Enable triggering {0} when {1} is set to {2}. Code Actions must be set to {3} to be triggered for window and focus changes.', '`#editor.codeActionsOnSave#`', '`#files.autoSave#`', '`afterDelay`', '`always`'),
             default: false,
         },
     }

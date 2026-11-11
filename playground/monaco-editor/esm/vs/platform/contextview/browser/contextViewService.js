@@ -25,7 +25,7 @@ let ContextViewHandler = class ContextViewHandler extends Disposable {
         this._register(layoutService.onDidLayoutContainer(() => this.layout()));
     }
     // ContextView
-    showContextView(delegate, container, shadowRoot) {
+    showContextView(delegate, container, shadowRoot, useWindowContainerForShadowRoot) {
         let domPosition;
         if (container) {
             if (container === this.layoutService.getContainer(getWindow(container))) {
@@ -41,7 +41,8 @@ let ContextViewHandler = class ContextViewHandler extends Disposable {
         else {
             domPosition = 1 /* ContextViewDOMPosition.ABSOLUTE */;
         }
-        this.contextView.setContainer(container ?? this.layoutService.activeContainer, domPosition);
+        const contextViewContainer = useWindowContainerForShadowRoot && container ? this.layoutService.getContainer(getWindow(container)) : container ?? this.layoutService.activeContainer;
+        this.contextView.setContainer(contextViewContainer, domPosition);
         this.contextView.show(delegate);
         const openContextView = {
             close: () => {

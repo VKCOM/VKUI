@@ -22,7 +22,7 @@ import { SnippetController2 } from '../../snippet/browser/snippetController2.js'
 import { CompletionModel } from './completionModel.js';
 import { QuickSuggestionsOptions, CompletionOptions, provideSuggestionItems } from './suggest.js';
 import { WordDistance } from './wordDistance.js';
-import { autorun } from '../../../../base/common/observableInternal/reactions/autorun.js';
+import { registerAutorunSelfDisposable } from '../../../../base/common/observableInternal/reactions/autorun.js';
 
 /*---------------------------------------------------------------------------------------------
  *  Copyright (c) Microsoft Corporation. All rights reserved.
@@ -403,9 +403,10 @@ let SuggestModel = SuggestModel_1 = class SuggestModel {
             triggerAndCleanUp(true);
             inlineModel.stop('automatic');
         }, 750, store);
-        store.add(autorun(reader => {
+        registerAutorunSelfDisposable(store, reader => {
             const currentInlineModel = inlineController.model.read(reader);
             if (currentInlineModel !== inlineModel) {
+                reader.dispose();
                 triggerAndCleanUp(false);
                 return;
             }
@@ -415,8 +416,9 @@ let SuggestModel = SuggestModel_1 = class SuggestModel {
                 // Still loading
                 return;
             }
+            reader.dispose();
             triggerAndCleanUp(!currentState);
-        }));
+        });
     }
     _refilterCompletionItems() {
         assertType(this._editor.hasModel());

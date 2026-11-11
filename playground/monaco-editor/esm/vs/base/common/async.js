@@ -152,8 +152,8 @@ class Throttler {
                     this.queuedPromiseFactory = null;
                     return result;
                 };
-                this.queuedPromise = new Promise(resolve => {
-                    this.activePromise.then(onComplete, onComplete).then(resolve);
+                this.queuedPromise = new Promise((resolve, reject) => {
+                    this.activePromise.then(onComplete, onComplete).then(resolve, reject);
                 });
             }
             return new Promise((resolve, reject) => {

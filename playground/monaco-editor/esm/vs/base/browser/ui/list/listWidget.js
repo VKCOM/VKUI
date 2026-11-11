@@ -1089,6 +1089,7 @@ class List {
     get onPointer() { return this.mouseController.onPointer; }
     get onMouseDown() { return this.view.onMouseDown; }
     get onMouseOver() { return this.view.onMouseOver; }
+    get onMouseMove() { return this.view.onMouseMove; }
     get onMouseOut() { return this.view.onMouseOut; }
     get onTouchStart() { return this.view.onTouchStart; }
     get onTap() { return this.view.onTap; }
@@ -1180,6 +1181,7 @@ class List {
         this.disposables.add(this.mouseController);
         this.onDidChangeFocus(this._onFocusChange, this, this.disposables);
         this.onDidChangeSelection(this._onSelectionChange, this, this.disposables);
+        this.view.onDidScroll(this.onDidChangeActiveDescendant, this, this.disposables);
         if (this.accessibilityProvider) {
             const ariaLabel = this.accessibilityProvider.getWidgetAriaLabel();
             const observable = (ariaLabel && typeof ariaLabel !== 'string') ? ariaLabel : constObservable(ariaLabel);
@@ -1226,6 +1228,9 @@ class List {
             return;
         }
         this.eventBufferer.bufferEvents(() => this.spliceable.splice(start, deleteCount, elements));
+    }
+    updateElementHeight(index, size) {
+        this.view.updateElementHeight(index, size, null);
     }
     rerender() {
         this.view.rerender();
@@ -1504,24 +1509,6 @@ class List {
             }
         }
     }
-    /**
-     * Returns the relative position of an element rendered in the list.
-     * Returns `null` if the element isn't *entirely* in the visible viewport.
-     */
-    getRelativeTop(index, paddingTop = 0) {
-        if (index < 0 || index >= this.length) {
-            throw new ListError(this.user, `Invalid index ${index}`);
-        }
-        const scrollTop = this.view.getScrollTop();
-        const elementTop = this.view.elementTop(index);
-        const elementHeight = this.view.elementHeight(index);
-        if (elementTop < scrollTop + paddingTop || elementTop + elementHeight > scrollTop + this.view.renderHeight) {
-            return null;
-        }
-        // y = mx + b
-        const m = elementHeight - this.view.renderHeight + paddingTop;
-        return Math.abs((scrollTop + paddingTop - elementTop) / m);
-    }
     getHTMLElement() {
         return this.view.domNode;
     }
@@ -1533,6 +1520,9 @@ class List {
     }
     getElementTop(index) {
         return this.view.elementTop(index);
+    }
+    getElementHeight(index) {
+        return this.view.elementHeight(index);
     }
     style(styles) {
         this.styleController.style(styles);
@@ -1548,11 +1538,20 @@ class List {
     onDidChangeActiveDescendant() {
         const focus = this.focus.get();
         if (focus.length > 0) {
+            const index = focus[0];
             let id;
             if (this.accessibilityProvider?.getActiveDescendantId) {
-                id = this.accessibilityProvider.getActiveDescendantId(this.view.element(focus[0]));
+                id = this.accessibilityProvider.getActiveDescendantId(this.view.element(index));
             }
-            this.view.domNode.setAttribute('aria-activedescendant', id || this.view.getElementDomId(focus[0]));
+            if (!id && this.view.domElement(index)) {
+                id = this.view.getElementDomId(index);
+            }
+            if (id) {
+                this.view.domNode.setAttribute('aria-activedescendant', id);
+            }
+            else {
+                this.view.domNode.removeAttribute('aria-activedescendant');
+            }
         }
         else {
             this.view.domNode.removeAttribute('aria-activedescendant');

@@ -31,10 +31,10 @@ class IndentationToSpacesAction extends EditorAction {
     constructor() {
         super({
             id: IndentationToSpacesAction.ID,
-            label: localize2(1189, "Convert Indentation to Spaces"),
+            label: localize2(1204, "Convert Indentation to Spaces"),
             precondition: EditorContextKeys.writable,
             metadata: {
-                description: localize2(1190, "Convert the tab indentation to spaces."),
+                description: localize2(1205, "Convert the tab indentation to spaces."),
             }
         });
     }
@@ -62,10 +62,10 @@ class IndentationToTabsAction extends EditorAction {
     constructor() {
         super({
             id: IndentationToTabsAction.ID,
-            label: localize2(1191, "Convert Indentation to Tabs"),
+            label: localize2(1206, "Convert Indentation to Tabs"),
             precondition: EditorContextKeys.writable,
             metadata: {
-                description: localize2(1192, "Convert the spaces indentation to tabs."),
+                description: localize2(1207, "Convert the spaces indentation to tabs."),
             }
         });
     }
@@ -108,17 +108,17 @@ class ChangeIndentationSizeAction extends EditorAction {
             label: n.toString(),
             // add description for tabSize value set in the configuration
             description: (n === creationOpts.tabSize && n === modelOpts.tabSize
-                ? localize(1185, "Configured Tab Size")
+                ? localize(1200, "Configured Tab Size")
                 : n === creationOpts.tabSize
-                    ? localize(1186, "Default Tab Size")
+                    ? localize(1201, "Default Tab Size")
                     : n === modelOpts.tabSize
-                        ? localize(1187, "Current Tab Size")
+                        ? localize(1202, "Current Tab Size")
                         : undefined)
         }));
         // auto focus the tabSize set for the current editor
         const autoFocusIndex = Math.min(model.getOptions().tabSize - 1, 7);
         setTimeout(() => {
-            quickInputService.pick(picks, { placeHolder: localize(1188, "Select Tab Size for Current File"), activeItem: picks[autoFocusIndex] }).then(pick => {
+            quickInputService.pick(picks, { placeHolder: localize(1203, "Select Tab Size for Current File"), activeItem: picks[autoFocusIndex] }).then(pick => {
                 if (pick) {
                     if (model && !model.isDisposed()) {
                         const pickedVal = parseInt(pick.label, 10);
@@ -145,10 +145,10 @@ class IndentUsingTabs extends ChangeIndentationSizeAction {
     constructor() {
         super(false, false, {
             id: IndentUsingTabs.ID,
-            label: localize2(1193, "Indent Using Tabs"),
+            label: localize2(1208, "Indent Using Tabs"),
             precondition: undefined,
             metadata: {
-                description: localize2(1194, "Use indentation with tabs."),
+                description: localize2(1209, "Use indentation with tabs."),
             }
         });
     }
@@ -158,10 +158,10 @@ class IndentUsingSpaces extends ChangeIndentationSizeAction {
     constructor() {
         super(true, false, {
             id: IndentUsingSpaces.ID,
-            label: localize2(1195, "Indent Using Spaces"),
+            label: localize2(1210, "Indent Using Spaces"),
             precondition: undefined,
             metadata: {
-                description: localize2(1196, "Use indentation with spaces."),
+                description: localize2(1211, "Use indentation with spaces."),
             }
         });
     }
@@ -171,10 +171,10 @@ class ChangeTabDisplaySize extends ChangeIndentationSizeAction {
     constructor() {
         super(true, true, {
             id: ChangeTabDisplaySize.ID,
-            label: localize2(1197, "Change Tab Display Size"),
+            label: localize2(1212, "Change Tab Display Size"),
             precondition: undefined,
             metadata: {
-                description: localize2(1198, "Change the space size equivalent of the tab."),
+                description: localize2(1213, "Change the space size equivalent of the tab."),
             }
         });
     }
@@ -184,10 +184,10 @@ class DetectIndentation extends EditorAction {
     constructor() {
         super({
             id: DetectIndentation.ID,
-            label: localize2(1199, "Detect Indentation from Content"),
+            label: localize2(1214, "Detect Indentation from Content"),
             precondition: undefined,
             metadata: {
-                description: localize2(1200, "Detect the indentation from content."),
+                description: localize2(1215, "Detect the indentation from content."),
             }
         });
     }
@@ -205,10 +205,10 @@ class ReindentLinesAction extends EditorAction {
     constructor() {
         super({
             id: 'editor.action.reindentlines',
-            label: localize2(1201, "Reindent Lines"),
+            label: localize2(1216, "Reindent Lines"),
             precondition: EditorContextKeys.writable,
             metadata: {
-                description: localize2(1202, "Reindent the lines of the editor."),
+                description: localize2(1217, "Reindent the lines of the editor."),
             },
             canTriggerInlineEdits: true,
         });
@@ -231,10 +231,10 @@ class ReindentSelectedLinesAction extends EditorAction {
     constructor() {
         super({
             id: 'editor.action.reindentselectedlines',
-            label: localize2(1203, "Reindent Selected Lines"),
+            label: localize2(1218, "Reindent Selected Lines"),
             precondition: EditorContextKeys.writable,
             metadata: {
-                description: localize2(1204, "Reindent the selected lines of the editor."),
+                description: localize2(1219, "Reindent the selected lines of the editor."),
             },
             canTriggerInlineEdits: true,
         });

@@ -33,7 +33,7 @@ function announceCursorChange(previousCursorState, cursorState) {
     const cursorDiff = cursorState.filter(cs => !previousCursorState.find(pcs => pcs.equals(cs)));
     if (cursorDiff.length >= 1) {
         const cursorPositions = cursorDiff.map(cs => `line ${cs.viewState.position.lineNumber} column ${cs.viewState.position.column}`).join(', ');
-        const msg = cursorDiff.length === 1 ? localize(1334, "Cursor added: {0}", cursorPositions) : localize(1335, "Cursors added: {0}", cursorPositions);
+        const msg = cursorDiff.length === 1 ? localize(1354, "Cursor added: {0}", cursorPositions) : localize(1355, "Cursors added: {0}", cursorPositions);
         status(msg);
     }
 }
@@ -41,7 +41,7 @@ class InsertCursorAbove extends EditorAction {
     constructor() {
         super({
             id: 'editor.action.insertCursorAbove',
-            label: localize2(1344, "Add Cursor Above"),
+            label: localize2(1364, "Add Cursor Above"),
             precondition: undefined,
             kbOpts: {
                 kbExpr: EditorContextKeys.editorTextFocus,
@@ -55,7 +55,7 @@ class InsertCursorAbove extends EditorAction {
             menuOpts: {
                 menuId: MenuId.MenubarSelectionMenu,
                 group: '3_multi',
-                title: localize(1336, "&&Add Cursor Above"),
+                title: localize(1356, "&&Add Cursor Above"),
                 order: 2
             }
         });
@@ -83,7 +83,7 @@ class InsertCursorBelow extends EditorAction {
     constructor() {
         super({
             id: 'editor.action.insertCursorBelow',
-            label: localize2(1345, "Add Cursor Below"),
+            label: localize2(1365, "Add Cursor Below"),
             precondition: undefined,
             kbOpts: {
                 kbExpr: EditorContextKeys.editorTextFocus,
@@ -97,7 +97,7 @@ class InsertCursorBelow extends EditorAction {
             menuOpts: {
                 menuId: MenuId.MenubarSelectionMenu,
                 group: '3_multi',
-                title: localize(1337, "A&&dd Cursor Below"),
+                title: localize(1357, "A&&dd Cursor Below"),
                 order: 3
             }
         });
@@ -125,7 +125,7 @@ class InsertCursorAtEndOfEachLineSelected extends EditorAction {
     constructor() {
         super({
             id: 'editor.action.insertCursorAtEndOfEachLineSelected',
-            label: localize2(1346, "Add Cursors to Line Ends"),
+            label: localize2(1366, "Add Cursors to Line Ends"),
             precondition: undefined,
             kbOpts: {
                 kbExpr: EditorContextKeys.editorTextFocus,
@@ -135,7 +135,7 @@ class InsertCursorAtEndOfEachLineSelected extends EditorAction {
             menuOpts: {
                 menuId: MenuId.MenubarSelectionMenu,
                 group: '3_multi',
-                title: localize(1338, "Add C&&ursors to Line Ends"),
+                title: localize(1358, "Add C&&ursors to Line Ends"),
                 order: 4
             }
         });
@@ -172,7 +172,7 @@ class InsertCursorAtEndOfLineSelected extends EditorAction {
     constructor() {
         super({
             id: 'editor.action.addCursorsToBottom',
-            label: localize2(1347, "Add Cursors to Bottom"),
+            label: localize2(1367, "Add Cursors to Bottom"),
             precondition: undefined
         });
     }
@@ -198,7 +198,7 @@ class InsertCursorAtTopOfLineSelected extends EditorAction {
     constructor() {
         super({
             id: 'editor.action.addCursorsToTop',
-            label: localize2(1348, "Add Cursors to Top"),
+            label: localize2(1368, "Add Cursors to Top"),
             precondition: undefined
         });
     }
@@ -575,7 +575,7 @@ class AddSelectionToNextFindMatchAction extends MultiCursorSelectionControllerAc
     constructor() {
         super({
             id: 'editor.action.addSelectionToNextFindMatch',
-            label: localize2(1349, "Add Selection to Next Find Match"),
+            label: localize2(1369, "Add Selection to Next Find Match"),
             precondition: undefined,
             kbOpts: {
                 kbExpr: EditorContextKeys.focus,
@@ -585,7 +585,7 @@ class AddSelectionToNextFindMatchAction extends MultiCursorSelectionControllerAc
             menuOpts: {
                 menuId: MenuId.MenubarSelectionMenu,
                 group: '3_multi',
-                title: localize(1339, "Add &&Next Occurrence"),
+                title: localize(1359, "Add &&Next Occurrence"),
                 order: 5
             }
         });
@@ -598,12 +598,12 @@ class AddSelectionToPreviousFindMatchAction extends MultiCursorSelectionControll
     constructor() {
         super({
             id: 'editor.action.addSelectionToPreviousFindMatch',
-            label: localize2(1350, "Add Selection to Previous Find Match"),
+            label: localize2(1370, "Add Selection to Previous Find Match"),
             precondition: undefined,
             menuOpts: {
                 menuId: MenuId.MenubarSelectionMenu,
                 group: '3_multi',
-                title: localize(1340, "Add P&&revious Occurrence"),
+                title: localize(1360, "Add P&&revious Occurrence"),
                 order: 6
             }
         });
@@ -616,7 +616,7 @@ class MoveSelectionToNextFindMatchAction extends MultiCursorSelectionControllerA
     constructor() {
         super({
             id: 'editor.action.moveSelectionToNextFindMatch',
-            label: localize2(1351, "Move Last Selection to Next Find Match"),
+            label: localize2(1371, "Move Last Selection to Next Find Match"),
             precondition: undefined,
             kbOpts: {
                 kbExpr: EditorContextKeys.focus,
@@ -633,7 +633,7 @@ class MoveSelectionToPreviousFindMatchAction extends MultiCursorSelectionControl
     constructor() {
         super({
             id: 'editor.action.moveSelectionToPreviousFindMatch',
-            label: localize2(1352, "Move Last Selection to Previous Find Match"),
+            label: localize2(1372, "Move Last Selection to Previous Find Match"),
             precondition: undefined
         });
     }
@@ -645,7 +645,7 @@ class SelectHighlightsAction extends MultiCursorSelectionControllerAction {
     constructor() {
         super({
             id: 'editor.action.selectHighlights',
-            label: localize2(1353, "Select All Occurrences of Find Match"),
+            label: localize2(1373, "Select All Occurrences of Find Match"),
             precondition: undefined,
             kbOpts: {
                 kbExpr: EditorContextKeys.focus,
@@ -655,7 +655,7 @@ class SelectHighlightsAction extends MultiCursorSelectionControllerAction {
             menuOpts: {
                 menuId: MenuId.MenubarSelectionMenu,
                 group: '3_multi',
-                title: localize(1341, "Select All &&Occurrences"),
+                title: localize(1361, "Select All &&Occurrences"),
                 order: 7
             }
         });
@@ -668,7 +668,7 @@ class CompatChangeAll extends MultiCursorSelectionControllerAction {
     constructor() {
         super({
             id: 'editor.action.changeAll',
-            label: localize2(1354, "Change All Occurrences"),
+            label: localize2(1374, "Change All Occurrences"),
             precondition: ContextKeyExpr.and(EditorContextKeys.writable, EditorContextKeys.editorTextFocus),
             kbOpts: {
                 kbExpr: EditorContextKeys.editorTextFocus,
@@ -925,9 +925,9 @@ class FocusNextCursor extends EditorAction {
     constructor() {
         super({
             id: 'editor.action.focusNextCursor',
-            label: localize2(1355, "Focus Next Cursor"),
+            label: localize2(1375, "Focus Next Cursor"),
             metadata: {
-                description: localize(1342, "Focuses the next cursor"),
+                description: localize(1362, "Focuses the next cursor"),
                 args: [],
             },
             precondition: undefined
@@ -957,9 +957,9 @@ class FocusPreviousCursor extends EditorAction {
     constructor() {
         super({
             id: 'editor.action.focusPreviousCursor',
-            label: localize2(1356, "Focus Previous Cursor"),
+            label: localize2(1376, "Focus Previous Cursor"),
             metadata: {
-                description: localize(1343, "Focuses the previous cursor"),
+                description: localize(1363, "Focuses the previous cursor"),
                 args: [],
             },
             precondition: undefined

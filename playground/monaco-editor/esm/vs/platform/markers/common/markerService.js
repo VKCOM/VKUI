@@ -240,8 +240,8 @@ class MarkerService {
      */
     _createFilteredMarker(resource, reasons) {
         const message = reasons.length === 1
-            ? localize(1801, "Problems are paused because: \"{0}\"", reasons[0])
-            : localize(1802, "Problems are paused because: \"{0}\" and {1} more", reasons[0], reasons.length - 1);
+            ? localize(1834, "Problems are paused because: \"{0}\"", reasons[0])
+            : localize(1835, "Problems are paused because: \"{0}\" and {1} more", reasons[0], reasons.length - 1);
         return {
             owner: 'markersFilter',
             resource,

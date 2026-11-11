@@ -10,7 +10,7 @@ class ForceRetokenizeAction extends EditorAction {
     constructor() {
         super({
             id: 'editor.action.forceRetokenize',
-            label: localize2(1584, "Developer: Force Retokenize"),
+            label: localize2(1606, "Developer: Force Retokenize"),
             precondition: undefined
         });
     }

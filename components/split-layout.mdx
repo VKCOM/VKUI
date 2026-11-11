@@ -5,9 +5,7 @@ keywords:
   - SplitCol
 ---
 
-<Overview group="layout">
-
-# SplitLayout [tag:component]
+# SplitLayout \[tag:component]
 
 Контейнер для реализации интерфейса многоколоночной структурой – за реализацию колонки отвечает [`SplitCol`](#split-col).
 
@@ -16,15 +14,9 @@ keywords:
 
 Связанные страницы и компоненты:
 
-- [Навигация](/overview/navigation)
-- [`Panel`](/components/panel)
-- [`PanelHeader`](/components/panel-header)
-
-</Overview>
-
-import { FixedLayoutWrapper } from '@/components/wrappers';
-
-<Playground hide>
+* [Навигация](/overview/navigation)
+* [`Panel`](/components/panel)
+* [`PanelHeader`](/components/panel-header)
 
 ```jsx
 const { viewWidth } = useAdaptivityConditionalRender();
@@ -63,10 +55,6 @@ return (
   </SplitLayout>
 );
 ```
-</Playground>
-
-{/* @example-description: Базовый пример `SplitLayout` с двумя колонками и адаптивным скрытием боковой колонки на узких экранах. */}
-<Playground Wrapper={FixedLayoutWrapper}>
 
 ```jsx
 const { viewWidth } = useAdaptivityConditionalRender();
@@ -106,11 +94,9 @@ return (
 );
 ```
 
-</Playground>
-
 ## Применение компонента
 
-<Callout>Компонент должен быть один на всё приложение.</Callout>
+Компонент должен быть один на всё приложение.
 
 Достаточно будет объявить `SplitLayout` один раз ближе к корню приложения (см. [Навигация | Предварительная настройка](/overview/navigation#initial-setup)).
 
@@ -118,15 +104,12 @@ return (
 
 За выравнивание контента по горизонтали отвечает свойство `center`.
 
-- `true` — весь контент выравнивается по центру;
-- `false` — выравнивание не применяется.
+* `true` — весь контент выравнивается по центру;
+* `false` — выравнивание не применяется.
 
 ## Сквозная шапка
 
 Для реализации сквозной шапки между колонками используется свойство `header` с передачей в него компонента [`PanelHeader`](/components/panel-header).
-
-{/* @example-description: Использование сквозной шапки `SplitLayout` через свойство `header` для синхронизации `PanelHeader` между колонками. */}
-<Playground Wrapper={FixedLayoutWrapper}>
 
 ```jsx
 const platform = usePlatform();
@@ -137,7 +120,7 @@ return (
   <SplitLayout header={hasHeader && <PanelHeader delimiter="none" />}>
     {viewWidth.tabletPlus && (
       <SplitCol className={viewWidth.tabletPlus.className} fixed width={280} maxWidth={280}>
-        <Panel mode="card">
+        <Panel layoutMode="card">
           {hasHeader && <PanelHeader />}
           <Group>
             <Box padding="system">Колонка слева</Box>
@@ -146,9 +129,9 @@ return (
       </SplitCol>
     )}
     <SplitCol maxWidth="560px" stretchedOnMobile autoSpaced>
-      <Panel mode="card">
+      <Panel layoutMode="card">
         <PanelHeader>Шапка</PanelHeader>
-        <Group mode="card">
+        <Group layoutMode="card">
           <Box padding="system">Колонка справа</Box>
         </Group>
       </Panel>
@@ -157,9 +140,6 @@ return (
 );
 ```
 
-</Playground>
-
-<Callout>
 Для платформы vkcom шапку передавать не нужно. Для определения платформы используйте хук [`usePlatform`](/components/platform-provider#use-platform).
 
 ```jsx showLineNumbers filename="src/App.tsx"
@@ -177,15 +157,10 @@ export default function App() {
 }
 ```
 
-</Callout>
-
 ## Кастомизация
 
 Через свойство `slotProps` можно прокинуть свойства во внутренние элементы.
 Это удобно для добавления кастомных классов, data-атрибутов, aria-атрибутов, обработчиков событий, доступов к элементам через `getRootRef` и других расширений, не влияя на внешний API компонента.
-
-{/* @example-description: Кастомизация `SplitLayout` через `slotProps` с добавлением классов, `data-testid` и ссылки на внутренний контейнер. */}
-<Playground Wrapper={FixedLayoutWrapper}>
 
 ```jsx
 const { viewWidth } = useAdaptivityConditionalRender();
@@ -236,9 +211,7 @@ return (
 );
 ```
 
-</Playground>
-
-## SplitCol [#split-col] [tag:component]
+## SplitCol \[#split-col] \[tag:component]
 
 Подкомпонент для отрисовки колонки в многоколоночном интерфейсе.
 
@@ -247,8 +220,8 @@ return (
 Свойство `fixed` даёт возможность задать стиль `position: fixed` для колонки.
 Обычно используется для боковых колонок, не позволяя им прокручиваться с основным контентом и всегда оставаться в области видимости.
 
-- `true` — стиль применяется;
-- `false` — стиль не применяется.
+* `true` — стиль применяется;
+* `false` — стиль не применяется.
 
 ### Размеры
 
@@ -267,36 +240,37 @@ return (
 
 Свойство `autoSpaced` добавляет фиксированные боковые отступы колонке на устройствах с шириной больше `smallTablet`.
 
-### Анимации [#animation]
+### Анимации \[#animation]
 
 Через свойство `animate` можно управлять включением/отключением анимаций при переходах во [`View`](/components/view). По умолчанию
 анимации при переходах включены только для мобильных устройств.
 
-## Свойства и методы [#api]
+## Свойства и методы \[#api]
 
 ### SplitLayout
 
-| Свойство | Тип | По умолчанию | Описание |
-| --- | --- | --- | --- |
-| `center` | `boolean` | `-` | Центрирует контент. |
-| `getRef` | `Ref<HTMLDivElement>` | `-` | **Deprecated**: Since 7.9.0. Будет удалено в **VKUI v9**. Вместо этого используйте `slotProps={ content: { getRootRef: ... } }`. |
-| `getRootRef` | `Ref<HTMLDivElement>` | `-` |  |
-| `header` | `ReactNode` | `-` | Компонент для отрисовки заголовка. |
-| `modal` | `ReactNode` | `-` | **Deprecated**: Since 7.0.0. Будет удалено в **VKUI v9**. Начиная с **VKUI v7**  `ModalRoot` можно располагать в любом месте приложения в пределах `AppRoot`. |
-| `popout` | `ReactNode` | `-` | **Deprecated**: Since 7.0.0. Будет удалено в **VKUI v9**. Начиная с **VKUI v7** компоненты можно располагать в любом месте приложения в пределах `AppRoot`. |
-| `reverseColumns` | `boolean` | `-` | Визуально меняет порядок колонок на обратный.  Используется для доступности: позволяет разместить в DOM первой колонку, важную для скринридеров, но визуально отрисовать её последней. DOM-порядок при этом не меняется, поэтому порядок чтения скринридерами сохраняется. |
-| `slotProps` | `{ root?: (HTMLAttributes<HTMLDivElement> & HasRootRef<HTMLDivElement> & HasDataAttribute); content?: (HTMLAttributes<...> & ... 1 more ... & HasDataAttribute) \| undefined; } \| undefined` | `-` | Свойства, которые можно прокинуть внутрь компонента: - `root`: свойства для прокидывания в корень компонента; - `content`: свойства для прокидывания в контент;. |
+| Свойство         | Тип                                                                                                                                                                                           | По умолчанию | Описание                                                                                                                                                                                                                                                                   |
+| ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `center`         | `boolean`                                                                                                                                                                                     | `-`          | Центрирует контент.                                                                                                                                                                                                                                                        |
+| `getRef`         | `Ref<HTMLDivElement>`                                                                                                                                                                         | `-`          | **Deprecated**: Since 7.9.0. Будет удалено в **VKUI v9**. Вместо этого используйте `slotProps={ content: { getRootRef: ... } }`.                                                                                                                                           |
+| `getRootRef`     | `Ref<HTMLDivElement>`                                                                                                                                                                         | `-`          |                                                                                                                                                                                                                                                                            |
+| `header`         | `ReactNode`                                                                                                                                                                                   | `-`          | Компонент для отрисовки заголовка.                                                                                                                                                                                                                                         |
+| `modal`          | `ReactNode`                                                                                                                                                                                   | `-`          | **Deprecated**: Since 7.0.0. Будет удалено в **VKUI v9**. Начиная с **VKUI v7**  `ModalRoot` можно располагать в любом месте приложения в пределах `AppRoot`.                                                                                                              |
+| `popout`         | `ReactNode`                                                                                                                                                                                   | `-`          | **Deprecated**: Since 7.0.0. Будет удалено в **VKUI v9**. Начиная с **VKUI v7** компоненты можно располагать в любом месте приложения в пределах `AppRoot`.                                                                                                                |
+| `ref`            | `Ref<HTMLDivElement>`                                                                                                                                                                         | `-`          |                                                                                                                                                                                                                                                                            |
+| `reverseColumns` | `boolean`                                                                                                                                                                                     | `-`          | Визуально меняет порядок колонок на обратный.  Используется для доступности: позволяет разместить в DOM первой колонку, важную для скринридеров, но визуально отрисовать её последней. DOM-порядок при этом не меняется, поэтому порядок чтения скринридерами сохраняется. |
+| `slotProps`      | `{ root?: (HTMLAttributes<HTMLDivElement> & HasRootRef<HTMLDivElement> & HasDataAttribute); content?: (HTMLAttributes<...> & ... 1 more ... & HasDataAttribute) \| undefined; } \| undefined` | `-`          | Свойства, которые можно прокинуть внутрь компонента: - `root`: свойства для прокидывания в корень компонента; - `content`: свойства для прокидывания в контент;.                                                                                                           |
 
 ### SplitCol
 
-| Свойство | Тип | По умолчанию | Описание |
-| --- | --- | --- | --- |
-| `animate` | `boolean` | `-` | Если false, то переходы между Panel происходят без анимации. |
-| `autoSpaced` | `boolean` | `-` | Если true, то добавляются боковые отступы фиксированной величины при ширине больше чем `smallTablet`. |
-| `fixed` | `boolean` | `-` | Фиксированное положение колонки. |
-| `getRootRef` | `Ref<HTMLDivElement>` | `-` |  |
-| `maxWidth` | `string \| number` | `-` | Максимальная ширина колонки. |
-| `minWidth` | `string \| number` | `-` | Минимальная ширина колонки. |
-| `stretchedOnMobile` | `boolean` | `-` | Если true, то ширина контейнера становится 100% при ширине меньше чем `tablet`. |
-| `width` | `string \| number` | `-` | Ширина колонки. |
-
+| Свойство            | Тип                   | По умолчанию | Описание                                                                                              |
+| ------------------- | --------------------- | ------------ | ----------------------------------------------------------------------------------------------------- |
+| `animate`           | `boolean`             | `-`          | Если false, то переходы между Panel происходят без анимации.                                          |
+| `autoSpaced`        | `boolean`             | `-`          | Если true, то добавляются боковые отступы фиксированной величины при ширине больше чем `smallTablet`. |
+| `fixed`             | `boolean`             | `-`          | Фиксированное положение колонки.                                                                      |
+| `getRootRef`        | `Ref<HTMLDivElement>` | `-`          |                                                                                                       |
+| `maxWidth`          | `string \| number`    | `-`          | Максимальная ширина колонки.                                                                          |
+| `minWidth`          | `string \| number`    | `-`          | Минимальная ширина колонки.                                                                           |
+| `ref`               | `Ref<HTMLDivElement>` | `-`          |                                                                                                       |
+| `stretchedOnMobile` | `boolean`             | `-`          | Если true, то ширина контейнера становится 100% при ширине меньше чем `tablet`.                       |
+| `width`             | `string \| number`    | `-`          | Ширина колонки.                                                                                       |

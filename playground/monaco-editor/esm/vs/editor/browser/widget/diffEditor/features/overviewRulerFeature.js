@@ -1,7 +1,7 @@
 import { h, addStandardDisposableListener, EventType, addDisposableListener } from '../../../../../base/browser/dom.js';
 import { createFastDomNode } from '../../../../../base/browser/fastDomNode.js';
 import { ScrollbarState } from '../../../../../base/browser/ui/scrollbar/scrollbarState.js';
-import { Disposable } from '../../../../../base/common/lifecycle.js';
+import { Disposable, toDisposable } from '../../../../../base/common/lifecycle.js';
 import '../../../../../base/common/observableInternal/index.js';
 import { appendRemoveOnDispose } from '../utils.js';
 import { Position } from '../../../../common/core/position.js';
@@ -51,6 +51,8 @@ let OverviewRulerFeature = class OverviewRulerFeature extends Disposable {
         this._modifiedEditorLayoutInfo = _modifiedEditorLayoutInfo;
         this._themeService = _themeService;
         this.width = OverviewRulerFeature_1.ENTIRE_DIFF_OVERVIEW_WIDTH;
+        this._rootElement.classList.add('has-diff-overview');
+        this._register(toDisposable(() => this._rootElement.classList.remove('has-diff-overview')));
         const currentColorTheme = observableFromEvent(this._themeService.onDidColorThemeChange, () => this._themeService.getColorTheme());
         const currentColors = derived(reader => {
             /** @description colors */

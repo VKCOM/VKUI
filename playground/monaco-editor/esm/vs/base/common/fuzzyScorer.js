@@ -1,4 +1,5 @@
 import { fuzzyScore, createMatches } from './filters.js';
+import { ConstantStringHash } from './hash.js';
 import { sep } from './path.js';
 import { isWindows } from './platform.js';
 
@@ -36,6 +37,12 @@ function doScoreFuzzy2Single(target, query, patternStart, wordStart) {
     }
     return [score[0], createMatches(score)];
 }
+new ConstantStringHash('allowNonContiguousMatches');
+new ConstantStringHash('description');
+new ConstantStringHash('label');
+new ConstantStringHash('values');
+new ConstantStringHash('expectContiguousMatch');
+new ConstantStringHash('value');
 function normalizeMatches(matches) {
     // sort matches by start to be able to normalize
     const sortedMatches = matches.sort((matchA, matchB) => {

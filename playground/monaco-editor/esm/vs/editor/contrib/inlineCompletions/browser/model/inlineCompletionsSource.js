@@ -10,11 +10,10 @@ import { observableReducerSettable } from '../../../../../base/common/observable
 import { isObject, isDefined } from '../../../../../base/common/types.js';
 import { IConfigurationService } from '../../../../../platform/configuration/common/configuration.js';
 import { IContextKeyService } from '../../../../../platform/contextkey/common/contextkey.js';
-import { isCopilotLikeExtension, forwardToChannelIf, DataChannelForwardingTelemetryService } from '../../../../../platform/dataChannel/browser/forwardingTelemetryService.js';
+import { DataChannelForwardingTelemetryService, isCopilotLikeExtension, forwardToChannelIf } from '../../../../../platform/dataChannel/browser/forwardingTelemetryService.js';
 import { IInstantiationService } from '../../../../../platform/instantiation/common/instantiation.js';
 import { ILogService } from '../../../../../platform/log/common/log.js';
 import { observableConfigValue } from '../../../../../platform/observable/common/platformObservableUtils.js';
-import product from '../../../../../platform/product/common/product.js';
 import { StringEdit } from '../../../../common/core/edits/stringEdit.js';
 import { Position } from '../../../../common/core/position.js';
 import { Range } from '../../../../common/core/range.js';
@@ -53,7 +52,7 @@ var InlineCompletionsSource_1;
 let InlineCompletionsSource = class InlineCompletionsSource extends Disposable {
     static { InlineCompletionsSource_1 = this; }
     static { this._requestId = 0; }
-    constructor(_textModel, _versionId, _debounceValue, _cursorPosition, _languageConfigurationService, _logService, _configurationService, _instantiationService, _contextKeyService, _textModelService) {
+    constructor(_textModel, _versionId, _debounceValue, _cursorPosition, completionsEnablementSetting, _languageConfigurationService, _logService, _configurationService, _instantiationService, _contextKeyService, _textModelService) {
         super();
         this._textModel = _textModel;
         this._versionId = _versionId;
@@ -103,17 +102,17 @@ let InlineCompletionsSource = class InlineCompletionsSource extends Disposable {
         });
         this._loadingCount = observableValue(this, 0);
         this.loading = this._loadingCount.map(this, v => v > 0);
+        this._dataChannelTelemetryService = this._instantiationService.createInstance(DataChannelForwardingTelemetryService);
         this._loggingEnabled = observableConfigValue('editor.inlineSuggest.logFetch', false, this._configurationService).recomputeInitiallyAndOnChange(this._store);
         this._sendRequestData = observableConfigValue('editor.inlineSuggest.emptyResponseInformation', true, this._configurationService).recomputeInitiallyAndOnChange(this._store);
         this._structuredFetchLogger = this._register(this._instantiationService.createInstance(StructuredLogger.cast(), 'editor.inlineSuggest.logFetch.commandId'));
         this._renameProcessor = this._store.add(this._instantiationService.createInstance(RenameSymbolProcessor));
         this.clearOperationOnTextModelChange.recomputeInitiallyAndOnChange(this._store);
-        const enablementSetting = product.defaultChatAgent?.completionsEnablementSetting ?? undefined;
-        if (enablementSetting) {
-            this._updateCompletionsEnablement(enablementSetting);
+        if (completionsEnablementSetting) {
+            this._updateCompletionsEnablement(completionsEnablementSetting);
             this._register(this._configurationService.onDidChangeConfiguration(e => {
-                if (e.affectsConfiguration(enablementSetting)) {
-                    this._updateCompletionsEnablement(enablementSetting);
+                if (e.affectsConfiguration(completionsEnablementSetting)) {
+                    this._updateCompletionsEnablement(completionsEnablementSetting);
                 }
             }));
         }
@@ -463,6 +462,7 @@ let InlineCompletionsSource = class InlineCompletionsSource extends Disposable {
             sameShapeReplacements: undefined,
             longDistanceHintVisible: undefined,
             longDistanceHintDistance: undefined,
+            isForAnotherDocument: undefined,
             notShownReason: undefined,
             renameCreated: false,
             renameDuration: undefined,
@@ -472,8 +472,7 @@ let InlineCompletionsSource = class InlineCompletionsSource extends Disposable {
             performanceMarkers: undefined,
             editKind: undefined,
         };
-        const dataChannel = this._instantiationService.createInstance(DataChannelForwardingTelemetryService);
-        sendInlineCompletionsEndOfLifeTelemetry(dataChannel, emptyEndOfLifeEvent);
+        sendInlineCompletionsEndOfLifeTelemetry(this._dataChannelTelemetryService, emptyEndOfLifeEvent);
     }
     clearSuggestWidgetInlineCompletions(tx) {
         if (this._updateOperation.value?.request.context.selectedSuggestionInfo) {
@@ -485,12 +484,12 @@ let InlineCompletionsSource = class InlineCompletionsSource extends Disposable {
     }
 };
 InlineCompletionsSource = InlineCompletionsSource_1 = __decorate([
-    __param(4, ILanguageConfigurationService),
-    __param(5, ILogService),
-    __param(6, IConfigurationService),
-    __param(7, IInstantiationService),
-    __param(8, IContextKeyService),
-    __param(9, ITextModelService)
+    __param(5, ILanguageConfigurationService),
+    __param(6, ILogService),
+    __param(7, IConfigurationService),
+    __param(8, IInstantiationService),
+    __param(9, IContextKeyService),
+    __param(10, ITextModelService)
 ], InlineCompletionsSource);
 class UpdateRequest {
     constructor(position, context, versionId, providers) {

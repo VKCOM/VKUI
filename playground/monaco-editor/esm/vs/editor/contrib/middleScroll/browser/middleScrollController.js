@@ -20,7 +20,7 @@ class MiddleScrollController extends Disposable {
         super();
         this._editor = _editor;
         const obsEditor = observableCodeEditor(this._editor);
-        const scrollOnMiddleClick = obsEditor.getOption(171 /* EditorOption.scrollOnMiddleClick */);
+        const scrollOnMiddleClick = obsEditor.getOption(172 /* EditorOption.scrollOnMiddleClick */);
         this._register(autorun(reader => {
             if (!scrollOnMiddleClick.read(reader)) {
                 return;

@@ -65,10 +65,10 @@ class RenderOptions {
     static fromEditor(editor) {
         const modifiedEditorOptions = editor.getOptions();
         const fontInfo = modifiedEditorOptions.get(59 /* EditorOption.fontInfo */);
-        const layoutInfo = modifiedEditorOptions.get(165 /* EditorOption.layoutInfo */);
-        return new RenderOptions(editor.getModel()?.getOptions().tabSize || 0, fontInfo, modifiedEditorOptions.get(40 /* EditorOption.disableMonospaceOptimizations */), fontInfo.typicalHalfwidthCharacterWidth, modifiedEditorOptions.get(118 /* EditorOption.scrollBeyondLastColumn */), modifiedEditorOptions.get(75 /* EditorOption.lineHeight */), layoutInfo.decorationsWidth, modifiedEditorOptions.get(133 /* EditorOption.stopRenderingLineAfter */), modifiedEditorOptions.get(113 /* EditorOption.renderWhitespace */), modifiedEditorOptions.get(108 /* EditorOption.renderControlCharacters */), modifiedEditorOptions.get(60 /* EditorOption.fontLigatures */), modifiedEditorOptions.get(117 /* EditorOption.scrollbar */).verticalScrollbarSize);
+        const layoutInfo = modifiedEditorOptions.get(166 /* EditorOption.layoutInfo */);
+        return new RenderOptions(editor.getModel()?.getOptions().tabSize || 0, fontInfo, modifiedEditorOptions.get(40 /* EditorOption.disableMonospaceOptimizations */), fontInfo.typicalHalfwidthCharacterWidth, modifiedEditorOptions.get(118 /* EditorOption.scrollBeyondLastColumn */), modifiedEditorOptions.get(75 /* EditorOption.lineHeight */), layoutInfo.decorationsWidth, modifiedEditorOptions.get(133 /* EditorOption.stopRenderingLineAfter */), modifiedEditorOptions.get(113 /* EditorOption.renderWhitespace */), modifiedEditorOptions.get(108 /* EditorOption.renderControlCharacters */), modifiedEditorOptions.get(60 /* EditorOption.fontLigatures */), modifiedEditorOptions.get(117 /* EditorOption.scrollbar */).verticalScrollbarSize, modifiedEditorOptions.get(176 /* EditorOption.effectiveFullwidthCharacterWidth */) === 'twoCells');
     }
-    constructor(tabSize, fontInfo, disableMonospaceOptimizations, typicalHalfwidthCharacterWidth, scrollBeyondLastColumn, lineHeight, lineDecorationsWidth, stopRenderingLineAfter, renderWhitespace, renderControlCharacters, fontLigatures, verticalScrollbarSize, setWidth = true) {
+    constructor(tabSize, fontInfo, disableMonospaceOptimizations, typicalHalfwidthCharacterWidth, scrollBeyondLastColumn, lineHeight, lineDecorationsWidth, stopRenderingLineAfter, renderWhitespace, renderControlCharacters, fontLigatures, verticalScrollbarSize, useTwoCellFullwidthCharacters = false, setWidth = true) {
         this.tabSize = tabSize;
         this.fontInfo = fontInfo;
         this.disableMonospaceOptimizations = disableMonospaceOptimizations;
@@ -81,13 +81,14 @@ class RenderOptions {
         this.renderControlCharacters = renderControlCharacters;
         this.fontLigatures = fontLigatures;
         this.verticalScrollbarSize = verticalScrollbarSize;
+        this.useTwoCellFullwidthCharacters = useTwoCellFullwidthCharacters;
         this.setWidth = setWidth;
     }
     withSetWidth(setWidth) {
-        return new RenderOptions(this.tabSize, this.fontInfo, this.disableMonospaceOptimizations, this.typicalHalfwidthCharacterWidth, this.scrollBeyondLastColumn, this.lineHeight, this.lineDecorationsWidth, this.stopRenderingLineAfter, this.renderWhitespace, this.renderControlCharacters, this.fontLigatures, this.verticalScrollbarSize, setWidth);
+        return new RenderOptions(this.tabSize, this.fontInfo, this.disableMonospaceOptimizations, this.typicalHalfwidthCharacterWidth, this.scrollBeyondLastColumn, this.lineHeight, this.lineDecorationsWidth, this.stopRenderingLineAfter, this.renderWhitespace, this.renderControlCharacters, this.fontLigatures, this.verticalScrollbarSize, this.useTwoCellFullwidthCharacters, setWidth);
     }
     withScrollBeyondLastColumn(scrollBeyondLastColumn) {
-        return new RenderOptions(this.tabSize, this.fontInfo, this.disableMonospaceOptimizations, this.typicalHalfwidthCharacterWidth, scrollBeyondLastColumn, this.lineHeight, this.lineDecorationsWidth, this.stopRenderingLineAfter, this.renderWhitespace, this.renderControlCharacters, this.fontLigatures, this.verticalScrollbarSize, this.setWidth);
+        return new RenderOptions(this.tabSize, this.fontInfo, this.disableMonospaceOptimizations, this.typicalHalfwidthCharacterWidth, scrollBeyondLastColumn, this.lineHeight, this.lineDecorationsWidth, this.stopRenderingLineAfter, this.renderWhitespace, this.renderControlCharacters, this.fontLigatures, this.verticalScrollbarSize, this.useTwoCellFullwidthCharacters, this.setWidth);
     }
 }
 class RenderLinesResult {
@@ -176,7 +177,7 @@ function renderOriginalLine(viewLineIdx, lineTokens, decorations, hasCharChanges
     const isBasicASCII = ViewLineRenderingData.isBasicASCII(lineContent, mightContainNonBasicASCII);
     const containsRTL = ViewLineRenderingData.containsRTL(lineContent, isBasicASCII, mightContainRTL);
     const output = renderViewLine(new RenderLineInput((options.fontInfo.isMonospace && !options.disableMonospaceOptimizations), options.fontInfo.canUseHalfwidthRightwardsArrow, lineContent, false, isBasicASCII, containsRTL, 0, lineTokens, decorations, options.tabSize, 0, options.fontInfo.spaceWidth, options.fontInfo.middotWidth, options.fontInfo.wsmiddotWidth, options.stopRenderingLineAfter, options.renderWhitespace, options.renderControlCharacters, options.fontLigatures !== EditorFontLigatures.OFF, null, // Send no selections, original line cannot be selected
-    null, options.verticalScrollbarSize), sb);
+    null, options.verticalScrollbarSize, false, options.useTwoCellFullwidthCharacters), sb);
     sb.appendString('</div>');
     const maxCharWidth = output.characterMapping.getHorizontalOffset(output.characterMapping.length);
     return { output, maxCharWidth };

@@ -315,7 +315,7 @@ let CommonFindController = class CommonFindController extends Disposable {
     replaceAll() {
         if (this._model) {
             if (this._editor.getModel()?.isTooLargeForHeapOperation()) {
-                this._notificationService.warn(localize(979, "The file is too large to perform a replace all operation."));
+                this._notificationService.warn(localize(994, "The file is too large to perform a replace all operation."));
                 return false;
             }
             this._model.replaceAll();
@@ -432,7 +432,7 @@ FindController = __decorate([
 ], FindController);
 const StartFindAction = registerMultiEditorAction(new MultiEditorAction({
     id: FIND_IDS.StartFindAction,
-    label: localize2(987, "Find"),
+    label: localize2(1002, "Find"),
     precondition: ContextKeyExpr.or(EditorContextKeys.focus, ContextKeyExpr.has('editorIsOpen')),
     kbOpts: {
         kbExpr: null,
@@ -442,7 +442,7 @@ const StartFindAction = registerMultiEditorAction(new MultiEditorAction({
     menuOpts: {
         menuId: MenuId.MenubarEditMenu,
         group: '3_find',
-        title: localize(980, "&&Find"),
+        title: localize(995, "&&Find"),
         order: 1
     }
 }));
@@ -483,7 +483,7 @@ class StartFindWithArgsAction extends EditorAction {
     constructor() {
         super({
             id: FIND_IDS.StartFindWithArgs,
-            label: localize2(988, "Find with Arguments"),
+            label: localize2(1003, "Find with Arguments"),
             precondition: undefined,
             kbOpts: {
                 kbExpr: null,
@@ -527,7 +527,7 @@ class StartFindWithSelectionAction extends EditorAction {
     constructor() {
         super({
             id: FIND_IDS.StartFindWithSelection,
-            label: localize2(989, "Find with Selection"),
+            label: localize2(1004, "Find with Selection"),
             precondition: undefined,
             kbOpts: {
                 kbExpr: null,
@@ -600,14 +600,14 @@ async function matchFindAction(editor, next) {
             // Re-announce "no results" for screen readers on explicit navigation (#301126)
             const state = controller.getState();
             if (wasFindWidgetVisible && state.matchesCount === 0 && state.searchString) {
-                alert(localize(981, "{0} found for '{1}'", NLS_NO_RESULTS, state.searchString));
+                alert(localize(996, "{0} found for '{1}'", NLS_NO_RESULTS, state.searchString));
             }
         }
     }
 }
 const NextMatchFindAction = registerMultiEditorAction(new MultiEditorAction({
     id: FIND_IDS.NextMatchFindAction,
-    label: localize2(990, "Find Next"),
+    label: localize2(1005, "Find Next"),
     precondition: undefined,
     kbOpts: [{
             kbExpr: EditorContextKeys.focus,
@@ -625,7 +625,7 @@ NextMatchFindAction.addImplementation(0, async (accessor, editor, args) => {
 });
 const PreviousMatchFindAction = registerMultiEditorAction(new MultiEditorAction({
     id: FIND_IDS.PreviousMatchFindAction,
-    label: localize2(991, "Find Previous"),
+    label: localize2(1006, "Find Previous"),
     precondition: undefined,
     kbOpts: [{
             kbExpr: EditorContextKeys.focus,
@@ -645,7 +645,7 @@ class MoveToMatchFindAction extends EditorAction {
     constructor() {
         super({
             id: FIND_IDS.GoToMatchFindAction,
-            label: localize2(992, "Go to Match..."),
+            label: localize2(1007, "Go to Match..."),
             precondition: CONTEXT_FIND_WIDGET_VISIBLE
         });
         this._highlightDecorations = [];
@@ -660,14 +660,14 @@ class MoveToMatchFindAction extends EditorAction {
             const notificationService = accessor.get(INotificationService);
             notificationService.notify({
                 severity: Severity.Warning,
-                message: localize(982, "No matches. Try searching for something else.")
+                message: localize(997, "No matches. Try searching for something else.")
             });
             return;
         }
         const quickInputService = accessor.get(IQuickInputService);
         const disposables = new DisposableStore();
         const inputBox = disposables.add(quickInputService.createInputBox());
-        inputBox.placeholder = localize(983, "Type a number to go to a specific match (between 1 and {0})", matchesCount);
+        inputBox.placeholder = localize(998, "Type a number to go to a specific match (between 1 and {0})", matchesCount);
         const toFindMatchIndex = (value) => {
             const index = parseInt(value);
             if (isNaN(index)) {
@@ -694,7 +694,7 @@ class MoveToMatchFindAction extends EditorAction {
                 }
             }
             else {
-                inputBox.validationMessage = localize(984, "Please type a number between 1 and {0}", controller.getState().matchesCount);
+                inputBox.validationMessage = localize(999, "Please type a number between 1 and {0}", controller.getState().matchesCount);
                 this.clearDecorations(editor);
             }
         };
@@ -708,7 +708,7 @@ class MoveToMatchFindAction extends EditorAction {
                 inputBox.hide();
             }
             else {
-                inputBox.validationMessage = localize(985, "Please type a number between 1 and {0}", controller.getState().matchesCount);
+                inputBox.validationMessage = localize(1000, "Please type a number between 1 and {0}", controller.getState().matchesCount);
             }
         }));
         disposables.add(inputBox.onDidHide(() => {
@@ -776,7 +776,7 @@ class NextSelectionMatchFindAction extends SelectionMatchFindAction {
     constructor() {
         super({
             id: FIND_IDS.NextSelectionMatchFindAction,
-            label: localize2(993, "Find Next Selection"),
+            label: localize2(1008, "Find Next Selection"),
             precondition: undefined,
             kbOpts: {
                 kbExpr: EditorContextKeys.focus,
@@ -793,7 +793,7 @@ class PreviousSelectionMatchFindAction extends SelectionMatchFindAction {
     constructor() {
         super({
             id: FIND_IDS.PreviousSelectionMatchFindAction,
-            label: localize2(994, "Find Previous Selection"),
+            label: localize2(1009, "Find Previous Selection"),
             precondition: undefined,
             kbOpts: {
                 kbExpr: EditorContextKeys.focus,
@@ -808,7 +808,7 @@ class PreviousSelectionMatchFindAction extends SelectionMatchFindAction {
 }
 const StartFindReplaceAction = registerMultiEditorAction(new MultiEditorAction({
     id: FIND_IDS.StartFindReplaceAction,
-    label: localize2(995, "Replace"),
+    label: localize2(1010, "Replace"),
     precondition: ContextKeyExpr.or(EditorContextKeys.focus, ContextKeyExpr.has('editorIsOpen')),
     kbOpts: {
         kbExpr: null,
@@ -819,7 +819,7 @@ const StartFindReplaceAction = registerMultiEditorAction(new MultiEditorAction({
     menuOpts: {
         menuId: MenuId.MenubarEditMenu,
         group: '3_find',
-        title: localize(986, "&&Replace"),
+        title: localize(1001, "&&Replace"),
         order: 2
     }
 }));
@@ -872,7 +872,7 @@ registerEditorCommand(new FindCommand({
     handler: x => x.closeFindWidget(),
     kbOpts: {
         weight: 100 /* KeybindingWeight.EditorContrib */ + 5,
-        kbExpr: ContextKeyExpr.and(EditorContextKeys.focus, ContextKeyExpr.not('isComposing')),
+        kbExpr: EditorContextKeys.focus,
         primary: 9 /* KeyCode.Escape */,
         secondary: [1024 /* KeyMod.Shift */ | 9 /* KeyCode.Escape */]
     }
@@ -958,7 +958,7 @@ registerEditorCommand(new FindCommand({
     handler: x => x.replace(),
     kbOpts: {
         weight: 100 /* KeybindingWeight.EditorContrib */ + 5,
-        kbExpr: ContextKeyExpr.and(EditorContextKeys.focus, CONTEXT_REPLACE_INPUT_FOCUSED, EditorContextKeys.isComposing.negate()),
+        kbExpr: ContextKeyExpr.and(EditorContextKeys.focus, CONTEXT_REPLACE_INPUT_FOCUSED),
         primary: 3 /* KeyCode.Enter */
     }
 }));

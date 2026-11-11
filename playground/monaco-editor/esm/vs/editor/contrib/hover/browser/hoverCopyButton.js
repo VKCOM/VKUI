@@ -31,7 +31,7 @@ let HoverCopyButton = class HoverCopyButton extends Disposable {
         this._hoverService = _hoverService;
         this._container.classList.add('hover-row-with-copy');
         this._button = this._register(new SimpleButton({
-            label: localize(1171, "Copy"),
+            label: localize(1186, "Copy"),
             icon: Codicon.copy,
             onTrigger: () => this._copyContent(),
             className: 'hover-copy-button',
@@ -42,7 +42,7 @@ let HoverCopyButton = class HoverCopyButton extends Disposable {
         const content = this._getContent();
         if (content) {
             await this._clipboardService.writeText(content);
-            status(localize(1172, "Copied to clipboard"));
+            status(localize(1187, "Copied to clipboard"));
         }
     }
 };

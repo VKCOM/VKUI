@@ -58,11 +58,26 @@ const EditSources = {
             $modelId: avoidPathRedaction(data.modelId),
             $extensionId: data.extensionId?.extensionId,
             $extensionVersion: data.extensionId?.version,
+            $harness: data.harness,
+            $origin: data.origin,
             $$languageId: data.languageId,
             $$sessionId: data.sessionId,
             $$requestId: data.requestId,
             $$mode: data.mode,
             $$codeBlockSuggestionId: data.codeBlockSuggestionId,
+        });
+    },
+    agentHostChatApplyEdits(data) {
+        return EditSources.chatApplyEdits({
+            modelId: data.modelId,
+            sessionId: data.sessionId,
+            requestId: data.requestId,
+            languageId: '',
+            mode: undefined,
+            extensionId: undefined,
+            codeBlockSuggestionId: undefined,
+            origin: 'agentHost',
+            harness: data.harness,
         });
     },
     chatUndoEdits: () => createEditSource({ source: 'Chat.undoEdits' }),

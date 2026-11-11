@@ -86,11 +86,11 @@ let UnusualLineTerminatorsDetector = class UnusualLineTerminatorsDetector extend
         try {
             this._isPresentingDialog = true;
             result = await this._dialogService.confirm({
-                title: localize(1610, "Unusual Line Terminators"),
-                message: localize(1611, "Detected unusual line terminators"),
-                detail: localize(1612, "The file '{0}' contains one or more unusual line terminator characters, like Line Separator (LS) or Paragraph Separator (PS).\n\nIt is recommended to remove them from the file. This can be configured via `editor.unusualLineTerminators`.", basename(model.uri)),
-                primaryButton: localize(1613, "&&Remove Unusual Line Terminators"),
-                cancelButton: localize(1614, "Ignore")
+                title: localize(1632, "Unusual Line Terminators"),
+                message: localize(1633, "Detected unusual line terminators"),
+                detail: localize(1634, "The file '{0}' contains one or more unusual line terminator characters, like Line Separator (LS) or Paragraph Separator (PS).\n\nIt is recommended to remove them from the file. This can be configured via `editor.unusualLineTerminators`.", basename(model.uri)),
+                primaryButton: localize(1635, "&&Remove Unusual Line Terminators"),
+                cancelButton: localize(1636, "Ignore")
             });
         }
         finally {

@@ -252,20 +252,20 @@ class MovedBlockOverlayWidget extends ViewZoneOverlayWidget {
         }));
         let text;
         if (_move.changes.length > 0) {
-            text = this._kind === 'original' ? localize(147, 'Code moved with changes to line {0}-{1}', this._move.lineRangeMapping.modified.startLineNumber, this._move.lineRangeMapping.modified.endLineNumberExclusive - 1) : localize(148, 'Code moved with changes from line {0}-{1}', this._move.lineRangeMapping.original.startLineNumber, this._move.lineRangeMapping.original.endLineNumberExclusive - 1);
+            text = this._kind === 'original' ? localize(150, 'Code moved with changes to line {0}-{1}', this._move.lineRangeMapping.modified.startLineNumber, this._move.lineRangeMapping.modified.endLineNumberExclusive - 1) : localize(151, 'Code moved with changes from line {0}-{1}', this._move.lineRangeMapping.original.startLineNumber, this._move.lineRangeMapping.original.endLineNumberExclusive - 1);
         }
         else {
-            text = this._kind === 'original' ? localize(149, 'Code moved to line {0}-{1}', this._move.lineRangeMapping.modified.startLineNumber, this._move.lineRangeMapping.modified.endLineNumberExclusive - 1) : localize(150, 'Code moved from line {0}-{1}', this._move.lineRangeMapping.original.startLineNumber, this._move.lineRangeMapping.original.endLineNumberExclusive - 1);
+            text = this._kind === 'original' ? localize(152, 'Code moved to line {0}-{1}', this._move.lineRangeMapping.modified.startLineNumber, this._move.lineRangeMapping.modified.endLineNumberExclusive - 1) : localize(153, 'Code moved from line {0}-{1}', this._move.lineRangeMapping.original.startLineNumber, this._move.lineRangeMapping.original.endLineNumberExclusive - 1);
         }
         const actionBar = this._register(new ActionBar(this._nodes.actionBar, {
             highlightToggledItems: true,
         }));
-        const caption = new Action('', text, '', false);
+        const caption = this._register(new Action('', text, '', false));
         actionBar.push(caption, { icon: false, label: true });
-        const actionCompare = new Action('', 'Compare', ThemeIcon.asClassName(Codicon.compareChanges), true, () => {
+        const actionCompare = this._register(new Action('', 'Compare', ThemeIcon.asClassName(Codicon.compareChanges), true, () => {
             this._editor.focus();
             this._diffModel.movedTextToCompare.set(this._diffModel.movedTextToCompare.get() === _move ? undefined : this._move, undefined);
-        });
+        }));
         this._register(autorun(reader => {
             const isActive = this._diffModel.movedTextToCompare.read(reader) === _move;
             actionCompare.checked = isActive;

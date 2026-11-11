@@ -18,12 +18,12 @@ import { CopyPasteController } from '../../dropOrPasteInto/browser/copyPasteCont
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 const CLIPBOARD_CONTEXT_MENU_GROUP = '9_cutcopypaste';
-const supportsCut = (isNative || document.queryCommandSupported('cut'));
-const supportsCopy = (isNative || document.queryCommandSupported('copy'));
+const supportsCut = (isNative || (document.queryCommandSupported && document.queryCommandSupported('cut')));
+const supportsCopy = (isNative || (document.queryCommandSupported && document.queryCommandSupported('copy')));
 // Firefox only supports navigator.clipboard.readText() in browser extensions.
 // See https://developer.mozilla.org/en-US/docs/Web/API/Clipboard/readText#Browser_compatibility
 // When loading over http, navigator.clipboard can be undefined. See https://github.com/microsoft/monaco-editor/issues/2313
-const supportsPaste = (typeof navigator.clipboard === 'undefined' || isFirefox) ? document.queryCommandSupported('paste') : true;
+const supportsPaste = (typeof navigator.clipboard === 'undefined' || isFirefox) ? document.queryCommandSupported && document.queryCommandSupported('paste') : true;
 function registerCommand(command) {
     command.register();
     return command;
@@ -42,23 +42,23 @@ const CutAction = supportsCut ? registerCommand(new MultiCommand({
     menuOpts: [{
             menuId: MenuId.MenubarEditMenu,
             group: '2_ccp',
-            title: localize(849, "Cu&&t"),
+            title: localize(864, "Cu&&t"),
             order: 1
         }, {
             menuId: MenuId.EditorContext,
             group: CLIPBOARD_CONTEXT_MENU_GROUP,
-            title: localize(850, "Cut"),
+            title: localize(865, "Cut"),
             when: EditorContextKeys.writable,
             order: 1,
         }, {
             menuId: MenuId.CommandPalette,
             group: '',
-            title: localize(851, "Cut"),
+            title: localize(866, "Cut"),
             order: 1
         }, {
             menuId: MenuId.SimpleEditorContext,
             group: CLIPBOARD_CONTEXT_MENU_GROUP,
-            title: localize(852, "Cut"),
+            title: localize(867, "Cut"),
             when: EditorContextKeys.writable,
             order: 1,
         }]
@@ -77,29 +77,29 @@ const CopyAction = supportsCopy ? registerCommand(new MultiCommand({
     menuOpts: [{
             menuId: MenuId.MenubarEditMenu,
             group: '2_ccp',
-            title: localize(853, "&&Copy"),
+            title: localize(868, "&&Copy"),
             order: 2
         }, {
             menuId: MenuId.EditorContext,
             group: CLIPBOARD_CONTEXT_MENU_GROUP,
-            title: localize(854, "Copy"),
+            title: localize(869, "Copy"),
             order: 2,
         }, {
             menuId: MenuId.CommandPalette,
             group: '',
-            title: localize(855, "Copy"),
+            title: localize(870, "Copy"),
             order: 1
         }, {
             menuId: MenuId.SimpleEditorContext,
             group: CLIPBOARD_CONTEXT_MENU_GROUP,
-            title: localize(856, "Copy"),
+            title: localize(871, "Copy"),
             order: 2,
         }]
 })) : undefined;
-MenuRegistry.appendMenuItem(MenuId.MenubarEditMenu, { submenu: MenuId.MenubarCopy, title: localize2(861, "Copy As"), group: '2_ccp', order: 3 });
-MenuRegistry.appendMenuItem(MenuId.EditorContext, { submenu: MenuId.EditorContextCopy, title: localize2(862, "Copy As"), group: CLIPBOARD_CONTEXT_MENU_GROUP, order: 3 });
-MenuRegistry.appendMenuItem(MenuId.EditorContext, { submenu: MenuId.EditorContextShare, title: localize2(863, "Share"), group: '11_share', order: -1, when: ContextKeyExpr.and(ContextKeyExpr.notEquals('resourceScheme', 'output'), EditorContextKeys.editorTextFocus) });
-MenuRegistry.appendMenuItem(MenuId.ExplorerContext, { submenu: MenuId.ExplorerContextShare, title: localize2(864, "Share"), group: '11_share', order: -1 });
+MenuRegistry.appendMenuItem(MenuId.MenubarEditMenu, { submenu: MenuId.MenubarCopy, title: localize2(876, "Copy As"), group: '2_ccp', order: 3 });
+MenuRegistry.appendMenuItem(MenuId.EditorContext, { submenu: MenuId.EditorContextCopy, title: localize2(877, "Copy As"), group: CLIPBOARD_CONTEXT_MENU_GROUP, order: 3 });
+MenuRegistry.appendMenuItem(MenuId.EditorContext, { submenu: MenuId.EditorContextShare, title: localize2(878, "Share"), group: '11_share', order: -1, when: ContextKeyExpr.and(ContextKeyExpr.notEquals('resourceScheme', 'output'), EditorContextKeys.editorTextFocus) });
+MenuRegistry.appendMenuItem(MenuId.ExplorerContext, { submenu: MenuId.ExplorerContextShare, title: localize2(879, "Share"), group: '11_share', order: -1 });
 const PasteAction = supportsPaste ? registerCommand(new MultiCommand({
     id: 'editor.action.clipboardPasteAction',
     precondition: undefined,
@@ -115,23 +115,23 @@ const PasteAction = supportsPaste ? registerCommand(new MultiCommand({
     menuOpts: [{
             menuId: MenuId.MenubarEditMenu,
             group: '2_ccp',
-            title: localize(857, "&&Paste"),
+            title: localize(872, "&&Paste"),
             order: 4
         }, {
             menuId: MenuId.EditorContext,
             group: CLIPBOARD_CONTEXT_MENU_GROUP,
-            title: localize(858, "Paste"),
+            title: localize(873, "Paste"),
             when: EditorContextKeys.writable,
             order: 4,
         }, {
             menuId: MenuId.CommandPalette,
             group: '',
-            title: localize(859, "Paste"),
+            title: localize(874, "Paste"),
             order: 1
         }, {
             menuId: MenuId.SimpleEditorContext,
             group: CLIPBOARD_CONTEXT_MENU_GROUP,
-            title: localize(860, "Paste"),
+            title: localize(875, "Paste"),
             when: EditorContextKeys.writable,
             order: 4,
         }]
@@ -140,7 +140,7 @@ class ExecCommandCopyWithSyntaxHighlightingAction extends EditorAction {
     constructor() {
         super({
             id: 'editor.action.clipboardCopyWithSyntaxHighlightingAction',
-            label: localize2(865, "Copy with Syntax Highlighting"),
+            label: localize2(880, "Copy with Syntax Highlighting"),
             precondition: undefined,
             kbOpts: {
                 kbExpr: EditorContextKeys.textInputFocus,
@@ -203,7 +203,7 @@ function registerExecCommandImpl(target, browserCommand) {
                 return true;
             }
             // TODO this is very ugly. The entire copy/paste/cut system needs a complete refactoring.
-            if (focusedEditor.getOption(170 /* EditorOption.effectiveEditContext */) && browserCommand === 'cut') {
+            if (focusedEditor.getOption(171 /* EditorOption.effectiveEditContext */) && browserCommand === 'cut') {
                 logCopyCommand(focusedEditor);
                 // execCommand(copy) works for edit context, but not execCommand(cut).
                 logService.trace('registerExecCommandImpl (before execCommand copy)');
@@ -237,7 +237,7 @@ function registerExecCommandImpl(target, browserCommand) {
     });
 }
 function logCopyCommand(editor) {
-    const editContextEnabled = editor.getOption(170 /* EditorOption.effectiveEditContext */);
+    const editContextEnabled = editor.getOption(171 /* EditorOption.effectiveEditContext */);
     if (editContextEnabled) {
         const nativeEditContext = NativeEditContextRegistry.get(editor.getId());
         if (nativeEditContext) {
@@ -258,7 +258,7 @@ if (PasteAction) {
         const focusedEditor = codeEditorService.getFocusedCodeEditor();
         if (focusedEditor && focusedEditor.hasModel() && focusedEditor.hasTextFocus()) {
             // execCommand(paste) does not work with edit context
-            const editContextEnabled = focusedEditor.getOption(170 /* EditorOption.effectiveEditContext */);
+            const editContextEnabled = focusedEditor.getOption(171 /* EditorOption.effectiveEditContext */);
             if (editContextEnabled) {
                 const nativeEditContext = NativeEditContextRegistry.get(focusedEditor.getId());
                 if (nativeEditContext) {

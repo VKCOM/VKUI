@@ -26,6 +26,7 @@ import { WorkbenchObjectTree } from '../../list/browser/listService.js';
 import { defaultCheckboxStyles } from '../../theme/browser/defaultStyles.js';
 import { isDark } from '../../theme/common/theme.js';
 import { IThemeService } from '../../theme/common/themeService.js';
+import { asCssVariable } from '../../theme/common/colorUtils.js';
 import { QuickPickFocus } from '../common/quickInput.js';
 import { quickInputButtonsToActionArrays } from './quickInputUtils.js';
 import { observableValue } from '../../../base/common/observableInternal/observables/observableValue.js';
@@ -210,7 +211,7 @@ class QuickInputItemDelegate {
 }
 class QuickInputAccessibilityProvider {
     getWidgetAriaLabel() {
-        return localize(1834, "Quick Input");
+        return localize(1867, "Quick Input");
     }
     getAriaLabel(element) {
         return element.separator?.label
@@ -353,6 +354,12 @@ let QuickPickItemElementRenderer = class QuickPickItemElementRenderer extends Ba
         element.element = data.entry ?? undefined;
         const mainItem = element.item;
         element.element.classList.toggle('not-pickable', element.item.pickable === false);
+        if (typeof mainItem.id === 'string') {
+            data.entry.setAttribute('data-quick-input-id', mainItem.id);
+        }
+        else {
+            data.entry.removeAttribute('data-quick-input-id');
+        }
         this.ensureCheckbox(element, data);
         const { labelHighlights, descriptionHighlights, detailHighlights } = element;
         // Icon
@@ -366,6 +373,7 @@ let QuickPickItemElementRenderer = class QuickPickItemElementRenderer extends Ba
             data.icon.style.backgroundImage = '';
             data.icon.className = mainItem.iconClass ? `quick-input-list-icon ${mainItem.iconClass}` : '';
         }
+        data.icon.style.color = mainItem.iconColor ? asCssVariable(mainItem.iconColor.id) : '';
         // Label
         let descriptionTitle;
         // if we have a tooltip, that will be the hover,

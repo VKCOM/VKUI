@@ -166,7 +166,7 @@ class MarkerNavigationAction extends EditorAction {
 }
 class NextMarkerAction extends MarkerNavigationAction {
     static { this.ID = 'editor.action.marker.next'; }
-    static { this.LABEL = localize2(1063, "Go to Next Problem (Error, Warning, Info)"); }
+    static { this.LABEL = localize2(1078, "Go to Next Problem (Error, Warning, Info)"); }
     constructor() {
         super(true, false, {
             id: NextMarkerAction.ID,
@@ -180,7 +180,7 @@ class NextMarkerAction extends MarkerNavigationAction {
             menuOpts: {
                 menuId: MarkerNavigationWidget.TitleMenu,
                 title: NextMarkerAction.LABEL.value,
-                icon: registerIcon('marker-navigation-next', Codicon.arrowDown, localize(1059, 'Icon for goto next marker.')),
+                icon: registerIcon('marker-navigation-next', Codicon.arrowDown, localize(1074, 'Icon for goto next marker.')),
                 group: 'navigation',
                 order: 1
             }
@@ -189,7 +189,7 @@ class NextMarkerAction extends MarkerNavigationAction {
 }
 class PrevMarkerAction extends MarkerNavigationAction {
     static { this.ID = 'editor.action.marker.prev'; }
-    static { this.LABEL = localize2(1064, "Go to Previous Problem (Error, Warning, Info)"); }
+    static { this.LABEL = localize2(1079, "Go to Previous Problem (Error, Warning, Info)"); }
     constructor() {
         super(false, false, {
             id: PrevMarkerAction.ID,
@@ -203,7 +203,7 @@ class PrevMarkerAction extends MarkerNavigationAction {
             menuOpts: {
                 menuId: MarkerNavigationWidget.TitleMenu,
                 title: PrevMarkerAction.LABEL.value,
-                icon: registerIcon('marker-navigation-previous', Codicon.arrowUp, localize(1060, 'Icon for goto previous marker.')),
+                icon: registerIcon('marker-navigation-previous', Codicon.arrowUp, localize(1075, 'Icon for goto previous marker.')),
                 group: 'navigation',
                 order: 2
             }
@@ -215,7 +215,7 @@ class NextMarkerInFilesAction extends MarkerNavigationAction {
     constructor() {
         super(true, true, {
             id: NextMarkerInFilesAction.ID,
-            label: localize2(1065, "Go to Next Problem in Files (Error, Warning, Info)"),
+            label: localize2(1080, "Go to Next Problem in Files (Error, Warning, Info)"),
             precondition: undefined,
             kbOpts: {
                 kbExpr: EditorContextKeys.focus,
@@ -224,7 +224,7 @@ class NextMarkerInFilesAction extends MarkerNavigationAction {
             },
             menuOpts: {
                 menuId: MenuId.MenubarGoMenu,
-                title: localize(1061, "Next &&Problem"),
+                title: localize(1076, "Next &&Problem"),
                 group: '6_problem_nav',
                 order: 1
             }
@@ -236,7 +236,7 @@ class PrevMarkerInFilesAction extends MarkerNavigationAction {
     constructor() {
         super(false, true, {
             id: PrevMarkerInFilesAction.ID,
-            label: localize2(1066, "Go to Previous Problem in Files (Error, Warning, Info)"),
+            label: localize2(1081, "Go to Previous Problem in Files (Error, Warning, Info)"),
             precondition: undefined,
             kbOpts: {
                 kbExpr: EditorContextKeys.focus,
@@ -245,7 +245,7 @@ class PrevMarkerInFilesAction extends MarkerNavigationAction {
             },
             menuOpts: {
                 menuId: MenuId.MenubarGoMenu,
-                title: localize(1062, "Previous &&Problem"),
+                title: localize(1077, "Previous &&Problem"),
                 group: '6_problem_nav',
                 order: 2
             }

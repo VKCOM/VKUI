@@ -15,6 +15,6 @@ import '../../../../platform/theme/common/colors/searchColors.js';
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-registerColor('multiDiffEditor.headerBackground', { dark: '#262626', light: 'tab.inactiveBackground', hcDark: 'tab.inactiveBackground', hcLight: 'tab.inactiveBackground', }, localize(158, 'The background color of the diff editor\'s header'));
-registerColor('multiDiffEditor.background', editorBackground, localize(159, 'The background color of the multi file diff editor'));
-registerColor('multiDiffEditor.border', { dark: 'sideBarSectionHeader.border', light: '#cccccc', hcDark: 'sideBarSectionHeader.border', hcLight: '#cccccc', }, localize(160, 'The border color of the multi file diff editor'));
+registerColor('multiDiffEditor.headerBackground', { dark: '#262626', light: 'tab.inactiveBackground', hcDark: 'tab.inactiveBackground', hcLight: 'tab.inactiveBackground', }, localize(161, 'The background color of the diff editor\'s header'));
+registerColor('multiDiffEditor.background', editorBackground, localize(162, 'The background color of the multi file diff editor'));
+registerColor('multiDiffEditor.border', { dark: 'sideBarSectionHeader.border', light: '#cccccc', hcDark: 'sideBarSectionHeader.border', hcLight: '#cccccc', }, localize(163, 'The border color of the multi file diff editor'));

@@ -200,8 +200,8 @@ let CodeEditorWidget = class CodeEditorWidget extends Disposable {
         this._register(this._configuration.onDidChange((e) => {
             this._onDidChangeConfiguration.fire(e);
             const options = this._configuration.options;
-            if (e.hasChanged(165 /* EditorOption.layoutInfo */)) {
-                const layoutInfo = options.get(165 /* EditorOption.layoutInfo */);
+            if (e.hasChanged(166 /* EditorOption.layoutInfo */)) {
+                const layoutInfo = options.get(166 /* EditorOption.layoutInfo */);
                 this._onDidLayoutChange.fire(layoutInfo);
             }
             if (e.hasChanged(61 /* EditorOption.fontSize */)) {
@@ -1047,7 +1047,7 @@ let CodeEditorWidget = class CodeEditorWidget extends Disposable {
     }
     getLayoutInfo() {
         const options = this._configuration.options;
-        const layoutInfo = options.get(165 /* EditorOption.layoutInfo */);
+        const layoutInfo = options.get(166 /* EditorOption.layoutInfo */);
         return layoutInfo;
     }
     createOverviewRuler(cssClassName) {
@@ -1218,7 +1218,7 @@ let CodeEditorWidget = class CodeEditorWidget extends Disposable {
         }
         const position = this._modelData.model.validatePosition(rawPosition);
         const options = this._configuration.options;
-        const layoutInfo = options.get(165 /* EditorOption.layoutInfo */);
+        const layoutInfo = options.get(166 /* EditorOption.layoutInfo */);
         const top = CodeEditorWidget_1._getVerticalOffsetForPosition(this._modelData, position.lineNumber, position.column) - this.getScrollTop();
         const left = this._modelData.view.getOffsetForColumn(position.lineNumber, position.column) + layoutInfo.glyphMarginWidth + layoutInfo.lineNumbersWidth + layoutInfo.decorationsWidth - this.getScrollLeft();
         const height = this.getLineHeightForPosition(position);
@@ -1651,7 +1651,7 @@ class EditorContextKeysManager extends Disposable {
     }
     _updateFromConfig() {
         const options = this._editor.getOptions();
-        this._tabMovesFocus.set(options.get(164 /* EditorOption.tabFocusMode */) || TabFocus.getTabFocusMode());
+        this._tabMovesFocus.set(options.get(165 /* EditorOption.tabFocusMode */) || TabFocus.getTabFocusMode());
         this._editorReadonly.set(options.get(104 /* EditorOption.readOnly */));
         this._inDiffEditor.set(options.get(70 /* EditorOption.inDiffEditor */));
         this._editorColumnSelection.set(options.get(28 /* EditorOption.columnSelection */));

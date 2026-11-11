@@ -25,6 +25,7 @@ let SemanticTokensProviderStyling = class SemanticTokensProviderStyling {
         this._hasWarnedOverlappingTokens = false;
         this._hasWarnedInvalidLengthTokens = false;
         this._hasWarnedInvalidEditStart = false;
+        this._hasWarnedInvalidEditDeleteCount = false;
         this._hashTable = new HashTable();
     }
     getMetadata(tokenTypeIndex, tokenModifierSet, languageId) {
@@ -101,6 +102,12 @@ let SemanticTokensProviderStyling = class SemanticTokensProviderStyling {
         if (!this._hasWarnedInvalidEditStart) {
             this._hasWarnedInvalidEditStart = true;
             this._logService.warn(`Invalid semantic tokens edit detected (previousResultId: ${previousResultId}, resultId: ${resultId}) at edit #${editIndex}: The provided start offset ${editStart} is outside the previous data (length ${maxExpectedStart}).`);
+        }
+    }
+    warnInvalidEditDeleteCount(previousResultId, resultId, srcLength, deltaLength) {
+        if (!this._hasWarnedInvalidEditDeleteCount) {
+            this._hasWarnedInvalidEditDeleteCount = true;
+            this._logService.warn(`Invalid semantic tokens edit detected (previousResultId: ${previousResultId}, resultId: ${resultId}): The edits delete more tokens than the previous data contains (previous length ${srcLength}, computed length ${srcLength + deltaLength}).`);
         }
     }
 };

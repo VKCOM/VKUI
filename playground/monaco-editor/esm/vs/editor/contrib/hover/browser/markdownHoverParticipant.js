@@ -36,8 +36,8 @@ var __param = (undefined && undefined.__param) || function (paramIndex, decorato
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 const $ = $$1;
-const increaseHoverVerbosityIcon = registerIcon('hover-increase-verbosity', Codicon.addSmall, localize(1173, 'Icon for increaseing hover verbosity.'));
-const decreaseHoverVerbosityIcon = registerIcon('hover-decrease-verbosity', Codicon.removeSmall, localize(1174, 'Icon for decreasing hover verbosity.'));
+const increaseHoverVerbosityIcon = registerIcon('hover-increase-verbosity', Codicon.addSmall, localize(1188, 'Icon for increaseing hover verbosity.'));
+const decreaseHoverVerbosityIcon = registerIcon('hover-decrease-verbosity', Codicon.removeSmall, localize(1189, 'Icon for decreasing hover verbosity.'));
 class MarkdownHover {
     constructor(owner, range, contents, isBeforeContent, ordinal, source = undefined) {
         this.owner = owner;
@@ -80,7 +80,7 @@ let MarkdownHoverParticipant = class MarkdownHoverParticipant {
         this.hoverOrdinal = 3;
     }
     createLoadingMessage(anchor) {
-        return new MarkdownHover(this, anchor.range, [new MarkdownString().appendText(localize(1175, "Loading..."))], false, 2000);
+        return new MarkdownHover(this, anchor.range, [new MarkdownString().appendText(localize(1190, "Loading..."))], false, 2000);
     }
     computeSync(anchor, lineDecorations) {
         if (!this._editor.hasModel() || anchor.type !== 1 /* HoverAnchorType.Range */) {
@@ -103,7 +103,7 @@ let MarkdownHoverParticipant = class MarkdownHoverParticipant {
             stopRenderingMessage = true;
             if (showLongLineWarning) {
                 result.push(new MarkdownHover(this, anchor.range, [{
-                        value: localize(1176, "Rendering paused for long line for performance reasons. This can be configured via `editor.stopRenderingLineAfter`. [Don't Show Again](command:{0})", HIDE_LONG_LINE_WARNING_HOVER_ACTION_ID),
+                        value: localize(1191, "Rendering paused for long line for performance reasons. This can be configured via `editor.stopRenderingLineAfter`. [Don't Show Again](command:{0})", HIDE_LONG_LINE_WARNING_HOVER_ACTION_ID),
                         isTrusted: true
                     }], false, index++));
             }
@@ -111,7 +111,7 @@ let MarkdownHoverParticipant = class MarkdownHoverParticipant {
         if (!stopRenderingMessage && typeof maxTokenizationLineLength === 'number' && lineLength >= maxTokenizationLineLength) {
             if (showLongLineWarning) {
                 result.push(new MarkdownHover(this, anchor.range, [{
-                        value: localize(1177, "Tokenization is skipped for long lines for performance reasons. This can be configured via `editor.maxTokenizationLineLength`. [Don't Show Again](command:{0})", HIDE_LONG_LINE_WARNING_HOVER_ACTION_ID),
+                        value: localize(1192, "Tokenization is skipped for long lines for performance reasons. This can be configured via `editor.maxTokenizationLineLength`. [Don't Show Again](command:{0})", HIDE_LONG_LINE_WARNING_HOVER_ACTION_ID),
                         isTrusted: true
                     }], false, index++));
             }
@@ -409,9 +409,9 @@ function renderMarkdown(editor, markdownHover, markdownRendererService, onFinish
 function labelForHoverVerbosityAction(keybindingService, action) {
     switch (action) {
         case HoverVerbosityAction.Increase:
-            return keybindingService.appendKeybinding(localize(1178, "Increase Hover Verbosity"), INCREASE_HOVER_VERBOSITY_ACTION_ID);
+            return keybindingService.appendKeybinding(localize(1193, "Increase Hover Verbosity"), INCREASE_HOVER_VERBOSITY_ACTION_ID);
         case HoverVerbosityAction.Decrease:
-            return keybindingService.appendKeybinding(localize(1179, "Decrease Hover Verbosity"), DECREASE_HOVER_VERBOSITY_ACTION_ID);
+            return keybindingService.appendKeybinding(localize(1194, "Decrease Hover Verbosity"), DECREASE_HOVER_VERBOSITY_ACTION_ID);
     }
 }
 

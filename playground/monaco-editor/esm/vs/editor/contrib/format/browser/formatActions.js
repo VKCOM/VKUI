@@ -185,7 +185,7 @@ class FormatDocumentAction extends EditorAction {
     constructor() {
         super({
             id: 'editor.action.formatDocument',
-            label: localize2(1057, "Format Document"),
+            label: localize2(1072, "Format Document"),
             precondition: ContextKeyExpr.and(EditorContextKeys.notInCompositeEditor, EditorContextKeys.writable, EditorContextKeys.hasDocumentFormattingProvider),
             kbOpts: {
                 kbExpr: EditorContextKeys.editorTextFocus,
@@ -211,7 +211,7 @@ class FormatSelectionAction extends EditorAction {
     constructor() {
         super({
             id: 'editor.action.formatSelection',
-            label: localize2(1058, "Format Selection"),
+            label: localize2(1073, "Format Selection"),
             precondition: ContextKeyExpr.and(EditorContextKeys.writable, EditorContextKeys.hasDocumentSelectionFormattingProvider),
             kbOpts: {
                 kbExpr: EditorContextKeys.editorTextFocus,

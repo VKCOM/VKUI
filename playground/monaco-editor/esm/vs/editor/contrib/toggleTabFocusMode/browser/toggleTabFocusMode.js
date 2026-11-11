@@ -12,7 +12,7 @@ class ToggleTabFocusModeAction extends Action2 {
     constructor() {
         super({
             id: ToggleTabFocusModeAction.ID,
-            title: localize2(1582, 'Toggle Tab Key Moves Focus'),
+            title: localize2(1604, 'Toggle Tab Key Moves Focus'),
             precondition: undefined,
             keybinding: {
                 primary: 2048 /* KeyMod.CtrlCmd */ | 43 /* KeyCode.KeyM */,
@@ -20,7 +20,7 @@ class ToggleTabFocusModeAction extends Action2 {
                 weight: 100 /* KeybindingWeight.EditorContrib */
             },
             metadata: {
-                description: localize2(1583, "Determines whether the tab key moves focus around the workbench or inserts the tab character in the current editor. This is also called tab trapping, tab navigation, or tab focus mode."),
+                description: localize2(1605, "Determines whether the tab key moves focus around the workbench or inserts the tab character in the current editor. This is also called tab trapping, tab navigation, or tab focus mode."),
             },
             f1: true
         });
@@ -30,10 +30,10 @@ class ToggleTabFocusModeAction extends Action2 {
         const newValue = !oldValue;
         TabFocus.setTabFocusMode(newValue);
         if (newValue) {
-            alert(localize(1580, "Pressing Tab will now move focus to the next focusable element"));
+            alert(localize(1602, "Pressing Tab will now move focus to the next focusable element"));
         }
         else {
-            alert(localize(1581, "Pressing Tab will now insert the tab character"));
+            alert(localize(1603, "Pressing Tab will now insert the tab character"));
         }
     }
 }

@@ -207,10 +207,10 @@ class TimeBasedVariableResolver {
     constructor() {
         this._date = new Date();
     }
-    static { this.dayNames = [localize(1456, "Sunday"), localize(1457, "Monday"), localize(1458, "Tuesday"), localize(1459, "Wednesday"), localize(1460, "Thursday"), localize(1461, "Friday"), localize(1462, "Saturday")]; }
-    static { this.dayNamesShort = [localize(1463, "Sun"), localize(1464, "Mon"), localize(1465, "Tue"), localize(1466, "Wed"), localize(1467, "Thu"), localize(1468, "Fri"), localize(1469, "Sat")]; }
-    static { this.monthNames = [localize(1470, "January"), localize(1471, "February"), localize(1472, "March"), localize(1473, "April"), localize(1474, "May"), localize(1475, "June"), localize(1476, "July"), localize(1477, "August"), localize(1478, "September"), localize(1479, "October"), localize(1480, "November"), localize(1481, "December")]; }
-    static { this.monthNamesShort = [localize(1482, "Jan"), localize(1483, "Feb"), localize(1484, "Mar"), localize(1485, "Apr"), localize(1486, "May"), localize(1487, "Jun"), localize(1488, "Jul"), localize(1489, "Aug"), localize(1490, "Sep"), localize(1491, "Oct"), localize(1492, "Nov"), localize(1493, "Dec")]; }
+    static { this.dayNames = [localize(1476, "Sunday"), localize(1477, "Monday"), localize(1478, "Tuesday"), localize(1479, "Wednesday"), localize(1480, "Thursday"), localize(1481, "Friday"), localize(1482, "Saturday")]; }
+    static { this.dayNamesShort = [localize(1483, "Sun"), localize(1484, "Mon"), localize(1485, "Tue"), localize(1486, "Wed"), localize(1487, "Thu"), localize(1488, "Fri"), localize(1489, "Sat")]; }
+    static { this.monthNames = [localize(1490, "January"), localize(1491, "February"), localize(1492, "March"), localize(1493, "April"), localize(1494, "May"), localize(1495, "June"), localize(1496, "July"), localize(1497, "August"), localize(1498, "September"), localize(1499, "October"), localize(1500, "November"), localize(1501, "December")]; }
+    static { this.monthNamesShort = [localize(1502, "Jan"), localize(1503, "Feb"), localize(1504, "Mar"), localize(1505, "Apr"), localize(1506, "May"), localize(1507, "Jun"), localize(1508, "Jul"), localize(1509, "Aug"), localize(1510, "Sep"), localize(1511, "Oct"), localize(1512, "Nov"), localize(1513, "Dec")]; }
     resolve(variable) {
         const { name } = variable;
         switch (name) {

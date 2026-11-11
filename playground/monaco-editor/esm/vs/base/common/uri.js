@@ -466,22 +466,30 @@ function encodeURIComponentFast(uriComponent, isPath, isAuthority) {
     return res !== undefined ? res : uriComponent;
 }
 function encodeURIComponentMinimal(path) {
-    let res = undefined;
-    for (let pos = 0; pos < path.length; pos++) {
+    let pos = path.indexOf('?');
+    const hashPos = path.indexOf('#');
+    if (pos === -1 || (hashPos !== -1 && hashPos < pos)) {
+        pos = hashPos;
+    }
+    if (pos === -1) {
+        return path;
+    }
+    let res = path.substring(0, pos);
+    let copyStart = pos;
+    for (; pos < path.length; pos++) {
         const code = path.charCodeAt(pos);
         if (code === 35 /* CharCode.Hash */ || code === 63 /* CharCode.QuestionMark */) {
-            if (res === undefined) {
-                res = path.substr(0, pos);
+            if (copyStart < pos) {
+                res += path.substring(copyStart, pos);
             }
             res += encodeTable[code];
-        }
-        else {
-            if (res !== undefined) {
-                res += path[pos];
-            }
+            copyStart = pos + 1;
         }
     }
-    return res !== undefined ? res : path;
+    if (copyStart < path.length) {
+        res += path.substring(copyStart);
+    }
+    return res;
 }
 /**
  * Compute `fsPath` for the given uri
@@ -559,16 +567,17 @@ function _asFormatted(uri, skipEncoding) {
         }
     }
     if (path) {
-        // lower-case windows drive letters in /C:/fff or C:/fff
+        // HTTP paths are case-sensitive, even when their first segment resembles a drive letter.
+        const lowerScheme = scheme.toLowerCase();
         if (path.length >= 3 && path.charCodeAt(0) === 47 /* CharCode.Slash */ && path.charCodeAt(2) === 58 /* CharCode.Colon */) {
             const code = path.charCodeAt(1);
-            if (code >= 65 /* CharCode.A */ && code <= 90 /* CharCode.Z */) {
+            if (code >= 65 /* CharCode.A */ && code <= 90 /* CharCode.Z */ && lowerScheme !== 'http' && lowerScheme !== 'https') {
                 path = `/${String.fromCharCode(code + 32)}:${path.substr(3)}`; // "/c:".length === 3
             }
         }
         else if (path.length >= 2 && path.charCodeAt(1) === 58 /* CharCode.Colon */) {
             const code = path.charCodeAt(0);
-            if (code >= 65 /* CharCode.A */ && code <= 90 /* CharCode.Z */) {
+            if (code >= 65 /* CharCode.A */ && code <= 90 /* CharCode.Z */ && lowerScheme !== 'http' && lowerScheme !== 'https') {
                 path = `${String.fromCharCode(code + 32)}:${path.substr(2)}`; // "/c:".length === 3
             }
         }

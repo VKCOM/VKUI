@@ -27,8 +27,14 @@ class WebWorkerService {
     _createWorker(descriptor) {
         const workerRunnerUrl = this.getWorkerUrl(descriptor);
         const workerUrlWithNls = getWorkerBootstrapUrl(descriptor.label, workerRunnerUrl, this._getWorkerLoadingFailedErrorMessage(descriptor));
-        const worker = new Worker(ttPolicy ? ttPolicy.createScriptURL(workerUrlWithNls) : workerUrlWithNls, { name: descriptor.label, type: 'module' });
-        return whenESMWorkerReady(worker);
+        try {
+            const worker = createBlobWorker(workerUrlWithNls, { name: descriptor.label, type: 'module' });
+            return whenESMWorkerReady(worker).finally(() => URL.revokeObjectURL(workerUrlWithNls));
+        }
+        catch (error) {
+            URL.revokeObjectURL(workerUrlWithNls);
+            throw error;
+        }
     }
     _getWorkerLoadingFailedErrorMessage(_descriptor) {
         return undefined;
@@ -54,6 +60,12 @@ const ttPolicy = (() => {
         return createTrustedTypesPolicy('defaultWorkerFactory', { createScriptURL: value => value });
     }
 })();
+function createBlobWorker(blobUrl, options) {
+    if (!blobUrl.startsWith('blob:')) {
+        throw new URIError('Not a blob-url: ' + blobUrl);
+    }
+    return new Worker(ttPolicy ? ttPolicy.createScriptURL(blobUrl) : blobUrl, { ...options, type: 'module' });
+}
 function getWorkerBootstrapUrl(label, workerScriptUrl, workerLoadingFailedErrorMessage) {
     if (/^((http:)|(https:)|(file:))/.test(workerScriptUrl) && workerScriptUrl.substring(0, globalThis.origin.length) !== globalThis.origin) ;
     else {
@@ -79,6 +91,7 @@ function getWorkerBootstrapUrl(label, workerScriptUrl, workerLoadingFailedErrorM
             `globalThis._VSCODE_NLS_MESSAGES = ${JSON.stringify(getNLSMessages())};`,
             `globalThis._VSCODE_NLS_LANGUAGE = ${JSON.stringify(getNLSLanguage())};`,
             `globalThis._VSCODE_FILE_ROOT = ${JSON.stringify(globalThis._VSCODE_FILE_ROOT)};`,
+            `globalThis._VSCODE_PRODUCT_JSON = ${JSON.stringify(globalThis._VSCODE_PRODUCT_JSON)};`,
             `const ttPolicy = globalThis.trustedTypes?.createPolicy('defaultWorkerFactory', { createScriptURL: value => value });`,
             `globalThis.workerttPolicy = ttPolicy;`,
             workerLoadingFailedErrorMessage ? 'try {' : '',
@@ -153,4 +166,4 @@ class WebWorker extends Disposable {
     }
 }
 
-export { WebWorker, WebWorkerService };
+export { WebWorker, WebWorkerService, createBlobWorker };

@@ -230,6 +230,9 @@ let ContentHoverWidgetWrapper = class ContentHoverWidgetWrapper extends Disposab
         if (isContentWidgetResizing) {
             return true;
         }
+        if (this._isMouseOnCodeActionWidget(mouseEvent)) {
+            return true;
+        }
         const anchorCandidates = this._findHoverAnchorCandidates(mouseEvent);
         const anchorCandidatesExist = anchorCandidates.length > 0;
         if (!anchorCandidatesExist) {
@@ -271,6 +274,13 @@ let ContentHoverWidgetWrapper = class ContentHoverWidgetWrapper extends Disposab
         }
         anchorCandidates.sort((a, b) => b.priority - a.priority);
         return anchorCandidates;
+    }
+    _isMouseOnCodeActionWidget(mouseEvent) {
+        const target = mouseEvent.event.browserEvent.target;
+        if (target instanceof Element && !!target.closest('.action-widget')) {
+            return true;
+        }
+        return false;
     }
     _onMouseLeave(e) {
         const editorDomNode = this._editor.getDomNode();

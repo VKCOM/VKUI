@@ -1,6 +1,7 @@
 import { append, $, EventType, addDisposableListener, EventHelper, isMouseEvent } from '../../dom.js';
 import { StandardKeyboardEvent } from '../../keyboardEvent.js';
 import { EventType as EventType$1, Gesture } from '../../touch.js';
+import { contextViewMenuCloseAnimation, CONTEXT_VIEW_MENU_MOTION_CLASS } from '../contextview/contextview.js';
 import { ActionRunner } from '../../../common/actions.js';
 import { Emitter } from '../../../common/event.js';
 import './dropdown.css';
@@ -10,16 +11,17 @@ import './dropdown.css';
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 class BaseDropdown extends ActionRunner {
-    constructor(container, options) {
+    constructor(container, baseOptions) {
         super();
+        this.baseOptions = baseOptions;
         this._onDidChangeVisibility = this._register(new Emitter());
         this.onDidChangeVisibility = this._onDidChangeVisibility.event;
         this._element = append(container, $('.monaco-dropdown'));
         this._label = append(this._element, $('.dropdown-label'));
-        let labelRenderer = options.labelRenderer;
+        let labelRenderer = baseOptions.labelRenderer;
         if (!labelRenderer) {
             labelRenderer = (container) => {
-                container.textContent = options.label || '';
+                container.textContent = baseOptions.label || '';
                 return null;
             };
         }
@@ -28,6 +30,9 @@ class BaseDropdown extends ActionRunner {
         }
         for (const event of [EventType.MOUSE_DOWN, EventType$1.Tap]) {
             this._register(addDisposableListener(this._label, event, e => {
+                if (baseOptions.isEnabled?.() === false) {
+                    return;
+                }
                 if (isMouseEvent(e) && e.button !== 0) {
                     // prevent right click trigger to allow separate context menu (https://github.com/microsoft/vscode/issues/151064)
                     return;
@@ -44,6 +49,9 @@ class BaseDropdown extends ActionRunner {
             const event = new StandardKeyboardEvent(e);
             if (event.equals(3 /* KeyCode.Enter */) || event.equals(10 /* KeyCode.Space */)) {
                 EventHelper.stop(e, true); // https://github.com/microsoft/vscode/issues/57997
+                if (baseOptions.isEnabled?.() === false) {
+                    return;
+                }
                 if (this.visible) {
                     this.hide();
                 }
@@ -62,7 +70,7 @@ class BaseDropdown extends ActionRunner {
         return this._element;
     }
     show() {
-        if (!this.visible) {
+        if (!this.visible && this.baseOptions.isEnabled?.() !== false) {
             this.visible = true;
             this._onDidChangeVisibility.fire(true);
         }
@@ -113,21 +121,32 @@ class DropdownMenu extends BaseDropdown {
         this._actions = actions;
     }
     show() {
+        if (this._options.isEnabled?.() === false) {
+            return;
+        }
         super.show();
         this.element.classList.add('active');
         this._options.contextMenuProvider.showContextMenu({
-            getAnchor: () => this.element,
+            getAnchor: () => this._options.getAnchor?.() ?? this.element,
             getActions: () => this.actions,
             getActionsContext: () => this.menuOptions ? this.menuOptions.context : null,
             getActionViewItem: (action, options) => this.menuOptions && this.menuOptions.actionViewItemProvider ? this.menuOptions.actionViewItemProvider(action, options) : undefined,
             getKeyBinding: action => this.menuOptions && this.menuOptions.getKeyBinding ? this.menuOptions.getKeyBinding(action) : undefined,
-            getMenuClassName: () => this._options.menuClassName || '',
+            getMenuClassName: () => this.getMenuClassName(),
+            closeAnimation: this._options.closeAnimation ?? contextViewMenuCloseAnimation,
             onHide: () => this.onHide(),
             actionRunner: this.menuOptions ? this.menuOptions.actionRunner : undefined,
             anchorAlignment: this.menuOptions ? this.menuOptions.anchorAlignment : 0 /* AnchorAlignment.LEFT */,
             domForShadowRoot: this._options.menuAsChild ? this.element : undefined,
             skipTelemetry: this._options.skipTelemetry
         });
+    }
+    getMenuClassName() {
+        const classNames = this._options.menuClassName?.split(/\s+/).filter(Boolean) ?? [];
+        if (!classNames.includes(CONTEXT_VIEW_MENU_MOTION_CLASS)) {
+            classNames.push(CONTEXT_VIEW_MENU_MOTION_CLASS);
+        }
+        return classNames.join(' ');
     }
     hide() {
         super.hide();

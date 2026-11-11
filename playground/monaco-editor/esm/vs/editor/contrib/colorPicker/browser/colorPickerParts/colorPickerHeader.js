@@ -33,7 +33,7 @@ class ColorPickerHeader extends Disposable {
         append(this._pickedColorNode, $('span.codicon.codicon-color-mode'));
         this._pickedColorPresentation = append(this._pickedColorNode, document.createElement('span'));
         this._pickedColorPresentation.classList.add('picked-color-presentation');
-        const tooltip = localize(922, "Click to toggle color options (rgb/hsl/hex)");
+        const tooltip = localize(937, "Click to toggle color options (rgb/hsl/hex)");
         this._pickedColorNode.setAttribute('title', tooltip);
         this._originalColorNode = append(this._domNode, $('.original-color'));
         this._originalColorNode.style.backgroundColor = Color.Format.CSS.format(this.model.originalColor) || '';

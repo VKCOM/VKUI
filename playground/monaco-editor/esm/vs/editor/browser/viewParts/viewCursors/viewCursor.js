@@ -33,7 +33,7 @@ class ViewCursor {
         this._context = context;
         const options = this._context.configuration.options;
         const fontInfo = options.get(59 /* EditorOption.fontInfo */);
-        this._cursorStyle = options.get(161 /* EditorOption.effectiveCursorStyle */);
+        this._cursorStyle = options.get(162 /* EditorOption.effectiveCursorStyle */);
         this._typicalHalfwidthCharacterWidth = fontInfo.typicalHalfwidthCharacterWidth;
         this._lineCursorWidth = Math.min(options.get(37 /* EditorOption.cursorWidth */), this._typicalHalfwidthCharacterWidth);
         this._lineCursorHeight = options.get(38 /* EditorOption.cursorHeight */);
@@ -87,7 +87,7 @@ class ViewCursor {
     onConfigurationChanged(e) {
         const options = this._context.configuration.options;
         const fontInfo = options.get(59 /* EditorOption.fontInfo */);
-        this._cursorStyle = options.get(161 /* EditorOption.effectiveCursorStyle */);
+        this._cursorStyle = options.get(162 /* EditorOption.effectiveCursorStyle */);
         this._typicalHalfwidthCharacterWidth = fontInfo.typicalHalfwidthCharacterWidth;
         this._lineCursorWidth = Math.min(options.get(37 /* EditorOption.cursorWidth */), this._typicalHalfwidthCharacterWidth);
         this._lineCursorHeight = options.get(38 /* EditorOption.cursorHeight */);

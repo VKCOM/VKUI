@@ -68,6 +68,13 @@ let BrowserClipboardService = class BrowserClipboardService extends Disposable {
     // This function sets up some handlers to work around that behavior.
     installWebKitWriteTextWorkaround() {
         const handler = () => {
+            // Guard access to navigator.clipboard, it is only present in a secure context.
+            // Returning early leaves `webKitPendingClipboardWritePromise` unset, so `writeText`
+            // keeps falling through to `fallbackWriteText` and copying still works.
+            const clipboard = getActiveWindow().navigator.clipboard;
+            if (!clipboard) {
+                return;
+            }
             const currentWritePromise = new DeferredPromise();
             // Cancel the previous promise since we just created a new one in response to this new event
             if (this.webKitPendingClipboardWritePromise && !this.webKitPendingClipboardWritePromise.isSettled) {
@@ -78,7 +85,7 @@ let BrowserClipboardService = class BrowserClipboardService extends Disposable {
             // This allows us to pass in a Promise that will either be cancelled by another event or
             // resolved with the contents of the first call to this.writeText.
             // see https://developer.mozilla.org/en-US/docs/Web/API/ClipboardItem/ClipboardItem#parameters
-            getActiveWindow().navigator.clipboard.write([new ClipboardItem({
+            clipboard.write([new ClipboardItem({
                     'text/plain': currentWritePromise.p,
                 })]).catch(async (err) => {
                 if (!(err instanceof Error) || err.name !== 'NotAllowedError' || !currentWritePromise.isRejected) {

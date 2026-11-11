@@ -508,7 +508,7 @@ class UnfoldAction extends FoldingAction {
     constructor() {
         super({
             id: 'editor.unfold',
-            label: localize2(1025, "Unfold"),
+            label: localize2(1040, "Unfold"),
             precondition: CONTEXT_FOLDING_ENABLED,
             kbOpts: {
                 kbExpr: EditorContextKeys.editorTextFocus,
@@ -569,7 +569,7 @@ class UnFoldRecursivelyAction extends FoldingAction {
     constructor() {
         super({
             id: 'editor.unfoldRecursively',
-            label: localize2(1026, "Unfold Recursively"),
+            label: localize2(1041, "Unfold Recursively"),
             precondition: CONTEXT_FOLDING_ENABLED,
             kbOpts: {
                 kbExpr: EditorContextKeys.editorTextFocus,
@@ -586,7 +586,7 @@ class FoldAction extends FoldingAction {
     constructor() {
         super({
             id: 'editor.fold',
-            label: localize2(1027, "Fold"),
+            label: localize2(1042, "Fold"),
             precondition: CONTEXT_FOLDING_ENABLED,
             kbOpts: {
                 kbExpr: EditorContextKeys.editorTextFocus,
@@ -653,7 +653,7 @@ class ToggleFoldAction extends FoldingAction {
     constructor() {
         super({
             id: 'editor.toggleFold',
-            label: localize2(1028, "Toggle Fold"),
+            label: localize2(1043, "Toggle Fold"),
             precondition: CONTEXT_FOLDING_ENABLED,
             kbOpts: {
                 kbExpr: EditorContextKeys.editorTextFocus,
@@ -671,7 +671,7 @@ class FoldRecursivelyAction extends FoldingAction {
     constructor() {
         super({
             id: 'editor.foldRecursively',
-            label: localize2(1029, "Fold Recursively"),
+            label: localize2(1044, "Fold Recursively"),
             precondition: CONTEXT_FOLDING_ENABLED,
             kbOpts: {
                 kbExpr: EditorContextKeys.editorTextFocus,
@@ -689,7 +689,7 @@ class ToggleFoldRecursivelyAction extends FoldingAction {
     constructor() {
         super({
             id: 'editor.toggleFoldRecursively',
-            label: localize2(1030, "Toggle Fold Recursively"),
+            label: localize2(1045, "Toggle Fold Recursively"),
             precondition: CONTEXT_FOLDING_ENABLED,
             kbOpts: {
                 kbExpr: EditorContextKeys.editorTextFocus,
@@ -707,7 +707,7 @@ class FoldAllBlockCommentsAction extends FoldingAction {
     constructor() {
         super({
             id: 'editor.foldAllBlockComments',
-            label: localize2(1031, "Fold All Block Comments"),
+            label: localize2(1046, "Fold All Block Comments"),
             precondition: CONTEXT_FOLDING_ENABLED,
             kbOpts: {
                 kbExpr: EditorContextKeys.editorTextFocus,
@@ -737,7 +737,7 @@ class FoldAllRegionsAction extends FoldingAction {
     constructor() {
         super({
             id: 'editor.foldAllMarkerRegions',
-            label: localize2(1032, "Fold All Regions"),
+            label: localize2(1047, "Fold All Regions"),
             precondition: CONTEXT_FOLDING_ENABLED,
             kbOpts: {
                 kbExpr: EditorContextKeys.editorTextFocus,
@@ -767,7 +767,7 @@ class UnfoldAllRegionsAction extends FoldingAction {
     constructor() {
         super({
             id: 'editor.unfoldAllMarkerRegions',
-            label: localize2(1033, "Unfold All Regions"),
+            label: localize2(1048, "Unfold All Regions"),
             precondition: CONTEXT_FOLDING_ENABLED,
             kbOpts: {
                 kbExpr: EditorContextKeys.editorTextFocus,
@@ -797,7 +797,7 @@ class FoldAllExceptAction extends FoldingAction {
     constructor() {
         super({
             id: 'editor.foldAllExcept',
-            label: localize2(1034, "Fold All Except Selected"),
+            label: localize2(1049, "Fold All Except Selected"),
             precondition: CONTEXT_FOLDING_ENABLED,
             kbOpts: {
                 kbExpr: EditorContextKeys.editorTextFocus,
@@ -815,7 +815,7 @@ class UnfoldAllExceptAction extends FoldingAction {
     constructor() {
         super({
             id: 'editor.unfoldAllExcept',
-            label: localize2(1035, "Unfold All Except Selected"),
+            label: localize2(1050, "Unfold All Except Selected"),
             precondition: CONTEXT_FOLDING_ENABLED,
             kbOpts: {
                 kbExpr: EditorContextKeys.editorTextFocus,
@@ -833,7 +833,7 @@ class FoldAllAction extends FoldingAction {
     constructor() {
         super({
             id: 'editor.foldAll',
-            label: localize2(1036, "Fold All"),
+            label: localize2(1051, "Fold All"),
             precondition: CONTEXT_FOLDING_ENABLED,
             kbOpts: {
                 kbExpr: EditorContextKeys.editorTextFocus,
@@ -850,7 +850,7 @@ class UnfoldAllAction extends FoldingAction {
     constructor() {
         super({
             id: 'editor.unfoldAll',
-            label: localize2(1037, "Unfold All"),
+            label: localize2(1052, "Unfold All"),
             precondition: CONTEXT_FOLDING_ENABLED,
             kbOpts: {
                 kbExpr: EditorContextKeys.editorTextFocus,
@@ -878,7 +878,7 @@ class GotoParentFoldAction extends FoldingAction {
     constructor() {
         super({
             id: 'editor.gotoParentFold',
-            label: localize2(1038, "Go to Parent Fold"),
+            label: localize2(1053, "Go to Parent Fold"),
             precondition: CONTEXT_FOLDING_ENABLED,
             kbOpts: {
                 kbExpr: EditorContextKeys.editorTextFocus,
@@ -906,7 +906,7 @@ class GotoPreviousFoldAction extends FoldingAction {
     constructor() {
         super({
             id: 'editor.gotoPreviousFold',
-            label: localize2(1039, "Go to Previous Folding Range"),
+            label: localize2(1054, "Go to Previous Folding Range"),
             precondition: CONTEXT_FOLDING_ENABLED,
             kbOpts: {
                 kbExpr: EditorContextKeys.editorTextFocus,
@@ -934,7 +934,7 @@ class GotoNextFoldAction extends FoldingAction {
     constructor() {
         super({
             id: 'editor.gotoNextFold',
-            label: localize2(1040, "Go to Next Folding Range"),
+            label: localize2(1055, "Go to Next Folding Range"),
             precondition: CONTEXT_FOLDING_ENABLED,
             kbOpts: {
                 kbExpr: EditorContextKeys.editorTextFocus,
@@ -961,7 +961,7 @@ class FoldRangeFromSelectionAction extends FoldingAction {
     constructor() {
         super({
             id: 'editor.createFoldingRangeFromSelection',
-            label: localize2(1041, "Create Folding Range from Selection"),
+            label: localize2(1056, "Create Folding Range from Selection"),
             precondition: CONTEXT_FOLDING_ENABLED,
             kbOpts: {
                 kbExpr: EditorContextKeys.editorTextFocus,
@@ -1009,7 +1009,7 @@ class RemoveFoldRangeFromSelectionAction extends FoldingAction {
     constructor() {
         super({
             id: 'editor.removeManualFoldingRanges',
-            label: localize2(1042, "Remove Manual Folding Ranges"),
+            label: localize2(1057, "Remove Manual Folding Ranges"),
             precondition: CONTEXT_FOLDING_ENABLED,
             kbOpts: {
                 kbExpr: EditorContextKeys.editorTextFocus,
@@ -1021,12 +1021,7 @@ class RemoveFoldRangeFromSelectionAction extends FoldingAction {
     invoke(foldingController, foldingModel, editor) {
         const selections = editor.getSelections();
         if (selections) {
-            const ranges = [];
-            for (const selection of selections) {
-                const { startLineNumber, endLineNumber } = selection;
-                ranges.push(endLineNumber >= startLineNumber ? { startLineNumber, endLineNumber } : { endLineNumber, startLineNumber });
-            }
-            foldingModel.removeManualRanges(ranges);
+            foldingModel.removeManualRanges(selections);
             foldingController.triggerFoldingModelChanged();
         }
     }
@@ -1035,7 +1030,7 @@ class ToggleImportFoldAction extends FoldingAction {
     constructor() {
         super({
             id: 'editor.toggleImportFold',
-            label: localize2(1043, "Toggle Import Fold"),
+            label: localize2(1058, "Toggle Import Fold"),
             precondition: CONTEXT_FOLDING_ENABLED,
             kbOpts: {
                 kbExpr: EditorContextKeys.editorTextFocus,
@@ -1078,7 +1073,7 @@ registerEditorAction(ToggleImportFoldAction);
 for (let i = 1; i <= 7; i++) {
     registerInstantiatedEditorAction(new FoldLevelAction({
         id: FoldLevelAction.ID(i),
-        label: localize2(1044, "Fold Level {0}", i),
+        label: localize2(1059, "Fold Level {0}", i),
         precondition: CONTEXT_FOLDING_ENABLED,
         kbOpts: {
             kbExpr: EditorContextKeys.editorTextFocus,

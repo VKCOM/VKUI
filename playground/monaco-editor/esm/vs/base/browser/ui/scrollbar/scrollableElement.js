@@ -18,6 +18,11 @@ import './media/scrollbars.css';
  *--------------------------------------------------------------------------------------------*/
 const HIDE_TIMEOUT = 500;
 const SCROLL_WHEEL_SENSITIVITY = 50;
+/** The default size (px) used when a scrollbar element does not pass an explicit size. */
+const DEFAULT_SCROLLBAR_SIZE = 10;
+let globalDefaultScrollbarSize = DEFAULT_SCROLLBAR_SIZE;
+const _onDidChangeDefaultScrollbarSizeEmitter = new Emitter();
+const onDidChangeDefaultScrollbarSize = _onDidChangeDefaultScrollbarSizeEmitter.event;
 class MouseWheelClassifierItem {
     constructor(timestamp, deltaX, deltaY) {
         this.timestamp = timestamp;
@@ -187,6 +192,19 @@ class AbstractScrollableElement extends Widget {
         this._mouseIsOver = false;
         this._shouldRender = true;
         this._revealOnScroll = true;
+        // Subscribe to global default size changes, but only for axes whose size
+        // was NOT explicitly provided. Elements with explicit sizes (editor,
+        // menus, peek, chat input, etc.) use a fixed size and must not be updated.
+        const hSizeExplicit = typeof options.horizontalScrollbarSize !== 'undefined';
+        const vSizeExplicit = typeof options.verticalScrollbarSize !== 'undefined';
+        if (!hSizeExplicit || !vSizeExplicit) {
+            this._register(onDidChangeDefaultScrollbarSize(newSize => {
+                this.updateOptions({
+                    ...(!hSizeExplicit ? { horizontalScrollbarSize: newSize } : {}),
+                    ...(!vSizeExplicit ? { verticalScrollbarSize: newSize } : {}),
+                });
+            }));
+        }
     }
     dispose() {
         this._mouseWheelToDispose = dispose(this._mouseWheelToDispose);
@@ -582,11 +600,11 @@ function resolveOptions(opts) {
         arrowSize: (typeof opts.arrowSize !== 'undefined' ? opts.arrowSize : 11),
         listenOnDomNode: (typeof opts.listenOnDomNode !== 'undefined' ? opts.listenOnDomNode : null),
         horizontal: (typeof opts.horizontal !== 'undefined' ? opts.horizontal : 1 /* ScrollbarVisibility.Auto */),
-        horizontalScrollbarSize: (typeof opts.horizontalScrollbarSize !== 'undefined' ? opts.horizontalScrollbarSize : 10),
+        horizontalScrollbarSize: (typeof opts.horizontalScrollbarSize !== 'undefined' ? opts.horizontalScrollbarSize : globalDefaultScrollbarSize),
         horizontalSliderSize: (typeof opts.horizontalSliderSize !== 'undefined' ? opts.horizontalSliderSize : 0),
         horizontalHasArrows: (typeof opts.horizontalHasArrows !== 'undefined' ? opts.horizontalHasArrows : false),
         vertical: (typeof opts.vertical !== 'undefined' ? opts.vertical : 1 /* ScrollbarVisibility.Auto */),
-        verticalScrollbarSize: (typeof opts.verticalScrollbarSize !== 'undefined' ? opts.verticalScrollbarSize : 10),
+        verticalScrollbarSize: (typeof opts.verticalScrollbarSize !== 'undefined' ? opts.verticalScrollbarSize : globalDefaultScrollbarSize),
         verticalHasArrows: (typeof opts.verticalHasArrows !== 'undefined' ? opts.verticalHasArrows : false),
         verticalSliderSize: (typeof opts.verticalSliderSize !== 'undefined' ? opts.verticalSliderSize : 0),
         scrollByPage: (typeof opts.scrollByPage !== 'undefined' ? opts.scrollByPage : false)
@@ -600,4 +618,4 @@ function resolveOptions(opts) {
     return result;
 }
 
-export { AbstractScrollableElement, DomScrollableElement, MouseWheelClassifier, ScrollableElement, SmoothScrollableElement };
+export { AbstractScrollableElement, DEFAULT_SCROLLBAR_SIZE, DomScrollableElement, MouseWheelClassifier, ScrollableElement, SmoothScrollableElement, onDidChangeDefaultScrollbarSize };

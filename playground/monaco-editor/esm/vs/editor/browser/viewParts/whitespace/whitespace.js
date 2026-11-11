@@ -31,7 +31,7 @@ class WhitespaceOverlay extends DynamicViewOverlay {
     onConfigurationChanged(e) {
         const newOptions = new WhitespaceOptions(this._context.configuration);
         if (this._options.equals(newOptions)) {
-            return e.hasChanged(165 /* EditorOption.layoutInfo */);
+            return e.hasChanged(166 /* EditorOption.layoutInfo */);
         }
         this._options = newOptions;
         return true;
@@ -177,7 +177,7 @@ class WhitespaceOverlay extends DynamicViewOverlay {
                     result += this._renderArrow(lineHeight, spaceWidth, visibleRange.left);
                 }
                 else {
-                    result += `<circle cx="${(visibleRange.left + spaceWidth / 2).toFixed(2)}" cy="${(lineHeight / 2).toFixed(2)}" r="${(spaceWidth / 7).toFixed(2)}" />`;
+                    result += this._renderCircle(lineHeight, spaceWidth, visibleRange.left);
                 }
             }
             else {
@@ -192,10 +192,17 @@ class WhitespaceOverlay extends DynamicViewOverlay {
         if (USE_SVG) {
             maxLeft = Math.round(maxLeft + spaceWidth);
             return (`<svg style="bottom:0;position:absolute;width:${maxLeft}px;height:${lineHeight}px" viewBox="0 0 ${maxLeft} ${lineHeight}" xmlns="http://www.w3.org/2000/svg" fill="${color}">`
-                + result
+                + (result ? `<path d="${result}" />` : '')
                 + `</svg>`);
         }
         return result;
+    }
+    _renderCircle(lineHeight, spaceWidth, left) {
+        const radius = Number((spaceWidth / 7).toFixed(2));
+        const centerX = Number((left + spaceWidth / 2).toFixed(2));
+        const centerY = (lineHeight / 2).toFixed(2);
+        const diameter = (radius * 2).toFixed(2);
+        return `M ${(centerX - radius).toFixed(2)} ${centerY} a ${radius} ${radius} 0 1 0 ${diameter} 0 a ${radius} ${radius} 0 1 0 -${diameter} 0 Z `;
     }
     _renderArrow(lineHeight, spaceWidth, left) {
         const strokeWidth = spaceWidth / 7;
@@ -214,7 +221,7 @@ class WhitespaceOverlay extends DynamicViewOverlay {
         const p10 = { x: p1.x, y: -p1.y };
         const p = [p1, p2, p3, p4, p5, p6, p7, p8, p9, p10];
         const parts = p.map((p) => `${(dx + p.x).toFixed(2)} ${(dy + p.y).toFixed(2)}`).join(' L ');
-        return `<path d="M ${parts}" />`;
+        return `M ${parts} Z `;
     }
     render(startLineNumber, lineNumber) {
         if (!this._renderResult) {

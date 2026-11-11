@@ -14,7 +14,7 @@ class QuickTreeAccessibilityProvider {
         this.onCheckedEvent = onCheckedEvent;
     }
     getWidgetAriaLabel() {
-        return localize(1836, "Quick Tree");
+        return localize(1869, "Quick Tree");
     }
     getAriaLabel(element) {
         return element.ariaLabel || [element.label, element.description]

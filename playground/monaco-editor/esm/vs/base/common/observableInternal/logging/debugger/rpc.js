@@ -31,6 +31,10 @@ class SimpleTypedRpcConnection {
         });
         const requests = new Proxy({}, {
             get: (target, key) => {
+                // Answering `then` makes this proxy a thenable, so `await` would send a bogus request and never settle.
+                if (key === 'then') {
+                    return undefined;
+                }
                 return async (...args) => {
                     const result = await this._channel.sendRequest([key, args]);
                     if (result.type === 'error') {
@@ -44,6 +48,10 @@ class SimpleTypedRpcConnection {
         });
         const notifications = new Proxy({}, {
             get: (target, key) => {
+                // Answering `then` makes this proxy a thenable, so `await` would send a bogus notification and never settle.
+                if (key === 'then') {
+                    return undefined;
+                }
                 return (...args) => {
                     this._channel.sendNotification([key, args]);
                 };

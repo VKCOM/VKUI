@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 class ResolvedKeybindingItem {
-    constructor(resolvedKeybinding, command, commandArgs, when, isDefault, extensionId, isBuiltinExtension) {
+    constructor(resolvedKeybinding, command, commandArgs, when, isDefault, extensionId, isBuiltinExtension, systemWide = false) {
         this._resolvedKeybindingItemBrand = undefined;
         this.resolvedKeybinding = resolvedKeybinding;
         this.chords = resolvedKeybinding ? toEmptyArrayIfContainsNull(resolvedKeybinding.getDispatchChords()) : [];
@@ -18,6 +18,7 @@ class ResolvedKeybindingItem {
         this.isDefault = isDefault;
         this.extensionId = extensionId;
         this.isBuiltinExtension = isBuiltinExtension;
+        this.systemWide = systemWide;
     }
 }
 function toEmptyArrayIfContainsNull(arr) {

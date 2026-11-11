@@ -23,15 +23,20 @@ async function createColorHover(editorModel, colorInfo, provider) {
         provider
     };
 }
-function updateEditorModel(editor, range, model) {
+function updateEditorModel(editor, range, model, insertionRanges) {
     const textEdits = [];
     const edit = model.presentation.textEdit ?? { range, text: model.presentation.label, forceMoveMarkers: false };
-    textEdits.push(edit);
     if (model.presentation.additionalTextEdits) {
         textEdits.push(...model.presentation.additionalTextEdits);
     }
     const replaceRange = Range.lift(edit.range);
     const trackedRange = editor.getModel()._setTrackedRange(null, replaceRange, 3 /* TrackedRangeStickiness.GrowsOnlyWhenTypingAfter */);
+    if (insertionRanges) {
+        textEdits.push(...insertionRanges.map(insertionRange => ({ range: insertionRange, text: edit.text, forceMoveMarkers: false })));
+    }
+    else {
+        textEdits.push(edit);
+    }
     editor.executeEdits('colorpicker', textEdits);
     editor.pushUndoStop();
     return editor.getModel()._getTrackedRange(trackedRange) ?? replaceRange;

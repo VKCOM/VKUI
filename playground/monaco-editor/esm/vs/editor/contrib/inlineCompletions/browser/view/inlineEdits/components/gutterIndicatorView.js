@@ -8,7 +8,6 @@ import { IAccessibilityService } from '../../../../../../../platform/accessibili
 import { IHoverService } from '../../../../../../../platform/hover/browser/hover.js';
 import { IInstantiationService } from '../../../../../../../platform/instantiation/common/instantiation.js';
 import { IThemeService } from '../../../../../../../platform/theme/common/themeService.js';
-import { Point } from '../../../../../../common/core/2d/point.js';
 import { Rect } from '../../../../../../common/core/2d/rect.js';
 import { OffsetRange } from '../../../../../../common/core/ranges/offsetRange.js';
 import { StickyScrollController } from '../../../../../stickyScroll/browser/stickyScrollController.js';
@@ -55,7 +54,7 @@ class InlineSuggestionGutterMenuData {
     static fromInlineSuggestion(suggestion) {
         const alternativeAction = suggestion.action?.kind === 'edit' ? suggestion.action.alternativeAction : undefined;
         const commands = suggestion.source.inlineSuggestions.commands ?? [];
-        return new InlineSuggestionGutterMenuData(suggestion.gutterMenuLinkAction, suggestion.source.provider.displayName ?? localize(1262, "Inline Suggestion"), commands.length > 0 ? [commands] : [], alternativeAction, suggestion.source.provider.modelInfo, suggestion.source.provider.setModelId?.bind(suggestion.source.provider));
+        return new InlineSuggestionGutterMenuData(suggestion.gutterMenuLinkAction, suggestion.source.provider.displayName ?? localize(1282, "Inline Suggestion"), commands.length > 0 ? [commands] : [], alternativeAction, suggestion.source.provider.modelInfo, suggestion.source.provider.setModelId?.bind(suggestion.source.provider));
     }
     constructor(action, displayName, extensionCommands, alternativeAction, modelInfo, setModelId, extensionCommandsOnly = false) {
         this.action = action;
@@ -353,9 +352,11 @@ let InlineEditsGutterIndicator = class InlineEditsGutterIndicator extends Dispos
                     }
                 },
                 onmouseenter: () => {
+                    this._isHoveredOverIcon.set(true, undefined);
                     // TODO show hover when hovering ghost text etc.
                     this._showHover();
                 },
+                onmouseleave: () => this._isHoveredOverIcon.set(false, undefined),
                 style: {
                     cursor: 'pointer',
                     zIndex: '20',
@@ -416,17 +417,6 @@ let InlineEditsGutterIndicator = class InlineEditsGutterIndicator extends Dispos
             position: constObservable(null),
             allowEditorOverflow: false,
             minContentWidthInPx: constObservable(0),
-        }));
-        this._register(this._editorObs.editor.onMouseMove((e) => {
-            const state = this._state.get();
-            if (state === undefined) {
-                return;
-            }
-            const el = this._iconRef.element;
-            const rect = el.getBoundingClientRect();
-            const rectangularArea = Rect.fromLeftTopWidthHeight(rect.left, rect.top, rect.width, rect.height);
-            const point = new Point(e.event.posx, e.event.posy);
-            this._isHoveredOverIcon.set(rectangularArea.containsPoint(point), undefined);
         }));
         this._register(this._editorObs.editor.onDidScrollChange(() => {
             this._isHoveredOverIcon.set(false, undefined);

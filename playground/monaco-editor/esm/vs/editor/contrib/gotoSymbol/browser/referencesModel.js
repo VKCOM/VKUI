@@ -33,10 +33,10 @@ class OneReference {
     get ariaMessage() {
         const preview = this.parent.getPreview(this)?.preview(this.range);
         if (!preview) {
-            return localize(1130, "in {0} on line {1} at column {2}", basename(this.uri), this.range.startLineNumber, this.range.startColumn);
+            return localize(1145, "in {0} on line {1} at column {2}", basename(this.uri), this.range.startLineNumber, this.range.startColumn);
         }
         else {
-            return localize(1131, "{0} in {1} on line {2} at column {3}", preview.value, basename(this.uri), this.range.startLineNumber, this.range.startColumn);
+            return localize(1146, "{0} in {1} on line {2} at column {3}", preview.value, basename(this.uri), this.range.startLineNumber, this.range.startColumn);
         }
     }
 }
@@ -82,10 +82,10 @@ class FileReferences {
     get ariaMessage() {
         const len = this.children.length;
         if (len === 1) {
-            return localize(1132, "1 symbol in {0}, full path {1}", basename(this.uri), this.uri.fsPath);
+            return localize(1147, "1 symbol in {0}, full path {1}", basename(this.uri), this.uri.fsPath);
         }
         else {
-            return localize(1133, "{0} symbols in {1}, full path {2}", len, basename(this.uri), this.uri.fsPath);
+            return localize(1148, "{0} symbols in {1}, full path {2}", len, basename(this.uri), this.uri.fsPath);
         }
     }
     async resolve(textModelResolverService) {
@@ -149,16 +149,16 @@ class ReferencesModel {
     }
     get ariaMessage() {
         if (this.isEmpty) {
-            return localize(1134, "No results found");
+            return localize(1149, "No results found");
         }
         else if (this.references.length === 1) {
-            return localize(1135, "Found 1 symbol in {0}", this.references[0].uri.fsPath);
+            return localize(1150, "Found 1 symbol in {0}", this.references[0].uri.fsPath);
         }
         else if (this.groups.length === 1) {
-            return localize(1136, "Found {0} symbols in {1}", this.references.length, this.groups[0].uri.fsPath);
+            return localize(1151, "Found {0} symbols in {1}", this.references.length, this.groups[0].uri.fsPath);
         }
         else {
-            return localize(1137, "Found {0} symbols in {1} files", this.references.length, this.groups.length);
+            return localize(1152, "Found {0} symbols in {1} files", this.references.length, this.groups.length);
         }
     }
     nextOrPreviousReference(reference, next) {

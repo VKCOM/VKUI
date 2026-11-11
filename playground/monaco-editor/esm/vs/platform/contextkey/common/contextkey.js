@@ -1,4 +1,4 @@
-import { isMacintosh, isLinux, isWindows, isWeb, isEdge, isFirefox, isChrome, isSafari } from '../../../base/common/platform.js';
+import { isMacintosh, isLinux, isWindows, isChromeOS, isWeb, isEdge, isFirefox, isChrome, isSafari } from '../../../base/common/platform.js';
 import { isFalsyOrWhitespace } from '../../../base/common/strings.js';
 import { Scanner } from './scanner.js';
 import { createDecorator } from '../../instantiation/common/instantiation.js';
@@ -14,6 +14,7 @@ CONSTANT_VALUES.set('true', true);
 CONSTANT_VALUES.set('isMac', isMacintosh);
 CONSTANT_VALUES.set('isLinux', isLinux);
 CONSTANT_VALUES.set('isWindows', isWindows);
+CONSTANT_VALUES.set('isChromeOS', isChromeOS);
 CONSTANT_VALUES.set('isWeb', isWeb);
 CONSTANT_VALUES.set('isMacNative', isMacintosh && !isWeb);
 CONSTANT_VALUES.set('isEdge', isEdge);
@@ -24,14 +25,14 @@ const hasOwnProperty = Object.prototype.hasOwnProperty;
 const defaultConfig = {
     regexParsingWithErrorRecovery: true
 };
-const errorEmptyString = localize(1737, "Empty context key expression");
-const hintEmptyString = localize(1738, "Did you forget to write an expression? You can also put 'false' or 'true' to always evaluate to false or true, respectively.");
-const errorNoInAfterNot = localize(1739, "'in' after 'not'.");
-const errorClosingParenthesis = localize(1740, "closing parenthesis ')'");
-const errorUnexpectedToken = localize(1741, "Unexpected token");
-const hintUnexpectedToken = localize(1742, "Did you forget to put && or || before the token?");
-const errorUnexpectedEOF = localize(1743, "Unexpected end of expression");
-const hintUnexpectedEOF = localize(1744, "Did you forget to put a context key?");
+const errorEmptyString = localize(1769, "Empty context key expression");
+const hintEmptyString = localize(1770, "Did you forget to write an expression? You can also put 'false' or 'true' to always evaluate to false or true, respectively.");
+const errorNoInAfterNot = localize(1771, "'in' after 'not'.");
+const errorClosingParenthesis = localize(1772, "closing parenthesis ')'");
+const errorUnexpectedToken = localize(1773, "Unexpected token");
+const hintUnexpectedToken = localize(1774, "Did you forget to put && or || before the token?");
+const errorUnexpectedEOF = localize(1775, "Unexpected end of expression");
+const hintUnexpectedEOF = localize(1776, "Did you forget to put a context key?");
 /**
  * A parser for context key expressions.
  *
@@ -376,7 +377,7 @@ class Parser {
         throw this._errExpectedButGot(message, this._peek());
     }
     _errExpectedButGot(expected, got, additionalInfo) {
-        const message = localize(1745, "Expected: {0}\nReceived: '{1}'.", expected, Scanner.getLexeme(got));
+        const message = localize(1777, "Expected: {0}\nReceived: '{1}'.", expected, Scanner.getLexeme(got));
         const offset = got.offset;
         const lexeme = Scanner.getLexeme(got);
         this._parsingErrors.push({ message, offset, lexeme, additionalInfo });

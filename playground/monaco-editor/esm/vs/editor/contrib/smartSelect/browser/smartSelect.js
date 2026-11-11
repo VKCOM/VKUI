@@ -131,7 +131,7 @@ class GrowSelectionAction extends AbstractSmartSelect {
     constructor() {
         super(true, {
             id: 'editor.action.smartSelect.expand',
-            label: localize2(1449, "Expand Selection"),
+            label: localize2(1469, "Expand Selection"),
             precondition: undefined,
             kbOpts: {
                 kbExpr: EditorContextKeys.editorTextFocus,
@@ -145,7 +145,7 @@ class GrowSelectionAction extends AbstractSmartSelect {
             menuOpts: {
                 menuId: MenuId.MenubarSelectionMenu,
                 group: '1_basic',
-                title: localize(1447, "&&Expand Selection"),
+                title: localize(1467, "&&Expand Selection"),
                 order: 2
             }
         });
@@ -157,7 +157,7 @@ class ShrinkSelectionAction extends AbstractSmartSelect {
     constructor() {
         super(false, {
             id: 'editor.action.smartSelect.shrink',
-            label: localize2(1450, "Shrink Selection"),
+            label: localize2(1470, "Shrink Selection"),
             precondition: undefined,
             kbOpts: {
                 kbExpr: EditorContextKeys.editorTextFocus,
@@ -171,7 +171,7 @@ class ShrinkSelectionAction extends AbstractSmartSelect {
             menuOpts: {
                 menuId: MenuId.MenubarSelectionMenu,
                 group: '1_basic',
-                title: localize(1448, "&&Shrink Selection"),
+                title: localize(1468, "&&Shrink Selection"),
                 order: 3
             }
         });

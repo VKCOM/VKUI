@@ -1,5 +1,5 @@
-import { EventHelper, addDisposableListener } from '../../dom.js';
-import { RegexToggle, WholeWordsToggle, CaseSensitiveToggle } from './findInputToggles.js';
+import { addDisposableListener } from '../../dom.js';
+import { RegexToggle, WholeWordsToggle, CaseSensitiveToggle, navigateToggles } from './findInputToggles.js';
 import { HistoryInputBox } from '../inputbox/inputBox.js';
 import { Widget } from '../widget.js';
 import { Emitter } from '../../../common/event.js';
@@ -109,32 +109,7 @@ class FindInput extends Widget {
             }));
             // Arrow-Key support to navigate between options
             this.onkeydown(this.domNode, (event) => {
-                if (event.equals(15 /* KeyCode.LeftArrow */) || event.equals(17 /* KeyCode.RightArrow */) || event.equals(9 /* KeyCode.Escape */)) {
-                    const indexes = this.getToggleDomNodes();
-                    const index = indexes.indexOf(this.domNode.ownerDocument.activeElement);
-                    if (index >= 0) {
-                        let newIndex = -1;
-                        if (event.equals(17 /* KeyCode.RightArrow */)) {
-                            newIndex = (index + 1) % indexes.length;
-                        }
-                        else if (event.equals(15 /* KeyCode.LeftArrow */)) {
-                            if (index === 0) {
-                                newIndex = indexes.length - 1;
-                            }
-                            else {
-                                newIndex = index - 1;
-                            }
-                        }
-                        if (event.equals(9 /* KeyCode.Escape */)) {
-                            indexes[index].blur();
-                            this.inputBox.focus();
-                        }
-                        else if (newIndex >= 0) {
-                            indexes[newIndex].focus();
-                        }
-                        EventHelper.stop(event, true);
-                    }
-                }
+                navigateToggles(event, this.domNode, () => this.getToggleDomNodes(), () => this.inputBox.focus());
             });
         }
         this.controls = document.createElement('div');
@@ -159,11 +134,11 @@ class FindInput extends Widget {
         }));
         this._register(addDisposableListener(this.inputBox.inputElement, 'compositionend', (e) => {
             this.imeSessionInProgress = false;
-            this._onInput.fire();
+            this._onInput.fire({ fromCompositionEnd: true });
         }));
         this.onkeydown(this.inputBox.inputElement, (e) => this._onKeyDown.fire(e));
         this.onkeyup(this.inputBox.inputElement, (e) => this._onKeyUp.fire(e));
-        this.oninput(this.inputBox.inputElement, (e) => this._onInput.fire());
+        this.oninput(this.inputBox.inputElement, (e) => this._onInput.fire({ fromCompositionEnd: false }));
         this.onmousedown(this.inputBox.inputElement, (e) => this._onMouseDown.fire(e));
     }
     get onDidChange() {

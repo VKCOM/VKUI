@@ -31,6 +31,7 @@ var Schemas;
      * An embedded code snippet.
      */
     Schemas.walkThroughSnippet = 'walkThroughSnippet';
+    Schemas.vscodeOnboardingSample = 'vscode-onboarding-sample';
     Schemas.http = 'http';
     Schemas.https = 'https';
     Schemas.file = 'file';
@@ -63,8 +64,16 @@ var Schemas;
     Schemas.vscodeChatEditor = 'vscode-chat-editor';
     /** Scheme used for the chat input part */
     Schemas.vscodeChatInput = 'chatSessionInput';
+    /** Scheme used for the Agents window new-session composer input */
+    Schemas.sessionsChatInput = 'sessions-chat';
     /** Scheme used for local chat session content */
     Schemas.vscodeLocalChatSession = 'vscode-chat-session';
+    /** Scheme used for read-only resources owned by a chat response or attachment */
+    Schemas.vscodeChatResponseResource = 'vscode-chat-response-resource';
+    /** Scheme used for Agent Host terminal channels. */
+    Schemas.agentHostTerminal = 'agenthost-terminal';
+    /** Scheme used for subscription-backed Agent Host terminal output editors. */
+    Schemas.vscodeChatTerminalOutput = 'vscode-chat-terminal-output';
     /**
      * Scheme used internally for webviews that aren't linked to a resource (i.e. not custom editors)
      */
@@ -182,6 +191,7 @@ class RemoteAuthoritiesImpl {
 }
 const RemoteAuthorities = new RemoteAuthoritiesImpl();
 const nodeModulesPath = 'vs/../../node_modules';
+const nodeModulesAsarPath = 'vs/../../node_modules.asar';
 const VSCODE_AUTHORITY = 'vscode-app';
 class FileAccessImpl {
     static { this.FALLBACK_AUTHORITY = VSCODE_AUTHORITY; }
@@ -296,4 +306,4 @@ var COI;
     COI.addSearchParam = addSearchParam;
 })(COI || (COI = {}));
 
-export { COI, FileAccess, RemoteAuthorities, Schemas, VSCODE_AUTHORITY, connectionTokenQueryName, matchesScheme, matchesSomeScheme, nodeModulesPath };
+export { COI, FileAccess, RemoteAuthorities, Schemas, VSCODE_AUTHORITY, connectionTokenQueryName, matchesScheme, matchesSomeScheme, nodeModulesAsarPath, nodeModulesPath };

@@ -1,4 +1,4 @@
-import { append, $ as $$1, getTotalHeight, isActiveElement, getTotalWidth } from '../../dom.js';
+import { append, $ as $$1, getTotalHeight, isActiveElement, DisposableResizeObserver, getTotalWidth, getWindow } from '../../dom.js';
 import { asCssValueWithDefault } from '../../cssValue.js';
 import { DomEmitter } from '../../event.js';
 import { renderFormattedText, renderText } from '../../formattedTextRenderer.js';
@@ -12,7 +12,7 @@ import { HistoryNavigator } from '../../../common/history.js';
 import { equals } from '../../../common/objects.js';
 import './inputBox.css';
 import { localize } from '../../../../nls.js';
-import { MutableDisposable } from '../../../common/lifecycle.js';
+import { MutableDisposable, DisposableStore } from '../../../common/lifecycle.js';
 
 /*---------------------------------------------------------------------------------------------
  *  Copyright (c) Microsoft Corporation. All rights reserved.
@@ -27,6 +27,7 @@ class InputBox extends Widget {
         this.state = 'idle';
         this.maxHeight = Number.POSITIVE_INFINITY;
         this.hover = this._register(new MutableDisposable());
+        this.messageResizeObserver = this._register(new MutableDisposable());
         this._onDidChange = this._register(new Emitter());
         this._onDidHeightChange = this._register(new Emitter());
         this.contextViewProvider = contextViewProvider;
@@ -310,9 +311,11 @@ class InputBox extends Widget {
             },
             onHide: () => {
                 this.state = 'closed';
+                this.messageResizeObserver.clear();
             },
             layout: layout
         });
+        this.observeElementResize();
         // ARIA Support
         let alertText;
         if (this.message.type === 3 /* MessageType.ERROR */) {
@@ -334,7 +337,25 @@ class InputBox extends Widget {
         if (this.state === 'open') {
             this.contextViewProvider.hideContextView();
         }
+        this.messageResizeObserver.clear();
         this.state = 'idle';
+    }
+    /**
+     * Keeps the validation message sized and anchored to the input while the
+     * message is showing and the input itself is resized, e.g. because the
+     * containing view was resized.
+     */
+    observeElementResize() {
+        const disposables = new DisposableStore();
+        const observer = disposables.add(new DisposableResizeObserver('InputBox.validationMessage', () => {
+            // Ignore notifications for a hidden or detached input, laying out
+            // against a degenerate anchor would move the message to the corner.
+            if (this.element.isConnected && getTotalWidth(this.element) > 0) {
+                this.layoutMessage();
+            }
+        }, getWindow(this.element)));
+        disposables.add(observer.observe(this.element));
+        this.messageResizeObserver.value = disposables;
     }
     layoutMessage() {
         if (this.state === 'open' && this.contextViewProvider) {

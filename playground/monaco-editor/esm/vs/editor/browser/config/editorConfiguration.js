@@ -87,7 +87,7 @@ let EditorConfiguration = class EditorConfiguration extends Disposable {
             lineNumbersDigitCount: this._lineNumbersDigitCount,
             emptySelectionClipboard: partialEnv.emptySelectionClipboard,
             pixelRatio: partialEnv.pixelRatio,
-            tabFocusMode: this._validatedOptions.get(164 /* EditorOption.tabFocusMode */) || TabFocus.getTabFocusMode(),
+            tabFocusMode: this._validatedOptions.get(165 /* EditorOption.tabFocusMode */) || TabFocus.getTabFocusMode(),
             inputMode: InputMode.getInputMode(),
             accessibilitySupport: partialEnv.accessibilitySupport,
             glyphMarginDecorationLaneCount: this._glyphMarginDecorationLaneCount,

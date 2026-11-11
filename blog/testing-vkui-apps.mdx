@@ -6,17 +6,11 @@ tags: testing
 image: /blog/vkui-testing.png
 ---
 
-import { PostHeader } from '@vkontakte/vkui-docs-theme';
-
-<PostHeader frontMatter={metadata} />
-
 ## Тестирование с помощью Jest и React Testing Library
 
 Инструментов для тестирования React-приложений несколько, но для функционального и unit-тестирования VKUI мы рекомендуем `Jest` и `React Testing Library`. Этот же стек мы применяем для тестирования компонентов VKUI. Здесь разберём основные подходы.
 
-<Callout>
-  Подразумевается, что вы владеете базовыми навыками работы с этими инструментами. Если нет — см. документацию [Jest](https://jestjs.io/) и [React Testing Library](https://testing-library.com/docs/react-testing-library/intro). Здесь сосредоточимся на настройках, специфичных для VKUI.
-</Callout>
+Подразумевается, что вы владеете базовыми навыками работы с этими инструментами. Если нет — см. документацию [Jest](https://jestjs.io/) и [React Testing Library](https://testing-library.com/docs/react-testing-library/intro). Здесь сосредоточимся на настройках, специфичных для VKUI.
 
 ### Jest
 
@@ -63,7 +57,7 @@ test('check if prevButton disabled', () => {
 
 Если всё же не получается протестировать нужную часть без привязки, например, к внутреннему классу, создайте [feature request](https://github.com/VKCOM/VKUI/issues/new/choose) на GitHub.
 
-## Особые компоненты [#special-components]
+## Особые компоненты \[#special-components]
 
 ### Snackbar, Spinner, SplitCol
 
@@ -126,8 +120,7 @@ test('test is value selected on mobile', () => {
 });
 ```
 
-<Callout>
-  Мы не используем `userEvent` напрямую из `@testing-library/user-event`, а импортируем обёртку, которая адаптирует функцию под `Jest`-окружение:
+Мы не используем `userEvent` напрямую из `@testing-library/user-event`, а импортируем обёртку, которая адаптирует функцию под `Jest`-окружение:
 
 ```jsx filename="./testing/helpers"
 import userEventLib from '@testing-library/user-event';
@@ -138,8 +131,6 @@ import userEventLib from '@testing-library/user-event';
  */
 export const userEvent = userEventLib.setup({ advanceTimers: jest.advanceTimersByTime });
 ```
-
-</Callout>
 
 Для тестирования `web`-реализации используйте более низкоуровневое API `React Testing Library`:
 
@@ -170,7 +161,4 @@ test('test is value selected on web', () => {
 });
 ```
 
-<Callout>
-  Выше мы используем `labelTextTestId` вместо `data-testid`: это позволяет эмулировать мышь или тач и быстрее получить доступ к выбранной опции.
-
-</Callout>
+Выше мы используем `labelTextTestId` вместо `data-testid`: это позволяет эмулировать мышь или тач и быстрее получить доступ к выбранной опции.

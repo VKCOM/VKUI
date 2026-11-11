@@ -1,5 +1,6 @@
-import { isHTMLElement } from '../../dom.js';
+import { isHTMLElement, getActiveElement, isAncestor, getWindow } from '../../dom.js';
 import { ActionBar } from '../actionbar/actionbar.js';
+import { BaseActionViewItem } from '../actionbar/actionViewItems.js';
 import { DropdownMenuActionViewItem } from '../dropdown/dropdownActionViewItem.js';
 import { Action, SubmenuAction, Separator } from '../../../common/actions.js';
 import { Codicon } from '../../../common/codicons.js';
@@ -52,6 +53,8 @@ class ToolBar extends Disposable {
                         actionRunner: this.actionRunner,
                         keybindingProvider: this.options.getKeyBinding,
                         classNames: ThemeIcon.asClassNameArray(options.moreIcon ?? Codicon.toolBarMore),
+                        menuClassName: this.options.dropdownMenuClassName,
+                        closeAnimation: this.options.dropdownMenuCloseAnimation,
                         anchorAlignmentProvider: this.options.anchorAlignmentProvider,
                         menuAsChild: !!this.options.renderDropdownAsChildElement,
                         skipTelemetry: this.options.skipTelemetry,
@@ -74,6 +77,8 @@ class ToolBar extends Disposable {
                         actionRunner: this.actionRunner,
                         keybindingProvider: this.options.getKeyBinding,
                         classNames: action.class,
+                        menuClassName: this.options.dropdownMenuClassName,
+                        closeAnimation: this.options.dropdownMenuCloseAnimation,
                         anchorAlignmentProvider: this.options.anchorAlignmentProvider,
                         menuAsChild: !!this.options.renderDropdownAsChildElement,
                         skipTelemetry: this.options.skipTelemetry,
@@ -119,8 +124,31 @@ class ToolBar extends Disposable {
     getItemAction(indexOrElement) {
         return this.actionBar.getAction(indexOrElement);
     }
-    getItemWidth(index) {
-        return this.actionBar.getWidth(index);
+    getItemElement(index) {
+        const element = this.actionBar.getContainer().firstElementChild?.children.item(index);
+        return isHTMLElement(element) ? element : undefined;
+    }
+    getItemViewItem(index) {
+        return this.actionBar.viewItems[index];
+    }
+    getUnshrunkItemWidth(index) {
+        const actionItem = this.actionBar.getContainer().firstElementChild?.children.item(index);
+        if (!isHTMLElement(actionItem)) {
+            return this.actionBar.getWidth(index);
+        }
+        const previousFlexShrink = actionItem.style.flexShrink;
+        const previousMinWidth = actionItem.style.minWidth;
+        try {
+            actionItem.style.flexShrink = '0';
+            if (!previousMinWidth) {
+                actionItem.style.minWidth = '0';
+            }
+            return this.actionBar.getWidth(index);
+        }
+        finally {
+            actionItem.style.flexShrink = previousFlexShrink;
+            actionItem.style.minWidth = previousMinWidth;
+        }
     }
     getItemsLength() {
         return this.actionBar.length();
@@ -149,19 +177,21 @@ class ToolBar extends Disposable {
             // Reset hidden actions
             this.hiddenActions.length = 0;
             // Set the minimum width
-            if (this.options.responsiveBehavior?.minItems !== undefined) {
+            if (this.options.responsiveBehavior.minItems !== undefined) {
                 const itemCount = this.options.responsiveBehavior.minItems;
-                const primaryActionsMinWidth = this.originalPrimaryActions
-                    .slice(0, itemCount)
-                    .reduce((total, action) => total + this.getActionMinWidth(action), 0);
+                const requiredActions = this.overflowFromStart
+                    ? this.originalPrimaryActions.slice(Math.max(0, this.originalPrimaryActions.length - itemCount))
+                    : this.originalPrimaryActions.slice(0, itemCount);
+                const primaryActionsMinWidth = requiredActions.reduce((total, action) => total + this.getActionMinWidth(action), 0);
                 // Account for overflow menu
                 let overflowWidth = 0;
                 if (this.originalSecondaryActions.length > 0 ||
                     itemCount < this.originalPrimaryActions.length) {
                     overflowWidth = ACTION_MIN_WIDTH + ACTION_PADDING;
                 }
-                this.container.style.minWidth = `${primaryActionsMinWidth + overflowWidth}px`;
-                this.element.style.minWidth = `${primaryActionsMinWidth + overflowWidth}px`;
+                const separatorWidth = this.options.trailingSeparator && !this.actionBar.isEmpty() ? this.actionBar.getWidth(this.actionBar.length() - 1) + ACTION_PADDING : 0;
+                this.container.style.minWidth = `${primaryActionsMinWidth + overflowWidth + separatorWidth}px`;
+                this.element.style.minWidth = `${primaryActionsMinWidth + overflowWidth + separatorWidth}px`;
             }
             else {
                 const minimumActionWidth = this.originalPrimaryActions.length > 0 ? this.getActionMinWidth(this.originalPrimaryActions[0]) : ACTION_MIN_WIDTH + ACTION_PADDING;
@@ -171,6 +201,9 @@ class ToolBar extends Disposable {
             // Update toolbar actions to fit with container width
             this.updateActions(this.getAvailableWidth());
         }
+    }
+    get overflowFromStart() {
+        return this.options.responsiveBehavior?.kind === 'all' && this.options.responsiveBehavior.overflowFrom === 'start';
     }
     getKeybindingLabel(action) {
         const key = this.options.getKeyBinding?.(action);
@@ -217,7 +250,10 @@ class ToolBar extends Disposable {
                 continue;
             }
             const action = this.actionBar.getAction(i);
-            const minWidth = `${this.getConfiguredActionMinWidth(action)}px`;
+            const minWidth = action instanceof Separator ? '0px' : `${this.getConfiguredActionMinWidth(action)}px`;
+            if (action instanceof Separator) {
+                actionItem.style.flexShrink = '0';
+            }
             if (actionItem.style.minWidth !== minWidth) {
                 actionItem.style.minWidth = minWidth;
             }
@@ -236,107 +272,239 @@ class ToolBar extends Disposable {
         // Each action is assumed to have a minimum width so that actions with a label
         // can shrink to the action's minimum width. We do this so that action visibility
         // takes precedence over the action label.
-        const actionBarWidth = (actualWidth) => {
+        const isActionItemVisible = (index) => {
+            const element = this.getItemElement(index);
+            return !element || getWindow(element).getComputedStyle(element).display !== 'none';
+        };
+        const getVisiblePrimaryActionIndexes = () => {
+            const indexes = [];
+            for (let index = 0; index < this.actionBar.length(); index++) {
+                const action = this.actionBar.getAction(index);
+                if (action && this.originalPrimaryActions.includes(action) && isActionItemVisible(index)) {
+                    indexes.push(index);
+                }
+            }
+            return indexes;
+        };
+        const getVisiblePrimaryActionCount = () => getVisiblePrimaryActionIndexes()
+            .reduce((count, index) => count + (this.actionBar.getAction(index) instanceof Separator ? 0 : 1), 0);
+        const getActionsToHide = () => {
+            const indexes = getVisiblePrimaryActionIndexes();
+            const actionIndex = (this.overflowFromStart ? indexes : indexes.slice().reverse())
+                .find(index => !(this.actionBar.getAction(index) instanceof Separator));
+            if (actionIndex === undefined) {
+                return [];
+            }
+            let startIndex = actionIndex;
+            let endIndex = actionIndex;
+            const step = this.overflowFromStart ? 1 : -1;
+            for (let index = actionIndex + step; index >= 0 && index < this.actionBar.length(); index += step) {
+                const action = this.actionBar.getAction(index);
+                if (!(action instanceof Separator) || !this.originalPrimaryActions.includes(action) || !isActionItemVisible(index)) {
+                    break;
+                }
+                startIndex = Math.min(startIndex, index);
+                endIndex = Math.max(endIndex, index);
+            }
+            const actions = [];
+            for (let index = startIndex; index <= endIndex; index++) {
+                const action = this.actionBar.getAction(index);
+                if (action) {
+                    actions.push(action);
+                }
+            }
+            return actions;
+        };
+        const getActionsToRestore = () => {
+            if (this.hiddenActions.length === 0) {
+                return [];
+            }
+            if (this.overflowFromStart) {
+                let startIndex = this.hiddenActions.length - 1;
+                while (startIndex > 0 && this.hiddenActions[startIndex] instanceof Separator) {
+                    startIndex--;
+                }
+                return this.hiddenActions.slice(startIndex);
+            }
+            let endIndex = 0;
+            while (endIndex < this.hiddenActions.length - 1 && this.hiddenActions[endIndex] instanceof Separator) {
+                endIndex++;
+            }
+            return this.hiddenActions.slice(0, endIndex + 1);
+        };
+        const actionBarMinimumWidth = () => {
             if (this.options.responsiveBehavior?.kind === 'last') {
                 const hasToggleMenuAction = this.actionBar.hasAction(this.toggleMenuAction);
-                const primaryActionsCount = hasToggleMenuAction
-                    ? this.actionBar.length() - 1
-                    : this.actionBar.length();
-                if (primaryActionsCount === 0) {
+                const primaryActionIndexes = getVisiblePrimaryActionIndexes();
+                if (primaryActionIndexes.length === 0) {
                     return hasToggleMenuAction ? ACTION_MIN_WIDTH + ACTION_PADDING : 0;
                 }
                 let itemsWidth = 0;
-                for (let i = 0; i < primaryActionsCount - 1; i++) {
-                    itemsWidth += this.actionBar.getWidth(i) + ACTION_PADDING;
+                for (const index of primaryActionIndexes.slice(0, -1)) {
+                    itemsWidth += this.actionBar.getWidth(index) + ACTION_PADDING;
                 }
-                const action = this.actionBar.getAction(primaryActionsCount - 1);
-                itemsWidth += actualWidth ? this.actionBar.getWidth(primaryActionsCount - 1) : this.getActionMinWidth(action); // item to shrink
+                const action = this.actionBar.getAction(primaryActionIndexes.at(-1));
+                itemsWidth += this.getActionMinWidth(action); // item to shrink
                 itemsWidth += hasToggleMenuAction ? ACTION_MIN_WIDTH + ACTION_PADDING : 0; // toggle menu action
                 return itemsWidth;
             }
             else {
                 let itemsWidth = 0;
                 for (let i = 0; i < this.actionBar.length(); i++) {
-                    itemsWidth += actualWidth ? this.actionBar.getWidth(i) : this.getActionMinWidth(this.actionBar.getAction(i));
+                    if (isActionItemVisible(i)) {
+                        const action = this.actionBar.getAction(i);
+                        itemsWidth += action instanceof Separator ? this.actionBar.getWidth(i) + ACTION_PADDING : this.getActionMinWidth(action);
+                    }
                 }
                 return itemsWidth;
             }
         };
-        const minimumWidth = actionBarWidth(false);
+        const projectedActionBarMinimumWidth = (actionsToAdd, keepToggleMenuAction) => {
+            let itemsWidth = actionsToAdd.reduce((width, action) => width + this.getActionMinWidth(action), 0);
+            if (this.options.responsiveBehavior?.kind === 'last') {
+                const primaryActionIndexes = getVisiblePrimaryActionIndexes();
+                for (const [position, index] of primaryActionIndexes.entries()) {
+                    const itemWidth = position === primaryActionIndexes.length - 1
+                        ? this.getUnshrunkItemWidth(index)
+                        : this.actionBar.getWidth(index);
+                    itemsWidth += itemWidth + ACTION_PADDING;
+                }
+            }
+            else {
+                for (let i = 0; i < this.actionBar.length(); i++) {
+                    const action = this.actionBar.getAction(i);
+                    if (action && action !== this.toggleMenuAction && isActionItemVisible(i)) {
+                        itemsWidth += action instanceof Separator ? this.actionBar.getWidth(i) + ACTION_PADDING : this.getActionMinWidth(action);
+                    }
+                }
+            }
+            if (keepToggleMenuAction) {
+                itemsWidth += ACTION_MIN_WIDTH + ACTION_PADDING;
+            }
+            return itemsWidth;
+        };
+        let minimumWidth = actionBarMinimumWidth();
         // Action bar fits and there are no hidden actions to show
         if (minimumWidth <= containerWidth && this.hiddenActions.length === 0) {
             return;
         }
+        const focusedElement = getActiveElement();
+        const focusedAction = isHTMLElement(focusedElement) ? this.actionBar.getAction(focusedElement) : undefined;
+        const previousHiddenActionsCount = this.hiddenActions.length;
         if (minimumWidth > containerWidth) {
+            const allowOverflow = this.options.responsiveBehavior?.allowOverflow;
+            if (allowOverflow === false || (typeof allowOverflow === 'function' && !allowOverflow())) {
+                return;
+            }
             // Check for max items limit
             if (this.options.responsiveBehavior?.minItems !== undefined) {
-                const primaryActionsCount = this.actionBar.hasAction(this.toggleMenuAction)
-                    ? this.actionBar.length() - 1
-                    : this.actionBar.length();
+                const primaryActionsCount = getVisiblePrimaryActionCount();
                 if (primaryActionsCount <= this.options.responsiveBehavior.minItems) {
                     return;
                 }
             }
-            // Hide actions from the right
-            while (actionBarWidth(false) > containerWidth && this.actionBar.length() > 0) {
-                const index = this.originalPrimaryActions.length - this.hiddenActions.length - 1;
-                if (index < 0) {
+            // Hide actions from the configured end.
+            while (minimumWidth > containerWidth && this.actionBar.length() > 0) {
+                if (this.options.responsiveBehavior?.minItems !== undefined
+                    && getVisiblePrimaryActionCount() <= this.options.responsiveBehavior.minItems) {
                     break;
                 }
-                // Store the action and its size
-                const action = this.originalPrimaryActions[index];
-                const size = Math.min(this.getActionMinWidth(action), this.getItemWidth(index));
-                this.hiddenActions.unshift({ action, size });
-                // Remove the action
-                this.actionBar.pull(index);
+                const actionsToHide = getActionsToHide();
+                if (actionsToHide.length === 0) {
+                    break;
+                }
+                for (const action of actionsToHide) {
+                    this.hiddenActions.push(action);
+                    const index = this.actionBar.viewItems.findIndex(item => item.action === action);
+                    if (index !== -1) {
+                        this.actionBar.pull(index);
+                    }
+                }
+                this.hiddenActions.sort((a, b) => this.originalPrimaryActions.indexOf(a) - this.originalPrimaryActions.indexOf(b));
                 // There are no secondary actions, but we have actions that we need to hide so we
                 // create the overflow menu. This will ensure that another primary action will be
                 // removed making space for the overflow menu.
-                if (this.originalSecondaryActions.length === 0 && this.hiddenActions.length === 1) {
+                if (this.originalSecondaryActions.length === 0 && !this.actionBar.hasAction(this.toggleMenuAction)) {
                     this.actionBar.push(this.toggleMenuAction, {
                         icon: this.options.icon ?? true,
                         label: this.options.label ?? false,
                         keybinding: this.getKeybindingLabel(this.toggleMenuAction),
+                        index: this.options.trailingSeparator ? this.actionBar.length() - 1 : undefined,
                     });
                     this.updateOverflowClassName();
                 }
                 this.applyResponsiveActionMinWidths();
+                minimumWidth = actionBarMinimumWidth();
             }
         }
         else {
-            // Show actions from the top of the toggle menu
+            // Restore actions in reverse overflow order.
             while (this.hiddenActions.length > 0) {
-                const entry = this.hiddenActions.shift();
-                if (actionBarWidth(true) + entry.size > containerWidth) {
+                const actionsToRestore = getActionsToRestore();
+                const keepToggleMenuAction = this.originalSecondaryActions.length > 0 || this.hiddenActions.length > actionsToRestore.length;
+                if (projectedActionBarMinimumWidth(actionsToRestore, keepToggleMenuAction) > containerWidth) {
                     // Not enough space to show the action
-                    this.hiddenActions.unshift(entry);
                     break;
                 }
-                // Add the action
-                this.actionBar.push(entry.action, {
-                    icon: this.options.icon ?? true,
-                    label: this.options.label ?? false,
-                    keybinding: this.getKeybindingLabel(entry.action),
-                    index: this.originalPrimaryActions.length - this.hiddenActions.length - 1
-                });
+                for (const action of actionsToRestore) {
+                    this.hiddenActions.splice(this.hiddenActions.indexOf(action), 1);
+                    const visibleActions = new Set(this.actionBar.viewItems.map(item => item.action));
+                    this.actionBar.push(action, {
+                        icon: this.options.icon ?? true,
+                        label: this.options.label ?? false,
+                        keybinding: this.getKeybindingLabel(action),
+                        index: this.originalPrimaryActions
+                            .slice(0, this.originalPrimaryActions.indexOf(action))
+                            .reduce((index, precedingAction) => index + (visibleActions.has(precedingAction) ? 1 : 0), 0)
+                    });
+                }
                 // There are no secondary actions, and there is only one hidden item left so we
                 // remove the overflow menu making space for the last hidden action to be shown.
                 if (this.originalSecondaryActions.length === 0 && this.hiddenActions.length === 0) {
                     this.toggleMenuAction.menuActions = [];
-                    this.actionBar.pull(this.actionBar.length() - 1);
+                    this.actionBar.pull(this.actionBar.viewItems.findIndex(item => item.action === this.toggleMenuAction));
                     this.updateOverflowClassName();
                 }
                 this.applyResponsiveActionMinWidths();
             }
         }
         // Update overflow menu
-        const hiddenActions = this.hiddenActions.map(entry => entry.action);
+        const hiddenActions = this.hiddenActions.map(action => this.options.responsiveBehavior?.getOverflowAction?.(action, () => this.toggleMenuActionViewItem?.element) ?? action);
         if (this.originalSecondaryActions.length > 0 || hiddenActions.length > 0) {
             const secondaryActions = this.originalSecondaryActions.slice(0);
-            this.toggleMenuAction.menuActions = Separator.join(hiddenActions, secondaryActions);
+            this.toggleMenuAction.menuActions = Separator.clean(Separator.join(hiddenActions, secondaryActions));
         }
         this.updateOverflowClassName();
         this.applyResponsiveActionMinWidths();
+        if (this.hiddenActions.length === previousHiddenActionsCount) {
+            return;
+        }
+        // Rebuild the roving tab stop after items have been removed or inserted.
+        for (let i = 0; i < this.actionBar.length(); i++) {
+            const viewItem = this.getItemViewItem(i);
+            if (viewItem instanceof BaseActionViewItem) {
+                viewItem.setFocusable(false);
+            }
+        }
+        if (focusedAction) {
+            const index = Array.from({ length: this.actionBar.length() }, (_, index) => index)
+                .find(index => this.actionBar.getAction(index) === focusedAction);
+            const overflowIndex = Array.from({ length: this.actionBar.length() }, (_, index) => index)
+                .find(index => this.actionBar.getAction(index) === this.toggleMenuAction);
+            this.actionBar.focus(index ?? overflowIndex);
+            if (index !== undefined && isHTMLElement(focusedElement) && isAncestor(focusedElement, this.getItemElement(index) ?? null) && getActiveElement() !== focusedElement) {
+                // Keep compound controls on their previously focused child.
+                const viewItem = this.getItemViewItem(index);
+                if (viewItem instanceof BaseActionViewItem) {
+                    viewItem.setFocusable(false);
+                }
+                focusedElement.tabIndex = 0;
+                focusedElement.focus({ preventScroll: true });
+            }
+        }
+        else {
+            this.actionBar.setFocusable(true);
+        }
     }
     updateOverflowClassName() {
         this.actionBar.domNode.classList.toggle('has-overflow', this.actionBar.hasAction(this.toggleMenuAction));

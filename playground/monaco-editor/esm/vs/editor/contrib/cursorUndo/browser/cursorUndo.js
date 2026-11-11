@@ -101,7 +101,7 @@ class CursorUndo extends EditorAction {
     constructor() {
         super({
             id: 'cursorUndo',
-            label: localize2(950, "Cursor Undo"),
+            label: localize2(965, "Cursor Undo"),
             precondition: undefined,
             kbOpts: {
                 kbExpr: EditorContextKeys.textInputFocus,
@@ -118,7 +118,7 @@ class CursorRedo extends EditorAction {
     constructor() {
         super({
             id: 'cursorRedo',
-            label: localize2(951, "Cursor Redo"),
+            label: localize2(966, "Cursor Redo"),
             precondition: undefined
         });
     }

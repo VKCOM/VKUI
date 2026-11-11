@@ -7,7 +7,6 @@ import '../../../../../base/common/observableInternal/index.js';
 import { isEqual } from '../../../../../base/common/resources.js';
 import { isUndefined } from '../../../../../base/common/types.js';
 import { localize } from '../../../../../nls.js';
-import { IAccessibilityService } from '../../../../../platform/accessibility/common/accessibility.js';
 import { IAccessibilitySignalService, AccessibilitySignal } from '../../../../../platform/accessibilitySignal/browser/accessibilitySignalService.js';
 import { ICommandService } from '../../../../../platform/commands/common/commands.js';
 import { IConfigurationService } from '../../../../../platform/configuration/common/configuration.js';
@@ -31,12 +30,12 @@ import { InlineCompletionsModel } from '../model/inlineCompletionsModel.js';
 import { ObservableSuggestWidgetAdapter } from '../model/suggestWidgetAdapter.js';
 import { ObservableContextKeyService } from '../utils.js';
 import { InlineSuggestionsView } from '../view/inlineSuggestionsView.js';
-import { inlineSuggestCommitId } from './commandIds.js';
+import { inlineSuggestCommitId, jumpToNextInlineEditId } from './commandIds.js';
 import { setInlineCompletionsControllerGetter } from './common.js';
 import { InlineCompletionContextKeys } from './inlineCompletionContextKeys.js';
 import { runOnChange, runOnChangeWithStore } from '../../../../../base/common/observableInternal/utils/runOnChange.js';
-import { derived, derivedDisposable } from '../../../../../base/common/observableInternal/observables/derived.js';
 import { observableValue } from '../../../../../base/common/observableInternal/observables/observableValue.js';
+import { derived, derivedDisposable } from '../../../../../base/common/observableInternal/observables/derived.js';
 import { observableSignal } from '../../../../../base/common/observableInternal/observables/observableSignal.js';
 import { observableFromEvent } from '../../../../../base/common/observableInternal/observables/observableFromEvent.js';
 import { autorun } from '../../../../../base/common/observableInternal/reactions/autorun.js';
@@ -77,7 +76,7 @@ let InlineCompletionsController = class InlineCompletionsController extends Disp
     static get(editor) {
         return hotClassGetOriginalInstance(editor.getContribution(InlineCompletionsController_1.ID));
     }
-    constructor(editor, _instantiationService, _contextKeyService, _configurationService, _commandService, _debounceService, _languageFeaturesService, _accessibilitySignalService, _keybindingService, _accessibilityService) {
+    constructor(editor, _instantiationService, _contextKeyService, _configurationService, _commandService, _debounceService, _languageFeaturesService, _accessibilitySignalService, _keybindingService) {
         super();
         this.editor = editor;
         this._instantiationService = _instantiationService;
@@ -88,8 +87,6 @@ let InlineCompletionsController = class InlineCompletionsController extends Disp
         this._languageFeaturesService = _languageFeaturesService;
         this._accessibilitySignalService = _accessibilitySignalService;
         this._keybindingService = _keybindingService;
-        this._accessibilityService = _accessibilityService;
-        this._enabled = derived(this, reader => this._enabledInConfig.read(reader) && (!this._isScreenReaderEnabled.read(reader) || !this._editorDictationInProgress.read(reader)));
         this._focusIsInMenu = observableValue(this, false);
         this._focusIsInEditorOrMenu = derived(this, reader => {
             const editorHasFocus = this._editorObs.isFocused.read(reader);
@@ -117,7 +114,7 @@ let InlineCompletionsController = class InlineCompletionsController extends Disp
             if (!textModel) {
                 return undefined;
             }
-            const model = this._instantiationService.createInstance(InlineCompletionsModel, textModel, this._suggestWidgetAdapter.selectedItem, this._editorObs.versionId, this._positions, this._debounceValue, this._enabled, this.editor);
+            const model = this._instantiationService.createInstance(InlineCompletionsModel, textModel, this._suggestWidgetAdapter.selectedItem, this._editorObs.versionId, this._positions, this._debounceValue, this._enabledInConfig, () => this._isEditorDictationInProgress(), this.editor);
             return model;
         });
         this._playAccessibilitySignal = observableSignal(this);
@@ -126,8 +123,11 @@ let InlineCompletionsController = class InlineCompletionsController extends Disp
         this._positions = derived(this, reader => this._editorObs.selections.read(reader)?.map(s => s.getEndPosition()) ?? [new Position(1, 1)]);
         this._suggestWidgetAdapter = this._register(new ObservableSuggestWidgetAdapter(this._editorObs, item => this.model.get()?.handleSuggestAccepted(item), () => this.model.get()?.selectedInlineCompletion.get()?.getSingleTextEdit()));
         this._enabledInConfig = observableFromEvent(this, this.editor.onDidChangeConfiguration, () => this.editor.getOption(71 /* EditorOption.inlineSuggest */).enabled);
-        this._isScreenReaderEnabled = observableFromEvent(this, this._accessibilityService.onDidChangeScreenReaderOptimized, () => this._accessibilityService.isScreenReaderOptimized());
-        this._editorDictationInProgress = observableFromEvent(this, this._contextKeyService.onDidChangeContext, () => this._contextKeyService.getContext(this.editor.getDomNode()).getValue('editorDictation.inProgress') === true);
+        this._register(this._contextKeyService.onDidChangeContext(e => {
+            if (e.affectsSome(new Set(['editorDictation.inProgress'])) && this._isEditorDictationInProgress()) {
+                this.model.get()?.stop();
+            }
+        }));
         this._debounceValue = this._debounceService.for(this._languageFeaturesService.inlineCompletionsProvider, 'InlineCompletionsDebounce', { min: 50, max: 50 });
         this.model.recomputeInitiallyAndOnChange(this._store);
         this._hideInlineEditOnSelectionChange = this._editorObs.getOption(71 /* EditorOption.inlineSuggest */).map(val => true);
@@ -187,12 +187,12 @@ let InlineCompletionsController = class InlineCompletionsController extends Disp
             }));
         }));
         this._register(runOnChange(this._editorObs.onDidType, (_value, _changes) => {
-            if (this._enabled.get()) {
+            if (this._enabledInConfig.get() && !this._isEditorDictationInProgress()) {
                 this.model.get()?.trigger();
             }
         }));
         this._register(runOnChange(this._editorObs.onDidPaste, (_value, _changes) => {
-            if (this._enabled.get()) {
+            if (this._enabledInConfig.get() && !this._isEditorDictationInProgress()) {
                 this.model.get()?.trigger();
             }
         }));
@@ -213,7 +213,7 @@ let InlineCompletionsController = class InlineCompletionsController extends Disp
             ...TriggerInlineEditCommandsRegistry.getRegisteredCommands(),
         ]);
         this._register(this._commandService.onDidExecuteCommand((e) => {
-            if (triggerCommands.has(e.commandId) && editor.hasTextFocus() && this._enabled.get()) {
+            if (triggerCommands.has(e.commandId) && editor.hasTextFocus() && this._enabledInConfig.get() && !this._isEditorDictationInProgress()) {
                 let noDelay = false;
                 if (e.commandId === inlineSuggestCommitId) {
                     noDelay = true;
@@ -323,7 +323,26 @@ let InlineCompletionsController = class InlineCompletionsController extends Disp
                     this._provideScreenReaderUpdate(state.primaryGhostText.renderForScreenReader(lineText));
                 }
                 else {
-                    this._provideScreenReaderUpdate(''); // Only announce Alt+F2
+                    const lineNumber = state.inlineSuggestion.targetRange.startLineNumber;
+                    const tabShouldAccept = model.tabShouldAcceptInlineEdit.get();
+                    const tabShouldJump = model.tabShouldJumpToInlineEdit.get();
+                    let content;
+                    if (tabShouldAccept) {
+                        const kb = this._keybindingService.lookupKeybinding(inlineSuggestCommitId)?.getAriaLabel();
+                        content = kb
+                            ? localize(1262, "Next edit suggestion available on line {0}, press {1} to accept", lineNumber, kb)
+                            : localize(1263, "Next edit suggestion available on line {0}, accept it to apply", lineNumber);
+                    }
+                    else if (tabShouldJump) {
+                        const kb = this._keybindingService.lookupKeybinding(jumpToNextInlineEditId)?.getAriaLabel();
+                        content = kb
+                            ? localize(1264, "Next edit suggestion available on line {0}, press {1} to jump", lineNumber, kb)
+                            : localize(1265, "Next edit suggestion available on line {0}", lineNumber);
+                    }
+                    else {
+                        content = localize(1266, "Next edit suggestion available on line {0}", lineNumber);
+                    }
+                    this._provideScreenReaderUpdate(content);
                 }
             }
         }));
@@ -382,6 +401,9 @@ let InlineCompletionsController = class InlineCompletionsController extends Disp
         }));
         this._register(this._instantiationService.createInstance(TextModelChangeRecorder, this.editor));
     }
+    _isEditorDictationInProgress() {
+        return this._contextKeyService.getContext(this.editor.getDomNode())?.getValue('editorDictation.inProgress') === true;
+    }
     playAccessibilitySignal(tx) {
         this._playAccessibilitySignal.trigger(tx);
     }
@@ -389,8 +411,8 @@ let InlineCompletionsController = class InlineCompletionsController extends Disp
         const accessibleViewShowing = this._contextKeyService.getContextKeyValue('accessibleViewIsShown');
         const accessibleViewKeybinding = this._keybindingService.lookupKeybinding('editor.action.accessibleView');
         let hint;
-        if (!accessibleViewShowing && accessibleViewKeybinding && this.editor.getOption(169 /* EditorOption.inlineCompletionsAccessibilityVerbose */)) {
-            hint = localize(1247, "Inspect this in the accessible view ({0})", accessibleViewKeybinding.getAriaLabel());
+        if (!accessibleViewShowing && accessibleViewKeybinding && this.editor.getOption(170 /* EditorOption.inlineCompletionsAccessibilityVerbose */)) {
+            hint = localize(1267, "Inspect this in the accessible view ({0})", accessibleViewKeybinding.getAriaLabel());
         }
         alert(hint ? content + ', ' + hint : content);
     }
@@ -435,8 +457,7 @@ InlineCompletionsController = InlineCompletionsController_1 = __decorate([
     __param(5, ILanguageFeatureDebounceService),
     __param(6, ILanguageFeaturesService),
     __param(7, IAccessibilitySignalService),
-    __param(8, IKeybindingService),
-    __param(9, IAccessibilityService)
+    __param(8, IKeybindingService)
 ], InlineCompletionsController);
 
 export { InlineCompletionsController };

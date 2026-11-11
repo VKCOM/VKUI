@@ -2,10 +2,7 @@
 description: Инструкция миграции VKUI на версию v8.
 ---
 
-<Overview type="doc">
 # Миграция с v7 на v8
-
-</Overview>
 
 > Документацию по миграции с **v6** на **v7** можно найти [здесь](/migrations/migration-v7).
 
@@ -67,7 +64,7 @@ description: Инструкция миграции VKUI на версию v8.
 Примеры миграции показывают типичный код «до» и «после». В реальном коде может быть другая переменная (например onClose={handleClose} вместо onClose={() => setPopout(null)}), другой формат — это нормально. Заменяй по смыслу: тот же проп, тот же компонент → применить изменение из after (например везде onClose → onClosed у Alert/Snackbar/ActionSheet).
 ```
 
----
+***
 
 ## 🌐 Поддерживаемые браузеры
 
@@ -95,7 +92,7 @@ description: Инструкция миграции VKUI на версию v8.
 + Android >= 84
 ```
 
----
+***
 
 ## 🗑️ Удалённые типы и функции
 
@@ -103,25 +100,24 @@ description: Инструкция миграции VKUI на версию v8.
 
 Удалена функция `withModalRootContext` из `ModalRoot`.
 
----
+***
 
 ### VisuallyHidden: baseClassName
 
 Удалено свойство `baseClassName` у компонента `VisuallyHidden`. Используйте стандартное свойство `className`.
 
----
+***
 
 ## 🧩 Компоненты
 
 ### ActionSheet
 
-- Свойство `onClose` переименовано в `onClosed`.
-- Добавлена поддержка `slotProps.iosCloseItem` для упрощения локализации кнопки "Отмена" на iOS.
+* Свойство `onClose` переименовано в `onClosed`.
+* Добавлена поддержка `slotProps.iosCloseItem` для упрощения локализации кнопки "Отмена" на iOS.
 
 Кнопка отмены на iOS рендерится отдельно от списка действий (вне `ActionSheetItem`). Теперь свойства можно передавать напрямую в `ActionSheetDefaultIosCloseItem` через `slotProps.iosCloseItem` без обёртки.
 
-<details>
-<summary>Миграция</summary>
+Миграция
 
 ```diff
 <ActionSheet
@@ -148,16 +144,13 @@ description: Инструкция миграции VKUI на версию v8.
 </ActionSheet>
 ```
 
-</details>
-
----
+***
 
 ### Alert
 
 Свойство `onClose` переименовано в `onClosed`.
 
-<details>
-<summary>Миграция</summary>
+Миграция
 
 ```diff
 <Alert
@@ -168,16 +161,13 @@ description: Инструкция миграции VKUI на версию v8.
 />
 ```
 
-</details>
-
----
+***
 
 ### Snackbar
 
 Свойство `onClose` переименовано в `onClosed`.
 
-<details>
-<summary>Миграция</summary>
+Миграция
 
 ```diff
 <Snackbar
@@ -188,16 +178,13 @@ description: Инструкция миграции VKUI на версию v8.
 </Snackbar>
 ```
 
-</details>
-
----
+***
 
 ### PopoutWrapper
 
 Свойство `fixed` удалено. Вместо него используйте свойство `strategy`.
 
-<details>
-<summary>Миграция</summary>
+Миграция
 
 ```diff
 <PopoutWrapper
@@ -214,15 +201,13 @@ description: Инструкция миграции VKUI на версию v8.
 />
 ```
 
-</details>
-
----
+***
 
 ### Textarea
 
 Внутренние отступы синхронизированы с другими элементами форм. Компонент стал компактнее.
 
----
+***
 
 ### RichCell
 
@@ -230,9 +215,9 @@ description: Инструкция миграции VKUI на версию v8.
 
 **Структурные изменения:**
 
-- Свойство `after` теперь всегда рендерится справа от компонента (вне основного контента), независимо от значения `afterAlign`.
-- Добавлены новые свойства `meta` и `submeta` для отображения текста справа от основного контента внутри блока.
-- Если вы использовали `after` с `afterAlign="start"`, замените его на `meta` и `submeta`.
+* Свойство `after` теперь всегда рендерится справа от компонента (вне основного контента), независимо от значения `afterAlign`.
+* Добавлены новые свойства `meta` и `submeta` для отображения текста справа от основного контента внутри блока.
+* Если вы использовали `after` с `afterAlign="start"`, замените его на `meta` и `submeta`.
 
 **Изменение минимальной высоты:**
 
@@ -241,8 +226,7 @@ description: Инструкция миграции VKUI на версию v8.
 | regular   | 64px   | 48px   |
 | compact   | 60px   | 44px   |
 
-<details>
-<summary>Миграция</summary>
+Миграция
 
 Если вы использовали `after` с `afterAlign="start"` (или не указывали `afterAlign`), замените на `meta` и `submeta`:
 
@@ -274,16 +258,13 @@ description: Инструкция миграции VKUI на версию v8.
 </RichCell>
 ```
 
-</details>
-
----
+***
 
 ### Banner
 
 Свойство `imageTheme` теперь по умолчанию имеет значение `"auto"` вместо `"dark"`. При `"auto"` тема изображения определяется автоматически по цветовой схеме приложения.
 
-<details>
-<summary>Миграция</summary>
+Миграция
 
 Если вам нужно сохранить прежнее поведение, укажите `imageTheme="dark"`:
 
@@ -297,9 +278,7 @@ description: Инструкция миграции VKUI на версию v8.
 </Banner>
 ```
 
-</details>
-
----
+***
 
 ### ContentBadge
 
@@ -307,21 +286,21 @@ description: Инструкция миграции VKUI на версию v8.
 
 **mode="primary"**:
 
-- Было: текст `--color_text_primary`, фон `--color_background_secondary`
-- Стало: текст `--color_text_contrast`, фон `--color_icon_secondary`
+* Было: текст `--color_text_primary`, фон `--color_background_secondary`
+* Стало: текст `--color_text_contrast`, фон `--color_icon_secondary`
 
 **mode="secondary"**:
 
-- Было: текст `--color_text_subhead`, фон `--color_background_secondary`
-- Стало: текст `--color_text_primary`, фон `--color_background_secondary_alpha`
+* Было: текст `--color_text_subhead`, фон `--color_background_secondary`
+* Стало: текст `--color_text_primary`, фон `--color_background_secondary_alpha`
 
----
+***
 
 ### DateInput, DateRangeInput, CustomSelect
 
 Свойство `accessible` теперь по умолчанию имеет значение `true`.
 
----
+***
 
 ### Calendar, CalendarRange
 
@@ -334,8 +313,7 @@ description: Инструкция миграции VKUI на версию v8.
 
 Проверка значения на `undefined` больше не требуется.
 
-<details>
-<summary>Миграция</summary>
+Миграция
 
 ```diff
 <Calendar
@@ -348,9 +326,7 @@ description: Инструкция миграции VKUI на версию v8.
 />
 ```
 
-</details>
-
----
+***
 
 ### DateInput, DateRangeInput
 
@@ -363,7 +339,7 @@ description: Инструкция миграции VKUI на версию v8.
 
 Значение `null` означает, что поле очищено. `undefined` не используется — оно зарезервировано для неконтролируемого состояния компонента.
 
----
+***
 
 ## 📦 Изменение передачи свойств (restProps)
 
@@ -406,8 +382,7 @@ description: Инструкция миграции VKUI на версию v8.
 
 Свойства `getRef`, `data-*` и `aria-*` атрибуты теперь нужно передавать через `slotProps.input`.
 
-<details>
-<summary>Миграция</summary>
+Миграция
 
 ```diff
 <Input
@@ -424,16 +399,13 @@ description: Инструкция миграции VKUI на версию v8.
 />
 ```
 
-</details>
-
----
+***
 
 ### Textarea, WriteBar
 
 Свойства `getRef`, `data-*` и `aria-*` атрибуты теперь нужно передавать через `slotProps.textarea`.
 
-<details>
-<summary>Миграция</summary>
+Миграция
 
 ```diff
 <Textarea
@@ -448,9 +420,7 @@ description: Инструкция миграции VKUI на версию v8.
 />
 ```
 
-</details>
-
----
+***
 
 ### Switch, Checkbox, Radio
 
@@ -458,8 +428,7 @@ description: Инструкция миграции VKUI на версию v8.
 (кроме `checked`, `disabled`, `readOnly`, `required`, `name`, `value`) теперь нужно
 передавать через `slotProps.input`.
 
-<details>
-<summary>Миграция</summary>
+Миграция
 
 ```diff
 <Checkbox
@@ -500,16 +469,13 @@ description: Инструкция миграции VKUI на версию v8.
 </Radio>
 ```
 
-</details>
-
----
+***
 
 ### File
 
 Свойства `getRef`, `data-*` и `aria-*` атрибуты теперь нужно передавать через `slotProps.input`.
 
-<details>
-<summary>Миграция</summary>
+Миграция
 
 ```diff
 <File
@@ -526,17 +492,14 @@ description: Инструкция миграции VKUI на версию v8.
 </File>
 ```
 
-</details>
-
----
+***
 
 ### CustomSelect, NativeSelect
 
 Свойства `restProps` теперь применяются к корневому элементу, а не к внутреннему input.
 Для передачи свойств во внутренний input используйте `slotProps.input`.
 
-<details>
-<summary>Миграция</summary>
+Миграция
 
 ```diff
 <CustomSelect
@@ -554,16 +517,13 @@ description: Инструкция миграции VKUI на версию v8.
 />
 ```
 
-</details>
-
----
+***
 
 ### ChipsSelect, ChipsInput
 
 Свойства для внутреннего input теперь передаются через `slotProps.input`.
 
-<details>
-<summary>Миграция</summary>
+Миграция
 
 ```diff
 <ChipsSelect
@@ -582,17 +542,14 @@ description: Инструкция миграции VKUI на версию v8.
 />
 ```
 
-</details>
-
----
+***
 
 ### SplitLayout
 
 Свойства `restProps` теперь применяются к корневому элементу, а не к внутреннему контейнеру `content`.
 Для передачи свойств в контейнер используйте `slotProps.content`.
 
-<details>
-<summary>Миграция</summary>
+Миграция
 
 ```diff
 <SplitLayout
@@ -610,9 +567,7 @@ description: Инструкция миграции VKUI на версию v8.
 </SplitLayout>
 ```
 
-</details>
-
----
+***
 
 ## ⚠️ Устаревшие API (deprecated)
 
@@ -622,8 +577,7 @@ description: Инструкция миграции VKUI на версию v8.
 
 Свойства `sizeX` и `sizeY` теперь `@deprecated`: используйте `density` вместо `sizeY`, `viewWidth={ViewWidth.MOBILE}` вместо `sizeX="compact"` и `viewWidth={ViewWidth.SMALL_TABLET}` вместо `sizeX="regular"`.
 
-<details>
-<summary>Пример миграции</summary>
+Пример миграции
 
 ```diff
 - <AdaptivityProvider sizeX="compact">
@@ -650,14 +604,12 @@ description: Инструкция миграции VKUI на версию v8.
 - <AppRootProvider sizeX="compact" sizeY="regular">
 + <AppRootProvider viewWidth={ViewWidth.MOBILE} density="regular">
 ```
-</details>
 
 ### ModalRoot
 
 Компонент `ModalRoot` помечен как `@deprecated`. Для императивного управления модальными окнами используйте хук [useModalManager](/components/use-modal-manager).
 
-<details>
-<summary>Миграция</summary>
+Миграция
 
 ```diff
 - const [activeModal, setActiveModal] = useState(null);
@@ -679,16 +631,13 @@ description: Инструкция миграции VKUI на версию v8.
 + {modalHolder}
 ```
 
-</details>
-
----
+***
 
 ### FixedLayout
 
 Компонент `FixedLayout` помечен как `@deprecated` и будет удалён в **v10**. Используйте [Box](/components/box) со свойствами `position="sticky"` и `insetBlockStart`/`insetBlockEnd`.
 
-<details>
-<summary>Миграция</summary>
+Миграция
 
 ```diff
 - <FixedLayout vertical="top">
@@ -707,22 +656,19 @@ description: Инструкция миграции VKUI на версию v8.
 > Так как элемент с `position: sticky` находится в основном потоке документа, при замене
 > `<FixedLayout vertical="bottom" />` на `Box` важно сохранить порядок элемента в документе.
 
-</details>
-
----
+***
 
 ### Flex.Item
 
 Подкомпонент `Flex.Item` помечен как `@deprecated`. Используйте стандартные CSS-свойства или свойства компонента `Box` для управления дочерними элементами.
 
----
+***
 
 ### RichCell: afterCaption
 
 Свойство `afterCaption` помечено как `@deprecated`. Используйте вместо него свойство `submeta`.
 
-<details>
-<summary>Миграция</summary>
+Миграция
 
 ```diff
 <RichCell
@@ -733,9 +679,7 @@ description: Инструкция миграции VKUI на версию v8.
 </RichCell>
 ```
 
-</details>
-
----
+***
 
 ### ActionSheetItem: mode="cancel" и isCancelItem
 
@@ -745,11 +689,10 @@ description: Инструкция миграции VKUI на версию v8.
 
 Вместо `ActionSheetItem` с `mode="cancel"` или `isCancelItem` в качестве `iosCloseItem` используйте:
 
-- `slotProps.iosCloseItem` в `ActionSheet` для передачи свойств в кнопку отмены;
-- или свойство `iosCloseItem` с компонентом `ActionSheetDefaultIosCloseItem` для полной кастомизации.
+* `slotProps.iosCloseItem` в `ActionSheet` для передачи свойств в кнопку отмены;
+* или свойство `iosCloseItem` с компонентом `ActionSheetDefaultIosCloseItem` для полной кастомизации.
 
-<details>
-<summary>Миграция</summary>
+Миграция
 
 ```diff
 <ActionSheet
@@ -792,9 +735,7 @@ description: Инструкция миграции VKUI на версию v8.
 </ActionSheet>
 ```
 
-</details>
-
----
+***
 
 ### DateInput, DateRangeInput, CustomSelect: accessible
 

@@ -1,6 +1,7 @@
 import { isFirefox, isSafari, isWebKit } from '../../../../base/browser/browser.js';
 import { createFastDomNode } from '../../../../base/browser/fastDomNode.js';
 import { isNative, isLinux } from '../../../../base/common/platform.js';
+import { isFullWidthCharacter } from '../../../../base/common/strings.js';
 import { RangeUtil } from './rangeUtil.js';
 import { VisibleRanges, FloatHorizontalRange } from '../../view/renderingContext.js';
 import { LineDecoration } from '../../../common/viewLayout/lineDecorations.js';
@@ -119,7 +120,7 @@ class ViewLine {
                 }
             }
         }
-        const renderLineInput = new RenderLineInput(options.useMonospaceOptimizations, options.canUseHalfwidthRightwardsArrow, lineData.content, lineData.continuesWithWrappedLine, lineData.isBasicASCII, lineData.containsRTL, lineData.minColumn - 1, lineData.tokens, actualInlineDecorations, lineData.tabSize, lineData.startVisibleColumn, options.spaceWidth, options.middotWidth, options.wsmiddotWidth, options.stopRenderingLineAfter, renderWhitespace, options.renderControlCharacters, options.fontLigatures !== EditorFontLigatures.OFF, selectionsOnLine, lineData.textDirection, options.verticalScrollbarSize);
+        const renderLineInput = new RenderLineInput(options.useMonospaceOptimizations, options.canUseHalfwidthRightwardsArrow, lineData.content, lineData.continuesWithWrappedLine, lineData.isBasicASCII, lineData.containsRTL, lineData.minColumn - 1, lineData.tokens, actualInlineDecorations, lineData.tabSize, lineData.startVisibleColumn, options.spaceWidth, options.middotWidth, options.wsmiddotWidth, options.stopRenderingLineAfter, renderWhitespace, options.renderControlCharacters, options.fontLigatures !== EditorFontLigatures.OFF, selectionsOnLine, lineData.textDirection, options.verticalScrollbarSize, false, options.useTwoCellFullwidthCharacters);
         if (this._renderedViewLine && this._renderedViewLine.input.equals(renderLineInput)) {
             // no need to do anything, we have the same render input
             return false;
@@ -480,6 +481,24 @@ class RenderedViewLine {
             return this.getWidth(context);
         }
         const domPosition = this._characterMapping.getDomPosition(column);
+        if (this.input.useTwoCellFullwidthCharacters) {
+            const target = this._getReadingTarget(domNode);
+            // The first branch needs the left edge of the character to the right
+            if (isFullWidthCharacter(this.input.lineContent.charCodeAt(column - 1))) {
+                const r = RangeUtil.readHorizontalRangeForElement(target, domPosition.partIndex, context);
+                if (r) {
+                    return r.left;
+                }
+            }
+            // The second branch needs the right edge of the character to the left.
+            else if (isFullWidthCharacter(this.input.lineContent.charCodeAt(column - 2))) {
+                const previousDomPosition = this._characterMapping.getDomPosition(column - 1);
+                const r = RangeUtil.readHorizontalRangeForElement(target, previousDomPosition.partIndex, context);
+                if (r) {
+                    return r.left + r.width;
+                }
+            }
+        }
         const r = RangeUtil.readHorizontalRanges(this._getReadingTarget(domNode), domPosition.partIndex, domPosition.charIndex, domPosition.partIndex, domPosition.charIndex, context);
         if (!r || r.length === 0) {
             return -1;

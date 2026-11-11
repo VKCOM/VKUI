@@ -3,13 +3,9 @@ description: Компонент, позволяющий переопредели
 tags: provider
 ---
 
-<Overview group="configuration">
-
-# LocaleProvider [tag:component]
+# LocaleProvider \[tag:component]
 
 Компонент, позволяющий переопределить локаль.
-
-</Overview>
 
 ## Локаль
 
@@ -21,7 +17,7 @@ tags: provider
 </LocaleProvider>
 ```
 
-## Хук useLocale [#use-locale]
+## Хук useLocale \[#use-locale]
 
 Для получения значения текущей локали используйте хук `useLocale`:
 
@@ -33,16 +29,15 @@ import { useLocale } from '@vkontakte/vkui';
 const locale = useLocale();
 ```
 
-## Свойства и методы [#api]
+## Свойства и методы \[#api]
 
 ### LocaleProvider
 
-| Свойство | Тип | По умолчанию | Описание |
-| --- | --- | --- | --- |
-| `**children** \*` | `ReactNode` | `-` | Содержимое. |
-| `**value** \*` | `string` | `-` | Строка с языковой меткой BCP 47. |
+| Свойство          | Тип         | По умолчанию | Описание                         |
+| ----------------- | ----------- | ------------ | -------------------------------- |
+| `**children** \*` | `ReactNode` | `-`          | Содержимое.                      |
+| `**value** \*`    | `string`    | `-`          | Строка с языковой меткой BCP 47. |
 
 ### useLocale
 
-_Не принимает свойств_
-
+*Не принимает свойств*

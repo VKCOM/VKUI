@@ -40,7 +40,7 @@ let AbstractGotoSymbolQuickAccessProvider = class AbstractGotoSymbolQuickAccessP
         this.options.canAcceptInBackground = true;
     }
     provideWithoutTextEditor(picker) {
-        this.provideLabelPick(picker, localize(1394, "To go to a symbol, first open a text editor with symbol information."));
+        this.provideLabelPick(picker, localize(1414, "To go to a symbol, first open a text editor with symbol information."));
         return Disposable.None;
     }
     provideWithTextEditor(context, picker, token, runOptions) {
@@ -61,7 +61,7 @@ let AbstractGotoSymbolQuickAccessProvider = class AbstractGotoSymbolQuickAccessP
     doProvideWithoutEditorSymbols(context, model, picker, token) {
         const disposables = new DisposableStore();
         // Generic pick for not having any symbol information
-        this.provideLabelPick(picker, localize(1395, "The active text editor does not provide symbol information."));
+        this.provideLabelPick(picker, localize(1415, "The active text editor does not provide symbol information."));
         // Wait for changes to the registry and see if eventually
         // we do get symbols. This can happen if the picker is opened
         // very early after the model has loaded but before the
@@ -153,10 +153,10 @@ let AbstractGotoSymbolQuickAccessProvider = class AbstractGotoSymbolQuickAccessP
                 }
                 else {
                     if (query.original.length > 0) {
-                        this.provideLabelPick(picker, localize(1396, "No matching editor symbols"));
+                        this.provideLabelPick(picker, localize(1416, "No matching editor symbols"));
                     }
                     else {
-                        this.provideLabelPick(picker, localize(1397, "No editor symbols"));
+                        this.provideLabelPick(picker, localize(1417, "No editor symbols"));
                     }
                 }
             }
@@ -203,7 +203,7 @@ let AbstractGotoSymbolQuickAccessProvider = class AbstractGotoSymbolQuickAccessP
         if (openSideBySideDirection) {
             buttons = [{
                     iconClass: openSideBySideDirection === 'right' ? ThemeIcon.asClassName(Codicon.splitHorizontal) : ThemeIcon.asClassName(Codicon.splitVertical),
-                    tooltip: openSideBySideDirection === 'right' ? localize(1398, "Open to the Side") : localize(1399, "Open to the Bottom")
+                    tooltip: openSideBySideDirection === 'right' ? localize(1418, "Open to the Side") : localize(1419, "Open to the Bottom")
                 }];
         }
         const filteredSymbolPicks = [];
@@ -319,7 +319,7 @@ let AbstractGotoSymbolQuickAccessProvider = class AbstractGotoSymbolQuickAccessP
         }
         else if (sortedFilteredSymbolPicks.length > 0) {
             symbolPicks = [
-                { label: localize(1400, "symbols ({0})", filteredSymbolPicks.length), type: 'separator' },
+                { label: localize(1420, "symbols ({0})", filteredSymbolPicks.length), type: 'separator' },
                 ...sortedFilteredSymbolPicks
             ];
         }
@@ -368,33 +368,33 @@ AbstractGotoSymbolQuickAccessProvider = AbstractGotoSymbolQuickAccessProvider_1 
     __param(1, IOutlineModelService)
 ], AbstractGotoSymbolQuickAccessProvider);
 // #region NLS Helpers
-const FALLBACK_NLS_SYMBOL_KIND = localize(1401, "properties ({0})");
+const FALLBACK_NLS_SYMBOL_KIND = localize(1421, "properties ({0})");
 const NLS_SYMBOL_KIND_CACHE = {
-    [5 /* SymbolKind.Method */]: localize(1402, "methods ({0})"),
-    [11 /* SymbolKind.Function */]: localize(1403, "functions ({0})"),
-    [8 /* SymbolKind.Constructor */]: localize(1404, "constructors ({0})"),
-    [12 /* SymbolKind.Variable */]: localize(1405, "variables ({0})"),
-    [4 /* SymbolKind.Class */]: localize(1406, "classes ({0})"),
-    [22 /* SymbolKind.Struct */]: localize(1407, "structs ({0})"),
-    [23 /* SymbolKind.Event */]: localize(1408, "events ({0})"),
-    [24 /* SymbolKind.Operator */]: localize(1409, "operators ({0})"),
-    [10 /* SymbolKind.Interface */]: localize(1410, "interfaces ({0})"),
-    [2 /* SymbolKind.Namespace */]: localize(1411, "namespaces ({0})"),
-    [3 /* SymbolKind.Package */]: localize(1412, "packages ({0})"),
-    [25 /* SymbolKind.TypeParameter */]: localize(1413, "type parameters ({0})"),
-    [1 /* SymbolKind.Module */]: localize(1414, "modules ({0})"),
-    [6 /* SymbolKind.Property */]: localize(1415, "properties ({0})"),
-    [9 /* SymbolKind.Enum */]: localize(1416, "enumerations ({0})"),
-    [21 /* SymbolKind.EnumMember */]: localize(1417, "enumeration members ({0})"),
-    [14 /* SymbolKind.String */]: localize(1418, "strings ({0})"),
-    [0 /* SymbolKind.File */]: localize(1419, "files ({0})"),
-    [17 /* SymbolKind.Array */]: localize(1420, "arrays ({0})"),
-    [15 /* SymbolKind.Number */]: localize(1421, "numbers ({0})"),
-    [16 /* SymbolKind.Boolean */]: localize(1422, "booleans ({0})"),
-    [18 /* SymbolKind.Object */]: localize(1423, "objects ({0})"),
-    [19 /* SymbolKind.Key */]: localize(1424, "keys ({0})"),
-    [7 /* SymbolKind.Field */]: localize(1425, "fields ({0})"),
-    [13 /* SymbolKind.Constant */]: localize(1426, "constants ({0})")
+    [5 /* SymbolKind.Method */]: localize(1422, "methods ({0})"),
+    [11 /* SymbolKind.Function */]: localize(1423, "functions ({0})"),
+    [8 /* SymbolKind.Constructor */]: localize(1424, "constructors ({0})"),
+    [12 /* SymbolKind.Variable */]: localize(1425, "variables ({0})"),
+    [4 /* SymbolKind.Class */]: localize(1426, "classes ({0})"),
+    [22 /* SymbolKind.Struct */]: localize(1427, "structs ({0})"),
+    [23 /* SymbolKind.Event */]: localize(1428, "events ({0})"),
+    [24 /* SymbolKind.Operator */]: localize(1429, "operators ({0})"),
+    [10 /* SymbolKind.Interface */]: localize(1430, "interfaces ({0})"),
+    [2 /* SymbolKind.Namespace */]: localize(1431, "namespaces ({0})"),
+    [3 /* SymbolKind.Package */]: localize(1432, "packages ({0})"),
+    [25 /* SymbolKind.TypeParameter */]: localize(1433, "type parameters ({0})"),
+    [1 /* SymbolKind.Module */]: localize(1434, "modules ({0})"),
+    [6 /* SymbolKind.Property */]: localize(1435, "properties ({0})"),
+    [9 /* SymbolKind.Enum */]: localize(1436, "enumerations ({0})"),
+    [21 /* SymbolKind.EnumMember */]: localize(1437, "enumeration members ({0})"),
+    [14 /* SymbolKind.String */]: localize(1438, "strings ({0})"),
+    [0 /* SymbolKind.File */]: localize(1439, "files ({0})"),
+    [17 /* SymbolKind.Array */]: localize(1440, "arrays ({0})"),
+    [15 /* SymbolKind.Number */]: localize(1441, "numbers ({0})"),
+    [16 /* SymbolKind.Boolean */]: localize(1442, "booleans ({0})"),
+    [18 /* SymbolKind.Object */]: localize(1443, "objects ({0})"),
+    [19 /* SymbolKind.Key */]: localize(1444, "keys ({0})"),
+    [7 /* SymbolKind.Field */]: localize(1445, "fields ({0})"),
+    [13 /* SymbolKind.Constant */]: localize(1446, "constants ({0})")
 };
 //#endregion
 

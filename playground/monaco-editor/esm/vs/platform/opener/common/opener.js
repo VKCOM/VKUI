@@ -5,6 +5,7 @@ import { createDecorator } from '../../instantiation/common/instantiation.js';
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 const IOpenerService = createDecorator('openerService');
+const defaultExternalUriOpenerId = 'default';
 /**
  * Encodes selection into the `URI`.
  *
@@ -40,4 +41,4 @@ function extractSelection(uri) {
     return { selection, uri };
 }
 
-export { IOpenerService, extractSelection, withSelection };
+export { IOpenerService, defaultExternalUriOpenerId, extractSelection, withSelection };

@@ -84,6 +84,7 @@ let HoverWidget = class HoverWidget extends Widget {
         this._onRequestLayout = this._register(new Emitter());
         this._linkHandler = options.linkHandler;
         this._target = 'targetElements' in options.target ? options.target : new ElementHoverTarget(options.target);
+        this._anchorAlignment = options.position?.anchorAlignment ?? 0 /* AnchorAlignment.LEFT */;
         if (options.style) {
             switch (options.style) {
                 case 1 /* HoverStyle.Pointer */: {
@@ -216,7 +217,7 @@ let HoverWidget = class HoverWidget extends Widget {
         if (options.appearance?.showHoverHint) {
             const statusBarElement = $('div.hover-row.status-bar');
             const infoElement = $('div.info');
-            infoElement.textContent = localize(1761, 'Hold {0} key to mouse over', isMacintosh ? 'Option' : 'Alt');
+            infoElement.textContent = localize(1794, 'Hold {0} key to mouse over', isMacintosh ? 'Option' : 'Alt');
             statusBarElement.appendChild(infoElement);
             this._hover.containerDomNode.appendChild(statusBarElement);
         }
@@ -307,6 +308,7 @@ let HoverWidget = class HoverWidget extends Widget {
         }
         this._hover.containerDomNode.classList.remove('right-aligned');
         this._hover.contentsDomNode.style.maxHeight = '';
+        this._hover.containerDomNode.style.maxWidth = '';
         const getZoomAccountedBoundingClientRect = (e) => {
             const zoom = getDomNodeZoomLevel(e);
             const boundingRect = e.getBoundingClientRect();
@@ -380,6 +382,7 @@ let HoverWidget = class HoverWidget extends Widget {
     }
     computeXCordinate(target) {
         const hoverWidth = this._hover.containerDomNode.clientWidth + 2 /* Constants.HoverBorderWidth */;
+        const documentElementClientLeft = this._targetDocumentElement.clientLeft;
         if (this._target.x !== undefined) {
             this._x = this._target.x;
         }
@@ -390,20 +393,24 @@ let HoverWidget = class HoverWidget extends Widget {
             this._x = target.left - hoverWidth;
         }
         else {
-            if (this._hoverPointer) {
+            if (this._anchorAlignment === 1 /* AnchorAlignment.RIGHT */) {
+                this._x = target.right - hoverWidth;
+            }
+            else if (this._hoverPointer) {
                 this._x = target.center.x - (this._hover.containerDomNode.clientWidth / 2);
             }
             else {
                 this._x = target.left;
             }
             // Hover is going beyond window towards right end
-            if (this._x + hoverWidth >= this._targetDocumentElement.clientWidth) {
+            const documentElementClientWidth = this._targetDocumentElement.clientWidth;
+            if (this._x + hoverWidth >= documentElementClientWidth) {
                 this._hover.containerDomNode.classList.add('right-aligned');
-                this._x = Math.max(this._targetDocumentElement.clientWidth - hoverWidth - 2 /* Constants.HoverWindowEdgeMargin */, this._targetDocumentElement.clientLeft);
+                this._x = Math.max(documentElementClientWidth - hoverWidth - 2 /* Constants.HoverWindowEdgeMargin */, documentElementClientLeft);
             }
         }
         // Hover is going beyond window towards left end
-        if (this._x < this._targetDocumentElement.clientLeft) {
+        if (this._x < documentElementClientLeft) {
             this._x = target.left + 2 /* Constants.HoverWindowEdgeMargin */;
         }
     }
@@ -433,6 +440,13 @@ let HoverWidget = class HoverWidget extends Widget {
     adjustHorizontalHoverPosition(target) {
         // Do not adjust horizontal hover position if x cordiante is provided
         if (this._target.x !== undefined) {
+            return;
+        }
+        if (this._anchorAlignment === 1 /* AnchorAlignment.RIGHT */ && (this._hoverPosition === 3 /* HoverPosition.ABOVE */ || this._hoverPosition === 2 /* HoverPosition.BELOW */)) {
+            const availableWidth = target.right - this._targetDocumentElement.clientLeft - 2 /* Constants.HoverWindowEdgeMargin */ - 2 /* Constants.HoverBorderWidth */;
+            if (this._hover.containerDomNode.clientWidth > availableWidth) {
+                this._hover.containerDomNode.style.maxWidth = `${Math.max(availableWidth, 0)}px`;
+            }
             return;
         }
         const hoverPointerOffset = (this._hoverPointer ? 3 /* Constants.PointerSize */ : 0);
@@ -518,7 +532,11 @@ let HoverWidget = class HoverWidget extends Widget {
                 maxHeight = Math.min(maxHeight, this._targetWindow.innerHeight - target.bottom - padding);
             }
         }
+        this._hover.containerDomNode.style.maxHeight = '';
+        const heightOutsideContents = this._hover.containerDomNode.offsetHeight - this._hover.contentsDomNode.offsetHeight;
+        const contentsMaxHeight = Math.max(0, maxHeight - heightOutsideContents);
         this._hover.containerDomNode.style.maxHeight = `${maxHeight}px`;
+        this._hover.contentsDomNode.style.maxHeight = `${contentsMaxHeight}px`;
         if (this._hover.contentsDomNode.clientHeight < this._hover.contentsDomNode.scrollHeight) {
             // Add padding for a vertical scrollbar
             const extraRightPadding = `${this._hover.scrollbar.options.verticalScrollbarSize}px`;
@@ -540,9 +558,9 @@ let HoverWidget = class HoverWidget extends Widget {
                 if (hoverHeight > target.height) {
                     this._hoverPointer.style.top = `${target.center.y - (this._y - hoverHeight) - 3 /* Constants.PointerSize */}px`;
                 }
-                // Otherwise show the pointer at the center of hover
+                // Otherwise show the pointer at the center of hover, unrounded so it stays centred
                 else {
-                    this._hoverPointer.style.top = `${Math.round((hoverHeight / 2)) - 3 /* Constants.PointerSize */}px`;
+                    this._hoverPointer.style.top = `${(hoverHeight / 2) - 3 /* Constants.PointerSize */}px`;
                 }
                 break;
             }
@@ -550,8 +568,8 @@ let HoverWidget = class HoverWidget extends Widget {
             case 2 /* HoverPosition.BELOW */: {
                 this._hoverPointer.classList.add(this._hoverPosition === 3 /* HoverPosition.ABOVE */ ? 'bottom' : 'top');
                 const hoverWidth = this._hover.containerDomNode.clientWidth;
-                // Position pointer at the center of the hover
-                let pointerLeftPosition = Math.round((hoverWidth / 2)) - 3 /* Constants.PointerSize */;
+                // Position pointer at the center of the hover, unrounded so it stays centred
+                let pointerLeftPosition = (hoverWidth / 2) - 3 /* Constants.PointerSize */;
                 // If pointer goes beyond target then position it at the center of the target
                 const pointerX = this._x + pointerLeftPosition;
                 if (pointerX < target.left || pointerX > target.right) {

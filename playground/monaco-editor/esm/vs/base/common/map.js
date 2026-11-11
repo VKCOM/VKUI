@@ -555,6 +555,10 @@ class BidirectionalMap {
         this._m2.clear();
     }
     set(key, value) {
+        const previousValue = this._m1.get(key);
+        if (previousValue !== undefined) {
+            this._m2.delete(previousValue);
+        }
         this._m1.set(key, value);
         this._m2.set(value, key);
     }

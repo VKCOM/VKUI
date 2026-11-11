@@ -13,15 +13,15 @@ class ShowOrFocusStandaloneColorPicker extends EditorAction2 {
         super({
             id: 'editor.action.showOrFocusStandaloneColorPicker',
             title: {
-                ...localize2(925, "Show or Focus Standalone Color Picker"),
-                mnemonicTitle: localize(924, "&&Show or Focus Standalone Color Picker"),
+                ...localize2(940, "Show or Focus Standalone Color Picker"),
+                mnemonicTitle: localize(939, "&&Show or Focus Standalone Color Picker"),
             },
             precondition: undefined,
             menu: [
                 { id: MenuId.CommandPalette },
             ],
             metadata: {
-                description: localize2(926, "Show or focus a standalone color picker which uses the default color provider. It displays hex/rgb/hsl colors."),
+                description: localize2(941, "Show or focus a standalone color picker which uses the default color provider. It displays hex/rgb/hsl colors."),
             }
         });
     }
@@ -33,7 +33,7 @@ class HideStandaloneColorPicker extends EditorAction {
     constructor() {
         super({
             id: 'editor.action.hideColorPicker',
-            label: localize2(927, "Hide the Color Picker"),
+            label: localize2(942, "Hide the Color Picker"),
 
 
 
@@ -45,7 +45,7 @@ class HideStandaloneColorPicker extends EditorAction {
                 weight: 100 /* KeybindingWeight.EditorContrib */
             },
             metadata: {
-                description: localize2(928, "Hide the standalone color picker."),
+                description: localize2(943, "Hide the standalone color picker."),
             }
         });
     }
@@ -57,7 +57,7 @@ class InsertColorWithStandaloneColorPicker extends EditorAction {
     constructor() {
         super({
             id: 'editor.action.insertColorWithStandaloneColorPicker',
-            label: localize2(929, "Insert Color with Standalone Color Picker"),
+            label: localize2(944, "Insert Color with Standalone Color Picker"),
 
 
 
@@ -69,7 +69,7 @@ class InsertColorWithStandaloneColorPicker extends EditorAction {
                 weight: 100 /* KeybindingWeight.EditorContrib */
             },
             metadata: {
-                description: localize2(930, "Insert hex/rgb/hsl colors with the focused standalone color picker."),
+                description: localize2(945, "Insert hex/rgb/hsl colors with the focused standalone color picker."),
             }
         });
     }

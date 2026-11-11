@@ -15,7 +15,7 @@ const autoCloseNever = () => false;
 const autoCloseBeforeWhitespace = (chr) => (chr === ' ' || chr === '\t');
 class CursorConfiguration {
     static shouldRecreate(e) {
-        return (e.hasChanged(165 /* EditorOption.layoutInfo */)
+        return (e.hasChanged(166 /* EditorOption.layoutInfo */)
             || e.hasChanged(148 /* EditorOption.wordSeparators */)
             || e.hasChanged(45 /* EditorOption.emptySelectionClipboard */)
             || e.hasChanged(85 /* EditorOption.multiCursorMergeOverlapping */)
@@ -39,7 +39,7 @@ class CursorConfiguration {
         this._cursorMoveConfigurationBrand = undefined;
         this._languageId = languageId;
         const options = configuration.options;
-        const layoutInfo = options.get(165 /* EditorOption.layoutInfo */);
+        const layoutInfo = options.get(166 /* EditorOption.layoutInfo */);
         const fontInfo = options.get(59 /* EditorOption.fontInfo */);
         this.readOnly = options.get(104 /* EditorOption.readOnly */);
         this.tabSize = modelOptions.tabSize;

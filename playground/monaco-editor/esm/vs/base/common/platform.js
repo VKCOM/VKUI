@@ -8,8 +8,10 @@ const LANGUAGE_DEFAULT = 'en';
 let _isWindows = false;
 let _isMacintosh = false;
 let _isLinux = false;
+let _isChromeOS = false;
 let _isNative = false;
 let _isWeb = false;
+let _isElectron = false;
 let _isIOS = false;
 let _isMobile = false;
 let _locale = undefined;
@@ -35,6 +37,7 @@ if (typeof nodeProcess === 'object') {
     _isMacintosh = (nodeProcess.platform === 'darwin');
     _isLinux = (nodeProcess.platform === 'linux');
     _isLinux && !!nodeProcess.env['SNAP'] && !!nodeProcess.env['SNAP_REVISION'];
+    _isElectron = isElectronProcess;
     !!nodeProcess.env['CI'] || !!nodeProcess.env['BUILD_ARTIFACTSTAGINGDIRECTORY'] || !!nodeProcess.env['GITHUB_WORKSPACE'];
     _locale = LANGUAGE_DEFAULT;
     _language = LANGUAGE_DEFAULT;
@@ -59,6 +62,7 @@ else if (typeof navigator === 'object' && !isElectronRenderer) {
     _isMacintosh = _userAgent.indexOf('Macintosh') >= 0;
     _isIOS = (_userAgent.indexOf('Macintosh') >= 0 || _userAgent.indexOf('iPad') >= 0 || _userAgent.indexOf('iPhone') >= 0) && !!navigator.maxTouchPoints && navigator.maxTouchPoints > 0;
     _isLinux = _userAgent.indexOf('Linux') >= 0;
+    _isChromeOS = _userAgent.indexOf('CrOS') >= 0;
     _isMobile = _userAgent?.indexOf('Mobi') >= 0;
     _isWeb = true;
     _language = getNLSLanguage() || LANGUAGE_DEFAULT;
@@ -82,7 +86,9 @@ else if (_isLinux) {
 const isWindows = _isWindows;
 const isMacintosh = _isMacintosh;
 const isLinux = _isLinux;
+const isChromeOS = _isChromeOS;
 const isNative = _isNative;
+const isElectron = _isElectron;
 const isWeb = _isWeb;
 const isWebWorker = (_isWeb && typeof $globalThis.importScripts === 'function');
 const webWorkerOrigin = isWebWorker ? $globalThis.origin : undefined;
@@ -149,5 +155,6 @@ const isFirefox = !!(userAgent && userAgent.indexOf('Firefox') >= 0);
 const isSafari = !!(!isChrome && (userAgent && userAgent.indexOf('Safari') >= 0));
 const isEdge = !!(userAgent && userAgent.indexOf('Edg/') >= 0);
 const isAndroid = !!(userAgent && userAgent.indexOf('Android') >= 0);
+const hasElectronUserAgent = !!(userAgent && userAgent.indexOf('Electron') >= 0);
 
-export { LANGUAGE_DEFAULT, OS, isAndroid, isChrome, isEdge, isFirefox, isIOS, isLinux, isLittleEndian, isMacintosh, isMobile, isNative, isSafari, isWeb, isWebWorker, isWindows, language, platform, setTimeout0, setTimeout0IsFaster, userAgent, webWorkerOrigin };
+export { LANGUAGE_DEFAULT, OS, hasElectronUserAgent, isAndroid, isChrome, isChromeOS, isEdge, isElectron, isFirefox, isIOS, isLinux, isLittleEndian, isMacintosh, isMobile, isNative, isSafari, isWeb, isWebWorker, isWindows, language, platform, setTimeout0, setTimeout0IsFaster, userAgent, webWorkerOrigin };

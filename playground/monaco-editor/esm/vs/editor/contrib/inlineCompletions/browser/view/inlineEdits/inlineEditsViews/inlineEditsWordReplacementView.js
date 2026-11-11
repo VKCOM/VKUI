@@ -137,10 +137,10 @@ let InlineEditsWordReplacementView = class InlineEditsWordReplacementView extend
                 const count = altCount.read(reader);
                 const active = altModifierActive.read(reader);
                 const occurrencesLabel = count !== undefined ? count === 1 ?
-                    localize(1263, "{0} 1 occurrence", label) :
-                    localize(1264, "{0} {1} occurrences", label, count)
+                    localize(1283, "{0} 1 occurrence", label) :
+                    localize(1284, "{0} {1} occurrences", label, count)
                     : label;
-                const keybindingTooltip = localize(1265, "{0} show occurrences", '[shift]');
+                const keybindingTooltip = localize(1285, "{0} show occurrences", '[shift]');
                 alternativeAction = {
                     label: count !== undefined ? (active ? occurrencesLabel : label) : label,
                     tooltip: occurrencesLabel ? `${occurrencesLabel}\n${keybindingTooltip}` : undefined,

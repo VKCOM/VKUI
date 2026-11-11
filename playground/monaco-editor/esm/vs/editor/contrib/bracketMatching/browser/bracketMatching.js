@@ -28,12 +28,12 @@ import { editorBracketMatchForeground } from '../../../common/core/editorColorRe
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-const overviewRulerBracketMatchForeground = registerColor('editorOverviewRuler.bracketMatchForeground', '#A0A0A0', localize(840, 'Overview ruler marker color for matching brackets.'));
+const overviewRulerBracketMatchForeground = registerColor('editorOverviewRuler.bracketMatchForeground', '#A0A0A0', localize(855, 'Overview ruler marker color for matching brackets.'));
 class JumpToBracketAction extends EditorAction {
     constructor() {
         super({
             id: 'editor.action.jumpToBracket',
-            label: localize2(842, "Go to Bracket"),
+            label: localize2(857, "Go to Bracket"),
             precondition: undefined,
             kbOpts: {
                 kbExpr: EditorContextKeys.editorTextFocus,
@@ -50,10 +50,10 @@ class SelectToBracketAction extends EditorAction {
     constructor() {
         super({
             id: 'editor.action.selectToBracket',
-            label: localize2(843, "Select to Bracket"),
+            label: localize2(858, "Select to Bracket"),
             precondition: undefined,
             metadata: {
-                description: localize2(844, "Select the text inside and including the brackets or curly braces"),
+                description: localize2(859, "Select the text inside and including the brackets or curly braces"),
                 args: [{
                         name: 'args',
                         schema: {
@@ -81,7 +81,7 @@ class RemoveBracketsAction extends EditorAction {
     constructor() {
         super({
             id: 'editor.action.removeBrackets',
-            label: localize2(845, "Remove Brackets"),
+            label: localize2(860, "Remove Brackets"),
             precondition: undefined,
             kbOpts: {
                 kbExpr: EditorContextKeys.editorTextFocus,
@@ -354,7 +354,7 @@ MenuRegistry.appendMenuItem(MenuId.MenubarGoMenu, {
     group: '5_infile_nav',
     command: {
         id: 'editor.action.jumpToBracket',
-        title: localize(841, "Go to &&Bracket")
+        title: localize(856, "Go to &&Bracket")
     },
     order: 2
 });

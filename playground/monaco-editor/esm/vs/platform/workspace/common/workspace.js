@@ -75,7 +75,7 @@ class WorkspaceFolder {
     }
 }
 const WORKSPACE_EXTENSION = 'code-workspace';
-[{ name: localize(2119, "Code Workspace"), extensions: [WORKSPACE_EXTENSION] }];
+[{ name: localize(2152, "Code Workspace"), extensions: [WORKSPACE_EXTENSION] }];
 const STANDALONE_EDITOR_WORKSPACE_ID = '4064f6ec-cb38-4ad0-af64-ee6467e63c82';
 function isStandaloneEditorWorkspace(workspace) {
     return workspace.id === STANDALONE_EDITOR_WORKSPACE_ID;

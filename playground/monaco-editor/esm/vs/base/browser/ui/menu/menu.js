@@ -17,6 +17,7 @@ import { DisposableStore } from '../../../common/lifecycle.js';
 import { isMacintosh, isLinux } from '../../../common/platform.js';
 import { escape, ltrim, rtrim } from '../../../common/strings.js';
 import { layout } from '../../../common/layout.js';
+import { CONTEXT_VIEW_MENU_MOTION_SHADOW_VARIABLE } from '../contextview/contextview.js';
 
 /*---------------------------------------------------------------------------------------------
  *  Copyright (c) Microsoft Corporation. All rights reserved.
@@ -109,7 +110,10 @@ class Menu extends ActionBar {
                 e.stopPropagation();
             }
         }));
-        this._register(addDisposableListener(this.actionsList, EventType.MOUSE_OVER, e => {
+        this._register(addDisposableListener(this.actionsList, EventType.MOUSE_MOVE, e => {
+            if (e.movementX === 0 && e.movementY === 0) {
+                return;
+            }
             let target = e.target;
             if (!target || !isAncestor(target, this.actionsList) || target === this.actionsList) {
                 return;
@@ -119,6 +123,10 @@ class Menu extends ActionBar {
             }
             if (target.classList.contains('action-item')) {
                 const lastFocusedItem = this.focusedItem;
+                // Moving within the focused item is the common case; skip the item lookup for it
+                if (lastFocusedItem !== undefined && this.actionsList.children[lastFocusedItem] === target) {
+                    return;
+                }
                 this.setFocusedItem(target);
                 if (lastFocusedItem !== this.focusedItem) {
                     this.updateFocus();
@@ -213,9 +221,7 @@ class Menu extends ActionBar {
     styleScrollElement(scrollElement, style) {
         const fgColor = style.foregroundColor ?? '';
         const bgColor = style.backgroundColor ?? '';
-        const border = style.borderColor ? `1px solid ${style.borderColor}` : '';
         const borderRadius = 'var(--vscode-cornerRadius-large)';
-        scrollElement.style.outline = border;
         scrollElement.style.borderRadius = borderRadius;
         scrollElement.style.color = fgColor;
         scrollElement.style.backgroundColor = bgColor;
@@ -573,7 +579,10 @@ class SubmenuMenuActionViewItem extends BaseMenuActionViewItem {
                 }
             }
         }));
-        this._register(addDisposableListener(this.element, EventType.MOUSE_OVER, e => {
+        this._register(addDisposableListener(this.element, EventType.MOUSE_MOVE, e => {
+            if (e.movementX === 0 && e.movementY === 0) {
+                return;
+            }
             if (!this.mouseOver) {
                 this.mouseOver = true;
                 this.showScheduler.schedule();
@@ -749,11 +758,12 @@ function formatRule(c) {
 }
 function getMenuWidgetCSS(style, isForShadowDom) {
     const borderColor = style.borderColor ?? 'var(--vscode-menu-border)';
+    const menuShadow = `var(--vscode-shadow-lg${style.shadowColor ? `, 0 0 12px ${style.shadowColor}` : ''})`;
     let result = /* css */ `
 .monaco-menu {
 	font-size: 13px;
 	border-radius: var(--vscode-cornerRadius-large);
-	border: 1px solid ${borderColor};
+	border: var(--vscode-strokeThickness) solid ${borderColor};
 	min-width: 160px;
 }
 
@@ -968,11 +978,12 @@ ${formatRule(Codicon.menuSubmenu)}
 /* Context Menu */
 
 .context-view.monaco-menu-container {
+	${CONTEXT_VIEW_MENU_MOTION_SHADOW_VARIABLE}: ${menuShadow};
 	outline: 0;
 	border: none;
 	animation: fadeIn 0.083s linear;
 	-webkit-app-region: no-drag;
-	box-shadow: var(--vscode-shadow-lg${style.shadowColor ? `, 0 0 12px ${style.shadowColor}` : ''});
+	box-shadow: var(${CONTEXT_VIEW_MENU_MOTION_SHADOW_VARIABLE});
 	border-radius: var(--vscode-cornerRadius-large);
 	overflow: hidden;
 }
@@ -987,6 +998,7 @@ ${formatRule(Codicon.menuSubmenu)}
 .hc-light .context-view.monaco-menu-container,
 :host-context(.hc-black) .context-view.monaco-menu-container,
 :host-context(.hc-light) .context-view.monaco-menu-container {
+	${CONTEXT_VIEW_MENU_MOTION_SHADOW_VARIABLE}: none;
 	box-shadow: none;
 }
 
@@ -1004,10 +1016,15 @@ ${formatRule(Codicon.menuSubmenu)}
 }
 
 /* High contrast themes always show the selection border to indicate the focused item, regardless of input modality. The duplicated .monaco-menu raises specificity above the keyboard-only suppression rule above so this wins independent of declaration order. */
-.hc-black .monaco-menu.monaco-menu .monaco-action-bar.vertical .action-item.focused .action-menu-item,
-.hc-light .monaco-menu.monaco-menu .monaco-action-bar.vertical .action-item.focused .action-menu-item,
-:host-context(.hc-black) .monaco-menu.monaco-menu .monaco-action-bar.vertical .action-item.focused .action-menu-item,
-:host-context(.hc-light) .monaco-menu.monaco-menu .monaco-action-bar.vertical .action-item.focused .action-menu-item {
+.hc-black .monaco-menu.monaco-menu .monaco-action-bar.vertical .action-item.focused > .action-menu-item,
+.hc-light .monaco-menu.monaco-menu .monaco-action-bar.vertical .action-item.focused > .action-menu-item {
+	outline: 1px solid var(--vscode-menu-selectionBorder) !important;
+	outline-offset: -1px !important;
+}
+
+/* Keep :host-context separate because WebKit otherwise rejects the valid selectors above. */
+:host-context(.hc-black) .monaco-menu.monaco-menu .monaco-action-bar.vertical .action-item.focused > .action-menu-item,
+:host-context(.hc-light) .monaco-menu.monaco-menu .monaco-action-bar.vertical .action-item.focused > .action-menu-item {
 	outline: 1px solid var(--vscode-menu-selectionBorder) !important;
 	outline-offset: -1px !important;
 }

@@ -171,22 +171,22 @@ let AbstractCommandsQuickAccessProvider = class AbstractCommandsQuickAccessProvi
             const isInHistory = !!this.commandsHistory.peek(commandPick.commandId);
             // Separator: recently used
             if (i === 0 && isInHistory) {
-                commandPicks.push({ type: 'separator', label: localize(1803, "recently used") });
+                commandPicks.push({ type: 'separator', label: localize(1836, "recently used") });
                 addOtherSeparator = true;
             }
             if (addSuggestedSeparator && commandPick.tfIdfScore !== undefined) {
-                commandPicks.push({ type: 'separator', label: localize(1804, "similar commands") });
+                commandPicks.push({ type: 'separator', label: localize(1837, "similar commands") });
                 addSuggestedSeparator = false;
             }
             // Separator: commonly used
             if (addCommonlyUsedSeparator && commandPick.tfIdfScore === undefined && !isInHistory && this.options.suggestedCommandIds?.has(commandPick.commandId)) {
-                commandPicks.push({ type: 'separator', label: localize(1805, "commonly used") });
+                commandPicks.push({ type: 'separator', label: localize(1838, "commonly used") });
                 addOtherSeparator = true;
                 addCommonlyUsedSeparator = false;
             }
             // Separator: other commands
             if (addOtherSeparator && commandPick.tfIdfScore === undefined && !isInHistory && !this.options.suggestedCommandIds?.has(commandPick.commandId)) {
-                commandPicks.push({ type: 'separator', label: localize(1806, "other commands") });
+                commandPicks.push({ type: 'separator', label: localize(1839, "other commands") });
                 addOtherSeparator = false;
             }
             // Command
@@ -206,7 +206,7 @@ let AbstractCommandsQuickAccessProvider = class AbstractCommandsQuickAccessProvi
                 // Basically, if we haven't already added a separator, we add one before the additional picks so long
                 // as one hasn't been added to the start of the array.
                 if (addSuggestedSeparator && commandPicks[0]?.type !== 'separator') {
-                    commandPicks.unshift({ type: 'separator', label: localize(1807, "similar commands") });
+                    commandPicks.unshift({ type: 'separator', label: localize(1840, "similar commands") });
                 }
                 return commandPicks;
             })()
@@ -220,7 +220,7 @@ let AbstractCommandsQuickAccessProvider = class AbstractCommandsQuickAccessProvi
             ?? commandPick.commandDescription?.value;
         const keybinding = this.keybindingService.lookupKeybinding(commandPick.commandId);
         const ariaLabel = keybinding ?
-            localize(1808, "{0}, {1}", commandPick.label, keybinding.getAriaLabel()) :
+            localize(1841, "{0}, {1}", commandPick.label, keybinding.getAriaLabel()) :
             commandPick.label;
         // Add remove button for recently used items (as the last button, to the right)
         const existingButtons = commandPick.buttons || [];
@@ -228,11 +228,12 @@ let AbstractCommandsQuickAccessProvider = class AbstractCommandsQuickAccessProvi
             ...existingButtons,
             {
                 iconClass: ThemeIcon.asClassName(Codicon.close),
-                tooltip: localize(1809, "Remove from Recently Used")
+                tooltip: localize(1842, "Remove from Recently Used")
             }
         ] : commandPick.buttons;
         return {
             ...commandPick,
+            id: commandPick.commandId,
             tooltip,
             ariaLabel,
             detail: this.options.showAlias && commandPick.commandAlias !== commandPick.label ? commandPick.commandAlias : undefined,
@@ -254,7 +255,7 @@ let AbstractCommandsQuickAccessProvider = class AbstractCommandsQuickAccessProvi
                 }
                 catch (error) {
                     if (!isCancellationError(error)) {
-                        this.dialogService.error(localize(1810, "Command '{0}' resulted in an error", commandPick.label), toErrorMessage(error));
+                        this.dialogService.error(localize(1843, "Command '{0}' resulted in an error", commandPick.label), toErrorMessage(error));
                     }
                 }
             },

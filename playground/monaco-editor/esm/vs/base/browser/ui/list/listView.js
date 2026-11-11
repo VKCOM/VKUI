@@ -7,7 +7,7 @@ import { splice, distinct, equals } from '../../../common/arrays.js';
 import { Delayer, disposableTimeout } from '../../../common/async.js';
 import { memoize } from '../../../common/decorators.js';
 import { Emitter, Event } from '../../../common/event.js';
-import { Disposable, DisposableStore, toDisposable } from '../../../common/lifecycle.js';
+import { Disposable, DisposableStore, MutableDisposable, toDisposable } from '../../../common/lifecycle.js';
 import { Range } from '../../../common/range.js';
 import { Scrollable } from '../../../common/scrollable.js';
 import { RangeMap, shift } from './rangeMap.js';
@@ -151,9 +151,7 @@ class ListView {
         this._horizontalScrolling = value;
         this.domNode.classList.toggle('horizontal-scrolling', this._horizontalScrolling);
         if (this._horizontalScrolling) {
-            for (const item of this.items) {
-                this.measureItemWidth(item);
-            }
+            this.measureItemWidths(this.items);
             this.updateScrollWidth();
             this.scrollableElement.setScrollDimensions({ width: getContentWidth(this.domNode) });
             this.rowsContainer.style.width = `${Math.max(this.scrollWidth || 0, this.renderWidth)}px`;
@@ -176,11 +174,12 @@ class ListView {
         this.splicing = false;
         this.dragOverAnimationStopDisposable = Disposable.None;
         this.dragOverMouseY = 0;
+        this.disposables = new DisposableStore();
         this.canDrop = false;
         this.currentDragFeedbackDisposable = Disposable.None;
         this.onDragLeaveTimeout = Disposable.None;
-        this.currentSelectionDisposable = Disposable.None;
-        this.disposables = new DisposableStore();
+        this.currentSelectionDisposable = this.disposables.add(new MutableDisposable());
+        this.currentSelectionMovementDisposable = this.disposables.add(new MutableDisposable());
         this._onDidChangeContentHeight = this.disposables.add(new Emitter());
         this._onDidChangeContentWidth = this.disposables.add(new Emitter());
         this.onDidChangeContentHeight = Event.latch(this._onDidChangeContentHeight.event, undefined, this.disposables);
@@ -318,6 +317,50 @@ class ListView {
             }
         }
     }
+    updateElementHeight(index, size, anchorIndex) {
+        if (index < 0 || index >= this.items.length) {
+            return;
+        }
+        const originalSize = this.items[index].size;
+        if (typeof size === 'undefined') {
+            if (!this.supportDynamicHeights) {
+                console.warn('Dynamic heights not supported', new Error().stack);
+                return;
+            }
+            this.items[index].lastDynamicHeightWidth = undefined;
+            size = originalSize + this.probeDynamicHeight(index);
+        }
+        if (originalSize === size) {
+            return;
+        }
+        const lastRenderRange = this.getRenderRange(this.lastRenderTop, this.lastRenderHeight);
+        let heightDiff = 0;
+        if (index < lastRenderRange.start) {
+            // do not scroll the viewport if resized element is out of viewport
+            heightDiff = size - originalSize;
+        }
+        else {
+            if (anchorIndex !== null && anchorIndex > index && anchorIndex < lastRenderRange.end) {
+                // anchor in viewport
+                // resized element in viewport and above the anchor
+                heightDiff = size - originalSize;
+            }
+            else {
+                heightDiff = 0;
+            }
+        }
+        this.rangeMap.splice(index, 1, [{ size: size }]);
+        this.items[index].size = size;
+        this.render(lastRenderRange, Math.max(0, this.lastRenderTop + heightDiff), this.lastRenderHeight, undefined, undefined, true);
+        this.setScrollTop(this.lastRenderTop);
+        this.eventuallyUpdateScrollDimensions();
+        if (this.supportDynamicHeights) {
+            this._rerender(this.lastRenderTop, this.lastRenderHeight);
+        }
+        else {
+            this._onDidChangeContentHeight.fire(this.contentHeight); // otherwise fired in _rerender()
+        }
+    }
     createRangeMap(paddingTop) {
         return new RangeMap(paddingTop);
     }
@@ -394,7 +437,9 @@ class ListView {
         const renderedRestRange = shift(previousRenderedRestRange, delta);
         const updateRange = Range.intersect(renderRange, renderedRestRange);
         for (let i = updateRange.start; i < updateRange.end; i++) {
-            this.updateItemInDOM(this.items[i], i);
+            if (this.items[i].row) {
+                this.updateItemInDOM(this.items[i], i);
+            }
         }
         const removeRanges = Range.relativeComplement(renderedRestRange, renderRange);
         for (const range of removeRanges) {
@@ -405,18 +450,24 @@ class ListView {
         const unrenderedRestRanges = previousUnrenderedRestRanges.map(r => shift(r, delta));
         const elementsRange = { start, end: start + elements.length };
         const insertRanges = [elementsRange, ...unrenderedRestRanges].map(r => Range.intersect(renderRange, r)).reverse();
+        const insertedItems = [];
         for (const range of insertRanges) {
             for (let i = range.end - 1; i >= range.start; i--) {
                 const item = this.items[i];
                 const rows = rowsToDispose.get(item.templateId);
                 const row = rows?.pop();
                 this.insertItemInDOM(i, row);
+                insertedItems.push(item);
             }
         }
         for (const rows of rowsToDispose.values()) {
             for (const row of rows) {
                 this.cache.release(row);
             }
+        }
+        if (this.horizontalScrolling && insertedItems.length > 0) {
+            this.measureItemWidths(insertedItems);
+            this.eventuallyUpdateScrollWidth();
         }
         this.eventuallyUpdateScrollDimensions();
         if (this.supportDynamicHeights) {
@@ -535,6 +586,7 @@ class ListView {
                 this.updateItemInDOM(this.items[i], i);
             }
         }
+        const insertedItems = [];
         this.cache.transact(() => {
             for (const range of rangesToRemove) {
                 for (let i = range.start; i < range.end; i++) {
@@ -544,9 +596,14 @@ class ListView {
             for (const range of rangesToInsert) {
                 for (let i = range.end - 1; i >= range.start; i--) {
                     this.insertItemInDOM(i);
+                    insertedItems.push(this.items[i]);
                 }
             }
         });
+        if (this.horizontalScrolling && insertedItems.length > 0) {
+            this.measureItemWidths(insertedItems);
+            this.eventuallyUpdateScrollWidth();
+        }
         if (renderLeft !== undefined) {
             this.rowsContainer.style.left = `-${renderLeft}px`;
         }
@@ -560,7 +617,7 @@ class ListView {
         this.lastRenderHeight = renderHeight;
     }
     // DOM operations
-    insertItemInDOM(index, row) {
+    insertItemInDOM(index, row, alreadyRendered = false) {
         const item = this.items[index];
         if (!item.row) {
             if (row) {
@@ -597,32 +654,39 @@ class ListView {
         if (!renderer) {
             throw new Error(`No renderer found for template id ${item.templateId}`);
         }
-        renderer?.renderElement(item.element, index, item.row.templateData, { height: item.size });
+        if (!alreadyRendered) {
+            renderer.renderElement(item.element, index, item.row.templateData, { height: item.size });
+        }
         const uri = this.dnd.getDragURI(item.element);
         item.dragStartDisposable.dispose();
         item.row.domNode.draggable = !!uri;
         if (uri) {
             item.dragStartDisposable = addDisposableListener(item.row.domNode, 'dragstart', event => this.onDragStart(item.element, uri, event));
         }
-        if (this.horizontalScrolling) {
-            this.measureItemWidth(item);
-            this.eventuallyUpdateScrollWidth();
-        }
     }
-    measureItemWidth(item) {
-        if (!item.row || !item.row.domNode) {
-            return;
+    measureItemWidths(items) {
+        const itemsWithRows = [];
+        for (const item of items) {
+            if (item.row) {
+                itemsWithRows.push({ item, domNode: item.row.domNode });
+            }
         }
-        item.row.domNode.style.width = 'fit-content';
-        item.width = getContentWidth(item.row.domNode);
-        const style = getWindow(item.row.domNode).getComputedStyle(item.row.domNode);
-        if (style.paddingLeft) {
-            item.width += parseFloat(style.paddingLeft);
+        for (const { domNode } of itemsWithRows) {
+            domNode.style.width = 'fit-content';
         }
-        if (style.paddingRight) {
-            item.width += parseFloat(style.paddingRight);
+        for (const { item, domNode } of itemsWithRows) {
+            item.width = getContentWidth(domNode);
+            const style = getWindow(domNode).getComputedStyle(domNode);
+            if (style.paddingLeft) {
+                item.width += parseFloat(style.paddingLeft);
+            }
+            if (style.paddingRight) {
+                item.width += parseFloat(style.paddingRight);
+            }
         }
-        item.row.domNode.style.width = '';
+        for (const { domNode } of itemsWithRows) {
+            domNode.style.width = '';
+        }
     }
     updateItemInDOM(item, index) {
         item.row.domNode.style.top = `${this.elementTop(index)}px`;
@@ -683,6 +747,7 @@ class ListView {
     get onMouseMiddleClick() { return Event.filter(Event.map(this.disposables.add(new DomEmitter(this.domNode, 'auxclick')).event, e => this.toMouseEvent(e), this.disposables), e => e.browserEvent.button === 1, this.disposables); }
     get onMouseDown() { return Event.map(this.disposables.add(new DomEmitter(this.domNode, 'mousedown')).event, e => this.toMouseEvent(e), this.disposables); }
     get onMouseOver() { return Event.map(this.disposables.add(new DomEmitter(this.domNode, 'mouseover')).event, e => this.toMouseEvent(e), this.disposables); }
+    get onMouseMove() { return Event.map(this.disposables.add(new DomEmitter(this.domNode, 'mousemove')).event, e => this.toMouseEvent(e), this.disposables); }
     get onMouseOut() { return Event.map(this.disposables.add(new DomEmitter(this.domNode, 'mouseout')).event, e => this.toMouseEvent(e), this.disposables); }
     get onContextMenu() { return Event.any(Event.map(this.disposables.add(new DomEmitter(this.domNode, 'contextmenu')).event, e => this.toMouseEvent(e), this.disposables), Event.map(this.disposables.add(new DomEmitter(this.domNode, EventType.Contextmenu)).event, e => this.toGestureEvent(e), this.disposables)); }
     get onTouchStart() { return Event.map(this.disposables.add(new DomEmitter(this.domNode, 'touchstart')).event, e => this.toTouchEvent(e), this.disposables); }
@@ -752,55 +817,64 @@ class ListView {
         this.dnd.onDragStart?.(this.currentDragData, event);
     }
     onPotentialSelectionStart(e) {
-        this.currentSelectionDisposable.dispose();
         const doc = getDocument(this.domNode);
+        this.currentSelectionMovementDisposable.clear();
+        if (e.shiftKey && this.currentSelectionBounds && doc.getSelection()?.isCollapsed === false) {
+            this.currentSelectionMovementDisposable.value = this.createSelectionMovementStore(doc);
+            return;
+        }
+        this.currentSelectionDisposable.clear();
         // Set up both the 'movement store' for watching the mouse, and the
         // 'selection store' which lasts as long as there's a selection, even
         // after the usr has stopped modifying it.
-        const selectionStore = this.currentSelectionDisposable = new DisposableStore();
-        const movementStore = selectionStore.add(new DisposableStore());
+        const selectionStore = new DisposableStore();
+        this.currentSelectionDisposable.value = selectionStore;
+        this.currentSelectionMovementDisposable.value = this.createSelectionMovementStore(doc);
         // The selection events we get from the DOM are fairly limited and we lack a 'selection end' event.
         // Selection events also don't tell us where the input doing the selection is. So, make a poor
         // assumption that a user is using the mouse, and base our events on that.
+        selectionStore.add(toDisposable(() => {
+            this.currentSelectionMovementDisposable.clear();
+            const previousRenderRange = this.getRenderRange(this.lastRenderTop, this.lastRenderHeight);
+            this.currentSelectionBounds = undefined;
+            this.render(previousRenderRange, this.lastRenderTop, this.lastRenderHeight, undefined, undefined);
+        }));
+        selectionStore.add(addDisposableListener(doc, 'selectionchange', () => {
+            const selection = doc.getSelection();
+            // if the selection changed _after_ mouseup, it's from clearing the list or similar, so teardown
+            if (!selection || selection.isCollapsed) {
+                if (!this.currentSelectionMovementDisposable.value) {
+                    this.currentSelectionDisposable.clear();
+                }
+                return;
+            }
+            let start = this.getIndexOfListElement(selection.anchorNode);
+            let end = this.getIndexOfListElement(selection.focusNode);
+            if (start !== undefined && end !== undefined) {
+                if (end < start) {
+                    [start, end] = [end, start];
+                }
+                this.currentSelectionBounds = { start, end };
+            }
+        }));
+    }
+    createSelectionMovementStore(doc) {
+        const movementStore = new DisposableStore();
         movementStore.add(addDisposableListener(this.domNode, 'selectstart', () => {
             movementStore.add(addDisposableListener(doc, 'mousemove', e => {
                 if (doc.getSelection()?.isCollapsed === false) {
                     this.setupDragAndDropScrollTopAnimation(e);
                 }
             }));
-            // The selection is cleared either on mouseup if there's no selection, or on next mousedown
-            // when `this.currentSelectionDisposable` is reset.
-            selectionStore.add(toDisposable(() => {
-                const previousRenderRange = this.getRenderRange(this.lastRenderTop, this.lastRenderHeight);
-                this.currentSelectionBounds = undefined;
-                this.render(previousRenderRange, this.lastRenderTop, this.lastRenderHeight, undefined, undefined);
-            }));
-            selectionStore.add(addDisposableListener(doc, 'selectionchange', () => {
-                const selection = doc.getSelection();
-                // if the selection changed _after_ mouseup, it's from clearing the list or similar, so teardown
-                if (!selection || selection.isCollapsed) {
-                    if (movementStore.isDisposed) {
-                        selectionStore.dispose();
-                    }
-                    return;
-                }
-                let start = this.getIndexOfListElement(selection.anchorNode);
-                let end = this.getIndexOfListElement(selection.focusNode);
-                if (start !== undefined && end !== undefined) {
-                    if (end < start) {
-                        [start, end] = [end, start];
-                    }
-                    this.currentSelectionBounds = { start, end };
-                }
-            }));
         }));
         movementStore.add(addDisposableListener(doc, 'mouseup', () => {
-            movementStore.dispose();
+            this.currentSelectionMovementDisposable.clear();
             this.teardownDragAndDropScrollTopAnimation();
             if (doc.getSelection()?.isCollapsed !== false) {
-                selectionStore.dispose();
+                this.currentSelectionDisposable.clear();
             }
         }));
+        return movementStore;
     }
     getIndexOfListElement(element) {
         if (!element || !this.domNode.contains(element)) {
@@ -1002,9 +1076,11 @@ class ListView {
         return undefined;
     }
     getVisibleRange(renderTop, renderHeight) {
+        const start = this.rangeMap.indexAt(renderTop);
         return {
-            start: this.rangeMap.indexAt(renderTop),
-            end: this.rangeMap.indexAfter(renderTop + renderHeight - 1)
+            start,
+            // Clamp so a collapsed viewport (renderHeight <= 0) cannot produce an inverted range.
+            end: Math.max(start, this.rangeMap.indexAfter(renderTop + renderHeight - 1))
         };
     }
     getRenderRange(renderTop, renderHeight) {
@@ -1021,91 +1097,120 @@ class ListView {
      * to be probed for dynamic height. Adjusts scroll height and top if necessary.
      */
     _rerender(renderTop, renderHeight, inSmoothScrolling) {
-        const previousRenderRange = this.getRenderRange(renderTop, renderHeight);
+        let previousRenderRange = this.getRenderRange(renderTop, renderHeight);
+        const retainedMeasurements = new Map();
         // Let's remember the second element's position, this helps in scrolling up
         // and preserving a linear upwards scroll movement
         let anchorElementIndex;
         let anchorElementTopDelta;
-        if (renderTop === this.elementTop(previousRenderRange.start)) {
-            anchorElementIndex = previousRenderRange.start;
-            anchorElementTopDelta = 0;
-        }
-        else if (previousRenderRange.end - previousRenderRange.start > 1) {
-            anchorElementIndex = previousRenderRange.start + 1;
-            anchorElementTopDelta = this.elementTop(anchorElementIndex) - renderTop;
-        }
-        let heightDiff = 0;
-        while (true) {
-            const renderRange = this.getRenderRange(renderTop, renderHeight);
-            let didChange = false;
-            for (let i = renderRange.start; i < renderRange.end; i++) {
-                const diff = this.probeDynamicHeight(i);
-                if (diff !== 0) {
-                    this.rangeMap.splice(i, 1, [this.items[i]]);
-                }
-                heightDiff += diff;
-                didChange = didChange || diff !== 0;
+        const updateAnchorElement = () => {
+            anchorElementIndex = undefined;
+            anchorElementTopDelta = undefined;
+            if (renderTop === this.elementTop(previousRenderRange.start)) {
+                anchorElementIndex = previousRenderRange.start;
+                anchorElementTopDelta = 0;
             }
-            if (!didChange) {
-                if (heightDiff !== 0) {
-                    this.eventuallyUpdateScrollDimensions();
-                }
-                const unrenderRanges = Range.relativeComplement(previousRenderRange, renderRange);
-                for (const range of unrenderRanges) {
-                    for (let i = range.start; i < range.end; i++) {
-                        if (this.items[i].row) {
-                            this.removeItemFromDOM(i);
+            else if (previousRenderRange.end - previousRenderRange.start > 1) {
+                anchorElementIndex = previousRenderRange.start + 1;
+                anchorElementTopDelta = this.elementTop(anchorElementIndex) - renderTop;
+            }
+        };
+        updateAnchorElement();
+        let heightDiff = 0;
+        try {
+            while (true) {
+                const renderRange = this.getRenderRange(renderTop, renderHeight);
+                let didChange = false;
+                const probedItems = this.items.slice(renderRange.start, renderRange.end);
+                const dynamicHeightDiffs = this.probeDynamicHeights(renderRange, retainedMeasurements);
+                const modelDidChange = this.items.length < renderRange.end
+                    || probedItems.some((item, index) => item !== this.items[renderRange.start + index]);
+                if (modelDidChange) {
+                    for (let index = 0; index < probedItems.length; index++) {
+                        const diff = dynamicHeightDiffs[index];
+                        const currentIndex = this.items.indexOf(probedItems[index]);
+                        if (diff !== 0 && currentIndex !== -1) {
+                            this.rangeMap.splice(currentIndex, 1, [probedItems[index]]);
+                            heightDiff += diff;
                         }
                     }
-                }
-                const renderRanges = Range.relativeComplement(renderRange, previousRenderRange).reverse();
-                for (const range of renderRanges) {
-                    for (let i = range.end - 1; i >= range.start; i--) {
-                        this.insertItemInDOM(i);
-                    }
+                    this.disposeDynamicHeightMeasurements(retainedMeasurements);
+                    previousRenderRange = this.getRenderRange(renderTop, renderHeight);
+                    updateAnchorElement();
+                    continue;
                 }
                 for (let i = renderRange.start; i < renderRange.end; i++) {
-                    if (this.items[i].row) {
-                        this.updateItemInDOM(this.items[i], i);
+                    const diff = dynamicHeightDiffs[i - renderRange.start];
+                    if (diff !== 0) {
+                        this.rangeMap.splice(i, 1, [this.items[i]]);
                     }
+                    heightDiff += diff;
+                    didChange = didChange || diff !== 0;
                 }
-                if (typeof anchorElementIndex === 'number') {
-                    // To compute a destination scroll top, we need to take into account the current smooth scrolling
-                    // animation, and then reuse it with a new target (to avoid prolonging the scroll)
-                    // See https://github.com/microsoft/vscode/issues/104144
-                    // See https://github.com/microsoft/vscode/pull/104284
-                    // See https://github.com/microsoft/vscode/issues/107704
-                    const deltaScrollTop = this.scrollable.getFutureScrollPosition().scrollTop - renderTop;
-                    const newScrollTop = this.elementTop(anchorElementIndex) - anchorElementTopDelta + deltaScrollTop;
-                    this.setScrollTop(newScrollTop, inSmoothScrolling);
+                if (!didChange) {
+                    if (heightDiff !== 0) {
+                        this.eventuallyUpdateScrollDimensions();
+                    }
+                    const unrenderRanges = Range.relativeComplement(previousRenderRange, renderRange);
+                    for (const range of unrenderRanges) {
+                        for (let i = range.start; i < range.end; i++) {
+                            if (this.items[i].row) {
+                                this.removeItemFromDOM(i);
+                            }
+                        }
+                    }
+                    const insertedItems = [];
+                    for (let i = renderRange.end - 1; i >= renderRange.start; i--) {
+                        const item = this.items[i];
+                        if (!item.row) {
+                            const measurement = retainedMeasurements.get(i);
+                            const canPromoteMeasurement = measurement?.item === item && measurement.item.templateId === item.templateId;
+                            if (canPromoteMeasurement) {
+                                retainedMeasurements.delete(i);
+                            }
+                            this.insertItemInDOM(i, canPromoteMeasurement ? measurement.row : undefined, canPromoteMeasurement);
+                            insertedItems.push(item);
+                        }
+                    }
+                    this.disposeDynamicHeightMeasurements(retainedMeasurements);
+                    if (this.horizontalScrolling && insertedItems.length > 0) {
+                        this.measureItemWidths(insertedItems);
+                        this.eventuallyUpdateScrollWidth();
+                    }
+                    for (let i = renderRange.start; i < renderRange.end; i++) {
+                        if (this.items[i].row) {
+                            this.updateItemInDOM(this.items[i], i);
+                        }
+                    }
+                    if (typeof anchorElementIndex === 'number') {
+                        // To compute a destination scroll top, we need to take into account the current smooth scrolling
+                        // animation, and then reuse it with a new target (to avoid prolonging the scroll)
+                        // See https://github.com/microsoft/vscode/issues/104144
+                        // See https://github.com/microsoft/vscode/pull/104284
+                        // See https://github.com/microsoft/vscode/issues/107704
+                        const deltaScrollTop = this.scrollable.getFutureScrollPosition().scrollTop - renderTop;
+                        const newScrollTop = this.elementTop(anchorElementIndex) - anchorElementTopDelta + deltaScrollTop;
+                        this.setScrollTop(newScrollTop, inSmoothScrolling);
+                    }
+                    this._onDidChangeContentHeight.fire(this.contentHeight);
+                    return;
                 }
-                this._onDidChangeContentHeight.fire(this.contentHeight);
-                return;
             }
+        }
+        finally {
+            this.disposeDynamicHeightMeasurements(retainedMeasurements);
         }
     }
     probeDynamicHeight(index) {
         const item = this.items[index];
-        const diff = this.probeDynamicHeightForItem(item, index);
-        if (diff > 0) {
-            this.virtualDelegate.setDynamicHeight?.(item.element, item.size);
-        }
-        return diff;
+        return this.probeDynamicHeightForItem(item, index);
     }
     probeDynamicHeightForItem(item, index) {
-        if (!!this.virtualDelegate.getDynamicHeight) {
-            const newSize = this.virtualDelegate.getDynamicHeight(item.element);
-            if (newSize !== null) {
-                const size = item.size;
-                item.size = newSize;
-                item.lastDynamicHeightWidth = this.renderWidth;
-                return newSize - size;
-            }
+        const delegateHeightDiff = this.probeDynamicHeightFromDelegate(item);
+        if (delegateHeightDiff !== undefined) {
+            return delegateHeightDiff;
         }
-        if (!item.hasDynamicHeight || item.lastDynamicHeightWidth === this.renderWidth) {
-            return 0;
-        }
-        if (!!this.virtualDelegate.hasDynamicHeight && !this.virtualDelegate.hasDynamicHeight(item.element)) {
+        if (!this.shouldProbeDynamicHeight(item)) {
             return 0;
         }
         const size = item.size;
@@ -1121,6 +1226,7 @@ class ListView {
                 }
             }
             item.lastDynamicHeightWidth = this.renderWidth;
+            this.publishDynamicHeight(item);
             return item.size - size;
         }
         const { row } = this.cache.alloc(item.templateId);
@@ -1134,15 +1240,103 @@ class ListView {
         item.size = row.domNode.offsetHeight;
         renderer.disposeElement?.(item.element, index, row.templateData);
         item.lastDynamicHeightWidth = this.renderWidth;
+        this.publishDynamicHeight(item);
         row.domNode.remove();
         this.cache.release(row);
         return item.size - size;
+    }
+    probeDynamicHeights(range, retainedMeasurements) {
+        const diffs = new Array(range.end - range.start).fill(0);
+        const measurements = [];
+        for (let index = range.start; index < range.end; index++) {
+            const item = this.items[index];
+            const delegateHeightDiff = this.probeDynamicHeightFromDelegate(item);
+            if (delegateHeightDiff !== undefined) {
+                diffs[index - range.start] = delegateHeightDiff;
+                continue;
+            }
+            if (!this.shouldProbeDynamicHeight(item) || retainedMeasurements.has(index)) {
+                continue;
+            }
+            if (item.row) {
+                item.row.domNode.style.height = '';
+                measurements.push({ item, index, previousSize: item.size, row: item.row, rendered: true });
+                continue;
+            }
+            const { row } = this.cache.alloc(item.templateId);
+            const measurement = { item, index, previousSize: item.size, row, rendered: false };
+            retainedMeasurements.set(index, measurement);
+            measurements.push(measurement);
+            row.domNode.style.height = '';
+            this.rowsContainer.appendChild(row.domNode);
+            const renderer = this.renderers.get(item.templateId);
+            if (!renderer) {
+                throw new BugIndicatingError('Missing renderer for templateId: ' + item.templateId);
+            }
+            measurement.rendered = true;
+            renderer.renderElement(item.element, index, row.templateData, { height: item.size });
+        }
+        for (const measurement of measurements) {
+            measurement.item.size = measurement.row.domNode.offsetHeight;
+        }
+        for (const measurement of measurements) {
+            const { item, index, previousSize, row } = measurement;
+            if (item.size === 0) {
+                if (!isAncestor(row.domNode, getWindow(row.domNode).document.body)) {
+                    console.warn('Measuring item node that is not in DOM! Add ListView to the DOM before measuring row height!', new Error().stack);
+                }
+                else {
+                    console.warn('Measured item node at 0px- ensure that ListView is not display:none before measuring row height!', new Error().stack);
+                }
+            }
+            item.lastDynamicHeightWidth = this.renderWidth;
+            this.publishDynamicHeight(item);
+            diffs[index - range.start] = item.size - previousSize;
+        }
+        return diffs;
+    }
+    disposeDynamicHeightMeasurements(measurements) {
+        for (const [measurementIndex, { item, index, row, rendered }] of measurements) {
+            measurements.delete(measurementIndex);
+            try {
+                if (rendered) {
+                    this.renderers.get(item.templateId)?.disposeElement?.(item.element, index, row.templateData, { height: item.size });
+                }
+            }
+            finally {
+                row.domNode.remove();
+                this.cache.release(row);
+            }
+        }
+    }
+    probeDynamicHeightFromDelegate(item) {
+        const newSize = this.virtualDelegate.getDynamicHeight?.(item.element);
+        if (newSize === undefined || newSize === null) {
+            return undefined;
+        }
+        const size = item.size;
+        item.size = newSize;
+        item.lastDynamicHeightWidth = this.renderWidth;
+        this.publishDynamicHeight(item);
+        return newSize - size;
+    }
+    shouldProbeDynamicHeight(item) {
+        if (!item.hasDynamicHeight || item.lastDynamicHeightWidth === this.renderWidth) {
+            return false;
+        }
+        return !this.virtualDelegate.hasDynamicHeight || this.virtualDelegate.hasDynamicHeight(item.element);
+    }
+    publishDynamicHeight(item) {
+        if (item.size > 0) {
+            this.virtualDelegate.setDynamicHeight?.(item.element, item.size);
+        }
     }
     getElementDomId(index) {
         return `${this.domId}_${index}`;
     }
     // Dispose
     dispose() {
+        this.currentSelectionDisposable.clear();
         for (const item of this.items) {
             item.dragStartDisposable.dispose();
             item.checkedDisposable.dispose();
@@ -1175,6 +1369,9 @@ __decorate([
 __decorate([
     memoize
 ], ListView.prototype, "onMouseOver", null);
+__decorate([
+    memoize
+], ListView.prototype, "onMouseMove", null);
 __decorate([
     memoize
 ], ListView.prototype, "onMouseOut", null);

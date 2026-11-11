@@ -2,25 +2,18 @@
 description: Компонент с установленными отступами, которые отличаются в зависимости от платформы.
 ---
 
-<Overview group="layout">
-
-# Div [tag:component]
+# Div \[tag:component]
 
 Компонент с установленными отступами, которые отличаются в зависимости от платформы.
 Необходим, когда есть какой-то блок с информацией, у которого должны быть стандартные отступы,
 чтобы визуально выровнять его с другими элементами на странице.
 
-</Overview>
-
-{/* @example-description: Базовое использование `Div` для применения стандартных внутренних отступов. */}
-<Playground>
-  ```jsx
-  <Div style={{ border: '1px dashed blue' }}>
-    {/** !!! свойство style используется в демонстрационных целях !!! **/}
-    <Div style={{ border: '1px dashed green' }}>Контент</Div>
-  </Div>
-  ```
-</Playground>
+```jsx
+<Div style={{ border: '1px dashed blue' }}>
+  {/** !!! свойство style используется в демонстрационных целях !!! **/}
+  <Div style={{ border: '1px dashed green' }}>Контент</Div>
+</Div>
+```
 
 ## Пример использования
 
@@ -30,19 +23,16 @@ description: Компонент с установленными отступам
 (или свой пользовательский компонент) и хотите добиться визуального выравнивания, то
 используйте компонент `Div`.
 
-{/* @example-description: Сравнение контента без отступов и с отступами внутри `Div` в составе `Group`. */}
-<Playground>
-  ```jsx
-  <Group mode="card" header={<Header size="s">Разделы</Header>}>
-    <Text>Примечание к странице без стандартных отступов</Text>
-    <Div>
-      <Text>Примечание к странице с отступами</Text>
-    </Div>
-    <SimpleCell onClick={() => {}}>Аккаунт</SimpleCell>
-    <SimpleCell onClick={() => {}}>Настройки</SimpleCell>
-  </Group>
-  ```
-</Playground>
+```jsx
+<Group layoutMode="card" header={<Header size="s">Разделы</Header>}>
+  <Text>Примечание к странице без стандартных отступов</Text>
+  <Div>
+    <Text>Примечание к странице с отступами</Text>
+  </Div>
+  <SimpleCell onClick={() => {}}>Аккаунт</SimpleCell>
+  <SimpleCell onClick={() => {}}>Настройки</SimpleCell>
+</Group>
+```
 
 ## Альтернатива
 
@@ -67,9 +57,9 @@ function MyComponent({ children }) {
 }
 ```
 
-## Свойства и методы [#api]
+## Свойства и методы \[#api]
 
-| Свойство | Тип | По умолчанию | Описание |
-| --- | --- | --- | --- |
-| `getRootRef` | `Ref<HTMLDivElement>` | `-` |  |
-
+| Свойство     | Тип                   | По умолчанию | Описание |
+| ------------ | --------------------- | ------------ | -------- |
+| `getRootRef` | `Ref<HTMLDivElement>` | `-`          |          |
+| `ref`        | `Ref<HTMLDivElement>` | `-`          |          |

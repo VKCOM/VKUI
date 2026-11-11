@@ -102,7 +102,7 @@ let Banner = class Banner extends Disposable {
         // Action
         const actionBarContainer = append(this.element, $('div.action-container'));
         this.actionBar = this._register(new ActionBar(actionBarContainer));
-        this.actionBar.push(this._register(new Action('banner.close', localize(1585, "Close Banner"), ThemeIcon.asClassName(widgetClose), true, () => {
+        this.actionBar.push(this._register(new Action('banner.close', localize(1607, "Close Banner"), ThemeIcon.asClassName(widgetClose), true, () => {
             if (typeof item.onClose === 'function') {
                 item.onClose();
             }

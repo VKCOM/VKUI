@@ -90,7 +90,7 @@ function createDiffEditor(domElement, options, override) {
 }
 function createMultiFileDiffEditor(domElement, override) {
     const instantiationService = StandaloneServices.initialize(override || {});
-    return new MultiDiffEditorWidget(domElement, {}, instantiationService);
+    return new MultiDiffEditorWidget(domElement, {}, { variant: 'noCardsNonCompact' }, instantiationService);
 }
 /**
  * Add a command.

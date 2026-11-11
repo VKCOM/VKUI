@@ -3,23 +3,14 @@ description: Компонент для выбора диапазона дат, �
 tags: forms
 ---
 
-<Overview group="dates">
-
-# CalendarRange [tag:component]
+# CalendarRange \[tag:component]
 
 Компонент для выбора диапазона дат, позволяет пользователю выбрать начальную и конечную даты в календаре.
 Компонент отображает два месяца одновременно для удобства выбора длинных диапазонов.
 
-</Overview>
-
-import { BlockWrapper } from '@/components/wrappers';
-
-{/* @example-description: Базовый выбор диапазона дат с предустановленными начальной и конечной датами. */}
-<Playground Wrapper={BlockWrapper}>
-  ```jsx
-  <CalendarRange defaultValue={[new Date(2024, 2, 1), new Date(2024, 2, 10)]} />
-  ```
-</Playground>
+```jsx
+<CalendarRange defaultValue={[new Date(2024, 2, 1), new Date(2024, 2, 10)]} />
+```
 
 ## Применение компонента
 
@@ -37,7 +28,7 @@ import { BlockWrapper } from '@/components/wrappers';
 Компонент поддерживает работу как в неконтролируемом режиме, так и контролируемом. Это стандартное поведение
 React-компонентов, прочитать про это можно в [документации React](https://react.dev/reference/react-dom/components/input#controlling-an-input-with-a-state-variable).
 
-Для использования неконтролируемого режима достаточно просто _не_ передавать `value` или передавать `defaultValue`, если
+Для использования неконтролируемого режима достаточно просто *не* передавать `value` или передавать `defaultValue`, если
 требуется задать значение по умолчанию.
 Для контролируемого режима используйте связку свойств `value`/`onChange` для задания значения и его изменения.
 
@@ -57,7 +48,7 @@ const [date, setDate] = React.useState([new Date(2024, 2, 1), new Date(2024, 2, 
 
 > Название месяцев и дней недели определяется исходя из значения `locale` в `ConfigProvider`.
 
-## Тестирование (e2e) [#e2e]
+## Тестирование (e2e) \[#e2e]
 
 Для тестирования компонента доступны следующие data-атрибуты:
 
@@ -73,41 +64,41 @@ const [date, setDate] = React.useState([new Date(2024, 2, 1), new Date(2024, 2, 
 />
 ```
 
-## Доступность (a11y) [#a11y]
+## Доступность (a11y) \[#a11y]
 
 Компонент обеспечивает базовую доступность через:
 
-- корректную семантическую разметку;
-- поддержку клавиатурной навигации;
-- `aria`-атрибуты для всех интерактивных элементов.
+* корректную семантическую разметку;
+* поддержку клавиатурной навигации;
+* `aria`-атрибуты для всех интерактивных элементов.
 
 При использовании компонента убедитесь, что все текстовые метки
 (`changeMonthLabel`, `changeYearLabel` и остальные `*Label` свойства) корректно описывают действия для пользователей скринридеров.
 
-## Свойства и методы [#api]
+## Свойства и методы \[#api]
 
-| Свойство | Тип | По умолчанию | Описание |
-| --- | --- | --- | --- |
-| `changeDayLabel` | `string` | `-` | **Deprecated**: Since 7.4.0. Будет удалено в **VKUI v9**.  Использовалось для задания aria-label для контейнера дней в календаре. Теперь этот контейнер является таблицей (с помощью role="grid") и в aria-label рендерится текущий открытый в календаре месяц и год. |
-| `changeMonthLabel` | `string` | `Изменить месяц` | `aria-label` для селектора месяца. |
-| `changeYearLabel` | `string` | `Изменить год` | `aria-label` для селектора года. |
-| `dayTestId` | `string \| ((day: Date) => string)` | `-` | Передает атрибут `data-testid` для дня в календаре. |
-| `defaultValue` | `DateRangeType \| null` | `-` | Начальный промежуток при монтировании. |
-| `disableFuture` | `boolean` | `-` | Запрещает выбор даты в будущем. Применяется, если не задано `shouldDisableDate`. |
-| `disablePast` | `boolean` | `-` | Запрещает выбор даты в прошлом. Применяется, если не заданы `shouldDisableDate` и `disableFuture`. |
-| `disablePickers` | `boolean` | `-` | Отключает селекторы выбора месяца/года. |
-| `getRootRef` | `Ref<HTMLDivElement>` | `-` |  |
-| `leftPartHeaderTestsData` | `CalendarHeaderTestsProps` | `-` | Передает атрибуты `data-testid` для интерактивных элементов в заголовке календаря в левой части. |
-| `listenDayChangesForUpdate` | `boolean` | `-` | Следить за изменениями дней для обновления UI. |
-| `nextMonthIcon` | `ReactNode` | `-` | Кастомная иконка для кнопки следующего месяца. |
-| `nextMonthLabel` | `string` | `Следующий месяц` | `aria-label` для кнопки следующего месяца. |
-| `onChange` | `((value: DateRangeType) => void)` | `-` | Обработчик изменения выбранного промежутка. |
-| `onClose` | `(() => void)` | `-` | **Deprecated**: Since 7.3.0. Будет удалено в **VKUI v9**. |
-| `prevMonthIcon` | `ReactNode` | `-` | Кастомная иконка для кнопки предыдущего месяца. |
-| `prevMonthLabel` | `string` | `Предыдущий месяц` | `aria-label` для кнопки предыдущего месяца. |
-| `renderDayContent` | `((day: Date) => ReactNode)` | `-` | Кастомизация отображения содержимого дня. |
-| `rightPartHeaderTestsData` | `CalendarHeaderTestsProps` | `-` | Передает атрибуты `data-testid` для интерактивных элементов в заголовке календаря в правой части. |
-| `shouldDisableDate` | `((value: Date) => boolean)` | `-` | Функция для проверки запрета выбора даты. |
-| `value` | `DateRangeType \| null` | `-` | Текущий выбранный промежуток. |
-| `weekStartsOn` | `0 \| 1 \| 2 \| 3 \| 4 \| 5 \| 6` | `1` | День недели, с которого начинается неделя. |
-
+| Свойство                    | Тип                                 | По умолчанию       | Описание                                                                                                                                                                                                                                                              |
+| --------------------------- | ----------------------------------- | ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `changeDayLabel`            | `string`                            | `-`                | **Deprecated**: Since 7.4.0. Будет удалено в **VKUI v9**.  Использовалось для задания aria-label для контейнера дней в календаре. Теперь этот контейнер является таблицей (с помощью role="grid") и в aria-label рендерится текущий открытый в календаре месяц и год. |
+| `changeMonthLabel`          | `string`                            | `Изменить месяц`   | `aria-label` для селектора месяца.                                                                                                                                                                                                                                    |
+| `changeYearLabel`           | `string`                            | `Изменить год`     | `aria-label` для селектора года.                                                                                                                                                                                                                                      |
+| `dayTestId`                 | `string \| ((day: Date) => string)` | `-`                | Передает атрибут `data-testid` для дня в календаре.                                                                                                                                                                                                                   |
+| `defaultValue`              | `DateRangeType \| null`             | `-`                | Начальный промежуток при монтировании.                                                                                                                                                                                                                                |
+| `disableFuture`             | `boolean`                           | `-`                | Запрещает выбор даты в будущем. Применяется, если не задано `shouldDisableDate`.                                                                                                                                                                                      |
+| `disablePast`               | `boolean`                           | `-`                | Запрещает выбор даты в прошлом. Применяется, если не заданы `shouldDisableDate` и `disableFuture`.                                                                                                                                                                    |
+| `disablePickers`            | `boolean`                           | `-`                | Отключает селекторы выбора месяца/года.                                                                                                                                                                                                                               |
+| `getRootRef`                | `Ref<HTMLDivElement>`               | `-`                |                                                                                                                                                                                                                                                                       |
+| `leftPartHeaderTestsData`   | `CalendarHeaderTestsProps`          | `-`                | Передает атрибуты `data-testid` для интерактивных элементов в заголовке календаря в левой части.                                                                                                                                                                      |
+| `listenDayChangesForUpdate` | `boolean`                           | `-`                | Следить за изменениями дней для обновления UI.                                                                                                                                                                                                                        |
+| `nextMonthIcon`             | `ReactNode`                         | `-`                | Кастомная иконка для кнопки следующего месяца.                                                                                                                                                                                                                        |
+| `nextMonthLabel`            | `string`                            | `Следующий месяц`  | `aria-label` для кнопки следующего месяца.                                                                                                                                                                                                                            |
+| `onChange`                  | `((value: DateRangeType) => void)`  | `-`                | Обработчик изменения выбранного промежутка.                                                                                                                                                                                                                           |
+| `onClose`                   | `(() => void)`                      | `-`                | **Deprecated**: Since 7.3.0. Будет удалено в **VKUI v9**.                                                                                                                                                                                                             |
+| `prevMonthIcon`             | `ReactNode`                         | `-`                | Кастомная иконка для кнопки предыдущего месяца.                                                                                                                                                                                                                       |
+| `prevMonthLabel`            | `string`                            | `Предыдущий месяц` | `aria-label` для кнопки предыдущего месяца.                                                                                                                                                                                                                           |
+| `ref`                       | `Ref<HTMLDivElement>`               | `-`                |                                                                                                                                                                                                                                                                       |
+| `renderDayContent`          | `((day: Date) => ReactNode)`        | `-`                | Кастомизация отображения содержимого дня.                                                                                                                                                                                                                             |
+| `rightPartHeaderTestsData`  | `CalendarHeaderTestsProps`          | `-`                | Передает атрибуты `data-testid` для интерактивных элементов в заголовке календаря в правой части.                                                                                                                                                                     |
+| `shouldDisableDate`         | `((value: Date) => boolean)`        | `-`                | Функция для проверки запрета выбора даты.                                                                                                                                                                                                                             |
+| `value`                     | `DateRangeType \| null`             | `-`                | Текущий выбранный промежуток.                                                                                                                                                                                                                                         |
+| `weekStartsOn`              | `0 \| 1 \| 2 \| 3 \| 4 \| 5 \| 6`   | `1`                | День недели, с которого начинается неделя.                                                                                                                                                                                                                            |

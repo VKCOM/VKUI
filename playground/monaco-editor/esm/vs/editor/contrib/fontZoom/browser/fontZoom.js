@@ -10,7 +10,7 @@ class EditorFontZoomIn extends EditorAction {
     constructor() {
         super({
             id: 'editor.action.fontZoomIn',
-            label: localize2(1054, "Increase Editor Font Size"),
+            label: localize2(1069, "Increase Editor Font Size"),
             precondition: undefined
         });
     }
@@ -22,7 +22,7 @@ class EditorFontZoomOut extends EditorAction {
     constructor() {
         super({
             id: 'editor.action.fontZoomOut',
-            label: localize2(1055, "Decrease Editor Font Size"),
+            label: localize2(1070, "Decrease Editor Font Size"),
             precondition: undefined
         });
     }
@@ -34,7 +34,7 @@ class EditorFontZoomReset extends EditorAction {
     constructor() {
         super({
             id: 'editor.action.fontZoomReset',
-            label: localize2(1056, "Reset Editor Font Size"),
+            label: localize2(1071, "Reset Editor Font Size"),
             precondition: undefined
         });
     }

@@ -14,6 +14,7 @@ import { localize } from '../../../nls.js';
 import { IAccessibilityService } from '../../accessibility/common/accessibility.js';
 import { isICommandActionToggleInfo } from '../../action/common/action.js';
 import { IConfigurationService } from '../../configuration/common/configuration.js';
+import { ICommandService } from '../../commands/common/commands.js';
 import { IContextKeyService } from '../../contextkey/common/contextkey.js';
 import { IContextMenuService, IContextViewService } from '../../contextview/browser/contextView.js';
 import { IInstantiationService } from '../../instantiation/common/instantiation.js';
@@ -32,7 +33,7 @@ import '../../theme/common/colors/minimapColors.js';
 import '../../theme/common/colors/miscColors.js';
 import '../../theme/common/colors/quickpickColors.js';
 import '../../theme/common/colors/searchColors.js';
-import { triggerClickAnimation } from '../../../base/browser/ui/animations/animations.js';
+import { captureAnimationTarget, triggerClickAnimation } from '../../../base/browser/ui/animations/animations.js';
 import { isDark } from '../../theme/common/theme.js';
 import { IThemeService } from '../../theme/common/themeService.js';
 import { hasNativeContextMenu } from '../../window/common/window.js';
@@ -149,15 +150,26 @@ let MenuEntryActionViewItem = class MenuEntryActionViewItem extends ActionViewIt
     async onClick(event) {
         event.preventDefault();
         event.stopPropagation();
-        if (this._options?.onClickAnimation && this.element && !this._accessibilityService.isMotionReduced()) {
-            const icon = this._menuItemAction.item.icon;
-            triggerClickAnimation(this.element, this._options.onClickAnimation, ThemeIcon.isThemeIcon(icon) ? icon : undefined);
-        }
+        const commandAction = this._commandAction;
+        let actionError;
+        const actionRunnerListener = this.actionRunner.onDidRun(event => {
+            if (event.action === commandAction) {
+                actionError = event.error;
+            }
+        });
         try {
-            await this.actionRunner.run(this._commandAction, this._context);
+            const animationTarget = this._options?.onClickAnimation && this.element ? captureAnimationTarget(this.element) : undefined;
+            await this.actionRunner.run(commandAction, this._context);
+            if (!actionError && this._options?.onClickAnimation && animationTarget && !this._accessibilityService.isMotionReduced()) {
+                const icon = this._menuItemAction.item.icon;
+                triggerClickAnimation(animationTarget, this._options.onClickAnimation, ThemeIcon.isThemeIcon(icon) ? icon : undefined);
+            }
         }
         catch (err) {
             this._notificationService.error(err);
+        }
+        finally {
+            actionRunnerListener.dispose();
         }
     }
     render(container) {
@@ -202,7 +214,7 @@ let MenuEntryActionViewItem = class MenuEntryActionViewItem extends ActionViewIt
         if (!this._wantsAltCommand && this._menuItemAction.alt?.enabled) {
             const altTooltip = this._menuItemAction.alt.tooltip || this._menuItemAction.alt.label;
             const altTitleSection = this._keybindingService.appendKeybinding(altTooltip, this._menuItemAction.alt.id, this._contextKeyService);
-            title = localize(1698, "{0}\n[{1}] {2}", title, UILabelProvider.modifierLabels[OS].altKey, altTitleSection);
+            title = localize(1724, "{0}\n[{1}] {2}", title, UILabelProvider.modifierLabels[OS].altKey, altTitleSection);
         }
         return title;
     }
@@ -276,10 +288,10 @@ class TextOnlyMenuEntryActionViewItem extends MenuEntryActionViewItem {
         if (this.label) {
             const kb2 = TextOnlyMenuEntryActionViewItem._symbolPrintEnter(kb);
             if (this._options?.conversational) {
-                this.label.textContent = localize(1699, '{1} to {0}', this._action.label, kb2);
+                this.label.textContent = localize(1725, '{1} to {0}', this._action.label, kb2);
             }
             else {
-                this.label.textContent = localize(1700, '{0} ({1})', this._action.label, kb2);
+                this.label.textContent = localize(1726, '{0} ({1})', this._action.label, kb2);
             }
         }
     }
@@ -331,7 +343,7 @@ SubmenuEntryActionViewItem = __decorate([
     __param(4, IThemeService)
 ], SubmenuEntryActionViewItem);
 let DropdownWithDefaultActionViewItem = class DropdownWithDefaultActionViewItem extends BaseActionViewItem {
-    constructor(submenuAction, options, _keybindingService, _notificationService, _contextMenuService, _menuService, _instaService, _storageService) {
+    constructor(submenuAction, options, _keybindingService, _notificationService, _contextMenuService, _menuService, _instaService, _storageService, _commandService) {
         super(null, submenuAction);
         this._keybindingService = _keybindingService;
         this._notificationService = _notificationService;
@@ -339,6 +351,7 @@ let DropdownWithDefaultActionViewItem = class DropdownWithDefaultActionViewItem 
         this._menuService = _menuService;
         this._instaService = _instaService;
         this._storageService = _storageService;
+        this._commandService = _commandService;
         this._defaultActionDisposables = this._register(new DisposableStore());
         this._container = null;
         this._primaryActionListener = this._register(new MutableDisposable());
@@ -348,10 +361,10 @@ let DropdownWithDefaultActionViewItem = class DropdownWithDefaultActionViewItem 
         let defaultAction;
         const defaultActionId = options?.togglePrimaryAction ? _storageService.get(this._storageKey, 1 /* StorageScope.WORKSPACE */) : undefined;
         if (defaultActionId) {
-            defaultAction = submenuAction.actions.find(a => defaultActionId === a.id);
+            defaultAction = submenuAction.actions.find(a => defaultActionId === a.id && this._canBePrimaryAction(a));
         }
         if (!defaultAction) {
-            defaultAction = submenuAction.actions[0];
+            defaultAction = submenuAction.actions.find(action => this._canBePrimaryAction(action)) ?? submenuAction.actions[0];
         }
         this._defaultAction = this._defaultActionDisposables.add(this._instaService.createInstance(MenuEntryActionViewItem, defaultAction, { keybinding: this._getDefaultActionKeybindingLabel(defaultAction), hoverDelegate: options?.hoverDelegate }));
         const dropdownOptions = {
@@ -367,15 +380,30 @@ let DropdownWithDefaultActionViewItem = class DropdownWithDefaultActionViewItem 
         }
     }
     registerTogglePrimaryActionListener() {
-        this._primaryActionListener.value = this._dropdown.actionRunner.onDidRun((e) => {
-            if (e.action instanceof MenuItemAction) {
-                this.update(e.action);
-            }
-        });
+        this._primaryActionListener.value = this._options?.primaryActionIds?.length
+            ? this._commandService.onDidExecuteCommand(event => {
+                const action = this._action.actions.find(action => action.id === event.commandId);
+                if (action instanceof MenuItemAction && this._canBePrimaryAction(action)) {
+                    this.update(action);
+                }
+            })
+            : this._dropdown.actionRunner.onDidRun((e) => {
+                if (e.action instanceof MenuItemAction) {
+                    this.update(e.action);
+                }
+            });
     }
     update(lastAction) {
+        if (!this._canBePrimaryAction(lastAction)) {
+            return;
+        }
         if (this._options?.togglePrimaryAction) {
-            this._storageService.store(this._storageKey, lastAction.id, 1 /* StorageScope.WORKSPACE */, 1 /* StorageTarget.MACHINE */);
+            if (this._storageService.get(this._storageKey, 1 /* StorageScope.WORKSPACE */) !== lastAction.id) {
+                this._storageService.store(this._storageKey, lastAction.id, 1 /* StorageScope.WORKSPACE */, 1 /* StorageTarget.MACHINE */);
+            }
+        }
+        if (this._defaultAction.action.id === lastAction.id) {
+            return;
         }
         this._defaultActionDisposables.clear();
         this._defaultAction = this._defaultActionDisposables.add(this._instaService.createInstance(MenuEntryActionViewItem, lastAction, { keybinding: this._getDefaultActionKeybindingLabel(lastAction), hoverDelegate: this._options?.hoverDelegate }));
@@ -387,6 +415,9 @@ let DropdownWithDefaultActionViewItem = class DropdownWithDefaultActionViewItem 
         if (this._container) {
             this._defaultAction.render(prepend(this._container, $('.action-container')));
         }
+    }
+    _canBePrimaryAction(action) {
+        return !this._options?.primaryActionIds?.length || this._options.primaryActionIds.includes(action.id);
     }
     _getDefaultActionKeybindingLabel(defaultAction) {
         let defaultActionKeybinding;
@@ -406,14 +437,9 @@ let DropdownWithDefaultActionViewItem = class DropdownWithDefaultActionViewItem 
     set actionRunner(actionRunner) {
         super.actionRunner = actionRunner;
         this._defaultAction.actionRunner = actionRunner;
-        // When togglePrimaryAction is enabled, keep the dropdown's private
-        // action runner so that the onDidRun listener only fires for actions
-        // originating from the dropdown, not from unrelated toolbar buttons.
-        if (!this._options?.togglePrimaryAction) {
+        // Without an allowlist, retain the private runner so only dropdown executions become primary.
+        if (!this._options?.togglePrimaryAction || this._options.primaryActionIds?.length) {
             this._dropdown.actionRunner = actionRunner;
-        }
-        if (this._primaryActionListener.value) {
-            this.registerTogglePrimaryActionListener();
         }
     }
     get actionRunner() {
@@ -475,7 +501,8 @@ DropdownWithDefaultActionViewItem = __decorate([
     __param(4, IContextMenuService),
     __param(5, IMenuService),
     __param(6, IInstantiationService),
-    __param(7, IStorageService)
+    __param(7, IStorageService),
+    __param(8, ICommandService)
 ], DropdownWithDefaultActionViewItem);
 let SubmenuEntrySelectActionViewItem = class SubmenuEntrySelectActionViewItem extends SelectActionViewItem {
     constructor(action, contextViewService, configurationService) {
@@ -512,6 +539,7 @@ function createActionViewItem(instaService, action, options) {
             return instaService.createInstance(DropdownWithDefaultActionViewItem, action, {
                 ...options,
                 togglePrimaryAction: typeof action.item.isSplitButton !== 'boolean' ? action.item.isSplitButton.togglePrimaryAction : false,
+                primaryActionIds: typeof action.item.isSplitButton !== 'boolean' ? action.item.isSplitButton.primaryActionIds : undefined,
             });
         }
         else {

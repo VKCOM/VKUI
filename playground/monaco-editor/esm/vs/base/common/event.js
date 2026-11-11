@@ -168,7 +168,7 @@ var Event;
         return d;
     }
     function debounce(event, merge, delay = 100, leading = false, flushOnListenerRemove = false, leakWarningThreshold, disposable) {
-        let subscription;
+        let subscription = Disposable.None;
         let output = undefined;
         let handle = undefined;
         let numDebouncedCalls = 0;
@@ -721,9 +721,12 @@ class EventProfiling {
     }
 }
 let _globalLeakWarningThreshold = -1;
+let leakageMonitorId = 1;
+function nextLeakageMonitorName() {
+    return (leakageMonitorId++).toString(16).padStart(3, '0');
+}
 class LeakageMonitor {
-    static { this._idPool = 1; }
-    constructor(_errorHandler, threshold, name = (LeakageMonitor._idPool++).toString(16).padStart(3, '0')) {
+    constructor(_errorHandler, threshold, name = nextLeakageMonitorName()) {
         this._errorHandler = _errorHandler;
         this.threshold = threshold;
         this.name = name;
@@ -740,8 +743,9 @@ class LeakageMonitor {
         if (!this._stacks) {
             this._stacks = new Map();
         }
-        const count = (this._stacks.get(stack.value) || 0);
-        this._stacks.set(stack.value, count + 1);
+        const stackKey = stack.value;
+        const count = (this._stacks.get(stackKey) || 0);
+        this._stacks.set(stackKey, count + 1);
         this._warnCountdown -= 1;
         if (this._warnCountdown <= 0) {
             // only warn on first exceed and then every time the limit
@@ -757,8 +761,13 @@ class LeakageMonitor {
             this._errorHandler(error);
         }
         return () => {
-            const count = (this._stacks.get(stack.value) || 0);
-            this._stacks.set(stack.value, count - 1);
+            const count = (this._stacks.get(stackKey) || 0);
+            if (count <= 1) {
+                this._stacks.delete(stackKey);
+            }
+            else {
+                this._stacks.set(stackKey, count - 1);
+            }
         };
     }
     getMostFrequentStack() {
@@ -844,11 +853,19 @@ class Emitter {
     constructor(options) {
         this._size = 0;
         this._options = options;
-        this._leakageMon = (this._options?.leakWarningThreshold)
-            ? new LeakageMonitor(options?.onListenerError ?? onUnexpectedError, this._options?.leakWarningThreshold ?? _globalLeakWarningThreshold, this._options?.leakWarningName) :
-            undefined;
+        if (this._options?.leakWarningThreshold) {
+            this._leakWarningThreshold = this._options?.leakWarningThreshold ?? _globalLeakWarningThreshold;
+            this._leakWarningName = this._options?.leakWarningName ?? nextLeakageMonitorName();
+            this._leakWarningErrorHandler = this._options?.onListenerError ?? onUnexpectedError;
+        }
         this._perfMon = this._options?._profName ? new EventProfiling(this._options._profName) : undefined;
         this._deliveryQueue = this._options?.deliveryQueue;
+    }
+    _getLeakageMonitor() {
+        if (this._leakWarningThreshold === undefined || this._leakWarningName === undefined || this._leakWarningErrorHandler === undefined) {
+            return undefined;
+        }
+        return this._leakageMon ??= new LeakageMonitor(this._leakWarningErrorHandler, this._leakWarningThreshold, this._leakWarningName);
     }
     dispose() {
         if (!this._disposed) {
@@ -879,15 +896,18 @@ class Emitter {
      */
     get event() {
         this._event ??= (callback, thisArgs, disposables) => {
-            if (this._leakageMon && this._size > this._leakageMon.threshold ** 2) {
-                const message = `[${this._leakageMon.name}] REFUSES to accept new listeners because it exceeded its threshold by far (${this._size} vs ${this._leakageMon.threshold})`;
-                console.warn(message);
-                const tuple = this._leakageMon.getMostFrequentStack() ?? ['UNKNOWN stack', -1];
-                const kind = tuple[1] / this._size > 0.3 ? 'dominated' : 'popular';
-                const error = new ListenerRefusalError(kind, `${message}. HINT: Stack shows most frequent listener (${tuple[1]}-times)`, tuple[0], this._size, this._options?.leakWarningName);
-                const errorHandler = this._options?.onListenerError || onUnexpectedError;
-                errorHandler(error);
-                return Disposable.None;
+            if (this._leakWarningThreshold !== undefined && this._size > this._leakWarningThreshold ** 2) {
+                const leakageMon = this._getLeakageMonitor();
+                if (leakageMon) {
+                    const message = `[${leakageMon.name}] REFUSES to accept new listeners because it exceeded its threshold by far (${this._size} vs ${leakageMon.threshold})`;
+                    console.warn(message);
+                    const tuple = leakageMon.getMostFrequentStack() ?? ['UNKNOWN stack', -1];
+                    const kind = tuple[1] / this._size > 0.3 ? 'dominated' : 'popular';
+                    const error = new ListenerRefusalError(kind, `${message}. HINT: Stack shows most frequent listener (${tuple[1]}-times)`, tuple[0], this._size, this._options?.leakWarningName);
+                    const errorHandler = this._options?.onListenerError || onUnexpectedError;
+                    errorHandler(error);
+                    return Disposable.None;
+                }
             }
             if (this._disposed) {
                 // todo: should we warn if a listener is added to a disposed emitter? This happens often
@@ -898,10 +918,13 @@ class Emitter {
             }
             const contained = new UniqueContainer(callback);
             let removeMonitor;
-            if (this._leakageMon && this._size >= Math.ceil(this._leakageMon.threshold * 0.2)) {
-                // check and record this emitter for potential leakage
-                contained.stack = Stacktrace.create();
-                removeMonitor = this._leakageMon.check(contained.stack, this._size + 1);
+            if (this._leakWarningThreshold !== undefined && this._size >= Math.ceil(this._leakWarningThreshold * 0.2)) {
+                const leakageMon = this._getLeakageMonitor();
+                if (leakageMon) {
+                    // check and record this emitter for potential leakage
+                    contained.stack = Stacktrace.create();
+                    removeMonitor = leakageMon.check(contained.stack, this._size + 1);
+                }
             }
             if (!this._listeners) {
                 this._options?.onWillAddFirstListener?.(this);

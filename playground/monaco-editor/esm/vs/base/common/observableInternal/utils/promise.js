@@ -9,8 +9,8 @@ import { observableValue } from '../observables/observableValue.js';
  * A promise whose state is observable.
  */
 class ObservablePromise {
-    static resolved(value) {
-        return new ObservablePromise(Promise.resolve(value));
+    static fromFn(fn) {
+        return new ObservablePromise(fn());
     }
     constructor(promise) {
         this._value = observableValue(this, undefined);

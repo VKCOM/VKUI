@@ -41,9 +41,9 @@ class FontMeasurementsImpl extends Disposable {
         }
         return cache;
     }
-    _writeToCache(targetWindow, item, value) {
+    _writeToCache(targetWindow, item, value, isRestored) {
         const cache = this._ensureCache(targetWindow);
-        cache.put(item, value);
+        cache.put(item, value, isRestored);
         if (!value.isTrusted && this._evictUntrustedReadingsTimeout === -1) {
             // Try reading again after some time
             this._evictUntrustedReadingsTimeout = targetWindow.setTimeout(() => {
@@ -94,7 +94,7 @@ class FontMeasurementsImpl extends Disposable {
                     maxDigitWidth: Math.max(readConfig.maxDigitWidth, 5),
                 }, false);
             }
-            this._writeToCache(targetWindow, bareFontInfo, readConfig);
+            this._writeToCache(targetWindow, bareFontInfo, readConfig, false);
         }
         return cache.get(bareFontInfo);
     }
@@ -176,6 +176,8 @@ class FontMeasurementsImpl extends Disposable {
 }
 class FontMeasurementsCache {
     constructor() {
+        this._wasPopulatedWithRestoredValues = false;
+        this._wasPopulatedWithCurrentSessionValues = false;
         this._keys = Object.create(null);
         this._values = Object.create(null);
     }
@@ -187,10 +189,16 @@ class FontMeasurementsCache {
         const itemId = item.getId();
         return this._values[itemId];
     }
-    put(item, value) {
+    put(item, value, isRestored) {
         const itemId = item.getId();
         this._keys[itemId] = item;
         this._values[itemId] = value;
+        if (isRestored) {
+            this._wasPopulatedWithRestoredValues = true;
+        }
+        else {
+            this._wasPopulatedWithCurrentSessionValues = true;
+        }
     }
     remove(item) {
         const itemId = item.getId();

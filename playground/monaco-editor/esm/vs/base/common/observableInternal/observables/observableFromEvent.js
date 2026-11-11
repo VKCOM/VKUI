@@ -39,14 +39,16 @@ class FromEventObservable extends BaseObservable {
         this.handleEvent = (args) => {
             const newValue = this._getValue(args);
             const oldValue = this._value;
-            const didChange = !this._hasValue || !(this._equalityComparator(oldValue, newValue));
+            const hadValue = this._hasValue;
+            const didChange = !hadValue || !(this._equalityComparator(oldValue, newValue));
             let didRunTransaction = false;
             if (didChange) {
                 this._value = newValue;
-                if (this._hasValue) {
+                this._hasValue = true;
+                if (hadValue) {
                     didRunTransaction = true;
                     subtransaction(this._getTransaction(), (tx) => {
-                        getLogger()?.handleObservableUpdated(this, { oldValue, newValue, change: undefined, didChange, hadValue: this._hasValue });
+                        getLogger()?.handleObservableUpdated(this, { oldValue, newValue, change: undefined, didChange, hadValue });
                         for (const o of this._observers) {
                             tx.updateObserver(o, this);
                             o.handleChange(this, undefined);
@@ -56,10 +58,9 @@ class FromEventObservable extends BaseObservable {
                         return 'Event fired' + (name ? `: ${name}` : '');
                     });
                 }
-                this._hasValue = true;
             }
             if (!didRunTransaction) {
-                getLogger()?.handleObservableUpdated(this, { oldValue, newValue, change: undefined, didChange, hadValue: this._hasValue });
+                getLogger()?.handleObservableUpdated(this, { oldValue, newValue, change: undefined, didChange, hadValue });
             }
         };
     }

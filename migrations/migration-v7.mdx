@@ -2,10 +2,7 @@
 description: Инструкция миграции VKUI на версию v7.
 ---
 
-<Overview type="doc">
 # Миграция с v6 на v7
-
-</Overview>
 
 > Документацию по миграции с **v5** на **v6** можно найти [здесь](https://github.com/VKCOM/VKUI/releases/tag/v6.0.0).
 
@@ -27,21 +24,21 @@ description: Инструкция миграции VKUI на версию v7.
 
 ## ⚙️ Сборка
 
-- Если вы завязывались на CSS-классы компонентов, пройдитесь по таким местам и проверьте классы: теперь за их формирование отвечают **CSS Modules**.
+* Если вы завязывались на CSS-классы компонентов, пройдитесь по таким местам и проверьте классы: теперь за их формирование отвечают **CSS Modules**.
 
   > По-прежнему не рекомендуем завязываться на CSS-классы компонентов — они могут измениться в любой момент.
 
-- Импорты теперь ограничены свойством `"exports"` в `package.json`. Если нужен внутренний функционал, создайте [issue](https://github.com/VKCOM/VKUI/issues/new/choose) на его экспорт — рассмотрим.
-- Поднята целевая версия `ECMAScript` для компиляции до `es2017`.
-- Удалена **CommonJS**-сборка — теперь библиотека поставляется только как **ESM**. Возможно, потребуется настроить трансформацию пакета `@vkontakte/vkui` в вашем сборщике.
+* Импорты теперь ограничены свойством `"exports"` в `package.json`. Если нужен внутренний функционал, создайте [issue](https://github.com/VKCOM/VKUI/issues/new/choose) на его экспорт — рассмотрим.
 
-      <details>
+* Поднята целевая версия `ECMAScript` для компиляции до `es2017`.
 
-  <summary>Возможные проблемы в **Jest \<= 29**</summary>
+* Удалена **CommonJS**-сборка — теперь библиотека поставляется только как **ESM**. Возможно, потребуется настроить трансформацию пакета `@vkontakte/vkui` в вашем сборщике.
+
+  Возможные проблемы в **Jest \<= 29**
 
   **Jest** пока не умеет работать с полем `"exports"` и ориентируется на `"main"`, которого в VKUI больше нет.
 
-  Как **workaround**, можно написать свой `jest-resolver.js` (см. https://github.com/jestjs/jest/issues/9771#issuecomment-776681032).
+  Как **workaround**, можно написать свой `jest-resolver.js` (см. [https://github.com/jestjs/jest/issues/9771#issuecomment-776681032](https://github.com/jestjs/jest/issues/9771#issuecomment-776681032)).
 
   ```js static
   const DEPENDENCIES_WITH_NO_MAIN_FIELD = ['@vkontakte/vkui'];
@@ -54,11 +51,7 @@ description: Инструкция миграции VKUI на версию v7.
     });
   ```
 
-      </details>
-
-      <details>
-
-  <summary>Возможные проблемы в **Vitest**</summary>
+  Возможные проблемы в **Vitest**
 
   Может падать с ошибкой `SyntaxError: Named export 'IconAppearanceProvider' not found. The requested module '@vkontakte/icons' is a CommonJS module, which may not support all module.exports as named exports.`.
 
@@ -75,9 +68,7 @@ description: Инструкция миграции VKUI на версию v7.
   });
   ```
 
-      </details>
-
----
+***
 
 ## 🌗 `Appearance` → `ColorScheme`
 
@@ -85,11 +76,9 @@ description: Инструкция миграции VKUI на версию v7.
 
 Это привело к следующим изменениям:
 
-- Константа `Appearance` переименована в `ColorScheme`.
+* Константа `Appearance` переименована в `ColorScheme`.
 
-      <details>
-
-  <summary>Миграция</summary>
+  Миграция
 
   ```diff
   - export const Appearance = {
@@ -102,26 +91,18 @@ description: Инструкция миграции VKUI на версию v7.
   + const colorScheme = ColorScheme.DARK
   ```
 
-      </details>
+* Тип `AppearanceType` переименован в `ColorSchemeType`.
 
-- Тип `AppearanceType` переименован в `ColorSchemeType`.
-
-      <details>
-
-  <summary>Миграция</summary>
+  Миграция
 
   ```diff
   - const appearance: ApperanceType = Appearance.DARK;
   + const colorScheme: ColorSchemeType = ColorScheme.DARK;
   ```
 
-      </details>
+* `AppearanceProvider` переименован в `ColorSchemeProvider`, `AppearanceProviderProps` переименован в `ColorSchemeProviderProps`.
 
-- `AppearanceProvider` переименован в `ColorSchemeProvider`, `AppearanceProviderProps` переименован в `ColorSchemeProviderProps`.
-
-      <details>
-
-  <summary>Миграция</summary>
+  Миграция
 
   ```diff
   - const props: AppearanceProviderProps = {
@@ -142,26 +123,18 @@ description: Инструкция миграции VKUI на версию v7.
   + </ColorSchemeProvider>
   ```
 
-      </details>
+* Хук `useAppearance` переименован в `useColorScheme`.
 
-- Хук `useAppearance` переименован в `useColorScheme`.
-
-      <details>
-
-  <summary>Миграция</summary>
+  Миграция
 
   ```diff
   - const appearance = useAppearance();
   + const colorScheme = useColorScheme();
   ```
 
-      </details>
+* В `ConfigProvider` и `ConfigProviderProps` свойство `appearance` переименовано в `colorScheme`.
 
-- В `ConfigProvider` и `ConfigProviderProps` свойство `appearance` переименовано в `colorScheme`.
-
-      <details>
-
-  <summary>Миграция</summary>
+  Миграция
 
   ```diff
   <ConfigProvider
@@ -175,13 +148,9 @@ description: Инструкция миграции VKUI на версию v7.
   </ConfigProvider>
   ```
 
-      </details>
+* В `ConfigProviderContext` свойство `appearance` переименовано в `colorScheme`.
 
-- В `ConfigProviderContext` свойство `appearance` переименовано в `colorScheme`.
-
-      <details>
-
-  <summary>Миграция</summary>
+  Миграция
 
   ```diff
   <ConfigProviderContext.Provider value={{
@@ -201,9 +170,7 @@ description: Инструкция миграции VKUI на версию v7.
   } = useConfigProvider();
   ```
 
-      </details>
-
----
+***
 
 ## 🧩 Компоненты
 
@@ -213,11 +180,10 @@ description: Инструкция миграции VKUI на версию v7.
 
 ### ActionSheet
 
-- Свойство `header` переименовано в `title`.
-- Свойство `text` переименовано в `description`.
+* Свойство `header` переименовано в `title`.
+* Свойство `text` переименовано в `description`.
 
-<details>
-<summary>Миграция</summary>
+Миграция
 
 ```diff
 <ActionSheet
@@ -231,17 +197,14 @@ description: Инструкция миграции VKUI на версию v7.
 </ActionSheet>
 ```
 
-</details>
-
----
+***
 
 ### Alert
 
-- Свойство `header` переименовано в `title`.
-- Свойство `text` переименовано в `description`.
+* Свойство `header` переименовано в `title`.
+* Свойство `text` переименовано в `description`.
 
-<details>
-<summary>Миграция</summary>
+Миграция
 
 ```diff
 <Alert
@@ -254,19 +217,16 @@ description: Инструкция миграции VKUI на версию v7.
 />
 ```
 
-</details>
-
----
+***
 
 ### Banner
 
-- Свойство `subheader` переименовано в `subtitle`.
-- Свойство `text` переименовано в `extraSubtitle`.
-- Свойство `header` переименовано в `title`.
-- Свойство `asideMode` переименовано в `after`.
+* Свойство `subheader` переименовано в `subtitle`.
+* Свойство `text` переименовано в `extraSubtitle`.
+* Свойство `header` переименовано в `title`.
+* Свойство `asideMode` переименовано в `after`.
 
-<details>
-<summary>Миграция</summary>
+Миграция
 
 ```diff
 <Banner
@@ -282,29 +242,15 @@ description: Инструкция миграции VKUI на версию v7.
 />
 ```
 
-</details>
-
----
+***
 
 ### Button
 
-- Изменён цвет компонента при `appearance="overlay"` и `mode="secondary"`.
+* Изменён цвет компонента при `appearance="overlay"` и `mode="secondary"`.
 
-  <img
-    width="480"
-    src="https://github.com/user-attachments/assets/8af4ce92-98e2-4492-8b29-c5a828b52089"
-  />
+* Изменён цвет компонента в состоянии `mode="primary"` и `appearance="neutral"`. При миграции рекомендуется выставлять `mode="secondary"` при `appearance="neutral"`.
 
-- Изменён цвет компонента в состоянии `mode="primary"` и `appearance="neutral"`. При миграции рекомендуется выставлять `mode="secondary"` при `appearance="neutral"`.
-
-  <img
-    width="480"
-    src="https://github.com/user-attachments/assets/9bb3cfb5-7f5a-40bc-9e2b-f6b736861da7"
-  />
-
-      <details>
-
-  <summary>Миграция</summary>
+  Миграция
 
   ```diff
   <Button
@@ -313,16 +259,13 @@ description: Инструкция миграции VKUI на версию v7.
   />
   ```
 
-      </details>
-
----
+***
 
 ### Calendar
 
 Свойство `onClose` переименовано в `onDoneButtonClick`.
 
-<details>
-<summary>Миграция</summary>
+Миграция
 
 ```diff
 <Calendar
@@ -331,16 +274,13 @@ description: Инструкция миграции VKUI на версию v7.
 />
 ```
 
-</details>
-
----
+***
 
 ### CardGrid
 
 Свойство `spaced` переименовано в `padding`.
 
-<details>
-<summary>Миграция</summary>
+Миграция
 
 ```diff
 <CardGrid
@@ -354,16 +294,13 @@ description: Инструкция миграции VKUI на версию v7.
 </CardGrid>
 ```
 
-</details>
-
----
+***
 
 ### CardScroll
 
 Свойство `noSpaces` заменено на `padding`.
 
-<details>
-<summary>Миграция</summary>
+Миграция
 
 ```diff
 <CardScroll
@@ -377,17 +314,13 @@ description: Инструкция миграции VKUI на версию v7.
 </CardScroll>
 ```
 
-</details>
-
----
+***
 
 ### Cell
 
-- Свойство `subhead` переименовано в `overTitle`.
+* Свойство `subhead` переименовано в `overTitle`.
 
-      <details>
-
-  <summary>Миграция</summary>
+  Миграция
 
   ```diff
   <Cell
@@ -400,13 +333,9 @@ description: Инструкция миграции VKUI на версию v7.
   </Cell>
   ```
 
-      </details>
+* Свойство `expandable` переименовано в `chevron`.
 
-- Свойство `expandable` переименовано в `chevron`.
-
-      <details>
-
-  <summary>Миграция</summary>
+  Миграция
 
   ```diff
   <Cell
@@ -419,17 +348,13 @@ description: Инструкция миграции VKUI на версию v7.
   </Cell>
   ```
 
-      </details>
-
----
+***
 
 ### CellButton
 
-- Свойство `subhead` переименовано в `overTitle`.
+* Свойство `subhead` переименовано в `overTitle`.
 
-      <details>
-
-  <summary>Миграция</summary>
+  Миграция
 
   ```diff
   <CellButton
@@ -442,13 +367,9 @@ description: Инструкция миграции VKUI на версию v7.
   </CellButton>
   ```
 
-      </details>
+* Свойство `expandable` переименовано в `chevron`.
 
-- Свойство `expandable` переименовано в `chevron`.
-
-      <details>
-
-  <summary>Миграция</summary>
+  Миграция
 
   ```diff
   <CellButton
@@ -461,13 +382,9 @@ description: Инструкция миграции VKUI на версию v7.
   </CellButton>
   ```
 
-      </details>
+* Свойство `mode` заменено на `appearance` со значениями `'accent' | 'neutral' | 'negative'`. Для `appearance="accent"` (ранее `mode="primary"`) возвращён токен `--vkui--color_text_accent`, а в комбинации с `centered` применяется `--vkui--color_text_accent_themed`.
 
-- Свойство `mode` заменено на `appearance` со значениями `'accent' | 'neutral' | 'negative'`. Для `appearance="accent"` (ранее `mode="primary"`) возвращён токен `--vkui--color_text_accent`, а в комбинации с `centered` применяется `--vkui--color_text_accent_themed`.
-
-      <details>
-
-  <summary>Миграция</summary>
+  Миграция
 
   ```diff
   <CellButton
@@ -485,19 +402,16 @@ description: Инструкция миграции VKUI на версию v7.
   </CellButton>
   ```
 
-      </details>
-
----
+***
 
 ### ContentCard
 
-- Свойство `header` переименовано в `title`.
-- Свойство `subtitle` переименовано в `overTitle`.
-- Свойство `text` переименовано в `description`.
-- Свойство `headerComponent` переименовано в `titleComponent`.
+* Свойство `header` переименовано в `title`.
+* Свойство `subtitle` переименовано в `overTitle`.
+* Свойство `text` переименовано в `description`.
+* Свойство `headerComponent` переименовано в `titleComponent`.
 
-<details>
-<summary>Миграция</summary>
+Миграция
 
 ```diff
 <ContentCard
@@ -513,42 +427,35 @@ description: Инструкция миграции VKUI на версию v7.
 />
 ```
 
-</details>
-
----
+***
 
 ### Counter
 
 Изменены значения свойства `mode`.
 
-<details>
-<summary>Таблица миграции значений</summary>
+Таблица миграции значений
 
 | **v6**             | **v7**                                   |
 | ------------------ | ---------------------------------------- |
-| `mode="inherit"`   | _без изменений_                          |
+| `mode="inherit"`   | *без изменений*                          |
 | `mode="primary"`   | `mode="primary" appearance="accent"`     |
 | `mode="secondary"` | `mode="primary" appearance="neutral"`    |
 | `mode="prominent"` | `mode="primary" appearance="accent-red"` |
 | `mode="contrast"`  | `mode="contrast" appearance="accent"`    |
 
-</details>
-
----
+***
 
 ### CustomScrollView
 
-Поскольку дизайн не документирует поведение ползунка и полосы прокрутки, мы перешли на системное поведение и облегчили компонент, стилизовав прокрутку полностью через CSS (в **Firefox < 64** стилизация останется браузерной).
+Поскольку дизайн не документирует поведение ползунка и полосы прокрутки, мы перешли на системное поведение и облегчили компонент, стилизовав прокрутку полностью через CSS (в **Firefox \< 64** стилизация останется браузерной).
 
 > Если всё же нужна JS-реализация, присмотритесь к библиотеке [react-custom-scrollbars](https://github.com/malte-wessel/react-custom-scrollbars) или другим альтернативам.
 
 Из-за этого:
 
-- удалено свойство `boxRef`, вместо него можно использовать свойство `getRootRef`;
+* удалено свойство `boxRef`, вместо него можно использовать свойство `getRootRef`;
 
-      <details>
-
-  <summary>Миграция</summary>
+  Миграция
 
   ```diff
   <CustomScrollView
@@ -561,13 +468,9 @@ description: Инструкция миграции VKUI на версию v7.
   </CustomScrollView>
   ```
 
-      </details>
+* удалены свойства `windowResize`, `autoHideScrollbar`, `autoHideScrollbarDelay` — это также затронуло [CustomSelect](/components/custom-select), [ChipsSelect](/components/chips-select) и [Select](/components/select);
 
-- удалены свойства `windowResize`, `autoHideScrollbar`, `autoHideScrollbarDelay` — это также затронуло [CustomSelect](/components/custom-select), [ChipsSelect](/components/chips-select) и [Select](/components/select);
-
-      <details>
-
-  <summary>Миграция</summary>
+  Миграция
 
   ```diff
   <CustomScrollView
@@ -581,11 +484,7 @@ description: Инструкция миграции VKUI на версию v7.
   </CustomScrollView>
   ```
 
-      </details>
-
-      <details>
-
-  <summary>Миграция `CustomSelect`</summary>
+  Миграция `CustomSelect`
 
   ```diff
   <CustomSelect
@@ -599,11 +498,7 @@ description: Инструкция миграции VKUI на версию v7.
   />
   ```
 
-      </details>
-
-      <details>
-
-  <summary>Миграция `ChipsSelect`</summary>
+  Миграция `ChipsSelect`
 
   ```diff
   <ChipsSelect
@@ -619,11 +514,7 @@ description: Инструкция миграции VKUI на версию v7.
   />
   ```
 
-      </details>
-
-      <details>
-
-  <summary>Миграция `Select`</summary>
+  Миграция `Select`
 
   ```diff
   <Select
@@ -637,22 +528,19 @@ description: Инструкция миграции VKUI на версию v7.
   />
   ```
 
-      </details>
-
----
+***
 
 ### 🗑️ DatePicker
 
 Компонент удалён как устаревший. Вместо него используйте [`Input`](/components/input), [`Select`](/components/select) и [`DateInput`](/components/date-input). Что выбрать — см. обсуждение [#7070](https://github.com/VKCOM/VKUI/discussions/7070).
 
----
+***
 
 ### Flex
 
 Изменена последовательность отступов в свойстве `gap` на `[row, column]`.
 
-<details>
-<summary>Миграция</summary>
+Миграция
 
 ```diff
 <Flex
@@ -666,17 +554,13 @@ description: Инструкция миграции VKUI на версию v7.
 </Flex>
 ```
 
-</details>
-
----
+***
 
 ### FormItem
 
-- Удалено свойство `topNode`, вместо него можно использовать свойство `top`.
+* Удалено свойство `topNode`, вместо него можно использовать свойство `top`.
 
-      <details>
-
-  <summary>Миграция</summary>
+  Миграция
 
   ```diff
   <FormItem
@@ -692,13 +576,9 @@ description: Инструкция миграции VKUI на версию v7.
   </FormItem>
   ```
 
-      </details>
+* У подкомпонента `FormItem.TopLabel` удалено свойство `multiline` — теперь `topMultiline` задаётся у `FormItem`.
 
-- У подкомпонента `FormItem.TopLabel` удалено свойство `multiline` — теперь `topMultiline` задаётся у `FormItem`.
-
-      <details>
-
-  <summary>Миграция</summary>
+  Миграция
 
   ```diff
   <FormItem
@@ -715,16 +595,13 @@ description: Инструкция миграции VKUI на версию v7.
   </FormItem>
   ```
 
-      </details>
-
----
+***
 
 ### FormStatus
 
 Свойство `header` переименовано в `title`.
 
-<details>
-<summary>Миграция</summary>
+Миграция
 
 ```diff
 <FormStatus
@@ -736,16 +613,13 @@ description: Инструкция миграции VKUI на версию v7.
 </FormStatus>
 ```
 
-</details>
-
----
+***
 
 ### Gallery
 
 Значение `arrowSize="l"` удалено, используйте `arrowSize="m"`, а вместо `arrowSize="m"` используйте `arrowSize="s"`.
 
-<details>
-<summary>Миграция</summary>
+Миграция
 
 ```diff
 - <Gallery arrowSize="m">
@@ -754,17 +628,13 @@ description: Инструкция миграции VKUI на версию v7.
 + <Gallery arrowSize="m">
 ```
 
-</details>
-
----
+***
 
 ### Header
 
-- Изменен формат `size` с `'regular' | 'large'` на `'m' | 'l'`.
+* Изменен формат `size` с `'regular' | 'large'` на `'m' | 'l'`.
 
-      <details>
-
-  <summary>Миграция</summary>
+  Миграция
 
   ```diff
   <Header
@@ -776,13 +646,9 @@ description: Инструкция миграции VKUI на версию v7.
   </Header>
   ```
 
-      </details>
+* Свойство `mode` было удалено. Логика удаления свойства `mode`.
 
-- Свойство `mode` было удалено. Логика удаления свойства `mode`.
-
-      <details>
-
-  <summary>Таблица миграции значений</summary>
+  Таблица миграции значений
 
   | **v6**                    | **v7**      |
   | ------------------------- | ----------- |
@@ -791,13 +657,9 @@ description: Инструкция миграции VKUI на версию v7.
   | `mode="tertiary"`         | `size="m"`  |
   | `mode="secondary"`        | `size="s"`  |
 
-      </details>
+* Свойство `aside` переименовано в `after`.
 
-- Свойство `aside` переименовано в `after`.
-
-      <details>
-
-  <summary>Миграция</summary>
+  Миграция
 
   ```diff
   <Header
@@ -809,17 +671,13 @@ description: Инструкция миграции VKUI на версию v7.
   />
   ```
 
-      </details>
-
----
+***
 
 ### HorizontalCell
 
-- Свойство `header` переименовано в `title`.
+* Свойство `header` переименовано в `title`.
 
-      <details>
-
-  <summary>Миграция</summary>
+  Миграция
 
   ```diff
   <HorizontalCell
@@ -828,38 +686,30 @@ description: Инструкция миграции VKUI на версию v7.
   />
   ```
 
-      </details>
+* Значение `size="l"` теперь ограничено по максимальной ширине. Там, где это нужно, используйте `size="auto"`.
 
-- Значение `size="l"` теперь ограничено по максимальной ширине. Там, где это нужно, используйте `size="auto"`.
-
----
+***
 
 ### HorizontalCellShowMore
 
-- Значение `size="l"` удалено, используйте `size="m"`.
+* Значение `size="l"` удалено, используйте `size="m"`.
 
-      <details>
-
-  <summary>Миграция</summary>
+  Миграция
 
   ```diff
   - <HorizontalCellShowMore size="l">
   + <HorizontalCellShowMore size="m">
   ```
 
-      </details>
+* Свойство `compensateLastCellIndent` удалено. Если вы выравнивали ячейки внутри `HorizontalScroll` дополнительными обёртками, пересмотрите их использование и размещайте `HorizontalCellShowMore` на том же уровне вложенности, что и остальные ячейки.
 
-- Свойство `compensateLastCellIndent` удалено. Если вы выравнивали ячейки внутри `HorizontalScroll` дополнительными обёртками, пересмотрите их использование и размещайте `HorizontalCellShowMore` на том же уровне вложенности, что и остальные ячейки.
-
----
+***
 
 ### HorizontalScroll
 
-- Значение `arrowSize="l"` удалено, используйте `arrowSize="m"`, а вместо `arrowSize="m"` используйте `arrowSize="s"`.
+* Значение `arrowSize="l"` удалено, используйте `arrowSize="m"`, а вместо `arrowSize="m"` используйте `arrowSize="s"`.
 
-      <details>
-
-  <summary>Миграция</summary>
+  Миграция
 
   ```diff
   - <HorizontalScroll arrowSize="m">
@@ -869,24 +719,21 @@ description: Инструкция миграции VKUI на версию v7.
   + <HorizontalScroll arrowSize="m">
   ```
 
-      </details>
+* Свойство `inline` удалено и теперь применяется по умолчанию. Если вы выравнивали ячейки внутри компонента дополнительными обёртками, пересмотрите их использование.
 
-- Свойство `inline` удалено и теперь применяется по умолчанию. Если вы выравнивали ячейки внутри компонента дополнительными обёртками, пересмотрите их использование.
-
----
+***
 
 ### Image
 
 У подкомпонента `Image.Overlay` удалено свойство `disableInteractive` — теперь достаточно просто не передавать `onClick`.
 
----
+***
 
 ### Link
 
 Для передачи иконок используйте параметры `before` и `after`. CSS-свойства, которые через каскад задавались переданным в `children` иконкам, удалены.
 
-<details>
-<summary>Миграция</summary>
+Миграция
 
 ```diff
 <Link
@@ -898,16 +745,13 @@ description: Инструкция миграции VKUI на версию v7.
 </Link>
 ```
 
-</details>
-
----
+***
 
 ### MiniInfoCell
 
 Свойство `expandable` переименовано в `chevron`.
 
-<details>
-<summary>Миграция</summary>
+Миграция
 
 ```diff
 <MiniInfoCell
@@ -922,19 +766,16 @@ description: Инструкция миграции VKUI на версию v7.
 </MiniInfoCell>
 ```
 
-</details>
-
----
+***
 
 ### ModalCard, ModalCardBase
 
-- Свойство `header` переименовано в `title`.
-- Свойство `subheader` переименовано в `description`.
-- Свойство `headerComponent` переименовано в `titleComponent`.
-- Свойство `subheaderComponent` переименовано в `descriptionComponent`.
+* Свойство `header` переименовано в `title`.
+* Свойство `subheader` переименовано в `description`.
+* Свойство `headerComponent` переименовано в `titleComponent`.
+* Свойство `subheaderComponent` переименовано в `descriptionComponent`.
 
-<details>
-<summary>Миграция на примере `ModalCard`</summary>
+Миграция на примере `ModalCard`
 
 ```diff
 <ModalCard
@@ -958,16 +799,13 @@ description: Инструкция миграции VKUI на версию v7.
 />
 ```
 
-</details>
-
----
+***
 
 ### ModalRoot
 
 Удалена реализация контекста через `React.cloneElement`, которая требовала передавать `settlingHeight` и `dynamicContentHeight` в обёртки над `ModalPage` / `ModalCard`.
 
-<details>
-<summary>Миграция (перенос `settlingHeight` / `dynamicContentHeight`)</summary>
+Миграция (перенос `settlingHeight` / `dynamicContentHeight`)
 
 ```diff
 const SomeWrapper = ({ id }) => (
@@ -985,10 +823,7 @@ const SomeWrapper = ({ id }) => (
 </ModalRoot>
 ```
 
-</details>
-
-<details>
-<summary>Миграция (пробрасывание `settlingHeight` / `dynamicContentHeight`)</summary>
+Миграция (пробрасывание `settlingHeight` / `dynamicContentHeight`)
 
 ```diff
 - const SomeWrapper = ({ id }) => (
@@ -1007,10 +842,7 @@ const SomeWrapper = ({ id }) => (
 </ModalRoot>
 ```
 
-</details>
-
-<details>
-<summary>Миграция (бизнес-логика в обёртках)</summary>
+Миграция (бизнес-логика в обёртках)
 
 ```diff
 + const FetchData = () => {
@@ -1050,16 +882,13 @@ const SomeWrapper = ({ id, ...restProps }) => {
 </ModalRoot>
 ```
 
-</details>
-
----
+***
 
 ### OnboardingTooltip
 
 Переименованы свойства `text` на `description`, `header` на `title`.
 
-<details>
-<summary>Миграция</summary>
+Миграция
 
 ```diff
 <OnboardingTooltip
@@ -1073,31 +902,28 @@ const SomeWrapper = ({ id, ...restProps }) => {
 </OnboardingTooltip>
 ```
 
-</details>
-
----
+***
 
 ### PanelHeader
 
 Теперь не переопределяет цвет `Spinner`. Если использовали `Spinner` внутри `PanelHeader`, передавайте `<Spinner noColor />`.
 
----
+***
 
 ### PanelHeaderButton
 
-- У пресета `PanelHeaderClose` удалено свойство `children`. Текст для `a11y` теперь передаётся в свойство `label`.
-- У пресета `PanelHeaderSubmit` удалено свойство `children`. Текст для `a11y` теперь передаётся в свойство `label`.
-- У пресета `PanelHeaderEdit` удалены свойства `children` и `label`. Вместо `label` используйте `doneLabel` и `editLabel`. Свойство `children` не использовалось.
-- У пресета `PanelHeaderBack` удалено свойство `children`. Текст для `a11y` теперь передаётся в свойство `label`. Логика отображения `label`, в отличие от других пресетов, осталась прежней. Для точной настройки добавлены свойства `hideLabelOnVKCom` и `hideLabelOnIOS` — они скрывают `label` на соответствующей платформе.
+* У пресета `PanelHeaderClose` удалено свойство `children`. Текст для `a11y` теперь передаётся в свойство `label`.
+* У пресета `PanelHeaderSubmit` удалено свойство `children`. Текст для `a11y` теперь передаётся в свойство `label`.
+* У пресета `PanelHeaderEdit` удалены свойства `children` и `label`. Вместо `label` используйте `doneLabel` и `editLabel`. Свойство `children` не использовалось.
+* У пресета `PanelHeaderBack` удалено свойство `children`. Текст для `a11y` теперь передаётся в свойство `label`. Логика отображения `label`, в отличие от других пресетов, осталась прежней. Для точной настройки добавлены свойства `hideLabelOnVKCom` и `hideLabelOnIOS` — они скрывают `label` на соответствующей платформе.
 
----
+***
 
 ### PanelHeaderContent
 
 Свойство `status` переименовано в `subtitle`.
 
-<details>
-<summary>Миграция</summary>
+Миграция
 
 ```diff
 <PanelHeaderContent
@@ -1109,16 +935,13 @@ const SomeWrapper = ({ id, ...restProps }) => {
 </PanelHeaderContent>
 ```
 
-</details>
-
----
+***
 
 ### PanelSpinner
 
 Изменен формат `size` с `'small' | 'regular' | 'medium' | 'large'` на `'s' | 'm' | 'l' | 'xl'`.
 
-<details>
-<summary>Миграция</summary>
+Миграция
 
 ```diff
 - <PanelSpinner size="large" />
@@ -1134,17 +957,13 @@ const SomeWrapper = ({ id, ...restProps }) => {
 + <PanelSpinner size="s" />
 ```
 
-</details>
-
----
+***
 
 ### Placeholder
 
-- свойство `header` переименовано на `title`
+* свойство `header` переименовано на `title`
 
-      <details>
-
-  <summary>Миграция</summary>
+  Миграция
 
   ```diff
   <Placeholder
@@ -1156,13 +975,9 @@ const SomeWrapper = ({ id, ...restProps }) => {
   </Placeholder>
   ```
 
-      </details>
+* подкомпонент `Header` переименован на `Title`, `Text` переименован на `Description`
 
-- подкомпонент `Header` переименован на `Title`, `Text` переименован на `Description`
-
-      <details>
-
-  <summary>Миграция</summary>
+  Миграция
 
   ```diff
   <Placeholder.Container>
@@ -1179,18 +994,15 @@ const SomeWrapper = ({ id, ...restProps }) => {
   </Placeholder.Container>
   ```
 
-      </details>
-
----
+***
 
 ### RichCell
 
-- Свойство `text` переименовано в `subtitle`.
-- Свойство `caption` переименовано в `extraSubtitle`.
-- Свойство `subhead` переименовано в `overTitle`.
+* Свойство `text` переименовано в `subtitle`.
+* Свойство `caption` переименовано в `extraSubtitle`.
+* Свойство `subhead` переименовано в `overTitle`.
 
-<details>
-<summary>Миграция</summary>
+Миграция
 
 ```diff
 <RichCell
@@ -1203,18 +1015,15 @@ const SomeWrapper = ({ id, ...restProps }) => {
 />
 ```
 
-</details>
-
----
+***
 
 ### ScreenSpinner
 
-- Удалён `a11y`-текст по умолчанию — передавайте нужный текст в `children` или `label`.
-- Удалено свойство `size`.
+* Удалён `a11y`-текст по умолчанию — передавайте нужный текст в `children` или `label`.
 
-      <details>
+* Удалено свойство `size`.
 
-  <summary>Миграция</summary>
+  Миграция
 
   ```diff
   <ScreenSpinner
@@ -1228,13 +1037,9 @@ const SomeWrapper = ({ id, ...restProps }) => {
   </ScreenSpinner.Container>
   ```
 
-      </details>
+* Свойство `caption` переименовано в `label`.
 
-- Свойство `caption` переименовано в `label`.
-
-      <details>
-
-  <summary>Миграция</summary>
+  Миграция
 
   ```diff
   <ScreenSpinner
@@ -1252,16 +1057,13 @@ const SomeWrapper = ({ id, ...restProps }) => {
   </ScreenSpinner.Container>
   ```
 
-      </details>
-
----
+***
 
 ### ScrollArrow
 
 Значение `size="l"` удалено, используйте `size="m"`, а вместо `size="m"` используйте `size="s"`.
 
-<details>
-<summary>Миграция</summary>
+Миграция
 
 ```diff
 - <ScrollArrow size="m">
@@ -1271,17 +1073,13 @@ const SomeWrapper = ({ id, ...restProps }) => {
 + <ScrollArrow size="m">
 ```
 
-</details>
-
----
+***
 
 ### Select
 
-- В колбэк `onChange` помимо `ChangeEvent` вторым аргументом теперь передаётся новое значение. Рекомендуется использовать именно его. То же относится к [CustomSelect](/components/custom-select) и [NativeSelect](/components/native-select).
+* В колбэк `onChange` помимо `ChangeEvent` вторым аргументом теперь передаётся новое значение. Рекомендуется использовать именно его. То же относится к [CustomSelect](/components/custom-select) и [NativeSelect](/components/native-select).
 
-      <details>
-
-  <summary>Миграция</summary>
+  Миграция
 
   ```diff
   <Select
@@ -1294,19 +1092,15 @@ const SomeWrapper = ({ id, ...restProps }) => {
   />
   ```
 
-      </details>
+* Для указания невыбранного состояния используйте `null` вместо `undefined` или пустой строки. То же относится к [CustomSelect](/components/custom-select) и [NativeSelect](/components/native-select).
 
-- Для указания невыбранного состояния используйте `null` вместо `undefined` или пустой строки. То же относится к [CustomSelect](/components/custom-select) и [NativeSelect](/components/native-select).
-
----
+***
 
 ### Separator
 
-- Свойство `mode` переименовано в `appearance`.
+* Свойство `mode` переименовано в `appearance`.
 
-      <details>
-
-  <summary>Миграция</summary>
+  Миграция
 
   ```diff
   <Separator
@@ -1315,13 +1109,9 @@ const SomeWrapper = ({ id, ...restProps }) => {
   />
   ```
 
-      </details>
+* Свойство `wide` заменено свойством `padding`.
 
-- Свойство `wide` заменено свойством `padding`.
-
-      <details>
-
-  <summary>Миграция</summary>
+  Миграция
 
   ```diff
   <Separator
@@ -1338,17 +1128,13 @@ const SomeWrapper = ({ id, ...restProps }) => {
   />
   ```
 
-      </details>
-
----
+***
 
 ### SimpleCell
 
-- Свойство `subhead` переименовано в `overTitle`.
+* Свойство `subhead` переименовано в `overTitle`.
 
-      <details>
-
-  <summary>Миграция</summary>
+  Миграция
 
   ```diff
   <SimpleCell
@@ -1361,13 +1147,9 @@ const SomeWrapper = ({ id, ...restProps }) => {
   </SimpleCell>
   ```
 
-      </details>
+* Свойство `expandable` переименовано в `chevron`.
 
-- Свойство `expandable` переименовано в `chevron`.
-
-      <details>
-
-  <summary>Миграция</summary>
+  Миграция
 
   ```diff
   <SimpleCell
@@ -1380,16 +1162,13 @@ const SomeWrapper = ({ id, ...restProps }) => {
   </SimpleCell>
   ```
 
-      </details>
-
----
+***
 
 ### SimpleGrid
 
 Изменена последовательность отступов в свойстве `gap` на `[row, column]`.
 
-<details>
-<summary>Миграция</summary>
+Миграция
 
 ```diff
 <SimpleGrid
@@ -1403,16 +1182,13 @@ const SomeWrapper = ({ id, ...restProps }) => {
 </SimpleGrid>
 ```
 
-</details>
-
----
+***
 
 ### Spacing
 
 Удалено значение `size="3xs"` — используйте `2xs`, оно совпадает по значению.
 
-<details>
-<summary>Миграция</summary>
+Миграция
 
 ```diff
 - <Spacing size="3xs" />
@@ -1420,16 +1196,13 @@ const SomeWrapper = ({ id, ...restProps }) => {
 + <Spacing size="2xs" />
 ```
 
-</details>
-
----
+***
 
 ### Spinner
 
 Изменен формат `size` с `'small' | 'regular' | 'medium' | 'large'` на `'s' | 'm' | 'l' | 'xl'`.
 
-<details>
-<summary>Миграция</summary>
+Миграция
 
 ```diff
 - <Spinner size="large" />
@@ -1445,9 +1218,7 @@ const SomeWrapper = ({ id, ...restProps }) => {
 + <Spinner size="s" />
 ```
 
-</details>
-
----
+***
 
 ### SplitLayout
 
@@ -1455,8 +1226,7 @@ const SomeWrapper = ({ id, ...restProps }) => {
 
 По умолчанию такие элементы рендерятся в `document.body`. Чтобы вернуть старое поведение, отключите портал точечно — например, передайте `usePortal={false}` в `ModalRoot`.
 
-<details>
-<summary>Пример</summary>
+Пример
 
 ```diff
 <SplitLayout
@@ -1467,16 +1237,13 @@ const SomeWrapper = ({ id, ...restProps }) => {
 </SplitLayout>
 ```
 
-</details>
-
----
+***
 
 ### SubnavigationBar
 
 Свойство `mode` заменено на флаг `fixed`.
 
-<details>
-<summary>Миграция</summary>
+Миграция
 
 ```diff
 <SubnavigationBar
@@ -1489,16 +1256,13 @@ const SomeWrapper = ({ id, ...restProps }) => {
 />
 ```
 
-</details>
-
----
+***
 
 ### SubnavigationButton
 
 Свойство `expandable` переименовано в `chevron`.
 
-<details>
-<summary>Миграция</summary>
+Миграция
 
 ```diff
 <SubnavigationButton
@@ -1511,16 +1275,13 @@ const SomeWrapper = ({ id, ...restProps }) => {
 </SubnavigationButton>
 ```
 
-</details>
-
----
+***
 
 ### TabbarItem
 
 Свойство `text` переименовано в `label`.
 
-<details>
-<summary>Миграция</summary>
+Миграция
 
 ```diff
 <Tabbar style={{ position: 'static', margin: '10px 0' }}>
@@ -1534,16 +1295,13 @@ const SomeWrapper = ({ id, ...restProps }) => {
 </Tabbar>
 ```
 
-</details>
-
----
+***
 
 ### Tooltip
 
 Переименованы свойства `text` на `description`, `header` на `title`.
 
-<details>
-<summary>Миграция</summary>
+Миграция
 
 ```diff
 <Tooltip
@@ -1557,16 +1315,13 @@ const SomeWrapper = ({ id, ...restProps }) => {
 </Tooltip>
 ```
 
-</details>
-
----
+***
 
 ### UsersStack
 
 Свойство `direction` заменено на `avatarsPosition` со значениями `'inline-start' | 'inline-end' | 'block-start'`.
 
-<details>
-<summary>Миграция</summary>
+Миграция
 
 ```diff
 - <UsersStack direction="row" />
@@ -1578,5 +1333,3 @@ const SomeWrapper = ({ id, ...restProps }) => {
 - <UsersStack direction="column" />
 + <UsersStack avatarsPosition="inline-end" />
 ```
-
-</details>

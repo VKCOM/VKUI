@@ -103,6 +103,10 @@ class LanguageAgnosticBracketTokens {
         }
         return singleLanguageBracketTokens;
     }
+    getToken(value, languageId) {
+        const singleLanguageBracketTokens = this.getSingleLanguageBracketTokens(languageId);
+        return singleLanguageBracketTokens.getToken(value);
+    }
 }
 
 export { BracketTokens, LanguageAgnosticBracketTokens };

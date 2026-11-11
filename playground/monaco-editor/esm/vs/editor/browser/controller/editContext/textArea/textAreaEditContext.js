@@ -1,6 +1,7 @@
 import './textAreaEditContext.css';
 import { localize } from '../../../../../nls.js';
 import { isSafari, isFirefox, isChrome, isAndroid } from '../../../../../base/browser/browser.js';
+import { $ } from '../../../../../base/browser/dom.js';
 import { createFastDomNode } from '../../../../../base/browser/fastDomNode.js';
 import { OS, isMacintosh } from '../../../../../base/common/platform.js';
 import { isHighSurrogate } from '../../../../../base/common/strings.js';
@@ -105,7 +106,7 @@ let TextAreaEditContext = class TextAreaEditContext extends AbstractEditContext 
         this._scrollLeft = 0;
         this._scrollTop = 0;
         const options = this._context.configuration.options;
-        const layoutInfo = options.get(165 /* EditorOption.layoutInfo */);
+        const layoutInfo = options.get(166 /* EditorOption.layoutInfo */);
         this._setAccessibilityOptions(options);
         this._contentLeft = layoutInfo.contentLeft;
         this._contentWidth = layoutInfo.contentWidth;
@@ -340,6 +341,9 @@ let TextAreaEditContext = class TextAreaEditContext extends AbstractEditContext 
         this.textAreaCover.domNode.remove();
     }
     _getAndroidWordAtPosition(position) {
+        if (position.lineNumber > this._context.viewModel.getLineCount()) {
+            return ['', 0];
+        }
         const ANDROID_WORD_SEPARATORS = '`~!@#$%^&*()-=+[{]}\\|;:",.<>/?';
         const lineContent = this._context.viewModel.getLineContent(position.lineNumber);
         const wordSeparators = getMapForWordSeparators(ANDROID_WORD_SEPARATORS, []);
@@ -380,6 +384,9 @@ let TextAreaEditContext = class TextAreaEditContext extends AbstractEditContext 
         return [lineContent.substring(startColumn - 1, endColumn - 1), position.column - startColumn];
     }
     _getWordBeforePosition(position) {
+        if (position.lineNumber > this._context.viewModel.getLineCount()) {
+            return '';
+        }
         const lineContent = this._context.viewModel.getLineContent(position.lineNumber);
         const wordSeparators = getMapForWordSeparators(this._context.configuration.options.get(148 /* EditorOption.wordSeparators */), []);
         let column = position.column;
@@ -397,6 +404,9 @@ let TextAreaEditContext = class TextAreaEditContext extends AbstractEditContext 
     }
     _getCharacterBeforePosition(position) {
         if (position.column > 1) {
+            if (position.lineNumber > this._context.viewModel.getLineCount()) {
+                return '';
+            }
             const lineContent = this._context.viewModel.getLineContent(position.lineNumber);
             const charBefore = lineContent.charAt(position.column - 2);
             if (!isHighSurrogate(charBefore.charCodeAt(0))) {
@@ -419,7 +429,7 @@ let TextAreaEditContext = class TextAreaEditContext extends AbstractEditContext 
         // we will size the textarea to match the width used for wrapping points computation (see `domLineBreaksComputer.ts`).
         // This is because screen readers will read the text in the textarea and we'd like that the
         // wrapping points in the textarea match the wrapping points in the editor.
-        const layoutInfo = options.get(165 /* EditorOption.layoutInfo */);
+        const layoutInfo = options.get(166 /* EditorOption.layoutInfo */);
         const wrappingColumn = layoutInfo.wrappingColumn;
         if (wrappingColumn !== -1 && this._accessibilitySupport !== 1 /* AccessibilitySupport.Disabled */) {
             const fontInfo = options.get(59 /* EditorOption.fontInfo */);
@@ -434,7 +444,7 @@ let TextAreaEditContext = class TextAreaEditContext extends AbstractEditContext 
     // --- begin event handlers
     onConfigurationChanged(e) {
         const options = this._context.configuration.options;
-        const layoutInfo = options.get(165 /* EditorOption.layoutInfo */);
+        const layoutInfo = options.get(166 /* EditorOption.layoutInfo */);
         this._setAccessibilityOptions(options);
         this._contentLeft = layoutInfo.contentLeft;
         this._contentWidth = layoutInfo.contentWidth;
@@ -702,11 +712,11 @@ function measureText(targetDocument, text, fontInfo, tabSize) {
     if (text.length === 0) {
         return 0;
     }
-    const container = targetDocument.createElement('div');
+    const container = $('div');
     container.style.position = 'absolute';
     container.style.top = '-50000px';
     container.style.width = '50000px';
-    const regularDomNode = targetDocument.createElement('span');
+    const regularDomNode = $('span');
     applyFontInfo(regularDomNode, fontInfo);
     regularDomNode.style.whiteSpace = 'pre'; // just like the textarea
     regularDomNode.style.tabSize = `${tabSize * fontInfo.spaceWidth}px`; // just like the textarea

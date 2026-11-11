@@ -302,7 +302,7 @@ let ReferenceWidget = class ReferenceWidget extends PeekViewWidget {
         };
         this._preview = this._instantiationService.createInstance(EmbeddedCodeEditorWidget, this._previewContainer, options, {}, this.editor);
         hide(this._previewContainer);
-        this._previewNotAvailableMessage = this._instantiationService.createInstance(TextModel, localize(1127, "no preview available"), PLAINTEXT_LANGUAGE_ID, TextModel.DEFAULT_CREATION_OPTIONS, null);
+        this._previewNotAvailableMessage = this._instantiationService.createInstance(TextModel, localize(1142, "no preview available"), PLAINTEXT_LANGUAGE_ID, TextModel.DEFAULT_CREATION_OPTIONS, null);
         // tree
         this._treeContainer = append(containerElement, $('div.ref-tree.inline'));
         const treeOptions = {
@@ -416,7 +416,7 @@ let ReferenceWidget = class ReferenceWidget extends PeekViewWidget {
         }
         if (this._model.isEmpty) {
             this.setTitle('');
-            this._messageContainer.innerText = localize(1128, "No results");
+            this._messageContainer.innerText = localize(1143, "No results");
             show(this._messageContainer);
             return Promise.resolve(undefined);
         }
@@ -477,7 +477,7 @@ let ReferenceWidget = class ReferenceWidget extends PeekViewWidget {
             this.setTitle(basenameOrAuthority(reference.uri), this._uriLabel.getUriLabel(dirname(reference.uri)));
         }
         else {
-            this.setTitle(localize(1129, "References"));
+            this.setTitle(localize(1144, "References"));
         }
         const promise = this._textModelResolverService.createModelReference(reference.uri);
         if (this._tree.getInput() === reference.parent) {

@@ -11,7 +11,7 @@ import { localize } from '../../../../nls.js';
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 const IEditorCancellationTokens = createDecorator('IEditorCancelService');
-const ctxCancellableOperation = new RawContextKey('cancellableOperation', false, localize(978, 'Whether the editor runs a cancellable operation, e.g. like \'Peek References\''));
+const ctxCancellableOperation = new RawContextKey('cancellableOperation', false, localize(993, 'Whether the editor runs a cancellable operation, e.g. like \'Peek References\''));
 registerSingleton(IEditorCancellationTokens, class {
     constructor() {
         this._tokens = new WeakMap();

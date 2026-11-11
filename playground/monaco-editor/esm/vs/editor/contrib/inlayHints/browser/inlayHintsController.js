@@ -462,14 +462,17 @@ let InlayHintsController = class InlayHintsController {
             }
         }
         // utils to collect/create injected text decorations
+        const { fontSize, fontFamily, padding, isUniform } = this._getLayoutInfo();
+        const editorFontSize = this._editor.getOption(61 /* EditorOption.fontSize */);
         const newDecorationsData = [];
-        const addInjectedText = (item, ref, content, cursorStops, attachedData) => {
+        const addInjectedText = (item, ref, content, cursorStops, attachedData, widthInEm) => {
             const opts = {
                 content,
                 inlineClassNameAffectsLetterSpacing: true,
                 inlineClassName: ref.className,
                 cursorStops,
-                attachedData
+                attachedData,
+                widthInEm
             };
             newDecorationsData.push({
                 item,
@@ -488,14 +491,15 @@ let InlayHintsController = class InlayHintsController {
             });
         };
         const addInjectedWhitespace = (item, isLast) => {
+            const widthInPixels = (fontSize / 3) | 0;
+            const widthInEm = widthInPixels / editorFontSize;
             const marginRule = this._ruleFactory.createClassNameRef({
-                width: `${(fontSize / 3) | 0}px`,
+                width: `${widthInPixels}px`,
                 display: 'inline-block'
             });
-            addInjectedText(item, marginRule, '\u200a', isLast ? InjectedTextCursorStops.Right : InjectedTextCursorStops.None, InlayHintsController_1._whitespaceData);
+            addInjectedText(item, marginRule, '', isLast ? InjectedTextCursorStops.Right : InjectedTextCursorStops.None, InlayHintsController_1._whitespaceData, widthInEm);
         };
         //
-        const { fontSize, fontFamily, padding, isUniform } = this._getLayoutInfo();
         const maxLength = this._editor.getOption(159 /* EditorOption.inlayHints */).maximumLength;
         const fontFamilyVar = '--code-editorInlayHintsFontFamily';
         this._editor.getContainerDomNode().style.setProperty(fontFamilyVar, fontFamily);

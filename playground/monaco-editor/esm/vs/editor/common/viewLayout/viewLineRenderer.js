@@ -1,5 +1,5 @@
 import { localize } from '../../../nls.js';
-import { containsRTL, firstNonWhitespaceIndex, lastNonWhitespaceIndex, isFullWidthCharacter } from '../../../base/common/strings.js';
+import { isFullWidthCharacter, containsRTL, firstNonWhitespaceIndex, lastNonWhitespaceIndex } from '../../../base/common/strings.js';
 import { StringBuilder } from '../core/stringBuilder.js';
 import { LineDecoration, LineDecorationsNormalizer } from './lineDecorations.js';
 import { LinePart } from './linePart.js';
@@ -13,7 +13,7 @@ class RenderLineInput {
     get isLTR() {
         return !this.containsRTL && this.textDirection !== TextDirection.RTL;
     }
-    constructor(useMonospaceOptimizations, canUseHalfwidthRightwardsArrow, lineContent, continuesWithWrappedLine, isBasicASCII, containsRTL, fauxIndentLength, lineTokens, lineDecorations, tabSize, startVisibleColumn, spaceWidth, middotWidth, wsmiddotWidth, stopRenderingLineAfter, renderWhitespace, renderControlCharacters, fontLigatures, selectionsOnLine, textDirection, verticalScrollbarSize, renderNewLineWhenEmpty = false) {
+    constructor(useMonospaceOptimizations, canUseHalfwidthRightwardsArrow, lineContent, continuesWithWrappedLine, isBasicASCII, containsRTL, fauxIndentLength, lineTokens, lineDecorations, tabSize, startVisibleColumn, spaceWidth, middotWidth, wsmiddotWidth, stopRenderingLineAfter, renderWhitespace, renderControlCharacters, fontLigatures, selectionsOnLine, textDirection, verticalScrollbarSize, renderNewLineWhenEmpty = false, useTwoCellFullwidthCharacters = false) {
         this.useMonospaceOptimizations = useMonospaceOptimizations;
         this.canUseHalfwidthRightwardsArrow = canUseHalfwidthRightwardsArrow;
         this.lineContent = lineContent;
@@ -40,6 +40,7 @@ class RenderLineInput {
         this.fontLigatures = fontLigatures;
         this.selectionsOnLine = selectionsOnLine && selectionsOnLine.sort((a, b) => a.start < b.start ? -1 : 1);
         this.renderNewLineWhenEmpty = renderNewLineWhenEmpty;
+        this.useTwoCellFullwidthCharacters = useTwoCellFullwidthCharacters;
         this.textDirection = textDirection;
         this.verticalScrollbarSize = verticalScrollbarSize;
         const wsmiddotDiff = Math.abs(wsmiddotWidth - spaceWidth);
@@ -92,7 +93,8 @@ class RenderLineInput {
             && this.sameSelection(other.selectionsOnLine)
             && this.textDirection === other.textDirection
             && this.verticalScrollbarSize === other.verticalScrollbarSize
-            && this.renderNewLineWhenEmpty === other.renderNewLineWhenEmpty);
+            && this.renderNewLineWhenEmpty === other.renderNewLineWhenEmpty
+            && this.useTwoCellFullwidthCharacters === other.useTwoCellFullwidthCharacters);
     }
 }
 class DomPosition {
@@ -218,17 +220,19 @@ function renderViewLine(input, sb) {
             let afterCount = 0;
             let containsForeignElements = 0 /* ForeignElementType.None */;
             for (const lineDecoration of input.lineDecorations) {
-                if (lineDecoration.type === 1 /* InlineDecorationType.Before */ || lineDecoration.type === 2 /* InlineDecorationType.After */) {
+                if (lineDecoration.type === 1 /* InlineDecorationType.Before */ || lineDecoration.type === 2 /* InlineDecorationType.After */ || lineDecoration.type === 4 /* InlineDecorationType.WidthOnly */) {
                     sb.appendString(`<span class="`);
                     sb.appendString(lineDecoration.className);
                     sb.appendString(`"></span>`);
-                    if (lineDecoration.type === 1 /* InlineDecorationType.Before */) {
-                        containsForeignElements |= 1 /* ForeignElementType.Before */;
-                        beforeCount++;
-                    }
                     if (lineDecoration.type === 2 /* InlineDecorationType.After */) {
                         containsForeignElements |= 2 /* ForeignElementType.After */;
                         afterCount++;
+                    }
+                    else {
+                        // Width only decorations sit before the character at their column, just like
+                        // before content decorations.
+                        containsForeignElements |= 1 /* ForeignElementType.Before */;
+                        beforeCount++;
                     }
                 }
             }
@@ -261,7 +265,7 @@ function renderViewLine2(input) {
     return new RenderLineOutput2(out.characterMapping, sb.build(), out.containsForeignElements);
 }
 class ResolvedRenderLineInput {
-    constructor(fontIsMonospace, canUseHalfwidthRightwardsArrow, lineContent, len, isOverflowing, overflowingCharCount, parts, containsForeignElements, fauxIndentLength, tabSize, startVisibleColumn, spaceWidth, renderSpaceCharCode, renderWhitespace, renderControlCharacters) {
+    constructor(fontIsMonospace, canUseHalfwidthRightwardsArrow, lineContent, len, isOverflowing, overflowingCharCount, parts, containsForeignElements, fauxIndentLength, tabSize, startVisibleColumn, spaceWidth, renderSpaceCharCode, renderWhitespace, renderControlCharacters, useTwoCellFullwidthCharacters) {
         this.fontIsMonospace = fontIsMonospace;
         this.canUseHalfwidthRightwardsArrow = canUseHalfwidthRightwardsArrow;
         this.lineContent = lineContent;
@@ -277,6 +281,7 @@ class ResolvedRenderLineInput {
         this.renderSpaceCharCode = renderSpaceCharCode;
         this.renderWhitespace = renderWhitespace;
         this.renderControlCharacters = renderControlCharacters;
+        this.useTwoCellFullwidthCharacters = useTwoCellFullwidthCharacters;
         //
     }
 }
@@ -321,6 +326,10 @@ function resolveRenderLineInput(input) {
             else if (lineDecoration.type === 2 /* InlineDecorationType.After */) {
                 containsForeignElements |= 2 /* ForeignElementType.After */;
             }
+            else if (lineDecoration.type === 4 /* InlineDecorationType.WidthOnly */) {
+                // Pretend there are foreign elements... although not 100% accurate. See above.
+                containsForeignElements |= 1 /* ForeignElementType.Before */;
+            }
         }
         tokens = _applyInlineDecorations(lineContent, len, tokens, input.lineDecorations);
     }
@@ -332,7 +341,34 @@ function resolveRenderLineInput(input) {
         // Split the first token if it contains both leading whitespace and RTL text
         tokens = splitLeadingWhitespaceFromRTL(lineContent, tokens);
     }
-    return new ResolvedRenderLineInput(input.useMonospaceOptimizations, input.canUseHalfwidthRightwardsArrow, lineContent, len, isOverflowing, overflowingCharCount, tokens, containsForeignElements, input.fauxIndentLength, input.tabSize, input.startVisibleColumn, input.spaceWidth, input.renderSpaceCharCode, input.renderWhitespace, input.renderControlCharacters);
+    if (input.useTwoCellFullwidthCharacters) {
+        tokens = splitFullWidthCharacters(lineContent, tokens);
+    }
+    return new ResolvedRenderLineInput(input.useMonospaceOptimizations, input.canUseHalfwidthRightwardsArrow, lineContent, len, isOverflowing, overflowingCharCount, tokens, containsForeignElements, input.fauxIndentLength, input.tabSize, input.startVisibleColumn, input.spaceWidth, input.renderSpaceCharCode, input.renderWhitespace, input.renderControlCharacters, input.useTwoCellFullwidthCharacters);
+}
+/** Splits parts such that every full-width character ends up in a part of its own. */
+function splitFullWidthCharacters(lineContent, parts) {
+    const result = [];
+    let startOffset = 0;
+    for (const part of parts) {
+        let didSplit = false;
+        for (let offset = startOffset; offset < part.endIndex; offset++) {
+            if (!isFullWidthCharacter(lineContent.charCodeAt(offset))) {
+                continue;
+            }
+            if (offset > startOffset) {
+                result.push(new LinePart(offset, part.type, part.metadata, part.containsRTL));
+            }
+            result.push(new LinePart(offset + 1, part.type, part.metadata, part.containsRTL));
+            startOffset = offset + 1;
+            didSplit = true;
+        }
+        if (!didSplit || part.endIndex > startOffset) {
+            result.push(part);
+        }
+        startOffset = part.endIndex;
+    }
+    return result;
 }
 /**
  * In the rendering phase, characters are always looped until token.endIndex.
@@ -758,6 +794,8 @@ function _renderLine(input, sb) {
     const renderSpaceCharCode = input.renderSpaceCharCode;
     const renderWhitespace = input.renderWhitespace;
     const renderControlCharacters = input.renderControlCharacters;
+    const useTwoCellFullwidthCharacters = input.useTwoCellFullwidthCharacters;
+    const fullWidthCharacterWidth = 2 * input.spaceWidth;
     const characterMapping = new CharacterMapping(len + 1, parts.length);
     let lastCharacterMappingDefined = false;
     let charIndex = 0;
@@ -774,13 +812,24 @@ function _renderLine(input, sb) {
         const partRendersWhitespace = (renderWhitespace !== 0 /* RenderWhitespace.None */ && part.isWhitespace());
         const partRendersWhitespaceWithWidth = partRendersWhitespace && !fontIsMonospace && (partType === 'mtkw' /*only whitespace*/ || !containsForeignElements);
         const partIsEmptyAndHasPseudoAfter = (charIndex === partEndIndex && part.isPseudoAfter());
+        // A full-width character is centered in two cells, unless the part already needs its
+        // style attribute for bidi isolation.
+        const partIsCenteredFullWidth = !partContainsRTL && useTwoCellFullwidthCharacters && isFullWidthCharacter(lineContent.charCodeAt(charIndex));
         charOffsetInPart = 0;
         sb.appendString('<span ');
         if (partContainsRTL) {
             sb.appendString('style="unicode-bidi:isolate" ');
         }
+        else if (partIsCenteredFullWidth) {
+            sb.appendString('style="width:');
+            sb.appendString(String(fullWidthCharacterWidth));
+            sb.appendString('px" ');
+        }
         sb.appendString('class="');
         sb.appendString(partRendersWhitespaceWithWidth ? 'mtkz' : partType);
+        if (partIsCenteredFullWidth) {
+            sb.appendString(' mtkfullwidth');
+        }
         sb.appendASCIICharCode(34 /* CharCode.DoubleQuote */);
         if (partRendersWhitespace) {
             let partWidth = 0;
@@ -926,7 +975,7 @@ function _renderLine(input, sb) {
     }
     if (isOverflowing) {
         sb.appendString('<span class="mtkoverflow">');
-        sb.appendString(localize(832, "Show more ({0})", renderOverflowingCharCount(overflowingCharCount)));
+        sb.appendString(localize(847, "Show more ({0})", renderOverflowingCharCount(overflowingCharCount)));
         sb.appendString('</span>');
     }
     sb.appendString('</span>');
@@ -937,7 +986,7 @@ function to4CharHex(n) {
 }
 function renderOverflowingCharCount(n) {
     if (n < 1024) {
-        return localize(833, "{0} chars", n);
+        return localize(848, "{0} chars", n);
     }
     if (n < 1024 * 1024) {
         return `${(n / 1024).toFixed(1)} KB`;

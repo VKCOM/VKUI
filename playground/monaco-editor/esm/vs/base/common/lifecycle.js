@@ -1,3 +1,4 @@
+import { createSingleCallFunction } from './functional.js';
 import { Iterable } from './iterator.js';
 
 function setParentOfDisposable(child, parent) {
@@ -227,6 +228,15 @@ class MutableDisposable {
         this._value?.dispose();
         this._value = undefined;
     }
+    /**
+     * Clears the value, but does not dispose it.
+     * The old value is returned.
+    */
+    clearAndLeak() {
+        const oldValue = this._value;
+        this._value = undefined;
+        return oldValue;
+    }
 }
 class RefCountedDisposable {
     constructor(_disposable) {
@@ -244,11 +254,26 @@ class RefCountedDisposable {
         return this;
     }
 }
-class ImmortalReference {
-    constructor(object) {
-        this.object = object;
+class ReferenceCollection {
+    constructor() {
+        this.references = new Map();
     }
-    dispose() { }
+    acquire(key, ...args) {
+        let reference = this.references.get(key);
+        if (!reference) {
+            reference = { counter: 0, object: this.createReferencedObject(key, ...args) };
+            this.references.set(key, reference);
+        }
+        const { object } = reference;
+        const dispose = createSingleCallFunction(() => {
+            if (--reference.counter === 0) {
+                this.destroyReferencedObject(key, reference.object);
+                this.references.delete(key);
+            }
+        });
+        reference.counter++;
+        return { object, dispose };
+    }
 }
 /**
  * A map the manages the lifecycle of the values that it stores.
@@ -311,4 +336,4 @@ class DisposableMap {
     }
 }
 
-export { Disposable, DisposableMap, DisposableStore, ImmortalReference, MutableDisposable, RefCountedDisposable, combinedDisposable, dispose, isDisposable, markAsSingleton, toDisposable };
+export { Disposable, DisposableMap, DisposableStore, MutableDisposable, RefCountedDisposable, ReferenceCollection, combinedDisposable, dispose, isDisposable, markAsSingleton, toDisposable };

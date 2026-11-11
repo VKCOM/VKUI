@@ -61,23 +61,31 @@ let InlineEditsInsertionView = class InlineEditsInsertionView extends Disposable
         });
         this._trimVertically = derived(this, reader => {
             const state = this._state.read(reader);
-            const text = state?.text;
-            if (!text || text.trim() === '') {
-                return { topOffset: 0, bottomOffset: 0, linesTop: 0, linesBottom: 0 };
+            if (!state) {
+                return { topOffset: 0, contentHeight: 0, linesTop: 0, linesBottom: 0 };
             }
-            // Adjust for leading/trailing newlines
+            const text = state.text;
             const lineHeight = this._editor.getLineHeightForPosition(new Position(state.lineNumber, 1));
             const eol = this._editor.getModel().getEOL();
+            const lineCount = text.split(eol).length;
+            // Count leading/trailing blank lines so the overlay can be trimmed to the actual inserted content.
             let linesTop = 0;
             let linesBottom = 0;
-            let i = 0;
-            for (; i < text.length && text.startsWith(eol, i); i += eol.length) {
-                linesTop += 1;
+            if (text.trim() !== '') {
+                let i = 0;
+                for (; i < text.length && text.startsWith(eol, i); i += eol.length) {
+                    linesTop += 1;
+                }
+                for (let j = text.length; j > i && text.endsWith(eol, j); j -= eol.length) {
+                    linesBottom += 1;
+                }
             }
-            for (let j = text.length; j > i && text.endsWith(eol, j); j -= eol.length) {
-                linesBottom += 1;
-            }
-            return { topOffset: linesTop * lineHeight, bottomOffset: linesBottom * lineHeight, linesTop, linesBottom };
+            return {
+                topOffset: linesTop * lineHeight,
+                contentHeight: (lineCount - linesTop - linesBottom) * lineHeight,
+                linesTop,
+                linesBottom,
+            };
         });
         this._maxPrefixTrim = derived(this, reader => {
             const state = this._state.read(reader);
@@ -156,9 +164,13 @@ let InlineEditsInsertionView = class InlineEditsInsertionView extends Disposable
             if (right <= left) {
                 return null;
             }
-            const { topOffset: topTrim, bottomOffset: bottomTrim } = this._trimVertically.read(reader);
+            const { topOffset: topTrim, contentHeight: height } = this._trimVertically.read(reader);
             const scrollTop = this._editorObs.scrollTop.read(reader);
-            const height = this._ghostTextView.height.read(reader) - topTrim - bottomTrim;
+            // Derive the overlay height synchronously from the model (via _trimVertically) rather than the
+            // asynchronously measured ghost text view zone height, which is transiently just a single line while
+            // the view zone is (re)created. Because it uses the same line height and line accounting as the trims,
+            // top/height/bottom stay consistent and height is always positive: leading and trailing blank lines
+            // can never cover every inserted line.
             const top = this._editor.getTopForLineNumber(state.lineNumber) - scrollTop + topTrim;
             const bottom = top + height;
             const overlay = new Rect(left, top, right, bottom);
@@ -180,7 +192,7 @@ let InlineEditsInsertionView = class InlineEditsInsertionView extends Disposable
             // such that there is a smooth transition at the edge of content left
             const overlayHider = overlayLayoutObs.map(layoutInfo => Rect.fromLeftTopRightBottom(layoutInfo.contentLeft - BORDER_RADIUS - BORDER_WIDTH, layoutInfo.overlay.top, layoutInfo.contentLeft, layoutInfo.overlay.bottom)).read(reader);
             const separatorWidth = this._input.map(i => i?.editorType === InlineCompletionEditorType.DiffEditor ? WIDGET_SEPARATOR_DIFF_EDITOR_WIDTH : WIDGET_SEPARATOR_WIDTH).read(reader);
-            const overlayRect = overlayLayoutObs.map(l => l.overlay.withMargin(0, BORDER_WIDTH, 0, l.startsAtContentLeft ? 0 : BORDER_WIDTH).intersectHorizontal(new OffsetRange(overlayHider.left, Number.MAX_SAFE_INTEGER)));
+            const overlayRect = overlayLayoutObs.map(l => l.overlay.withMargin(0, BORDER_WIDTH, BORDER_WIDTH, l.startsAtContentLeft ? 0 : BORDER_WIDTH).intersectHorizontal(new OffsetRange(overlayHider.left, Number.MAX_SAFE_INTEGER)));
             const underlayRect = overlayRect.map(rect => rect.withMargin(separatorWidth, separatorWidth));
             const editorBackground = getEditorBackgroundColor(this._input.read(undefined)?.editorType ?? InlineCompletionEditorType.TextEditor);
             return [

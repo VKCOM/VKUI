@@ -4,18 +4,12 @@ keywords:
   - ActionSheetItem
 ---
 
-<Overview group="modals">
-
-# ActionSheet [tag:component]
+# ActionSheet \[tag:component]
 
 Компонент для отображения списка действий в виде всплывающего меню.
 Поддерживает различные режимы отображения в зависимости от платформы и размера экрана. Например,
 на платформе iOS компонент имитирует поведение [нативного](https://developer.apple.com/design/human-interface-guidelines/action-sheets/).
 В качестве элементов списка принимает коллекцию [`ActionSheetItem`](#action-sheet-item).
-
-</Overview>
-
-<Playground hide>
 
 ```jsx
 <ActionSheet mode="sheet" onClosed={() => {}}>
@@ -24,11 +18,6 @@ keywords:
   <ActionSheetItem>Скопировать ссылку</ActionSheetItem>
 </ActionSheet>
 ```
-
-</Playground>
-
-{/* @example-description: Базовый пример использования ActionSheet. */}
-<Playground>
 
 ```jsx
 const [actionSheet, setActionSheet] = React.useState(null);
@@ -57,8 +46,6 @@ return (
   </>
 );
 ```
-
-</Playground>
 
 При использовании данного компонента отталкивайтесь от контекста и количества действий.
 Использование `ActionSheet` хорошо подходит для отображения вариантов в ответ на осознанное действие.
@@ -101,8 +88,8 @@ function handleClosed({ closedBy }) {
 
 Задаётся свойством `mode`. По умолчанию отображение определяется в зависимости от размеров экрана.
 
-- `"sheet"` — отображение снизу экрана в виде всплывающего окна (по умолчанию для мобильных устройств)
-- `"menu"` — отображение в виде всплывающего элемента относительно якорного элемента (по умолчанию для десктопа)
+* `"sheet"` — отображение снизу экрана в виде всплывающего окна (по умолчанию для мобильных устройств)
+* `"menu"` — отображение в виде всплывающего элемента относительно якорного элемента (по умолчанию для десктопа)
 
 ## Шапка
 
@@ -123,7 +110,7 @@ function handleClosed({ closedBy }) {
 Свойство `placement` отвечает за направление положения относительно якорного элемента.
 Оно поддерживается только для `mode="menu"` (учитывая автоматическое определение режима).
 
-Компонент выбирает наилучшее расположение самостоятельно, а это свойство задаёт только _приоритетное_ положение. Если для приоритетного положения не хватает места, будет выбрано любое другое подходящее.
+Компонент выбирает наилучшее расположение самостоятельно, а это свойство задаёт только *приоритетное* положение. Если для приоритетного положения не хватает места, будет выбрано любое другое подходящее.
 
 В качестве вариантов положения ориентируйтесь на значения из библиотеки [floating-ui](https://floating-ui.com/docs/tutorial#placements).
 
@@ -174,7 +161,7 @@ function handleClosed({ closedBy }) {
 
 Задаёт задержку (в миллисекундах) при установке и восстановлении фокуса.
 
-## Кнопка «Отмена» [#cancel-item]
+## Кнопка «Отмена» \[#cancel-item]
 
 Согласно рекомендациям **Apple**, в `ActionSheet` должен быть вариант действия «Отмена», закрывающий окно без выполнения дополнительных действий.
 
@@ -183,8 +170,8 @@ function handleClosed({ closedBy }) {
 
 > Данное свойство доступно только при выполнении следующих условий:
 >
-> - платформа iOS
-> - `mode="sheet"` (учитывая автоматическое определение режима)
+> * платформа iOS
+> * `mode="sheet"` (учитывая автоматическое определение режима)
 
 ```jsx
 import { ActionSheet, ActionSheetDefaultIosCloseItem } from '@vkontakte/vkui';
@@ -214,28 +201,24 @@ import { ActionSheet, ActionSheetDefaultIosCloseItem } from '@vkontakte/vkui';
 </ActionSheet>;
 ```
 
-## ActionSheetDefaultIosCloseItem [#action-sheet-default-ios-close-item]
+## ActionSheetDefaultIosCloseItem \[#action-sheet-default-ios-close-item]
 
 Компонент для отображения кнопки "Отмена" в `ActionSheet` на платформе iOS.
 
 Рекомендуется использовать этот компонент вместо устаревших `mode="cancel"` и `isCancelItem` в `ActionSheetItem`.
 
-<Playground>
-  ```jsx
-  <ActionSheetDefaultIosCloseItem>Отмена</ActionSheetDefaultIosCloseItem>
-  ```
-</Playground>
+```jsx
+<ActionSheetDefaultIosCloseItem>Отмена</ActionSheetDefaultIosCloseItem>
+```
 
-## ActionSheetItem [#action-sheet-item]
+## ActionSheetItem \[#action-sheet-item]
 
 Подкомпонент для отображения элемента всплывающего меню [`ActionSheet`](/components/action-sheet). Каждому компоненту можно задать различные режимы отображения,
 добавлять иконки и метаданные.
 
-<Playground>
-  ```jsx
-  <ActionSheetItem>Сохранить</ActionSheetItem>
-  ```
-</Playground>
+```jsx
+<ActionSheetItem>Сохранить</ActionSheetItem>
+```
 
 ### Цвет
 
@@ -245,37 +228,31 @@ import { ActionSheet, ActionSheetDefaultIosCloseItem } from '@vkontakte/vkui';
 
 Стандартный цвет отображения текста, используется в действиях, где нет необходимости в привлечении дополнительного внимания.
 
-<Playground>
-  ```jsx
-  <ActionSheetItem>Сохранить</ActionSheetItem>
-  ```
-</Playground>
+```jsx
+<ActionSheetItem>Сохранить</ActionSheetItem>
+```
 
 #### `"destructive"`
 
 Цвет критических действий (чаще всего красный), старайтесь располагать такие действия сверху списка,
 где они наиболее заметны.
 
-<Playground>
-  ```jsx
-  <ActionSheetItem mode="destructive">Удалить</ActionSheetItem>
-  ```
-</Playground>
+```jsx
+<ActionSheetItem mode="destructive">Удалить</ActionSheetItem>
+```
 
-#### ~`"cancel"`~
+#### ~~`"cancel"`~~
 
 > **@deprecated** Since 8.0.0. Значение `"cancel"` устарело и будет удалено в **VKUI v10**.
 > Используйте компонент [`ActionSheetDefaultIosCloseItem`](/components/action-sheet#action-sheet-default-ios-close-item) или передайте пропсы через `slotProps.iosCloseItem` в `ActionSheet`.
 
 Цвет действия отмены.
 
-<Playground>
-  ```jsx
-  <ActionSheetItem mode="cancel">Отмена</ActionSheetItem>
-  ```
-</Playground>
+```jsx
+<ActionSheetItem mode="cancel">Отмена</ActionSheetItem>
+```
 
-### ~Кнопка "Отмена"~
+### ~~Кнопка "Отмена"~~
 
 > **@deprecated** Since 8.0.0. Свойство `isCancelItem` устарело и будет удалено в **VKUI v10**.
 > Используйте компонент [`ActionSheetDefaultIosCloseItem`](/components/action-sheet#action-sheet-default-ios-close-item) или передайте пропсы через `slotProps.iosCloseItem` в `ActionSheet`.
@@ -294,42 +271,34 @@ import { ActionSheet, ActionSheetDefaultIosCloseItem } from '@vkontakte/vkui';
 
 Основной контент компонента (заголовок) можно задать, передав в свойство `children` необходимый текст:
 
-<Playground>
-  ```jsx
-  <ActionSheetItem>Скорость воспроизведения</ActionSheetItem>
-  ```
-</Playground>
+```jsx
+<ActionSheetItem>Скорость воспроизведения</ActionSheetItem>
+```
 
 Свойство `subtitle` позволяет отобразить дополнительный текст под заголовком:
 
-<Playground>
-  ```jsx
-  <ActionSheetItem subtitle="Обычная">Скорость воспроизведения</ActionSheetItem>
-  ```
-</Playground>
+```jsx
+<ActionSheetItem subtitle="Обычная">Скорость воспроизведения</ActionSheetItem>
+```
 
 Свойство `meta` даёт возможность отобразить небольшой пояснительный текст или индикатор рядом с заголовком:
 
-<Playground>
-  ```jsx
-  <ActionSheetItem meta={<Icon12Circle fill="var(--vkui--color_icon_negative)" />}>
-    Закрепить запись
-  </ActionSheetItem>
-  ```
-</Playground>
+```jsx
+<ActionSheetItem meta={<Icon12Circle fill="var(--vkui--color_icon_negative)" />}>
+  Закрепить запись
+</ActionSheetItem>
+```
 
 #### Многострочный режим
 
 По умолчанию большое количество текста обрезается и заменяется на многоточие, поддерживая однострочный режим отображения.
-Это поведение можно отключить (_для всех текстовых элементов_) с помощью свойства `multiline`:
+Это поведение можно отключить (*для всех текстовых элементов*) с помощью свойства `multiline`:
 
-<Playground style={{ maxWidth: 270 }}>
-  ```jsx
-  <ActionSheetItem multiline>
-    Очень длинный заголовок просто для примера, старайтесь избегать такого
-  </ActionSheetItem>
-  ```
-</Playground>
+```jsx
+<ActionSheetItem multiline>
+  Очень длинный заголовок просто для примера, старайтесь избегать такого
+</ActionSheetItem>
+```
 
 ### Контент в начале/в конце
 
@@ -341,17 +310,15 @@ import { ActionSheet, ActionSheetDefaultIosCloseItem } from '@vkontakte/vkui';
 использовать иконки размером `20px`, для мобильного представления (`regular`-режим) — `28px`.
 Проще всего это сделать, используя компонент [`AdaptiveIconRenderer`](/components/adaptive-icon-renderer).
 
-<Playground>
-  ```jsx
-  <ActionSheetItem
-    before={
-      <AdaptiveIconRenderer IconCompact={Icon20WriteOutline} IconRegular={Icon28EditOutline} />
-    }
-  >
-    Редактировать профиль
-  </ActionSheetItem>
-  ```
-</Playground>
+```jsx
+<ActionSheetItem
+  before={
+    <AdaptiveIconRenderer IconCompact={Icon20WriteOutline} IconRegular={Icon28EditOutline} />
+  }
+>
+  Редактировать профиль
+</ActionSheetItem>
+```
 
 ### Состояния
 
@@ -359,25 +326,21 @@ import { ActionSheet, ActionSheetDefaultIosCloseItem } from '@vkontakte/vkui';
 
 Свойство позволяет отключить возможность взаимодействия с пунктом меню.
 
-<Playground>
-  ```jsx
-  <ActionSheetItem subtitle="Отсутствуют" disabled>
-    Субтитры
-  </ActionSheetItem>
-  ```
-</Playground>
+```jsx
+<ActionSheetItem subtitle="Отсутствуют" disabled>
+  Субтитры
+</ActionSheetItem>
+```
 
 #### `selectable`
 
 Свойство даёт возможность выбирать элемент (визуальная и нативная имитация элемента радиокнопки).
 При использовании данного свойства вы также можете передавать стандартные свойства радиокнопок, для управления поведением:
 
-- `name` — имя группы для радиокнопок;
-- `value` — значение радиокнопки;
-- `defaultChecked` — установить выбранным по умолчанию;
-- `checked` и [`onChange`](#onchange) — для контролируемого извне использования выбранного значения;
-
-<Playground direction="column">
+* `name` — имя группы для радиокнопок;
+* `value` — значение радиокнопки;
+* `defaultChecked` — установить выбранным по умолчанию;
+* `checked` и [`onChange`](#onchange) — для контролируемого извне использования выбранного значения;
 
 ```jsx
 const [filter, setFilter] = useState('Нормальная');
@@ -401,24 +364,20 @@ return ['0.25x', '0.5x', '0.75x', 'Нормальная', '1.25x', '1.5x', '2x',
 ));
 ```
 
-</Playground>
-
 Дополнительно через свойство `iconChecked` есть возможность изменить иконки радиокнопки, которая рисуется по умолчанию.
 
-<Playground>
-  ```jsx
-  <ActionSheetItem
-    defaultChecked
-    selectable
-    iconChecked={
-      // квадратные иконки выбора
-      <AdaptiveIconRenderer IconCompact={Icon20CheckBoxOn} IconRegular={Icon24CheckBoxOn} />
-    }
-  >
-    0.75x
-  </ActionSheetItem>
-  ```
-</Playground>
+```jsx
+<ActionSheetItem
+  defaultChecked
+  selectable
+  iconChecked={
+    // квадратные иконки выбора
+    <AdaptiveIconRenderer IconCompact={Icon20CheckBoxOn} IconRegular={Icon24CheckBoxOn} />
+  }
+>
+  0.75x
+</ActionSheetItem>
+```
 
 ### Обработчики событий
 
@@ -451,58 +410,57 @@ return ['0.25x', '0.5x', '0.75x', 'Нормальная', '1.25x', '1.5x', '2x',
 </ActionSheetItem>
 ```
 
-## Доступность (a11y) [#a11y]
+## Доступность (a11y) \[#a11y]
 
-- у `ActionSheet` уже заданы атрибуты `role="dialog"` и `aria-modal="true"`, потому что по умолчанию он появляется как диалог и,
+* у `ActionSheet` уже заданы атрибуты `role="dialog"` и `aria-modal="true"`, потому что по умолчанию он появляется как диалог и,
   пока он не закроется, нельзя взаимодействовать с другими элементами на странице. Эти атрибуты можно переопределить, явно передавая
   их компоненту;
-- у целевого элемента обязательно должен быть выставлен атрибут `aria-expanded`.
-- при задании параметра `selectable={true}` для корректной работы важно задать всем `ActionSheetItem` одинаковое значение параметра
+* у целевого элемента обязательно должен быть выставлен атрибут `aria-expanded`.
+* при задании параметра `selectable={true}` для корректной работы важно задать всем `ActionSheetItem` одинаковое значение параметра
   `name`. Обусловлено это тем, что в реализации используется нативный `input[type='radio']` и по пунктам можно навигировать как по
   обычным `radio`-кнопкам;
-- при задании `selectable={true}` в реализации используется тег `"label"`. В остальных случаях используется тег `"div"`.
+* при задании `selectable={true}` в реализации используется тег `"label"`. В остальных случаях используется тег `"div"`.
 
-## Свойства и методы [#api]
+## Свойства и методы \[#api]
 
 ### ActionSheet
 
-| Свойство | Тип | По умолчанию | Описание |
-| --- | --- | --- | --- |
-| `allowClickPropagation` | `boolean` | `-` | По умолчанию событие `onClick` не всплывает. |
-| `autoFocus` | `boolean \| "root"` | `true` | Управление поведением автофокуса при появлении всплывающего окна. При прокидывании `true` фокус будет установлен на первый элемент. При прокидывании `root` фокус будет установлен в корень. |
-| `description` | `ReactNode` | `-` | Описание всплывающего окна, под заголовком. |
-| `disabled` | `boolean` | `-` | **Deprecated**: Since 7.3.0. Будет удалено в **VKUI v9**. |
-| `iosCloseItem` | `ReactNode` | `-` | Только мобильный iOS. |
-| `mode` | `"menu" \| "sheet"` | `-` | Режим отображения компонента:  - `sheet` – отображение снизу экрана в виде всплывающего окна, подходит для мобильных устройств - `menu` – отображение в виде всплывающего элемента, относительно якорного элемента. |
-| `mount` | `boolean` | `-` | **Deprecated**: Since 7.3.0.  Будет удалено в **VKUI v9**. |
-| `onClose` | `((reason: ActionSheetOnCloseReason) => void)` | `-` | Обработчик закрытия всплывающего окна. |
-| `**onClosed** \*` | `(options: ActionSheetOnCloseOptions) => void` | `-` | Обработчик закрытия всплывающего окна срабатывающий после завершения анимации закрытия.  > Since 8.0.0 аргумент, переданный в данную функцию, устарел и будет удален в **VKUI v10**. > Для получения причины закрытия всплывающего окна используйте свойство `onClose`. |
-| `placement` | `PlacementWithAuto` | `-` | Позиционирование всплывающего окна для десктопа. Компонент выберет наилучшее расположение сам, но можно задать приоритетное направление с помощью этого свойства. |
-| `popupOffsetDistance` | `number` | `-` | Отступ, где заданное кол-во единиц равняется пикселям. |
-| `restoreFocus` | `boolean \| (() => boolean \| HTMLElement)` | `true` | Управление поведением возврата фокуса при закрытии всплывающего окна. |
-| `slotProps` | `{ dropdown?: Pick<SharedDropdownProps, "className" \| "style">; iosCloseItem?: (Omit<ActionSheetItemProps, "mode" \| "isCancelItem"> & HasRootRef<...>) \| undefined; } \| undefined` | `-` | Свойства, которые можно прокинуть внутрь компонента: - `dropdown`: стили и класс всплывающей панели в режимах `menu` и `sheet`. - `iosCloseItem`: свойства для прокидывания в кнопку отмены на iOS. |
-| `timeout` | `number` | `0` | Время в миллисекундах после которого срабатывает автофокус при появлении всплывающего окна. |
-| `title` | `ReactNode` | `-` | Заголовок всплывающего окна. |
-| `**toggleRef** \*` | `ToggleRef` | `-` | Элемент, рядом с которым вылезает всплывающий элемент на десктопе. Лучше передавать `RefObject` c current. |
-| `usePortal` | `boolean \| HTMLElement \| RefObject<HTMLElement \| null> \| null` | `true (использует `document.body` как портал по умолчанию)` | Настройка портала для рендеринга компонента.  `true` - использует `portalRoot` из контекста `AppRoot` (если доступен) или `document.body`; `false` - отключает использование портала; `HTMLElement` - указывает конкретный DOM-элемент для использования в качестве портала; `React.RefObject<HTMLElement \| null>` - ссылка на DOM-элемент для использования в качестве портала; `null` - эквивалентно `false`, отключает использование портала. |
+| Свойство                | Тип                                                                                                                                                                                    | По умолчанию                                                | Описание                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `allowClickPropagation` | `boolean`                                                                                                                                                                              | `-`                                                         | По умолчанию событие `onClick` не всплывает.                                                                                                                                                                                                                                                                                                                                                                                                      |
+| `autoFocus`             | `boolean \| "root"`                                                                                                                                                                    | `true`                                                      | Управление поведением автофокуса при появлении всплывающего окна. При прокидывании `true` фокус будет установлен на первый элемент. При прокидывании `root` фокус будет установлен в корень.                                                                                                                                                                                                                                                      |
+| `description`           | `ReactNode`                                                                                                                                                                            | `-`                                                         | Описание всплывающего окна, под заголовком.                                                                                                                                                                                                                                                                                                                                                                                                       |
+| `disabled`              | `boolean`                                                                                                                                                                              | `-`                                                         | **Deprecated**: Since 7.3.0. Будет удалено в **VKUI v9**.                                                                                                                                                                                                                                                                                                                                                                                         |
+| `iosCloseItem`          | `ReactNode`                                                                                                                                                                            | `-`                                                         | Только мобильный iOS.                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| `mode`                  | `"menu" \| "sheet"`                                                                                                                                                                    | `-`                                                         | Режим отображения компонента:  - `sheet` – отображение снизу экрана в виде всплывающего окна, подходит для мобильных устройств - `menu` – отображение в виде всплывающего элемента, относительно якорного элемента.                                                                                                                                                                                                                               |
+| `mount`                 | `boolean`                                                                                                                                                                              | `-`                                                         | **Deprecated**: Since 7.3.0.  Будет удалено в **VKUI v9**.                                                                                                                                                                                                                                                                                                                                                                                        |
+| `onClose`               | `((reason: ActionSheetOnCloseReason) => void)`                                                                                                                                         | `-`                                                         | Обработчик закрытия всплывающего окна.                                                                                                                                                                                                                                                                                                                                                                                                            |
+| `**onClosed** \*`       | `(options: ActionSheetOnCloseOptions) => void`                                                                                                                                         | `-`                                                         | Обработчик закрытия всплывающего окна срабатывающий после завершения анимации закрытия.  > Since 8.0.0 аргумент, переданный в данную функцию, устарел и будет удален в **VKUI v10**. > Для получения причины закрытия всплывающего окна используйте свойство `onClose`.                                                                                                                                                                           |
+| `placement`             | `PlacementWithAuto`                                                                                                                                                                    | `-`                                                         | Позиционирование всплывающего окна для десктопа. Компонент выберет наилучшее расположение сам, но можно задать приоритетное направление с помощью этого свойства.                                                                                                                                                                                                                                                                                 |
+| `popupOffsetDistance`   | `number`                                                                                                                                                                               | `-`                                                         | Отступ, где заданное кол-во единиц равняется пикселям.                                                                                                                                                                                                                                                                                                                                                                                            |
+| `restoreFocus`          | `boolean \| (() => boolean \| HTMLElement)`                                                                                                                                            | `true`                                                      | Управление поведением возврата фокуса при закрытии всплывающего окна.                                                                                                                                                                                                                                                                                                                                                                             |
+| `slotProps`             | `{ dropdown?: Pick<SharedDropdownProps, "className" \| "style">; iosCloseItem?: (Omit<ActionSheetItemProps, "mode" \| "isCancelItem"> & HasRootRef<...>) \| undefined; } \| undefined` | `-`                                                         | Свойства, которые можно прокинуть внутрь компонента: - `dropdown`: стили и класс всплывающей панели в режимах `menu` и `sheet`. - `iosCloseItem`: свойства для прокидывания в кнопку отмены на iOS.                                                                                                                                                                                                                                               |
+| `timeout`               | `number`                                                                                                                                                                               | `0`                                                         | Время в миллисекундах после которого срабатывает автофокус при появлении всплывающего окна.                                                                                                                                                                                                                                                                                                                                                       |
+| `title`                 | `ReactNode`                                                                                                                                                                            | `-`                                                         | Заголовок всплывающего окна.                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| `**toggleRef** \*`      | `ToggleRef`                                                                                                                                                                            | `-`                                                         | Элемент, рядом с которым вылезает всплывающий элемент на десктопе. Лучше передавать `RefObject` c current.                                                                                                                                                                                                                                                                                                                                        |
+| `usePortal`             | `boolean \| HTMLElement \| RefObject<HTMLElement \| null> \| null`                                                                                                                     | `true (использует `document.body` как портал по умолчанию)` | Настройка портала для рендеринга компонента.  `true` - использует `portalRoot` из контекста `AppRoot` (если доступен) или `document.body`; `false` - отключает использование портала; `HTMLElement` - указывает конкретный DOM-элемент для использования в качестве портала; `React.RefObject<HTMLElement \| null>` - ссылка на DOM-элемент для использования в качестве портала; `null` - эквивалентно `false`, отключает использование портала. |
 
 ### ActionSheetItem
 
-| Свойство | Тип | По умолчанию | Описание |
-| --- | --- | --- | --- |
-| `after` | `ReactNode` | `-` | Иконка или другой React-элемент для отображения после основного контента. |
-| `autoCloseDisabled` | `boolean` | `false` | По умолчанию нажатие на опцию вызывает переданную в `ActionSheet` функцию `onClose`, данное свойство позволяет отключить такое поведение. |
-| `before` | `ReactNode` | `-` | Иконка или другой React-элемент для отображения перед основным контентом. |
-| `disabled` | `boolean` | `-` | Блокировка взаимодействия с компонентом. |
-| `href` | `string` | `-` | Если указано, элемент будет использоваться как ссылка. |
-| `iconChecked` | `ReactNode` | `-` | Иконка для `selectable` режима. |
-| `isCancelItem` | `boolean` | `-` | **Deprecated**: Since 8.0.0. Свойство устарело и будет удалено в **VKUI v10**. Используйте компонент `ActionSheetDefaultIosCloseItem` или передайте пропсы через `slotProps.iosCloseItem` в `ActionSheet`. |
-| `meta` | `ReactNode` | `-` | Дополнительная информация, отображаемая рядом с основным контентом. |
-| `mode` | `"default" \| "destructive" \| "cancel"` | `default` | Свойство, определяющее внешний вид элемента действия.  > Since 8.0.0. Значение `"cancel"` устарело и будет удалено в **VKUI v10**. > Используйте компонент `ActionSheetDefaultIosCloseItem` или передайте пропсы через `slotProps.iosCloseItem` в `ActionSheet`. |
-| `multiline` | `boolean` | `false` | Все текстовые элементы при необходимости занимают несколько строк. |
-| `onClick` | `MouseEventHandler<HTMLElement>` | `-` | По умолчанию `onClick` будет вызван после завершения анимации скрытия и после вызова `onClose`. Из этого следует, что в объекте события значения полей типа `currentTarget` будут не определены. Если вам нужен объект события именно на момент нажатия, используйте `onImmediateClick`. |
-| `onImmediateClick` | `MouseEventHandler<HTMLElement>` | `-` | Обработчик нажатия, вызывающийся непосредственно в момент нажатия (в отличие от `onClick`). |
-| `selectable` | `boolean` | `-` | Включает возможность выбрать элемент (отображает радиокнопку). |
-| `subtitle` | `ReactNode` | `-` | Слот для подсказки или вспомогательного текста. |
-| `target` | `string` | `-` | Атрибут `target` для тега `<a>`. |
-
+| Свойство            | Тип                                      | По умолчанию | Описание                                                                                                                                                                                                                                                                                 |
+| ------------------- | ---------------------------------------- | ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `after`             | `ReactNode`                              | `-`          | Иконка или другой React-элемент для отображения после основного контента.                                                                                                                                                                                                                |
+| `autoCloseDisabled` | `boolean`                                | `false`      | По умолчанию нажатие на опцию вызывает переданную в `ActionSheet` функцию `onClose`, данное свойство позволяет отключить такое поведение.                                                                                                                                                |
+| `before`            | `ReactNode`                              | `-`          | Иконка или другой React-элемент для отображения перед основным контентом.                                                                                                                                                                                                                |
+| `disabled`          | `boolean`                                | `-`          | Блокировка взаимодействия с компонентом.                                                                                                                                                                                                                                                 |
+| `href`              | `string`                                 | `-`          | Если указано, элемент будет использоваться как ссылка.                                                                                                                                                                                                                                   |
+| `iconChecked`       | `ReactNode`                              | `-`          | Иконка для `selectable` режима.                                                                                                                                                                                                                                                          |
+| `isCancelItem`      | `boolean`                                | `-`          | **Deprecated**: Since 8.0.0. Свойство устарело и будет удалено в **VKUI v10**. Используйте компонент `ActionSheetDefaultIosCloseItem` или передайте пропсы через `slotProps.iosCloseItem` в `ActionSheet`.                                                                               |
+| `meta`              | `ReactNode`                              | `-`          | Дополнительная информация, отображаемая рядом с основным контентом.                                                                                                                                                                                                                      |
+| `mode`              | `"default" \| "destructive" \| "cancel"` | `default`    | Свойство, определяющее внешний вид элемента действия.  > Since 8.0.0. Значение `"cancel"` устарело и будет удалено в **VKUI v10**. > Используйте компонент `ActionSheetDefaultIosCloseItem` или передайте пропсы через `slotProps.iosCloseItem` в `ActionSheet`.                         |
+| `multiline`         | `boolean`                                | `false`      | Все текстовые элементы при необходимости занимают несколько строк.                                                                                                                                                                                                                       |
+| `onClick`           | `MouseEventHandler<HTMLElement>`         | `-`          | По умолчанию `onClick` будет вызван после завершения анимации скрытия и после вызова `onClose`. Из этого следует, что в объекте события значения полей типа `currentTarget` будут не определены. Если вам нужен объект события именно на момент нажатия, используйте `onImmediateClick`. |
+| `onImmediateClick`  | `MouseEventHandler<HTMLElement>`         | `-`          | Обработчик нажатия, вызывающийся непосредственно в момент нажатия (в отличие от `onClick`).                                                                                                                                                                                              |
+| `selectable`        | `boolean`                                | `-`          | Включает возможность выбрать элемент (отображает радиокнопку).                                                                                                                                                                                                                           |
+| `subtitle`          | `ReactNode`                              | `-`          | Слот для подсказки или вспомогательного текста.                                                                                                                                                                                                                                          |
+| `target`            | `string`                                 | `-`          | Атрибут `target` для тега `<a>`.                                                                                                                                                                                                                                                         |

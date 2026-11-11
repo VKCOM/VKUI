@@ -48,8 +48,8 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var __param = (undefined && undefined.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-const CONTEXT_RENAME_INPUT_VISIBLE = new RawContextKey('renameInputVisible', false, localize(1440, "Whether the rename input widget is visible"));
-new RawContextKey('renameInputFocused', false, localize(1441, "Whether the rename input widget is focused"));
+const CONTEXT_RENAME_INPUT_VISIBLE = new RawContextKey('renameInputVisible', false, localize(1460, "Whether the rename input widget is visible"));
+new RawContextKey('renameInputFocused', false, localize(1461, "Whether the rename input widget is focused"));
 let RenameWidget = class RenameWidget {
     constructor(_editor, _acceptKeybindings, _themeService, _keybindingService, contextKeyService, _logService) {
         this._editor = _editor;
@@ -172,7 +172,7 @@ let RenameWidget = class RenameWidget {
     }
     beforeRender() {
         const [accept, preview] = this._acceptKeybindings;
-        this._label.innerText = localize(1442, "{0} to Rename, {1} to Preview", this._keybindingService.lookupKeybinding(accept)?.getLabel(), this._keybindingService.lookupKeybinding(preview)?.getLabel());
+        this._label.innerText = localize(1462, "{0} to Rename, {1} to Preview", this._keybindingService.lookupKeybinding(accept)?.getLabel(), this._keybindingService.lookupKeybinding(preview)?.getLabel());
         this._domNode.style.minWidth = `200px`; // to prevent from widening when candidates come in
         return null;
     }
@@ -485,7 +485,7 @@ class RenameCandidateListView {
         // adjust list container layout
         this._listContainer.style.height = `${height}px`;
         this._listContainer.style.width = `${width}px`;
-        status(localize(1443, "Received {0} rename suggestions", candidates.length));
+        status(localize(1463, "Received {0} rename suggestions", candidates.length));
     }
     clearCandidates() {
         this._listContainer.style.height = '0px';
@@ -627,13 +627,13 @@ class InputWithButton {
             this._inputNode.className = 'rename-input';
             this._inputNode.type = 'text';
             this._inputNode.style.border = 'none';
-            this._inputNode.setAttribute('aria-label', localize(1444, "Rename input. Type new name and press Enter to commit."));
+            this._inputNode.setAttribute('aria-label', localize(1464, "Rename input. Type new name and press Enter to commit."));
             this._domNode.appendChild(this._inputNode);
             this._buttonNode = document.createElement('div');
             this._buttonNode.className = 'rename-suggestions-button';
             this._buttonNode.setAttribute('tabindex', '0');
-            this._buttonGenHoverText = localize(1445, "Generate New Name Suggestions");
-            this._buttonCancelHoverText = localize(1446, "Cancel");
+            this._buttonGenHoverText = localize(1465, "Generate New Name Suggestions");
+            this._buttonCancelHoverText = localize(1466, "Cancel");
             this._buttonHoverContent = this._buttonGenHoverText;
             this._disposables.add(getBaseLayerHoverDelegate().setupDelayedHover(this._buttonNode, () => ({
                 content: this._buttonHoverContent,

@@ -1,5 +1,6 @@
 import { Schemas } from '../common/network.js';
 import { reset } from './dom.js';
+import { createTrustedTypesPolicy } from './trustedTypes.js';
 import purify from './dompurify/dompurify.js';
 
 /*---------------------------------------------------------------------------------------------
@@ -120,23 +121,34 @@ function validateLink(value, allowedProtocols) {
     }
 }
 /**
- * Hooks dompurify using `afterSanitizeAttributes` to check that all `href` and `src`
- * attributes are valid.
+ * Hooks dompurify using `afterSanitizeAttributes` to check link and media-loading attributes.
  */
-function hookDomPurifyHrefAndSrcSanitizer(allowedLinkProtocols, allowedMediaProtocols) {
+function hookDomPurifyHrefAndSrcSanitizer(allowedLinkProtocols, allowedMediaProtocols, mediaSourceIsAllowed, replaceWithPlaintext) {
     purify.addHook('afterSanitizeAttributes', (node) => {
-        // check all href/src attributes for validity
-        for (const attr of ['href', 'src']) {
+        for (const attr of ['href', 'src', 'poster']) {
             if (node.hasAttribute(attr)) {
                 const attrValue = node.getAttribute(attr);
-                if (attr === 'href') {
+                if (attr === 'href' && node.nodeName.toLowerCase() === 'a') {
                     if (!attrValue.startsWith('#') && !validateLink(attrValue, allowedLinkProtocols)) {
                         node.removeAttribute(attr);
                     }
                 }
-                else { // 'src'
+                else if (attr === 'href' && attrValue.startsWith('#')) {
+                    continue;
+                }
+                else {
                     if (!validateLink(attrValue, allowedMediaProtocols)) {
                         node.removeAttribute(attr);
+                    }
+                    else if (mediaSourceIsAllowed && !mediaSourceIsAllowed(attrValue)) {
+                        const replacement = replaceWithPlaintext ? convertTagToPlaintext(node) : undefined;
+                        if (replacement && node.parentNode) {
+                            node.parentNode.replaceChild(replacement, node);
+                            return;
+                        }
+                        else {
+                            node.removeAttribute(attr);
+                        }
                     }
                 }
             }
@@ -208,7 +220,7 @@ function doSanitizeHtml(untrusted, config, outputType) {
         }, {
             override: config?.allowedMediaProtocols?.override ?? [Schemas.http, Schemas.https],
             allowRelativePaths: config?.allowRelativeMediaPaths ?? false
-        });
+        }, config?.mediaSourceIsAllowed, config?.replaceWithPlaintext ?? false);
         if (config?.replaceWithPlaintext) {
             purify.addHook('uponSanitizeElement', replaceWithPlainTextHook);
         }
@@ -231,21 +243,52 @@ function doSanitizeHtml(untrusted, config, outputType) {
             });
         }
         if (outputType === 'dom') {
-            return purify.sanitize(untrusted, {
-                ...resolvedConfig,
-                RETURN_DOM_FRAGMENT: true
-            });
+            return sanitizeSurvivingStalePolicy(untrusted, { ...resolvedConfig, RETURN_DOM_FRAGMENT: true });
         }
         else {
-            return purify.sanitize(untrusted, {
-                ...resolvedConfig,
-                RETURN_TRUSTED_TYPE: true
-            }); // Cast from lib TrustedHTML to global TrustedHTML
+            return sanitizeSurvivingStalePolicy(untrusted, { ...resolvedConfig, RETURN_TRUSTED_TYPE: true }); // Cast from lib TrustedHTML to global TrustedHTML
         }
     }
     finally {
         purify.removeAllHooks();
     }
+}
+/** Names a replacement policy; Trusted Types rejects a name that is already taken. */
+let stalePolicyReplacementCount = 0;
+/**
+ * Sanitizes HTML, replacing the sanitizer's Trusted Types policy first when the policy's
+ * creating realm is gone and every call would otherwise throw. The replacement is kept
+ * for later calls, so this recovers once rather than on every call.
+ *
+ * Exported, with `sanitize` injectable, only so a test can drive the recovery: dompurify
+ * caches one policy for the lifetime of the module, so once anything has sanitized, no
+ * later stand-in policy is ever consulted. Prefer {@link sanitizeHtml}.
+ */
+function sanitizeSurvivingStalePolicy(untrusted, config, sanitize = (html, cfg) => purify.sanitize(html, cfg)) {
+    try {
+        return sanitize(untrusted, config);
+    }
+    catch (error) {
+        if (!isStaleTrustedTypesPolicy(error)) {
+            throw error;
+        }
+        const replacement = createTrustedTypesPolicy(`domSanitize${stalePolicyReplacementCount++}`, {
+            createHTML: (value) => value,
+            createScriptURL: (value) => value,
+        });
+        if (!replacement) {
+            throw error;
+        }
+        // Named through dompurify's own config rather than the global `TrustedTypePolicy`.
+        // The two spell the same type, but the editor build resolves `trusted-types` twice
+        // and the branded declarations then do not unify.
+        const policy = replacement;
+        return sanitize(untrusted, { ...config, TRUSTED_TYPES_POLICY: policy });
+    }
+}
+/** Whether the failure is a Trusted Types policy whose realm is gone, rather than bad markup. */
+function isStaleTrustedTypesPolicy(error) {
+    return error instanceof Error && /no longer runnable/i.test(error.message);
 }
 const selfClosingTags = ['area', 'base', 'br', 'col', 'command', 'embed', 'hr', 'img', 'input', 'keygen', 'link', 'meta', 'param', 'source', 'track', 'wbr'];
 const replaceWithPlainTextHook = (node, data, _config) => {
@@ -289,7 +332,7 @@ function convertTagToPlaintext(node) {
     else {
         return;
     }
-    const fragment = document.createDocumentFragment();
+    const fragment = node.ownerDocument.createDocumentFragment();
     const textNode = node.ownerDocument.createTextNode(startTagText);
     fragment.appendChild(textNode);
     while (node.firstChild) {
@@ -309,4 +352,4 @@ function safeSetInnerHtml(node, untrusted, config) {
     reset(node, fragment);
 }
 
-export { basicMarkupHtmlTags, convertTagToPlaintext, defaultAllowedAttrs, safeSetInnerHtml, sanitizeHtml };
+export { basicMarkupHtmlTags, convertTagToPlaintext, defaultAllowedAttrs, safeSetInnerHtml, sanitizeHtml, sanitizeSurvivingStalePolicy };

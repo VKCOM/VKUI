@@ -1,5 +1,5 @@
-import { FileAccess, nodeModulesPath } from './base/common/network.js';
-import './base/common/platform.js';
+import { FileAccess, nodeModulesAsarPath, nodeModulesPath } from './base/common/network.js';
+import { isElectron, isWebWorker, hasElectronUserAgent } from './base/common/platform.js';
 
 /*---------------------------------------------------------------------------------------------
  *  Copyright (c) Microsoft Corporation. All rights reserved.
@@ -7,9 +7,10 @@ import './base/common/platform.js';
  *--------------------------------------------------------------------------------------------*/
 function resolveAmdNodeModulePath(nodeModuleName, pathInsideNodeModule) {
     const product = globalThis._VSCODE_PRODUCT_JSON;
-    Boolean((product ?? globalThis.vscode?.context?.configuration()?.product)?.commit);
+    const isBuilt = Boolean((product ?? globalThis.vscode?.context?.configuration()?.product)?.commit);
+    const useASAR = (isBuilt && (isElectron || (isWebWorker && hasElectronUserAgent)));
     const nodeModulePath = `${nodeModuleName}/${pathInsideNodeModule}`;
-    const actualNodeModulesPath = (nodeModulesPath);
+    const actualNodeModulesPath = (useASAR ? nodeModulesAsarPath : nodeModulesPath);
     const resourcePath = `${actualNodeModulesPath}/${nodeModulePath}`;
     return FileAccess.asBrowserUri(resourcePath).toString(true);
 }

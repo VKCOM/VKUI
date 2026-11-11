@@ -29,7 +29,7 @@ var MessageController_1;
 let MessageController = class MessageController {
     static { MessageController_1 = this; }
     static { this.ID = 'editor.contrib.messageController'; }
-    static { this.MESSAGE_VISIBLE = new RawContextKey('messageVisible', false, localize(1333, 'Whether the editor is currently showing an inline message')); }
+    static { this.MESSAGE_VISIBLE = new RawContextKey('messageVisible', false, localize(1353, 'Whether the editor is currently showing an inline message')); }
     static get(editor) {
         return editor.getContribution(MessageController_1.ID);
     }

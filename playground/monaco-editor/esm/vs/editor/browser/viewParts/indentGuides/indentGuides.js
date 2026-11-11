@@ -22,7 +22,7 @@ class IndentGuidesOverlay extends DynamicViewOverlay {
         this._context = context;
         this._primaryPosition = null;
         const options = this._context.configuration.options;
-        const wrappingInfo = options.get(166 /* EditorOption.wrappingInfo */);
+        const wrappingInfo = options.get(167 /* EditorOption.wrappingInfo */);
         const fontInfo = options.get(59 /* EditorOption.fontInfo */);
         this._spaceWidth = fontInfo.spaceWidth;
         this._maxIndentLeft = wrappingInfo.wrappingColumn === -1 ? -1 : (wrappingInfo.wrappingColumn * fontInfo.typicalHalfwidthCharacterWidth);
@@ -38,7 +38,7 @@ class IndentGuidesOverlay extends DynamicViewOverlay {
     // --- begin event handlers
     onConfigurationChanged(e) {
         const options = this._context.configuration.options;
-        const wrappingInfo = options.get(166 /* EditorOption.wrappingInfo */);
+        const wrappingInfo = options.get(167 /* EditorOption.wrappingInfo */);
         const fontInfo = options.get(59 /* EditorOption.fontInfo */);
         this._spaceWidth = fontInfo.spaceWidth;
         this._maxIndentLeft = wrappingInfo.wrappingColumn === -1 ? -1 : (wrappingInfo.wrappingColumn * fontInfo.typicalHalfwidthCharacterWidth);

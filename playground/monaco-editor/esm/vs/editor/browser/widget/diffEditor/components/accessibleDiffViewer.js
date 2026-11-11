@@ -428,9 +428,9 @@ let View = class View extends Disposable {
         this._scrollbar.scanDomNode();
     }
     _createRow(item, lineHeight, width, originalOptions, originalModel, originalModelOpts, modifiedOptions, modifiedModel, modifiedModelOpts) {
-        const originalLayoutInfo = originalOptions.get(165 /* EditorOption.layoutInfo */);
+        const originalLayoutInfo = originalOptions.get(166 /* EditorOption.layoutInfo */);
         const originalLineNumbersWidth = originalLayoutInfo.glyphMarginWidth + originalLayoutInfo.lineNumbersWidth;
-        const modifiedLayoutInfo = modifiedOptions.get(165 /* EditorOption.layoutInfo */);
+        const modifiedLayoutInfo = modifiedOptions.get(166 /* EditorOption.layoutInfo */);
         const modifiedLineNumbersWidth = 10 + modifiedLayoutInfo.glyphMarginWidth + modifiedLayoutInfo.lineNumbersWidth;
         let rowClassName = 'diff-review-row';
         let lineNumbersExtraClassName = '';

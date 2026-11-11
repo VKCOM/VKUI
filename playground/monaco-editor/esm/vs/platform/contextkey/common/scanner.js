@@ -8,17 +8,17 @@ import { localize } from '../../../nls.js';
 function hintDidYouMean(...meant) {
     switch (meant.length) {
         case 1:
-            return localize(1755, "Did you mean {0}?", meant[0]);
+            return localize(1788, "Did you mean {0}?", meant[0]);
         case 2:
-            return localize(1756, "Did you mean {0} or {1}?", meant[0], meant[1]);
+            return localize(1789, "Did you mean {0} or {1}?", meant[0], meant[1]);
         case 3:
-            return localize(1757, "Did you mean {0}, {1} or {2}?", meant[0], meant[1], meant[2]);
+            return localize(1790, "Did you mean {0}, {1} or {2}?", meant[0], meant[1], meant[2]);
         default: // we just don't expect that many
             return undefined;
     }
 }
-const hintDidYouForgetToOpenOrCloseQuote = localize(1758, "Did you forget to open or close the quote?");
-const hintDidYouForgetToEscapeSlash = localize(1759, "Did you forget to escape the '/' (slash) character? Put two backslashes before it to escape, e.g., '\\\\/\'.");
+const hintDidYouForgetToOpenOrCloseQuote = localize(1791, "Did you forget to open or close the quote?");
+const hintDidYouForgetToEscapeSlash = localize(1792, "Did you forget to escape the '/' (slash) character? Put two backslashes before it to escape, e.g., '\\\\/\'.");
 /**
  * A simple scanner for context keys.
  *

@@ -305,13 +305,13 @@ class EditorAccessibilitySupport extends BaseEditorOption {
             type: 'string',
             enum: ['auto', 'on', 'off'],
             enumDescriptions: [
-                localize(220, "Use platform APIs to detect when a Screen Reader is attached."),
-                localize(221, "Optimize for usage with a Screen Reader."),
-                localize(222, "Assume a screen reader is not attached."),
+                localize(226, "Use platform APIs to detect when a Screen Reader is attached."),
+                localize(227, "Optimize for usage with a Screen Reader."),
+                localize(228, "Assume a screen reader is not attached."),
             ],
             default: 'auto',
             tags: ['accessibility'],
-            description: localize(223, "Controls if the UI should run in a mode where it is optimized for screen readers.")
+            description: localize(229, "Controls if the UI should run in a mode where it is optimized for screen readers.")
         });
     }
     validate(input) {
@@ -340,12 +340,12 @@ class EditorComments extends BaseEditorOption {
             'editor.comments.insertSpace': {
                 type: 'boolean',
                 default: defaults.insertSpace,
-                description: localize(224, "Controls whether a space character is inserted when commenting.")
+                description: localize(230, "Controls whether a space character is inserted when commenting.")
             },
             'editor.comments.ignoreEmptyLines': {
                 type: 'boolean',
                 default: defaults.ignoreEmptyLines,
-                description: localize(225, 'Controls if empty lines should be ignored with toggle, add or remove actions for line comments.')
+                description: localize(231, 'Controls if empty lines should be ignored with toggle, add or remove actions for line comments.')
             },
         });
     }
@@ -421,7 +421,7 @@ function cursorStyleFromString(cursorStyle) {
 //#region editorClassName
 class EditorClassName extends ComputedEditorOption {
     constructor() {
-        super(162 /* EditorOption.editorClassName */, '');
+        super(163 /* EditorOption.editorClassName */, '');
     }
     compute(env, options, _) {
         const classNames = ['monaco-editor'];
@@ -450,7 +450,7 @@ class EditorClassName extends ComputedEditorOption {
 //#region emptySelectionClipboard
 class EditorEmptySelectionClipboard extends EditorBooleanOption {
     constructor() {
-        super(45 /* EditorOption.emptySelectionClipboard */, 'emptySelectionClipboard', true, { description: localize(226, "Controls whether copying without a selection copies the current line.") });
+        super(45 /* EditorOption.emptySelectionClipboard */, 'emptySelectionClipboard', true, { description: localize(232, "Controls whether copying without a selection copies the current line.") });
     }
     compute(env, options, value) {
         return value && env.emptySelectionClipboard;
@@ -474,75 +474,75 @@ class EditorFind extends BaseEditorOption {
             'editor.find.cursorMoveOnType': {
                 type: 'boolean',
                 default: defaults.cursorMoveOnType,
-                description: localize(227, "Controls whether the cursor should jump to find matches while typing.")
+                description: localize(233, "Controls whether the cursor should jump to find matches while typing.")
             },
             'editor.find.seedSearchStringFromSelection': {
                 type: 'string',
                 enum: ['never', 'always', 'selection'],
                 default: defaults.seedSearchStringFromSelection,
                 enumDescriptions: [
-                    localize(228, 'Never seed search string from the editor selection.'),
-                    localize(229, 'Always seed search string from the editor selection, including word at cursor position.'),
-                    localize(230, 'Only seed search string from the editor selection.')
+                    localize(234, 'Never seed search string from the editor selection.'),
+                    localize(235, 'Always seed search string from the editor selection, including word at cursor position.'),
+                    localize(236, 'Only seed search string from the editor selection.')
                 ],
-                description: localize(231, "Controls whether the search string in the Find Widget is seeded from the editor selection.")
+                description: localize(237, "Controls whether the search string in the Find Widget is seeded from the editor selection.")
             },
             'editor.find.autoFindInSelection': {
                 type: 'string',
                 enum: ['never', 'always', 'multiline'],
                 default: defaults.autoFindInSelection,
                 enumDescriptions: [
-                    localize(232, 'Never turn on Find in Selection automatically (default).'),
-                    localize(233, 'Always turn on Find in Selection automatically.'),
-                    localize(234, 'Turn on Find in Selection automatically when multiple lines of content are selected.')
+                    localize(238, 'Never turn on Find in Selection automatically (default).'),
+                    localize(239, 'Always turn on Find in Selection automatically.'),
+                    localize(240, 'Turn on Find in Selection automatically when multiple lines of content are selected.')
                 ],
-                description: localize(235, "Controls the condition for turning on Find in Selection automatically.")
+                description: localize(241, "Controls the condition for turning on Find in Selection automatically.")
             },
             'editor.find.globalFindClipboard': {
                 type: 'boolean',
                 default: defaults.globalFindClipboard,
-                description: localize(236, "Controls whether the Find Widget should read or modify the shared find clipboard on macOS."),
+                description: localize(242, "Controls whether the Find Widget should read or modify the shared find clipboard on macOS."),
                 included: isMacintosh
             },
             'editor.find.addExtraSpaceOnTop': {
                 type: 'boolean',
                 default: defaults.addExtraSpaceOnTop,
-                description: localize(237, "Controls whether the Find Widget should add extra lines on top of the editor. When true, you can scroll beyond the first line when the Find Widget is visible.")
+                description: localize(243, "Controls whether the Find Widget should add extra lines on top of the editor. When true, you can scroll beyond the first line when the Find Widget is visible.")
             },
             'editor.find.loop': {
                 type: 'boolean',
                 default: defaults.loop,
-                description: localize(238, "Controls whether the search automatically restarts from the beginning (or the end) when no further matches can be found.")
+                description: localize(244, "Controls whether the search automatically restarts from the beginning (or the end) when no further matches can be found.")
             },
             'editor.find.closeOnResult': {
                 type: 'boolean',
                 default: defaults.closeOnResult,
-                description: localize(239, "Controls whether the Find Widget closes after an explicit find navigation command lands on a result.")
+                description: localize(245, "Controls whether the Find Widget closes after an explicit find navigation command lands on a result.")
             },
             'editor.find.history': {
                 type: 'string',
                 enum: ['never', 'workspace'],
                 default: 'workspace',
                 enumDescriptions: [
-                    localize(240, 'Do not store search history from the find widget.'),
-                    localize(241, 'Store search history across the active workspace'),
+                    localize(246, 'Do not store search history from the find widget.'),
+                    localize(247, 'Store search history across the active workspace'),
                 ],
-                description: localize(242, "Controls how the find widget history should be stored")
+                description: localize(248, "Controls how the find widget history should be stored")
             },
             'editor.find.replaceHistory': {
                 type: 'string',
                 enum: ['never', 'workspace'],
                 default: 'workspace',
                 enumDescriptions: [
-                    localize(243, 'Do not store history from the replace widget.'),
-                    localize(244, 'Store replace history across the active workspace'),
+                    localize(249, 'Do not store history from the replace widget.'),
+                    localize(250, 'Store replace history across the active workspace'),
                 ],
-                description: localize(245, "Controls how the replace widget history should be stored")
+                description: localize(251, "Controls how the replace widget history should be stored")
             },
             'editor.find.findOnType': {
                 type: 'boolean',
                 default: defaults.findOnType,
-                description: localize(246, "Controls whether the Find Widget should search as you type.")
+                description: localize(252, "Controls whether the Find Widget should search as you type.")
             },
         });
     }
@@ -582,14 +582,14 @@ class EditorFontLigatures extends BaseEditorOption {
             anyOf: [
                 {
                     type: 'boolean',
-                    description: localize(247, "Enables/Disables font ligatures ('calt' and 'liga' font features). Change this to a string for fine-grained control of the 'font-feature-settings' CSS property."),
+                    description: localize(253, "Enables/Disables font ligatures ('calt' and 'liga' font features). Change this to a string for fine-grained control of the 'font-feature-settings' CSS property."),
                 },
                 {
                     type: 'string',
-                    description: localize(248, "Explicit 'font-feature-settings' CSS property. A boolean can be passed instead if one only needs to turn on/off ligatures.")
+                    description: localize(254, "Explicit 'font-feature-settings' CSS property. A boolean can be passed instead if one only needs to turn on/off ligatures.")
                 }
             ],
-            description: localize(249, "Configures font ligatures or font features. Can be either a boolean to enable/disable ligatures or a string for the value of the CSS 'font-feature-settings' property."),
+            description: localize(255, "Configures font ligatures or font features. Can be either a boolean to enable/disable ligatures or a string for the value of the CSS 'font-feature-settings' property."),
             default: false
         });
     }
@@ -627,14 +627,14 @@ class EditorFontVariations extends BaseEditorOption {
             anyOf: [
                 {
                     type: 'boolean',
-                    description: localize(250, "Enables/Disables the translation from font-weight to font-variation-settings. Change this to a string for fine-grained control of the 'font-variation-settings' CSS property."),
+                    description: localize(256, "Enables/Disables the translation from font-weight to font-variation-settings. Change this to a string for fine-grained control of the 'font-variation-settings' CSS property."),
                 },
                 {
                     type: 'string',
-                    description: localize(251, "Explicit 'font-variation-settings' CSS property. A boolean can be passed instead if one only needs to translate font-weight to font-variation-settings.")
+                    description: localize(257, "Explicit 'font-variation-settings' CSS property. A boolean can be passed instead if one only needs to translate font-weight to font-variation-settings.")
                 }
             ],
-            description: localize(252, "Configures font variations. Can be either a boolean to enable/disable the translation from font-weight to font-variation-settings or a string for the value of the CSS 'font-variation-settings' property."),
+            description: localize(258, "Configures font variations. Can be either a boolean to enable/disable the translation from font-weight to font-variation-settings or a string for the value of the CSS 'font-variation-settings' property."),
             default: false
         });
     }
@@ -693,7 +693,7 @@ class EditorFontInfo extends ComputedEditorOption {
 //#region effectiveCursorStyle
 class EffectiveCursorStyle extends ComputedEditorOption {
     constructor() {
-        super(161 /* EditorOption.effectiveCursorStyle */, TextEditorCursorStyle.Line);
+        super(162 /* EditorOption.effectiveCursorStyle */, TextEditorCursorStyle.Line);
     }
     compute(env, options, _) {
         return env.inputMode === 'overtype' ?
@@ -705,7 +705,7 @@ class EffectiveCursorStyle extends ComputedEditorOption {
 //#region effectiveExperimentalEditContext
 class EffectiveEditContextEnabled extends ComputedEditorOption {
     constructor() {
-        super(170 /* EditorOption.effectiveEditContext */, false);
+        super(171 /* EditorOption.effectiveEditContext */, false);
     }
     compute(env, options) {
         return env.editContextSupported && options.get(44 /* EditorOption.editContext */);
@@ -715,7 +715,7 @@ class EffectiveEditContextEnabled extends ComputedEditorOption {
 //#region effectiveAllowVariableFonts
 class EffectiveAllowVariableFonts extends ComputedEditorOption {
     constructor() {
-        super(172 /* EditorOption.effectiveAllowVariableFonts */, false);
+        super(173 /* EditorOption.effectiveAllowVariableFonts */, false);
     }
     compute(env, options) {
         const accessibilitySupport = env.accessibilitySupport;
@@ -728,6 +728,19 @@ class EffectiveAllowVariableFonts extends ComputedEditorOption {
     }
 }
 //#engregion
+//#region effectiveFullwidthCharacterWidth
+class EffectiveFullwidthCharacterWidth extends ComputedEditorOption {
+    constructor() {
+        super(176 /* EditorOption.effectiveFullwidthCharacterWidth */, 'font');
+    }
+    compute(env, options) {
+        if (options.get(175 /* EditorOption.fullwidthCharacterWidth */) === 'twoCells' && env.fontInfo.isMonospace) {
+            return 'twoCells';
+        }
+        return 'font';
+    }
+}
+//#endregion
 //#region fontSize
 class EditorFontSize extends SimpleEditorOption {
     constructor() {
@@ -736,7 +749,7 @@ class EditorFontSize extends SimpleEditorOption {
             minimum: 6,
             maximum: 100,
             default: EDITOR_FONT_DEFAULTS.fontSize,
-            description: localize(253, "Controls the font size in pixels.")
+            description: localize(259, "Controls the font size in pixels.")
         });
     }
     validate(input) {
@@ -765,7 +778,7 @@ class EditorFontWeight extends BaseEditorOption {
                     type: 'number',
                     minimum: EditorFontWeight.MINIMUM_VALUE,
                     maximum: EditorFontWeight.MAXIMUM_VALUE,
-                    errorMessage: localize(254, "Only \"normal\" and \"bold\" keywords or numbers between 1 and 1000 are allowed.")
+                    errorMessage: localize(260, "Only \"normal\" and \"bold\" keywords or numbers between 1 and 1000 are allowed.")
                 },
                 {
                     type: 'string',
@@ -776,7 +789,7 @@ class EditorFontWeight extends BaseEditorOption {
                 }
             ],
             default: EDITOR_FONT_DEFAULTS.fontWeight,
-            description: localize(255, "Controls the font weight. Accepts \"normal\" and \"bold\" keywords or numbers between 1 and 1000.")
+            description: localize(261, "Controls the font weight. Accepts \"normal\" and \"bold\" keywords or numbers between 1 and 1000.")
         });
     }
     validate(input) {
@@ -808,65 +821,65 @@ class EditorGoToLocation extends BaseEditorOption {
             enum: ['peek', 'gotoAndPeek', 'goto'],
             default: defaults.multiple,
             enumDescriptions: [
-                localize(256, 'Show Peek view of the results (default)'),
-                localize(257, 'Go to the primary result and show a Peek view'),
-                localize(258, 'Go to the primary result and enable Peek-less navigation to others')
+                localize(262, 'Show Peek view of the results (default)'),
+                localize(263, 'Go to the primary result and show a Peek view'),
+                localize(264, 'Go to the primary result and enable Peek-less navigation to others')
             ]
         };
         const alternativeCommandOptions = ['', 'editor.action.referenceSearch.trigger', 'editor.action.goToReferences', 'editor.action.peekImplementation', 'editor.action.goToImplementation', 'editor.action.peekTypeDefinition', 'editor.action.goToTypeDefinition', 'editor.action.peekDeclaration', 'editor.action.revealDeclaration', 'editor.action.peekDefinition', 'editor.action.revealDefinitionAside', 'editor.action.revealDefinition'];
         super(67 /* EditorOption.gotoLocation */, 'gotoLocation', defaults, {
             'editor.gotoLocation.multiple': {
-                deprecationMessage: localize(259, "This setting is deprecated, please use separate settings like 'editor.editor.gotoLocation.multipleDefinitions' or 'editor.editor.gotoLocation.multipleImplementations' instead."),
+                deprecationMessage: localize(265, "This setting is deprecated, please use separate settings like 'editor.editor.gotoLocation.multipleDefinitions' or 'editor.editor.gotoLocation.multipleImplementations' instead."),
             },
             'editor.gotoLocation.multipleDefinitions': {
-                description: localize(260, "Controls the behavior the 'Go to Definition'-command when multiple target locations exist."),
+                description: localize(266, "Controls the behavior the 'Go to Definition'-command when multiple target locations exist."),
                 ...jsonSubset,
             },
             'editor.gotoLocation.multipleTypeDefinitions': {
-                description: localize(261, "Controls the behavior the 'Go to Type Definition'-command when multiple target locations exist."),
+                description: localize(267, "Controls the behavior the 'Go to Type Definition'-command when multiple target locations exist."),
                 ...jsonSubset,
             },
             'editor.gotoLocation.multipleDeclarations': {
-                description: localize(262, "Controls the behavior the 'Go to Declaration'-command when multiple target locations exist."),
+                description: localize(268, "Controls the behavior the 'Go to Declaration'-command when multiple target locations exist."),
                 ...jsonSubset,
             },
             'editor.gotoLocation.multipleImplementations': {
-                description: localize(263, "Controls the behavior the 'Go to Implementations'-command when multiple target locations exist."),
+                description: localize(269, "Controls the behavior the 'Go to Implementations'-command when multiple target locations exist."),
                 ...jsonSubset,
             },
             'editor.gotoLocation.multipleReferences': {
-                description: localize(264, "Controls the behavior the 'Go to References'-command when multiple target locations exist."),
+                description: localize(270, "Controls the behavior the 'Go to References'-command when multiple target locations exist."),
                 ...jsonSubset,
             },
             'editor.gotoLocation.alternativeDefinitionCommand': {
                 type: 'string',
                 default: defaults.alternativeDefinitionCommand,
                 enum: alternativeCommandOptions,
-                description: localize(265, "Alternative command id that is being executed when the result of 'Go to Definition' is the current location.")
+                description: localize(271, "Alternative command id that is being executed when the result of 'Go to Definition' is the current location.")
             },
             'editor.gotoLocation.alternativeTypeDefinitionCommand': {
                 type: 'string',
                 default: defaults.alternativeTypeDefinitionCommand,
                 enum: alternativeCommandOptions,
-                description: localize(266, "Alternative command id that is being executed when the result of 'Go to Type Definition' is the current location.")
+                description: localize(272, "Alternative command id that is being executed when the result of 'Go to Type Definition' is the current location.")
             },
             'editor.gotoLocation.alternativeDeclarationCommand': {
                 type: 'string',
                 default: defaults.alternativeDeclarationCommand,
                 enum: alternativeCommandOptions,
-                description: localize(267, "Alternative command id that is being executed when the result of 'Go to Declaration' is the current location.")
+                description: localize(273, "Alternative command id that is being executed when the result of 'Go to Declaration' is the current location.")
             },
             'editor.gotoLocation.alternativeImplementationCommand': {
                 type: 'string',
                 default: defaults.alternativeImplementationCommand,
                 enum: alternativeCommandOptions,
-                description: localize(268, "Alternative command id that is being executed when the result of 'Go to Implementation' is the current location.")
+                description: localize(274, "Alternative command id that is being executed when the result of 'Go to Implementation' is the current location.")
             },
             'editor.gotoLocation.alternativeReferenceCommand': {
                 type: 'string',
                 default: defaults.alternativeReferenceCommand,
                 enum: alternativeCommandOptions,
-                description: localize(269, "Alternative command id that is being executed when the result of 'Go to Reference' is the current location.")
+                description: localize(275, "Alternative command id that is being executed when the result of 'Go to Reference' is the current location.")
             },
         });
     }
@@ -908,11 +921,11 @@ class EditorHover extends BaseEditorOption {
                 enum: ['on', 'off', 'onKeyboardModifier'],
                 default: defaults.enabled,
                 markdownEnumDescriptions: [
-                    localize(270, "Hover is enabled."),
-                    localize(271, "Hover is disabled."),
-                    localize(272, "Hover is shown when holding `{0}` or `Alt` (the opposite modifier of `#editor.multiCursorModifier#`)", isMacintosh ? `Command` : `Control`)
+                    localize(276, "Hover is enabled."),
+                    localize(277, "Hover is disabled."),
+                    localize(278, "Hover is shown when holding `{0}` or `Alt` (the opposite modifier of `#editor.multiCursorModifier#`)", isMacintosh ? `Command` : `Control`)
                 ],
-                description: localize(273, "Controls whether the hover is shown."),
+                description: localize(279, "Controls whether the hover is shown."),
                 keywords: ['hint', 'info', 'tooltip']
             },
             'editor.hover.delay': {
@@ -920,28 +933,28 @@ class EditorHover extends BaseEditorOption {
                 default: defaults.delay,
                 minimum: 0,
                 maximum: 10000,
-                description: localize(274, "Controls the delay in milliseconds after which the hover is shown.")
+                description: localize(280, "Controls the delay in milliseconds after which the hover is shown.")
             },
             'editor.hover.sticky': {
                 type: 'boolean',
                 default: defaults.sticky,
-                description: localize(275, "Controls whether the hover should remain visible when mouse is moved over it.")
+                description: localize(281, "Controls whether the hover should remain visible when mouse is moved over it.")
             },
             'editor.hover.hidingDelay': {
                 type: 'integer',
                 minimum: 0,
                 default: defaults.hidingDelay,
-                markdownDescription: localize(276, "Controls the delay in milliseconds after which the hover is hidden. Requires `#editor.hover.sticky#` to be enabled.")
+                markdownDescription: localize(282, "Controls the delay in milliseconds after which the hover is hidden. Requires `#editor.hover.sticky#` to be enabled.")
             },
             'editor.hover.above': {
                 type: 'boolean',
                 default: defaults.above,
-                description: localize(277, "Prefer showing hovers above the line, if there's space.")
+                description: localize(283, "Prefer showing hovers above the line, if there's space.")
             },
             'editor.hover.showLongLineWarning': {
                 type: 'boolean',
                 default: defaults.showLongLineWarning,
-                description: localize(278, "Controls whether long line warning hovers are shown, such as when tokenization is skipped or rendering is paused.")
+                description: localize(284, "Controls whether long line warning hovers are shown, such as when tokenization is skipped or rendering is paused.")
             },
         });
     }
@@ -965,7 +978,7 @@ class EditorHover extends BaseEditorOption {
  */
 class EditorLayoutInfoComputer extends ComputedEditorOption {
     constructor() {
-        super(165 /* EditorOption.layoutInfo */, {
+        super(166 /* EditorOption.layoutInfo */, {
             width: 0,
             height: 0,
             glyphMarginLeft: 0,
@@ -1205,6 +1218,7 @@ class EditorLayoutInfoComputer extends ComputedEditorOption {
         const wordWrapOverride1 = (wordWrapOverride2 === 'inherit' ? options.get(153 /* EditorOption.wordWrapOverride1 */) : wordWrapOverride2);
         const wordWrap = (wordWrapOverride1 === 'inherit' ? options.get(149 /* EditorOption.wordWrap */) : wordWrapOverride1);
         const wordWrapColumn = options.get(152 /* EditorOption.wordWrapColumn */);
+        const wordWrapIndicator = options.get(161 /* EditorOption.wordWrapIndicator */);
         const isDominatedByLongLines = env.isDominatedByLongLines;
         const showGlyphMargin = options.get(66 /* EditorOption.glyphMargin */);
         const showLineNumbers = (options.get(76 /* EditorOption.lineNumbers */).renderType !== 0 /* RenderLineNumbersType.Off */);
@@ -1279,7 +1293,9 @@ class EditorLayoutInfoComputer extends ComputedEditorOption {
         const verticalArrowSize = (verticalScrollbarHasArrows ? scrollbarArrowSize : 0);
         if (isViewportWrapping) {
             // compute the actual wrappingColumn
-            wrappingColumn = Math.max(1, viewportColumn);
+            // (leaving the rightmost column for the word wrap indicator so that it does not overlap
+            // the wrapped text or end up underneath the vertical scrollbar)
+            wrappingColumn = Math.max(1, viewportColumn - (wordWrapIndicator ? 1 : 0));
             if (wordWrap === 'bounded') {
                 wrappingColumn = Math.min(wrappingColumn, wordWrapColumn);
             }
@@ -1319,13 +1335,13 @@ class WrappingStrategy extends BaseEditorOption {
         super(156 /* EditorOption.wrappingStrategy */, 'wrappingStrategy', 'simple', {
             'editor.wrappingStrategy': {
                 enumDescriptions: [
-                    localize(279, "Assumes that all characters are of the same width. This is a fast algorithm that works correctly for monospace fonts and certain scripts (like Latin characters) where glyphs are of equal width."),
-                    localize(280, "Delegates wrapping points computation to the browser. This is a slow algorithm, that might cause freezes for large files, but it works correctly in all cases.")
+                    localize(285, "Assumes that all characters are of the same width. This is a fast algorithm that works correctly for monospace fonts and certain scripts (like Latin characters) where glyphs are of equal width."),
+                    localize(286, "Delegates wrapping points computation to the browser. This is a slow algorithm, that might cause freezes for large files, but it works correctly in all cases.")
                 ],
                 type: 'string',
                 enum: ['simple', 'advanced'],
                 default: 'simple',
-                description: localize(281, "Controls the algorithm that computes wrapping points. Note that when in accessibility mode, advanced will be used for the best experience.")
+                description: localize(287, "Controls the algorithm that computes wrapping points. Note that when in accessibility mode, advanced will be used for the best experience.")
             }
         });
     }
@@ -1359,11 +1375,11 @@ class EditorLightbulb extends BaseEditorOption {
                 enum: [ShowLightbulbIconMode.Off, ShowLightbulbIconMode.OnCode, ShowLightbulbIconMode.On],
                 default: defaults.enabled,
                 enumDescriptions: [
-                    localize(282, 'Disable the code action menu.'),
-                    localize(283, 'Show the code action menu when the cursor is on lines with code.'),
-                    localize(284, 'Show the code action menu when the cursor is on lines with code or on empty lines.'),
+                    localize(288, 'Disable the code action menu.'),
+                    localize(289, 'Show the code action menu when the cursor is on lines with code.'),
+                    localize(290, 'Show the code action menu when the cursor is on lines with code or on empty lines.'),
                 ],
-                description: localize(285, "Enables the Code Action lightbulb in the editor.")
+                description: localize(291, "Enables the Code Action lightbulb in the editor.")
             }
         });
     }
@@ -1384,25 +1400,25 @@ class EditorStickyScroll extends BaseEditorOption {
             'editor.stickyScroll.enabled': {
                 type: 'boolean',
                 default: defaults.enabled,
-                description: localize(286, "Shows the nested current scopes during the scroll at the top of the editor.")
+                description: localize(292, "Shows the nested current scopes during the scroll at the top of the editor.")
             },
             'editor.stickyScroll.maxLineCount': {
                 type: 'number',
                 default: defaults.maxLineCount,
                 minimum: 1,
                 maximum: 20,
-                description: localize(287, "Defines the maximum number of sticky lines to show.")
+                description: localize(293, "Defines the maximum number of sticky lines to show.")
             },
             'editor.stickyScroll.defaultModel': {
                 type: 'string',
                 enum: ['outlineModel', 'foldingProviderModel', 'indentationModel'],
                 default: defaults.defaultModel,
-                description: localize(288, "Defines the model to use for determining which lines to stick. If the outline model does not exist, it will fall back on the folding provider model which falls back on the indentation model. This order is respected in all three cases.")
+                description: localize(294, "Defines the model to use for determining which lines to stick. If the outline model does not exist, it will fall back on the folding provider model which falls back on the indentation model. This order is respected in all three cases.")
             },
             'editor.stickyScroll.scrollWithEditor': {
                 type: 'boolean',
                 default: defaults.scrollWithEditor,
-                description: localize(289, "Enable scrolling of Sticky Scroll with the editor's horizontal scrollbar.")
+                description: localize(295, "Enable scrolling of Sticky Scroll with the editor's horizontal scrollbar.")
             },
         });
     }
@@ -1426,34 +1442,34 @@ class EditorInlayHints extends BaseEditorOption {
             'editor.inlayHints.enabled': {
                 type: 'string',
                 default: defaults.enabled,
-                description: localize(290, "Enables the inlay hints in the editor."),
+                description: localize(296, "Enables the inlay hints in the editor."),
                 enum: ['on', 'onUnlessPressed', 'offUnlessPressed', 'off'],
                 markdownEnumDescriptions: [
-                    localize(291, "Inlay hints are enabled"),
-                    localize(292, "Inlay hints are showing by default and hide when holding {0}", isMacintosh ? `Ctrl+Option` : `Ctrl+Alt`),
-                    localize(293, "Inlay hints are hidden by default and show when holding {0}", isMacintosh ? `Ctrl+Option` : `Ctrl+Alt`),
-                    localize(294, "Inlay hints are disabled"),
+                    localize(297, "Inlay hints are enabled"),
+                    localize(298, "Inlay hints are showing by default and hide when holding {0}", isMacintosh ? `Ctrl+Option` : `Ctrl+Alt`),
+                    localize(299, "Inlay hints are hidden by default and show when holding {0}", isMacintosh ? `Ctrl+Option` : `Ctrl+Alt`),
+                    localize(300, "Inlay hints are disabled"),
                 ],
             },
             'editor.inlayHints.fontSize': {
                 type: 'number',
                 default: defaults.fontSize,
-                markdownDescription: localize(295, "Controls font size of inlay hints in the editor. As default the {0} is used when the configured value is less than {1} or greater than the editor font size.", '`#editor.fontSize#`', '`5`')
+                markdownDescription: localize(301, "Controls font size of inlay hints in the editor. As default the {0} is used when the configured value is less than {1} or greater than the editor font size.", '`#editor.fontSize#`', '`5`')
             },
             'editor.inlayHints.fontFamily': {
                 type: 'string',
                 default: defaults.fontFamily,
-                markdownDescription: localize(296, "Controls font family of inlay hints in the editor. When set to empty, the {0} is used.", '`#editor.fontFamily#`')
+                markdownDescription: localize(302, "Controls font family of inlay hints in the editor. When set to empty, the {0} is used.", '`#editor.fontFamily#`')
             },
             'editor.inlayHints.padding': {
                 type: 'boolean',
                 default: defaults.padding,
-                description: localize(297, "Enables the padding around the inlay hints in the editor.")
+                description: localize(303, "Enables the padding around the inlay hints in the editor.")
             },
             'editor.inlayHints.maximumLength': {
                 type: 'number',
                 default: defaults.maximumLength,
-                markdownDescription: localize(298, "Maximum overall length of inlay hints, for a single line, before they get truncated by the editor. Set to `0` to never truncate")
+                markdownDescription: localize(304, "Maximum overall length of inlay hints, for a single line, before they get truncated by the editor. Set to `0` to never truncate")
             }
         });
     }
@@ -1503,7 +1519,7 @@ class EditorLineDecorationsWidth extends BaseEditorOption {
 //#region lineHeight
 class EditorLineHeight extends EditorFloatOption {
     constructor() {
-        super(75 /* EditorOption.lineHeight */, 'lineHeight', EDITOR_FONT_DEFAULTS.lineHeight, x => EditorFloatOption.clamp(x, 0, 150), { markdownDescription: localize(299, "Controls the line height. \n - Use 0 to automatically compute the line height from the font size.\n - Values between 0 and 8 will be used as a multiplier with the font size.\n - Values greater than or equal to 8 will be used as effective values.") }, 0, 150);
+        super(75 /* EditorOption.lineHeight */, 'lineHeight', EDITOR_FONT_DEFAULTS.lineHeight, x => EditorFloatOption.clamp(x, 0, 150), { markdownDescription: localize(305, "Controls the line height. \n - Use 0 to automatically compute the line height from the font size.\n - Values between 0 and 8 will be used as a multiplier with the font size.\n - Values greater than or equal to 8 will be used as effective values.") }, 0, 150);
     }
     compute(env, options, value) {
         // The lineHeight is computed from the fontSize if it is 0.
@@ -1533,41 +1549,41 @@ class EditorMinimap extends BaseEditorOption {
             'editor.minimap.enabled': {
                 type: 'boolean',
                 default: defaults.enabled,
-                description: localize(300, "Controls whether the minimap is shown.")
+                description: localize(306, "Controls whether the minimap is shown.")
             },
             'editor.minimap.autohide': {
                 type: 'string',
                 enum: ['none', 'mouseover', 'scroll'],
                 enumDescriptions: [
-                    localize(301, "The minimap is always shown."),
-                    localize(302, "The minimap is hidden when mouse is not over the minimap and shown when mouse is over the minimap."),
-                    localize(303, "The minimap is only shown when the editor is scrolled"),
+                    localize(307, "The minimap is always shown."),
+                    localize(308, "The minimap is hidden when mouse is not over the minimap and shown when mouse is over the minimap."),
+                    localize(309, "The minimap is only shown when the editor is scrolled"),
                 ],
                 default: defaults.autohide,
-                description: localize(304, "Controls whether the minimap is hidden automatically.")
+                description: localize(310, "Controls whether the minimap is hidden automatically.")
             },
             'editor.minimap.size': {
                 type: 'string',
                 enum: ['proportional', 'fill', 'fit'],
                 enumDescriptions: [
-                    localize(305, "The minimap has the same size as the editor contents (and might scroll)."),
-                    localize(306, "The minimap will stretch or shrink as necessary to fill the height of the editor (no scrolling)."),
-                    localize(307, "The minimap will shrink as necessary to never be larger than the editor (no scrolling)."),
+                    localize(311, "The minimap has the same size as the editor contents (and might scroll)."),
+                    localize(312, "The minimap will stretch or shrink as necessary to fill the height of the editor (no scrolling)."),
+                    localize(313, "The minimap will shrink as necessary to never be larger than the editor (no scrolling)."),
                 ],
                 default: defaults.size,
-                description: localize(308, "Controls the size of the minimap.")
+                description: localize(314, "Controls the size of the minimap.")
             },
             'editor.minimap.side': {
                 type: 'string',
                 enum: ['left', 'right'],
                 default: defaults.side,
-                description: localize(309, "Controls the side where to render the minimap.")
+                description: localize(315, "Controls the side where to render the minimap.")
             },
             'editor.minimap.showSlider': {
                 type: 'string',
                 enum: ['always', 'mouseover'],
                 default: defaults.showSlider,
-                description: localize(310, "Controls when the minimap slider is shown.")
+                description: localize(316, "Controls when the minimap slider is shown.")
             },
             'editor.minimap.scale': {
                 type: 'number',
@@ -1575,42 +1591,42 @@ class EditorMinimap extends BaseEditorOption {
                 minimum: 1,
                 maximum: 3,
                 enum: [1, 2, 3],
-                description: localize(311, "Scale of content drawn in the minimap: 1, 2 or 3.")
+                description: localize(317, "Scale of content drawn in the minimap: 1, 2 or 3.")
             },
             'editor.minimap.renderCharacters': {
                 type: 'boolean',
                 default: defaults.renderCharacters,
-                description: localize(312, "Render the actual characters on a line as opposed to color blocks.")
+                description: localize(318, "Render the actual characters on a line as opposed to color blocks.")
             },
             'editor.minimap.maxColumn': {
                 type: 'number',
                 default: defaults.maxColumn,
-                description: localize(313, "Limit the width of the minimap to render at most a certain number of columns.")
+                description: localize(319, "Limit the width of the minimap to render at most a certain number of columns.")
             },
             'editor.minimap.showRegionSectionHeaders': {
                 type: 'boolean',
                 default: defaults.showRegionSectionHeaders,
-                description: localize(314, "Controls whether named regions are shown as section headers in the minimap.")
+                description: localize(320, "Controls whether named regions are shown as section headers in the minimap.")
             },
             'editor.minimap.showMarkSectionHeaders': {
                 type: 'boolean',
                 default: defaults.showMarkSectionHeaders,
-                description: localize(315, "Controls whether MARK: comments are shown as section headers in the minimap.")
+                description: localize(321, "Controls whether MARK: comments are shown as section headers in the minimap.")
             },
             'editor.minimap.markSectionHeaderRegex': {
                 type: 'string',
                 default: defaults.markSectionHeaderRegex,
-                description: localize(316, "Defines the regular expression used to find section headers in comments. The regex must contain a named match group `label` (written as `(?<label>.+)`) that encapsulates the section header, otherwise it will not work. Optionally you can include another match group named `separator`. Use \\n in the pattern to match multi-line headers."),
+                description: localize(322, "Defines the regular expression used to find section headers in comments. The regex must contain a named match group `label` (written as `(?<label>.+)`) that encapsulates the section header, otherwise it will not work. Optionally you can include another match group named `separator`. Use \\n in the pattern to match multi-line headers."),
             },
             'editor.minimap.sectionHeaderFontSize': {
                 type: 'number',
                 default: defaults.sectionHeaderFontSize,
-                description: localize(317, "Controls the font size of section headers in the minimap.")
+                description: localize(323, "Controls the font size of section headers in the minimap.")
             },
             'editor.minimap.sectionHeaderLetterSpacing': {
                 type: 'number',
                 default: defaults.sectionHeaderLetterSpacing,
-                description: localize(318, "Controls the amount of space (in pixels) between characters of section header. This helps the readability of the header in small font sizes.")
+                description: localize(324, "Controls the amount of space (in pixels) between characters of section header. This helps the readability of the header in small font sizes.")
             }
         });
     }
@@ -1662,14 +1678,14 @@ class EditorPadding extends BaseEditorOption {
                 default: 0,
                 minimum: 0,
                 maximum: 1000,
-                description: localize(319, "Controls the amount of space between the top edge of the editor and the first line.")
+                description: localize(325, "Controls the amount of space between the top edge of the editor and the first line.")
             },
             'editor.padding.bottom': {
                 type: 'number',
                 default: 0,
                 minimum: 0,
                 maximum: 1000,
-                description: localize(320, "Controls the amount of space between the bottom edge of the editor and the last line.")
+                description: localize(326, "Controls the amount of space between the bottom edge of the editor and the last line.")
             }
         });
     }
@@ -1694,12 +1710,12 @@ class EditorParameterHints extends BaseEditorOption {
             'editor.parameterHints.enabled': {
                 type: 'boolean',
                 default: defaults.enabled,
-                description: localize(321, "Enables a pop-up that shows parameter documentation and type information as you type.")
+                description: localize(327, "Enables a pop-up that shows parameter documentation and type information as you type.")
             },
             'editor.parameterHints.cycle': {
                 type: 'boolean',
                 default: defaults.cycle,
-                description: localize(322, "Controls whether the parameter hints menu cycles or closes when reaching the end of the list.")
+                description: localize(328, "Controls whether the parameter hints menu cycles or closes when reaching the end of the list.")
             },
         });
     }
@@ -1718,7 +1734,7 @@ class EditorParameterHints extends BaseEditorOption {
 //#region pixelRatio
 class EditorPixelRatio extends ComputedEditorOption {
     constructor() {
-        super(163 /* EditorOption.pixelRatio */, 1);
+        super(164 /* EditorOption.pixelRatio */, 1);
     }
     compute(env, options, _) {
         return env.pixelRatio;
@@ -1752,7 +1768,7 @@ class EditorQuickSuggestions extends BaseEditorOption {
             {
                 type: 'string',
                 enum: ['on', 'inline', 'off', 'offWhenInlineCompletions'],
-                enumDescriptions: [localize(323, "Quick suggestions show inside the suggest widget"), localize(324, "Quick suggestions show as ghost text"), localize(325, "Quick suggestions are disabled"), localize(326, "Quick suggestions are disabled when inline completions are showing")]
+                enumDescriptions: [localize(329, "Quick suggestions show inside the suggest widget"), localize(330, "Quick suggestions show as ghost text"), localize(331, "Quick suggestions are disabled"), localize(332, "Quick suggestions are disabled when inline completions are showing")]
             }
         ];
         super(102 /* EditorOption.quickSuggestions */, 'quickSuggestions', defaults, {
@@ -1761,7 +1777,7 @@ class EditorQuickSuggestions extends BaseEditorOption {
                 {
                     type: 'string',
                     enum: ['on', 'inline', 'off', 'offWhenInlineCompletions'],
-                    enumDescriptions: [localize(327, "Quick suggestions are enabled for all token types"), localize(328, "Quick suggestions show as ghost text for all token types"), localize(329, "Quick suggestions are disabled for all token types"), localize(330, "Quick suggestions are disabled for all token types when inline completions are showing")]
+                    enumDescriptions: [localize(333, "Quick suggestions are enabled for all token types"), localize(334, "Quick suggestions show as ghost text for all token types"), localize(335, "Quick suggestions are disabled for all token types"), localize(336, "Quick suggestions are disabled for all token types when inline completions are showing")]
                 },
                 {
                     type: 'object',
@@ -1770,23 +1786,23 @@ class EditorQuickSuggestions extends BaseEditorOption {
                         strings: {
                             anyOf: types,
                             default: defaults.strings,
-                            description: localize(331, "Enable quick suggestions inside strings.")
+                            description: localize(337, "Enable quick suggestions inside strings.")
                         },
                         comments: {
                             anyOf: types,
                             default: defaults.comments,
-                            description: localize(332, "Enable quick suggestions inside comments.")
+                            description: localize(338, "Enable quick suggestions inside comments.")
                         },
                         other: {
                             anyOf: types,
                             default: defaults.other,
-                            description: localize(333, "Enable quick suggestions outside of strings and comments.")
+                            description: localize(339, "Enable quick suggestions outside of strings and comments.")
                         },
                     },
                 }
             ],
             default: defaults,
-            markdownDescription: localize(334, "Controls whether suggestions should automatically show up while typing. This can be controlled for typing in comments, strings, and other code. Quick suggestion can be configured to show as ghost text or with the suggest widget. Also be aware of the {0}-setting which controls if suggestions are triggered by special characters.", '`#editor.suggestOnTriggerCharacters#`'),
+            markdownDescription: localize(340, "Controls whether suggestions should automatically show up while typing. This can be controlled for typing in comments, strings, and other code. Quick suggestion can be configured to show as ghost text or with the suggest widget. Also be aware of the {0}-setting which controls if suggestions are triggered by special characters.", '`#editor.suggestOnTriggerCharacters#`'),
             experiment: {
                 mode: 'auto'
             }
@@ -1845,13 +1861,13 @@ class EditorRenderLineNumbersOption extends BaseEditorOption {
             type: 'string',
             enum: ['off', 'on', 'relative', 'interval'],
             enumDescriptions: [
-                localize(335, "Line numbers are not rendered."),
-                localize(336, "Line numbers are rendered as absolute number."),
-                localize(337, "Line numbers are rendered as distance in lines to cursor position."),
-                localize(338, "Line numbers are rendered every 10 lines.")
+                localize(341, "Line numbers are not rendered."),
+                localize(342, "Line numbers are rendered as absolute number."),
+                localize(343, "Line numbers are rendered as distance in lines to cursor position."),
+                localize(344, "Line numbers are rendered every 10 lines.")
             ],
             default: 'on',
-            description: localize(339, "Controls the display of line numbers.")
+            description: localize(345, "Controls the display of line numbers.")
         });
     }
     validate(lineNumbers) {
@@ -1899,12 +1915,12 @@ function filterValidationDecorations(options) {
  * @internal
  */
 function filterFontDecorations(options) {
-    return !options.get(172 /* EditorOption.effectiveAllowVariableFonts */);
+    return !options.get(173 /* EditorOption.effectiveAllowVariableFonts */);
 }
 class EditorRulers extends BaseEditorOption {
     constructor() {
         const defaults = [];
-        const columnSchema = { type: 'number', description: localize(340, "Number of monospace characters at which this editor ruler will render.") };
+        const columnSchema = { type: 'number', description: localize(346, "Number of monospace characters at which this editor ruler will render.") };
         super(116 /* EditorOption.rulers */, 'rulers', defaults, {
             type: 'array',
             items: {
@@ -1918,7 +1934,7 @@ class EditorRulers extends BaseEditorOption {
                             column: columnSchema,
                             color: {
                                 type: 'string',
-                                description: localize(341, "Color of this editor ruler."),
+                                description: localize(347, "Color of this editor ruler."),
                                 format: 'color-hex'
                             }
                         }
@@ -1926,7 +1942,7 @@ class EditorRulers extends BaseEditorOption {
                 ]
             },
             default: defaults,
-            description: localize(342, "Render vertical rulers after a certain number of monospace characters. Use multiple values for multiple rulers. No rulers are drawn if array is empty.")
+            description: localize(348, "Render vertical rulers after a certain number of monospace characters. Use multiple values for multiple rulers. No rulers are drawn if array is empty.")
         });
     }
     validate(input) {
@@ -2003,43 +2019,43 @@ class EditorScrollbar extends BaseEditorOption {
                 type: 'string',
                 enum: ['auto', 'visible', 'hidden'],
                 enumDescriptions: [
-                    localize(343, "The vertical scrollbar will be visible only when necessary."),
-                    localize(344, "The vertical scrollbar will always be visible."),
-                    localize(345, "The vertical scrollbar will always be hidden."),
+                    localize(349, "The vertical scrollbar will be visible only when necessary."),
+                    localize(350, "The vertical scrollbar will always be visible."),
+                    localize(351, "The vertical scrollbar will always be hidden."),
                 ],
                 default: 'auto',
-                description: localize(346, "Controls the visibility of the vertical scrollbar.")
+                description: localize(352, "Controls the visibility of the vertical scrollbar.")
             },
             'editor.scrollbar.horizontal': {
                 type: 'string',
                 enum: ['auto', 'visible', 'hidden'],
                 enumDescriptions: [
-                    localize(347, "The horizontal scrollbar will be visible only when necessary."),
-                    localize(348, "The horizontal scrollbar will always be visible."),
-                    localize(349, "The horizontal scrollbar will always be hidden."),
+                    localize(353, "The horizontal scrollbar will be visible only when necessary."),
+                    localize(354, "The horizontal scrollbar will always be visible."),
+                    localize(355, "The horizontal scrollbar will always be hidden."),
                 ],
                 default: 'auto',
-                description: localize(350, "Controls the visibility of the horizontal scrollbar.")
+                description: localize(356, "Controls the visibility of the horizontal scrollbar.")
             },
             'editor.scrollbar.verticalScrollbarSize': {
                 type: 'number',
                 default: defaults.verticalScrollbarSize,
-                description: localize(351, "The width of the vertical scrollbar.")
+                description: localize(357, "The width of the vertical scrollbar.")
             },
             'editor.scrollbar.horizontalScrollbarSize': {
                 type: 'number',
                 default: defaults.horizontalScrollbarSize,
-                description: localize(352, "The height of the horizontal scrollbar.")
+                description: localize(358, "The height of the horizontal scrollbar.")
             },
             'editor.scrollbar.scrollByPage': {
                 type: 'boolean',
                 default: defaults.scrollByPage,
-                description: localize(353, "Controls whether clicks scroll by page or jump to click position.")
+                description: localize(359, "Controls whether clicks scroll by page or jump to click position.")
             },
             'editor.scrollbar.ignoreHorizontalScrollbarInContentHeight': {
                 type: 'boolean',
                 default: defaults.ignoreHorizontalScrollbarInContentHeight,
-                description: localize(354, "When set, the horizontal scrollbar will not increase the size of the editor's content.")
+                description: localize(360, "When set, the horizontal scrollbar will not increase the size of the editor's content.")
             }
         });
     }
@@ -2101,39 +2117,39 @@ class UnicodeHighlight extends BaseEditorOption {
                 type: ['boolean', 'string'],
                 enum: [true, false, inUntrustedWorkspace],
                 default: defaults.nonBasicASCII,
-                description: localize(355, "Controls whether all non-basic ASCII characters are highlighted. Only characters between U+0020 and U+007E, tab, line-feed and carriage-return are considered basic ASCII.")
+                description: localize(361, "Controls whether all non-basic ASCII characters are highlighted. Only characters between U+0020 and U+007E, tab, line-feed and carriage-return are considered basic ASCII.")
             },
             [unicodeHighlightConfigKeys.invisibleCharacters]: {
                 restricted: true,
                 type: 'boolean',
                 default: defaults.invisibleCharacters,
-                description: localize(356, "Controls whether characters that just reserve space or have no width at all are highlighted.")
+                description: localize(362, "Controls whether characters that just reserve space or have no width at all are highlighted.")
             },
             [unicodeHighlightConfigKeys.ambiguousCharacters]: {
                 restricted: true,
                 type: 'boolean',
                 default: defaults.ambiguousCharacters,
-                description: localize(357, "Controls whether characters are highlighted that can be confused with basic ASCII characters, except those that are common in the current user locale.")
+                description: localize(363, "Controls whether characters are highlighted that can be confused with basic ASCII characters, except those that are common in the current user locale.")
             },
             [unicodeHighlightConfigKeys.includeComments]: {
                 restricted: true,
                 type: ['boolean', 'string'],
                 enum: [true, false, inUntrustedWorkspace],
                 default: defaults.includeComments,
-                description: localize(358, "Controls whether characters in comments should also be subject to Unicode highlighting.")
+                description: localize(364, "Controls whether characters in comments should also be subject to Unicode highlighting.")
             },
             [unicodeHighlightConfigKeys.includeStrings]: {
                 restricted: true,
                 type: ['boolean', 'string'],
                 enum: [true, false, inUntrustedWorkspace],
                 default: defaults.includeStrings,
-                description: localize(359, "Controls whether characters in strings should also be subject to Unicode highlighting.")
+                description: localize(365, "Controls whether characters in strings should also be subject to Unicode highlighting.")
             },
             [unicodeHighlightConfigKeys.allowedCharacters]: {
                 restricted: true,
                 type: 'object',
                 default: defaults.allowedCharacters,
-                description: localize(360, "Defines allowed characters that are not being highlighted."),
+                description: localize(366, "Defines allowed characters that are not being highlighted."),
                 additionalProperties: {
                     type: 'boolean'
                 }
@@ -2145,7 +2161,7 @@ class UnicodeHighlight extends BaseEditorOption {
                     type: 'boolean'
                 },
                 default: defaults.allowedLocales,
-                description: localize(361, "Unicode characters that are common in allowed locales are not being highlighted.")
+                description: localize(367, "Unicode characters that are common in allowed locales are not being highlighted.")
             },
         });
     }
@@ -2220,6 +2236,7 @@ class InlineEditorSuggest extends BaseEditorOption {
                 renderSideBySide: 'auto',
                 allowCodeShifting: 'always',
                 showLongDistanceHint: true,
+                longDistanceHintContextLineCount: 0,
             },
             triggerCommandOnProviderChange: false,
             experimental: {
@@ -2232,46 +2249,46 @@ class InlineEditorSuggest extends BaseEditorOption {
             'editor.inlineSuggest.enabled': {
                 type: 'boolean',
                 default: defaults.enabled,
-                description: localize(362, "Controls whether to automatically show inline suggestions in the editor.")
+                description: localize(368, "Controls whether to automatically show inline suggestions in the editor.")
             },
             'editor.inlineSuggest.showToolbar': {
                 type: 'string',
                 default: defaults.showToolbar,
                 enum: ['always', 'onHover', 'never'],
                 enumDescriptions: [
-                    localize(363, "Show the inline suggestion toolbar whenever an inline suggestion is shown."),
-                    localize(364, "Show the inline suggestion toolbar when hovering over an inline suggestion."),
-                    localize(365, "Never show the inline suggestion toolbar."),
+                    localize(369, "Show the inline suggestion toolbar whenever an inline suggestion is shown."),
+                    localize(370, "Show the inline suggestion toolbar when hovering over an inline suggestion."),
+                    localize(371, "Never show the inline suggestion toolbar."),
                 ],
-                description: localize(366, "Controls when to show the inline suggestion toolbar."),
+                description: localize(372, "Controls when to show the inline suggestion toolbar."),
             },
             'editor.inlineSuggest.syntaxHighlightingEnabled': {
                 type: 'boolean',
                 default: defaults.syntaxHighlightingEnabled,
-                description: localize(367, "Controls whether to show syntax highlighting for inline suggestions in the editor."),
+                description: localize(373, "Controls whether to show syntax highlighting for inline suggestions in the editor."),
             },
             'editor.inlineSuggest.suppressSuggestions': {
                 type: 'boolean',
                 default: defaults.suppressSuggestions,
-                description: localize(368, "Controls how inline suggestions interact with the suggest widget. If enabled, the suggest widget is not shown automatically when inline suggestions are available.")
+                description: localize(374, "Controls how inline suggestions interact with the suggest widget. If enabled, the suggest widget is not shown automatically when inline suggestions are available.")
             },
             'editor.inlineSuggest.suppressInSnippetMode': {
                 type: 'boolean',
                 default: defaults.suppressInSnippetMode,
-                description: localize(369, "Controls whether inline suggestions are suppressed when in snippet mode."),
+                description: localize(375, "Controls whether inline suggestions are suppressed when in snippet mode."),
             },
             'editor.inlineSuggest.minShowDelay': {
                 type: 'number',
                 default: 0,
                 minimum: 0,
                 maximum: 10000,
-                description: localize(370, "Controls the minimal delay in milliseconds after which inline suggestions are shown after typing."),
+                description: localize(376, "Controls the minimal delay in milliseconds after which inline suggestions are shown after typing."),
             },
             'editor.inlineSuggest.experimental.suppressInlineSuggestions': {
                 type: 'string',
                 default: defaults.experimental.suppressInlineSuggestions,
                 tags: ['experimental'],
-                description: localize(371, "Suppresses inline completions for specified extension IDs -- comma separated."),
+                description: localize(377, "Suppresses inline completions for specified extension IDs -- comma separated."),
                 experiment: {
                     mode: 'auto'
                 }
@@ -2280,7 +2297,7 @@ class InlineEditorSuggest extends BaseEditorOption {
                 type: 'boolean',
                 default: defaults.experimental.emptyResponseInformation,
                 tags: ['experimental'],
-                description: localize(372, "Controls whether to send request information from the inline suggestion provider."),
+                description: localize(378, "Controls whether to send request information from the inline suggestion provider."),
                 experiment: {
                     mode: 'auto'
                 }
@@ -2289,7 +2306,7 @@ class InlineEditorSuggest extends BaseEditorOption {
                 type: 'boolean',
                 default: defaults.triggerCommandOnProviderChange,
                 tags: ['experimental'],
-                description: localize(373, "Controls whether to trigger a command when the inline suggestion provider changes."),
+                description: localize(379, "Controls whether to trigger a command when the inline suggestion provider changes."),
                 experiment: {
                     mode: 'auto'
                 }
@@ -2299,7 +2316,7 @@ class InlineEditorSuggest extends BaseEditorOption {
                 default: defaults.experimental.showOnSuggestConflict,
                 tags: ['experimental'],
                 enum: ['always', 'never', 'whenSuggestListIsIncomplete'],
-                description: localize(374, "Controls whether to show inline suggestions when there is a suggest conflict."),
+                description: localize(380, "Controls whether to show inline suggestions when there is a suggest conflict."),
                 experiment: {
                     mode: 'auto'
                 }
@@ -2307,36 +2324,47 @@ class InlineEditorSuggest extends BaseEditorOption {
             'editor.inlineSuggest.fontFamily': {
                 type: 'string',
                 default: defaults.fontFamily,
-                description: localize(375, "Controls the font family of the inline suggestions.")
+                description: localize(381, "Controls the font family of the inline suggestions.")
             },
             'editor.inlineSuggest.edits.allowCodeShifting': {
                 type: 'string',
                 default: defaults.edits.allowCodeShifting,
-                description: localize(376, "Controls whether showing a suggestion will shift the code to make space for the suggestion inline."),
+                description: localize(382, "Controls whether showing a suggestion will shift the code to make space for the suggestion inline."),
                 enum: ['always', 'horizontal', 'never'],
                 tags: ['nextEditSuggestions']
             },
             'editor.inlineSuggest.edits.showLongDistanceHint': {
                 type: 'boolean',
                 default: defaults.edits.showLongDistanceHint,
-                description: localize(377, "Controls whether long distance inline suggestions are shown."),
+                description: localize(383, "Controls whether long distance inline suggestions are shown."),
                 tags: ['nextEditSuggestions', 'experimental']
+            },
+            'editor.inlineSuggest.edits.longDistanceHintContextLineCount': {
+                type: 'number',
+                default: defaults.edits.longDistanceHintContextLineCount,
+                minimum: 0,
+                maximum: 10,
+                description: localize(384, "Controls how many lines of surrounding context are shown above and below the target line in the long distance inline suggestion preview. Set to 0 to only show the target line."),
+                tags: ['nextEditSuggestions', 'experimental'],
+                experiment: {
+                    mode: 'auto'
+                }
             },
             'editor.inlineSuggest.edits.renderSideBySide': {
                 type: 'string',
                 default: defaults.edits.renderSideBySide,
-                description: localize(378, "Controls whether larger suggestions can be shown side by side."),
+                description: localize(385, "Controls whether larger suggestions can be shown side by side."),
                 enum: ['auto', 'never'],
                 enumDescriptions: [
-                    localize(379, "Larger suggestions will show side by side if there is enough space, otherwise they will be shown below."),
-                    localize(380, "Larger suggestions are never shown side by side and will always be shown below."),
+                    localize(386, "Larger suggestions will show side by side if there is enough space, otherwise they will be shown below."),
+                    localize(387, "Larger suggestions are never shown side by side and will always be shown below."),
                 ],
                 tags: ['nextEditSuggestions']
             },
             'editor.inlineSuggest.edits.showCollapsed': {
                 type: 'boolean',
                 default: defaults.edits.showCollapsed,
-                description: localize(381, "Controls whether the suggestion will show as collapsed until jumping to it."),
+                description: localize(388, "Controls whether the suggestion will show as collapsed until jumping to it."),
                 tags: ['nextEditSuggestions']
             },
         });
@@ -2371,6 +2399,7 @@ class InlineEditorSuggest extends BaseEditorOption {
             showCollapsed: boolean(input.showCollapsed, this.defaultValue.edits.showCollapsed),
             allowCodeShifting: stringSet(input.allowCodeShifting, this.defaultValue.edits.allowCodeShifting, ['always', 'horizontal', 'never']),
             showLongDistanceHint: boolean(input.showLongDistanceHint, this.defaultValue.edits.showLongDistanceHint),
+            longDistanceHintContextLineCount: EditorIntOption.clampedInt(input.longDistanceHintContextLineCount, this.defaultValue.edits.longDistanceHintContextLineCount, 0, 10),
             renderSideBySide: stringSet(input.renderSideBySide, this.defaultValue.edits.renderSideBySide, ['never', 'auto']),
         };
     }
@@ -2399,12 +2428,12 @@ class BracketPairColorization extends BaseEditorOption {
             'editor.bracketPairColorization.enabled': {
                 type: 'boolean',
                 default: defaults.enabled,
-                markdownDescription: localize(382, "Controls whether bracket pair colorization is enabled or not. Use {0} to override the bracket highlight colors.", '`#workbench.colorCustomizations#`')
+                markdownDescription: localize(389, "Controls whether bracket pair colorization is enabled or not. Use {0} to override the bracket highlight colors.", '`#workbench.colorCustomizations#`')
             },
             'editor.bracketPairColorization.independentColorPoolPerBracketType': {
                 type: 'boolean',
                 default: defaults.independentColorPoolPerBracketType,
-                description: localize(383, "Controls whether each bracket type has its own independent color pool.")
+                description: localize(390, "Controls whether each bracket type has its own independent color pool.")
             },
         });
     }
@@ -2436,44 +2465,44 @@ class GuideOptions extends BaseEditorOption {
                 type: ['boolean', 'string'],
                 enum: [true, 'active', false],
                 enumDescriptions: [
-                    localize(384, "Enables bracket pair guides."),
-                    localize(385, "Enables bracket pair guides only for the active bracket pair."),
-                    localize(386, "Disables bracket pair guides."),
+                    localize(391, "Enables bracket pair guides."),
+                    localize(392, "Enables bracket pair guides only for the active bracket pair."),
+                    localize(393, "Disables bracket pair guides."),
                 ],
                 default: defaults.bracketPairs,
-                description: localize(387, "Controls whether bracket pair guides are enabled or not.")
+                description: localize(394, "Controls whether bracket pair guides are enabled or not.")
             },
             'editor.guides.bracketPairsHorizontal': {
                 type: ['boolean', 'string'],
                 enum: [true, 'active', false],
                 enumDescriptions: [
-                    localize(388, "Enables horizontal guides as addition to vertical bracket pair guides."),
-                    localize(389, "Enables horizontal guides only for the active bracket pair."),
-                    localize(390, "Disables horizontal bracket pair guides."),
+                    localize(395, "Enables horizontal guides as addition to vertical bracket pair guides."),
+                    localize(396, "Enables horizontal guides only for the active bracket pair."),
+                    localize(397, "Disables horizontal bracket pair guides."),
                 ],
                 default: defaults.bracketPairsHorizontal,
-                description: localize(391, "Controls whether horizontal bracket pair guides are enabled or not.")
+                description: localize(398, "Controls whether horizontal bracket pair guides are enabled or not.")
             },
             'editor.guides.highlightActiveBracketPair': {
                 type: 'boolean',
                 default: defaults.highlightActiveBracketPair,
-                description: localize(392, "Controls whether the editor should highlight the active bracket pair.")
+                description: localize(399, "Controls whether the editor should highlight the active bracket pair.")
             },
             'editor.guides.indentation': {
                 type: 'boolean',
                 default: defaults.indentation,
-                description: localize(393, "Controls whether the editor should render indent guides.")
+                description: localize(400, "Controls whether the editor should render indent guides.")
             },
             'editor.guides.highlightActiveIndentation': {
                 type: ['boolean', 'string'],
                 enum: [true, 'always', false],
                 enumDescriptions: [
-                    localize(394, "Highlights the active indent guide."),
-                    localize(395, "Highlights the active indent guide even if bracket guides are highlighted."),
-                    localize(396, "Do not highlight the active indent guide."),
+                    localize(401, "Highlights the active indent guide."),
+                    localize(402, "Highlights the active indent guide even if bracket guides are highlighted."),
+                    localize(403, "Do not highlight the active indent guide."),
                 ],
                 default: defaults.highlightActiveIndentation,
-                description: localize(397, "Controls whether the editor should highlight the active indent guide.")
+                description: localize(404, "Controls whether the editor should highlight the active indent guide.")
             }
         });
     }
@@ -2512,6 +2541,7 @@ class EditorSuggest extends BaseEditorOption {
             preview: false,
             previewMode: 'subwordSmart',
             showInlineDetails: true,
+            fitWidthToDetails: false,
             showMethods: true,
             showFunctions: true,
             showConstructors: true,
@@ -2547,221 +2577,217 @@ class EditorSuggest extends BaseEditorOption {
                 type: 'string',
                 enum: ['insert', 'replace'],
                 enumDescriptions: [
-                    localize(398, "Insert suggestion without overwriting text right of the cursor."),
-                    localize(399, "Insert suggestion and overwrite text right of the cursor."),
+                    localize(405, "Insert suggestion without overwriting text right of the cursor."),
+                    localize(406, "Insert suggestion and overwrite text right of the cursor."),
                 ],
                 default: defaults.insertMode,
-                description: localize(400, "Controls whether words are overwritten when accepting completions. Note that this depends on extensions opting into this feature.")
+                description: localize(407, "Controls whether words are overwritten when accepting completions. Note that this depends on extensions opting into this feature.")
             },
             'editor.suggest.filterGraceful': {
                 type: 'boolean',
                 default: defaults.filterGraceful,
-                description: localize(401, "Controls whether filtering and sorting suggestions accounts for small typos.")
+                description: localize(408, "Controls whether filtering and sorting suggestions accounts for small typos.")
             },
             'editor.suggest.localityBonus': {
                 type: 'boolean',
                 default: defaults.localityBonus,
-                description: localize(402, "Controls whether sorting favors words that appear close to the cursor.")
+                description: localize(409, "Controls whether sorting favors words that appear close to the cursor.")
             },
             'editor.suggest.shareSuggestSelections': {
                 type: 'boolean',
                 default: defaults.shareSuggestSelections,
-                markdownDescription: localize(403, "Controls whether remembered suggestion selections are shared between multiple workspaces and windows (needs `#editor.suggestSelection#`).")
+                markdownDescription: localize(410, "Controls whether remembered suggestion selections are shared between multiple workspaces and windows (needs `#editor.suggestSelection#`).")
             },
             'editor.suggest.selectionMode': {
                 type: 'string',
                 enum: ['always', 'never', 'whenTriggerCharacter', 'whenQuickSuggestion'],
                 enumDescriptions: [
-                    localize(404, "Always select a suggestion when automatically triggering IntelliSense."),
-                    localize(405, "Never select a suggestion when automatically triggering IntelliSense."),
-                    localize(406, "Select a suggestion only when triggering IntelliSense from a trigger character."),
-                    localize(407, "Select a suggestion only when triggering IntelliSense as you type."),
+                    localize(411, "Always select a suggestion when automatically triggering IntelliSense."),
+                    localize(412, "Never select a suggestion when automatically triggering IntelliSense."),
+                    localize(413, "Select a suggestion only when triggering IntelliSense from a trigger character."),
+                    localize(414, "Select a suggestion only when triggering IntelliSense as you type."),
                 ],
                 default: defaults.selectionMode,
-                markdownDescription: localize(408, "Controls whether a suggestion is selected when the widget shows. Note that this only applies to automatically triggered suggestions ({0} and {1}) and that a suggestion is always selected when explicitly invoked, e.g via `Ctrl+Space`.", '`#editor.quickSuggestions#`', '`#editor.suggestOnTriggerCharacters#`')
+                markdownDescription: localize(415, "Controls whether a suggestion is selected when the widget shows. Note that this only applies to automatically triggered suggestions ({0} and {1}) and that a suggestion is always selected when explicitly invoked, e.g via `Ctrl+Space`.", '`#editor.quickSuggestions#`', '`#editor.suggestOnTriggerCharacters#`')
             },
             'editor.suggest.snippetsPreventQuickSuggestions': {
                 type: 'boolean',
                 default: defaults.snippetsPreventQuickSuggestions,
-                description: localize(409, "Controls whether an active snippet prevents quick suggestions.")
+                description: localize(416, "Controls whether an active snippet prevents quick suggestions.")
             },
             'editor.suggest.showIcons': {
                 type: 'boolean',
                 default: defaults.showIcons,
-                description: localize(410, "Controls whether to show or hide icons in suggestions.")
+                description: localize(417, "Controls whether to show or hide icons in suggestions.")
             },
             'editor.suggest.showStatusBar': {
                 type: 'boolean',
                 default: defaults.showStatusBar,
-                description: localize(411, "Controls the visibility of the status bar at the bottom of the suggest widget.")
+                description: localize(418, "Controls the visibility of the status bar at the bottom of the suggest widget.")
             },
             'editor.suggest.preview': {
                 type: 'boolean',
                 default: defaults.preview,
-                description: localize(412, "Controls whether to preview the suggestion outcome in the editor.")
+                description: localize(419, "Controls whether to preview the suggestion outcome in the editor.")
             },
             'editor.suggest.showInlineDetails': {
                 type: 'boolean',
                 default: defaults.showInlineDetails,
-                description: localize(413, "Controls whether suggest details show inline with the label or only in the details widget.")
-            },
-            'editor.suggest.maxVisibleSuggestions': {
-                type: 'number',
-                deprecationMessage: localize(414, "This setting is deprecated. The suggest widget can now be resized."),
+                description: localize(420, "Controls whether suggest details show inline with the label or only in the details widget.")
             },
             'editor.suggest.filteredTypes': {
                 type: 'object',
-                deprecationMessage: localize(415, "This setting is deprecated, please use separate settings like 'editor.suggest.showKeywords' or 'editor.suggest.showSnippets' instead.")
+                deprecationMessage: localize(421, "This setting is deprecated, please use separate settings like 'editor.suggest.showKeywords' or 'editor.suggest.showSnippets' instead.")
             },
             'editor.suggest.showMethods': {
                 type: 'boolean',
                 default: true,
-                markdownDescription: localize(416, "When enabled IntelliSense shows `method`-suggestions.")
+                markdownDescription: localize(422, "When enabled IntelliSense shows `method`-suggestions.")
             },
             'editor.suggest.showFunctions': {
                 type: 'boolean',
                 default: true,
-                markdownDescription: localize(417, "When enabled IntelliSense shows `function`-suggestions.")
+                markdownDescription: localize(423, "When enabled IntelliSense shows `function`-suggestions.")
             },
             'editor.suggest.showConstructors': {
                 type: 'boolean',
                 default: true,
-                markdownDescription: localize(418, "When enabled IntelliSense shows `constructor`-suggestions.")
+                markdownDescription: localize(424, "When enabled IntelliSense shows `constructor`-suggestions.")
             },
             'editor.suggest.showDeprecated': {
                 type: 'boolean',
                 default: true,
-                markdownDescription: localize(419, "When enabled IntelliSense shows `deprecated`-suggestions.")
+                markdownDescription: localize(425, "When enabled IntelliSense shows `deprecated`-suggestions.")
             },
             'editor.suggest.matchOnWordStartOnly': {
                 type: 'boolean',
                 default: true,
-                markdownDescription: localize(420, "When enabled IntelliSense filtering requires that the first character matches on a word start. For example, `c` on `Console` or `WebContext` but _not_ on `description`. When disabled IntelliSense will show more results but still sorts them by match quality.")
+                markdownDescription: localize(426, "When enabled IntelliSense filtering requires that the first character matches on a word start. For example, `c` on `Console` or `WebContext` but _not_ on `description`. When disabled IntelliSense will show more results but still sorts them by match quality.")
             },
             'editor.suggest.showFields': {
                 type: 'boolean',
                 default: true,
-                markdownDescription: localize(421, "When enabled IntelliSense shows `field`-suggestions.")
+                markdownDescription: localize(427, "When enabled IntelliSense shows `field`-suggestions.")
             },
             'editor.suggest.showVariables': {
                 type: 'boolean',
                 default: true,
-                markdownDescription: localize(422, "When enabled IntelliSense shows `variable`-suggestions.")
+                markdownDescription: localize(428, "When enabled IntelliSense shows `variable`-suggestions.")
             },
             'editor.suggest.showClasses': {
                 type: 'boolean',
                 default: true,
-                markdownDescription: localize(423, "When enabled IntelliSense shows `class`-suggestions.")
+                markdownDescription: localize(429, "When enabled IntelliSense shows `class`-suggestions.")
             },
             'editor.suggest.showStructs': {
                 type: 'boolean',
                 default: true,
-                markdownDescription: localize(424, "When enabled IntelliSense shows `struct`-suggestions.")
+                markdownDescription: localize(430, "When enabled IntelliSense shows `struct`-suggestions.")
             },
             'editor.suggest.showInterfaces': {
                 type: 'boolean',
                 default: true,
-                markdownDescription: localize(425, "When enabled IntelliSense shows `interface`-suggestions.")
+                markdownDescription: localize(431, "When enabled IntelliSense shows `interface`-suggestions.")
             },
             'editor.suggest.showModules': {
                 type: 'boolean',
                 default: true,
-                markdownDescription: localize(426, "When enabled IntelliSense shows `module`-suggestions.")
+                markdownDescription: localize(432, "When enabled IntelliSense shows `module`-suggestions.")
             },
             'editor.suggest.showProperties': {
                 type: 'boolean',
                 default: true,
-                markdownDescription: localize(427, "When enabled IntelliSense shows `property`-suggestions.")
+                markdownDescription: localize(433, "When enabled IntelliSense shows `property`-suggestions.")
             },
             'editor.suggest.showEvents': {
                 type: 'boolean',
                 default: true,
-                markdownDescription: localize(428, "When enabled IntelliSense shows `event`-suggestions.")
+                markdownDescription: localize(434, "When enabled IntelliSense shows `event`-suggestions.")
             },
             'editor.suggest.showOperators': {
                 type: 'boolean',
                 default: true,
-                markdownDescription: localize(429, "When enabled IntelliSense shows `operator`-suggestions.")
+                markdownDescription: localize(435, "When enabled IntelliSense shows `operator`-suggestions.")
             },
             'editor.suggest.showUnits': {
                 type: 'boolean',
                 default: true,
-                markdownDescription: localize(430, "When enabled IntelliSense shows `unit`-suggestions.")
+                markdownDescription: localize(436, "When enabled IntelliSense shows `unit`-suggestions.")
             },
             'editor.suggest.showValues': {
                 type: 'boolean',
                 default: true,
-                markdownDescription: localize(431, "When enabled IntelliSense shows `value`-suggestions.")
+                markdownDescription: localize(437, "When enabled IntelliSense shows `value`-suggestions.")
             },
             'editor.suggest.showConstants': {
                 type: 'boolean',
                 default: true,
-                markdownDescription: localize(432, "When enabled IntelliSense shows `constant`-suggestions.")
+                markdownDescription: localize(438, "When enabled IntelliSense shows `constant`-suggestions.")
             },
             'editor.suggest.showEnums': {
                 type: 'boolean',
                 default: true,
-                markdownDescription: localize(433, "When enabled IntelliSense shows `enum`-suggestions.")
+                markdownDescription: localize(439, "When enabled IntelliSense shows `enum`-suggestions.")
             },
             'editor.suggest.showEnumMembers': {
                 type: 'boolean',
                 default: true,
-                markdownDescription: localize(434, "When enabled IntelliSense shows `enumMember`-suggestions.")
+                markdownDescription: localize(440, "When enabled IntelliSense shows `enumMember`-suggestions.")
             },
             'editor.suggest.showKeywords': {
                 type: 'boolean',
                 default: true,
-                markdownDescription: localize(435, "When enabled IntelliSense shows `keyword`-suggestions.")
+                markdownDescription: localize(441, "When enabled IntelliSense shows `keyword`-suggestions.")
             },
             'editor.suggest.showWords': {
                 type: 'boolean',
                 default: true,
-                markdownDescription: localize(436, "When enabled IntelliSense shows `text`-suggestions.")
+                markdownDescription: localize(442, "When enabled IntelliSense shows `text`-suggestions.")
             },
             'editor.suggest.showColors': {
                 type: 'boolean',
                 default: true,
-                markdownDescription: localize(437, "When enabled IntelliSense shows `color`-suggestions.")
+                markdownDescription: localize(443, "When enabled IntelliSense shows `color`-suggestions.")
             },
             'editor.suggest.showFiles': {
                 type: 'boolean',
                 default: true,
-                markdownDescription: localize(438, "When enabled IntelliSense shows `file`-suggestions.")
+                markdownDescription: localize(444, "When enabled IntelliSense shows `file`-suggestions.")
             },
             'editor.suggest.showReferences': {
                 type: 'boolean',
                 default: true,
-                markdownDescription: localize(439, "When enabled IntelliSense shows `reference`-suggestions.")
+                markdownDescription: localize(445, "When enabled IntelliSense shows `reference`-suggestions.")
             },
             'editor.suggest.showCustomcolors': {
                 type: 'boolean',
                 default: true,
-                markdownDescription: localize(440, "When enabled IntelliSense shows `customcolor`-suggestions.")
+                markdownDescription: localize(446, "When enabled IntelliSense shows `customcolor`-suggestions.")
             },
             'editor.suggest.showFolders': {
                 type: 'boolean',
                 default: true,
-                markdownDescription: localize(441, "When enabled IntelliSense shows `folder`-suggestions.")
+                markdownDescription: localize(447, "When enabled IntelliSense shows `folder`-suggestions.")
             },
             'editor.suggest.showTypeParameters': {
                 type: 'boolean',
                 default: true,
-                markdownDescription: localize(442, "When enabled IntelliSense shows `typeParameter`-suggestions.")
+                markdownDescription: localize(448, "When enabled IntelliSense shows `typeParameter`-suggestions.")
             },
             'editor.suggest.showSnippets': {
                 type: 'boolean',
                 default: true,
-                markdownDescription: localize(443, "When enabled IntelliSense shows `snippet`-suggestions.")
+                markdownDescription: localize(449, "When enabled IntelliSense shows `snippet`-suggestions.")
             },
             'editor.suggest.showUsers': {
                 type: 'boolean',
                 default: true,
-                markdownDescription: localize(444, "When enabled IntelliSense shows `user`-suggestions.")
+                markdownDescription: localize(450, "When enabled IntelliSense shows `user`-suggestions.")
             },
             'editor.suggest.showIssues': {
                 type: 'boolean',
                 default: true,
-                markdownDescription: localize(445, "When enabled IntelliSense shows `issues`-suggestions.")
+                markdownDescription: localize(451, "When enabled IntelliSense shows `issues`-suggestions.")
             }
         });
     }
@@ -2782,6 +2808,7 @@ class EditorSuggest extends BaseEditorOption {
             preview: boolean(input.preview, this.defaultValue.preview),
             previewMode: stringSet(input.previewMode, this.defaultValue.previewMode, ['prefix', 'subword', 'subwordSmart']),
             showInlineDetails: boolean(input.showInlineDetails, this.defaultValue.showInlineDetails),
+            fitWidthToDetails: boolean(input.fitWidthToDetails, this.defaultValue.fitWidthToDetails),
             showMethods: boolean(input.showMethods, this.defaultValue.showMethods),
             showFunctions: boolean(input.showFunctions, this.defaultValue.showFunctions),
             showConstructors: boolean(input.showConstructors, this.defaultValue.showConstructors),
@@ -2821,12 +2848,12 @@ class SmartSelect extends BaseEditorOption {
             selectSubwords: true,
         }, {
             'editor.smartSelect.selectLeadingAndTrailingWhitespace': {
-                description: localize(446, "Whether leading and trailing whitespace should always be selected."),
+                description: localize(452, "Whether leading and trailing whitespace should always be selected."),
                 default: true,
                 type: 'boolean'
             },
             'editor.smartSelect.selectSubwords': {
-                description: localize(447, "Whether subwords (like 'foo' in 'fooBar' or 'foo_bar') should be selected."),
+                description: localize(453, "Whether subwords (like 'foo' in 'fooBar' or 'foo_bar') should be selected."),
                 default: true,
                 type: 'boolean'
             }
@@ -2863,7 +2890,7 @@ class WordSegmenterLocales extends BaseEditorOption {
                     }
                 }
             ],
-            description: localize(448, "Locales to be used for word segmentation when doing word related navigations or operations. Specify the BCP 47 language tag of the word you wish to recognize (e.g., ja, zh-CN, zh-Hant-TW, etc.)."),
+            description: localize(454, "Locales to be used for word segmentation when doing word related navigations or operations. Specify the BCP 47 language tag of the word you wish to recognize (e.g., ja, zh-CN, zh-Hant-TW, etc.)."),
             type: 'array',
             items: {
                 type: 'string',
@@ -2901,12 +2928,12 @@ class WrappingIndentOption extends BaseEditorOption {
                 type: 'string',
                 enum: ['none', 'same', 'indent', 'deepIndent'],
                 enumDescriptions: [
-                    localize(449, "No indentation. Wrapped lines begin at column 1."),
-                    localize(450, "Wrapped lines get the same indentation as the parent."),
-                    localize(451, "Wrapped lines get +1 indentation toward the parent."),
-                    localize(452, "Wrapped lines get +2 indentation toward the parent."),
+                    localize(455, "No indentation. Wrapped lines begin at column 1."),
+                    localize(456, "Wrapped lines get the same indentation as the parent."),
+                    localize(457, "Wrapped lines get +1 indentation toward the parent."),
+                    localize(458, "Wrapped lines get +2 indentation toward the parent."),
                 ],
-                description: localize(453, "Controls the indentation of wrapped lines."),
+                description: localize(459, "Controls the indentation of wrapped lines."),
                 default: 'same'
             }
         });
@@ -2932,7 +2959,7 @@ class WrappingIndentOption extends BaseEditorOption {
 }
 class EditorWrappingInfoComputer extends ComputedEditorOption {
     constructor() {
-        super(166 /* EditorOption.wrappingInfo */, {
+        super(167 /* EditorOption.wrappingInfo */, {
             isDominatedByLongLines: false,
             isWordWrapMinified: false,
             isViewportWrapping: false,
@@ -2940,7 +2967,7 @@ class EditorWrappingInfoComputer extends ComputedEditorOption {
         });
     }
     compute(env, options, _) {
-        const layoutInfo = options.get(165 /* EditorOption.layoutInfo */);
+        const layoutInfo = options.get(166 /* EditorOption.layoutInfo */);
         return {
             isDominatedByLongLines: env.isDominatedByLongLines,
             isWordWrapMinified: layoutInfo.isWordWrapMinified,
@@ -2956,18 +2983,18 @@ class EditorDropIntoEditor extends BaseEditorOption {
             'editor.dropIntoEditor.enabled': {
                 type: 'boolean',
                 default: defaults.enabled,
-                markdownDescription: localize(454, "Controls whether you can drag and drop a file into a text editor by holding down the `Shift` key (instead of opening the file in an editor)."),
+                markdownDescription: localize(460, "Controls whether you can drag and drop a file into a text editor by holding down the `Shift` key (instead of opening the file in an editor)."),
             },
             'editor.dropIntoEditor.showDropSelector': {
                 type: 'string',
-                markdownDescription: localize(455, "Controls if a widget is shown when dropping files into the editor. This widget lets you control how the file is dropped."),
+                markdownDescription: localize(461, "Controls if a widget is shown when dropping files into the editor. This widget lets you control how the file is dropped."),
                 enum: [
                     'afterDrop',
                     'never'
                 ],
                 enumDescriptions: [
-                    localize(456, "Show the drop selector widget after a file is dropped into the editor."),
-                    localize(457, "Never show the drop selector widget. Instead the default drop provider is always used."),
+                    localize(462, "Show the drop selector widget after a file is dropped into the editor."),
+                    localize(463, "Never show the drop selector widget. Instead the default drop provider is always used."),
                 ],
                 default: 'afterDrop',
             },
@@ -2991,18 +3018,18 @@ class EditorPasteAs extends BaseEditorOption {
             'editor.pasteAs.enabled': {
                 type: 'boolean',
                 default: defaults.enabled,
-                markdownDescription: localize(458, "Controls whether you can paste content in different ways."),
+                markdownDescription: localize(464, "Controls whether you can paste content in different ways."),
             },
             'editor.pasteAs.showPasteSelector': {
                 type: 'string',
-                markdownDescription: localize(459, "Controls if a widget is shown when pasting content in to the editor. This widget lets you control how the file is pasted."),
+                markdownDescription: localize(465, "Controls if a widget is shown when pasting content in to the editor. This widget lets you control how the file is pasted."),
                 enum: [
                     'afterPaste',
                     'never'
                 ],
                 enumDescriptions: [
-                    localize(460, "Show the paste selector widget after content is pasted into the editor."),
-                    localize(461, "Never show the paste selector widget. Instead the default pasting behavior is always used."),
+                    localize(466, "Show the paste selector widget after content is pasted into the editor."),
+                    localize(467, "Never show the paste selector widget. Instead the default pasting behavior is always used."),
                 ],
                 default: 'afterPaste',
             },
@@ -3029,237 +3056,244 @@ function register(option) {
     return option;
 }
 const EditorOptions = {
-    acceptSuggestionOnCommitCharacter: register(new EditorBooleanOption(0 /* EditorOption.acceptSuggestionOnCommitCharacter */, 'acceptSuggestionOnCommitCharacter', true, { markdownDescription: localize(462, "Controls whether suggestions should be accepted on commit characters. For example, in JavaScript, the semi-colon (`;`) can be a commit character that accepts a suggestion and types that character.") })),
+    acceptSuggestionOnCommitCharacter: register(new EditorBooleanOption(0 /* EditorOption.acceptSuggestionOnCommitCharacter */, 'acceptSuggestionOnCommitCharacter', true, { markdownDescription: localize(468, "Controls whether suggestions should be accepted on commit characters. For example, in JavaScript, the semi-colon (`;`) can be a commit character that accepts a suggestion and types that character.") })),
     acceptSuggestionOnEnter: register(new EditorStringEnumOption(1 /* EditorOption.acceptSuggestionOnEnter */, 'acceptSuggestionOnEnter', 'on', ['on', 'smart', 'off'], {
         markdownEnumDescriptions: [
             '',
-            localize(463, "Only accept a suggestion with `Enter` when it makes a textual change."),
+            localize(469, "Only accept a suggestion with `Enter` when it makes a textual change."),
             ''
         ],
-        markdownDescription: localize(464, "Controls whether suggestions should be accepted on `Enter`, in addition to `Tab`. Helps to avoid ambiguity between inserting new lines or accepting suggestions.")
+        markdownDescription: localize(470, "Controls whether suggestions should be accepted on `Enter`, in addition to `Tab`. Helps to avoid ambiguity between inserting new lines or accepting suggestions.")
     })),
     accessibilitySupport: register(new EditorAccessibilitySupport()),
     accessibilityPageSize: register(new EditorIntOption(3 /* EditorOption.accessibilityPageSize */, 'accessibilityPageSize', 500, 1, 1073741824 /* Constants.MAX_SAFE_SMALL_INTEGER */, {
-        description: localize(465, "Controls the number of lines in the editor that can be read out by a screen reader at once. When we detect a screen reader we automatically set the default to be 500. Warning: this has a performance implication for numbers larger than the default."),
+        description: localize(471, "Controls the number of lines in the editor that can be read out by a screen reader at once. When we detect a screen reader we automatically set the default to be 500. Warning: this has a performance implication for numbers larger than the default."),
         tags: ['accessibility']
     })),
     allowOverflow: register(new EditorBooleanOption(4 /* EditorOption.allowOverflow */, 'allowOverflow', true)),
     allowVariableLineHeights: register(new EditorBooleanOption(5 /* EditorOption.allowVariableLineHeights */, 'allowVariableLineHeights', true, {
-        description: localize(466, "Controls whether to allow using variable line heights in the editor.")
+        description: localize(472, "Controls whether to allow using variable line heights in the editor.")
     })),
     allowVariableFonts: register(new EditorBooleanOption(6 /* EditorOption.allowVariableFonts */, 'allowVariableFonts', true, {
-        description: localize(467, "Controls whether to allow using variable fonts in the editor.")
+        description: localize(473, "Controls whether to allow using variable fonts in the editor.")
     })),
     allowVariableFontsInAccessibilityMode: register(new EditorBooleanOption(7 /* EditorOption.allowVariableFontsInAccessibilityMode */, 'allowVariableFontsInAccessibilityMode', false, {
-        description: localize(468, "Controls whether to allow using variable fonts in the editor in the accessibility mode."),
+        description: localize(474, "Controls whether to allow using variable fonts in the editor in the accessibility mode."),
         tags: ['accessibility']
     })),
-    ariaLabel: register(new EditorStringOption(8 /* EditorOption.ariaLabel */, 'ariaLabel', localize(469, "Editor content"))),
+    ariaLabel: register(new EditorStringOption(8 /* EditorOption.ariaLabel */, 'ariaLabel', localize(475, "Editor content"))),
     ariaRequired: register(new EditorBooleanOption(9 /* EditorOption.ariaRequired */, 'ariaRequired', false, undefined)),
     screenReaderAnnounceInlineSuggestion: register(new EditorBooleanOption(12 /* EditorOption.screenReaderAnnounceInlineSuggestion */, 'screenReaderAnnounceInlineSuggestion', true, {
-        description: localize(470, "Control whether inline suggestions are announced by a screen reader."),
+        description: localize(476, "Control whether inline suggestions are announced by a screen reader."),
         tags: ['accessibility']
     })),
     autoClosingBrackets: register(new EditorStringEnumOption(10 /* EditorOption.autoClosingBrackets */, 'autoClosingBrackets', 'languageDefined', ['always', 'languageDefined', 'beforeWhitespace', 'never'], {
         enumDescriptions: [
             '',
-            localize(471, "Use language configurations to determine when to autoclose brackets."),
-            localize(472, "Autoclose brackets only when the cursor is to the left of whitespace."),
+            localize(477, "Use language configurations to determine when to autoclose brackets."),
+            localize(478, "Autoclose brackets only when the cursor is to the left of whitespace."),
             '',
         ],
-        description: localize(473, "Controls whether the editor should automatically close brackets after the user adds an opening bracket.")
+        description: localize(479, "Controls whether the editor should automatically close brackets after the user adds an opening bracket.")
     })),
     autoClosingComments: register(new EditorStringEnumOption(11 /* EditorOption.autoClosingComments */, 'autoClosingComments', 'languageDefined', ['always', 'languageDefined', 'beforeWhitespace', 'never'], {
         enumDescriptions: [
             '',
-            localize(474, "Use language configurations to determine when to autoclose comments."),
-            localize(475, "Autoclose comments only when the cursor is to the left of whitespace."),
+            localize(480, "Use language configurations to determine when to autoclose comments."),
+            localize(481, "Autoclose comments only when the cursor is to the left of whitespace."),
             '',
         ],
-        description: localize(476, "Controls whether the editor should automatically close comments after the user adds an opening comment.")
+        description: localize(482, "Controls whether the editor should automatically close comments after the user adds an opening comment.")
     })),
     autoClosingDelete: register(new EditorStringEnumOption(13 /* EditorOption.autoClosingDelete */, 'autoClosingDelete', 'auto', ['always', 'auto', 'never'], {
         enumDescriptions: [
             '',
-            localize(477, "Remove adjacent closing quotes or brackets only if they were automatically inserted."),
+            localize(483, "Remove adjacent closing quotes or brackets only if they were automatically inserted."),
             '',
         ],
-        description: localize(478, "Controls whether the editor should remove adjacent closing quotes or brackets when deleting.")
+        description: localize(484, "Controls whether the editor should remove adjacent closing quotes or brackets when deleting.")
     })),
     autoClosingOvertype: register(new EditorStringEnumOption(14 /* EditorOption.autoClosingOvertype */, 'autoClosingOvertype', 'auto', ['always', 'auto', 'never'], {
         enumDescriptions: [
             '',
-            localize(479, "Type over closing quotes or brackets only if they were automatically inserted."),
+            localize(485, "Type over closing quotes or brackets only if they were automatically inserted."),
             '',
         ],
-        description: localize(480, "Controls whether the editor should type over closing quotes or brackets.")
+        description: localize(486, "Controls whether the editor should type over closing quotes or brackets.")
     })),
     autoClosingQuotes: register(new EditorStringEnumOption(15 /* EditorOption.autoClosingQuotes */, 'autoClosingQuotes', 'languageDefined', ['always', 'languageDefined', 'beforeWhitespace', 'never'], {
         enumDescriptions: [
             '',
-            localize(481, "Use language configurations to determine when to autoclose quotes."),
-            localize(482, "Autoclose quotes only when the cursor is to the left of whitespace."),
+            localize(487, "Use language configurations to determine when to autoclose quotes."),
+            localize(488, "Autoclose quotes only when the cursor is to the left of whitespace."),
             '',
         ],
-        description: localize(483, "Controls whether the editor should automatically close quotes after the user adds an opening quote.")
+        description: localize(489, "Controls whether the editor should automatically close quotes after the user adds an opening quote.")
     })),
     autoIndent: register(new EditorEnumOption(16 /* EditorOption.autoIndent */, 'autoIndent', 4 /* EditorAutoIndentStrategy.Full */, 'full', ['none', 'keep', 'brackets', 'advanced', 'full'], _autoIndentFromString, {
         enumDescriptions: [
-            localize(484, "The editor will not insert indentation automatically."),
-            localize(485, "The editor will keep the current line's indentation."),
-            localize(486, "The editor will keep the current line's indentation and honor language defined brackets."),
-            localize(487, "The editor will keep the current line's indentation, honor language defined brackets and invoke special onEnterRules defined by languages."),
-            localize(488, "The editor will keep the current line's indentation, honor language defined brackets, invoke special onEnterRules defined by languages, and honor indentationRules defined by languages."),
+            localize(490, "The editor will not insert indentation automatically."),
+            localize(491, "The editor will keep the current line's indentation."),
+            localize(492, "The editor will keep the current line's indentation and honor language defined brackets."),
+            localize(493, "The editor will keep the current line's indentation, honor language defined brackets and invoke special onEnterRules defined by languages."),
+            localize(494, "The editor will keep the current line's indentation, honor language defined brackets, invoke special onEnterRules defined by languages, and honor indentationRules defined by languages."),
         ],
-        description: localize(489, "Controls whether the editor should automatically adjust the indentation when users type, paste, move or indent lines.")
+        description: localize(495, "Controls whether the editor should automatically adjust the indentation when users type, paste, move or indent lines.")
     })),
-    autoIndentOnPaste: register(new EditorBooleanOption(17 /* EditorOption.autoIndentOnPaste */, 'autoIndentOnPaste', false, { description: localize(490, "Controls whether the editor should automatically auto-indent the pasted content.") })),
-    autoIndentOnPasteWithinString: register(new EditorBooleanOption(18 /* EditorOption.autoIndentOnPasteWithinString */, 'autoIndentOnPasteWithinString', true, { description: localize(491, "Controls whether the editor should automatically auto-indent the pasted content when pasted within a string. This takes effect when autoIndentOnPaste is true.") })),
+    autoIndentOnPaste: register(new EditorBooleanOption(17 /* EditorOption.autoIndentOnPaste */, 'autoIndentOnPaste', false, { description: localize(496, "Controls whether the editor should automatically auto-indent the pasted content.") })),
+    autoIndentOnPasteWithinString: register(new EditorBooleanOption(18 /* EditorOption.autoIndentOnPasteWithinString */, 'autoIndentOnPasteWithinString', true, { description: localize(497, "Controls whether the editor should automatically auto-indent the pasted content when pasted within a string. This takes effect when autoIndentOnPaste is true.") })),
     automaticLayout: register(new EditorBooleanOption(19 /* EditorOption.automaticLayout */, 'automaticLayout', false)),
     autoSurround: register(new EditorStringEnumOption(20 /* EditorOption.autoSurround */, 'autoSurround', 'languageDefined', ['languageDefined', 'quotes', 'brackets', 'never'], {
         enumDescriptions: [
-            localize(492, "Use language configurations to determine when to automatically surround selections."),
-            localize(493, "Surround with quotes but not brackets."),
-            localize(494, "Surround with brackets but not quotes."),
+            localize(498, "Use language configurations to determine when to automatically surround selections."),
+            localize(499, "Surround with quotes but not brackets."),
+            localize(500, "Surround with brackets but not quotes."),
             ''
         ],
-        description: localize(495, "Controls whether the editor should automatically surround selections when typing quotes or brackets.")
+        description: localize(501, "Controls whether the editor should automatically surround selections when typing quotes or brackets.")
     })),
     bracketPairColorization: register(new BracketPairColorization()),
     bracketPairGuides: register(new GuideOptions()),
-    stickyTabStops: register(new EditorBooleanOption(132 /* EditorOption.stickyTabStops */, 'stickyTabStops', false, { description: localize(496, "Emulate selection behavior of tab characters when using spaces for indentation. Selection will stick to tab stops.") })),
-    codeLens: register(new EditorBooleanOption(23 /* EditorOption.codeLens */, 'codeLens', true, { description: localize(497, "Controls whether the editor shows CodeLens.") })),
-    codeLensFontFamily: register(new EditorStringOption(24 /* EditorOption.codeLensFontFamily */, 'codeLensFontFamily', '', { description: localize(498, "Controls the font family for CodeLens.") })),
+    stickyTabStops: register(new EditorBooleanOption(132 /* EditorOption.stickyTabStops */, 'stickyTabStops', false, { description: localize(502, "Emulate selection behavior of tab characters when using spaces for indentation. Selection will stick to tab stops.") })),
+    codeLens: register(new EditorBooleanOption(23 /* EditorOption.codeLens */, 'codeLens', true, { description: localize(503, "Controls whether the editor shows CodeLens.") })),
+    codeLensFontFamily: register(new EditorStringOption(24 /* EditorOption.codeLensFontFamily */, 'codeLensFontFamily', '', { description: localize(504, "Controls the font family for CodeLens.") })),
     codeLensFontSize: register(new EditorIntOption(25 /* EditorOption.codeLensFontSize */, 'codeLensFontSize', 0, 0, 100, {
         type: 'number',
         default: 0,
         minimum: 0,
         maximum: 100,
-        markdownDescription: localize(499, "Controls the font size in pixels for CodeLens. When set to 0, 90% of `#editor.fontSize#` is used.")
+        markdownDescription: localize(505, "Controls the font size in pixels for CodeLens. When set to 0, 90% of `#editor.fontSize#` is used.")
     })),
-    colorDecorators: register(new EditorBooleanOption(26 /* EditorOption.colorDecorators */, 'colorDecorators', true, { description: localize(500, "Controls whether the editor should render the inline color decorators and color picker.") })),
-    colorDecoratorActivatedOn: register(new EditorStringEnumOption(168 /* EditorOption.colorDecoratorsActivatedOn */, 'colorDecoratorsActivatedOn', 'clickAndHover', ['clickAndHover', 'hover', 'click'], {
+    colorDecorators: register(new EditorBooleanOption(26 /* EditorOption.colorDecorators */, 'colorDecorators', true, { description: localize(506, "Controls whether the editor should render the inline color decorators and color picker.") })),
+    colorDecoratorActivatedOn: register(new EditorStringEnumOption(169 /* EditorOption.colorDecoratorsActivatedOn */, 'colorDecoratorsActivatedOn', 'clickAndHover', ['clickAndHover', 'hover', 'click'], {
         enumDescriptions: [
-            localize(501, "Make the color picker appear both on click and hover of the color decorator"),
-            localize(502, "Make the color picker appear on hover of the color decorator"),
-            localize(503, "Make the color picker appear on click of the color decorator")
+            localize(507, "Make the color picker appear both on click and hover of the color decorator"),
+            localize(508, "Make the color picker appear on hover of the color decorator"),
+            localize(509, "Make the color picker appear on click of the color decorator")
         ],
-        description: localize(504, "Controls the condition to make a color picker appear from a color decorator.")
+        description: localize(510, "Controls the condition to make a color picker appear from a color decorator.")
     })),
     colorDecoratorsLimit: register(new EditorIntOption(27 /* EditorOption.colorDecoratorsLimit */, 'colorDecoratorsLimit', 500, 1, 1000000, {
-        markdownDescription: localize(505, "Controls the max number of color decorators that can be rendered in an editor at once.")
+        markdownDescription: localize(511, "Controls the max number of color decorators that can be rendered in an editor at once.")
     })),
-    columnSelection: register(new EditorBooleanOption(28 /* EditorOption.columnSelection */, 'columnSelection', false, { description: localize(506, "Enable that the selection with the mouse and keys is doing column selection.") })),
+    columnSelection: register(new EditorBooleanOption(28 /* EditorOption.columnSelection */, 'columnSelection', false, { description: localize(512, "Enable that the selection with the mouse and keys is doing column selection.") })),
     comments: register(new EditorComments()),
     contextmenu: register(new EditorBooleanOption(30 /* EditorOption.contextmenu */, 'contextmenu', true)),
-    copyWithSyntaxHighlighting: register(new EditorBooleanOption(31 /* EditorOption.copyWithSyntaxHighlighting */, 'copyWithSyntaxHighlighting', true, { description: localize(507, "Controls whether syntax highlighting should be copied into the clipboard.") })),
-    cursorBlinking: register(new EditorEnumOption(32 /* EditorOption.cursorBlinking */, 'cursorBlinking', 1 /* TextEditorCursorBlinkingStyle.Blink */, 'blink', ['blink', 'smooth', 'phase', 'expand', 'solid'], cursorBlinkingStyleFromString, { description: localize(508, "Control the cursor animation style.") })),
+    copyWithSyntaxHighlighting: register(new EditorBooleanOption(31 /* EditorOption.copyWithSyntaxHighlighting */, 'copyWithSyntaxHighlighting', true, { description: localize(513, "Controls whether syntax highlighting should be copied into the clipboard.") })),
+    cursorBlinking: register(new EditorEnumOption(32 /* EditorOption.cursorBlinking */, 'cursorBlinking', 1 /* TextEditorCursorBlinkingStyle.Blink */, 'blink', ['blink', 'smooth', 'phase', 'expand', 'solid'], cursorBlinkingStyleFromString, { description: localize(514, "Control the cursor animation style.") })),
     cursorSmoothCaretAnimation: register(new EditorStringEnumOption(33 /* EditorOption.cursorSmoothCaretAnimation */, 'cursorSmoothCaretAnimation', 'off', ['off', 'explicit', 'on'], {
         enumDescriptions: [
-            localize(509, "Smooth caret animation is disabled."),
-            localize(510, "Smooth caret animation is enabled only when the user moves the cursor with an explicit gesture."),
-            localize(511, "Smooth caret animation is always enabled.")
+            localize(515, "Smooth caret animation is disabled."),
+            localize(516, "Smooth caret animation is enabled only when the user moves the cursor with an explicit gesture."),
+            localize(517, "Smooth caret animation is always enabled.")
         ],
-        description: localize(512, "Controls whether the smooth caret animation should be enabled.")
+        description: localize(518, "Controls whether the smooth caret animation should be enabled.")
     })),
-    cursorStyle: register(new EditorEnumOption(34 /* EditorOption.cursorStyle */, 'cursorStyle', TextEditorCursorStyle.Line, 'line', ['line', 'block', 'underline', 'line-thin', 'block-outline', 'underline-thin'], cursorStyleFromString, { description: localize(513, "Controls the cursor style in insert input mode.") })),
-    overtypeCursorStyle: register(new EditorEnumOption(92 /* EditorOption.overtypeCursorStyle */, 'overtypeCursorStyle', TextEditorCursorStyle.Block, 'block', ['line', 'block', 'underline', 'line-thin', 'block-outline', 'underline-thin'], cursorStyleFromString, { description: localize(514, "Controls the cursor style in overtype input mode.") })),
-    cursorSurroundingLines: register(new EditorIntOption(35 /* EditorOption.cursorSurroundingLines */, 'cursorSurroundingLines', 0, 0, 1073741824 /* Constants.MAX_SAFE_SMALL_INTEGER */, { description: localize(515, "Controls the minimal number of visible leading lines (minimum 0) and trailing lines (minimum 1) surrounding the cursor. Known as 'scrollOff' or 'scrollOffset' in some other editors.") })),
+    cursorStyle: register(new EditorEnumOption(34 /* EditorOption.cursorStyle */, 'cursorStyle', TextEditorCursorStyle.Line, 'line', ['line', 'block', 'underline', 'line-thin', 'block-outline', 'underline-thin'], cursorStyleFromString, { description: localize(519, "Controls the cursor style in insert input mode.") })),
+    overtypeCursorStyle: register(new EditorEnumOption(92 /* EditorOption.overtypeCursorStyle */, 'overtypeCursorStyle', TextEditorCursorStyle.Block, 'block', ['line', 'block', 'underline', 'line-thin', 'block-outline', 'underline-thin'], cursorStyleFromString, { description: localize(520, "Controls the cursor style in overtype input mode.") })),
+    cursorSurroundingLines: register(new EditorIntOption(35 /* EditorOption.cursorSurroundingLines */, 'cursorSurroundingLines', 0, 0, 1073741824 /* Constants.MAX_SAFE_SMALL_INTEGER */, { description: localize(521, "Controls the minimal number of visible leading lines (minimum 0) and trailing lines (minimum 1) surrounding the cursor. Known as 'scrollOff' or 'scrollOffset' in some other editors.") })),
     cursorSurroundingLinesStyle: register(new EditorStringEnumOption(36 /* EditorOption.cursorSurroundingLinesStyle */, 'cursorSurroundingLinesStyle', 'default', ['default', 'all'], {
         enumDescriptions: [
-            localize(516, "`cursorSurroundingLines` is enforced only when triggered via the keyboard or API."),
-            localize(517, "`cursorSurroundingLines` is enforced always.")
+            localize(522, "`cursorSurroundingLines` is enforced only when triggered via the keyboard or API."),
+            localize(523, "`cursorSurroundingLines` is enforced always.")
         ],
-        markdownDescription: localize(518, "Controls when `#editor.cursorSurroundingLines#` should be enforced.")
+        markdownDescription: localize(524, "Controls when `#editor.cursorSurroundingLines#` should be enforced.")
     })),
-    cursorWidth: register(new EditorIntOption(37 /* EditorOption.cursorWidth */, 'cursorWidth', 0, 0, 1073741824 /* Constants.MAX_SAFE_SMALL_INTEGER */, { markdownDescription: localize(519, "Controls the width of the cursor when `#editor.cursorStyle#` is set to `line`.") })),
-    cursorHeight: register(new EditorIntOption(38 /* EditorOption.cursorHeight */, 'cursorHeight', 0, 0, 1073741824 /* Constants.MAX_SAFE_SMALL_INTEGER */, { markdownDescription: localize(520, "Controls the height of the cursor when `#editor.cursorStyle#` is set to `line`. Cursor's max height depends on line height.") })),
+    cursorWidth: register(new EditorIntOption(37 /* EditorOption.cursorWidth */, 'cursorWidth', 0, 0, 1073741824 /* Constants.MAX_SAFE_SMALL_INTEGER */, { markdownDescription: localize(525, "Controls the width of the cursor when `#editor.cursorStyle#` is set to `line`.") })),
+    cursorHeight: register(new EditorIntOption(38 /* EditorOption.cursorHeight */, 'cursorHeight', 0, 0, 1073741824 /* Constants.MAX_SAFE_SMALL_INTEGER */, { markdownDescription: localize(526, "Controls the height of the cursor when `#editor.cursorStyle#` is set to `line`. Cursor's max height depends on line height.") })),
     disableLayerHinting: register(new EditorBooleanOption(39 /* EditorOption.disableLayerHinting */, 'disableLayerHinting', false)),
     disableMonospaceOptimizations: register(new EditorBooleanOption(40 /* EditorOption.disableMonospaceOptimizations */, 'disableMonospaceOptimizations', false)),
     domReadOnly: register(new EditorBooleanOption(41 /* EditorOption.domReadOnly */, 'domReadOnly', false)),
-    doubleClickSelectsBlock: register(new EditorBooleanOption(173 /* EditorOption.doubleClickSelectsBlock */, 'doubleClickSelectsBlock', true, { description: localize(521, "Controls whether double-clicking next to a bracket or quote selects the content inside.") })),
-    dragAndDrop: register(new EditorBooleanOption(42 /* EditorOption.dragAndDrop */, 'dragAndDrop', true, { description: localize(522, "Controls whether the editor should allow moving selections via drag and drop.") })),
+    doubleClickSelectsBlock: register(new EditorBooleanOption(174 /* EditorOption.doubleClickSelectsBlock */, 'doubleClickSelectsBlock', true, { description: localize(527, "Controls whether double-clicking next to a bracket or quote selects the content inside.") })),
+    dragAndDrop: register(new EditorBooleanOption(42 /* EditorOption.dragAndDrop */, 'dragAndDrop', true, { description: localize(528, "Controls whether the editor should allow moving selections via drag and drop.") })),
     emptySelectionClipboard: register(new EditorEmptySelectionClipboard()),
     dropIntoEditor: register(new EditorDropIntoEditor()),
     editContext: register(new EditorBooleanOption(44 /* EditorOption.editContext */, 'editContext', true, {
-        description: localize(523, "Sets whether the EditContext API should be used instead of the text area to power input in the editor."),
+        description: localize(529, "Sets whether the EditContext API should be used instead of the text area to power input in the editor."),
         included: isChrome || isEdge || isNative
     })),
     renderRichScreenReaderContent: register(new EditorBooleanOption(107 /* EditorOption.renderRichScreenReaderContent */, 'renderRichScreenReaderContent', false, {
-        markdownDescription: localize(524, "Whether to render rich screen reader content when the `#editor.editContext#` setting is enabled."),
+        markdownDescription: localize(530, "Whether to render rich screen reader content when the `#editor.editContext#` setting is enabled."),
     })),
     stickyScroll: register(new EditorStickyScroll()),
     experimentalGpuAcceleration: register(new EditorStringEnumOption(46 /* EditorOption.experimentalGpuAcceleration */, 'experimentalGpuAcceleration', 'off', ['off', 'on'], {
         tags: ['experimental'],
         enumDescriptions: [
-            localize(525, "Use regular DOM-based rendering."),
-            localize(526, "Use GPU acceleration."),
+            localize(531, "Use regular DOM-based rendering."),
+            localize(532, "Use GPU acceleration."),
         ],
-        description: localize(527, "Controls whether to use the experimental GPU acceleration to render the editor.")
+        description: localize(533, "Controls whether to use the experimental GPU acceleration to render the editor.")
     })),
     experimentalWhitespaceRendering: register(new EditorStringEnumOption(47 /* EditorOption.experimentalWhitespaceRendering */, 'experimentalWhitespaceRendering', 'svg', ['svg', 'font', 'off'], {
         enumDescriptions: [
-            localize(528, "Use a new rendering method with svgs."),
-            localize(529, "Use a new rendering method with font characters."),
-            localize(530, "Use the stable rendering method."),
+            localize(534, "Use a new rendering method with svgs."),
+            localize(535, "Use a new rendering method with font characters."),
+            localize(536, "Use the stable rendering method."),
         ],
-        description: localize(531, "Controls whether whitespace is rendered with a new, experimental method.")
+        description: localize(537, "Controls whether whitespace is rendered with a new, experimental method.")
     })),
     extraEditorClassName: register(new EditorStringOption(48 /* EditorOption.extraEditorClassName */, 'extraEditorClassName', '')),
-    fastScrollSensitivity: register(new EditorFloatOption(49 /* EditorOption.fastScrollSensitivity */, 'fastScrollSensitivity', 5, x => (x <= 0 ? 5 : x), { markdownDescription: localize(532, "Scrolling speed multiplier when pressing `Alt`.") })),
+    fastScrollSensitivity: register(new EditorFloatOption(49 /* EditorOption.fastScrollSensitivity */, 'fastScrollSensitivity', 5, x => (x <= 0 ? 5 : x), { markdownDescription: localize(538, "Scrolling speed multiplier when pressing `Alt`.") })),
     find: register(new EditorFind()),
     fixedOverflowWidgets: register(new EditorBooleanOption(51 /* EditorOption.fixedOverflowWidgets */, 'fixedOverflowWidgets', false)),
-    folding: register(new EditorBooleanOption(52 /* EditorOption.folding */, 'folding', true, { description: localize(533, "Controls whether the editor has code folding enabled.") })),
+    folding: register(new EditorBooleanOption(52 /* EditorOption.folding */, 'folding', true, { description: localize(539, "Controls whether the editor has code folding enabled.") })),
     foldingStrategy: register(new EditorStringEnumOption(53 /* EditorOption.foldingStrategy */, 'foldingStrategy', 'auto', ['auto', 'indentation'], {
         enumDescriptions: [
-            localize(534, "Use a language-specific folding strategy if available, else the indentation-based one."),
-            localize(535, "Use the indentation-based folding strategy."),
+            localize(540, "Use a language-specific folding strategy if available, else the indentation-based one."),
+            localize(541, "Use the indentation-based folding strategy."),
         ],
-        description: localize(536, "Controls the strategy for computing folding ranges.")
+        description: localize(542, "Controls the strategy for computing folding ranges.")
     })),
-    foldingHighlight: register(new EditorBooleanOption(54 /* EditorOption.foldingHighlight */, 'foldingHighlight', true, { description: localize(537, "Controls whether the editor should highlight folded ranges.") })),
-    foldingImportsByDefault: register(new EditorBooleanOption(55 /* EditorOption.foldingImportsByDefault */, 'foldingImportsByDefault', false, { description: localize(538, "Controls whether the editor automatically collapses import ranges.") })),
+    foldingHighlight: register(new EditorBooleanOption(54 /* EditorOption.foldingHighlight */, 'foldingHighlight', true, { description: localize(543, "Controls whether the editor should highlight folded ranges.") })),
+    foldingImportsByDefault: register(new EditorBooleanOption(55 /* EditorOption.foldingImportsByDefault */, 'foldingImportsByDefault', false, { description: localize(544, "Controls whether the editor automatically collapses import ranges.") })),
     foldingMaximumRegions: register(new EditorIntOption(56 /* EditorOption.foldingMaximumRegions */, 'foldingMaximumRegions', 5000, 10, 65000, // limit must be less than foldingRanges MAX_FOLDING_REGIONS
-    { description: localize(539, "The maximum number of foldable regions. Increasing this value may result in the editor becoming less responsive when the current source has a large number of foldable regions.") })),
-    unfoldOnClickAfterEndOfLine: register(new EditorBooleanOption(57 /* EditorOption.unfoldOnClickAfterEndOfLine */, 'unfoldOnClickAfterEndOfLine', false, { description: localize(540, "Controls whether clicking on the empty content after a folded line will unfold the line.") })),
-    fontFamily: register(new EditorStringOption(58 /* EditorOption.fontFamily */, 'fontFamily', EDITOR_FONT_DEFAULTS.fontFamily, { description: localize(541, "Controls the font family.") })),
+    { description: localize(545, "The maximum number of foldable regions. Increasing this value may result in the editor becoming less responsive when the current source has a large number of foldable regions.") })),
+    unfoldOnClickAfterEndOfLine: register(new EditorBooleanOption(57 /* EditorOption.unfoldOnClickAfterEndOfLine */, 'unfoldOnClickAfterEndOfLine', false, { description: localize(546, "Controls whether clicking on the empty content after a folded line will unfold the line.") })),
+    fontFamily: register(new EditorStringOption(58 /* EditorOption.fontFamily */, 'fontFamily', EDITOR_FONT_DEFAULTS.fontFamily, { description: localize(547, "Controls the font family.") })),
     fontInfo: register(new EditorFontInfo()),
     fontLigatures2: register(new EditorFontLigatures()),
     fontSize: register(new EditorFontSize()),
     fontWeight: register(new EditorFontWeight()),
     fontVariations: register(new EditorFontVariations()),
-    formatOnPaste: register(new EditorBooleanOption(64 /* EditorOption.formatOnPaste */, 'formatOnPaste', false, { description: localize(542, "Controls whether the editor should automatically format the pasted content. A formatter must be available and the formatter should be able to format a range in a document.") })),
-    formatOnType: register(new EditorBooleanOption(65 /* EditorOption.formatOnType */, 'formatOnType', false, { description: localize(543, "Controls whether the editor should automatically format the line after typing.") })),
-    glyphMargin: register(new EditorBooleanOption(66 /* EditorOption.glyphMargin */, 'glyphMargin', true, { description: localize(544, "Controls whether the editor should render the vertical glyph margin. Glyph margin is mostly used for debugging.") })),
+    formatOnPaste: register(new EditorBooleanOption(64 /* EditorOption.formatOnPaste */, 'formatOnPaste', false, { description: localize(548, "Controls whether the editor should automatically format the pasted content. A formatter must be available and the formatter should be able to format a range in a document.") })),
+    formatOnType: register(new EditorBooleanOption(65 /* EditorOption.formatOnType */, 'formatOnType', false, { description: localize(549, "Controls whether the editor should automatically format the line after typing.") })),
+    fullwidthCharacterWidth: register(new EditorStringEnumOption(175 /* EditorOption.fullwidthCharacterWidth */, 'fullwidthCharacterWidth', 'font', ['font', 'twoCells'], {
+        enumDescriptions: [
+            localize(550, "Render full-width characters using the width defined by the font."),
+            localize(551, "Render full-width characters centered in exactly two character cells. Only applies to monospace fonts. Does not apply to multi codepoint full-width characters or to GPU rendering. This has a performance impact on line rendering."),
+        ],
+        description: localize(552, "Controls the width used to render full-width characters.")
+    })),
+    glyphMargin: register(new EditorBooleanOption(66 /* EditorOption.glyphMargin */, 'glyphMargin', true, { description: localize(553, "Controls whether the editor should render the vertical glyph margin. Glyph margin is mostly used for debugging.") })),
     gotoLocation: register(new EditorGoToLocation()),
-    hideCursorInOverviewRuler: register(new EditorBooleanOption(68 /* EditorOption.hideCursorInOverviewRuler */, 'hideCursorInOverviewRuler', false, { description: localize(545, "Controls whether the cursor should be hidden in the overview ruler.") })),
+    hideCursorInOverviewRuler: register(new EditorBooleanOption(68 /* EditorOption.hideCursorInOverviewRuler */, 'hideCursorInOverviewRuler', false, { description: localize(554, "Controls whether the cursor should be hidden in the overview ruler.") })),
     hover: register(new EditorHover()),
     inDiffEditor: register(new EditorBooleanOption(70 /* EditorOption.inDiffEditor */, 'inDiffEditor', false)),
-    inertialScroll: register(new EditorBooleanOption(158 /* EditorOption.inertialScroll */, 'inertialScroll', false, { description: localize(546, "Make scrolling inertial - mostly useful with touchpad on linux.") })),
-    letterSpacing: register(new EditorFloatOption(72 /* EditorOption.letterSpacing */, 'letterSpacing', EDITOR_FONT_DEFAULTS.letterSpacing, x => EditorFloatOption.clamp(x, -5, 20), { description: localize(547, "Controls the letter spacing in pixels.") })),
+    inertialScroll: register(new EditorBooleanOption(158 /* EditorOption.inertialScroll */, 'inertialScroll', false, { description: localize(555, "Make scrolling inertial - mostly useful with touchpad on linux.") })),
+    letterSpacing: register(new EditorFloatOption(72 /* EditorOption.letterSpacing */, 'letterSpacing', EDITOR_FONT_DEFAULTS.letterSpacing, x => EditorFloatOption.clamp(x, -5, 20), { description: localize(556, "Controls the letter spacing in pixels.") })),
     lightbulb: register(new EditorLightbulb()),
     lineDecorationsWidth: register(new EditorLineDecorationsWidth()),
     lineHeight: register(new EditorLineHeight()),
     lineNumbers: register(new EditorRenderLineNumbersOption()),
     lineNumbersMinChars: register(new EditorIntOption(77 /* EditorOption.lineNumbersMinChars */, 'lineNumbersMinChars', 5, 1, 300)),
-    linkedEditing: register(new EditorBooleanOption(78 /* EditorOption.linkedEditing */, 'linkedEditing', false, { description: localize(548, "Controls whether the editor has linked editing enabled. Depending on the language, related symbols such as HTML tags, are updated while editing.") })),
-    links: register(new EditorBooleanOption(79 /* EditorOption.links */, 'links', true, { description: localize(549, "Controls whether the editor should detect links and make them clickable.") })),
-    matchBrackets: register(new EditorStringEnumOption(80 /* EditorOption.matchBrackets */, 'matchBrackets', 'always', ['always', 'near', 'never'], { description: localize(550, "Highlight matching brackets.") })),
+    linkedEditing: register(new EditorBooleanOption(78 /* EditorOption.linkedEditing */, 'linkedEditing', false, { description: localize(557, "Controls whether the editor has linked editing enabled. Depending on the language, related symbols such as HTML tags, are updated while editing.") })),
+    links: register(new EditorBooleanOption(79 /* EditorOption.links */, 'links', true, { description: localize(558, "Controls whether the editor should detect links and make them clickable.") })),
+    matchBrackets: register(new EditorStringEnumOption(80 /* EditorOption.matchBrackets */, 'matchBrackets', 'always', ['always', 'near', 'never'], { description: localize(559, "Highlight matching brackets.") })),
     minimap: register(new EditorMinimap()),
     mouseStyle: register(new EditorStringEnumOption(82 /* EditorOption.mouseStyle */, 'mouseStyle', 'text', ['text', 'default', 'copy'])),
-    mouseWheelScrollSensitivity: register(new EditorFloatOption(83 /* EditorOption.mouseWheelScrollSensitivity */, 'mouseWheelScrollSensitivity', 1, x => (x === 0 ? 1 : x), { markdownDescription: localize(551, "A multiplier to be used on the `deltaX` and `deltaY` of mouse wheel scroll events.") })),
+    mouseWheelScrollSensitivity: register(new EditorFloatOption(83 /* EditorOption.mouseWheelScrollSensitivity */, 'mouseWheelScrollSensitivity', 1, x => (x === 0 ? 1 : x), { markdownDescription: localize(560, "A multiplier to be used on the `deltaX` and `deltaY` of mouse wheel scroll events.") })),
     mouseWheelZoom: register(new EditorBooleanOption(84 /* EditorOption.mouseWheelZoom */, 'mouseWheelZoom', false, {
         markdownDescription: isMacintosh
-            ? localize(552, "Zoom the font of the editor when using mouse wheel and holding `Cmd`.")
-            : localize(553, "Zoom the font of the editor when using mouse wheel and holding `Ctrl`.")
+            ? localize(561, "Zoom the font of the editor when using mouse wheel and holding `Cmd`.")
+            : localize(562, "Zoom the font of the editor when using mouse wheel and holding `Ctrl`.")
     })),
-    multiCursorMergeOverlapping: register(new EditorBooleanOption(85 /* EditorOption.multiCursorMergeOverlapping */, 'multiCursorMergeOverlapping', true, { description: localize(554, "Merge multiple cursors when they are overlapping.") })),
+    multiCursorMergeOverlapping: register(new EditorBooleanOption(85 /* EditorOption.multiCursorMergeOverlapping */, 'multiCursorMergeOverlapping', true, { description: localize(563, "Merge multiple cursors when they are overlapping.") })),
     multiCursorModifier: register(new EditorEnumOption(86 /* EditorOption.multiCursorModifier */, 'multiCursorModifier', 'altKey', 'alt', ['ctrlCmd', 'alt'], _multiCursorModifierFromString, {
         markdownEnumDescriptions: [
-            localize(555, "Maps to `Control` on Windows and Linux and to `Command` on macOS."),
-            localize(556, "Maps to `Alt` on Windows and Linux and to `Option` on macOS.")
+            localize(564, "Maps to `Control` on Windows and Linux and to `Command` on macOS."),
+            localize(565, "Maps to `Alt` on Windows and Linux and to `Option` on macOS.")
         ],
-        markdownDescription: localize(557, "The modifier to be used to add multiple cursors with the mouse. The Go to Definition and Open Link mouse gestures will adapt such that they do not conflict with the [multicursor modifier](https://code.visualstudio.com/docs/editor/codebasics#_multicursor-modifier).")
+        markdownDescription: localize(566, "The modifier to be used to add multiple cursors with the mouse. The Go to Definition and Open Link mouse gestures will adapt such that they do not conflict with the [multicursor modifier](https://code.visualstudio.com/docs/editor/codebasics#_multicursor-modifier).")
 
 
 
@@ -3267,171 +3301,171 @@ const EditorOptions = {
 
 
     })),
-    mouseMiddleClickAction: register(new EditorStringEnumOption(87 /* EditorOption.mouseMiddleClickAction */, 'mouseMiddleClickAction', 'default', ['default', 'openLink', 'ctrlLeftClick'], { description: localize(558, "Controls what happens when middle mouse button is clicked in the editor.") })),
+    mouseMiddleClickAction: register(new EditorStringEnumOption(87 /* EditorOption.mouseMiddleClickAction */, 'mouseMiddleClickAction', 'default', ['default', 'openLink', 'ctrlLeftClick'], { description: localize(567, "Controls what happens when middle mouse button is clicked in the editor.") })),
     multiCursorPaste: register(new EditorStringEnumOption(88 /* EditorOption.multiCursorPaste */, 'multiCursorPaste', 'spread', ['spread', 'full'], {
         markdownEnumDescriptions: [
-            localize(559, "Each cursor pastes a single line of the text."),
-            localize(560, "Each cursor pastes the full text.")
+            localize(568, "Each cursor pastes a single line of the text."),
+            localize(569, "Each cursor pastes the full text.")
         ],
-        markdownDescription: localize(561, "Controls pasting when the line count of the pasted text matches the cursor count.")
+        markdownDescription: localize(570, "Controls pasting when the line count of the pasted text matches the cursor count.")
     })),
     multiCursorLimit: register(new EditorIntOption(89 /* EditorOption.multiCursorLimit */, 'multiCursorLimit', 10000, 1, 100000, {
-        markdownDescription: localize(562, "Controls the max number of cursors that can be in an active editor at once.")
+        markdownDescription: localize(571, "Controls the max number of cursors that can be in an active editor at once.")
     })),
     occurrencesHighlight: register(new EditorStringEnumOption(90 /* EditorOption.occurrencesHighlight */, 'occurrencesHighlight', 'singleFile', ['off', 'singleFile', 'multiFile'], {
         markdownEnumDescriptions: [
-            localize(563, "Does not highlight occurrences."),
-            localize(564, "Highlights occurrences only in the current file."),
-            localize(565, "Experimental: Highlights occurrences across all valid open files.")
+            localize(572, "Does not highlight occurrences."),
+            localize(573, "Highlights occurrences only in the current file."),
+            localize(574, "Experimental: Highlights occurrences across all valid open files.")
         ],
-        markdownDescription: localize(566, "Controls whether occurrences should be highlighted across open files.")
+        markdownDescription: localize(575, "Controls whether occurrences should be highlighted across open files.")
     })),
     occurrencesHighlightDelay: register(new EditorIntOption(91 /* EditorOption.occurrencesHighlightDelay */, 'occurrencesHighlightDelay', 0, 0, 2000, {
-        description: localize(567, "Controls the delay in milliseconds after which occurrences are highlighted."),
+        description: localize(576, "Controls the delay in milliseconds after which occurrences are highlighted."),
         tags: ['preview']
     })),
-    overtypeOnPaste: register(new EditorBooleanOption(93 /* EditorOption.overtypeOnPaste */, 'overtypeOnPaste', true, { description: localize(568, "Controls whether pasting should overtype.") })),
-    overviewRulerBorder: register(new EditorBooleanOption(94 /* EditorOption.overviewRulerBorder */, 'overviewRulerBorder', true, { description: localize(569, "Controls whether a border should be drawn around the overview ruler.") })),
+    overtypeOnPaste: register(new EditorBooleanOption(93 /* EditorOption.overtypeOnPaste */, 'overtypeOnPaste', true, { description: localize(577, "Controls whether pasting should overtype.") })),
+    overviewRulerBorder: register(new EditorBooleanOption(94 /* EditorOption.overviewRulerBorder */, 'overviewRulerBorder', true, { description: localize(578, "Controls whether a border should be drawn around the overview ruler.") })),
     overviewRulerLanes: register(new EditorIntOption(95 /* EditorOption.overviewRulerLanes */, 'overviewRulerLanes', 3, 0, 3)),
     padding: register(new EditorPadding()),
     pasteAs: register(new EditorPasteAs()),
     parameterHints: register(new EditorParameterHints()),
     peekWidgetDefaultFocus: register(new EditorStringEnumOption(99 /* EditorOption.peekWidgetDefaultFocus */, 'peekWidgetDefaultFocus', 'tree', ['tree', 'editor'], {
         enumDescriptions: [
-            localize(570, "Focus the tree when opening peek"),
-            localize(571, "Focus the editor when opening peek")
+            localize(579, "Focus the tree when opening peek"),
+            localize(580, "Focus the editor when opening peek")
         ],
-        description: localize(572, "Controls whether to focus the inline editor or the tree in the peek widget.")
+        description: localize(581, "Controls whether to focus the inline editor or the tree in the peek widget.")
     })),
     placeholder: register(new PlaceholderOption()),
-    definitionLinkOpensInPeek: register(new EditorBooleanOption(101 /* EditorOption.definitionLinkOpensInPeek */, 'definitionLinkOpensInPeek', false, { description: localize(573, "Controls whether the Go to Definition mouse gesture always opens the peek widget.") })),
+    definitionLinkOpensInPeek: register(new EditorBooleanOption(101 /* EditorOption.definitionLinkOpensInPeek */, 'definitionLinkOpensInPeek', false, { description: localize(582, "Controls whether the Go to Definition mouse gesture always opens the peek widget.") })),
     quickSuggestions: register(new EditorQuickSuggestions()),
     quickSuggestionsDelay: register(new EditorIntOption(103 /* EditorOption.quickSuggestionsDelay */, 'quickSuggestionsDelay', 10, 0, 1073741824 /* Constants.MAX_SAFE_SMALL_INTEGER */, {
-        description: localize(574, "Controls the delay in milliseconds after which quick suggestions will show up."),
+        description: localize(583, "Controls the delay in milliseconds after which quick suggestions will show up."),
         experiment: {
             mode: 'auto'
         }
     })),
     readOnly: register(new EditorBooleanOption(104 /* EditorOption.readOnly */, 'readOnly', false)),
     readOnlyMessage: register(new ReadonlyMessage()),
-    renameOnType: register(new EditorBooleanOption(106 /* EditorOption.renameOnType */, 'renameOnType', false, { description: localize(575, "Controls whether the editor auto renames on type."), markdownDeprecationMessage: localize(576, "Deprecated, use `#editor.linkedEditing#` instead.") })),
-    renderControlCharacters: register(new EditorBooleanOption(108 /* EditorOption.renderControlCharacters */, 'renderControlCharacters', true, { description: localize(577, "Controls whether the editor should render control characters."), restricted: true })),
-    renderFinalNewline: register(new EditorStringEnumOption(109 /* EditorOption.renderFinalNewline */, 'renderFinalNewline', (isLinux ? 'dimmed' : 'on'), ['off', 'on', 'dimmed'], { description: localize(578, "Render last line number when the file ends with a newline.") })),
+    renameOnType: register(new EditorBooleanOption(106 /* EditorOption.renameOnType */, 'renameOnType', false, { description: localize(584, "Controls whether the editor auto renames on type."), markdownDeprecationMessage: localize(585, "Deprecated, use `#editor.linkedEditing#` instead.") })),
+    renderControlCharacters: register(new EditorBooleanOption(108 /* EditorOption.renderControlCharacters */, 'renderControlCharacters', true, { description: localize(586, "Controls whether the editor should render control characters."), restricted: true })),
+    renderFinalNewline: register(new EditorStringEnumOption(109 /* EditorOption.renderFinalNewline */, 'renderFinalNewline', (isLinux ? 'dimmed' : 'on'), ['off', 'on', 'dimmed'], { description: localize(587, "Render last line number when the file ends with a newline.") })),
     renderLineHighlight: register(new EditorStringEnumOption(110 /* EditorOption.renderLineHighlight */, 'renderLineHighlight', 'line', ['none', 'gutter', 'line', 'all'], {
         enumDescriptions: [
             '',
             '',
             '',
-            localize(579, "Highlights both the gutter and the current line."),
+            localize(588, "Highlights both the gutter and the current line."),
         ],
-        description: localize(580, "Controls how the editor should render the current line highlight.")
+        description: localize(589, "Controls how the editor should render the current line highlight.")
     })),
-    renderLineHighlightOnlyWhenFocus: register(new EditorBooleanOption(111 /* EditorOption.renderLineHighlightOnlyWhenFocus */, 'renderLineHighlightOnlyWhenFocus', false, { description: localize(581, "Controls if the editor should render the current line highlight only when the editor is focused.") })),
+    renderLineHighlightOnlyWhenFocus: register(new EditorBooleanOption(111 /* EditorOption.renderLineHighlightOnlyWhenFocus */, 'renderLineHighlightOnlyWhenFocus', false, { description: localize(590, "Controls if the editor should render the current line highlight only when the editor is focused.") })),
     renderValidationDecorations: register(new EditorStringEnumOption(112 /* EditorOption.renderValidationDecorations */, 'renderValidationDecorations', 'editable', ['editable', 'on', 'off'])),
     renderWhitespace: register(new EditorStringEnumOption(113 /* EditorOption.renderWhitespace */, 'renderWhitespace', 'selection', ['none', 'boundary', 'selection', 'trailing', 'all'], {
         enumDescriptions: [
             '',
-            localize(582, "Render whitespace characters except for single spaces between words."),
-            localize(583, "Render whitespace characters only on selected text."),
-            localize(584, "Render only trailing whitespace characters."),
+            localize(591, "Render whitespace characters except for single spaces between words."),
+            localize(592, "Render whitespace characters only on selected text."),
+            localize(593, "Render only trailing whitespace characters."),
             ''
         ],
-        description: localize(585, "Controls how the editor should render whitespace characters.")
+        description: localize(594, "Controls how the editor should render whitespace characters.")
     })),
     revealHorizontalRightPadding: register(new EditorIntOption(114 /* EditorOption.revealHorizontalRightPadding */, 'revealHorizontalRightPadding', 15, 0, 1000)),
-    roundedSelection: register(new EditorBooleanOption(115 /* EditorOption.roundedSelection */, 'roundedSelection', true, { description: localize(586, "Controls whether selections should have rounded corners.") })),
+    roundedSelection: register(new EditorBooleanOption(115 /* EditorOption.roundedSelection */, 'roundedSelection', true, { description: localize(595, "Controls whether selections should have rounded corners.") })),
     rulers: register(new EditorRulers()),
     scrollbar: register(new EditorScrollbar()),
-    scrollBeyondLastColumn: register(new EditorIntOption(118 /* EditorOption.scrollBeyondLastColumn */, 'scrollBeyondLastColumn', 4, 0, 1073741824 /* Constants.MAX_SAFE_SMALL_INTEGER */, { description: localize(587, "Controls the number of extra characters beyond which the editor will scroll horizontally.") })),
-    scrollBeyondLastLine: register(new EditorBooleanOption(119 /* EditorOption.scrollBeyondLastLine */, 'scrollBeyondLastLine', true, { description: localize(588, "Controls whether the editor will scroll beyond the last line.") })),
-    scrollOnMiddleClick: register(new EditorBooleanOption(171 /* EditorOption.scrollOnMiddleClick */, 'scrollOnMiddleClick', false, { description: localize(589, "Controls whether the editor will scroll when the middle button is pressed.") })),
-    scrollPredominantAxis: register(new EditorBooleanOption(120 /* EditorOption.scrollPredominantAxis */, 'scrollPredominantAxis', true, { description: localize(590, "Scroll only along the predominant axis when scrolling both vertically and horizontally at the same time. Prevents horizontal drift when scrolling vertically on a trackpad.") })),
+    scrollBeyondLastColumn: register(new EditorIntOption(118 /* EditorOption.scrollBeyondLastColumn */, 'scrollBeyondLastColumn', 4, 0, 1073741824 /* Constants.MAX_SAFE_SMALL_INTEGER */, { description: localize(596, "Controls the number of extra characters beyond which the editor will scroll horizontally.") })),
+    scrollBeyondLastLine: register(new EditorBooleanOption(119 /* EditorOption.scrollBeyondLastLine */, 'scrollBeyondLastLine', true, { description: localize(597, "Controls whether the editor will scroll beyond the last line.") })),
+    scrollOnMiddleClick: register(new EditorBooleanOption(172 /* EditorOption.scrollOnMiddleClick */, 'scrollOnMiddleClick', false, { description: localize(598, "Controls whether the editor will scroll when the middle button is pressed.") })),
+    scrollPredominantAxis: register(new EditorBooleanOption(120 /* EditorOption.scrollPredominantAxis */, 'scrollPredominantAxis', true, { description: localize(599, "Scroll only along the predominant axis when scrolling both vertically and horizontally at the same time. Prevents horizontal drift when scrolling vertically on a trackpad.") })),
     selectionClipboard: register(new EditorBooleanOption(121 /* EditorOption.selectionClipboard */, 'selectionClipboard', true, {
-        description: localize(591, "Controls whether the Linux primary clipboard should be supported."),
+        description: localize(600, "Controls whether the Linux primary clipboard should be supported."),
         included: isLinux
     })),
-    selectionHighlight: register(new EditorBooleanOption(122 /* EditorOption.selectionHighlight */, 'selectionHighlight', true, { description: localize(592, "Controls whether the editor should highlight matches similar to the selection.") })),
-    selectionHighlightMaxLength: register(new EditorIntOption(123 /* EditorOption.selectionHighlightMaxLength */, 'selectionHighlightMaxLength', 200, 0, 1073741824 /* Constants.MAX_SAFE_SMALL_INTEGER */, { description: localize(593, "Controls how many characters can be in the selection before similiar matches are not highlighted. Set to zero for unlimited.") })),
-    selectionHighlightMultiline: register(new EditorBooleanOption(124 /* EditorOption.selectionHighlightMultiline */, 'selectionHighlightMultiline', false, { description: localize(594, "Controls whether the editor should highlight selection matches that span multiple lines.") })),
+    selectionHighlight: register(new EditorBooleanOption(122 /* EditorOption.selectionHighlight */, 'selectionHighlight', true, { description: localize(601, "Controls whether the editor should highlight matches similar to the selection.") })),
+    selectionHighlightMaxLength: register(new EditorIntOption(123 /* EditorOption.selectionHighlightMaxLength */, 'selectionHighlightMaxLength', 200, 0, 1073741824 /* Constants.MAX_SAFE_SMALL_INTEGER */, { description: localize(602, "Controls how many characters can be in the selection before similar matches are not highlighted. Set to zero for unlimited.") })),
+    selectionHighlightMultiline: register(new EditorBooleanOption(124 /* EditorOption.selectionHighlightMultiline */, 'selectionHighlightMultiline', false, { description: localize(603, "Controls whether the editor should highlight selection matches that span multiple lines.") })),
     selectOnLineNumbers: register(new EditorBooleanOption(125 /* EditorOption.selectOnLineNumbers */, 'selectOnLineNumbers', true)),
     showFoldingControls: register(new EditorStringEnumOption(126 /* EditorOption.showFoldingControls */, 'showFoldingControls', 'mouseover', ['always', 'never', 'mouseover'], {
         enumDescriptions: [
-            localize(595, "Always show the folding controls."),
-            localize(596, "Never show the folding controls and reduce the gutter size."),
-            localize(597, "Only show the folding controls when the mouse is over the gutter."),
+            localize(604, "Always show the folding controls."),
+            localize(605, "Never show the folding controls and reduce the gutter size."),
+            localize(606, "Only show the folding controls when the mouse is over the gutter."),
         ],
-        description: localize(598, "Controls when the folding controls on the gutter are shown.")
+        description: localize(607, "Controls when the folding controls on the gutter are shown.")
     })),
-    showUnused: register(new EditorBooleanOption(127 /* EditorOption.showUnused */, 'showUnused', true, { description: localize(599, "Controls fading out of unused code.") })),
-    showDeprecated: register(new EditorBooleanOption(157 /* EditorOption.showDeprecated */, 'showDeprecated', true, { description: localize(600, "Controls strikethrough deprecated variables.") })),
+    showUnused: register(new EditorBooleanOption(127 /* EditorOption.showUnused */, 'showUnused', true, { description: localize(608, "Controls fading out of unused code.") })),
+    showDeprecated: register(new EditorBooleanOption(157 /* EditorOption.showDeprecated */, 'showDeprecated', true, { description: localize(609, "Controls strikethrough deprecated variables.") })),
     inlayHints: register(new EditorInlayHints()),
     snippetSuggestions: register(new EditorStringEnumOption(128 /* EditorOption.snippetSuggestions */, 'snippetSuggestions', 'inline', ['top', 'bottom', 'inline', 'none'], {
         enumDescriptions: [
-            localize(601, "Show snippet suggestions on top of other suggestions."),
-            localize(602, "Show snippet suggestions below other suggestions."),
-            localize(603, "Show snippets suggestions with other suggestions."),
-            localize(604, "Do not show snippet suggestions."),
+            localize(610, "Show snippet suggestions on top of other suggestions."),
+            localize(611, "Show snippet suggestions below other suggestions."),
+            localize(612, "Show snippets suggestions with other suggestions."),
+            localize(613, "Do not show snippet suggestions."),
         ],
-        description: localize(605, "Controls whether snippets are shown with other suggestions and how they are sorted.")
+        description: localize(614, "Controls whether snippets are shown with other suggestions and how they are sorted.")
     })),
     smartSelect: register(new SmartSelect()),
-    smoothScrolling: register(new EditorBooleanOption(130 /* EditorOption.smoothScrolling */, 'smoothScrolling', false, { description: localize(606, "Controls whether the editor will scroll using an animation.") })),
+    smoothScrolling: register(new EditorBooleanOption(130 /* EditorOption.smoothScrolling */, 'smoothScrolling', false, { description: localize(615, "Controls whether the editor will scroll using an animation.") })),
     stopRenderingLineAfter: register(new EditorIntOption(133 /* EditorOption.stopRenderingLineAfter */, 'stopRenderingLineAfter', 10000, -1, 1073741824 /* Constants.MAX_SAFE_SMALL_INTEGER */)),
     suggest: register(new EditorSuggest()),
     inlineSuggest: register(new InlineEditorSuggest()),
-    inlineCompletionsAccessibilityVerbose: register(new EditorBooleanOption(169 /* EditorOption.inlineCompletionsAccessibilityVerbose */, 'inlineCompletionsAccessibilityVerbose', false, { description: localize(607, "Controls whether the accessibility hint should be provided to screen reader users when an inline completion is shown.") })),
-    suggestFontSize: register(new EditorIntOption(135 /* EditorOption.suggestFontSize */, 'suggestFontSize', 0, 0, 1000, { markdownDescription: localize(608, "Font size for the suggest widget. When set to {0}, the value of {1} is used.", '`0`', '`#editor.fontSize#`') })),
-    suggestLineHeight: register(new EditorIntOption(136 /* EditorOption.suggestLineHeight */, 'suggestLineHeight', 0, 0, 1000, { markdownDescription: localize(609, "Line height for the suggest widget. When set to {0}, the value of {1} is used. The minimum value is 8.", '`0`', '`#editor.lineHeight#`') })),
-    suggestOnTriggerCharacters: register(new EditorBooleanOption(137 /* EditorOption.suggestOnTriggerCharacters */, 'suggestOnTriggerCharacters', true, { description: localize(610, "Controls whether suggestions should automatically show up when typing trigger characters.") })),
+    inlineCompletionsAccessibilityVerbose: register(new EditorBooleanOption(170 /* EditorOption.inlineCompletionsAccessibilityVerbose */, 'inlineCompletionsAccessibilityVerbose', false, { description: localize(616, "Controls whether the accessibility hint should be provided to screen reader users when an inline completion is shown.") })),
+    suggestFontSize: register(new EditorIntOption(135 /* EditorOption.suggestFontSize */, 'suggestFontSize', 0, 0, 1000, { markdownDescription: localize(617, "Font size for the suggest widget. When set to {0}, the value of {1} is used.", '`0`', '`#editor.fontSize#`') })),
+    suggestLineHeight: register(new EditorIntOption(136 /* EditorOption.suggestLineHeight */, 'suggestLineHeight', 0, 0, 1000, { markdownDescription: localize(618, "Line height for the suggest widget. When set to {0}, the value of {1} is used. The minimum value is 8.", '`0`', '`#editor.lineHeight#`') })),
+    suggestOnTriggerCharacters: register(new EditorBooleanOption(137 /* EditorOption.suggestOnTriggerCharacters */, 'suggestOnTriggerCharacters', true, { description: localize(619, "Controls whether suggestions should automatically show up when typing trigger characters.") })),
     suggestSelection: register(new EditorStringEnumOption(138 /* EditorOption.suggestSelection */, 'suggestSelection', 'first', ['first', 'recentlyUsed', 'recentlyUsedByPrefix'], {
         markdownEnumDescriptions: [
-            localize(611, "Always select the first suggestion."),
-            localize(612, "Select recent suggestions unless further typing selects one, e.g. `console.| -> console.log` because `log` has been completed recently."),
-            localize(613, "Select suggestions based on previous prefixes that have completed those suggestions, e.g. `co -> console` and `con -> const`."),
+            localize(620, "Always select the first suggestion."),
+            localize(621, "Select recent suggestions unless further typing selects one, e.g. `console.| -> console.log` because `log` has been completed recently."),
+            localize(622, "Select suggestions based on previous prefixes that have completed those suggestions, e.g. `co -> console` and `con -> const`."),
         ],
-        description: localize(614, "Controls how suggestions are pre-selected when showing the suggest list.")
+        description: localize(623, "Controls how suggestions are pre-selected when showing the suggest list.")
     })),
     tabCompletion: register(new EditorStringEnumOption(139 /* EditorOption.tabCompletion */, 'tabCompletion', 'off', ['on', 'off', 'onlySnippets'], {
         enumDescriptions: [
-            localize(615, "Tab complete will insert the best matching suggestion when pressing tab."),
-            localize(616, "Disable tab completions."),
-            localize(617, "Tab complete snippets when their prefix match. Works best when 'quickSuggestions' aren't enabled."),
+            localize(624, "Tab complete will insert the best matching suggestion when pressing tab."),
+            localize(625, "Disable tab completions."),
+            localize(626, "Tab complete snippets when their prefix match. Works best when 'quickSuggestions' aren't enabled."),
         ],
-        description: localize(618, "Enables tab completions.")
+        description: localize(627, "Enables tab completions.")
     })),
     tabIndex: register(new EditorIntOption(140 /* EditorOption.tabIndex */, 'tabIndex', 0, -1, 1073741824 /* Constants.MAX_SAFE_SMALL_INTEGER */)),
-    trimWhitespaceOnDelete: register(new EditorBooleanOption(141 /* EditorOption.trimWhitespaceOnDelete */, 'trimWhitespaceOnDelete', false, { description: localize(619, "Controls whether the editor will also delete the next line's indentation whitespace when deleting a newline.") })),
+    trimWhitespaceOnDelete: register(new EditorBooleanOption(141 /* EditorOption.trimWhitespaceOnDelete */, 'trimWhitespaceOnDelete', false, { description: localize(628, "Controls whether the editor will also delete the next line's indentation whitespace when deleting a newline.") })),
     unicodeHighlight: register(new UnicodeHighlight()),
     unusualLineTerminators: register(new EditorStringEnumOption(143 /* EditorOption.unusualLineTerminators */, 'unusualLineTerminators', 'prompt', ['auto', 'off', 'prompt'], {
         enumDescriptions: [
-            localize(620, "Unusual line terminators are automatically removed."),
-            localize(621, "Unusual line terminators are ignored."),
-            localize(622, "Unusual line terminators prompt to be removed."),
+            localize(629, "Unusual line terminators are automatically removed."),
+            localize(630, "Unusual line terminators are ignored."),
+            localize(631, "Unusual line terminators prompt to be removed."),
         ],
-        description: localize(623, "Remove unusual line terminators that might cause problems.")
+        description: localize(632, "Remove unusual line terminators that might cause problems.")
     })),
     useShadowDOM: register(new EditorBooleanOption(144 /* EditorOption.useShadowDOM */, 'useShadowDOM', true)),
-    useTabStops: register(new EditorBooleanOption(145 /* EditorOption.useTabStops */, 'useTabStops', true, { description: localize(624, "Spaces and tabs are inserted and deleted in alignment with tab stops.") })),
+    useTabStops: register(new EditorBooleanOption(145 /* EditorOption.useTabStops */, 'useTabStops', true, { description: localize(633, "Spaces and tabs are inserted and deleted in alignment with tab stops.") })),
     wordBreak: register(new EditorStringEnumOption(146 /* EditorOption.wordBreak */, 'wordBreak', 'normal', ['normal', 'keepAll'], {
         markdownEnumDescriptions: [
-            localize(625, "Use the default line break rule."),
-            localize(626, "Word breaks should not be used for Chinese/Japanese/Korean (CJK) text. Non-CJK text behavior is the same as for normal."),
+            localize(634, "Use the default line break rule."),
+            localize(635, "Word breaks should not be used for Chinese/Japanese/Korean (CJK) text. Non-CJK text behavior is the same as for normal."),
         ],
-        description: localize(627, "Controls the word break rules used for Chinese/Japanese/Korean (CJK) text.")
+        description: localize(636, "Controls the word break rules used for Chinese/Japanese/Korean (CJK) text.")
     })),
     wordSegmenterLocales: register(new WordSegmenterLocales()),
-    wordSeparators: register(new EditorStringOption(148 /* EditorOption.wordSeparators */, 'wordSeparators', USUAL_WORD_SEPARATORS, { description: localize(628, "Characters that will be used as word separators when doing word related navigations or operations.") })),
+    wordSeparators: register(new EditorStringOption(148 /* EditorOption.wordSeparators */, 'wordSeparators', USUAL_WORD_SEPARATORS, { description: localize(637, "Characters that will be used as word separators when doing word related navigations or operations.") })),
     wordWrap: register(new EditorStringEnumOption(149 /* EditorOption.wordWrap */, 'wordWrap', 'off', ['off', 'on', 'wordWrapColumn', 'bounded'], {
         markdownEnumDescriptions: [
-            localize(629, "Lines will never wrap."),
-            localize(630, "Lines will wrap at the viewport width."),
-            localize(631, "Lines will wrap at `#editor.wordWrapColumn#`."),
+            localize(638, "Lines will never wrap."),
+            localize(639, "Lines will wrap at the viewport width."),
+            localize(640, "Lines will wrap at `#editor.wordWrapColumn#`."),
 
 
 
 
 
-            localize(632, "Lines will wrap at the minimum of viewport and `#editor.wordWrapColumn#`."),
+            localize(641, "Lines will wrap at the minimum of viewport and `#editor.wordWrapColumn#`."),
 
 
 
@@ -3439,10 +3473,16 @@ const EditorOptions = {
 
 
         ],
-        description: localize(633, "Controls how lines should wrap.")
+        description: localize(642, "Controls how lines should wrap.")
 
 
 
+
+
+
+    })),
+    wordWrapIndicator: register(new EditorBooleanOption(161 /* EditorOption.wordWrapIndicator */, 'wordWrapIndicator', false, {
+        markdownDescription: localize(643, "Controls whether an indicator is rendered at the wrapping column of lines that wrap. Only has an effect when `#editor.wordWrap#` is enabled.")
 
 
 
@@ -3454,7 +3494,7 @@ const EditorOptions = {
     // allow-any-unicode-next-line
     '([{‘“〈《「『【〔（［｛｢£¥＄￡￥+＋')),
     wordWrapColumn: register(new EditorIntOption(152 /* EditorOption.wordWrapColumn */, 'wordWrapColumn', 80, 1, 1073741824 /* Constants.MAX_SAFE_SMALL_INTEGER */, {
-        markdownDescription: localize(634, "Controls the wrapping column of the editor when `#editor.wordWrap#` is `wordWrapColumn` or `bounded`.")
+        markdownDescription: localize(644, "Controls the wrapping column of the editor when `#editor.wordWrap#` is `wordWrapColumn` or `bounded`.")
 
 
 
@@ -3464,26 +3504,27 @@ const EditorOptions = {
     })),
     wordWrapOverride1: register(new EditorStringEnumOption(153 /* EditorOption.wordWrapOverride1 */, 'wordWrapOverride1', 'inherit', ['off', 'on', 'inherit'])),
     wordWrapOverride2: register(new EditorStringEnumOption(154 /* EditorOption.wordWrapOverride2 */, 'wordWrapOverride2', 'inherit', ['off', 'on', 'inherit'])),
-    wrapOnEscapedLineFeeds: register(new EditorBooleanOption(160 /* EditorOption.wrapOnEscapedLineFeeds */, 'wrapOnEscapedLineFeeds', false, { markdownDescription: localize(635, "Controls whether literal `\\n` shall trigger a wordWrap when `#editor.wordWrap#` is enabled.\n\nFor example:\n```c\nchar* str=\"hello\\nworld\"\n```\nwill be displayed as\n```c\nchar* str=\"hello\\n\n           world\"\n```") })),
+    wrapOnEscapedLineFeeds: register(new EditorBooleanOption(160 /* EditorOption.wrapOnEscapedLineFeeds */, 'wrapOnEscapedLineFeeds', false, { markdownDescription: localize(645, "Controls whether literal `\\n` shall trigger a wordWrap when `#editor.wordWrap#` is enabled.\n\nFor example:\n```c\nchar* str=\"hello\\nworld\"\n```\nwill be displayed as\n```c\nchar* str=\"hello\\n\n           world\"\n```") })),
     // Leave these at the end (because they have dependencies!)
     effectiveCursorStyle: register(new EffectiveCursorStyle()),
     editorClassName: register(new EditorClassName()),
-    defaultColorDecorators: register(new EditorStringEnumOption(167 /* EditorOption.defaultColorDecorators */, 'defaultColorDecorators', 'auto', ['auto', 'always', 'never'], {
+    defaultColorDecorators: register(new EditorStringEnumOption(168 /* EditorOption.defaultColorDecorators */, 'defaultColorDecorators', 'auto', ['auto', 'always', 'never'], {
         enumDescriptions: [
-            localize(636, "Show default color decorators only when no extension provides colors decorators."),
-            localize(637, "Always show default color decorators."),
-            localize(638, "Never show default color decorators."),
+            localize(646, "Show default color decorators only when no extension provides colors decorators."),
+            localize(647, "Always show default color decorators."),
+            localize(648, "Never show default color decorators."),
         ],
-        description: localize(639, "Controls whether inline color decorations should be shown using the default document color provider.")
+        description: localize(649, "Controls whether inline color decorations should be shown using the default document color provider.")
     })),
     pixelRatio: register(new EditorPixelRatio()),
-    tabFocusMode: register(new EditorBooleanOption(164 /* EditorOption.tabFocusMode */, 'tabFocusMode', false, { markdownDescription: localize(640, "Controls whether the editor receives tabs or defers them to the workbench for navigation.") })),
+    tabFocusMode: register(new EditorBooleanOption(165 /* EditorOption.tabFocusMode */, 'tabFocusMode', false, { markdownDescription: localize(650, "Controls whether the editor receives tabs or defers them to the workbench for navigation.") })),
     layoutInfo: register(new EditorLayoutInfoComputer()),
     wrappingInfo: register(new EditorWrappingInfoComputer()),
     wrappingIndent: register(new WrappingIndentOption()),
     wrappingStrategy: register(new WrappingStrategy()),
     effectiveEditContextEnabled: register(new EffectiveEditContextEnabled()),
-    effectiveAllowVariableFonts: register(new EffectiveAllowVariableFonts())
+    effectiveAllowVariableFonts: register(new EffectiveAllowVariableFonts()),
+    effectiveFullwidthCharacterWidth: register(new EffectiveFullwidthCharacterWidth())
 };
 
 export { ApplyUpdateResult, ComputeOptionsMemory, ConfigurationChangedEvent, EditorFontLigatures, EditorFontVariations, EditorLayoutInfoComputer, EditorOptions, MINIMAP_GUTTER_WIDTH, ShowLightbulbIconMode, TextEditorCursorStyle, boolean, clampedFloat, clampedInt, cursorBlinkingStyleFromString, cursorStyleFromString, editorOptionsRegistry, filterFontDecorations, filterValidationDecorations, inUntrustedWorkspace, stringSet, unicodeHighlightConfigKeys };

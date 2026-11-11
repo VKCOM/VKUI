@@ -6,6 +6,10 @@ function isManagedHoverTooltipMarkdownString(obj) {
     const candidate = obj;
     return typeof candidate === 'object' && 'markdown' in candidate && 'markdownNotSupportedFallback' in candidate;
 }
+function isManagedHoverTooltipHTMLElement(obj) {
+    const candidate = obj;
+    return typeof candidate === 'object' && 'element' in candidate;
+}
 // #endregion Managed hover
 
-export { isManagedHoverTooltipMarkdownString };
+export { isManagedHoverTooltipHTMLElement, isManagedHoverTooltipMarkdownString };

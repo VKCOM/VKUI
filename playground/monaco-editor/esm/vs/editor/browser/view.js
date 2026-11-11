@@ -32,6 +32,7 @@ import { SelectionsOverlay } from './viewParts/selections/selections.js';
 import { ViewCursors } from './viewParts/viewCursors/viewCursors.js';
 import { ViewZones } from './viewParts/viewZones/viewZones.js';
 import { WhitespaceOverlay } from './viewParts/whitespace/whitespace.js';
+import { WordWrapIndicatorOverlay } from './viewParts/wordWrapIndicator/wordWrapIndicator.js';
 import { Position } from '../common/core/position.js';
 import { Range } from '../common/core/range.js';
 import { Selection } from '../common/core/selection.js';
@@ -95,7 +96,7 @@ let View = class View extends ViewEventHandler {
         this._context.addEventHandler(this);
         this._viewParts = [];
         // Keyboard handler
-        this._editContextEnabled = this._context.configuration.options.get(170 /* EditorOption.effectiveEditContext */);
+        this._editContextEnabled = this._context.configuration.options.get(171 /* EditorOption.effectiveEditContext */);
         this._accessibilitySupport = this._context.configuration.options.get(2 /* EditorOption.accessibilitySupport */);
         this._editContext = this._instantiateEditContext();
         this._connectEditContextClipboardEvents();
@@ -133,6 +134,7 @@ let View = class View extends ViewEventHandler {
         contentViewOverlays.addDynamicOverlay(new IndentGuidesOverlay(this._context));
         contentViewOverlays.addDynamicOverlay(new DecorationsOverlay(this._context));
         contentViewOverlays.addDynamicOverlay(new WhitespaceOverlay(this._context));
+        contentViewOverlays.addDynamicOverlay(new WordWrapIndicatorOverlay(this._context));
         const marginViewOverlays = new MarginViewOverlays(this._context);
         this._viewParts.push(marginViewOverlays);
         marginViewOverlays.addDynamicOverlay(new CurrentLineMarginHighlightOverlay(this._context));
@@ -202,7 +204,7 @@ let View = class View extends ViewEventHandler {
         this._pointerHandler = this._register(new PointerHandler(this._context, this._viewController, this._createPointerHandlerHelper()));
     }
     _instantiateEditContext() {
-        const usingExperimentalEditContext = this._context.configuration.options.get(170 /* EditorOption.effectiveEditContext */);
+        const usingExperimentalEditContext = this._context.configuration.options.get(171 /* EditorOption.effectiveEditContext */);
         if (usingExperimentalEditContext) {
             return this._instantiationService.createInstance(NativeEditContext, this._ownerID, this._context, this._overflowGuardContainer, this._viewController, this._createTextAreaHandlerHelper());
         }
@@ -211,7 +213,7 @@ let View = class View extends ViewEventHandler {
         }
     }
     _updateEditContext() {
-        const editContextEnabled = this._context.configuration.options.get(170 /* EditorOption.effectiveEditContext */);
+        const editContextEnabled = this._context.configuration.options.get(171 /* EditorOption.effectiveEditContext */);
         const accessibilitySupport = this._context.configuration.options.get(2 /* EditorOption.accessibilitySupport */);
         if (this._editContextEnabled === editContextEnabled && this._accessibilitySupport === accessibilitySupport) {
             return;
@@ -324,7 +326,7 @@ let View = class View extends ViewEventHandler {
     }
     _applyLayout() {
         const options = this._context.configuration.options;
-        const layoutInfo = options.get(165 /* EditorOption.layoutInfo */);
+        const layoutInfo = options.get(166 /* EditorOption.layoutInfo */);
         this.domNode.setWidth(layoutInfo.width);
         this.domNode.setHeight(layoutInfo.height);
         this._overflowGuardContainer.setWidth(layoutInfo.width);
@@ -335,7 +337,7 @@ let View = class View extends ViewEventHandler {
     }
     _getEditorClassName() {
         const focused = this._editContext.isFocused() ? ' focused' : '';
-        return this._context.configuration.options.get(162 /* EditorOption.editorClassName */) + ' ' + getThemeTypeSelector(this._context.theme.type) + focused;
+        return this._context.configuration.options.get(163 /* EditorOption.editorClassName */) + ' ' + getThemeTypeSelector(this._context.theme.type) + focused;
     }
     // --- begin event handlers
     handleEvents(events) {

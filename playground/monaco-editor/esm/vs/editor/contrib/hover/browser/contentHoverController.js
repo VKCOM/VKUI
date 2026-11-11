@@ -115,7 +115,7 @@ let ContentHoverController = class ContentHoverController extends Disposable {
         return this._isMouseOnContentHoverWidget(mouseEvent) || this._isContentWidgetResizing() || isOnColorDecorator(mouseEvent);
     }
     _isMouseOnContentHoverWidget(mouseEvent) {
-        if (!this._contentWidget) {
+        if (!this._contentWidget || !this._contentWidget.getDomNode().isConnected) {
             return false;
         }
         return isMousePositionWithinElement(this._contentWidget.getDomNode(), mouseEvent.event.posx, mouseEvent.event.posy);
@@ -178,6 +178,12 @@ let ContentHoverController = class ContentHoverController extends Disposable {
     }
     _onEditorMouseMove(mouseEvent) {
         if (this._ignoreMouseEvents) {
+            return;
+        }
+        // When the user is dragging to select text (mouse down started outside the hover widget),
+        // hide the hover and suppress any new hover computation to avoid covering the selection.
+        if (this._isMouseDown && !this._shouldKeepHoverWidgetVisible(mouseEvent)) {
+            this._cancelSchedulerAndHide();
             return;
         }
         this._mouseMoveEvent = mouseEvent;

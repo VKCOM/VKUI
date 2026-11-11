@@ -2,48 +2,38 @@
 description: Компонент для создания полей ввода с возможностью добавления иконок и статусов.
 ---
 
-<Overview group="forms">
-
-# FormField [tag:component]
+# FormField \[tag:component]
 
 Компонент для создания полей ввода с возможностью добавления иконок и статусов,
 лежит в основе таких элементов форм, как [`Input`](/components/input), [`Select`](/components/select),
 [`Textarea`](/components/textarea), но может использоваться как база для пользовательских полей ввода.
 
-</Overview>
-
-{/* @example-description: Базовый `FormField` с кастомным полем ввода на основе `UnstyledTextField`. */}
-<Playground style={{ maxWidth: 270 }}>
-  ```jsx
-  <FormField>
-    <UnstyledTextField
-      as="input"
-      name="location"
-      placeholder="Введите локацию"
-      style={{ padding: 8 }}
-    />
-  </FormField>
-  ```
-</Playground>
+```jsx
+<FormField>
+  <UnstyledTextField
+    as="input"
+    name="location"
+    placeholder="Введите локацию"
+    style={{ padding: 8 }}
+  />
+</FormField>
+```
 
 ## Режимы отображения
 
 Задаётся свойством `mode`.
 
-- `"default"` — стандартный режим отображения с фоном, обводкой и текстом-подсказкой;
-- `"plain"` — упрощенный режим, который показывает только текст-подсказку без фона и обводки.
+* `"default"` — стандартный режим отображения с фоном, обводкой и текстом-подсказкой;
+* `"plain"` — упрощенный режим, который показывает только текст-подсказку без фона и обводки.
 
-{/* @example-description: Сравнение режимов `FormField`: стандартный `default` и упрощённый `plain`. */}
-<Playground style={{ maxWidth: 270 }}>
-  ```jsx
-  <FormField before={<Icon20LocationMapOutline />} mode="default">
-    <UnstyledTextField as="input" name="location" placeholder="Введите локацию" />
-  </FormField>
-  <FormField before={<Icon20LocationMapOutline />} mode="plain">
-    <UnstyledTextField as="input" name="location" placeholder="Введите локацию" />
-  </FormField>
-  ```
-</Playground>
+```jsx
+<FormField before={<Icon20LocationMapOutline />} mode="default">
+  <UnstyledTextField as="input" name="location" placeholder="Введите локацию" />
+</FormField>
+<FormField before={<Icon20LocationMapOutline />} mode="plain">
+  <UnstyledTextField as="input" name="location" placeholder="Введите локацию" />
+</FormField>
+```
 
 ## Контент в начале/в конце
 
@@ -52,52 +42,46 @@ description: Компонент для создания полей ввода с
 
 Придерживайтесь следующих рекомендаций:
 
-- используйте иконки следующих размеров: `12px`, `16px`, `20px`, `24px` и `28px`;
-- для интерактивных иконок используйте компонент [`IconButton`](/components/icon-button).
+* используйте иконки следующих размеров: `12px`, `16px`, `20px`, `24px` и `28px`;
+* для интерактивных иконок используйте компонент [`IconButton`](/components/icon-button).
 
-{/* @example-description: Поле с иконкой слева и интерактивной кнопкой справа через `before/after`. */}
-<Playground style={{ maxWidth: 270 }}>
-  ```jsx
-  <FormField
-    before={<Icon20LocationMapOutline />}
-    after={
-      <IconButton aria-label="Выбрать локацию" onClick={() => alert('Диалог с локациями')}>
-        <Icon16DropdownOutline />
-      </IconButton>
-    }
-  >
-    <UnstyledTextField as="input" name="location" placeholder="Введите локацию" />
-  </FormField>
-  ```
-</Playground>
+```jsx
+<FormField
+  before={<Icon20LocationMapOutline />}
+  after={
+    <IconButton aria-label="Выбрать локацию" onClick={() => alert('Диалог с локациями')}>
+      <Icon16DropdownOutline />
+    </IconButton>
+  }
+>
+  <UnstyledTextField as="input" name="location" placeholder="Введите локацию" />
+</FormField>
+```
 
 ### Выравнивание иконок
 
 Для каждой иконки можно задать вертикальное выравнивание с помощью свойств:
 
-- `beforeAlign` — выравнивание левой иконки;
-- `afterAlign` — выравнивание правой иконки.
+* `beforeAlign` — выравнивание левой иконки;
+* `afterAlign` — выравнивание правой иконки.
 
 Доступные значения:
 
-- `"center"` — по центру (значение по умолчанию);
-- `"start"` — по верхнему краю;
-- `"end"` — по нижнему краю.
+* `"center"` — по центру (значение по умолчанию);
+* `"start"` — по верхнему краю;
+* `"end"` — по нижнему краю.
 
-{/* @example-description: Настройка вертикального выравнивания иконки в `after` для многострочного поля. */}
-<Playground style={{ maxWidth: 270 }}>
-  ```jsx
-  <FormField after={<Icon20CopyOutline />} afterAlign="center">
-    <UnstyledTextField
-      as="textarea"
-      name="location"
-      rows={3}
-      placeholder="Введите локацию"
-      style={{ padding: 8 }}
-    />
-  </FormField>
-  ```
-</Playground>
+```jsx
+<FormField after={<Icon20CopyOutline />} afterAlign="center">
+  <UnstyledTextField
+    as="textarea"
+    name="location"
+    rows={3}
+    placeholder="Введите локацию"
+    style={{ padding: 8 }}
+  />
+</FormField>
+```
 
 ## Состояния
 
@@ -105,19 +89,16 @@ description: Компонент для создания полей ввода с
 
 Свойство `disabled` блокирует взаимодействие с компонентом и добавляет визуальную индикацию недоступности.
 
-{/* @example-description: `FormField` в состоянии `disabled` без возможности редактирования. */}
-<Playground style={{ maxWidth: 270 }}>
-  ```jsx
-  <FormField disabled>
-    <UnstyledTextField
-      as="input"
-      name="location"
-      placeholder="Введите локацию"
-      style={{ padding: 8 }}
-    />
-  </FormField>
-  ```
-</Playground>
+```jsx
+<FormField disabled>
+  <UnstyledTextField
+    as="input"
+    name="location"
+    placeholder="Введите локацию"
+    style={{ padding: 8 }}
+  />
+</FormField>
+```
 
 ## Валидация
 
@@ -127,46 +108,43 @@ description: Компонент для создания полей ввода с
 > Если вы используете `FormField` вместе с [`FormItem`](/components/form-item), вам достаточно указать свойство `status` только у
 > [`FormItem`](/components/form-item).
 
-{/* @example-description: Валидация `FormField` со статусами `valid` и `error`. */}
-<Playground style={{ maxWidth: 270 }}>
-  ```jsx
-  <FormField status="valid">
-    <UnstyledTextField
-      as="input"
-      name="location"
-      defaultValue="Санкт-Петербург"
-      style={{ padding: 8 }}
-    />
-  </FormField>
-  <FormField status="error">
-    <UnstyledTextField as="input" name="location" defaultValue="Москва" style={{ padding: 8 }} />
-  </FormField>
-  ```
-</Playground>
+```jsx
+<FormField status="valid">
+  <UnstyledTextField
+    as="input"
+    name="location"
+    defaultValue="Санкт-Петербург"
+    style={{ padding: 8 }}
+  />
+</FormField>
+<FormField status="error">
+  <UnstyledTextField as="input" name="location" defaultValue="Москва" style={{ padding: 8 }} />
+</FormField>
+```
 
-## Доступность (a11y) [#a11y]
+## Доступность (a11y) \[#a11y]
 
 `FormField` автоматически обрабатывает состояния фокуса и наведения, обеспечивая визуальную обратную связь для пользователей.
 Компонент поддерживает все стандартные `HTML`-атрибуты доступности.
 
 При использовании `FormField` с полями ввода убедитесь, что:
 
-- у поля есть описание (используйте свойство `top` у `FormItem` или оборачивайте `FormField` в `HTML`-тэг `label`);
-- при наличии ошибок валидации или при необходимости подтверждения валидности, оставляйте пояснение
+* у поля есть описание (используйте свойство `top` у `FormItem` или оборачивайте `FormField` в `HTML`-тэг `label`);
+* при наличии ошибок валидации или при необходимости подтверждения валидности, оставляйте пояснение
   (используйте свойство `bottom` у `FormItem` или `aria-describedby`).
 
-## Свойства и методы [#api]
+## Свойства и методы \[#api]
 
-| Свойство | Тип | По умолчанию | Описание |
-| --- | --- | --- | --- |
-| `after` | `ReactNode` | `-` | Добавляет иконку справа.  Рекомендации:  - Используйте следующие размеры иконок `12` \| `16` \| `20` \| `24` \| `28`. - Используйте [IconButton](https://vkui.io/components/icon-button), если вам нужна иконка, реагируюущая на нажатие. |
-| `afterAlign` | `FieldIconsAlign` | `center` | Вертикальное выравнивание иконки справа. |
-| `before` | `ReactNode` | `-` | Добавляет иконку слева.  Рекомендации:  - Используйте следующие размеры иконок `12` \| `16` \| `20` \| `24` \| `28`. - Используйте [IconButton](https://vkui.io/components/icon-button), если вам нужна иконка, реагирующая на нажатие. |
-| `beforeAlign` | `FieldIconsAlign` | `center` | Вертикальное выравнивание иконки слева. |
-| `Component` | `ElementType<any, keyof IntrinsicElements>` | `span` |  |
-| `disabled` | `boolean` | `-` | Блокировка взаимодействия с компонентом. |
-| `getRootRef` | `Ref<HTMLElement>` | `-` |  |
-| `maxHeight` | `number` | `-` | Максимальная высота поля. |
-| `mode` | `"default" \| "plain"` | `default` | Режим отображения.  - `default` — показывает фон, обводку и, при наличии, текст-подсказку. - `plain` — показывает только текст-подсказку. |
-| `status` | `"default" \| "error" \| "valid"` | `default` | Статус отображения поля в форме. |
-
+| Свойство      | Тип                                         | По умолчанию | Описание                                                                                                                                                                                                                                  |
+| ------------- | ------------------------------------------- | ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `after`       | `ReactNode`                                 | `-`          | Добавляет иконку справа.  Рекомендации:  - Используйте следующие размеры иконок `12` \| `16` \| `20` \| `24` \| `28`. - Используйте [IconButton](https://vkui.io/components/icon-button), если вам нужна иконка, реагируюущая на нажатие. |
+| `afterAlign`  | `FieldIconsAlign`                           | `center`     | Вертикальное выравнивание иконки справа.                                                                                                                                                                                                  |
+| `before`      | `ReactNode`                                 | `-`          | Добавляет иконку слева.  Рекомендации:  - Используйте следующие размеры иконок `12` \| `16` \| `20` \| `24` \| `28`. - Используйте [IconButton](https://vkui.io/components/icon-button), если вам нужна иконка, реагирующая на нажатие.   |
+| `beforeAlign` | `FieldIconsAlign`                           | `center`     | Вертикальное выравнивание иконки слева.                                                                                                                                                                                                   |
+| `Component`   | `ElementType<any, keyof IntrinsicElements>` | `span`       |                                                                                                                                                                                                                                           |
+| `disabled`    | `boolean`                                   | `-`          | Блокировка взаимодействия с компонентом.                                                                                                                                                                                                  |
+| `getRootRef`  | `Ref<HTMLElement>`                          | `-`          |                                                                                                                                                                                                                                           |
+| `maxHeight`   | `number`                                    | `-`          | Максимальная высота поля.                                                                                                                                                                                                                 |
+| `mode`        | `"default" \| "plain"`                      | `default`    | Режим отображения.  - `default` — показывает фон, обводку и, при наличии, текст-подсказку. - `plain` — показывает только текст-подсказку.                                                                                                 |
+| `ref`         | `Ref<HTMLElement>`                          | `-`          |                                                                                                                                                                                                                                           |
+| `status`      | `"default" \| "error" \| "valid"`           | `default`    | Статус отображения поля в форме.                                                                                                                                                                                                          |

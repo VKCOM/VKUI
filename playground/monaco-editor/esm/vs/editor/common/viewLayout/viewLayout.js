@@ -106,7 +106,7 @@ class ViewLayout extends Disposable {
         super();
         this._configuration = configuration;
         const options = this._configuration.options;
-        const layoutInfo = options.get(165 /* EditorOption.layoutInfo */);
+        const layoutInfo = options.get(166 /* EditorOption.layoutInfo */);
         const padding = options.get(96 /* EditorOption.padding */);
         this._linesLayout = new LinesLayout(lineCount, options.get(75 /* EditorOption.lineHeight */), padding.top, padding.bottom, customLineHeightData);
         this._maxLineWidth = 0;
@@ -137,8 +137,8 @@ class ViewLayout extends Disposable {
             const padding = options.get(96 /* EditorOption.padding */);
             this._linesLayout.setPadding(padding.top, padding.bottom);
         }
-        if (e.hasChanged(165 /* EditorOption.layoutInfo */)) {
-            const layoutInfo = options.get(165 /* EditorOption.layoutInfo */);
+        if (e.hasChanged(166 /* EditorOption.layoutInfo */)) {
+            const layoutInfo = options.get(166 /* EditorOption.layoutInfo */);
             const width = layoutInfo.contentWidth;
             const height = layoutInfo.height;
             const scrollDimensions = this._scrollable.getScrollDimensions();
@@ -207,9 +207,9 @@ class ViewLayout extends Disposable {
     _computeContentWidth() {
         const options = this._configuration.options;
         const maxLineWidth = this._maxLineWidth;
-        const wrappingInfo = options.get(166 /* EditorOption.wrappingInfo */);
+        const wrappingInfo = options.get(167 /* EditorOption.wrappingInfo */);
         const fontInfo = options.get(59 /* EditorOption.fontInfo */);
-        const layoutInfo = options.get(165 /* EditorOption.layoutInfo */);
+        const layoutInfo = options.get(166 /* EditorOption.layoutInfo */);
         if (wrappingInfo.isViewportWrapping) {
             const minimap = options.get(81 /* EditorOption.minimap */);
             if (maxLineWidth > layoutInfo.contentWidth + fontInfo.typicalHalfwidthCharacterWidth) {

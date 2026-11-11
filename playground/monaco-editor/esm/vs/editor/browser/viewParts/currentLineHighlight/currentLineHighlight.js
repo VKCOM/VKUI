@@ -16,7 +16,7 @@ class AbstractLineHighlightOverlay extends DynamicViewOverlay {
         super();
         this._context = context;
         const options = this._context.configuration.options;
-        const layoutInfo = options.get(165 /* EditorOption.layoutInfo */);
+        const layoutInfo = options.get(166 /* EditorOption.layoutInfo */);
         this._renderLineHighlight = options.get(110 /* EditorOption.renderLineHighlight */);
         this._renderLineHighlightOnlyWhenFocus = options.get(111 /* EditorOption.renderLineHighlightOnlyWhenFocus */);
         this._wordWrap = layoutInfo.isViewportWrapping;
@@ -58,7 +58,7 @@ class AbstractLineHighlightOverlay extends DynamicViewOverlay {
     }
     onConfigurationChanged(e) {
         const options = this._context.configuration.options;
-        const layoutInfo = options.get(165 /* EditorOption.layoutInfo */);
+        const layoutInfo = options.get(166 /* EditorOption.layoutInfo */);
         this._renderLineHighlight = options.get(110 /* EditorOption.renderLineHighlight */);
         this._renderLineHighlightOnlyWhenFocus = options.get(111 /* EditorOption.renderLineHighlightOnlyWhenFocus */);
         this._wordWrap = layoutInfo.isViewportWrapping;

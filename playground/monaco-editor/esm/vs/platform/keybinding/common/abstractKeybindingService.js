@@ -11,6 +11,14 @@ import { NoMatchingKb } from './keybindingResolver.js';
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 const HIGH_FREQ_COMMANDS = /^(cursor|delete|undo|redo|tab|editor\.action\.clipboard)/;
+/**
+ * Whether the keystroke belongs to an in-flight IME composition. `StandardKeyboardEvent` normalizes
+ * every composing keystroke to {@link KeyCode.KEY_IN_COMPOSITION}, including the platform/IME
+ * combinations that would otherwise report the real key code for keys the IME owns.
+ */
+function isKeyInComposition(e) {
+    return e.keyCode === 114 /* KeyCode.KEY_IN_COMPOSITION */;
+}
 class AbstractKeybindingService extends Disposable {
     get onDidUpdateKeybindings() {
         return this._onDidUpdateKeybindings ? this._onDidUpdateKeybindings.event : Event.None; // Sinon stubbing walks properties on prototype
@@ -57,6 +65,13 @@ class AbstractKeybindingService extends Disposable {
     // TODO@ulugbekna: this fn doesn't seem to take into account single-modifier keybindings, eg `shift shift`
     softDispatch(e, target) {
         this._log(`/ Soft dispatching keyboard event`);
+        if (isKeyInComposition(e)) {
+            // Must agree with `_dispatch`: callers use this to decide whether the workbench will
+            // claim the key, and a "yes" here followed by a "no" there would drop the keystroke on
+            // the floor - stopping the widget (e.g. the terminal) from passing it to the IME.
+            this._log(`\\ Keyboard event is part of an IME composition`);
+            return NoMatchingKb;
+        }
         const keybinding = this.resolveKeyboardEvent(e);
         if (keybinding.hasMultipleChords()) {
             console.warn('keyboard event should not be mapped to multiple chords');
@@ -93,11 +108,11 @@ class AbstractKeybindingService extends Disposable {
                 throw illegalState('impossible');
             case 1:
                 // TODO@ulugbekna: revise this message and the one below (at least, fix terminology)
-                this._currentChordStatusMessage = this._notificationService.status(localize(1763, "({0}) was pressed. Waiting for second key of chord...", keypressLabel));
+                this._currentChordStatusMessage = this._notificationService.status(localize(1796, "({0}) was pressed. Waiting for second key of chord...", keypressLabel));
                 break;
             default: {
                 const fullKeypressLabel = this._currentChords.map(({ label }) => label).join(', ');
-                this._currentChordStatusMessage = this._notificationService.status(localize(1764, "({0}) was pressed. Waiting for next key of chord...", fullKeypressLabel));
+                this._currentChordStatusMessage = this._notificationService.status(localize(1797, "({0}) was pressed. Waiting for next key of chord...", fullKeypressLabel));
             }
         }
         this._scheduleLeaveChordMode();
@@ -115,9 +130,20 @@ class AbstractKeybindingService extends Disposable {
         IME.enable();
     }
     _dispatch(e, target) {
+        if (isKeyInComposition(e)) {
+            // The keystroke belongs to the IME, which owns Enter (commit), Space and the arrows
+            // (candidate selection) and Escape (cancel) for the duration of the composition.
+            // Dispatching would run commands the user never invoked - e.g. accepting a picker or
+            // submitting a form while they are still choosing characters.
+            this._log(`+ Ignoring keybinding dispatch because an IME composition is in progress.`);
+            return false;
+        }
         return this._doDispatch(this.resolveKeyboardEvent(e), target, /*isSingleModiferChord*/ false);
     }
     _singleModifierDispatch(e, target) {
+        if (isKeyInComposition(e)) {
+            return false;
+        }
         const keybinding = this.resolveKeyboardEvent(e);
         const [singleModifier,] = keybinding.getSingleModifierDispatchChords();
         if (singleModifier) {
@@ -196,7 +222,7 @@ class AbstractKeybindingService extends Disposable {
                 if (this.inChordMode) {
                     const currentChordsLabel = this._currentChords.map(({ label }) => label).join(', ');
                     this._log(`+ Leaving multi-chord mode: Nothing bound to "${currentChordsLabel}, ${keypressLabel}".`);
-                    this._notificationService.status(localize(1765, "The key combination ({0}, {1}) is not a command.", currentChordsLabel, keypressLabel), { hideAfter: 10 * 1000 /* 10s */ });
+                    this._notificationService.status(localize(1798, "The key combination ({0}, {1}) is not a command.", currentChordsLabel, keypressLabel), { hideAfter: 10 * 1000 /* 10s */ });
                     this._leaveChordMode();
                     shouldPreventDefault = true;
                 }
@@ -215,7 +241,7 @@ class AbstractKeybindingService extends Disposable {
                     if (this.inChordMode) {
                         const currentChordsLabel = this._currentChords.map(({ label }) => label).join(', ');
                         this._log(`+ Leaving chord mode: Nothing bound to "${currentChordsLabel}, ${keypressLabel}".`);
-                        this._notificationService.status(localize(1766, "The key combination ({0}, {1}) is not a command.", currentChordsLabel, keypressLabel), { hideAfter: 10 * 1000 /* 10s */ });
+                        this._notificationService.status(localize(1799, "The key combination ({0}, {1}) is not a command.", currentChordsLabel, keypressLabel), { hideAfter: 10 * 1000 /* 10s */ });
                         this._leaveChordMode();
                         shouldPreventDefault = true;
                     }
@@ -265,7 +291,7 @@ class AbstractKeybindingService extends Disposable {
         if (commandId) {
             const keybindingLabel = this.lookupKeybinding(commandId, context, enforceContextCheck)?.getLabel();
             if (keybindingLabel) {
-                return localize(1767, "{0} ({1})", label, keybindingLabel);
+                return localize(1800, "{0} ({1})", label, keybindingLabel);
             }
         }
         return label;

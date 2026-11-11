@@ -1,4 +1,3 @@
-import { lastNonWhitespaceIndex } from '../../../../base/common/strings.js';
 import { EditOperation } from '../../../common/core/editOperation.js';
 import { Position } from '../../../common/core/position.js';
 
@@ -28,11 +27,6 @@ class InsertFinalNewLineCommand {
  */
 function insertFinalNewLine(model) {
     const lineCount = model.getLineCount();
-    const lastLine = model.getLineContent(lineCount);
-    const lastLineIsEmptyOrWhitespace = lastNonWhitespaceIndex(lastLine) === -1;
-    if (!lineCount || lastLineIsEmptyOrWhitespace) {
-        return;
-    }
     return EditOperation.insert(new Position(lineCount, model.getLineMaxColumn(lineCount)), model.getEOL());
 }
 

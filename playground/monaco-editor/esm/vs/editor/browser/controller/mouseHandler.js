@@ -26,7 +26,7 @@ class MouseHandler extends ViewEventHandler {
         this.mouseTargetFactory = new MouseTargetFactory(this._context, viewHelper);
         this._mouseDownOperation = this._register(new MouseDownOperation(this._context, this.viewController, this.viewHelper, this.mouseTargetFactory, (e, testEventTarget) => this._createMouseTarget(e, testEventTarget), (e) => this._getMouseColumn(e)));
         this.lastMouseLeaveTime = -1;
-        this._height = this._context.configuration.options.get(165 /* EditorOption.layoutInfo */).height;
+        this._height = this._context.configuration.options.get(166 /* EditorOption.layoutInfo */).height;
         const mouseEvents = new EditorMouseEventFactory(this.viewHelper.viewDomNode);
         this._register(mouseEvents.onContextMenu(this.viewHelper.viewDomNode, (e) => this._onContextMenu(e, true)));
         this._register(mouseEvents.onMouseMove(this.viewHelper.viewDomNode, (e) => {
@@ -128,9 +128,9 @@ class MouseHandler extends ViewEventHandler {
     }
     // --- begin event handlers
     onConfigurationChanged(e) {
-        if (e.hasChanged(165 /* EditorOption.layoutInfo */)) {
+        if (e.hasChanged(166 /* EditorOption.layoutInfo */)) {
             // layout change
-            const height = this._context.configuration.options.get(165 /* EditorOption.layoutInfo */).height;
+            const height = this._context.configuration.options.get(166 /* EditorOption.layoutInfo */).height;
             if (this._height !== height) {
                 this._height = height;
                 this._mouseDownOperation.onHeightChanged();
@@ -401,7 +401,7 @@ class MouseDownOperation extends Disposable {
             return MouseTarget.createOutsideEditor(mouseColumn, new Position(belowLineNumber, model.getLineMaxColumn(belowLineNumber)), 'below', outsideDistance);
         }
         const possibleLineNumber = viewLayout.getLineNumberAtVerticalOffset(viewLayout.getCurrentScrollTop() + e.relativePos.y);
-        const layoutInfo = this._context.configuration.options.get(165 /* EditorOption.layoutInfo */);
+        const layoutInfo = this._context.configuration.options.get(166 /* EditorOption.layoutInfo */);
         const xLeftBoundary = layoutInfo.contentLeft;
         if (e.relativePos.x <= xLeftBoundary) {
             const outsideDistance = xLeftBoundary - e.relativePos.x;
