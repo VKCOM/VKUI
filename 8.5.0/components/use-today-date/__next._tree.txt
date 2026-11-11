@@ -10,4 +10,4 @@
 :HL["/8.5.0/_next/static/css/c725fc0605ad406a.css","style"]
 2:[["children",{"s":"__PAGE__","h":160}]]
 1:[["children",{"s":{"n":"mdxPath","t":"oc","k":"components/use-today-date","s":["_not-found","_global-error","apple-icon.png","favicon.ico","icon.svg"]},"h":64,"c":"$Q2"}]]
-0:{"b":"8PhKH7pImpc-E3HhVI1Ya","t":{"t":{"s":"","h":16,"c":"$Q1"}}}
+0:{"b":"1CbmudEuQh9iF9D11XA7w","t":{"t":{"s":"","h":16,"c":"$Q1"}}}
