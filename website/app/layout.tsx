@@ -15,6 +15,7 @@ import { getPageMap } from 'nextra/page-map';
 import { PlaygroundStoreProvider } from '@/providers/playgroundStoreProvider';
 import challengeCode from '../inline/challange.js?raw';
 import uwuCode from '../inline/uwu.js?raw';
+import { SITE_DESCRIPTION, SITE_IMAGE, SITE_TITLE, SITE_URL } from '../lib/metadata';
 import { AlternateMdxLink, FooterLinks, RedirectHandler, Versions } from './_components';
 import '@vkontakte/vkui-docs-theme/styles.css';
 
@@ -37,28 +38,27 @@ function InlineCode() {
 
 export const metadata: Metadata = {
   title: {
-    default: 'VKUI – React UI Kit',
+    default: SITE_TITLE,
     template: '%s | VKUI',
   },
-  description:
-    'VKUI — библиотека адаптивных React-компонентов для создания мобильных и веб-приложений.',
-  metadataBase: new URL('https://vkui.io'),
+  description: SITE_DESCRIPTION,
+  metadataBase: new URL(SITE_URL),
   alternates: {
     canonical: './',
   },
   openGraph: {
     type: 'website',
-    url: 'https://vkui.io/',
-    title: 'VKUI – React UI Kit',
-    description:
-      'VKUI — библиотека адаптивных React-компонентов для создания мобильных и веб-приложений.',
+    url: SITE_URL,
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
     siteName: 'VKUI',
+    images: [{ url: SITE_IMAGE, alt: 'Документация VKUI' }],
   },
   twitter: {
-    card: 'summary',
-    title: 'VKUI – React UI Kit',
-    description:
-      'VKUI — библиотека адаптивных React-компонентов для создания мобильных и веб-приложений.',
+    card: 'summary_large_image',
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+    images: [{ url: SITE_IMAGE, alt: 'Документация VKUI' }],
   },
 };
 
