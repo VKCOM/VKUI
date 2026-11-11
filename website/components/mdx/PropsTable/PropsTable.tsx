@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
+import { VisuallyHidden } from '@vkontakte/vkui';
 import { Code, getMdxComponents, Table, Td, Th, Tr } from '@vkontakte/vkui-docs-theme';
 import { compileMdx } from 'nextra/compile';
 import { MDXRemote } from 'nextra/mdx-remote';
@@ -23,7 +24,7 @@ export function PropsTable({ name, children }: PropsTableProps) {
 
   if (!children && typeof name === 'string') {
     const componentName = name.split('/').pop();
-    return renderProps(AllProps[componentName || name]);
+    return renderProps(AllProps[componentName || name], componentName || name);
   }
 
   if (!children) {
@@ -37,19 +38,22 @@ export function PropsTable({ name, children }: PropsTableProps) {
     return (
       <div key={child.key || componentName}>
         {child}
-        {renderProps(componentProps)}
+        {renderProps(componentProps, componentName)}
       </div>
     );
   });
 }
 
-function renderProps(props: PropItem[] = []) {
+function renderProps(props: PropItem[] = [], componentName: string) {
   if (props.length === 0) {
     return <Paragraph>Не принимает свойств</Paragraph>;
   }
 
   return (
     <Table className={styles.root}>
+      <caption>
+        <VisuallyHidden>Свойства {componentName}</VisuallyHidden>
+      </caption>
       <thead>
         <Tr>
           <Th>Свойство</Th>
