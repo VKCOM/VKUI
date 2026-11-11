@@ -5,4 +5,5 @@ export default {
   generateRobotsTxt: true,
   output: 'export',
   generateIndexSitemap: false,
+  exclude: ['/404', '/404/', '/500', '/500/', '/_not-found', '/_not-found/'],
 };
