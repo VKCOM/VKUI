@@ -1,0 +1,19 @@
+{
+  "$schema": "https://schemas.agentskills.io/discovery/0.2.0/schema.json",
+  "skills": [
+    {
+      "name": "vkui",
+      "type": "skill-md",
+      "description": "Build and update React interfaces with @vkontakte/vkui using documentation for the project's installed or requested target version.",
+      "url": "vkui/SKILL.md",
+      "digest": "sha256:72b6370f94110392e91014006c1a7dd1e00216e892ae649a2875d00de2e0753e"
+    },
+    {
+      "name": "vkui-migrate-v7-to-v8",
+      "type": "skill-md",
+      "description": "Review or perform an application's migration from @vkontakte/vkui v7 to v8 using the official migration guide and codemods.",
+      "url": "vkui-migrate-v7-to-v8/SKILL.md",
+      "digest": "sha256:17ec81de2cbb721b9be1cb24552f6d1f2c9bc67af7c334388b21b4f48f0fcdeb"
+    }
+  ]
+}
