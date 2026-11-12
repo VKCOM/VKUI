@@ -2972,6 +2972,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@project-tools/postcss-margin-trim@workspace:1.0.0, @project-tools/postcss-margin-trim@workspace:tools/postcss-margin-trim":
+  version: 0.0.0-use.local
+  resolution: "@project-tools/postcss-margin-trim@workspace:tools/postcss-margin-trim"
+  languageName: unknown
+  linkType: soft
+
 "@project-tools/postcss-restructure-variable@workspace:1.0.0, @project-tools/postcss-restructure-variable@workspace:tools/postcss-restructure-variable":
   version: 0.0.0-use.local
   resolution: "@project-tools/postcss-restructure-variable@workspace:tools/postcss-restructure-variable"
@@ -5602,6 +5608,7 @@ __metadata:
     "@project-docs/website": "workspace:1.0.0"
     "@project-tools/eslint-plugin-vkui": "workspace:1.0.0"
     "@project-tools/postcss-layout-classes": "workspace:1.0.0"
+    "@project-tools/postcss-margin-trim": "workspace:1.0.0"
     "@project-tools/postcss-restructure-variable": "workspace:1.0.0"
     "@project-tools/storybook-addon-cartesian": "workspace:1.0.0"
     "@project-tools/stylelint-plugin-vkui": "workspace:1.0.0"
