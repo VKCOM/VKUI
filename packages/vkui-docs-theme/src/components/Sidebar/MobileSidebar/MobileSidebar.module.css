@@ -112,13 +112,9 @@
   position: sticky;
   inset-block-end: 0;
   display: flex;
+  column-gap: var(--vkui--spacing_size_xl);
   padding-block: var(--vkui--spacing_size_2xl);
   padding-inline: var(--vkui--spacing_size_l);
-}
-
-/* stylelint-disable-next-line selector-max-universal */
-.extra > *:not(:last-child) {
-  margin-inline-end: var(--vkui--spacing_size_xl);
 }
 
 .extra > :first-child {
