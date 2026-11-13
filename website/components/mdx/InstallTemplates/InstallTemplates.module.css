@@ -39,8 +39,10 @@
   display: inline-block;
 }
 
-.hover .externalLink {
-  animation: animationLinkShift 0.35s ease-out;
+@media (prefers-reduced-motion: no-preference) {
+  .hover .externalLink {
+    animation: animationLinkShift 0.35s ease-out;
+  }
 }
 
 @keyframes animationLinkShift {
