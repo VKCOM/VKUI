@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { generateStaticParamsFor, importPage } from 'nextra/pages';
-import { createPageMetadata } from '../../lib/metadata';
+import { createPageMetadata, getPageDetails, SITE_URL } from '../../lib/metadata';
 import { useMDXComponents as mdxComponents } from '../../mdx-components';
 
 export const generateStaticParams = generateStaticParamsFor('mdxPath');
@@ -32,8 +32,26 @@ export default async function Page(props: PageProps) {
     notFound();
   }
 
+  const { title, description, url, image } = getPageDetails(metadata, params.mdxPath);
+  const structuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: title,
+    description,
+    url,
+    image,
+    inLanguage: 'ru',
+    isPartOf: { '@type': 'WebSite', name: 'VKUI', url: SITE_URL },
+  };
+
   return (
     <Wrapper toc={toc} metadata={metadata} sourceCode={sourceCode}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(structuredData).replace(/</g, '\\u003c'),
+        }}
+      />
       <MDXContent {...props} params={params} />
     </Wrapper>
   );
