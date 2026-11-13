@@ -1,5 +1,5 @@
 import vkuiPkg from '../../../../../packages/vkui/package.json';
-import { vkuiScope } from '../scope';
+import vkuiExportNames from '../../../../generated/vkui-export-names.json';
 
 export const VKUI_VERSION = vkuiPkg.version;
 
@@ -21,7 +21,7 @@ const REACT_HOOKS = new Set([
   'useId',
 ]);
 
-const VKUI_EXPORTS = new Set(Object.keys(vkuiScope));
+const VKUI_EXPORTS = new Set(vkuiExportNames);
 
 const SKIP_IDENTIFIERS = new Set(['React', 'Fragment', 'App', 'StrictMode']);
 
