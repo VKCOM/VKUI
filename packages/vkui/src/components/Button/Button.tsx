@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
-import { useExternRef } from '../../hooks/useExternRef';
+import { useRootRef } from '../../hooks/useExternRef';
 import { usePlatform } from '../../hooks/usePlatform';
 import type { Elevation, HasAlign } from '../../types';
 import { Spinner } from '../Spinner/Spinner';
@@ -146,7 +146,7 @@ export const Button = ({
   elevation,
   ...restProps
 }: ButtonProps): React.ReactNode => {
-  const getRootRef = useExternRef(getRootRefProp, refProp);
+  const getRootRef = useRootRef(getRootRefProp, refProp);
   const hasIconOnly = !children && Boolean(after) !== Boolean(before);
   const { density = 'none' } = useAdaptivity();
   const platform = usePlatform();

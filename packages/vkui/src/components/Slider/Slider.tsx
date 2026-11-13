@@ -6,7 +6,7 @@ import { clamp } from '../../helpers/math';
 import { mergeStyle } from '../../helpers/mergeStyle';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useConfigDirection } from '../../hooks/useConfigDirection';
-import { useExternRef } from '../../hooks/useExternRef';
+import { useExternRef, useRootRef } from '../../hooks/useExternRef';
 import type { CSSCustomProperties, HTMLAttributesWithRootRef } from '../../types';
 import { type CustomTouchEvent, type CustomTouchEventHandler, Touch } from '../Touch/Touch';
 import { SliderThumb } from './SliderThumb/SliderThumb';
@@ -148,7 +148,7 @@ export const Slider = ({
   style: styleProp,
   ...restProps
 }: SliderProps | SliderMultipleProps): React.ReactNode => {
-  const getRootRef = useExternRef(getRootRefProp, refProp);
+  const getRootRef = useRootRef(getRootRefProp, refProp);
   const { density = 'none' } = useAdaptivity();
   const direction = useConfigDirection();
   const isRtl = direction === 'rtl';

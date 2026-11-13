@@ -12,7 +12,7 @@ import {
   Icon24CheckCircleOn,
 } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
-import { useExternRef } from '../../../hooks/useExternRef';
+import { useRootRef } from '../../../hooks/useExternRef';
 import { usePlatform } from '../../../hooks/usePlatform';
 import type { HasRef, HasRootRef } from '../../../types';
 import { AdaptiveIconRenderer } from '../../AdaptiveIconRenderer/AdaptiveIconRenderer';
@@ -70,7 +70,7 @@ export const CellCheckbox = ({
   type = 'auto',
   ...restProps
 }: CellCheckboxProps): React.ReactNode => {
-  const getRootRef = useExternRef(getRootRefProp, refProp);
+  const getRootRef = useRootRef(getRootRefProp, refProp);
   const typeIcon = useTypeIcon(type);
 
   const IconOff = typeIcon === 'circle' ? CheckCircleOff : CheckBoxOff;

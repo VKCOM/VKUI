@@ -23,6 +23,15 @@ describe('ContentCard', () => {
     </CardGrid>
   ));
 
+  it.each([undefined, null])('does not pass a ref to Component when getRootRef is %s', (ref) => {
+    const Component = vi.fn((props: React.ComponentProps<'section'>) => <section {...props} />);
+
+    render(<ContentCard Component={Component} getRootRef={ref} title="Custom card" />);
+
+    expect(Component.mock.calls[0]?.[0].ref ?? undefined).toBeUndefined();
+    expect(screen.getByText('Custom card').closest('section')).toBeInTheDocument();
+  });
+
   it('[img] renders img if src is passed', () => {
     render(<ContentCardTest src="/image.png" />);
 

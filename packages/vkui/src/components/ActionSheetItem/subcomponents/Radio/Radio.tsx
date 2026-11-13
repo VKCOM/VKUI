@@ -3,7 +3,7 @@
 import type * as React from 'react';
 import { Icon20CheckCircleOn, Icon24CheckCircleOn } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
-import { useExternRef } from '../../../../hooks/useExternRef';
+import { useRootRef } from '../../../../hooks/useExternRef';
 import type { HasRef, HasRootRef } from '../../../../types';
 import { AdaptiveIconRenderer } from '../../../AdaptiveIconRenderer/AdaptiveIconRenderer';
 import { RootComponent } from '../../../RootComponent/RootComponent';
@@ -33,7 +33,7 @@ export const Radio = ({
   style,
   ...restProps
 }: ActionSheetItemCheckedProps): React.ReactNode => {
-  const getRootRef = useExternRef(getRootRefProp, refProp);
+  const getRootRef = useRootRef(getRootRefProp, refProp);
   return (
     <RootComponent
       getRootRef={getRootRef}
