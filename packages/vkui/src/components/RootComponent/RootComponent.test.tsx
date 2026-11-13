@@ -2,7 +2,7 @@ import { createRef, useEffect } from 'react';
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import { baselineComponent } from '../../testing/utils';
-import { RootComponent } from './RootComponent';
+import { RootComponent, type RootComponentProps } from './RootComponent';
 
 describe('RootComponent', () => {
   baselineComponent(RootComponent);
@@ -19,6 +19,20 @@ describe('RootComponent', () => {
   });
 
   describe('render prop', () => {
+    it.each([undefined, null])('preserves an absent getRootRef (%s)', (ref) => {
+      const localRef = createRef<HTMLDivElement>();
+      const renderRoot = vi.fn<NonNullable<RootComponentProps<HTMLDivElement>['render']>>(
+        ({ getRootRef, ...props }) => (
+          <div {...props} ref={getRootRef || localRef} data-testid="rendered" />
+        ),
+      );
+
+      render(<RootComponent<HTMLDivElement> getRootRef={ref} render={renderRoot} />);
+
+      expect(renderRoot.mock.calls[0]?.[0].getRootRef).toBe(ref);
+      expect(localRef.current).toBe(screen.getByTestId('rendered'));
+    });
+
     it('does not overwrite an explicit ref with spread render props', () => {
       const localRef = createRef<HTMLDivElement>();
       render(

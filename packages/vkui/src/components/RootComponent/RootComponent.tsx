@@ -68,7 +68,13 @@ export const RootComponent = <T,>({
   };
 
   if (render) {
-    return <RenderRootComponent render={render} getRootRef={getRootRef} {...resolvedProps} />;
+    return (
+      <RenderRootComponent
+        render={render}
+        getRootRef={getRootRefProp || refProp ? getRootRef : getRootRefProp}
+        {...resolvedProps}
+      />
+    );
   }
 
   return <Component ref={getRootRefProp || refProp ? getRootRef : undefined} {...resolvedProps} />;
