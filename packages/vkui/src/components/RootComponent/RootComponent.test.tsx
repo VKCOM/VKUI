@@ -2,12 +2,81 @@ import { createRef, useEffect } from 'react';
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import { baselineComponent } from '../../testing/utils';
-import { RootComponent } from './RootComponent';
+import { RootComponent, type RootComponentProps } from './RootComponent';
 
 describe('RootComponent', () => {
   baselineComponent(RootComponent);
 
+  it('runs a single getRootRef cleanup on unmount', () => {
+    const cleanup = vi.fn();
+    const getRootRef = vi.fn((node: HTMLDivElement | null) => {
+      if (!node) {
+        return;
+      }
+      return cleanup;
+    });
+    const { container, unmount } = render(<RootComponent getRootRef={getRootRef} />);
+    const node = container.firstChild;
+
+    unmount();
+
+    expect(cleanup).toHaveBeenCalledTimes(1);
+    expect(getRootRef.mock.calls).toEqual([[node]]);
+  });
+
+  it('calls a replaced getRootRef after updating the DOM', () => {
+    const observed: Array<string | undefined> = [];
+    const { rerender } = render(
+      <RootComponent<HTMLElement>
+        data-value="old"
+        getRootRef={(node) => {
+          if (node) {
+            observed.push(node.dataset.value);
+          }
+        }}
+      />,
+    );
+
+    rerender(
+      <RootComponent<HTMLElement>
+        data-value="new"
+        getRootRef={(node) => {
+          if (node) {
+            observed.push(node.dataset.value);
+          }
+        }}
+      />,
+    );
+
+    expect(observed).toEqual(['old', 'new']);
+  });
+
+  it.each([undefined, null])('does not pass a ref to Component when getRootRef is %s', (ref) => {
+    const Component = (props: React.ComponentProps<'div'>) => {
+      expect(props.ref).toBeUndefined();
+      return <div {...props} data-testid="rendered" />;
+    };
+
+    render(<RootComponent Component={Component} getRootRef={ref} />);
+
+    expect(screen.getByTestId('rendered')).toBeInTheDocument();
+  });
+
   describe('render prop', () => {
+    it.each([undefined, null])('preserves an absent getRootRef (%s)', (ref) => {
+      const localRef = createRef<HTMLDivElement>();
+      const renderRoot = vi.fn<NonNullable<RootComponentProps<HTMLDivElement>['render']>>(
+        ({ getRootRef, ...props }) => (
+          <div {...props} ref={getRootRef || localRef} data-testid="rendered" />
+        ),
+      );
+
+      render(<RootComponent<HTMLDivElement> getRootRef={ref} render={renderRoot} />);
+
+      expect(renderRoot.mock.calls[0]?.[0].getRootRef).toBe(ref);
+      expect(localRef.current).toBe(screen.getByTestId('rendered'));
+    });
+
     it('does not overwrite an explicit ref with spread render props', () => {
       const localRef = createRef<HTMLDivElement>();
       render(

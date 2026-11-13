@@ -3,7 +3,7 @@
 import type * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { mergeStyle } from '../../helpers/mergeStyle';
-import { useExternRef } from '../../hooks/useExternRef';
+import { useRootRef } from '../../hooks/useExternRef';
 import type { CSSCustomProperties, HasRef, HasRootRef, LiteralUnion } from '../../types';
 import { Avatar } from '../Avatar/Avatar';
 import { Tappable, type TappableOmitProps } from '../Tappable/Tappable';
@@ -89,7 +89,7 @@ export const HorizontalCell = ({
   TitleComponent = size === 's' ? Caption : Subhead,
   ...restProps
 }: HorizontalCellProps): React.ReactNode => {
-  const getRootRef = useExternRef(getRootRefProp, refProp);
+  const getRootRef = useRootRef(getRootRefProp, refProp);
   const hasTypography =
     hasReactNode(title) || hasReactNode(subtitle) || hasReactNode(extraSubtitle);
 
