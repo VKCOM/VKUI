@@ -1,0 +1,82 @@
+2:"$Sreact.fragment"
+3:I[91133,[],""]
+4:I[4297,[],""]
+9:"static/chunks/3587-370fbc97ac594ffc.js"
+a:"static/chunks/977-ea0fbad387b4950d.js"
+b:"static/chunks/app/%5B%5B...mdxPath%5D%5D/page-f1322870613ed6e2.js"
+c:I[67042,["3587","$9","977","$a","217","$b"],"Main"]
+e:"OverviewHeaderLinks"
+f:I[44740,["3587","$9","977","$a","217","$b"],"$e",1]
+10:I[13091,["3587","$9","977","$a","217","$b"],"Anchor"]
+11:I[95540,["3587","$9","977","$a","217","$b"],"PlaygroundLazy"]
+19:"ViewportBoundary"
+1a:I[31872,[],"$19"]
+1b:"MetadataBoundary"
+1c:I[31872,[],"$1b"]
+1d:"$Sreact.suspense"
+1e:I[12569,[],"IconMark"]
+6:X
+6:C
+7:X
+d:T60b,---
+description: Компонент сбрасывает user-agent stylesheets таких полей ввода, как <input> и <textarea>.
+tags: forms
+---
+
+<Overview group="utils">
+
+# UnstyledTextField [tag:component]
+
+Компонент сбрасывает [User-agent stylesheets](https://www.geeksforgeeks.org/what-is-a-user-agent-stylesheet/)
+таких полей ввода, как `<input>` и `<textarea>`.
+
+</Overview>
+
+{/* @example-description: Базовый `UnstyledTextField` как поле ввода без пользовательских и браузерных стилей. */}
+<Playground>
+  ```jsx
+  <FormItem top="Текст" htmlFor="unstyled-text-field-unstyled-text">
+    <UnstyledTextField
+      id="unstyled-text-field-unstyled-text"
+      as="input"
+      name="unstyled-text"
+      placeholder="Стилей нет..."
+    />
+  </FormItem>
+  ```
+</Playground>
+
+Используйте данный компонент, если вы разрабатываете своё поле вода и хотите сбросить все браузерные стили, которые
+применяются по умолчанию к таким компонентам,как `<input>` и `<textarea>`.
+
+## Обязательные свойства
+
+### Тэг компонента
+
+Используйте свойства `as`, которое позволяет задать тип поля ввода (`"textarea"` или `"input"`).
+
+## Свойства и методы [#api]
+
+<PropsTable name="UnstyledTextField" />8:[["children",{"s":"__PAGE__","h":160,"d":{"r":["$","$2","c",{"children":[[["$","$Lc",null,{"metadata":{"description":"Компонент сбрасывает user-agent stylesheets таких полей ввода, как <input> и <textarea>.","tags":"forms","title":"UnstyledTextField","filePath":"content/components/unstyled-text-field.mdx","timestamp":1794581447000},"sourceCode":"$d","children":[["$","div",null,{"className":"Overview_root__nbCiB","children":[["$","$Lf",null,{"group":"utils"}],[["$","h1",null,{"className":"mdx_h1__1mgpN","data-pagefind-filter":"tag:component","children":"UnstyledTextField"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Компонент сбрасывает ",["$","$L10",null,{"href":"https://www.geeksforgeeks.org/what-is-a-user-agent-stylesheet/","children":"User-agent stylesheets"}],"\nтаких полей ввода, как ",["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"<input>"}]," и ",["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"<textarea>"}],"."]}]]]}],"\n","\n",["$","$L11",null,{"code":"<FormItem top=\"Текст\" htmlFor=\"unstyled-text-field-unstyled-text\">\n  <UnstyledTextField\n    id=\"unstyled-text-field-unstyled-text\"\n    as=\"input\"\n    name=\"unstyled-text\"\n    placeholder=\"Стилей нет...\"\n  />\n</FormItem>","previewId":"4f254d35ad44df6ff3861fbb"}],"\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Используйте данный компонент, если вы разрабатываете своё поле вода и хотите сбросить все браузерные стили, которые\nприменяются по умолчанию к таким компонентам,как ",["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"<input>"}]," и ",["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"<textarea>"}],"."]}],"\n",["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"obyazatelnye-svojstva","children":["$","a",null,{"href":"#obyazatelnye-svojstva","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Обязательные свойства","children":["Обязательные свойства",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}],"\n","$L12","\n","$L13","\n","$L14","\n","$L15"]}],"$L16"],null,"$L17"]}],"p":"$@18","v":null,"s":"$7"}}]]
+1:[["children",{"s":{"n":"mdxPath","t":"oc","k":"components/unstyled-text-field","s":["_not-found","_global-error","apple-icon.png","favicon.ico","icon.svg"]},"h":64,"d":{"r":["$","$2","c",{"children":[null,["$","$L3",null,{"parallelRouterKey":"children","template":["$","$L4",null,{}]}]]}],"p":"$@5","v":"$6","s":"$7"},"c":"$Q8"}]]
+0:{"t":{"t":{"s":"","h":16,"c":"$Q1"},"h":{"r":["$","$2","h",{"children":[null,["$","$L1a",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]}],["$","$L1c",null,{"children":[["$","div",null,{"hidden":true,"children":["$","$1d",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"UnstyledTextField | VKUI"}],["$","meta","1",{"name":"description","content":"Компонент сбрасывает user-agent stylesheets таких полей ввода, как <input> и <textarea>."}],["$","link","2",{"rel":"canonical","href":"https://vkui.io/components/unstyled-text-field/"}],["$","meta","3",{"property":"og:title","content":"VKUI – React UI Kit"}],["$","meta","4",{"property":"og:description","content":"VKUI — библиотека адаптивных React-компонентов для создания мобильных и веб-приложений."}],["$","meta","5",{"property":"og:url","content":"https://vkui.io/"}],["$","meta","6",{"property":"og:site_name","content":"VKUI"}],["$","meta","7",{"property":"og:type","content":"website"}],["$","meta","8",{"name":"twitter:card","content":"summary"}],["$","meta","9",{"name":"twitter:title","content":"VKUI – React UI Kit"}],["$","meta","10",{"name":"twitter:description","content":"VKUI — библиотека адаптивных React-компонентов для создания мобильных и веб-приложений."}],["$","link","11",{"rel":"icon","href":"/8.5.1/favicon.ico?60dfc7274b0e657e","type":"image/x-icon","sizes":"48x48"}],["$","link","12",{"rel":"icon","href":"/8.5.1/icon.svg?01ea673639a821e1","type":"image/svg+xml","sizes":"any"}],["$","link","13",{"rel":"apple-touch-icon","href":"/8.5.1/apple-icon.png?131c1f3e67ede032","type":"image/png","sizes":"180x180"}],["$","$L1e","14",{}]]}]}],null]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}],"p":"$@1f","v":null,"s":"$7"}},"a":"$@20","u":"$@21","b":"RTW-5dFQkHMktz2ud-kDX"}
+26:I[80784,["3587","$9","977","$a","217","$b"],"TOC"]
+27:I[31872,[],"OutletBoundary"]
+12:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"teg-komponenta","children":["$","a",null,{"href":"#teg-komponenta","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Тэг компонента","children":["Тэг компонента",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+13:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Используйте свойства ",["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"as"}],", которое позволяет задать тип поля ввода (",["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"\"textarea\""}]," или ",["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"\"input\""}],")."]}]
+14:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"api","children":["$","a",null,{"href":"#api","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Свойства и методы","children":["Свойства и методы",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+15:["$","div",null,{"className":"Table_root__0rGvK","children":["$","table",null,{"className":"Table_table__NzLHi PropsTable_root__O959b","children":[["$","thead",null,{"children":["$","tr",null,{"children":[["$","th",null,{"children":"Свойство","className":"Table_th__EHorR"}],["$","th",null,{"children":"Описание","className":"Table_th__EHorR"}]],"className":"Table_tr__SD2Ot"}]}],["$","tbody",null,{"children":["$@22","$@23","$@24","$@25"]}]]}]}]
+16:["$","$L26",null,{"toc":[{"value":"Обязательные свойства","id":"obyazatelnye-svojstva","depth":2},{"value":"Тэг компонента","id":"teg-komponenta","depth":3},{"value":"Свойства и методы","id":"api","depth":2}]}]
+17:["$","$L27",null,{"children":["$","$1d",null,{"name":"Next.MetadataOutlet","children":"$@28"}]}]
+21:true
+7:300
+22:["$","tr","as",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ PropsTable_propRequired__6g8iy","children":["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"as"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"\"input\" | \"textarea\""}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Тег используемый в компоненте."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+23:["$","tr","getRootRef",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"getRootRef"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"((instance: HTMLInputElement | null) => void | (() => VoidOrUndefinedOnly)) | RefObject<HTMLInputElement | null> | ((instance: HTMLTextAreaElement | null) => void | (() => VoidOrUndefinedOnly)) | RefObject<...> | null"}],"$undefined",["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+24:["$","tr","noPadding",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"noPadding"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"boolean"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"По умолчанию отключено во избежание проблем из-за очередности загрузки стилей."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"false"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+25:["$","tr","ref",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"ref"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"((instance: HTMLInputElement | null) => void | (() => VoidOrUndefinedOnly)) | RefObject<HTMLInputElement | null> | ((instance: HTMLTextAreaElement | null) => void | (() => VoidOrUndefinedOnly)) | RefObject<...> | null"}],"$undefined",["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+28:null
+7:C
+20:0
+5:"$undefined"
+1f:"$undefined"
+18:"$undefined"

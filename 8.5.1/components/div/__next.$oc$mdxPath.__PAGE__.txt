@@ -1,0 +1,119 @@
+2:"$Sreact.fragment"
+3:I[91133,[],""]
+4:I[4297,[],""]
+9:"static/chunks/3587-370fbc97ac594ffc.js"
+a:"static/chunks/977-ea0fbad387b4950d.js"
+b:"static/chunks/app/%5B%5B...mdxPath%5D%5D/page-f1322870613ed6e2.js"
+c:I[67042,["3587","$9","977","$a","217","$b"],"Main"]
+e:"OverviewHeaderLinks"
+f:I[44740,["3587","$9","977","$a","217","$b"],"$e",1]
+1d:"ViewportBoundary"
+1e:I[31872,[],"$1d"]
+1f:"MetadataBoundary"
+20:I[31872,[],"$1f"]
+21:"$Sreact.suspense"
+22:I[12569,[],"IconMark"]
+6:X
+6:C
+7:X
+d:Tda6,---
+description: Компонент с установленными отступами, которые отличаются в зависимости от платформы.
+---
+
+<Overview group="layout">
+
+# Div [tag:component]
+
+Компонент с установленными отступами, которые отличаются в зависимости от платформы.
+Необходим, когда есть какой-то блок с информацией, у которого должны быть стандартные отступы,
+чтобы визуально выровнять его с другими элементами на странице.
+
+</Overview>
+
+{/* @example-description: Базовое использование `Div` для применения стандартных внутренних отступов. */}
+<Playground>
+  ```jsx
+  <Div style={{ border: '1px dashed blue' }}>
+    {/** !!! свойство style используется в демонстрационных целях !!! **/}
+    <Div style={{ border: '1px dashed green' }}>Контент</Div>
+  </Div>
+  ```
+</Playground>
+
+## Пример использования
+
+В компоненты [`Header`](/components/group#header) и [`SimpleCell`](/components/simple-cell) уже заложены
+стандартные платформенные отступы, поэтому не требуется никакой дополнительной конфигурации,
+чтобы выравнять эти элементы. Но если вы просто добавляете на страницу текстовый элемент
+(или свой пользовательский компонент) и хотите добиться визуального выравнивания, то
+используйте компонент `Div`.
+
+{/* @example-description: Сравнение контента без отступов и с отступами внутри `Div` в составе `Group`. */}
+<Playground>
+  ```jsx
+  <Group layoutMode="card" header={<Header size="s">Разделы</Header>}>
+    <Text>Примечание к странице без стандартных отступов</Text>
+    <Div>
+      <Text>Примечание к странице с отступами</Text>
+    </Div>
+    <SimpleCell onClick={() => {}}>Аккаунт</SimpleCell>
+    <SimpleCell onClick={() => {}}>Настройки</SimpleCell>
+  </Group>
+  ```
+</Playground>
+
+## Альтернатива
+
+Если вы не хотите использовать дополнительную обёртку, то можно задать отступы с помощью
+`CSS`-переменных `--vkui--size_base_padding_vertical--regular` для верхнего и нижнего отступа
+и `--vkui--size_base_padding_horizontal--regular` для боковых отступов.
+
+```jsx filename="MyComponent.tsx"
+import styles from './MyComponent.module.css';
+
+function MyComponent({ children }) {
+  return <div className={styles.paddings}>{children}</div>;
+}
+```
+
+```css filename="MyComponent.module.css"
+.paddings {
+  padding-top: var(--vkui--size_base_padding_vertical--regular);
+  padding-bottom: var(--vkui--size_base_padding_vertical--regular);
+  padding-left: var(--vkui--size_base_padding_horizontal--regular);
+  padding-right: var(--vkui--size_base_padding_horizontal--regular);
+}
+```
+
+## Свойства и методы [#api]
+
+<PropsTable name="Div" />8:[["children",{"s":"__PAGE__","h":160,"d":{"r":["$","$2","c",{"children":[[["$","$Lc",null,{"metadata":{"description":"Компонент с установленными отступами, которые отличаются в зависимости от платформы.","title":"Div","filePath":"content/components/div.mdx","timestamp":1794581447000},"sourceCode":"$d","children":[["$","div",null,{"className":"Overview_root__nbCiB","children":[["$","$Lf",null,{"group":"layout"}],[["$","h1",null,{"className":"mdx_h1__1mgpN","data-pagefind-filter":"tag:component","children":"Div"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Компонент с установленными отступами, которые отличаются в зависимости от платформы.\nНеобходим, когда есть какой-то блок с информацией, у которого должны быть стандартные отступы,\nчтобы визуально выровнять его с другими элементами на странице."}]]]}],"\n","\n","$L10","\n","$L11","\n","$L12","\n","\n","$L13","\n","$L14","\n","$L15","\n","$L16","\n","$L17","\n","$L18","\n","$L19"]}],"$L1a"],null,"$L1b"]}],"p":"$@1c","v":null,"s":"$7"}}]]
+1:[["children",{"s":{"n":"mdxPath","t":"oc","k":"components/div","s":["_not-found","_global-error","apple-icon.png","favicon.ico","icon.svg"]},"h":64,"d":{"r":["$","$2","c",{"children":[null,["$","$L3",null,{"parallelRouterKey":"children","template":["$","$L4",null,{}]}]]}],"p":"$@5","v":"$6","s":"$7"},"c":"$Q8"}]]
+0:{"t":{"t":{"s":"","h":16,"c":"$Q1"},"h":{"r":["$","$2","h",{"children":[null,["$","$L1e",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]}],["$","$L20",null,{"children":[["$","div",null,{"hidden":true,"children":["$","$21",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"Div | VKUI"}],["$","meta","1",{"name":"description","content":"Компонент с установленными отступами, которые отличаются в зависимости от платформы."}],["$","link","2",{"rel":"canonical","href":"https://vkui.io/components/div/"}],["$","meta","3",{"property":"og:title","content":"VKUI – React UI Kit"}],["$","meta","4",{"property":"og:description","content":"VKUI — библиотека адаптивных React-компонентов для создания мобильных и веб-приложений."}],["$","meta","5",{"property":"og:url","content":"https://vkui.io/"}],["$","meta","6",{"property":"og:site_name","content":"VKUI"}],["$","meta","7",{"property":"og:type","content":"website"}],["$","meta","8",{"name":"twitter:card","content":"summary"}],["$","meta","9",{"name":"twitter:title","content":"VKUI – React UI Kit"}],["$","meta","10",{"name":"twitter:description","content":"VKUI — библиотека адаптивных React-компонентов для создания мобильных и веб-приложений."}],["$","link","11",{"rel":"icon","href":"/8.5.1/favicon.ico?60dfc7274b0e657e","type":"image/x-icon","sizes":"48x48"}],["$","link","12",{"rel":"icon","href":"/8.5.1/icon.svg?01ea673639a821e1","type":"image/svg+xml","sizes":"any"}],["$","link","13",{"rel":"apple-touch-icon","href":"/8.5.1/apple-icon.png?131c1f3e67ede032","type":"image/png","sizes":"180x180"}],["$","$L22","14",{}]]}]}],null]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}],"p":"$@23","v":null,"s":"$7"}},"a":"$@24","u":"$@25","b":"RTW-5dFQkHMktz2ud-kDX"}
+26:I[95540,["3587","$9","977","$a","217","$b"],"PlaygroundLazy"]
+27:I[13091,["3587","$9","977","$a","217","$b"],"Anchor"]
+28:I[98982,["3587","$9","977","$a","217","$b"],"PreContainer"]
+2b:I[80784,["3587","$9","977","$a","217","$b"],"TOC"]
+2c:I[31872,[],"OutletBoundary"]
+10:["$","$L26",null,{"code":"<Div style={{ border: '1px dashed blue' }}>\n  {/** !!! свойство style используется в демонстрационных целях !!! **/}\n  <Div style={{ border: '1px dashed green' }}>Контент</Div>\n</Div>","previewId":"2c6685776e53c8311a3a7e6d"}]
+11:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"primer-ispolzovaniya","children":["$","a",null,{"href":"#primer-ispolzovaniya","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Пример использования","children":["Пример использования",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+12:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["В компоненты ",["$","$L27",null,{"href":"/components/group#header","children":["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"Header"}]}]," и ",["$","$L27",null,{"href":"/components/simple-cell","children":["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"SimpleCell"}]}]," уже заложены\nстандартные платформенные отступы, поэтому не требуется никакой дополнительной конфигурации,\nчтобы выравнять эти элементы. Но если вы просто добавляете на страницу текстовый элемент\n(или свой пользовательский компонент) и хотите добиться визуального выравнивания, то\nиспользуйте компонент ",["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"Div"}],"."]}]
+13:["$","$L26",null,{"code":"<Group layoutMode=\"card\" header={<Header size=\"s\">Разделы</Header>}>\n  <Text>Примечание к странице без стандартных отступов</Text>\n  <Div>\n    <Text>Примечание к странице с отступами</Text>\n  </Div>\n  <SimpleCell onClick={() => {}}>Аккаунт</SimpleCell>\n  <SimpleCell onClick={() => {}}>Настройки</SimpleCell>\n</Group>","previewId":"94338765053da1863c2a0f8d"}]
+14:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"alternativa","children":["$","a",null,{"href":"#alternativa","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Альтернатива","children":["Альтернатива",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+15:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Если вы не хотите использовать дополнительную обёртку, то можно задать отступы с помощью\n",["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"CSS"}],"-переменных ",["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"--vkui--size_base_padding_vertical--regular"}]," для верхнего и нижнего отступа\nи ",["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"--vkui--size_base_padding_horizontal--regular"}]," для боковых отступов."]}]
+16:["$","$L28",null,{"filename":"MyComponent.tsx","copy":true,"children":["$","pre",null,{"className":"Pre_pre__hY1fL","tabIndex":"0","data-language":"jsx","data-word-wrap":"","data-pagefind-ignore":"all","children":["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":[["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"import"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" styles "}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"from"}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":" './MyComponent.module.css'"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":";"}]]}],"\n",["$","span",null,{"children":" "}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"function"}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" MyComponent"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"({ "}],["$","span",null,{"style":{"--shiki-light":"#E36209","--shiki-dark":"#FFAB70"},"children":"children"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" }) {"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"  return"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" <"}],["$","span",null,{"style":{"--shiki-light":"#22863A","--shiki-dark":"#85E89D"},"children":"div"}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" className"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"{styles.paddings}>{children}</"}],["$","span",null,{"style":{"--shiki-light":"#22863A","--shiki-dark":"#85E89D"},"children":"div"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">;"}]]}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"}"}]}]]}]}]}]
+17:["$","$L28",null,{"filename":"MyComponent.module.css","copy":true,"children":["$","pre",null,{"className":"Pre_pre__hY1fL","tabIndex":"0","data-language":"css","data-word-wrap":"","data-pagefind-ignore":"all","children":["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":[["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":".paddings"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" {"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"  padding-top"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":": "}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"var"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"("}],["$","span",null,{"style":{"--shiki-light":"#E36209","--shiki-dark":"#FFAB70"},"children":"--vkui--size_base_padding_vertical--regular"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":");"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"  padding-bottom"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":": "}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"var"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"("}],["$","span",null,{"style":{"--shiki-light":"#E36209","--shiki-dark":"#FFAB70"},"children":"--vkui--size_base_padding_vertical--regular"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":");"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"  padding-left"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":": "}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"var"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"("}],["$","span",null,{"style":{"--shiki-light":"#E36209","--shiki-dark":"#FFAB70"},"children":"--vkui--size_base_padding_horizontal--regular"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":");"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"  padding-right"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":": "}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"var"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"("}],["$","span",null,{"style":{"--shiki-light":"#E36209","--shiki-dark":"#FFAB70"},"children":"--vkui--size_base_padding_horizontal--regular"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":");"}]]}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"}"}]}]]}]}]}]
+18:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"api","children":["$","a",null,{"href":"#api","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Свойства и методы","children":["Свойства и методы",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+19:["$","div",null,{"className":"Table_root__0rGvK","children":["$","table",null,{"className":"Table_table__NzLHi PropsTable_root__O959b","children":[["$","thead",null,{"children":["$","tr",null,{"children":[["$","th",null,{"children":"Свойство","className":"Table_th__EHorR"}],["$","th",null,{"children":"Описание","className":"Table_th__EHorR"}]],"className":"Table_tr__SD2Ot"}]}],["$","tbody",null,{"children":["$@29","$@2a"]}]]}]}]
+1a:["$","$L2b",null,{"toc":[{"value":"Пример использования","id":"primer-ispolzovaniya","depth":2},{"value":"Альтернатива","id":"alternativa","depth":2},{"value":"Свойства и методы","id":"api","depth":2}]}]
+1b:["$","$L2c",null,{"children":["$","$21",null,{"name":"Next.MetadataOutlet","children":"$@2d"}]}]
+25:true
+7:300
+29:["$","tr","getRootRef",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"getRootRef"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"Ref<HTMLDivElement>"}],"$undefined",["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+2a:["$","tr","ref",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"ref"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"Ref<HTMLDivElement>"}],"$undefined",["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+2d:null
+7:C
+24:0
+5:"$undefined"
+23:"$undefined"
+1c:"$undefined"

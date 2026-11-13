@@ -1,0 +1,3 @@
+import{n as e}from"./rolldown-runtime-sJBDdmOt.js";import{c as t,l as n,n as r,u as i}from"./blocks-CKQcXDTk.js";import{t as a}from"./jsx-runtime-MKhVqBIO.js";import{n as o,t as s}from"./AppRoot-C5j1UKnp.js";import{i as c,r as l}from"./react-DITjJg24.js";function u(e){return(0,f.jsxs)(f.Fragment,{children:[(0,f.jsx)(t,{title:`Configuration/AppRoot`,tags:[`Конфигурация`]}),`
+`,(0,f.jsx)(n,{children:`AppRoot`}),`
+`,(0,f.jsx)(r,{of:s})]})}function d(e={}){let{wrapper:t}={...c(),...e.components};return t?(0,f.jsx)(t,{...e,children:(0,f.jsx)(u,{...e})}):u(e)}var f;function p(){return(p=e((()=>{f=a(),l(),i(),o()})))()}p();export{d as default};

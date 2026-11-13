@@ -1,0 +1,1 @@
+import{n as e}from"./rolldown-runtime-sJBDdmOt.js";import{n as t,t as n}from"./callMultiple-CyaG3Iy6.js";function r(...e){let t=e.reduce((e,t)=>(Object.entries(t).forEach(([t,n])=>{e.hasOwnProperty(t)||(e[t]=[]),e[t].push(n)}),e),{});return Object.entries(t).reduce((e,[t,r])=>(e[t]=n(...r),e),{})}function i(){return(i=e((()=>{t()})))()}export{r as n,i as t};

@@ -1,0 +1,377 @@
+2:"$Sreact.fragment"
+3:I[91133,[],""]
+4:I[4297,[],""]
+9:"static/chunks/3587-370fbc97ac594ffc.js"
+a:"static/chunks/977-ea0fbad387b4950d.js"
+b:"static/chunks/app/%5B%5B...mdxPath%5D%5D/page-f1322870613ed6e2.js"
+c:I[67042,["3587","$9","977","$a","217","$b"],"Main"]
+12:"ViewportBoundary"
+13:I[31872,[],"$12"]
+14:"MetadataBoundary"
+15:I[31872,[],"$14"]
+16:"$Sreact.suspense"
+17:I[12569,[],"IconMark"]
+6:X
+6:C
+7:X
+d:T2298,---
+description: Компонент для удобной работы с pointer-событиями.
+tags: accessibility
+---
+
+<Overview group="utils">
+
+# Touch [tag:component]
+
+Компонент для удобной работы с `pointer`-событиями.
+Позволяет отслеживать свайпы, нажатия и движения указателя, а также управлять их поведением.
+
+</Overview>
+
+import { BlockWrapper } from '@/components/wrappers';
+
+{/* @example-description: Демонстрация `Touch` с перетаскиванием элемента и обработкой смещений по осям. */}
+<Playground Wrapper={BlockWrapper}>
+
+```jsx
+const circleStyle = {
+  width: 40,
+  height: 40,
+  borderRadius: '50%',
+  background: 'var(--vkui--color_background_accent)',
+  position: 'absolute',
+  left: '50%',
+  top: '50%',
+  marginLeft: -20,
+  marginTop: -20,
+  touchAction: 'none',
+};
+
+const containerStyle = {
+  height: 200,
+  border: '8px solid var(--vkui--color_icon_secondary)',
+  position: 'relative',
+};
+
+const [shiftX, setShiftX] = React.useState(0);
+const [shiftY, setShiftY] = React.useState(0);
+const [limitX, setLimitX] = React.useState(0);
+const [limitY, setLimitY] = React.useState(0);
+
+const circleRef = React.useRef(null);
+const startX = React.useRef(0);
+const startY = React.useRef(0);
+
+React.useLayoutEffect(() => {
+  setLimitX(circleRef.current.offsetLeft);
+  setLimitY(circleRef.current.offsetTop);
+});
+
+const getValueWithLimit = (value, limit) => {
+  return value > limit ? limit : value < -limit ? -limit : value;
+};
+
+const onMove = (e) => {
+  const shiftX = startX.current + e.shiftX;
+  const shiftY = startY.current + e.shiftY;
+
+  setShiftX(getValueWithLimit(shiftX, limitX));
+  setShiftY(getValueWithLimit(shiftY, limitY));
+};
+
+const onEnd = (e) => {
+  const shiftX = startX.current + e.shiftX;
+  const shiftY = startY.current + e.shiftY;
+
+  startX.current = getValueWithLimit(shiftX, limitX);
+  startY.current = getValueWithLimit(shiftY, limitY);
+};
+
+const limitExceeded = Math.abs(shiftX) >= limitX || Math.abs(shiftY) >= limitY;
+
+return (
+  <div
+    style={{
+      ...containerStyle,
+      borderColor: limitExceeded
+        ? 'var(--vkui--color_icon_negative)'
+        : 'var(--vkui--color_icon_secondary)',
+    }}
+  >
+    <Touch
+      getRootRef={circleRef}
+      onMove={onMove}
+      onEnd={onEnd}
+      style={{
+        ...circleStyle,
+        transform: `translate(${shiftX}px, ${shiftY}px)`,
+      }}
+    />
+  </div>
+);
+```
+
+</Playground>
+
+Данный компонент представляет собой унифицированный интерфейс для обработки пользовательских взаимодействий
+на различных устройствах (десктопы с мышью, сенсорные устройства).
+`Touch` подходит для реализации компонентов, которые требуют кросс-платформенной обработки касаний.
+Примерами таких компонентов являются [`Slider`](/components/slider), [`Gallery`](/components/gallery)
+или [`PullToRefresh`](/components/pull-to-refresh), которые работают на базе `Touch`.
+
+> **Обратите внимание**
+>
+> Если вам нужен интерактивный компонент по типу кнопки для обработки событий нажатия,
+> то используйте компонент [`Tappable`](/components/tappable).
+
+## Обработка взаимодействия
+
+Компонент позволяет обрабатывать различные фазы взаимодействия через соответствующие обработчики:
+
+### Начало взаимодействия
+
+- `onStart` — общий обработчик начала перемещения;
+- `onStartX` — обработчик начала горизонтального перемещения;
+- `onStartY` — обработчик начала вертикального перемещения.
+
+### Движение
+
+- `onMove` — общий обработчик перемещения;
+- `onMoveX` — обработчик горизонтального перемещения;
+- `onMoveY` — обработчик вертикального перемещения.
+
+### Завершение взаимодействия
+
+- `onEnd` - общий обработчик завершения перемещения;
+- `onEndX` - обработчик завершения горизонтального перемещения;
+- `onEndY` - обработчик завершения вертикального перемещения.
+
+### Параметры взаимодействия
+
+Каждый обработчик, перечисленный выше, содержит в параметре объект со следующей информацией:
+
+- `startX` и `startY` — начальные горизонтальные и вертикальные координаты указателя соответственно;
+- `startT` — время начала взаимодействия;
+- `duration` — длительность взаимодействия в миллисекундах;
+- `isPressed` — флаг активного нажатия;
+- `isY` и `isX` — флаги вертикального и горизонтального перемещения соответственно;
+- `isSlideY` и `isSlideX` — флаги вертикального и горизонтального свайпа соответственно;
+- `isSlide` — общий флаг свайпа;
+- `clientX` и `clientY` — текущие координаты указателя;
+- `shiftX` и `shiftY` — смещение относительно начальной точки по горизонтали и вертикали соответственно;
+- `shiftXAbs` и `shiftYAbs` — абсолютное смещение по горизонтали и вертикали соответственно;
+- `originalEvent` — оригинальное событие.
+
+## События наведения/снятия указателя
+
+Данные обработчики вызываются только для указателя, который поддерживает события `pointerenter`/`pointerleave`, и мыши.
+
+- `onEnter` — обработчик входа курсора в область
+- `onLeave` — обработчик выхода курсора из области
+
+Свойство `usePointerHover` позволяет использовать только `pointer`-события для наведения, что работает даже на отключенных элементах:
+
+```jsx
+<Touch usePointerHover onEnter={handleEnter} onLeave={handleLeave}>
+  <input disabled /> {/* `onEnter` и `onLeave` сработают при взаимодействии с полем  */}
+</Touch>
+```
+
+## Настройка поведения
+
+### Пороговое значение свайпа
+
+Свойство `slideThreshold` определяет минимальное расстояние в пикселях, необходимое для активации свайпа. По умолчанию равно `5`.
+
+```jsx
+<Touch slideThreshold={10}>
+  <div>Свайп активируется при перемещении на 10px</div>
+</Touch>
+```
+
+### Предотвращение кликов
+
+Свойство `noSlideClick` позволяет блокировать клики после распознавания свайпа:
+
+```jsx
+<Touch noSlideClick onMove={handleMove}>
+  <a href="/link">Ссылка не будет активироваться в случае свайпа</a>
+</Touch>
+```
+
+### Управление всплытием событий
+
+Свойство `stopPropagation` позволяет остановить всплытие событий:
+
+```jsx
+<Touch stopPropagation onStart={handleStart} onMove={handleMove} onEnd={handleEnd}>
+  <div>События не будут всплывать выше</div>
+</Touch>
+```
+
+### Фаза capture
+
+Свойство `useCapture` позволяет использовать фазу `capture` для событий:
+
+```jsx
+<Touch useCapture onStart={handleStart}>
+  <div>События будут перехватываться в фазе `capture`</div>
+</Touch>
+```
+
+## Мультитач
+
+При обнаружении мультитача (более одного касания) жест прерывается и вызывается обработчик `onEnd`.
+
+## Свойства и методы [#api]
+
+<PropsTable name="Touch" />8:[["children",{"s":"__PAGE__","h":160,"d":{"r":["$","$2","c",{"children":[[["$","$Lc",null,{"metadata":{"description":"Компонент для удобной работы с pointer-событиями.","tags":"accessibility","title":"Touch","filePath":"content/components/touch.mdx","timestamp":1794581447000},"sourceCode":"$d","children":"$Le"}],"$Lf"],null,"$L10"]}],"p":"$@11","v":null,"s":"$7"}}]]
+1:[["children",{"s":{"n":"mdxPath","t":"oc","k":"components/touch","s":["_not-found","_global-error","apple-icon.png","favicon.ico","icon.svg"]},"h":64,"d":{"r":["$","$2","c",{"children":[null,["$","$L3",null,{"parallelRouterKey":"children","template":["$","$L4",null,{}]}]]}],"p":"$@5","v":"$6","s":"$7"},"c":"$Q8"}]]
+0:{"t":{"t":{"s":"","h":16,"c":"$Q1"},"h":{"r":["$","$2","h",{"children":[null,["$","$L13",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]}],["$","$L15",null,{"children":[["$","div",null,{"hidden":true,"children":["$","$16",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"Touch | VKUI"}],["$","meta","1",{"name":"description","content":"Компонент для удобной работы с pointer-событиями."}],["$","link","2",{"rel":"canonical","href":"https://vkui.io/components/touch/"}],["$","meta","3",{"property":"og:title","content":"VKUI – React UI Kit"}],["$","meta","4",{"property":"og:description","content":"VKUI — библиотека адаптивных React-компонентов для создания мобильных и веб-приложений."}],["$","meta","5",{"property":"og:url","content":"https://vkui.io/"}],["$","meta","6",{"property":"og:site_name","content":"VKUI"}],["$","meta","7",{"property":"og:type","content":"website"}],["$","meta","8",{"name":"twitter:card","content":"summary"}],["$","meta","9",{"name":"twitter:title","content":"VKUI – React UI Kit"}],["$","meta","10",{"name":"twitter:description","content":"VKUI — библиотека адаптивных React-компонентов для создания мобильных и веб-приложений."}],["$","link","11",{"rel":"icon","href":"/8.5.1/favicon.ico?60dfc7274b0e657e","type":"image/x-icon","sizes":"48x48"}],["$","link","12",{"rel":"icon","href":"/8.5.1/icon.svg?01ea673639a821e1","type":"image/svg+xml","sizes":"any"}],["$","link","13",{"rel":"apple-touch-icon","href":"/8.5.1/apple-icon.png?131c1f3e67ede032","type":"image/png","sizes":"180x180"}],["$","$L17","14",{}]]}]}],null]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}],"p":"$@18","v":null,"s":"$7"}},"a":"$@19","u":"$@1a","b":"RTW-5dFQkHMktz2ud-kDX"}
+1b:"OverviewHeaderLinks"
+1c:I[44740,["3587","$9","977","$a","217","$b"],"$1b",1]
+1d:I[95540,["3587","$9","977","$a","217","$b"],"PlaygroundLazy"]
+1e:I[38303,["3587","$9","977","$a","217","$b"],"BlockWrapper"]
+20:I[13091,["3587","$9","977","$a","217","$b"],"Anchor"]
+44:I[80784,["3587","$9","977","$a","217","$b"],"TOC"]
+45:I[31872,[],"OutletBoundary"]
+1f:T712,const circleStyle = {
+  width: 40,
+  height: 40,
+  borderRadius: '50%',
+  background: 'var(--vkui--color_background_accent)',
+  position: 'absolute',
+  left: '50%',
+  top: '50%',
+  marginLeft: -20,
+  marginTop: -20,
+  touchAction: 'none',
+};
+
+const containerStyle = {
+  height: 200,
+  border: '8px solid var(--vkui--color_icon_secondary)',
+  position: 'relative',
+};
+
+const [shiftX, setShiftX] = React.useState(0);
+const [shiftY, setShiftY] = React.useState(0);
+const [limitX, setLimitX] = React.useState(0);
+const [limitY, setLimitY] = React.useState(0);
+
+const circleRef = React.useRef(null);
+const startX = React.useRef(0);
+const startY = React.useRef(0);
+
+React.useLayoutEffect(() => {
+  setLimitX(circleRef.current.offsetLeft);
+  setLimitY(circleRef.current.offsetTop);
+});
+
+const getValueWithLimit = (value, limit) => {
+  return value > limit ? limit : value < -limit ? -limit : value;
+};
+
+const onMove = (e) => {
+  const shiftX = startX.current + e.shiftX;
+  const shiftY = startY.current + e.shiftY;
+
+  setShiftX(getValueWithLimit(shiftX, limitX));
+  setShiftY(getValueWithLimit(shiftY, limitY));
+};
+
+const onEnd = (e) => {
+  const shiftX = startX.current + e.shiftX;
+  const shiftY = startY.current + e.shiftY;
+
+  startX.current = getValueWithLimit(shiftX, limitX);
+  startY.current = getValueWithLimit(shiftY, limitY);
+};
+
+const limitExceeded = Math.abs(shiftX) >= limitX || Math.abs(shiftY) >= limitY;
+
+return (
+  <div
+    style={{
+      ...containerStyle,
+      borderColor: limitExceeded
+        ? 'var(--vkui--color_icon_negative)'
+        : 'var(--vkui--color_icon_secondary)',
+    }}
+  >
+    <Touch
+      getRootRef={circleRef}
+      onMove={onMove}
+      onEnd={onEnd}
+      style={{
+        ...circleStyle,
+        transform: `translate(${shiftX}px, ${shiftY}px)`,
+      }}
+    />
+  </div>
+);e:[["$","div",null,{"className":"Overview_root__nbCiB","children":[["$","$L1c",null,{"group":"utils"}],[["$","h1",null,{"className":"mdx_h1__1mgpN","data-pagefind-filter":"tag:component","children":"Touch"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Компонент для удобной работы с ",["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"pointer"}],"-событиями.\nПозволяет отслеживать свайпы, нажатия и движения указателя, а также управлять их поведением."]}]]]}],"\n","\n","\n",["$","$L1d",null,{"Wrapper":"$1e","code":"$1f","previewId":"949db4f6144925b1075d85d7"}],"\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Данный компонент представляет собой унифицированный интерфейс для обработки пользовательских взаимодействий\nна различных устройствах (десктопы с мышью, сенсорные устройства).\n",["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"Touch"}]," подходит для реализации компонентов, которые требуют кросс-платформенной обработки касаний.\nПримерами таких компонентов являются ",["$","$L20",null,{"href":"/components/slider","children":["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"Slider"}]}],", ",["$","$L20",null,{"href":"/components/gallery","children":["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"Gallery"}]}],"\nили ",["$","$L20",null,{"href":"/components/pull-to-refresh","children":["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"PullToRefresh"}]}],", которые работают на базе ",["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"Touch"}],"."]}],"\n",["$","aside",null,{"className":"Callout_root__6UBFP","children":["$","div",null,{"className":"Callout_content__MYf_T","children":["\n","$L21","\n","$L22","\n"]}]}],"\n","$L23","\n","$L24","\n","$L25","\n","$L26","\n","$L27","\n","$L28","\n","$L29","\n","$L2a","\n","$L2b","\n","$L2c","\n","$L2d","\n","$L2e","\n","$L2f","\n","$L30","\n","$L31","\n","$L32","\n","$L33","\n","$L34","\n","$L35","\n","$L36","\n","$L37","\n","$L38","\n","$L39","\n","$L3a","\n","$L3b","\n","$L3c","\n","$L3d","\n","$L3e","\n","$L3f","\n","$L40","\n","$L41","\n","$L42","\n","$L43"]
+f:["$","$L44",null,{"toc":[{"value":"Обработка взаимодействия","id":"obrabotka-vzaimodejstviya","depth":2},{"value":"Начало взаимодействия","id":"nachalo-vzaimodejstviya","depth":3},{"value":"Движение","id":"dvizhenie","depth":3},{"value":"Завершение взаимодействия","id":"zavershenie-vzaimodejstviya","depth":3},{"value":"Параметры взаимодействия","id":"parametry-vzaimodejstviya","depth":3},{"value":"События наведения/снятия указателя","id":"sobytiya-navedeniyasnyatiya-ukazatelya","depth":2},{"value":"Настройка поведения","id":"nastrojka-povedeniya","depth":2},{"value":"Пороговое значение свайпа","id":"porogovoe-znachenie-svajpa","depth":3},{"value":"Предотвращение кликов","id":"predotvrashenie-klikov","depth":3},{"value":"Управление всплытием событий","id":"upravlenie-vsplytiem-sobytij","depth":3},{"value":"Фаза capture","id":"faza-capture","depth":3},{"value":"Мультитач","id":"multitach","depth":2},{"value":"Свойства и методы","id":"api","depth":2}]}]
+10:["$","$L45",null,{"children":["$","$16",null,{"name":"Next.MetadataOutlet","children":"$@46"}]}]
+1a:true
+47:I[98982,["3587","$9","977","$a","217","$b"],"PreContainer"]
+7:300
+21:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["$","strong",null,{"className":"mdx_strong__N7OUG","children":"Обратите внимание"}]}]
+22:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Если вам нужен интерактивный компонент по типу кнопки для обработки событий нажатия,\nто используйте компонент ",["$","$L20",null,{"href":"/components/tappable","children":["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"Tappable"}]}],"."]}]
+23:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"obrabotka-vzaimodejstviya","children":["$","a",null,{"href":"#obrabotka-vzaimodejstviya","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Обработка взаимодействия","children":["Обработка взаимодействия",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+24:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Компонент позволяет обрабатывать различные фазы взаимодействия через соответствующие обработчики:"}]
+25:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"nachalo-vzaimodejstviya","children":["$","a",null,{"href":"#nachalo-vzaimodejstviya","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Начало взаимодействия","children":["Начало взаимодействия",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+26:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"onStart"}]," — общий обработчик начала перемещения;"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"onStartX"}]," — обработчик начала горизонтального перемещения;"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"onStartY"}]," — обработчик начала вертикального перемещения."]}],"\n"]}]
+27:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"dvizhenie","children":["$","a",null,{"href":"#dvizhenie","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Движение","children":["Движение",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+28:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"onMove"}]," — общий обработчик перемещения;"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"onMoveX"}]," — обработчик горизонтального перемещения;"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"onMoveY"}]," — обработчик вертикального перемещения."]}],"\n"]}]
+29:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"zavershenie-vzaimodejstviya","children":["$","a",null,{"href":"#zavershenie-vzaimodejstviya","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Завершение взаимодействия","children":["Завершение взаимодействия",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+2a:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"onEnd"}]," - общий обработчик завершения перемещения;"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"onEndX"}]," - обработчик завершения горизонтального перемещения;"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"onEndY"}]," - обработчик завершения вертикального перемещения."]}],"\n"]}]
+2b:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"parametry-vzaimodejstviya","children":["$","a",null,{"href":"#parametry-vzaimodejstviya","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Параметры взаимодействия","children":["Параметры взаимодействия",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+2c:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Каждый обработчик, перечисленный выше, содержит в параметре объект со следующей информацией:"}]
+2d:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"startX"}]," и ",["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"startY"}]," — начальные горизонтальные и вертикальные координаты указателя соответственно;"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"startT"}]," — время начала взаимодействия;"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"duration"}]," — длительность взаимодействия в миллисекундах;"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"isPressed"}]," — флаг активного нажатия;"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"isY"}]," и ",["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"isX"}]," — флаги вертикального и горизонтального перемещения соответственно;"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"isSlideY"}]," и ",["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"isSlideX"}]," — флаги вертикального и горизонтального свайпа соответственно;"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"isSlide"}]," — общий флаг свайпа;"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"clientX"}]," и ",["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"clientY"}]," — текущие координаты указателя;"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"shiftX"}]," и ",["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"shiftY"}]," — смещение относительно начальной точки по горизонтали и вертикали соответственно;"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"shiftXAbs"}]," и ",["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"shiftYAbs"}]," — абсолютное смещение по горизонтали и вертикали соответственно;"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"originalEvent"}]," — оригинальное событие."]}],"\n"]}]
+2e:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"sobytiya-navedeniyasnyatiya-ukazatelya","children":["$","a",null,{"href":"#sobytiya-navedeniyasnyatiya-ukazatelya","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию События наведения/снятия указателя","children":["События наведения/снятия указателя",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+2f:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Данные обработчики вызываются только для указателя, который поддерживает события ",["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"pointerenter"}],"/",["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"pointerleave"}],", и мыши."]}]
+30:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"onEnter"}]," — обработчик входа курсора в область"]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"onLeave"}]," — обработчик выхода курсора из области"]}],"\n"]}]
+31:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"usePointerHover"}]," позволяет использовать только ",["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"pointer"}],"-события для наведения, что работает даже на отключенных элементах:"]}]
+32:["$","$L47",null,{"copy":true,"children":["$","pre",null,{"className":"Pre_pre__hY1fL","tabIndex":"0","data-language":"jsx","data-word-wrap":"","data-pagefind-ignore":"all","children":["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":[["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"<"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Touch"}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" usePointerHover"}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" onEnter"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"{handleEnter} "}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":"onLeave"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"{handleLeave}>"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  <"}],["$","span",null,{"style":{"--shiki-light":"#22863A","--shiki-dark":"#85E89D"},"children":"input"}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" disabled"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" /> {"}],["$","span",null,{"style":{"--shiki-light":"#6A737D","--shiki-dark":"#6A737D"},"children":"/* `onEnter` и `onLeave` сработают при взаимодействии с полем  */"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"}"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"</"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Touch"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}]]}]}]}]
+33:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"nastrojka-povedeniya","children":["$","a",null,{"href":"#nastrojka-povedeniya","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Настройка поведения","children":["Настройка поведения",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+34:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"porogovoe-znachenie-svajpa","children":["$","a",null,{"href":"#porogovoe-znachenie-svajpa","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Пороговое значение свайпа","children":["Пороговое значение свайпа",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+35:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"slideThreshold"}]," определяет минимальное расстояние в пикселях, необходимое для активации свайпа. По умолчанию равно ",["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"5"}],"."]}]
+36:["$","$L47",null,{"copy":true,"children":["$","pre",null,{"className":"Pre_pre__hY1fL","tabIndex":"0","data-language":"jsx","data-word-wrap":"","data-pagefind-ignore":"all","children":["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":[["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"<"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Touch"}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" slideThreshold"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"{"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"10"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"}>"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  <"}],["$","span",null,{"style":{"--shiki-light":"#22863A","--shiki-dark":"#85E89D"},"children":"div"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">Свайп активируется при перемещении на 10px</"}],["$","span",null,{"style":{"--shiki-light":"#22863A","--shiki-dark":"#85E89D"},"children":"div"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"</"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Touch"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}]]}]}]}]
+37:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"predotvrashenie-klikov","children":["$","a",null,{"href":"#predotvrashenie-klikov","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Предотвращение кликов","children":["Предотвращение кликов",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+38:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"noSlideClick"}]," позволяет блокировать клики после распознавания свайпа:"]}]
+39:["$","$L47",null,{"copy":true,"children":["$","pre",null,{"className":"Pre_pre__hY1fL","tabIndex":"0","data-language":"jsx","data-word-wrap":"","data-pagefind-ignore":"all","children":["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":[["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"<"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Touch"}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" noSlideClick"}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" onMove"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"{handleMove}>"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  <"}],["$","span",null,{"style":{"--shiki-light":"#22863A","--shiki-dark":"#85E89D"},"children":"a"}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" href"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"/link\""}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">Ссылка не будет активироваться в случае свайпа</"}],["$","span",null,{"style":{"--shiki-light":"#22863A","--shiki-dark":"#85E89D"},"children":"a"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"</"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Touch"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}]]}]}]}]
+3a:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"upravlenie-vsplytiem-sobytij","children":["$","a",null,{"href":"#upravlenie-vsplytiem-sobytij","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Управление всплытием событий","children":["Управление всплытием событий",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+3b:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"stopPropagation"}]," позволяет остановить всплытие событий:"]}]
+3c:["$","$L47",null,{"copy":true,"children":["$","pre",null,{"className":"Pre_pre__hY1fL","tabIndex":"0","data-language":"jsx","data-word-wrap":"","data-pagefind-ignore":"all","children":["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":[["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"<"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Touch"}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" stopPropagation"}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" onStart"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"{handleStart} "}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":"onMove"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"{handleMove} "}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":"onEnd"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"{handleEnd}>"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  <"}],["$","span",null,{"style":{"--shiki-light":"#22863A","--shiki-dark":"#85E89D"},"children":"div"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">События не будут всплывать выше</"}],["$","span",null,{"style":{"--shiki-light":"#22863A","--shiki-dark":"#85E89D"},"children":"div"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"</"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Touch"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}]]}]}]}]
+3d:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"faza-capture","children":["$","a",null,{"href":"#faza-capture","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Фаза capture","children":["Фаза capture",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+3e:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"useCapture"}]," позволяет использовать фазу ",["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"capture"}]," для событий:"]}]
+3f:["$","$L47",null,{"copy":true,"children":["$","pre",null,{"className":"Pre_pre__hY1fL","tabIndex":"0","data-language":"jsx","data-word-wrap":"","data-pagefind-ignore":"all","children":["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":[["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"<"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Touch"}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" useCapture"}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" onStart"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"{handleStart}>"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  <"}],["$","span",null,{"style":{"--shiki-light":"#22863A","--shiki-dark":"#85E89D"},"children":"div"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">События будут перехватываться в фазе `capture`</"}],["$","span",null,{"style":{"--shiki-light":"#22863A","--shiki-dark":"#85E89D"},"children":"div"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"</"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Touch"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}]]}]}]}]
+40:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"multitach","children":["$","a",null,{"href":"#multitach","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Мультитач","children":["Мультитач",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+41:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["При обнаружении мультитача (более одного касания) жест прерывается и вызывается обработчик ",["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"onEnd"}],"."]}]
+42:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"api","children":["$","a",null,{"href":"#api","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Свойства и методы","children":["Свойства и методы",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+43:["$","div",null,{"className":"Table_root__0rGvK","children":["$","table",null,{"className":"Table_table__NzLHi PropsTable_root__O959b","children":[["$","thead",null,{"children":["$","tr",null,{"children":[["$","th",null,{"children":"Свойство","className":"Table_th__EHorR"}],["$","th",null,{"children":"Описание","className":"Table_th__EHorR"}]],"className":"Table_tr__SD2Ot"}]}],["$","tbody",null,{"children":["$@48","$@49","$@4a","$@4b","$@4c","$@4d","$@4e","$@4f","$@50","$@51","$@52","$@53","$@54","$@55","$@56","$@57","$@58","$@59","$@5a"]}]]}]}]
+46:null
+7:C
+48:["$","tr","Component",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"Component"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"ElementType<any, keyof IntrinsicElements>"}],"$undefined",["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"div"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+49:["$","tr","getRootRef",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"getRootRef"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"Ref<HTMLElement>"}],"$undefined",["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+4a:["$","tr","noSlideClick",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"noSlideClick"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"boolean"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Блокировать click-события после распознавания свайпа."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"false"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+4b:["$","tr","onEnd",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"onEnd"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"CustomTouchEventHandler"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Общий обработчик завершения взаимодействия."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+4c:["$","tr","onEndX",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"onEndX"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"CustomTouchEventHandler"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Обработчик завершения горизонтального свайпа."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+4d:["$","tr","onEndY",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"onEndY"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"CustomTouchEventHandler"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Обработчик завершения вертикального свайпа."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+4e:["$","tr","onEnter",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"onEnter"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"HoverHandler"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Обработчик входа курсора в область."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+4f:["$","tr","onLeave",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"onLeave"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"HoverHandler"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Обработчик выхода курсора из области."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+50:["$","tr","onMove",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"onMove"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"CustomTouchEventHandler"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Общий обработчик перемещения."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+51:["$","tr","onMoveX",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"onMoveX"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"CustomTouchEventHandler"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Обработчик горизонтального перемещения."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+52:["$","tr","onMoveY",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"onMoveY"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"CustomTouchEventHandler"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Обработчик вертикального перемещения."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+53:["$","tr","onStart",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"onStart"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"CustomTouchEventHandler"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Общий обработчик начала взаимодействия."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+54:["$","tr","onStartX",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"onStartX"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"CustomTouchEventHandler"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Обработчик начала горизонтального перемещения."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+55:["$","tr","onStartY",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"onStartY"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"CustomTouchEventHandler"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Обработчик начала вертикального перемещения."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+56:["$","tr","ref",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"ref"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"Ref<HTMLElement>"}],"$undefined",["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+57:["$","tr","slideThreshold",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"slideThreshold"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"number"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Порог расстояния в пикселях для активации свайпа."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"5"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+58:["$","tr","stopPropagation",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"stopPropagation"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"boolean"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Останавливать всплытие событий."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"false"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+59:["$","tr","useCapture",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"useCapture"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"boolean"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Использовать фазу capture для событий."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"false"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+5a:["$","tr","usePointerHover",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ","children":["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"usePointerHover"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"boolean"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Использовать pointer-events для hover-состояний.\nРаботает на отключенных элементах (disabled inputs)."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_b921ba","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+19:0
+5:"$undefined"
+18:"$undefined"
+11:"$undefined"

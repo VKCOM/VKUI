@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[5463],{35463:(e,r,s)=>{s.r(r),s.d(r,{Preview_9a468e648adc5d669ee2f22f:()=>d});var n=s(73365),c=s(72281),a=s(9903);function d(){return(0,n.jsxs)(n.Fragment,{children:[(0,n.jsx)(c.Text,{children:"Здесь есть ещё текст для скринридера"}),(0,n.jsx)(a.s,{children:"Доступно только для скринридеров"})]})}}}]);

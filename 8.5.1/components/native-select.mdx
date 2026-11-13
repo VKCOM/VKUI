@@ -1,0 +1,142 @@
+﻿---
+description: Компонент для создания выпадающего списка на основе нативного HTML-элемента select.
+tags: selection
+---
+
+# NativeSelect \[tag:component]
+
+Компонент для создания выпадающего списка на основе нативного HTML-элемента `select`.
+Используется для выбора одного значения из списка опций.
+
+Связанные компоненты:
+
+* [`Select`](/components/select)
+
+> Важно: для отображения невыбранного состояния нужно использовать `value=null` вместо `undefined`.
+>
+> `undefined` ипользуется только для неконтролируемого компонента.
+
+```jsx
+<FormItem top="Опция" htmlFor="native-select-native-option">
+  <NativeSelect id="native-select-native-option" name="native-option">
+    <option value="1">Опция 1</option>
+    <option value="2">Опция 2</option>
+    <option value="3">Опция 3</option>
+  </NativeSelect>
+</FormItem>
+```
+
+> Используйте данный компонент на мобильных устройствах или отдайте предпочтение [`Select`](/components/select),
+> который автоматически выберет наилучший для отображения компонент.
+> Используйте компонент [`CustomSelect`](/components/custom-select), чтобы вид компонента был всегда кастомный.
+
+## Режим работы
+
+Компонент поддерживает работу как в неконтролируемом режиме, так и контролируемом. Это стандартное поведение
+React-компонентов, прочитать про это можно в [документации React](https://react.dev/reference/react-dom/components/input#controlling-an-input-with-a-state-variable).
+
+Для использования неконтролируемого режима достаточно просто *не* передавать `value` или передавать `defaultValue`, если
+требуется задать значение по умолчанию.
+Для контролируемого режима используйте связку свойств `value`/`onChange` для задания значения и его изменения.
+
+```jsx
+// Неконтролируемое состояние
+<NativeSelect defaultValue="f">
+  <option value="f">Женский</option>
+  <option value="m">Мужской</option>
+</NativeSelect>;
+
+// Контролируемое состояние
+const [gender, setGender] = React.useState('f');
+
+<NativeSelect value={gender} onChange={(_, newGender) => setGender(newGender)}>
+  <option value="f">Женский</option>
+  <option value="m">Мужской</option>
+</NativeSelect>;
+```
+
+## Состояния
+
+### `disabled`
+
+Свойство `disabled` блокирует взаимодействие с компонентом и добавляет визуальную индикацию недоступности.
+
+> Если вы используете `NativeSelect` вместе с `FormItem`, то свойство `disabled` следует указывать и у `Input`, и у `FormItem`.
+
+```jsx
+<FormItem top="Опция" htmlFor="native-select-native-select-option-2" disabled>
+  <NativeSelect id="native-select-native-select-option-2" name="native-select-option-2" disabled>
+    <option value="1">Опция 1</option>
+  </NativeSelect>
+</FormItem>
+```
+
+## Валидация
+
+Свойство `status` используется для визуализации валидации компонента - некорректности заполненного поля (значение `"error"`)
+или успешной валидации (значение `"valid"`).
+
+> Если вы используете `FormField` вместе с [`FormItem`](/components/form-item), вам достаточно указать свойство `status` только у
+> [`FormItem`](/components/form-item).
+
+```jsx
+<FormItem top="Опция" htmlFor="native-select-native-select-option-3" status="error">
+  <NativeSelect id="native-select-native-select-option-3" name="native-select-option-3">
+    <option value="1">Опция 1</option>
+  </NativeSelect>
+</FormItem>
+<FormItem top="Опция" htmlFor="native-select-native-select-option-4" status="valid">
+  <NativeSelect id="native-select-native-select-option-4" name="native-select-option-4">
+    <option value="1">Опция 1</option>
+  </NativeSelect>
+</FormItem>
+```
+
+## Кастомизация
+
+Через свойство `slotProps` можно прокинуть свойства во внутренние элементы.
+Это удобно для добавления кастомных классов, data-атрибутов, aria-атрибутов, обработчиков событий, доступов к элементам через `getRootRef` и других расширений, не влияя на внешний API компонента.
+
+```jsx
+const selectRef = React.useRef();
+
+return (
+  <FormItem top="Опция" htmlFor="native-select-id">
+    <NativeSelect
+      name="native-select-option-5"
+      className="my-root-class"
+      data-testid="native-select-root"
+      id="native-select-id"
+      slotProps={{
+        root: {
+          id: 'select-root-id',
+        },
+        select: {
+          className: 'my-select-class',
+          'data-test-id': 'select',
+          getRootRef: selectRef,
+          'aria-label': 'Пример slotProps'
+        }
+      }}
+    >
+      <option value="1">Опция 1</option>
+      <option value="2">Опция 2</option>
+      <option value="3">Опция 3</option>
+    </NativeSelect>
+  </FormItem>
+)
+```
+
+## Доступность (a11y) \[#a11y]
+
+Компонент построен на основе нативного HTML-элемента `select`, что обеспечивает базовую доступность. Для улучшения доступности рекомендуется:
+
+* всегда добавлять `label` для селекта;
+* использовать `aria-label` или `aria-labelledby`, если визуальный заголовок отсутствует;
+* добавлять `aria-describedby` для дополнительного описания, если оно есть.
+
+Для лучшей доступности оборачивайте `NativeSelect` в `FormItem` — так у поля будут заголовок и описание.
+
+## Свойства и методы \[#api]
+
+*Не принимает свойств*

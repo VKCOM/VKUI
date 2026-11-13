@@ -1,0 +1,4 @@
+import{n as e}from"./rolldown-runtime-sJBDdmOt.js";import{c as t,i as n,l as r,n as i,u as a}from"./blocks-CKQcXDTk.js";import{t as o}from"./jsx-runtime-MKhVqBIO.js";import{i as s,r as c}from"./react-DITjJg24.js";import{n as l,t as u}from"./UnstyledTextField-noxGn9Qd.js";function d(e){return(0,p.jsxs)(p.Fragment,{children:[(0,p.jsx)(t,{title:`Utils/UnstyledTextField`,tags:[`Утилиты`]}),`
+`,(0,p.jsx)(r,{children:`UnstyledTextField`}),`
+`,(0,p.jsx)(n,{of:u}),`
+`,(0,p.jsx)(i,{of:u})]})}function f(e={}){let{wrapper:t}={...s(),...e.components};return t?(0,p.jsx)(t,{...e,children:(0,p.jsx)(d,{...e})}):d(e)}var p;function m(){return(m=e((()=>{p=o(),c(),a(),l()})))()}m();export{f as default};

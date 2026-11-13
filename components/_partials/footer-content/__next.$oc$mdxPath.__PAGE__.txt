@@ -1,11 +1,11 @@
 2:"$Sreact.fragment"
 3:I[91133,[],""]
 4:I[4297,[],""]
-9:"static/chunks/959-cbc89b0d34fd068e.js"
-a:"static/chunks/628-30182439a4d3f7ae.js"
-b:"static/chunks/app/%5B%5B...mdxPath%5D%5D/page-9e158cb4dcea1416.js"
-c:I[67042,["959","$9","628","$a","217","$b"],"Main"]
-d:I[80784,["959","$9","628","$a","217","$b"],"TOC"]
+9:"static/chunks/3587-5e66987dfa869320.js"
+a:"static/chunks/977-dbba56833b76a0b6.js"
+b:"static/chunks/app/%5B%5B...mdxPath%5D%5D/page-f1322870613ed6e2.js"
+c:I[67042,["3587","$9","977","$a","217","$b"],"Main"]
+d:I[80784,["3587","$9","977","$a","217","$b"],"TOC"]
 e:I[31872,[],"OutletBoundary"]
 f:"$Sreact.suspense"
 12:"ViewportBoundary"
@@ -16,9 +16,9 @@ f:"$Sreact.suspense"
 6:X
 6:C
 7:X
-8:[["children",{"s":"__PAGE__","h":160,"d":{"r":["$","$2","c",{"children":[[["$","$Lc",null,{"metadata":{"title":"Footer Content","filePath":"content/components/_partials/footer-content.mdx","timestamp":1794401315000},"sourceCode":""}],["$","$Ld",null,{"toc":[]}]],null,["$","$Le",null,{"children":["$","$f",null,{"name":"Next.MetadataOutlet","children":"$@10"}]}]]}],"p":"$@11","v":null,"s":"$7"}}]]
+8:[["children",{"s":"__PAGE__","h":160,"d":{"r":["$","$2","c",{"children":[[["$","$Lc",null,{"metadata":{"title":"Footer Content","filePath":"content/components/_partials/footer-content.mdx","timestamp":1794581447000},"sourceCode":""}],["$","$Ld",null,{"toc":[]}]],null,["$","$Le",null,{"children":["$","$f",null,{"name":"Next.MetadataOutlet","children":"$@10"}]}]]}],"p":"$@11","v":null,"s":"$7"}}]]
 1:[["children",{"s":{"n":"mdxPath","t":"oc","k":"components/_partials/footer-content","s":["_not-found","_global-error","apple-icon.png","favicon.ico","icon.svg"]},"h":64,"d":{"r":["$","$2","c",{"children":[null,["$","$L3",null,{"parallelRouterKey":"children","template":["$","$L4",null,{}]}]]}],"p":"$@5","v":"$6","s":"$7"},"c":"$Q8"}]]
-0:{"t":{"t":{"s":"","h":16,"c":"$Q1"},"h":{"r":["$","$2","h",{"children":[null,["$","$L13",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]}],["$","$L15",null,{"children":[["$","div",null,{"hidden":true,"children":["$","$f",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"Footer Content | VKUI"}],["$","meta","1",{"name":"description","content":"VKUI — библиотека адаптивных React-компонентов для создания мобильных и веб-приложений."}],["$","link","2",{"rel":"canonical","href":"https://vkui.io/components/_partials/footer-content/"}],["$","meta","3",{"property":"og:title","content":"VKUI – React UI Kit"}],["$","meta","4",{"property":"og:description","content":"VKUI — библиотека адаптивных React-компонентов для создания мобильных и веб-приложений."}],["$","meta","5",{"property":"og:url","content":"https://vkui.io/"}],["$","meta","6",{"property":"og:site_name","content":"VKUI"}],["$","meta","7",{"property":"og:type","content":"website"}],["$","meta","8",{"name":"twitter:card","content":"summary"}],["$","meta","9",{"name":"twitter:title","content":"VKUI – React UI Kit"}],["$","meta","10",{"name":"twitter:description","content":"VKUI — библиотека адаптивных React-компонентов для создания мобильных и веб-приложений."}],["$","link","11",{"rel":"icon","href":"/favicon.ico?60dfc7274b0e657e","type":"image/x-icon","sizes":"48x48"}],["$","link","12",{"rel":"icon","href":"/icon.svg?01ea673639a821e1","type":"image/svg+xml","sizes":"any"}],["$","link","13",{"rel":"apple-touch-icon","href":"/apple-icon.png?131c1f3e67ede032","type":"image/png","sizes":"180x180"}],["$","$L16","14",{}]]}]}],null]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}],"p":"$@17","v":null,"s":"$7"}},"a":"$@18","u":"$@19","b":"4OLeuTG5G4I-YTaLhBfT_"}
+0:{"t":{"t":{"s":"","h":16,"c":"$Q1"},"h":{"r":["$","$2","h",{"children":[null,["$","$L13",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]}],["$","$L15",null,{"children":[["$","div",null,{"hidden":true,"children":["$","$f",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"Footer Content | VKUI"}],["$","meta","1",{"name":"description","content":"VKUI — библиотека адаптивных React-компонентов для создания мобильных и веб-приложений."}],["$","link","2",{"rel":"canonical","href":"https://vkui.io/components/_partials/footer-content/"}],["$","meta","3",{"property":"og:title","content":"VKUI – React UI Kit"}],["$","meta","4",{"property":"og:description","content":"VKUI — библиотека адаптивных React-компонентов для создания мобильных и веб-приложений."}],["$","meta","5",{"property":"og:url","content":"https://vkui.io/"}],["$","meta","6",{"property":"og:site_name","content":"VKUI"}],["$","meta","7",{"property":"og:type","content":"website"}],["$","meta","8",{"name":"twitter:card","content":"summary"}],["$","meta","9",{"name":"twitter:title","content":"VKUI – React UI Kit"}],["$","meta","10",{"name":"twitter:description","content":"VKUI — библиотека адаптивных React-компонентов для создания мобильных и веб-приложений."}],["$","link","11",{"rel":"icon","href":"/favicon.ico?60dfc7274b0e657e","type":"image/x-icon","sizes":"48x48"}],["$","link","12",{"rel":"icon","href":"/icon.svg?01ea673639a821e1","type":"image/svg+xml","sizes":"any"}],["$","link","13",{"rel":"apple-touch-icon","href":"/apple-icon.png?131c1f3e67ede032","type":"image/png","sizes":"180x180"}],["$","$L16","14",{}]]}]}],null]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}],"p":"$@17","v":null,"s":"$7"}},"a":"$@18","u":"$@19","b":"Hnq57rVxXH4AX6kuKy0O1"}
 10:null
 19:true
 7:300

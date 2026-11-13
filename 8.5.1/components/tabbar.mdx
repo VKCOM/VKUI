@@ -1,0 +1,66 @@
+﻿---
+other:
+  hidden: true
+  parent: Epic
+description: Панель навигации, закреплённая в нижней части экрана, для использования в Epic.
+---
+
+# Tabbar \[tag:component]
+
+Панель навигации, закреплённая в нижней части экрана. Передаётся в свойство `tabbar` компонента [`Epic`](/components/epic).
+
+Подкомпонент прибивает элементы навигации ([`TabbarItem`](#tabbar-item)) к низу экрана. Передаётся в свойство `tabbar` компонента [`Epic`](/components/epic).
+
+```jsx
+<Tabbar>
+  <TabbarItem label="Новости">
+    <Icon28NewsfeedOutline />
+  </TabbarItem>
+  <TabbarItem label="Профиль" selected>
+    <Icon28UserCircleOutline />
+  </TabbarItem>
+</Tabbar>
+```
+
+```jsx
+<Tabbar>
+  <TabbarItem label="Новости">
+    <Icon28NewsfeedOutline />
+  </TabbarItem>
+  <TabbarItem label="Профиль" selected>
+    <Icon28UserCircleOutline />
+  </TabbarItem>
+</Tabbar>
+```
+
+### Выравнивание \[#tabbar-align]
+
+В случае, если в `Tabbar` передан один или два элемента [`TabbarItem`](#tabbar-item), контент внутри этих элементов располагается
+по горизонтали, в остальных случаях контент располагается вертикально.
+
+С помощью свойства `mode` у `Tabbar` можно переопределить это поведение.
+
+* `"vertical"` — задаёт всегда вертикальное расположение;
+* `"horizontal"` — задаёт всегда горизонтальное расположение.
+
+```jsx
+<Tabbar mode="vertical">
+  <TabbarItem label="Новости">
+    <Icon28NewsfeedOutline />
+  </TabbarItem>
+  <TabbarItem label="Профиль" selected>
+    <Icon28UserCircleOutline />
+  </TabbarItem>
+</Tabbar>
+```
+
+## Свойства и методы \[#api]
+
+### Tabbar
+
+| Свойство     | Тип                                    | По умолчанию | Описание                                                     |
+| ------------ | -------------------------------------- | ------------ | ------------------------------------------------------------ |
+| `getRootRef` | `Ref<HTMLDivElement>`                  | `-`          |                                                              |
+| `mode`       | `"auto" \| "horizontal" \| "vertical"` | `-`          | Задает расположение элементов (вертикальное/горизонтальное). |
+| `plain`      | `boolean`                              | `false`      | Флаг, который скрывает тень (Android) или границы (iOS).     |
+| `ref`        | `Ref<HTMLDivElement>`                  | `-`          |                                                              |

@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[7290],{24909:(e,r,c)=>{c.r(r),c.d(r,{Preview_40a6de1e42a5cb891cf75f32:()=>a});var n=c(73365),s=c(69393);function a(){return(0,n.jsx)(n.Fragment,{children:(0,n.jsx)(s.L,{children:"Подзаголовок второго уровня"})})}}}]);
