@@ -38,7 +38,7 @@ const isMenu = (page: PageItem | MenuItem): page is MenuItem => page.type === 'm
 export function Navbar({ logo, fakeNavbarItem }: NavbarProps): React.ReactElement {
   const themeConfig = useThemeConfig();
   const activeRoute = useFSRoute();
-  const { setMenu } = useMenu();
+  const { menu, setMenu } = useMenu();
   const {
     normalizePagesResult: { topLevelNavbarItems: items },
   } = useConfig();
@@ -55,6 +55,9 @@ export function Navbar({ logo, fakeNavbarItem }: NavbarProps): React.ReactElemen
               appearance="neutral"
               className={styles.menuButton}
               aria-label="Меню"
+              aria-expanded={menu}
+              aria-controls={menu ? 'vkui-docs-mobile-sidebar' : undefined}
+              aria-haspopup="dialog"
               onClick={() => setMenu(true)}
             />
             <Tappable
