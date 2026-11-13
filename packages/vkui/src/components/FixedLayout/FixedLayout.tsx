@@ -7,7 +7,6 @@ import { useRootRef } from '../../hooks/useExternRef';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useResizeObserver } from '../../hooks/useResizeObserver';
 import { useDOM } from '../../lib/dom';
-import { setRef } from '../../lib/utils';
 import { warnOnce } from '../../lib/warnOnce';
 import type { HasComponent, HTMLAttributesWithRootRef } from '../../types';
 import { OnboardingTooltipContainer } from '../OnboardingTooltip/OnboardingTooltipContainer';
@@ -76,14 +75,11 @@ export const FixedLayout = ({
   const { colRef } = React.useContext(SplitColContext);
   const parentRef = React.useRef<HTMLElement | null>(null);
 
-  const handleRootRef = useCallback(
-    (node: HTMLElement | null) => {
-      setRef(node, getRootRef);
-      setRef(node, ref);
-      setRef(node?.parentElement ?? null, parentRef);
-    },
-    [getRootRef],
-  );
+  const handleRootRef = useCallback((node: HTMLDivElement | null) => {
+    ref.current = node;
+    parentRef.current = node?.parentElement ?? null;
+  }, []);
+  const rootRef = useRootRef(getRootRef, handleRootRef);
 
   const doResize = () => {
     if (useParentWidth && parentRef.current) {
@@ -112,7 +108,7 @@ export const FixedLayout = ({
     <OnboardingTooltipContainer
       {...restProps}
       fixed
-      ref={handleRootRef}
+      ref={rootRef}
       className={classNames(
         styles.host,
         platform === 'ios' && stylesGlobal.vkuiInternalFixedLayoutIos,

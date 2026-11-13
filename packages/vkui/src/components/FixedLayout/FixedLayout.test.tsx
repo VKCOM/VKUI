@@ -1,4 +1,4 @@
-import { act, type RefObject } from 'react';
+import { act, type RefCallback, type RefObject } from 'react';
 import { render } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import { baselineComponent } from '../../testing/utils';
@@ -24,6 +24,35 @@ vi.stubGlobal('ResizeObserver', mockResizeObserver);
 
 describe('FixedLayout', () => {
   baselineComponent(FixedLayout);
+
+  it('runs callback ref cleanups on replacement and unmount', () => {
+    const firstCleanup = vi.fn();
+    const nextCleanup = vi.fn();
+    const firstRef = vi.fn<RefCallback<HTMLDivElement>>().mockReturnValue(firstCleanup);
+    const nextRef = vi.fn<RefCallback<HTMLDivElement>>().mockReturnValue(nextCleanup);
+    const { rerender, unmount } = render(<FixedLayout getRootRef={firstRef} />);
+    const node = firstRef.mock.calls[0]?.[0];
+
+    expect(node).toBeInstanceOf(HTMLElement);
+
+    rerender(<FixedLayout getRootRef={firstRef} filled />);
+
+    expect(firstCleanup).not.toHaveBeenCalled();
+    expect(firstRef.mock.calls).toEqual([[node]]);
+
+    rerender(<FixedLayout getRootRef={nextRef} />);
+
+    expect(firstCleanup).toHaveBeenCalledTimes(1);
+    expect(firstRef.mock.calls).toEqual([[node]]);
+    expect(nextRef.mock.calls).toEqual([[node]]);
+    expect(nextCleanup).not.toHaveBeenCalled();
+
+    unmount();
+
+    expect(firstCleanup).toHaveBeenCalledTimes(1);
+    expect(nextCleanup).toHaveBeenCalledTimes(1);
+    expect(nextRef.mock.calls).toEqual([[node]]);
+  });
 
   it('check update width by parent width', async () => {
     const parentRef: RefObject<HTMLDivElement | null> = {
