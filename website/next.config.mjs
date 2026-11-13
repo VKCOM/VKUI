@@ -11,6 +11,9 @@ import { transformer as codeImportTransformer } from './remark-plugins/remarkCod
 import { transformer as headingTransformer } from './remark-plugins/remarkHeading.mjs';
 import { transformer as playgroundTransformer } from './remark-plugins/remarkPlayground.mjs';
 import { transformer as slugifyTransformer } from './remark-plugins/remarkSlugify.mjs';
+import { generatePreviews } from './scripts/generate-previews.ts';
+
+await generatePreviews();
 
 const basePath =
   process.env.NODE_ENV === 'production' ? process.env.NEXT_PUBLIC_VKUI_DOCS_BASE_PATH : undefined;
@@ -62,6 +65,13 @@ export default withBundleAnalyzer(
     },
     distDir,
     webpack: (config, { isServer, dev }) => {
+      if (dev) {
+        config.plugins.push({
+          apply(compiler) {
+            compiler.hooks.beforeCompile.tapPromise('GeneratePlaygroundPreviews', generatePreviews);
+          },
+        });
+      }
       config.resolve.alias = {
         ...config.resolve.alias,
         '@vkontakte/vkui$': fileURLToPath(import.meta.resolve('@vkontakte/vkui/dist/cssm')),
