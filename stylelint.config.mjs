@@ -1,6 +1,15 @@
 import path from 'node:path';
 
 const config = {
+  languageOptions: {
+    syntax: {
+      properties: {
+        // PostCSS margin-trim поддерживает inline-значения из CSS Box Model Level 4.
+        'margin-trim':
+          'none | block | inline | [ block-start || block-end || inline-start || inline-end ]',
+      },
+    },
+  },
   extends: [
     'stylelint-config-standard',
     '@vkontakte/stylelint-config',

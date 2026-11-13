@@ -28,6 +28,7 @@
 }
 
 .photos {
+  margin-trim: inline-start;
   display: flex;
 }
 
@@ -57,9 +58,6 @@
 
 .photoWrapper {
   display: flex;
-}
-
-.photoWrapper:not(:first-child) {
   margin-inline-start: -2px;
 }
 

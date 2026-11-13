@@ -3,6 +3,7 @@
 }
 
 .body {
+  margin-trim: block-end;
   padding-block: var(--vkui--size_base_padding_vertical--regular);
   padding-inline: var(--vkui--size_base_padding_horizontal--regular);
 }
@@ -24,7 +25,7 @@
   border-end-end-radius: 0;
 }
 
-.text:not(:last-child) {
+.text {
   margin-block-end: 4px;
 }
 

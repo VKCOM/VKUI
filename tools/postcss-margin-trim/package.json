@@ -1,0 +1,11 @@
+{
+  "private": true,
+  "name": "@project-tools/postcss-margin-trim",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "echo no build",
+    "test": "node --test '**/*.test.*'",
+    "test:ci": "node --run test"
+  }
+}
