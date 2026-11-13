@@ -25,17 +25,18 @@ export interface NavbarProps {
    */
   logo: React.ReactElement;
   /**
-   * Временное :) решение для роутинга
+   * Дополнительные ссылки перед разделами из карты страниц.
    */
-  fakeNavbarItem?: {
+  additionalItems?: Array<{
     title: string;
     href: string;
-  };
+    isActive: (activeRoute: string) => boolean;
+  }>;
 }
 
 const isMenu = (page: PageItem | MenuItem): page is MenuItem => page.type === 'menu';
 
-export function Navbar({ logo, fakeNavbarItem }: NavbarProps): React.ReactElement {
+export function Navbar({ logo, additionalItems }: NavbarProps): React.ReactElement {
   const themeConfig = useThemeConfig();
   const activeRoute = useFSRoute();
   const { setMenu } = useMenu();
@@ -63,20 +64,21 @@ export function Navbar({ logo, fakeNavbarItem }: NavbarProps): React.ReactElemen
               hoverMode="opacity"
               activeMode="opacity"
               aria-label="Лого VKUI"
-              href={fakeNavbarItem ? fakeNavbarItem.href : '/'}
+              href={additionalItems?.[0]?.href ?? '/'}
             >
               {logo}
             </Tappable>
             <div className={styles.versions}>{themeConfig.versions}</div>
           </Flex>
           <ButtonGroup gap="space" className={classNames(styles.links)}>
-            {fakeNavbarItem && (
+            {additionalItems?.map((item) => (
               <NavBarLink
-                title={fakeNavbarItem.title}
-                href={fakeNavbarItem.href}
-                activated={!activeRoute.includes('/blog')}
+                key={item.href}
+                title={item.title}
+                href={item.href}
+                activated={item.isActive(activeRoute)}
               />
-            )}
+            ))}
             {items.map((page) => {
               if (('display' in page && page.display === 'hidden') || isMenu(page)) {
                 return null;
