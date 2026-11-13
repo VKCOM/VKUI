@@ -86,3 +86,9 @@ export const CustomScrollViewWithBothScrollsPlayground = (props: ComponentPlaygr
     </ComponentPlayground>
   );
 };
+
+export const CustomScrollViewSmoothPlayground = () => (
+  <CustomScrollView data-testid="smooth-scroll" scrollBehavior="smooth" style={{ height: 100 }}>
+    <div style={{ height: 1000 }} />
+  </CustomScrollView>
+);
