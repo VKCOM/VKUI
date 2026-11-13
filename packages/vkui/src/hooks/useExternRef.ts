@@ -79,6 +79,25 @@ class ExternalRef<T> implements React.RefObject<T | null> {
   }
 }
 
+/**
+ * Сохраняет одиночный ref. При объединении refs меняет объект при смене входных
+ * refs, чтобы React прикреплял новые refs после обновления DOM.
+ */
+export function useRootRef<T>(
+  getRootRef?: React.Ref<T> | undefined,
+  ref?: React.Ref<T> | undefined,
+): React.Ref<T> | undefined {
+  return React.useMemo(() => {
+    if (!ref) {
+      return getRootRef;
+    }
+    if (!getRootRef) {
+      return ref;
+    }
+    return new ExternalRef([getRootRef, ref]);
+  }, [getRootRef, ref]);
+}
+
 export function useExternRef<T>(
   ...externRefs: Array<React.Ref<T> | undefined | false>
 ): React.RefObject<T | null> {

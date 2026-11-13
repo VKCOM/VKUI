@@ -1,7 +1,7 @@
 'use client';
 
 import type * as React from 'react';
-import { useExternRef } from '../../hooks/useExternRef';
+import { useRootRef } from '../../hooks/useExternRef';
 import { useMergeProps } from '../../hooks/useMergeProps';
 import { warnOnce } from '../../lib/warnOnce';
 import { withLabelClickWrapper } from '../../lib/withLabelClickWrapper';
@@ -95,7 +95,7 @@ export const File = ({
   slotProps,
   ...restProps
 }: FileProps): React.ReactNode => {
-  const getRootRef = useExternRef(getRootRefProp, refProp);
+  const getRootRef = useRootRef(getRootRefProp, refProp);
   /* istanbul ignore if: не проверяем в тестах */
   if (process.env.NODE_ENV === 'development' && getRef) {
     warn('Свойство `getRef` устаревшее, используйте `slotProps={ input: { getRootRef: ... } }`');

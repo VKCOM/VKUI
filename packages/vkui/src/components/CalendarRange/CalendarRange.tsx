@@ -4,7 +4,7 @@ import * as React from 'react';
 import { isSameDate } from '@vkontakte/vkjs';
 import { useCalendar } from '../../hooks/useCalendar';
 import { useCustomEnsuredControl } from '../../hooks/useEnsuredControl';
-import { useExternRef } from '../../hooks/useExternRef';
+import { useRootRef } from '../../hooks/useExternRef';
 import { isFirstDay, isLastDay } from '../../lib/calendar';
 import {
   addMonths,
@@ -142,7 +142,7 @@ export const CalendarRange = ({
   ref: refProp,
   ...props
 }: CalendarRangeProps): React.ReactNode => {
-  const getRootRef = useExternRef(getRootRefProp, refProp);
+  const getRootRef = useRootRef(getRootRefProp, refProp);
   const _onChange = (newRange: DateRangeType | null) => {
     if (newRange && onChange) {
       onChange(newRange);

@@ -3,7 +3,7 @@
 import { useCallback } from 'react';
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { useExternRef } from '../../hooks/useExternRef';
+import { useRootRef } from '../../hooks/useExternRef';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useResizeObserver } from '../../hooks/useResizeObserver';
 import { useDOM } from '../../lib/dom';
@@ -62,7 +62,7 @@ export const FixedLayout = ({
   useParentWidth,
   ...restProps
 }: FixedLayoutProps): React.ReactNode => {
-  const getRootRef = useExternRef(getRootRefProp, refProp);
+  const getRootRef = useRootRef(getRootRefProp, refProp);
   /* istanbul ignore if: не проверяем в тестах */
   if (process.env.NODE_ENV === 'development') {
     warn(

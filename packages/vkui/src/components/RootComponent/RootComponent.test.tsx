@@ -7,6 +7,33 @@ import { RootComponent, type RootComponentProps } from './RootComponent';
 describe('RootComponent', () => {
   baselineComponent(RootComponent);
 
+  it('calls a replaced getRootRef after updating the DOM', () => {
+    const observed: Array<string | undefined> = [];
+    const { rerender } = render(
+      <RootComponent<HTMLElement>
+        data-value="old"
+        getRootRef={(node) => {
+          if (node) {
+            observed.push(node.dataset.value);
+          }
+        }}
+      />,
+    );
+
+    rerender(
+      <RootComponent<HTMLElement>
+        data-value="new"
+        getRootRef={(node) => {
+          if (node) {
+            observed.push(node.dataset.value);
+          }
+        }}
+      />,
+    );
+
+    expect(observed).toEqual(['old', 'new']);
+  });
+
   it.each([undefined, null])('does not pass a ref to Component when getRootRef is %s', (ref) => {
     const Component = (props: React.ComponentProps<'div'>) => {
       expect(props.ref).toBeUndefined();

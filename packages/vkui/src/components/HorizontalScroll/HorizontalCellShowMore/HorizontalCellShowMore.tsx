@@ -2,7 +2,7 @@
 
 import { Icon28ChevronRightCircle } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
-import { useExternRef } from '../../../hooks/useExternRef';
+import { useRootRef } from '../../../hooks/useExternRef';
 import type { HasRef, HasRootRef, LiteralUnion } from '../../../types';
 import type { ImageBaseSize } from '../../ImageBase/ImageBase';
 import { Tappable, type TappableOmitProps } from '../../Tappable/Tappable';
@@ -61,7 +61,7 @@ export const HorizontalCellShowMore = ({
   centered = false,
   ...restProps
 }: HorizontalCellShowMoreProps): React.ReactNode => {
-  const getRootRef = useExternRef(getRootRefProp, refProp);
+  const getRootRef = useRootRef(getRootRefProp, refProp);
   return (
     <div
       style={style}

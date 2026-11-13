@@ -3,7 +3,7 @@
 import type * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { mergeStyle } from '../../helpers/mergeStyle';
-import { useExternRef } from '../../hooks/useExternRef';
+import { useRootRef } from '../../hooks/useExternRef';
 import type { HasComponent, HasRender, HasRootRef } from '../../types';
 import styles from './RootComponent.module.css';
 
@@ -55,7 +55,7 @@ export const RootComponent = <T,>({
   render,
   ...restProps
 }: RootComponentInternalProps<T>): React.ReactNode => {
-  const getRootRef = useExternRef(getRootRefProp, refProp);
+  const getRootRef = useRootRef(getRootRefProp, refProp);
   const resolvedProps = {
     className: classNames(
       className,

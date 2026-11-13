@@ -4,7 +4,7 @@ import * as React from 'react';
 import { classNames, isSameDate } from '@vkontakte/vkjs';
 import { useCalendar } from '../../hooks/useCalendar';
 import { useCustomEnsuredControl } from '../../hooks/useEnsuredControl';
-import { useExternRef } from '../../hooks/useExternRef';
+import { useRootRef } from '../../hooks/useExternRef';
 import { Keys, pressedKey } from '../../lib/accessibility';
 import { clamp, isFirstDay, isLastDay, navigateDate, NAVIGATION_KEYS } from '../../lib/calendar';
 import {
@@ -195,7 +195,7 @@ export const Calendar = ({
   dayTestId,
   ...props
 }: CalendarProps): React.ReactNode => {
-  const getRootRef = useExternRef(getRootRefProp, refProp);
+  const getRootRef = useRootRef(getRootRefProp, refProp);
   const _onChange = React.useCallback(
     (date: Date | null) => {
       const newDate = convertDateFromTimeZone(date, timezone);
