@@ -1,6 +1,7 @@
 import { createRef, type Ref, type RefCallback } from 'react';
 import { render, renderHook } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
+import { setRef } from '../lib/utils';
 import { useRootRef } from './useExternRef';
 
 const RefForwarder = ({
@@ -14,7 +15,30 @@ const RefForwarder = ({
 }) => <div ref={useRootRef(firstRef, secondRef)} data-value={value} />;
 
 describe(useRootRef, () => {
-  it('preserves absent and single refs', () => {
+  it.each(['getRootRef', 'ref'] as const)(
+    'supports single callback cleanup with the React 18 ref protocol (%s)',
+    (prop) => {
+      const cleanup = vi.fn();
+      const callbackRef = vi.fn<RefCallback<HTMLDivElement>>().mockReturnValue(cleanup);
+      const { result } = renderHook(() =>
+        useRootRef(
+          prop === 'getRootRef' ? callbackRef : undefined,
+          prop === 'ref' ? callbackRef : undefined,
+        ),
+      );
+      const node = document.createElement('div');
+
+      expect(callbackRef).not.toHaveBeenCalled();
+
+      setRef(node, result.current);
+      setRef(null, result.current);
+
+      expect(cleanup).toHaveBeenCalledTimes(1);
+      expect(callbackRef.mock.calls).toEqual([[node]]);
+    },
+  );
+
+  it('preserves absent and single object refs without calling callbacks during render', () => {
     const objectRef = createRef<HTMLDivElement>();
     const callbackRef = vi.fn();
     const { result, rerender } = renderHook(
@@ -36,7 +60,6 @@ describe(useRootRef, () => {
     expect(result.current).toBe(objectRef);
 
     rerender({ firstRef: undefined, secondRef: callbackRef });
-    expect(result.current).toBe(callbackRef);
     expect(callbackRef).not.toHaveBeenCalled();
   });
 

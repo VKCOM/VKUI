@@ -7,6 +7,23 @@ import { RootComponent, type RootComponentProps } from './RootComponent';
 describe('RootComponent', () => {
   baselineComponent(RootComponent);
 
+  it('runs a single getRootRef cleanup on unmount', () => {
+    const cleanup = vi.fn();
+    const getRootRef = vi.fn((node: HTMLDivElement | null) => {
+      if (!node) {
+        return;
+      }
+      return cleanup;
+    });
+    const { container, unmount } = render(<RootComponent getRootRef={getRootRef} />);
+    const node = container.firstChild;
+
+    unmount();
+
+    expect(cleanup).toHaveBeenCalledTimes(1);
+    expect(getRootRef.mock.calls).toEqual([[node]]);
+  });
+
   it('calls a replaced getRootRef after updating the DOM', () => {
     const observed: Array<string | undefined> = [];
     const { rerender } = render(
