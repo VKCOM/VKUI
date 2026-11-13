@@ -1,13 +1,5 @@
 import { getMdxComponents as getDefaultMdxComponents } from '@vkontakte/vkui-docs-theme';
-import {
-  InstallTemplates,
-  McpClientsTab,
-  McpClientsTabs,
-  Overview,
-  Playground,
-  PropsTable,
-  Typography,
-} from '@/components/mdx';
+import { InstallTemplates, Overview, Playground, PropsTable } from '@/components/mdx';
 
 const docsComponents = getDefaultMdxComponents();
 
@@ -16,9 +8,6 @@ export const useMDXComponents: typeof getDefaultMdxComponents = (components) => 
   ...components,
   InstallTemplates,
   Playground,
-  Typography,
   Overview,
   PropsTable,
-  McpClientsTabs,
-  McpClientsTab,
 });
