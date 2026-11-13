@@ -76,3 +76,5 @@ __diff_output__
 
 .claude/*
 !.claude/commands
+
+.agents/*
