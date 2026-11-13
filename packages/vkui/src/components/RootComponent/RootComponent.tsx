@@ -71,5 +71,5 @@ export const RootComponent = <T,>({
     return <RenderRootComponent render={render} getRootRef={getRootRef} {...resolvedProps} />;
   }
 
-  return <Component ref={getRootRef} {...resolvedProps} />;
+  return <Component ref={getRootRefProp || refProp ? getRootRef : undefined} {...resolvedProps} />;
 };

@@ -7,6 +7,17 @@ import { RootComponent } from './RootComponent';
 describe('RootComponent', () => {
   baselineComponent(RootComponent);
 
+  it.each([undefined, null])('does not pass a ref to Component when getRootRef is %s', (ref) => {
+    const Component = (props: React.ComponentProps<'div'>) => {
+      expect(props.ref).toBeUndefined();
+      return <div {...props} data-testid="rendered" />;
+    };
+
+    render(<RootComponent Component={Component} getRootRef={ref} />);
+
+    expect(screen.getByTestId('rendered')).toBeInTheDocument();
+  });
+
   describe('render prop', () => {
     it('does not overwrite an explicit ref with spread render props', () => {
       const localRef = createRef<HTMLDivElement>();
