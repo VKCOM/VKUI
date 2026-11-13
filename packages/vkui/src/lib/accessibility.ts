@@ -76,6 +76,16 @@ export function pressedKey<T extends KeyboardEvent | React.KeyboardEvent>(
   return foundKey ? foundKey : null;
 }
 
+/**
+ * Не перехватываем клавиши окна кандидатов IME. В Safari подтверждающий Enter
+ * может приходить уже с isComposing=false, но с keyCode=229.
+ */
+export function isKeyboardEventComposing(event: React.KeyboardEvent): boolean {
+  return (
+    event.nativeEvent.isComposing || (event.key === Keys.ENTER && event.nativeEvent.keyCode === 229)
+  );
+}
+
 export const FOCUS_ALLOW_LIST_KEYS: Set<string> = new Set<string>([
   Keys.TAB,
   Keys.ARROW_LEFT,

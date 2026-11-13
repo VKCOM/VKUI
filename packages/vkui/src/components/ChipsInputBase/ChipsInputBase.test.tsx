@@ -86,6 +86,42 @@ describe(ChipsInputBase, () => {
     onClearOptions.mockClear();
   });
 
+  it.each(['readOnly', 'defaultPrevented'])('does not add chips for %s', (mode) => {
+    render(
+      <ChipsInputBaseTest
+        onClear={onClearOptions}
+        onAddChipOption={onAddChipOption}
+        onRemoveChipOption={onRemoveChipOption}
+        inputValue="text"
+        readOnly={mode === 'readOnly'}
+        slotProps={{
+          input: {
+            onKeyDown: mode === 'defaultPrevented' ? (event) => event.preventDefault() : undefined,
+          },
+        }}
+      />,
+    );
+    fireEvent.keyDown(screen.getByTestId('chips-input'), { key: 'Enter' });
+    expect(onAddChipOption).not.toHaveBeenCalled();
+  });
+
+  it.each([{ isComposing: true }, { keyCode: 229 }])('ignores IME Enter (%o)', (ime) => {
+    render(
+      <ChipsInputBaseTest
+        onClear={onClearOptions}
+        onAddChipOption={onAddChipOption}
+        onRemoveChipOption={onRemoveChipOption}
+        inputValue="東京"
+      />,
+    );
+    const input = screen.getByTestId('chips-input');
+    expect(fireEvent.keyDown(input, { key: 'Enter', ...ime })).toBe(true);
+    expect(onAddChipOption).not.toHaveBeenCalled();
+    expect(input).toHaveValue('東京');
+    fireEvent.keyDown(input, { key: 'Enter' });
+    expect(onAddChipOption).toHaveBeenCalledExactlyOnceWith('東京');
+  });
+
   it(
     'should work with slotProps',
     withFakeTimers(async () => {
