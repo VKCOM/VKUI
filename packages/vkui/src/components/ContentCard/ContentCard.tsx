@@ -2,7 +2,6 @@
 
 import type * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
-import { useExternRef } from '../../hooks/useExternRef';
 import { getFetchPriorityProp } from '../../lib/utils';
 import type { HasComponent, HasRef, HasRootRef } from '../../types';
 import { Card, type CardProps } from '../Card/Card';
@@ -67,7 +66,7 @@ export const ContentCard = ({
   className,
   mode = 'shadow',
   style,
-  getRootRef: getRootRefProp,
+  getRootRef,
   ref: refProp,
   // img props
   getRef,
@@ -91,11 +90,11 @@ export const ContentCard = ({
   render,
   ...restProps
 }: ContentCardProps): React.ReactNode => {
-  const getRootRef = useExternRef(getRootRefProp, refProp);
   return (
     <Card
       mode={mode}
       getRootRef={getRootRef}
+      ref={refProp}
       Component={Component}
       render={render}
       style={style}
