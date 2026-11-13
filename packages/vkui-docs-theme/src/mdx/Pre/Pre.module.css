@@ -25,12 +25,8 @@
 
 .buttons {
   display: flex;
+  column-gap: var(--vkui--spacing_size_xs);
   color: var(--vkui--color_icon_tertiary);
-}
-
-/* stylelint-disable-next-line selector-max-universal */
-.buttons > *:not(:last-child) {
-  margin-inline-end: var(--vkui--spacing_size_xs);
 }
 
 .header {

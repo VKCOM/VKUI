@@ -30,12 +30,8 @@
 
 .extraContent {
   display: flex;
+  column-gap: var(--vkui--spacing_size_m);
   align-items: center;
-}
-
-/* stylelint-disable-next-line selector-max-universal */
-.extraContent > *:not(:first-child) {
-  margin-inline-start: var(--vkui--spacing_size_m);
 }
 
 /* Переопределения VKUI должны работать независимо от порядка загрузки CSS-чанков. */
