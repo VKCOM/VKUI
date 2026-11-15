@@ -5539,7 +5539,7 @@ __metadata:
     nextra: "npm:^4.6.1"
     react: "npm:^19.3.1"
     react-dom: "npm:^19.3.1"
-    scroll-into-view-if-needed: "npm:^3.1.0"
+    scroll-into-view-if-needed: "npm:^3.2.0"
     typescript: "npm:^6.0.3"
   peerDependencies:
     next: ^16.4.5
@@ -15668,12 +15668,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"scroll-into-view-if-needed@npm:^3.1.0":
-  version: 3.1.0
-  resolution: "scroll-into-view-if-needed@npm:3.1.0"
+"scroll-into-view-if-needed@npm:^3.2.0":
+  version: 3.2.0
+  resolution: "scroll-into-view-if-needed@npm:3.2.0"
   dependencies:
     compute-scroll-into-view: "npm:^3.0.2"
-  checksum: 10/1ea10d84b79db592493ed22563e307a4eaf858527b4c345e70cc26b9c51383636edda31a09d383541fafb5b50a94e59384d85351662cb7d6e5d70805c0d18798
+  checksum: 10/77274910105505e2446419e19567a649730274d947d86c3215cf71ee02326cd9f8a4b37b80ea0a415f45b0ce2084540a26296bbcde7fdbef39ccc2d21293a9ad
   languageName: node
   linkType: hard
 
