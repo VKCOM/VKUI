@@ -61,7 +61,8 @@
   padding-inline: 12px;
 }
 
-.title {
+/* Отступ должен перекрывать сброс Typography независимо от порядка загрузки стилей. */
+.host .title {
   margin-block-end: 8px;
 }
 

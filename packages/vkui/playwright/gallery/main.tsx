@@ -10,18 +10,44 @@ import '../../src/styles/layout.css';
 type Story = React.ComponentType<Record<string, unknown>>;
 type StoryModule = Record<string, unknown>;
 
-const storyModules = import.meta.glob('../../src/**/*.e2e-playground.tsx', { eager: true });
+const storyModules = import.meta.glob<StoryModule>('../../src/**/*.e2e-playground.tsx');
 const rootElement = document.getElementById('root')!;
 let root: Root | undefined;
 
-function resolveStory(storyId: string): Story | undefined {
-  for (const module of Object.values(storyModules)) {
-    const story = (module as StoryModule)[storyId];
-    if (typeof story === 'function') {
-      return story as Story;
-    }
+const getStoryModulePath = (storyId: string) => {
+  const candidates = Object.keys(storyModules)
+    .map((modulePath) => {
+      const fileName = modulePath.split('/').pop()!;
+      const moduleName = fileName.replace('.e2e-playground.tsx', '');
+      return { modulePath, moduleName };
+    })
+    .filter(({ moduleName }) => storyId.startsWith(moduleName))
+    .sort((a, b) => b.moduleName.length - a.moduleName.length);
+
+  return candidates[0]?.modulePath;
+};
+
+const storyCache = new Map<string, Story>();
+
+async function resolveStory(storyId: string): Promise<Story | undefined> {
+  const cachedStory = storyCache.get(storyId);
+  if (cachedStory) {
+    return cachedStory;
   }
-  return undefined;
+
+  const modulePath = getStoryModulePath(storyId);
+  const loadStoryModule = modulePath && storyModules[modulePath];
+  if (!loadStoryModule) {
+    return undefined;
+  }
+
+  const story = (await loadStoryModule())[storyId];
+  if (typeof story !== 'function') {
+    return undefined;
+  }
+
+  storyCache.set(storyId, story as Story);
+  return story as Story;
 }
 
 const galleryWindow = window as unknown as Window & {
@@ -30,7 +56,7 @@ const galleryWindow = window as unknown as Window & {
 };
 
 galleryWindow.mount = async ({ story: storyId, props }) => {
-  const Story = resolveStory(storyId);
+  const Story = await resolveStory(storyId);
   if (!Story) {
     throw new Error(`Unknown story: ${storyId}`);
   }

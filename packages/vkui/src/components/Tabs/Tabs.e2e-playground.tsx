@@ -145,38 +145,3 @@ export const TabsPlayground = (props: ComponentPlaygroundProps) => {
     </ComponentPlayground>
   );
 };
-
-export const TabsItemsFlexModePlayground = (props: ComponentPlaygroundProps) => {
-  return (
-    <ComponentPlayground
-      {...props}
-      propSets={[
-        {
-          mode: ['default', 'accent', 'secondary'],
-          layoutFillMode: ['auto', 'shrinked', 'stretched'],
-        },
-      ]}
-    >
-      {(props: TabsProps) => (
-        <>
-          <Tabs {...props}>
-            <TabsItem onClick={noop}>Unscrollable</TabsItem>
-            <TabsItem onClick={noop} selected>
-              Unscrollable
-            </TabsItem>
-          </Tabs>
-          <HorizontalScroll key="scrolled" arrowSize="m" withPadding={props.mode !== 'default'}>
-            <Tabs {...props}>
-              <TabsItem onClick={noop} key="groups">
-                Scrollable
-              </TabsItem>
-              <TabsItem onClick={noop} key="news" selected>
-                Scrollable
-              </TabsItem>
-            </Tabs>
-          </HorizontalScroll>
-        </>
-      )}
-    </ComponentPlayground>
-  );
-};
