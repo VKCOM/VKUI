@@ -1,26 +1,14 @@
-import type { Page, PlaywrightWorkerOptions } from '@playwright/test';
+import type { Page } from '@playwright/test';
 import { DEFAULT_CROP_TO_CONTENT_SELECTOR } from './constants';
 import type { ScreenshotWithClipToContentOptions } from './types';
 
 export async function screenshotWithClipToContent(
   page: Page,
   options: ScreenshotWithClipToContentOptions = {},
-  browserName: PlaywrightWorkerOptions['browserName'] | undefined = undefined,
 ) {
   const { fullPage = true, cropToContentSelector = DEFAULT_CROP_TO_CONTENT_SELECTOR } = options;
 
   await page.evaluate(() => document.fonts.ready);
-
-  // getBoundingClientRect в webkit возвращает некорректные значения, спасает timeout 500ms
-  // см. https://github.com/VKCOM/VKUI/pull/3417
-  if (browserName === 'webkit') {
-    await page.evaluate(
-      () =>
-        new Promise((resolve) => {
-          setTimeout(resolve, 500);
-        }),
-    );
-  }
 
   const clip = await page.evaluate((selector) => {
     const size = { right: 0, bottom: 0, x: Infinity, y: Infinity };

@@ -94,7 +94,7 @@ export const test = testBase.extend<VKUITestOptions & InternalVKUITestOptions & 
         },
         expectCallCount,
       );
-      expect(await screenshotWithClipToContent(page, options, browserName)).toMatchSnapshot(
+      expect(await screenshotWithClipToContent(page, options)).toMatchSnapshot(
         customScreenshotName,
         toMatchSnapshot,
       );
