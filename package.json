@@ -45,7 +45,7 @@
     "@vkontakte/stylelint-config": "^4.1.0",
     "@vkontakte/vkui-tokens": "4.100.0",
     "autoprefixer": "^10.6.2",
-    "concurrently": "^10.0.5",
+    "concurrently": "^10.0.7",
     "cross-env": "^10.1.0",
     "css-loader": "^7.1.5",
     "css-minimizer-webpack-plugin": "^8.0.0",
