@@ -20,6 +20,12 @@ const TS_CONFIG_ALIASES = Object.entries(tsconfig.compilerOptions.paths).reduce<
 // eslint-disable-next-line import/no-default-export -- требование vitetest
 export default {
   build: {
+    outDir: 'playwright/.cache',
+    rolldownOptions: {
+      input: path.join(import.meta.dirname, 'playwright/gallery/index.html'),
+    },
+    // Минификация округляет CSS-вычисления и меняет эталонные скриншоты.
+    cssMinify: false,
     commonjsOptions: { include: [/node_modules/, /\.js/] },
     sourcemap: process.env.PLAYWRIGHT_COVERAGE === '1',
   },
