@@ -554,7 +554,8 @@ export type { PopperProps } from './components/Popper/Popper';
  * Types
  */
 export type { LayoutProps } from './lib/layouts';
-export type { AlignType, HasPlatform, HasRef, HasRootRef } from './types';
+// Публичный HasRootRef сохраняет совместимость с DOM props, содержащими свой ref.
+export type { AlignType, HasPlatform, HasRef, HasGetRootRef as HasRootRef } from './types';
 export type { NavIdProps } from './lib/getNavId';
 export type { PlatformType } from './lib/platform';
 export type { TransitionContextProps } from './components/NavTransitionContext/NavTransitionContext';

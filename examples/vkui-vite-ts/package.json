@@ -4,8 +4,9 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
+    "tsc": "node ./node_modules/@typescript/native/bin/tsc",
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "yarn tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
@@ -23,6 +24,7 @@
     "@types/node": "^26",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@typescript/native": "npm:typescript@^7.0.2",
     "@vitejs/plugin-react": "^6",
     "babel-plugin-react-compiler": "^1",
     "eslint": "^10",
@@ -34,5 +36,5 @@
     "typescript-eslint": "^8",
     "vite": "^8"
   },
-  "packageManager": "yarn@4.14.1+sha512.64df448055b2d37ba269d7db535a469b8da93f8ef1140c25fd7a83c00a8fbaacb214ca0e02553b92a2c54cef78bb67d0b4817fab02001df0e24fac0faccc3b42"
+  "packageManager": "yarn@4.18.1+sha512.b2e1e7524f654f2749d32b4ebcb4622473cb5bcbc485df2007e12a154e50162a4d795526768bc5f5b8f81717bfd79deb2472813d86fb5ae2eb551fa9c872b08f"
 }

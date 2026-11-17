@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { useExternRef } from '../../hooks/useExternRef';
+import { useExternRef, useRootRef } from '../../hooks/useExternRef';
 import { useCSSKeyframesAnimationController } from '../../lib/animation';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import type { HasRef, HasRootRef } from '../../types';
@@ -33,7 +33,7 @@ export const AccordionContent = ({
   children,
   ...restProps
 }: AccordionContentProps) => {
-  const getRootRef = useExternRef(getRootRefProp, refProp);
+  const getRootRef = useRootRef(getRootRefProp, refProp);
   const { expanded, labelId, contentId, unmountOnCollapsed } = React.useContext(AccordionContext);
 
   const inRef = useExternRef(getRef);

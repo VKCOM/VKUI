@@ -13,10 +13,15 @@ tags: selection
 
 </Overview>
 
+import { BlockWrapper } from '@/components/wrappers';
+
 {/* @example-description: Базовый переключатель `Switch`. */}
-<Playground>
+<Playground Wrapper={BlockWrapper} style={{ width: 270 }}>
   ```jsx
-  <Switch />
+  <SelectionControl>
+    <SelectionControl.Label>Уведомления</SelectionControl.Label>
+    <Switch id="switch-notifications-enabled" name="notifications-enabled" />
+  </SelectionControl>
   ```
 </Playground>
 

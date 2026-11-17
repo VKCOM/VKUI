@@ -7,7 +7,10 @@ import { useExternRef } from '../../hooks/useExternRef';
 import { Keys } from '../../lib/accessibility';
 import { isActiveElement } from '../../lib/dom';
 import { ComboBox } from './ComboBox';
+import { padStartTimeValue } from './helpers';
 import styles from './CalendarTime.module.css';
+
+export { padStartTimeValue } from './helpers';
 
 function validateValueInput(event: React.ChangeEvent<HTMLInputElement>, maxValue: number) {
   if (event.target.value === '') {
@@ -31,10 +34,6 @@ function validateValueInput(event: React.ChangeEvent<HTMLInputElement>, maxValue
   }
 
   return resultValueNumber.toString();
-}
-
-export function padStartTimeValue(value: Pick<string, 'toString'>): string {
-  return value.toString().padStart(2, '0');
 }
 
 function newValueOnInputKeyDown(event: React.KeyboardEvent<HTMLInputElement>, maxValue: number) {

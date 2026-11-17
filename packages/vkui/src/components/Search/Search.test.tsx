@@ -1,4 +1,4 @@
-import { act, createRef } from 'react';
+import { act, createRef, useState } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { Icon24Done } from '@vkontakte/icons';
 import { noop } from '@vkontakte/vkjs';
@@ -137,6 +137,35 @@ describe(Search, () => {
       expect(getInput()).toHaveValue('');
       expect(onClearClick).toHaveBeenCalledTimes(1);
     });
+    it('moves focus to input when cleared by keyboard', async () => {
+      render(
+        <Search
+          defaultValue="def"
+          slotProps={{ clearButton: { 'data-testid': 'clear-button' } }}
+        />,
+      );
+      act(() => getClearIcon().focus());
+      await userEvent.keyboard('{Enter}');
+      act(() => {
+        vi.runOnlyPendingTimers();
+      });
+      expect(getInput()).toHaveValue('');
+      expect(getInput()).toHaveFocus();
+      expect(getClearIcon()).toHaveAttribute('aria-hidden', 'true');
+    });
+    it('moves focus to input when form is reset with focus on clear button', async () => {
+      render(
+        <form data-testid="form">
+          <Search slotProps={{ clearButton: { 'data-testid': 'clear-button' } }} />
+        </form>,
+      );
+      await userEvent.type(getInput(), 'user');
+      act(() => getClearIcon().focus());
+      act(() => {
+        screen.getByTestId<HTMLFormElement>('form').reset();
+      });
+      expect(getInput()).toHaveFocus();
+    });
     it('form reset form', async () => {
       render(
         <form data-testid="form">
@@ -158,10 +187,13 @@ describe(Search, () => {
         </form>,
       );
       expect(getClearIcon()).toHaveAttribute('tabindex', '-1');
+      expect(getClearIcon()).toHaveAttribute('aria-hidden', 'true');
       await userEvent.type(getInput(), 'user');
       expect(getClearIcon()).not.toHaveAttribute('tabindex');
+      expect(getClearIcon()).not.toHaveAttribute('aria-hidden');
       fireEvent.click(screen.getByTestId('reset'));
       expect(getClearIcon()).toHaveAttribute('tabindex', '-1');
+      expect(getClearIcon()).toHaveAttribute('aria-hidden', 'true');
     });
     it('handles clear button visibility with default value correctly', async () => {
       render(
@@ -192,6 +224,25 @@ describe(Search, () => {
   });
 
   describe('works controlled', () => {
+    it('moves focus to input when value is cleared by find button', async () => {
+      const ControlledSearch = () => {
+        const [value, setValue] = useState('def');
+        return (
+          <Search
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+            findButtonTestId="find-button"
+            onFindButtonClick={() => setValue('')}
+          />
+        );
+      };
+      render(<ControlledSearch />);
+      act(() => getFindButton().focus());
+      await userEvent.keyboard('{Enter}');
+      expect(getInput()).toHaveValue('');
+      expect(getInput()).toHaveFocus();
+      expect(getFindButton()).toHaveAttribute('aria-hidden', 'true');
+    });
     fakeTimersForScope();
     it('respects outer value', () => {
       const { rerender } = render(<Search value="init" />);
@@ -220,8 +271,10 @@ describe(Search, () => {
         <Search value="init" slotProps={{ clearButton: { 'data-testid': 'clear-button' } }} />,
       );
       expect(getClearIcon()).not.toHaveAttribute('tabindex');
+      expect(getClearIcon()).not.toHaveAttribute('aria-hidden');
       rerender(<Search value="" slotProps={{ clearButton: { 'data-testid': 'clear-button' } }} />);
       expect(getClearIcon()).toHaveAttribute('tabindex', '-1');
+      expect(getClearIcon()).toHaveAttribute('aria-hidden', 'true');
     });
     it('hides clear button with hideClearButton prop', () => {
       const h = render(
@@ -291,6 +344,22 @@ describe(Search, () => {
       expect(cb).toHaveBeenCalled();
     }),
   );
+
+  it('hides find button from assistive technologies while empty', () => {
+    const { rerender } = render(
+      <Search value="" findButtonTestId="find-button" onFindButtonClick={noop} />,
+    );
+    expect(getFindButton()).toHaveAttribute('tabindex', '-1');
+    expect(getFindButton()).toHaveAttribute('aria-hidden', 'true');
+    rerender(<Search value="test" findButtonTestId="find-button" onFindButtonClick={noop} />);
+    expect(getFindButton()).not.toHaveAttribute('tabindex');
+    expect(getFindButton()).not.toHaveAttribute('aria-hidden');
+  });
+
+  it('keeps icon button accessible while empty', () => {
+    render(<Search value="" icon={<Icon24Done />} iconLabel="Icon" />);
+    expect(screen.getByRole('button', { name: 'Icon' })).not.toHaveAttribute('aria-hidden');
+  });
 
   it(
     'calls onFindButtonClick',

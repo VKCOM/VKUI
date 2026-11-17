@@ -16,7 +16,9 @@ description: Компонент для загрузки файлов.
 {/* @example-description: Базовая кнопка `File` для открытия системного диалога выбора файла. */}
 <Playground>
   ```jsx
-  <File>Выберите файл</File>
+  <FormItem top="Вложение" htmlFor="file-attachment">
+    <File id="file-attachment" name="attachment">Выберите файл</File>
+  </FormItem>
   ```
 </Playground>
 

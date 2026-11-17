@@ -14,9 +14,12 @@ export type HasDataAttribute = Record<
   string | number | boolean | undefined | null
 >;
 
-export interface HasRootRef<T> {
-  ref?: React.Ref<T> | undefined;
+export interface HasGetRootRef<T> {
   getRootRef?: React.Ref<T> | undefined;
+}
+
+export interface HasRootRef<T> extends HasGetRootRef<T> {
+  ref?: React.Ref<T> | undefined;
 }
 
 export interface HasRef<T> {

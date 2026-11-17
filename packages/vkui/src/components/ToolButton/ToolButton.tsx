@@ -7,7 +7,10 @@ import {
   type AdaptiveIconRendererProps,
 } from '../AdaptiveIconRenderer/AdaptiveIconRenderer';
 import { Tappable, type TappableOmitProps } from '../Tappable/Tappable';
+import { getRoundedClassName } from './helpers';
 import styles from './ToolButton.module.css';
+
+export { getRoundedClassName } from './helpers';
 
 const stylesMode = {
   primary: styles.modePrimary,
@@ -94,15 +97,3 @@ export const ToolButton = ({
     </Tappable>
   );
 };
-
-export function getRoundedClassName(
-  direction: 'row' | 'column',
-  hasChildren: boolean,
-): string | undefined {
-  switch (direction) {
-    case 'row':
-      return styles.rounded;
-    case 'column':
-      return hasChildren ? undefined : styles.rounded;
-  }
-}

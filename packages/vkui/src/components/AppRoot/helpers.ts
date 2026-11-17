@@ -4,7 +4,7 @@ import type { AppRootUserSelectMode, SafeAreaInsets } from './types';
 import styles from './AppRootStyleContainer/AppRootStyleContainer.module.css';
 
 export const extractPortalRootByProp = (
-  portalRootProp: HTMLElement | React.RefObject<HTMLElement>,
+  portalRootProp: HTMLElement | React.RefObject<HTMLElement | null>,
 ): HTMLElement | null => (isRefObject(portalRootProp) ? portalRootProp.current : portalRootProp);
 
 export const CUSTOM_PROPERTY_INSET_PREFIX = `--vkui_internal--safe_area_inset_`;

@@ -8,7 +8,7 @@ import {
   getAdaptivityConditionalRenderForSizeXCompact,
   useAdaptivityConditionalRender,
 } from '../../hooks/useAdaptivityConditionalRender';
-import { useExternRef } from '../../hooks/useExternRef';
+import { useRootRef } from '../../hooks/useExternRef';
 import { usePlatform } from '../../hooks/usePlatform';
 import { type SizeTypeValues, ViewWidth, type ViewWidthType } from '../../lib/adaptivity';
 import type {
@@ -181,7 +181,8 @@ export const PanelHeader = ({
   );
   const isVKCOM = platform === 'vkcom';
   const isFixed = fixed !== undefined ? fixed : !isVKCOM;
-  const rootRef = useExternRef(getRootRef, refProp, !isFixed && getRef);
+  const externalRootRef = useRootRef(getRootRef, refProp);
+  const rootRef = useRootRef(externalRootRef, !isFixed ? getRef : undefined);
   const separatorVisible = delimiter === 'auto' || delimiter === 'separator';
   const staticSeparatorVisible = !float && separatorVisible;
   const staticSpacingVisible =

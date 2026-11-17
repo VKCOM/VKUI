@@ -1,6 +1,4 @@
-'use client';
-
-import { Search } from './components';
+import { Search } from './components/Search/Search';
 import type { DocsThemeConfig } from './types';
 
 export const DEFAULT_THEME: DocsThemeConfig = {

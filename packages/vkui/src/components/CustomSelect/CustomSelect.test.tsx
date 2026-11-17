@@ -16,6 +16,7 @@ import { CustomSelectOption } from '../CustomSelectOption/CustomSelectOption';
 import { CustomSelect, type SelectProps } from './CustomSelect';
 import type { CustomSelectRenderOption } from './types';
 import styles from './CustomSelect.module.css';
+import formFieldStyles from '../FormField/FormField.module.css';
 
 let placementStub: Placement | undefined = undefined;
 vi.mock('../../lib/floating', async () => {
@@ -98,6 +99,53 @@ describe('CustomSelect', () => {
       options={[]}
     />
   ));
+
+  it.each([{}, { disabled: true }, { readOnly: true }, { icon: null }])(
+    'renders after inside the field with %j',
+    (props) => {
+      const { container } = render(
+        <CustomSelect
+          {...props}
+          options={[]}
+          after={<span data-testid="custom-after">After</span>}
+        />,
+      );
+
+      expect(screen.getByTestId('custom-after')).toBeVisible();
+      expect(screen.getByTestId('custom-after').parentElement).toHaveClass(formFieldStyles.after);
+      expect(container.firstElementChild).not.toHaveAttribute('after');
+    },
+  );
+
+  it('preserves the dropdown icon when rendering after', () => {
+    const { container } = render(<CustomSelect options={[]} after={<span>After</span>} />);
+
+    expect(container.querySelector('svg')).toBeInTheDocument();
+    expect(screen.getByText('After')).toBeVisible();
+  });
+
+  it('preserves the custom icon and clearing behavior when rendering after', () => {
+    const onChange = vi.fn();
+    render(
+      <CustomSelect
+        options={[{ value: 0, label: 'Mike' }]}
+        defaultValue={0}
+        after={<span>After</span>}
+        icon={<span>Icon</span>}
+        allowClearButton
+        clearButtonTestId="clear-button"
+        onChange={onChange}
+      />,
+    );
+
+    expect(screen.getByText('After')).toBeVisible();
+    expect(screen.getByText('Icon')).toBeVisible();
+    fireEvent.click(screen.getByTestId('clear-button'));
+
+    expect(onChange).toHaveBeenCalledExactlyOnceWith(expect.anything(), null);
+    expect(screen.getByText('After')).toBeVisible();
+    expect(screen.getByText('Icon')).toBeVisible();
+  });
 
   it(
     'should work with slotProps',

@@ -18,12 +18,12 @@ import {
 } from '../CustomSelectDropdown/CustomSelectDropdown';
 import { CustomSelectOption } from '../CustomSelectOption/CustomSelectOption';
 import type { FormFieldProps } from '../FormField/FormField';
+import type { NativeSelectProps } from '../NativeSelect/NativeSelect';
 import {
-  type NativeSelectProps,
   NOT_SELECTED,
   remapFromNativeValueToSelectValue,
   type SelectValue,
-} from '../NativeSelect/NativeSelect';
+} from '../NativeSelect/helpers';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
@@ -284,6 +284,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     // FormFieldProps
     status,
     before,
+    after,
 
     // CustomSelectDropdownProps
     overscrollBehavior,
@@ -798,7 +799,16 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
         searchable={searchable}
         accessible={accessible}
         before={before}
-        after={afterItems}
+        after={
+          after ? (
+            <React.Fragment>
+              {after}
+              {afterItems}
+            </React.Fragment>
+          ) : (
+            afterItems
+          )
+        }
         selectType={selectType || mode || 'default'}
         align={align}
         status={status}

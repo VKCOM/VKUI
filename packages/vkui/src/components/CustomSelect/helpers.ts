@@ -1,6 +1,6 @@
 import { getTextFromChildren } from '../../lib/children';
 import { warnOnce } from '../../lib/warnOnce';
-import { NOT_SELECTED, type SelectValue } from '../NativeSelect/NativeSelect';
+import { NOT_SELECTED, type SelectValue } from '../NativeSelect/helpers';
 import type { SelectProps } from './CustomSelect';
 import type { CustomSelectOptionInterface } from './types';
 

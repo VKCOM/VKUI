@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { classNames, isSameDate } from '@vkontakte/vkjs';
-import { useExternRef } from '../../hooks/useExternRef';
+import { useRootRef } from '../../hooks/useExternRef';
 import { useLocale } from '../../hooks/useLocale';
 import { useTodayDate } from '../../hooks/useTodayDate';
 import { getDaysNames, getWeeks } from '../../lib/calendar';
@@ -152,7 +152,7 @@ export const CalendarDays = ({
   dayTestId,
   ...props
 }: CalendarDaysProps): React.ReactNode => {
-  const getRootRef = useExternRef(getRootRefProp, refProp);
+  const getRootRef = useRootRef(getRootRefProp, refProp);
   const locale = useLocale();
   const now = useTodayDate(listenDayChangesForUpdate);
 

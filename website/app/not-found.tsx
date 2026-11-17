@@ -1,7 +1,5 @@
-'use client';
-
 import { Button, Placeholder } from '@vkontakte/vkui';
-import NextLink from 'next/link';
+import { NextLink } from '@vkontakte/vkui-docs-theme';
 import { Icon120IllustrationSpottyDetective } from './_components/Icon120IllustrationSpottyDetective';
 
 export default function NotFound() {

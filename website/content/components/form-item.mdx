@@ -20,7 +20,7 @@ description: Компонент для создания элементов фо�
 
   return (
     <FormItem htmlFor={id} top="E-mail">
-      <Input type="email" id={id} name="email" />
+      <Input type="email" id={id} name="email" autoComplete="email" />
     </FormItem>
   );
   ```
@@ -47,7 +47,7 @@ description: Компонент для создания элементов фо�
       bottom="Мы не передаём вашу почту третьим лицам"
       bottomId={bottomId}
     >
-      <Input type="email" id={id} name="email" aria-labelledby={bottomId} />
+      <Input type="email" id={id} name="email" autoComplete="email" aria-labelledby={bottomId} />
     </FormItem>
   );
   ```
@@ -98,7 +98,7 @@ description: Компонент для создания элементов фо�
 
   return (
     <FormItem htmlFor={id} top="E-mail" disabled>
-      <Input type="email" id={id} name="email" disabled />
+      <Input type="email" id={id} name="email" autoComplete="email" disabled />
     </FormItem>
   );
   ```
@@ -133,7 +133,7 @@ description: Компонент для создания элементов фо�
         required
         noPadding
       >
-        <Input aria-labelledby={emailBottomId} id={emailId} type="email" name="email" required />
+        <Input aria-labelledby={emailBottomId} id={emailId} type="email" name="email" autoComplete="email" required />
       </FormItem>
       <FormItem htmlFor={textId} top="Описание" status="valid" noPadding>
         <Input id={textId} name="text" />
@@ -152,7 +152,7 @@ description: Компонент для создания элементов фо�
 
 ```jsx
 <FormItem top="Email" required>
-  <Input type="email" name="email" required />
+  <Input type="email" name="email" autoComplete="email" required />
 </FormItem>
 ```
 

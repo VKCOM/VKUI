@@ -71,7 +71,8 @@ export default defineConfig({
   projects: generateProjects(),
 
   webServer: {
-    command: '../../node_modules/.bin/vite --config vite.config.ts --host 127.0.0.1',
+    command:
+      '../../node_modules/.bin/vite build --config vite.config.ts && ../../node_modules/.bin/vite preview --config vite.config.ts --host 127.0.0.1 --port 5173',
     url: 'http://127.0.0.1:5173/playwright/gallery/index.html',
     reuseExistingServer: !env.CI,
   },

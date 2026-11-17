@@ -8,7 +8,7 @@ tags: overlay
 # Tooltip [tag:component]
 
 Небольшое всплывающее окно-подсказка, открывающееся при наведении мыши на `children` (или при нажатии на мобильных устройствах).
-В качестве содержимого рекомендуется использовать только текст.
+Обычно подсказка содержит только текст. Если внутри нужна ссылка или другое действие, используйте `enableInteractive`.
 
 </Overview>
 
@@ -24,6 +24,30 @@ tags: overlay
 <Playground>
   ```jsx
   <Tooltip placement="right" description="Привет">
+    <Button>Наведи</Button>
+  </Tooltip>
+  ```
+</Playground>
+
+## Интерактивная подсказка
+
+Свойство `action` позволяет добавить в подсказку интерактивный элемент. Установите `enableInteractive`,
+чтобы при наведении на содержимое подсказка оставалась открытой. Свойство `closable` добавляет кнопку закрытия.
+
+{/* @example-description: Подсказка со ссылкой на документацию и кнопкой закрытия. */}
+<Playground>
+  ```jsx
+  <Tooltip
+    title="Как работают подсказки"
+    description="Узнайте больше о компоненте Tooltip и его возможностях."
+    action={
+      <Button size="s" href="https://vkui.io/components/tooltip">
+        Подробнее
+      </Button>
+    }
+    enableInteractive
+    closable
+  >
     <Button>Наведи</Button>
   </Tooltip>
   ```

@@ -1,5 +1,3 @@
-'use client';
-
 import { InputLike, type InputLikeProps } from '../InputLike/InputLike';
 /* eslint-disable jsdoc/require-jsdoc */
 

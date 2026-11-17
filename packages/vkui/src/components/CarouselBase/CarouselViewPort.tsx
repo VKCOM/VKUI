@@ -2,7 +2,7 @@
 /* eslint-disable jsdoc/require-jsdoc */
 
 import * as React from 'react';
-import { useExternRef } from '../../hooks/useExternRef';
+import { useRootRef } from '../../hooks/useExternRef';
 import type { HasChildren, HasRootRef } from '../../types';
 import { type CustomTouchEvent, Touch } from '../Touch/Touch';
 import type { BaseGalleryProps } from './types';
@@ -40,7 +40,7 @@ export const CarouselViewPort = ({
   setSlideRef,
   slidesContainerId,
 }: GalleryViewPortProps) => {
-  const getRootRef = useExternRef(getRootRefProp, refProp);
+  const getRootRef = useRootRef(getRootRefProp, refProp);
   const slidesCount = React.Children.count(children);
 
   const onSlideFocus = React.useCallback(

@@ -4,6 +4,8 @@ import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
+import { getWindow, isHTMLElement } from '../../lib/dom';
+import { getOverflowAncestors } from '../../lib/floating';
 import { warnOnce } from '../../lib/warnOnce';
 import type { AnchorHTMLAttributesOnly, HTMLAttributesWithRootRef } from '../../types';
 import { TabsControllerContext } from '../Tabs/TabsControllerContext';
@@ -146,20 +148,9 @@ export const TabsItem = ({
 
   const rootRef = useExternRef(getRootRef, refProp);
 
-  const prevSelectedRef = React.useRef<boolean | undefined>(undefined);
-
   React.useEffect(
     function scrollToSelectedItem() {
-      const isInitialRender = prevSelectedRef.current === undefined;
-      const shouldScrollToSelected =
-        withScrollToSelectedTab &&
-        !isInitialRender &&
-        prevSelectedRef.current !== selected &&
-        selected;
-
-      prevSelectedRef.current = selected;
-
-      if (!shouldScrollToSelected || !rootRef.current) {
+      if (!withScrollToSelectedTab || !selected || !rootRef.current) {
         return;
       }
 
@@ -168,9 +159,52 @@ export const TabsItem = ({
         tabDOMRect.top < 0 ||
         tabDOMRect.bottom > rootRef.current.ownerDocument.documentElement.clientHeight;
 
-      /* проверяем, возможен ли вертикальный скролл, а он возможен для scrollIntoView если
-       * элемент вертикально вне зоны видимости */
+      /* scrollIntoView может прокрутить как страницу, так и вложенные контейнеры,
+       * если вкладка вертикально вне их видимой области. */
       if (isTabVerticallyOutsideOfViewport) {
+        return;
+      }
+
+      const isTabVerticallyOutsideOfOverflowAncestor = getOverflowAncestors(rootRef.current).some(
+        (ancestor) => {
+          if (!isHTMLElement(ancestor)) {
+            return false;
+          }
+
+          const ancestorStyle = getWindow(ancestor).getComputedStyle(ancestor);
+          if (!/auto|scroll|overlay|hidden|clip/.test(ancestorStyle.overflowY)) {
+            return false;
+          }
+
+          const ancestorDOMRect = ancestor.getBoundingClientRect();
+          // При зуме границы могут быть дробными, а clientTop и размеры округляются.
+          const borderTop = parseFloat(ancestorStyle.borderTopWidth) || 0;
+          const borderBottom = parseFloat(ancestorStyle.borderBottomWidth) || 0;
+          // Погрешность округления границ не должна считаться полосой прокрутки.
+          const scrollbarHeight = Math.max(
+            0,
+            ancestor.offsetHeight - ancestor.clientHeight - Math.ceil(borderTop + borderBottom),
+          );
+          const ancestorTop = ancestorDOMRect.top + borderTop;
+          let ancestorBottom = ancestorDOMRect.bottom - borderBottom - scrollbarHeight;
+          if (scrollbarHeight > 0) {
+            // Для полосы прокрутки используем консервативную нижнюю границу.
+            ancestorBottom = Math.min(
+              ancestorBottom,
+              ancestorDOMRect.bottom -
+                (ancestor.offsetHeight - ancestor.clientHeight - ancestor.clientTop),
+            );
+          }
+          // DOMRect и вычисленные стили могут различаться на доли тысячной CSS-пикселя.
+          const precision = 0.0001;
+          return (
+            tabDOMRect.top < ancestorTop - precision ||
+            tabDOMRect.bottom > ancestorBottom + precision
+          );
+        },
+      );
+
+      if (isTabVerticallyOutsideOfOverflowAncestor) {
         return;
       }
 

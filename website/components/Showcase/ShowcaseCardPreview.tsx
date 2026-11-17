@@ -12,12 +12,17 @@ import styles from './ShowcaseCard.module.css';
 
 export interface ShowcaseCardPreviewProps {
   slug: string;
-  code: string;
+  previewId: string;
   direction?: 'row' | 'column' | undefined;
   wrapper?: string | undefined;
 }
 
-export function ShowcaseCardPreview({ slug, code, direction, wrapper }: ShowcaseCardPreviewProps) {
+export function ShowcaseCardPreview({
+  slug,
+  previewId,
+  direction,
+  wrapper,
+}: ShowcaseCardPreviewProps) {
   const isIsolated = ISOLATED_PREVIEW_SLUGS.has(slug);
 
   const stageRef = React.useRef<HTMLDivElement | null>(null);
@@ -73,13 +78,13 @@ export function ShowcaseCardPreview({ slug, code, direction, wrapper }: Showcase
           {isIsolated ? (
             <IframePreviewContent
               contentRef={iframeRef}
-              code={code}
+              previewId={previewId}
               colorScheme={colorScheme}
               Wrapper={Wrapper}
               mounted={mounted}
             />
           ) : (
-            <InlinePreviewContent contentRef={contentRef} code={code} Wrapper={Wrapper} />
+            <InlinePreviewContent contentRef={contentRef} previewId={previewId} Wrapper={Wrapper} />
           )}
         </Box>
       )}

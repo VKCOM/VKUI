@@ -27,6 +27,61 @@ describe('SegmentedControl', () => {
     );
     baselineComponent((props) => <SegmentedControl options={[]} name="" {...props} />);
 
+    it('names the radiogroup with aria-label', () => {
+      render(<SegmentedControlTest aria-label="Пол" />);
+
+      expect(screen.getByRole('radiogroup', { name: 'Пол' })).toBeInTheDocument();
+      expect(ctrl()).not.toHaveAttribute('aria-label');
+    });
+
+    it('moves group state attributes to the radiogroup', () => {
+      render(
+        <SegmentedControlTest
+          aria-required
+          aria-invalid
+          aria-errormessage="error"
+          aria-details="details"
+          aria-disabled
+          aria-readonly
+          aria-orientation="horizontal"
+          aria-roledescription="переключатель"
+        />,
+      );
+
+      const radiogroup = screen.getByRole('radiogroup');
+      const attributes = {
+        'aria-required': 'true',
+        'aria-invalid': 'true',
+        'aria-errormessage': 'error',
+        'aria-details': 'details',
+        'aria-disabled': 'true',
+        'aria-readonly': 'true',
+        'aria-orientation': 'horizontal',
+        'aria-roledescription': 'переключатель',
+      };
+
+      for (const [name, value] of Object.entries(attributes)) {
+        expect(radiogroup).toHaveAttribute(name, value);
+        expect(ctrl()).not.toHaveAttribute(name);
+      }
+    });
+
+    it('names the radiogroup with aria-labelledby and describes it with aria-describedby', () => {
+      render(
+        <>
+          <span id="label">Пол</span>
+          <span id="description">Показывать людей выбранного пола</span>
+          <SegmentedControlTest aria-labelledby="label" aria-describedby="description" />
+        </>,
+      );
+
+      const radiogroup = screen.getByRole('radiogroup', { name: 'Пол' });
+
+      expect(radiogroup).toHaveAccessibleDescription('Показывать людей выбранного пола');
+      expect(ctrl()).not.toHaveAttribute('aria-labelledby');
+      expect(ctrl()).not.toHaveAttribute('aria-describedby');
+    });
+
     it('uses the first option value as initial', () => {
       render(<SegmentedControlTest />);
       expect(option(0)).toBeChecked();
@@ -91,6 +146,28 @@ describe('SegmentedControl', () => {
       render(<SegmentedControlTabsTest />);
       expect(screen.queryByRole('tablist')).toBeTruthy();
       expect(getTab(0)).toHaveAttribute('role', 'tab');
+    });
+
+    it('names the tablist with aria-label', () => {
+      render(<SegmentedControlTabsTest aria-label="Разделы" />);
+      expect(screen.getByRole('tablist', { name: 'Разделы' })).toBeInTheDocument();
+      expect(ctrl()).not.toHaveAttribute('aria-label');
+    });
+
+    it('names the tablist with aria-labelledby and describes it with aria-describedby', () => {
+      render(
+        <>
+          <span id="label">Разделы</span>
+          <span id="description">Переключает соцсеть</span>
+          <SegmentedControlTabsTest aria-labelledby="label" aria-describedby="description" />
+        </>,
+      );
+
+      const tablist = screen.getByRole('tablist', { name: 'Разделы' });
+
+      expect(tablist).toHaveAccessibleDescription('Переключает соцсеть');
+      expect(ctrl()).not.toHaveAttribute('aria-labelledby');
+      expect(ctrl()).not.toHaveAttribute('aria-describedby');
     });
 
     it('sets aria-selected correctly', () => {

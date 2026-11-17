@@ -1,6 +1,6 @@
 import type * as React from 'react';
 import { Card, Link, Text } from '@vkontakte/vkui';
-import NextLink from 'next/link';
+import { NextLink } from '../../../components/NextLink';
 import { PostHeading } from './PostHeading';
 import { PostMeta, type PostMetaProps } from './PostMeta';
 import styles from './Post.module.css';

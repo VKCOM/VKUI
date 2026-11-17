@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { useStableCallback } from '../../../hooks/useStableCallback';
 import { DropdownIcon } from '../../DropdownIcon/DropdownIcon';
-import { type NativeSelectValue, NOT_SELECTED } from '../../NativeSelect/NativeSelect';
+import { type NativeSelectValue, NOT_SELECTED } from '../../NativeSelect/helpers';
 import type { SelectProps } from '../CustomSelect';
 import { CustomSelectClearButton } from '../CustomSelectClearButton';
 import styles from '../CustomSelect.module.css';

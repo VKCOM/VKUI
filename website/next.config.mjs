@@ -1,4 +1,5 @@
 import * as path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import analyzer from '@next/bundle-analyzer';
 import { transformerNotationDiff } from '@shikijs/transformers';
 import browserslistGrammar from 'browserslist-vscode/syntaxes/browserslist.tmLanguage.json' with {
@@ -10,6 +11,9 @@ import { transformer as codeImportTransformer } from './remark-plugins/remarkCod
 import { transformer as headingTransformer } from './remark-plugins/remarkHeading.mjs';
 import { transformer as playgroundTransformer } from './remark-plugins/remarkPlayground.mjs';
 import { transformer as slugifyTransformer } from './remark-plugins/remarkSlugify.mjs';
+import { generatePreviews } from './scripts/generate-previews.ts';
+
+await generatePreviews();
 
 const basePath =
   process.env.NODE_ENV === 'production' ? process.env.NEXT_PUBLIC_VKUI_DOCS_BASE_PATH : undefined;
@@ -51,14 +55,8 @@ export default withBundleAnalyzer(
     trailingSlash: true,
     // ... your Next.js config
     transpilePackages: ['@vkontakte/vkui-docs-theme', '@vkontakte/vkui'],
-    modularizeImports: {
-      '@vkontakte/vkui': {
-        transform: '@vkontakte/vkui/dist/cssm',
-        skipDefaultConversion: true,
-      },
-    },
     experimental: {
-      optimizePackageImports: ['@vkontakte/icons'],
+      optimizePackageImports: ['@vkontakte/icons', '@vkontakte/vkui'],
     },
     basePath,
     output: 'export',
@@ -66,7 +64,19 @@ export default withBundleAnalyzer(
       unoptimized: true,
     },
     distDir,
-    webpack: (config, { isServer }) => {
+    webpack: (config, { isServer, dev }) => {
+      if (dev) {
+        config.plugins.push({
+          apply(compiler) {
+            compiler.hooks.beforeCompile.tapPromise('GeneratePlaygroundPreviews', generatePreviews);
+          },
+        });
+      }
+      config.resolve.alias = {
+        ...config.resolve.alias,
+        '@vkontakte/vkui$': fileURLToPath(import.meta.resolve('@vkontakte/vkui/dist/cssm')),
+      };
+
       if (!isServer) {
         config.resolve = {
           ...config.resolve,
@@ -90,6 +100,35 @@ export default withBundleAnalyzer(
         resourceQuery: /raw/,
         type: 'asset/source',
       });
+
+      if (!isServer) {
+        config.module.rules.push({
+          test: /\.[jt]sx?$/,
+          include: [import.meta.dirname, path.resolve(import.meta.dirname, '../packages/vkui')],
+          exclude: /node_modules/,
+          resourceQuery: { not: [/raw/] },
+          enforce: 'pre',
+          loader: 'swc-loader',
+          options: {
+            // Next's SWC loader expects the preceding loader's source map to be an object.
+            parseMap: dev,
+            swcrc: false,
+            jsc: {
+              target: 'esnext',
+              parser: {
+                syntax: 'typescript',
+                tsx: true,
+              },
+              transform: {
+                react: {
+                  runtime: 'preserve',
+                },
+                reactCompiler: true,
+              },
+            },
+          },
+        });
+      }
 
       return config;
     },

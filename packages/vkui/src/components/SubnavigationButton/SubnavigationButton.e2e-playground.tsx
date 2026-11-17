@@ -43,7 +43,7 @@ export const SubnavigationButtonPlayground = (props: ComponentPlaygroundProps) =
           chevron: [true],
           selected: [undefined, true],
           before: [<Icon24Filter key="icon" />],
-          mode: ['primary', 'outline', 'tertiary'],
+          mode: ['primary', 'secondary', 'outline', 'tertiary'],
           appearance: ['accent', 'neutral'],
           after: [
             <Counter key="counter" size="s">

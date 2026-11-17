@@ -10,18 +10,20 @@
     "pagefind": "pagefind --site out/ --output-path ./public/_pagefind && cp -r ./public/_pagefind ./out",
     "next-sitemap": "next-sitemap",
     "generate": "node ./scripts/index.ts",
-    "lint:types": "tsc"
+    "test": "node ./scripts/generate-previews.ts && yarn run -T vitest run",
+    "test:ci": "node --run test",
+    "lint:types": "node ./scripts/generate-previews.ts && node ../node_modules/@typescript/native/bin/tsc"
   },
   "devDependencies": {
-    "@next/bundle-analyzer": "^16.4.2",
-    "@shikijs/transformers": "^4.5.0",
+    "@next/bundle-analyzer": "^16.4.6",
+    "@shikijs/transformers": "^4.6.0",
     "@vkontakte/vkui": "workspace:^",
     "@vkontakte/vkui-docs-theme": "workspace:^",
     "browserslist-vscode": "github:browserslist/browserslist-vscode",
-    "next": "^16.4.2",
+    "next": "^16.4.6",
     "next-sitemap": "^4.2.3",
     "nextra": "^4.6.1",
-    "pagefind": "^1.5.2",
+    "pagefind": "^1.6.0",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
     "react-live": "^5.0.1",
@@ -30,12 +32,12 @@
     "remark-mdx": "^3.0.0",
     "remark-parse": "^11.0.0",
     "remark-stringify": "^11.0.0",
-    "serve": "^14.2.6",
+    "serve": "^14.2.7",
     "slug": "^12.0.1",
     "swr": "^2.5.1",
     "typescript": "*",
     "unified": "^11.0.5",
-    "zustand": "^5.0.16"
+    "zustand": "^5.1.0"
   },
   "dependencies": {
     "@stackblitz/sdk": "^1.11.1",

@@ -15,10 +15,10 @@ tags: forms, layout
   ```jsx
   <FormLayoutGroup mode="horizontal">
     <FormItem htmlFor="name" top="Имя">
-      <Input id="name" />
+      <Input id="name" autoComplete="given-name" />
     </FormItem>
     <FormItem htmlFor="lastName" top="Фамилия">
-      <Input id="lastName" />
+      <Input id="lastName" autoComplete="family-name" />
     </FormItem>
   </FormLayoutGroup>
   ```
@@ -39,6 +39,7 @@ tags: forms, layout
   <FormLayoutGroup mode="vertical" segmented>
     <FormItem htmlFor="doctype" top="Документ, удостоверяющий личность">
       <Select
+        name="form-layout-group-option-1"
         id="doctype"
         options={['Паспорт гражданина РФ', 'Загранпаспорт'].map((i) => ({
           label: i,
@@ -95,10 +96,12 @@ tags: forms, layout
   ```jsx
   <FormLayoutGroup mode="horizontal" segmented>
     <FormItem htmlFor="email" top="E-mail">
-      <Input id="email" slotProps={{ input: { 'aria-label': 'Имя пользователя' } }} />
+      <Input id="email" autoComplete="username" slotProps={{ input: { 'aria-label': 'Имя пользователя' } }} />
     </FormItem>
     <FormItem>
       <Select
+        name="form-layout-group-option-2"
+        id="form-layout-group-input-2"
         slotProps={{ input: { 'aria-label': 'Имя домена' } }}
         options={['@mail.ru', '@internet.ru', '@bk.ru', '@inbox.ru', '@list.ru'].map((i) => ({
           label: i,

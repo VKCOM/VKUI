@@ -32,7 +32,7 @@
     "src"
   ],
   "dependencies": {
-    "@babel/standalone": "^8.0.7",
+    "@babel/standalone": "^8.1.2",
     "monaco-editor": "^0.57.0"
   },
   "peerDependencies": {
@@ -47,8 +47,8 @@
   },
   "scripts": {
     "test": "echo no test",
-    "lint": "tsc",
-    "build": "tsc"
+    "lint": "node ../../node_modules/@typescript/native/bin/tsc",
+    "build": "node ../../node_modules/@typescript/native/bin/tsc"
   },
   "publishConfig": {
     "access": "public"

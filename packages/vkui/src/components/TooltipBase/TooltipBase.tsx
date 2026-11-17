@@ -1,5 +1,3 @@
-'use client';
-
 import type * as React from 'react';
 import { Icon16Cancel } from '@vkontakte/icons';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';

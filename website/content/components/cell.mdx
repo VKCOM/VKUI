@@ -1,6 +1,9 @@
 ---
 description: Расширенная версия SimpleCell с поддержкой удаления, перетаскивания и выбора элементов.
 tags: list
+keywords:
+  - Cell.Checkbox
+  - List
 ---
 
 <Overview group="buttons">
@@ -15,7 +18,7 @@ tags: list
 {/* @example-description: Базовый `Cell` в режиме выбора с аватаром в начале строки. */}
 <Playground>
   ```jsx
-  <Cell mode="selectable" before={<Avatar />}>
+  <Cell name="selected-user" mode="selectable" before={<Avatar />}>
     Пётр Кузнецов
   </Cell>
   ```

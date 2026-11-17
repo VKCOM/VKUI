@@ -1,5 +1,3 @@
-'use client';
-
 import { Banner, type BannerProps, classNames, Headline, SimpleGrid } from '@vkontakte/vkui';
 import { NextjsLogo } from './NextjsLogo';
 import { ViteLogo } from './ViteLogo';

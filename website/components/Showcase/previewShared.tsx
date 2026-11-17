@@ -1,5 +1,3 @@
-'use client';
-
 import * as React from 'react';
 import { Flex } from '@vkontakte/vkui';
 import {
@@ -27,13 +25,6 @@ export const wrapperMap: Record<string, React.ComponentType<React.PropsWithChild
     OnboardingTooltipWrapper as React.ComponentType<React.PropsWithChildren>,
   OverlayButtonWrapper: OverlayButtonWrapper as React.ComponentType<React.PropsWithChildren>,
 };
-
-export function transformCode(code: string): string {
-  if (code.trim().startsWith('<')) {
-    return `<React.Fragment>\n${code}\n</React.Fragment>;`;
-  }
-  return `() => { ${code} }`;
-}
 
 export function makeDefaultWrapper(direction: 'row' | 'column' = 'row') {
   return function DefaultPreviewWrapper({ children }: React.PropsWithChildren) {

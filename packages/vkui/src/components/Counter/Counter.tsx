@@ -1,5 +1,3 @@
-'use client';
-
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { mergeStyle } from '../../helpers/mergeStyle';
@@ -68,33 +66,15 @@ export const Counter = ({
   style: styleProp,
   ...restProps
 }: CounterProps): React.ReactNode => {
-  const appearance = React.useMemo<CounterProps['appearance']>(() => {
-    if (mode === 'inherit') {
-      return undefined;
-    }
-    if (appearanceProp) {
-      return appearanceProp;
-    }
-    return 'accent';
-  }, [appearanceProp, mode]);
+  const appearance = mode === 'inherit' ? undefined : appearanceProp || 'accent';
+  let style: (React.CSSProperties & CSSCustomProperties<string | undefined>) | undefined;
 
-  const style: (React.CSSProperties & CSSCustomProperties<string | undefined>) | undefined =
-    React.useMemo(() => {
-      if (mode === 'inherit' || appearance !== 'custom' || !color) {
-        return undefined;
-      }
-      switch (mode) {
-        case 'primary':
-          return {
-            '--vkui_internal--counter_background': color,
-          };
-        case 'contrast':
-        case 'tertiary':
-          return {
-            '--vkui_internal--counter_foreground': color,
-          };
-      }
-    }, [appearance, color, mode]);
+  if (mode !== 'inherit' && appearance === 'custom' && color) {
+    style =
+      mode === 'primary'
+        ? { '--vkui_internal--counter_background': color }
+        : { '--vkui_internal--counter_foreground': color };
+  }
 
   if (React.Children.count(children) === 0) {
     return null;

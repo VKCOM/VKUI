@@ -7,7 +7,8 @@ import { Keys, pressedKey } from '../../lib/accessibility';
 import { setHours, setMinutes } from '../../lib/date';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { Button, type ButtonProps } from '../Button/Button';
-import { CalendarTimePicker, padStartTimeValue } from './CalendarTimePicker';
+import { CalendarTimePicker } from './CalendarTimePicker';
+import { padStartTimeValue } from './helpers';
 import styles from './CalendarTime.module.css';
 
 const MAX_HOURS = 23;

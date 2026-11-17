@@ -4,13 +4,13 @@ import * as React from 'react';
 import { Tabs, TabsItem } from '@vkontakte/vkui';
 import styles from './McpClientsTabs.module.css';
 
-type McpClientsTabProps = {
+export type McpClientsTabProps = {
   id: string;
   title: string;
   children: React.ReactNode;
 };
 
-type McpClientsTabsProps = {
+export type McpClientsTabsProps = {
   children: React.ReactNode;
 };
 

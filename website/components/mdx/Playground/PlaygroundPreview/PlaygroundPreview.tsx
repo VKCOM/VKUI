@@ -9,7 +9,6 @@ import {
   PanelSpinner,
 } from '@vkontakte/vkui';
 import { useMounted } from 'nextra/hooks';
-import { LiveContext, LiveError, LivePreview } from 'react-live';
 import { usePlaygroundStore } from '@/providers/playgroundStoreProvider';
 import { useResolvedColorScheme } from '../hooks/useResolvedColorScheme';
 import { makeTokenClassName } from '../vkuiThemes/helpers';
@@ -41,16 +40,21 @@ export interface PlaygroundPreviewProps
   extends Pick<FlexProps, 'direction' | 'align' | 'justify'>,
     Pick<AppRootProps, 'scroll'> {
   className?: string | undefined;
-  Wrapper?: React.ComponentType | undefined;
+  Wrapper?:
+    | React.ComponentType<
+        React.PropsWithChildren<Pick<FlexProps, 'direction' | 'align' | 'justify'>>
+      >
+    | undefined;
+  children?: React.ReactNode;
 }
 
 export function PlaygroundPreview({
   className,
   Wrapper = DefaultWrapper,
   scroll = 'contain',
+  children,
   ...restProps
 }: PlaygroundPreviewProps) {
-  const { error } = React.useContext(LiveContext);
   const mounted = useMounted();
   const colorScheme = useResolvedColorScheme();
   const { platform, themeName, playgroundLoading } = usePlaygroundStore((store) => store);
@@ -61,11 +65,9 @@ export function PlaygroundPreview({
         styles.root,
         styles.previewBackground,
         colorScheme === 'dark' && styles.previewBackgroundDark,
-        error && styles.error,
         className,
       )}
     >
-      {error && <LiveError />}
       {playgroundLoading && <PanelSpinner visibilityDelay={250} />}
       {mounted && !playgroundLoading && (
         <AppRoot style={{ height: '100%', width: '100%' }} mode="partial" scroll={scroll}>
@@ -77,7 +79,7 @@ export function PlaygroundPreview({
               dark: makeTokenClassName(themeName, 'dark'),
             }}
           >
-            <LivePreview Component={Wrapper} {...restProps} />
+            <Wrapper {...restProps}>{children}</Wrapper>
           </ConfigProvider>
         </AppRoot>
       )}

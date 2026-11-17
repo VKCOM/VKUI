@@ -5,7 +5,12 @@ runs:
   using: composite
   steps:
     - name: Enable Corepack
-      run: corepack enable
+      run: |
+        if ! command -v corepack > /dev/null 2>&1; then
+          # Replace standalone Yarn binaries provided by the container image.
+          npm install --global --force corepack@0.36.0
+        fi
+        corepack enable
       shell: bash
 
     - name: Setup NodeJS

@@ -1,6 +1,6 @@
 {
   "type": "module",
-  "version": "8.4.0",
+  "version": "8.5.0",
   "name": "@vkontakte/vkui",
   "description": "VKUI library",
   "module": "./dist/index.js",
@@ -62,7 +62,7 @@
     "swc-base": "yarn run -T cross-env NODE_ENV=production swc src/ --config-file package.swcrc --extensions .tsx,.jsx,.ts,.js --strip-leading-paths",
     "swc:es6": "node --run swc-base -- -d dist -s",
     "swc:cssm": "node --run swc-base -- -d dist/cssm -s --config-file ./cssm/cssm.swcrc",
-    "tsc:es6": "yarn run -T cross-env NODE_ENV=production tsc --emitDeclarationOnly --declaration -p tsconfig.dist.json",
+    "tsc:es6": "yarn run -T cross-env NODE_ENV=production node ../../node_modules/@typescript/native/bin/tsc --emitDeclarationOnly --declaration -p tsconfig.dist.json",
     "test": "yarn run -T vitest run",
     "test:watch": "yarn run -T vitest",
     "test:ci": "yarn run -T vitest run --reporter=json --outputFile=../../test-results.json --coverage",
@@ -76,7 +76,7 @@
     "lint:generated-files": "yarn run -T concurrently 'yarn:lint:generated-files:*'",
     "lint:generated-files:css-custom-medias": "node --run generate:css-custom-medias && git diff --exit-code src/styles/customMedias.generated.css",
     "lint:generated-files:css-modules": "node --run generate:css-modules",
-    "lint:types": "tsc -b",
+    "lint:types": "node ../../node_modules/@typescript/native/bin/tsc -b",
     "storybook": "bash -c 'source .env && yarn run -T storybook dev -p ${STORYBOOK_DEV_PORT:=6006}'",
     "storybook:build": "yarn run -T storybook build",
     "generate": "yarn run -T concurrently 'yarn:generate:*'",
@@ -88,25 +88,25 @@
     "react-dom": "^18.2.0 || ^19.0.0"
   },
   "dependencies": {
-    "@swc/helpers": "^0.5.23",
-    "@vkontakte/icons": "^3.78.0",
+    "@swc/helpers": "^0.5.24",
+    "@vkontakte/icons": "^3.80.0",
     "@vkontakte/vkjs": "^2.0.2",
     "@vkontakte/vkui-date-fns-tz": "^0.0.6",
     "@vkontakte/vkui-floating-ui": "^0.2.8"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.6.2",
+    "@biomejs/biome": "^2.6.7",
     "@storybook/icons": "^2.2.0",
-    "@storybook/react-vite": "10.6.3",
+    "@storybook/react-vite": "10.6.7",
     "@types/node": "*",
     "@types/postcss-import": "^14.0.3",
     "@vkontakte/storybook-addons": "workspace:^",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
-    "size-limit": "^14.2.0",
-    "storybook": "10.6.3",
+    "size-limit": "^14.3.0",
+    "storybook": "10.6.7",
     "typescript": "^6.0.3",
-    "vite": "^8.3.5"
+    "vite": "^8.3.8"
   },
   "size-limit": [
     {

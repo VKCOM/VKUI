@@ -1,7 +1,7 @@
 'use client';
 
-import { useContext } from 'react';
-import { useExternRef } from '../../../hooks/useExternRef';
+import { useContext, useRef } from 'react';
+import { useRootRef } from '../../../hooks/useExternRef';
 import { setRef } from '../../../lib/utils';
 import type { ModalOverlayProps } from '../../ModalOverlay/ModalOverlay';
 import { ModalRootOverlayContext } from '../ModalRootContext';
@@ -27,15 +27,28 @@ export const VisuallyHiddenModalOverlay = ({
   disableCloseAnimation,
   ...restProps
 }: VisuallyHiddenModalOverlayProps) => {
-  const getRootRef = useExternRef(getRootRefProp, refProp);
+  const getRootRef = useRootRef(getRootRefProp, refProp);
   const ref = useContext(ModalRootOverlayContext);
+  const cleanupRef = useRef<(() => void) | undefined>(undefined);
   return (
     <div
       {...restProps}
       aria-hidden="true"
       className={styles.host}
-      ref={function handleCurrentRefForForwardContextRef() {
-        setRef(ref.current, getRootRef);
+      ref={function handleCurrentRefForForwardContextRef(node) {
+        if (!node && cleanupRef.current) {
+          const cleanup = cleanupRef.current;
+          cleanupRef.current = undefined;
+          cleanup();
+          return;
+        }
+        const element = node ? ref.current : null;
+        if (typeof getRootRef === 'function') {
+          const result = getRootRef(element);
+          cleanupRef.current = typeof result === 'function' ? result : undefined;
+        } else {
+          setRef(element, getRootRef);
+        }
       }}
     />
   );

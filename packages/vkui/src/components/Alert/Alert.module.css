@@ -251,34 +251,6 @@
   color: var(--vkui--color_text_negative);
 }
 
-/**
- * VKCOM
- */
-
-.vkcom {
-  inline-size: 400px;
-  box-shadow:
-    0 0 2px rgb(0, 0, 0, 0.12),
-    0 0 96px rgb(0, 0, 0, 0.16);
-}
-
-.vkcom .content {
-  padding-block-end: 20px;
-}
-
-.vkcom .actions {
-  padding-block: 0 12px;
-  padding-inline: 20px;
-}
-
-.vkcom .button {
-  order: 2;
-}
-
-.vkcom .buttonModeCancel {
-  order: 1;
-}
-
 .dismiss {
   position: absolute;
   inset-block-start: 8px;

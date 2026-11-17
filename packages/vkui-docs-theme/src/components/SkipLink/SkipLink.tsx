@@ -1,5 +1,3 @@
-'use client';
-
 import { Button } from '@vkontakte/vkui';
 import styles from './SkipLink.module.css';
 

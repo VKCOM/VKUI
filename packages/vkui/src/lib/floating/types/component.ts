@@ -53,7 +53,7 @@ export interface FloatingComponentProps
   /**
    * По умолчанию используется document.body.
    */
-  usePortal?: boolean | HTMLElement | React.RefObject<HTMLElement> | undefined;
+  usePortal?: boolean | HTMLElement | React.RefObject<HTMLElement | null> | undefined;
   /**
    * В зависимости от области видимости, позиция может смениться на более оптимальную,
    * чтобы всплывающий элемент вместился в эту область видимости.

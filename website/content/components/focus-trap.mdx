@@ -37,8 +37,12 @@ return (
           }}
         >
           <Flex direction="column" gap="m">
-            <Input placeholder="Первое поле ввода" />
-            <Input placeholder="Второе поле ввода" />
+            <FormItem top="Первое поле ввода" htmlFor="focus-trap-focus-trap-1">
+              <Input id="focus-trap-focus-trap-1" name="focus-trap-1" placeholder="Первое поле ввода" />
+            </FormItem>
+            <FormItem top="Второе поле ввода" htmlFor="focus-trap-focus-trap-2">
+              <Input id="focus-trap-focus-trap-2" name="focus-trap-2" placeholder="Второе поле ввода" />
+            </FormItem>
             <ButtonGroup>
               <Button>Действие</Button>
               <Button mode="secondary" onClick={() => setOpen(false)}>
@@ -96,7 +100,9 @@ return (
   <FocusTrap rootRef={focusTrapRef} autoFocus restoreFocus>
     <div ref={focusTrapRef} tabIndex={-1} style={{ padding: 16 }}>
       <Flex direction="column" gap="m">
-        <Input placeholder="Ввод текста" />
+        <FormItem top="Ввод текста" htmlFor="focus-trap-focus-trap-3">
+          <Input id="focus-trap-focus-trap-3" name="focus-trap-3" placeholder="Ввод текста" />
+        </FormItem>
         <Button>Отправить</Button>
       </Flex>
     </div>
@@ -157,7 +163,9 @@ return (
           }}
         >
           <Flex direction="column" gap="m">
-            <Input placeholder="Поле ввода" />
+            <FormItem top="Поле ввода" htmlFor="focus-trap-focus-trap-4">
+              <Input id="focus-trap-focus-trap-4" name="focus-trap-4" placeholder="Поле ввода" />
+            </FormItem>
             <Button>Кнопка</Button>
           </Flex>
         </div>
@@ -257,7 +265,9 @@ return (
         }}
       >
         <Flex direction="column" gap="m">
-          <Input placeholder="Поле ввода" />
+          <FormItem top="Поле ввода" htmlFor="focus-trap-focus-trap-5">
+            <Input id="focus-trap-focus-trap-5" name="focus-trap-5" placeholder="Поле ввода" />
+          </FormItem>
           <Button>Кнопка</Button>
         </Flex>
       </div>

@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useColorScheme } from '../../../hooks/useColorScheme';
-import { useExternRef } from '../../../hooks/useExternRef';
+import { useExternRef, useRootRef } from '../../../hooks/useExternRef';
 import { useFocusVisible } from '../../../hooks/useFocusVisible';
 import { useFocusVisibleClassName } from '../../../hooks/useFocusVisibleClassName';
 import { clickByKeyboardHandler } from '../../../lib/utils';
@@ -40,7 +40,7 @@ const ImageBaseOverlayInteractive = ({
   overlayShown,
   ...restProps
 }: ImageBaseOverlayInteractiveProps & { overlayShown?: boolean }) => {
-  const getRootRef = useExternRef(getRootRefProp, refProp);
+  const getRootRef = useRootRef(getRootRefProp, refProp);
   const { focusVisible, ...focusEvents } = useFocusVisible();
   const focusVisibleClassNames = useFocusVisibleClassName({ focusVisible, mode: 'inside' });
 

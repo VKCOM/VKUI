@@ -4,7 +4,7 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../../hooks/useAdaptivity';
-import { useExternRef } from '../../../hooks/useExternRef';
+import { useExternRef, useRootRef } from '../../../hooks/useExternRef';
 import { useFocusWithin } from '../../../hooks/useFocusWithin';
 import { useMergeProps } from '../../../hooks/useMergeProps';
 import { usePlatform } from '../../../hooks/usePlatform';
@@ -77,7 +77,7 @@ export const CustomSelectInput = ({
   slotProps,
   ...restProps
 }: CustomSelectInputProps): React.ReactNode => {
-  const rootGetRootRef = useExternRef(rootGetRootRefProp, refProp);
+  const rootGetRootRef = useRootRef(rootGetRootRefProp, refProp);
   const { density = 'none' } = useAdaptivity();
 
   const { style, className, getRootRef, ...rootRest } = useMergeProps(

@@ -1,6 +1,6 @@
 import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
-import { mkdir, readdir, readFile, stat, writeFile } from 'node:fs/promises';
+import { glob, mkdir, readdir, readFile, stat, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { gunzipSync } from 'node:zlib';
@@ -161,6 +161,15 @@ for (const entry of await readdir(path.join(sourceRoot, 'styles'), { withFileTyp
   }
 }
 
+// Vite не включает исходники CSS-модулей в sourcemaps собранного JavaScript.
+for await (const filePath of glob('**/*.module.css', { cwd: sourceRoot })) {
+  const absolutePath = path.join(sourceRoot, filePath);
+  const relativePath = path.relative(repoRoot, absolutePath).split(path.sep).join('/');
+  const content = await readFile(absolutePath, 'utf8');
+  cssSources.set(relativePath, content);
+  sourceFiles.set(relativePath, { lines: new Map(), content });
+}
+
 const addSourceCoverage = async (assetPath: string, sourceText: string, intervals: Interval[]) => {
   const mapPath = `${assetPath}.map`;
   if (!sourceMaps.has(mapPath)) {
@@ -313,7 +322,7 @@ const addCssSourceCoverage = (sourceText: string, intervals: Interval[]) => {
   const sourceByHash = new Map<string, string>();
   for (const [hash, candidates] of hashCandidates) {
     const ranked = [...candidates.entries()].sort((a, b) => b[1].size - a[1].size);
-    if (ranked.length === 1 || ranked[0][1].size > ranked[1][1].size) {
+    if (ranked.length > 0 && (ranked.length === 1 || ranked[0][1].size > ranked[1][1].size)) {
       sourceByHash.set(hash, ranked[0][0]);
     }
   }

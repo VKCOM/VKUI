@@ -11,6 +11,7 @@
 @import '../vkui/src/styles/common.css';
 @import '../vkui/src/styles/dynamicTokens.css';
 @import '../vkui/src/styles/adaptivity.module.css';
+@import '../vkui/dist/cssm/styles/layout.css';
 
 /* Docs styles */
 @import './styles/constants.css';

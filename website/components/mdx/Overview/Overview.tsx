@@ -1,5 +1,3 @@
-'use client';
-
 import type * as React from 'react';
 import { OverviewHeaderLinks } from './OverviewHeaderLinks/OverviewHeaderLinks';
 import type { OverviewHeaderLinksProps } from './OverviewHeaderLinks/types';

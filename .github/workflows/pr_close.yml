@@ -29,7 +29,11 @@ jobs:
 
   v7:
     if: github.event.pull_request.merged == true && contains(github.event.pull_request.labels.*.name, 'ci:cherry-pick:v7')
-    concurrency: ci-stable
+    concurrency:
+      group: ci-stable
+      cancel-in-progress: false
+      # Сохраняем ожидающие cherry-pick при мерже стека PR.
+      queue: max
     runs-on: ubuntu-slim
     name: v7 Patch
     steps:
@@ -67,7 +71,11 @@ jobs:
 
   patch:
     if: github.event.pull_request.merged == true && contains(github.event.pull_request.labels.*.name, 'ci:cherry-pick:patch')
-    concurrency: ci-stable
+    concurrency:
+      group: ci-stable
+      cancel-in-progress: false
+      # Сохраняем ожидающие cherry-pick при мерже стека PR.
+      queue: max
     runs-on: ubuntu-slim
     name: Stable Patch
     steps:
@@ -103,7 +111,11 @@ jobs:
 
   v7-patch:
     if: github.event.pull_request.merged == true && contains(github.event.pull_request.labels.*.name, 'ci:cherry-pick:v7-patch')
-    concurrency: ci-stable
+    concurrency:
+      group: ci-stable
+      cancel-in-progress: false
+      # Сохраняем ожидающие cherry-pick при мерже стека PR.
+      queue: max
     runs-on: ubuntu-slim
     name: v7 Stable Patch
     steps:

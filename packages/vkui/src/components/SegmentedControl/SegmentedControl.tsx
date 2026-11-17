@@ -83,6 +83,17 @@ export const SegmentedControl = <T extends SegmentedControlValue = SegmentedCont
   onChange: onChangeProp,
   value: valueProp,
   role = 'radiogroup',
+  'aria-label': ariaLabel,
+  'aria-labelledby': ariaLabelledby,
+  'aria-describedby': ariaDescribedby,
+  'aria-details': ariaDetails,
+  'aria-roledescription': ariaRoledescription,
+  'aria-required': ariaRequired,
+  'aria-invalid': ariaInvalid,
+  'aria-errormessage': ariaErrormessage,
+  'aria-disabled': ariaDisabled,
+  'aria-readonly': ariaReadonly,
+  'aria-orientation': ariaOrientation,
   ...restProps
 }: SegmentedControlProps<T>): React.ReactNode => {
   const id = React.useId();
@@ -122,7 +133,22 @@ export const SegmentedControl = <T extends SegmentedControlValue = SegmentedCont
         isRtl && styles.rtl,
       )}
     >
-      <div role={role} ref={tabsRef} className={styles.in}>
+      <div
+        role={role}
+        aria-label={ariaLabel}
+        aria-labelledby={ariaLabelledby}
+        aria-describedby={ariaDescribedby}
+        aria-details={ariaDetails}
+        aria-roledescription={ariaRoledescription}
+        aria-required={ariaRequired}
+        aria-invalid={ariaInvalid}
+        aria-errormessage={ariaErrormessage}
+        aria-disabled={ariaDisabled}
+        aria-readonly={ariaReadonly}
+        aria-orientation={ariaOrientation}
+        ref={tabsRef}
+        className={styles.in}
+      >
         {actualIndex > -1 && <div aria-hidden className={styles.slider} style={sliderStyle} />}
         {options.map(({ label, before, ...optionProps }) => {
           const selected = value === optionProps.value;

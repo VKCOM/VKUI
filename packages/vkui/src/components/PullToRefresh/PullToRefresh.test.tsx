@@ -5,6 +5,7 @@ import { noop } from '@vkontakte/vkjs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { Platform, type PlatformType } from '../../lib/platform';
 import { baselineComponent, fakeTimersForScope, withFakeTimers } from '../../testing/utils';
+import { ScrollContext } from '../AppRoot/ScrollContext';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { PullToRefresh } from './PullToRefresh';
 import pullToRefreshStyles from './PullToRefresh.module.css';
@@ -51,6 +52,33 @@ describe(PullToRefresh, () => {
 
   describe('calls onRefresh', () => {
     fakeTimersForScope();
+    it.each([
+      { y: -50, calls: 1 },
+      { y: -0.5, calls: 1 },
+      { y: 0, calls: 1 },
+      { y: 0.5, calls: 0 },
+      { y: 50, calls: 0 },
+    ])('on iOS with scroll offset $y calls onRefresh $calls times', async ({ y, calls }) => {
+      const onRefresh = vi.fn();
+      render(
+        <ConfigProvider platform="ios">
+          <ScrollContext.Provider
+            value={{
+              getScroll: () => ({ x: 0, y }),
+              scrollTo: noop,
+              incrementScrollLockCounter: noop,
+              decrementScrollLockCounter: noop,
+            }}
+          >
+            <PullToRefresh onRefresh={onRefresh} data-testid="xxx" />
+          </ScrollContext.Provider>
+        </ConfigProvider>,
+      );
+      firePull(screen.getByTestId('xxx'));
+      await act(vi.runAllTimers);
+      expect(onRefresh).toHaveBeenCalledTimes(calls);
+    });
+
     it('after pull', async () => {
       const onRefresh = vi.fn();
       render(<PullToRefresh onRefresh={onRefresh} data-testid="xxx" />);

@@ -1,0 +1,14 @@
+/* stylelint-disable selector-max-type -- root is a view transition name, not an element selector. */
+.transition::view-transition-old(root),
+.transition::view-transition-new(root) {
+  mix-blend-mode: normal;
+  animation: none;
+}
+
+.transition::view-transition-old(root) {
+  z-index: 1;
+}
+
+.transition::view-transition-new(root) {
+  z-index: 2;
+}
