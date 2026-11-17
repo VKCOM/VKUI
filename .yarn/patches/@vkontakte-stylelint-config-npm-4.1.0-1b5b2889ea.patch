@@ -1,0 +1,18 @@
+diff --git a/index.js b/index.js
+index cc14e4a22e1aa6e6f5ec8bc28806b698c96a6783..c8a44b2670d6ba070ee60e6a9a771ef2c1a1cc21 100644
+--- a/index.js
++++ b/index.js
+@@ -1,9 +1,9 @@
+ export default {
+   plugins: [
+-    './dist/stylelint-selector-bem-pattern',
+-    './dist/stylelint-vkui',
+-    './dist/stylelint-logical-shorthands',
+-    './dist/stylelint-css-property-memory',
++    './dist/stylelint-selector-bem-pattern/index.js',
++    './dist/stylelint-vkui/index.js',
++    './dist/stylelint-logical-shorthands/index.js',
++    './dist/stylelint-css-property-memory/index.js',
+   ],
+   rules: {
+     'max-nesting-depth': [0, { ignoreAtRules: ['supports'] }],

@@ -42,7 +42,7 @@
     "@vitest/coverage-v8": "^5.1.0",
     "@vitest/eslint-plugin": "^1.6.28",
     "@vitest/utils": "^5.1.0",
-    "@vkontakte/stylelint-config": "^4.1.0",
+    "@vkontakte/stylelint-config": "patch:@vkontakte/stylelint-config@npm%3A4.1.0#~/.yarn/patches/@vkontakte-stylelint-config-npm-4.1.0-1b5b2889ea.patch",
     "@vkontakte/vkui-tokens": "4.101.0",
     "autoprefixer": "^10.6.2",
     "concurrently": "^10.0.7",
