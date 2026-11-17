@@ -5505,29 +5505,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@vkontakte/stylelint-config@npm:4.1.0":
-  version: 4.1.0
-  resolution: "@vkontakte/stylelint-config@npm:4.1.0"
+"@vkontakte/stylelint-config@npm:^4.2.0":
+  version: 4.2.0
+  resolution: "@vkontakte/stylelint-config@npm:4.2.0"
   dependencies:
     micromatch: "npm:^4.0.5"
     postcss-value-parser: "npm:^4.2.0"
   peerDependencies:
     postcss: ^8.4.16
-    stylelint: ^15.11.0 || ^16.1.0
-  checksum: 10/56ae986ed708f8e234e348485b0a8b2840ef14b8912492a6dc374b083e317c9562bda86fb3245aa6c6b1cce0e12cfb95e43f622777d8e9c0139483cd4a92e970
-  languageName: node
-  linkType: hard
-
-"@vkontakte/stylelint-config@patch:@vkontakte/stylelint-config@npm%3A4.1.0#~/.yarn/patches/@vkontakte-stylelint-config-npm-4.1.0-1b5b2889ea.patch":
-  version: 4.1.0
-  resolution: "@vkontakte/stylelint-config@patch:@vkontakte/stylelint-config@npm%3A4.1.0#~/.yarn/patches/@vkontakte-stylelint-config-npm-4.1.0-1b5b2889ea.patch::version=4.1.0&hash=2b8256"
-  dependencies:
-    micromatch: "npm:^4.0.5"
-    postcss-value-parser: "npm:^4.2.0"
-  peerDependencies:
-    postcss: ^8.4.16
-    stylelint: ^15.11.0 || ^16.1.0
-  checksum: 10/b8b01194560829799a6fc9b546a0cccc17c6dc6a14da1e4b9842f24dd074d1c007dddb432dba730791feabda40272d29ffad8adf6b4b1ab8714d2fe87ce9d0f4
+    stylelint: ^16.8.2 || ^17.0.0 || ^18.0.0
+  checksum: 10/6f350a04f97ebba1fc8c9fd70c13e660be17485a8e4f96c002f37a1ae93e2790e116820aa8058787c825abc7d6261885e9467b9a8c20796f017c0d3e63ca1fac
   languageName: node
   linkType: hard
 
@@ -5682,7 +5669,7 @@ __metadata:
     "@vitest/coverage-v8": "npm:^5.1.0"
     "@vitest/eslint-plugin": "npm:^1.6.28"
     "@vitest/utils": "npm:^5.1.0"
-    "@vkontakte/stylelint-config": "patch:@vkontakte/stylelint-config@npm%3A4.1.0#~/.yarn/patches/@vkontakte-stylelint-config-npm-4.1.0-1b5b2889ea.patch"
+    "@vkontakte/stylelint-config": "npm:^4.2.0"
     "@vkontakte/vkui-tokens": "npm:4.101.0"
     autoprefixer: "npm:^10.6.2"
     concurrently: "npm:^10.0.7"
