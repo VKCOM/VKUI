@@ -261,6 +261,11 @@ const rootRules = {
           position: 'after',
         },
         {
+          pattern: './*.css',
+          group: 'index',
+          position: 'after',
+        },
+        {
           pattern: '*.css',
           group: 'index',
           patternOptions: { matchBase: true },

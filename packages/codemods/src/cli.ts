@@ -2,9 +2,9 @@ import fs from 'node:fs';
 import chalk from 'chalk';
 import { Command } from 'commander';
 import prompts from 'prompts';
+import pkg from '../package.json';
 import { autoDetectVKUIVersion } from './autoDetectVKUIVersion';
 import getAvailableCodemods from './getAvailableCodemods.js';
-import pkg from '../package.json';
 import logger from './helpers/logger.js';
 
 export interface CliOptions {

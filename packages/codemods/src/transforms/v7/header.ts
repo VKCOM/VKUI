@@ -6,15 +6,15 @@ import type {
   JSXAttribute,
   JSXSpreadAttribute,
 } from 'jscodeshift';
-import { report } from '../../report';
-import { remapSizePropValue } from './common/remapSizePropValue';
 import {
   getImportInfo,
   getStringValueFromAttribute,
   removeAttribute,
   renameProp,
 } from '../../codemod-helpers';
+import { report } from '../../report';
 import type { JSCodeShiftOptions } from '../../types';
+import { remapSizePropValue } from './common/remapSizePropValue';
 
 export const parser = 'tsx';
 
