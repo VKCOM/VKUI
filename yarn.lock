@@ -5520,14 +5520,14 @@ __metadata:
 
 "@vkontakte/stylelint-config@patch:@vkontakte/stylelint-config@npm%3A4.1.0#~/.yarn/patches/@vkontakte-stylelint-config-npm-4.1.0-1b5b2889ea.patch":
   version: 4.1.0
-  resolution: "@vkontakte/stylelint-config@patch:@vkontakte/stylelint-config@npm%3A4.1.0#~/.yarn/patches/@vkontakte-stylelint-config-npm-4.1.0-1b5b2889ea.patch::version=4.1.0&hash=0abeba"
+  resolution: "@vkontakte/stylelint-config@patch:@vkontakte/stylelint-config@npm%3A4.1.0#~/.yarn/patches/@vkontakte-stylelint-config-npm-4.1.0-1b5b2889ea.patch::version=4.1.0&hash=2b8256"
   dependencies:
     micromatch: "npm:^4.0.5"
     postcss-value-parser: "npm:^4.2.0"
   peerDependencies:
     postcss: ^8.4.16
     stylelint: ^15.11.0 || ^16.1.0
-  checksum: 10/04b4cc92de85224601b82aa0ab7749b08730d5e6b42130ff5e8f722ef7f51bb0f64321e15b76ac190b7528d19d0e60f909e5d18ee55c393c258b69207df1decc
+  checksum: 10/b8b01194560829799a6fc9b546a0cccc17c6dc6a14da1e4b9842f24dd074d1c007dddb432dba730791feabda40272d29ffad8adf6b4b1ab8714d2fe87ce9d0f4
   languageName: node
   linkType: hard
 

@@ -1,5 +1,5 @@
 diff --git a/index.js b/index.js
-index cc14e4a22e1aa6e6f5ec8bc28806b698c96a6783..c8a44b2670d6ba070ee60e6a9a771ef2c1a1cc21 100644
+index cc14e4a22e1aa6e6f5ec8bc28806b698c96a6783..6ca60d6ffbdd65ffaca5fc0c968502e00809cbcc 100644
 --- a/index.js
 +++ b/index.js
 @@ -1,9 +1,9 @@
@@ -16,3 +16,11 @@ index cc14e4a22e1aa6e6f5ec8bc28806b698c96a6783..c8a44b2670d6ba070ee60e6a9a771ef2
    ],
    rules: {
      'max-nesting-depth': [0, { ignoreAtRules: ['supports'] }],
+@@ -13,7 +13,6 @@ export default {
+     'selector-pseudo-element-colon-notation': 'double',
+     'rule-empty-line-before': ['always', { ignore: ['after-comment', 'first-nested'] }],
+     'comment-empty-line-before': ['always', { ignore: ['stylelint-commands'], except: ['first-nested'] }],
+-    'declaration-block-single-line-max-declarations': 1,
+     'declaration-property-value-disallowed-list': {
+       '/^border/': ['none'],
+       '/^(@|--).+/': ['/^#/', '/^rgb/'],
