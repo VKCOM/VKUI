@@ -1,7 +1,7 @@
 import type { API, FileInfo } from 'jscodeshift';
-import { swapGapPropElements } from './common/swapGapPropElements';
 import { getImportInfo } from '../../codemod-helpers';
 import type { JSCodeShiftOptions } from '../../types';
+import { swapGapPropElements } from './common/swapGapPropElements';
 
 export const parser = 'tsx';
 
