@@ -20,10 +20,10 @@ export function ContentWrapper({ children }: React.PropsWithChildren) {
   return (
     <Component
       id={isBlog ? 'vkui-docs-main' : undefined}
+      tabIndex={isBlog ? -1 : undefined}
       className={classNames(styles.root, isBlog && styles.blog, !isFullLayout && styles.maxWidth)}
     >
       {themeContext.sidebar && !isNotFound && <Sidebar />}
-      {/* TODO [docs] (@BlackySoul): <SkipNavContent /> */}
       {children}
     </Component>
   );
