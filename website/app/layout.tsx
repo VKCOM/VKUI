@@ -9,7 +9,7 @@ import {
   Search,
   type SearchProps,
 } from '@vkontakte/vkui-docs-theme';
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import type { PageMapItem } from 'nextra';
 import { getPageMap } from 'nextra/page-map';
 import { PlaygroundStoreProvider } from '@/providers/playgroundStoreProvider';
@@ -34,6 +34,12 @@ function InlineCode() {
     </>
   );
 }
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover',
+};
 
 export const metadata: Metadata = {
   title: {
