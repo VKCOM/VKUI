@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom';
 import { Icon16ArticleBoxOutline } from '@vkontakte/icons';
 import { AdaptivityProvider, Button, VisuallyHidden } from '@vkontakte/vkui';
 import dynamic from 'next/dynamic';
-import { useMounted } from 'nextra/hooks';
+import { useFSRoute, useMounted } from 'nextra/hooks';
 import vkuiPgk from '../../../../packages/vkui/package.json';
 
 const VersionsModal = dynamic(() => import('./VersionsModal').then((mod) => mod.VersionsModal), {
@@ -20,6 +20,11 @@ export function Versions() {
   const [open, setOpen] = React.useState(false);
   const [hasOpened, setHasOpened] = React.useState(false);
   const mounted = useMounted();
+  const route = useFSRoute();
+
+  if (route === '/icons' || route.startsWith('/icons/')) {
+    return null;
+  }
 
   return (
     <>

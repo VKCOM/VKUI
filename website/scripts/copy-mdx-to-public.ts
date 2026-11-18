@@ -28,11 +28,15 @@ export async function copyMdxToPublic() {
   let copiedCount = 0;
 
   for (const absoluteMdxPath of mdxFiles) {
-    if (absoluteMdxPath.endsWith('index.mdx')) {
+    const relativeMdxPath = path.relative(CONTENT_DIRECTORY, absoluteMdxPath);
+    const isIconsPage = relativeMdxPath === path.join('icons', 'index.mdx');
+    if (!isIconsPage && absoluteMdxPath.endsWith('index.mdx')) {
       continue;
     }
-    const relativeMdxPath = path.relative(CONTENT_DIRECTORY, absoluteMdxPath);
-    const destinationPath = path.join(PUBLIC_DIRECTORY, relativeMdxPath);
+    const destinationPath = path.join(
+      PUBLIC_DIRECTORY,
+      isIconsPage ? 'icons.mdx' : relativeMdxPath,
+    );
 
     const rawContent = fs.readFileSync(absoluteMdxPath, 'utf-8');
 
