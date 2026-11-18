@@ -23,6 +23,8 @@ export default {
     outDir: 'playwright/.cache',
     rolldownOptions: {
       input: path.join(import.meta.dirname, 'playwright/gallery/index.html'),
+      // Галерея Playwright работает в браузере и не использует React Server Components.
+      checks: { moduleLevelDirective: false },
     },
     // Минификация округляет CSS-вычисления и меняет эталонные скриншоты.
     cssMinify: false,
