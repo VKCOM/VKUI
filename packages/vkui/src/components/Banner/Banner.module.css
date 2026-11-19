@@ -49,6 +49,17 @@
   opacity: 0.72;
 }
 
+.modeImage .subtitle,
+.modeImage .extraSubtitle {
+  color: rgb(44, 45, 46, 0.72);
+  opacity: 1;
+}
+
+.inverted .subtitle,
+.inverted .extraSubtitle {
+  color: rgb(255, 255, 255, 0.72);
+}
+
 .bg {
   position: absolute;
   inset-block-start: 0;
