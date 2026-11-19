@@ -22,13 +22,20 @@ package_vkui: &package_vkui
   - 'tsconfig.*'
   - 'package.json'
 
+package_vkui_docs:
+  - 'website/content/**'
+  - 'website/lib/metadata.ts'
+  - 'website/package.json'
+  - 'website/remark-plugins/remarkCodeImport.mts'
+  - 'website/scripts/**'
+
 docs_storybook:
   - *package_vkui
   - 'packages/vkui/.storybook/**'
   - 'packages/vkui/storybook/**'
   - 'packages/vkui/src/**/*.stories.*'
   - 'packages/vkui/src/**/*.mdx'
-  - 'packages/vkui/docs/**'
+  - 'packages/vkui/website/**'
   - 'tools/storybook-*/**'
 
 docs_website:

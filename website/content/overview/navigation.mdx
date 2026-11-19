@@ -198,7 +198,7 @@ export const Router = () => {
 
 Отличия от [`Root`](/components/root):
 
-- принимает [`Tabbar`](/components/tabbar) через свойство `tabbar`;
+- принимает [`Tabbar`](/components/epic#tabbar) через свойство `tabbar`;
 - потомками могут быть не только [`View`](/components/view), но и [`Root`](/components/root) — для более глубокой иерархии сценариев;
 - переключает разделы без анимаций.
 
@@ -324,7 +324,7 @@ app (Epic)
       └─ about-version-panel (Panel)
 ```
 
-Для навигации по основным разделам на мобильных используется [`Tabbar`](/components/tabbar), на настольных — [`SplitCol`](/components/split-layout#split-col) с [`Cell`](/components/cell) в роли бокового меню.
+Для навигации по основным разделам на мобильных используется [`Tabbar`](/components/epic#tabbar), на настольных — [`SplitCol`](/components/split-layout#split-col) с [`Cell`](/components/cell) в роли бокового меню.
 
 import { FixedLayoutWrapper } from '@/components/wrappers';
 

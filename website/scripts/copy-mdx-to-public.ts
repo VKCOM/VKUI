@@ -1,16 +1,15 @@
 import * as fs from 'node:fs';
 import * as path from 'node:path';
-import { collectMdxFiles } from './common/collectMdxFiles.ts';
+import {
+  collectDocumentationPages,
+  CONTENT_DIRECTORY,
+  readDocumentationMarkdown,
+} from './common/documentationMarkdown.ts';
 import { loadDocgen } from './common/loadDocgen.ts';
-import { mdxToMarkdown } from './common/mdxToMarkdown.ts';
-import { resolvePartials } from './common/resolvePartials.ts';
+import { stringifyMarkdown } from './common/mdxToMarkdown.ts';
 import { runIfMain } from './common/runIfMain.ts';
-const CONTENT_DIRECTORY = path.resolve('content');
-const PUBLIC_DIRECTORY = path.resolve('public');
 
-function ensureDirectoryExists(targetPath: string) {
-  fs.mkdirSync(path.dirname(targetPath), { recursive: true });
-}
+const PUBLIC_DIRECTORY = path.resolve(import.meta.dirname, '../public');
 
 export async function copyMdxToPublic() {
   if (!fs.existsSync(CONTENT_DIRECTORY)) {
@@ -20,40 +19,24 @@ export async function copyMdxToPublic() {
   }
 
   const docgen = loadDocgen();
-  const mdxFiles = collectMdxFiles(CONTENT_DIRECTORY);
+  const mdxFiles = collectDocumentationPages();
 
   // eslint-disable-next-line no-console
   console.log('🔄 Преобразование MDX-файлов документации в Markdown...');
 
-  let copiedCount = 0;
-
   for (const absoluteMdxPath of mdxFiles) {
-    if (absoluteMdxPath.endsWith('index.mdx')) {
-      continue;
-    }
     const relativeMdxPath = path.relative(CONTENT_DIRECTORY, absoluteMdxPath);
     const destinationPath = path.join(PUBLIC_DIRECTORY, relativeMdxPath);
+    const markdown = await readDocumentationMarkdown(absoluteMdxPath, docgen);
 
-    const rawContent = fs.readFileSync(absoluteMdxPath, 'utf-8');
-
-    // Преобразуем partial отдельно: импорты кода разрешаются относительно его пути.
-    const resolvedContent = await resolvePartials(
-      rawContent,
-      absoluteMdxPath,
-      (partial, partialPath) => mdxToMarkdown(partial, partialPath, docgen),
-    );
-    const transformedContent = await mdxToMarkdown(resolvedContent, absoluteMdxPath, docgen);
-
-    ensureDirectoryExists(destinationPath);
+    fs.mkdirSync(path.dirname(destinationPath), { recursive: true });
     // BOM (U+FEFF) заставляет браузер распознавать кодировку UTF-8
     // независимо от Content-Type заголовка сервера
-    fs.writeFileSync(destinationPath, '\uFEFF' + transformedContent, 'utf-8');
-
-    copiedCount++;
+    fs.writeFileSync(destinationPath, '\uFEFF' + stringifyMarkdown(markdown), 'utf-8');
   }
 
   // eslint-disable-next-line no-console
-  console.log(`✅ Скопировано ${copiedCount} MDX-файлов`);
+  console.log(`✅ Скопировано ${mdxFiles.length} MDX-файлов`);
 }
 
 void runIfMain(import.meta.url, copyMdxToPublic);
