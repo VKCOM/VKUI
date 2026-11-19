@@ -1,10 +1,14 @@
 .root {
   color: inherit;
   text-decoration: none;
-  transition: transform 120ms ease;
 }
 
-@media (hover: hover) and (pointer: fine) {
+@media (prefers-reduced-motion: no-preference) {
+  .root {
+    transition: transform 120ms ease;
+  }
+}
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
   .root:hover {
     transform: translateY(-2px);
   }
