@@ -27,23 +27,28 @@ if (process.env.NODE_ENV !== 'production') {
   });
 }
 
-function script(storageKey: string, defaultColorScheme: 'light' | 'dark') {
+function script(storageKey: string, defaultColorScheme: ColorSchemeExtendedType) {
   const LIGHT_CLASS_NAME = 'vkui--vkBase--light';
   const DARK_CLASS_NAME = 'vkui--vkBase--dark';
 
+  let colorScheme = defaultColorScheme;
   try {
-    const colorScheme = localStorage.getItem(storageKey) || defaultColorScheme;
-    let resolved = colorScheme;
-    if (resolved === 'system') {
-      resolved = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    const stored = localStorage.getItem(storageKey);
+    if (stored === 'light' || stored === 'dark' || stored === 'system') {
+      colorScheme = stored;
     }
-
-    document.documentElement.classList.remove(LIGHT_CLASS_NAME, DARK_CLASS_NAME);
-    const colorSchemeClassName = resolved === 'dark' ? DARK_CLASS_NAME : LIGHT_CLASS_NAME;
-    document.documentElement.classList.add(colorSchemeClassName);
-
-    document.documentElement.style.colorScheme = resolved;
   } catch (e) {
-    //
+    // Storage может быть недоступен; продолжаем с темой по умолчанию.
   }
+
+  const resolved =
+    colorScheme === 'system'
+      ? window.matchMedia('(prefers-color-scheme: dark)').matches
+        ? 'dark'
+        : 'light'
+      : colorScheme;
+
+  document.documentElement.classList.remove(LIGHT_CLASS_NAME, DARK_CLASS_NAME);
+  document.documentElement.classList.add(resolved === 'dark' ? DARK_CLASS_NAME : LIGHT_CLASS_NAME);
+  document.documentElement.style.colorScheme = resolved;
 }
