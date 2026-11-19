@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { generateStaticParamsFor, importPage } from 'nextra/pages';
+import { createPageMetadata } from '../../lib/metadata';
 import { useMDXComponents as mdxComponents } from '../../mdx-components';
 
 export const generateStaticParams = generateStaticParamsFor('mdxPath');
@@ -19,7 +20,7 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
   if (metadata.other?.hidden) {
     notFound();
   }
-  return metadata;
+  return createPageMetadata(metadata, params.mdxPath);
 }
 
 export default async function Page(props: PageProps) {
