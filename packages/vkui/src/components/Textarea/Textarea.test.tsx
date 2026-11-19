@@ -252,5 +252,133 @@ describe(Textarea, () => {
       );
       expect(onResize).not.toHaveBeenCalled();
     });
+
+    const mockScrollLayout = (textArea: HTMLTextAreaElement, initialScrollTop = 0) => {
+      const scrollContainer = textArea.parentElement?.parentElement as HTMLElement;
+      const clientHeight = 200;
+      let scrollHeight = 400;
+      let nextScrollHeight = scrollHeight;
+      let scrollTop = initialScrollTop;
+      const heightChanges: string[] = [];
+      vi.spyOn(scrollContainer, 'scrollHeight', 'get').mockImplementation(() => scrollHeight);
+      vi.spyOn(scrollContainer, 'clientHeight', 'get').mockImplementation(() => clientHeight);
+      Object.defineProperty(scrollContainer, 'scrollTop', {
+        configurable: true,
+        get: () => scrollTop,
+        set: (value: number) => {
+          scrollTop = Math.max(0, Math.min(value, scrollHeight - clientHeight));
+        },
+      });
+      const setProperty = textArea.style.setProperty.bind(textArea.style);
+      vi.spyOn(textArea.style, 'setProperty').mockImplementation((name, value, priority) => {
+        if (name === 'height') {
+          heightChanges.push(value ?? '');
+          if (value === '') {
+            // Android/Chrome сбрасывает прокрутку во время пересчёта layout.
+            scrollTop = 0;
+          } else {
+            scrollHeight = nextScrollHeight;
+          }
+        }
+        setProperty(name, value, priority);
+      });
+      return {
+        heightChanges,
+        getScrollTop: () => scrollTop,
+        setNextScrollHeight: (value: number) => {
+          nextScrollHeight = value;
+        },
+      };
+    };
+
+    it.each([
+      ['Space', ' ', 420],
+      ['Backspace', '{backspace}', 380],
+    ])('keeps the caret visible after %s at the end (#8273)', async (_name, input, height) => {
+      render(<Textarea defaultValue={'line\n'.repeat(20)} />);
+      const textArea = getInput() as HTMLTextAreaElement;
+      await userEvent.click(textArea);
+      textArea.setSelectionRange(textArea.value.length, textArea.value.length);
+      const layout = mockScrollLayout(textArea, 200);
+      layout.setNextScrollHeight(height);
+
+      await userEvent.type(textArea, input, { skipClick: true });
+
+      expect(layout.heightChanges).toHaveLength(2);
+      expect(layout.getScrollTop()).toBe(height - 200);
+    });
+
+    it('preserves scroll position when editing in the middle (#8273)', async () => {
+      render(<Textarea defaultValue={'line\n'.repeat(20)} />);
+      const textArea = getInput() as HTMLTextAreaElement;
+      await userEvent.click(textArea);
+      textArea.setSelectionRange(5, 5);
+      const layout = mockScrollLayout(textArea, 80);
+      layout.setNextScrollHeight(420);
+
+      await userEvent.type(textArea, 'X', { skipClick: true });
+
+      expect(textArea.selectionEnd).toBeLessThan(textArea.value.length);
+      expect(layout.heightChanges).toHaveLength(2);
+      expect(layout.getScrollTop()).toBe(80);
+    });
+
+    it.each([
+      ['manually scrolled up, caret at end', 40, true],
+      ['at top, caret at start', 0, false],
+    ])('preserves scroll on window resize: %s (#8273)', (_name, scrollTop, caretAtEnd) => {
+      render(<Textarea defaultValue={'line\n'.repeat(20)} />);
+      const textArea = getInput() as HTMLTextAreaElement;
+      const caret = caretAtEnd ? textArea.value.length : 0;
+      textArea.setSelectionRange(caret, caret);
+      const layout = mockScrollLayout(textArea, scrollTop);
+      layout.setNextScrollHeight(420);
+
+      fireEvent(window, new Event('resize'));
+
+      expect(layout.heightChanges).toHaveLength(2);
+      expect(layout.getScrollTop()).toBe(scrollTop);
+    });
+
+    it.each([
+      ['long defaultValue (cursor at start)', 'line\n'.repeat(20)],
+      ['empty value (cursor at end)', ''],
+    ])('keeps scroll at top on first appearance: %s (#8273)', (_name, defaultValue) => {
+      // Смокаем геометрию контейнера прокрутки ДО монтирования, чтобы первичный
+      // ресайз (запускается из `useEffect` при появлении Textarea) видел переполнение.
+      const SCROLL_HEIGHT = 400;
+      const containerScrollTop = { value: 0 };
+      const scrollHeightSpy = vi
+        .spyOn(HTMLElement.prototype, 'scrollHeight', 'get')
+        .mockImplementation(function (this: HTMLElement) {
+          return SCROLL_HEIGHT;
+        });
+      const clientHeightSpy = vi
+        .spyOn(HTMLElement.prototype, 'clientHeight', 'get')
+        .mockImplementation(function (this: HTMLElement) {
+          return 200;
+        });
+      const scrollTopDesc = Object.getOwnPropertyDescriptor(Element.prototype, 'scrollTop')!;
+      Object.defineProperty(Element.prototype, 'scrollTop', {
+        configurable: true,
+        get(this: HTMLElement) {
+          return containerScrollTop.value;
+        },
+        set(this: HTMLElement, v: number) {
+          containerScrollTop.value = v;
+        },
+      });
+
+      render(<Textarea defaultValue={defaultValue} />);
+
+      scrollHeightSpy.mockRestore();
+      clientHeightSpy.mockRestore();
+      Object.defineProperty(Element.prototype, 'scrollTop', scrollTopDesc);
+
+      // При первичном появлении Textarea с переполняющим контентом прокрутка
+      // должна оставаться вверху, а не уходить в самый низ — независимо от того,
+      // где находится курсор (в начале или в конце).
+      expect(containerScrollTop.value).toBe(0);
+    });
   });
 });
