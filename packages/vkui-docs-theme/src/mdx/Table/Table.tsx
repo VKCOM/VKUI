@@ -2,8 +2,8 @@ import type * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import styles from './Table.module.css';
 
-export const Th = (props: React.HTMLAttributes<HTMLTableCellElement>) => {
-  return <th {...props} className={classNames(styles.th, props.className)} />;
+export const Th = (props: React.ComponentProps<'th'>) => {
+  return <th scope="col" {...props} className={classNames(styles.th, props.className)} />;
 };
 
 export const Tr = (props: React.HTMLAttributes<HTMLTableRowElement>) => {
