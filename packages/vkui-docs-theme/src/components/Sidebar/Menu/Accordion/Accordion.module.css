@@ -1,7 +1,12 @@
 .icon {
   color: var(--vkui--color_icon_accent);
   transform: rotate(-90deg);
-  transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .icon {
+    transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  }
 }
 
 .iconActive {

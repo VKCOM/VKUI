@@ -41,8 +41,10 @@
   opacity: 0;
 }
 
-.heading:target {
-  animation: animationHighlight 1.2s ease;
+@media (prefers-reduced-motion: no-preference) {
+  .heading:target {
+    animation: animationHighlight 1.2s ease;
+  }
 }
 
 .anchor:focus .anchorIcon,
