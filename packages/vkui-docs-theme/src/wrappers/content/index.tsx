@@ -23,7 +23,7 @@ export function ContentWrapper({ children }: React.PropsWithChildren) {
       tabIndex={isBlog ? -1 : undefined}
       className={classNames(styles.root, isBlog && styles.blog, !isFullLayout && styles.maxWidth)}
     >
-      {themeContext.sidebar && !isNotFound && <Sidebar />}
+      <Sidebar asPopover={!themeContext.sidebar || isNotFound} />
       {children}
     </Component>
   );

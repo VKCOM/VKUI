@@ -1,6 +1,5 @@
 import { type ChangeEvent, useCallback, useMemo, useState } from 'react';
 import { throttle } from '@vkontakte/vkjs';
-import { useManualScroll } from '../../../src/components/AppRoot/ScrollContext';
 
 function convertCyrillicToLatin(input: string): string {
   // Проверяем, содержит ли строка кириллические символы
@@ -50,25 +49,25 @@ function convertCyrillicToLatin(input: string): string {
     .join('');
 }
 
+const normalizeComponentQuery = (value: string) =>
+  convertCyrillicToLatin(value.toLocaleLowerCase());
+
 export const useGetConfigByQuery = <CONFIG>(
   config: CONFIG,
   filterConfig: (config: CONFIG, query: string) => CONFIG,
+  normalizeQuery = normalizeComponentQuery,
 ) => {
   const [query, setQuery] = useState('');
   const [loading, setLoading] = useState(false);
-  const { scrollTo } = useManualScroll();
 
   const _updateQuery = useMemo(() => {
     return throttle((newValue: string) => {
-      setQuery(convertCyrillicToLatin(newValue.toLocaleLowerCase()));
+      setQuery(normalizeQuery(newValue));
       setLoading(false);
-    }, 1000);
-  }, []);
+    }, 200);
+  }, [normalizeQuery]);
 
-  const filteredConfig: CONFIG = useMemo(() => {
-    scrollTo(0, 0);
-    return filterConfig(config, query);
-  }, [config, filterConfig, query, scrollTo]);
+  const filteredConfig = useMemo(() => filterConfig(config, query), [config, filterConfig, query]);
 
   const onUpdateQuery = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
