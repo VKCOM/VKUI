@@ -2,6 +2,7 @@
   box-sizing: border-box;
   display: flex;
   flex-wrap: wrap;
+  column-gap: 24px;
   justify-content: space-around;
   inline-size: 610px;
   padding: 12px;
@@ -15,10 +16,6 @@
   display: flex;
   flex-grow: 1;
   flex-direction: column;
-}
-
-.inner:not(:last-child) {
-  margin-inline-end: 24px;
 }
 
 .header {

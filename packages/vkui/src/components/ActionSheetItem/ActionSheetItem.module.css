@@ -89,13 +89,9 @@
 .after {
   display: flex;
   flex-direction: row;
+  column-gap: 12px;
   margin-inline-start: 16px;
   color: var(--vkui--color_icon_accent);
-}
-
-/* stylelint-disable-next-line selector-max-universal -- gap 12px */
-.after > *:not(:last-child) {
-  margin-inline-end: 12px;
 }
 
 /**

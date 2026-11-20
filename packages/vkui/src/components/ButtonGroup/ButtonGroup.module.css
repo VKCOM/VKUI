@@ -25,16 +25,16 @@
  */
 
 /* "gap" для mode="vertical" */
-.modeVertical.gapSpace > *:not(:first-child) {
-  margin-block-start: var(--vkui--size_button_group_gap_space--regular);
+.modeVertical.gapSpace {
+  row-gap: var(--vkui--size_button_group_gap_space--regular);
 }
 
-.modeVertical.gapS > *:not(:first-child) {
-  margin-block-start: var(--vkui--size_button_group_gap_small--regular);
+.modeVertical.gapS {
+  row-gap: var(--vkui--size_button_group_gap_small--regular);
 }
 
-.modeVertical.gapM > *:not(:first-child) {
-  margin-block-start: var(--vkui--size_button_group_gap_medium--regular);
+.modeVertical.gapM {
+  row-gap: var(--vkui--size_button_group_gap_medium--regular);
 }
 
 /* "gap" для mode="horizontal" */
@@ -50,16 +50,16 @@
   min-inline-size: 0;
 }
 
-.modeHorizontal.gapSpace > *:not(:last-child) {
-  margin-inline-end: var(--vkui--size_button_group_gap_space--regular);
+.modeHorizontal.gapSpace {
+  column-gap: var(--vkui--size_button_group_gap_space--regular);
 }
 
-.modeHorizontal.gapS > *:not(:last-child) {
-  margin-inline-end: var(--vkui--size_button_group_gap_small--regular);
+.modeHorizontal.gapS {
+  column-gap: var(--vkui--size_button_group_gap_small--regular);
 }
 
-.modeHorizontal.gapM > *:not(:last-child) {
-  margin-inline-end: var(--vkui--size_button_group_gap_medium--regular);
+.modeHorizontal.gapM {
+  column-gap: var(--vkui--size_button_group_gap_medium--regular);
 }
 
 /* stylelint-enable selector-max-universal */
