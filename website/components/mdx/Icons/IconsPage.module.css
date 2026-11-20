@@ -1,0 +1,5 @@
+.root {
+  inline-size: 100%;
+  max-inline-size: var(--vkui_docs--max-width);
+  margin-inline: auto;
+}
