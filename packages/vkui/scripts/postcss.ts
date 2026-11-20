@@ -1,6 +1,7 @@
 import * as path from 'node:path';
 import postcssGlobalData from '@csstools/postcss-global-data';
 import layoutClasses from '@project-tools/postcss-layout-classes';
+import marginTrim from '@project-tools/postcss-margin-trim';
 import restructureVariable from '@project-tools/postcss-restructure-variable';
 import autoprefixer from 'autoprefixer';
 import cssnano from 'cssnano';
@@ -87,6 +88,7 @@ function makePostcssPlugins({
     }),
 
     layoutClasses(),
+    marginTrim(),
 
     // Автопрефиксер
     autoprefixer(),

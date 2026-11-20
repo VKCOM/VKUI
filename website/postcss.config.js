@@ -13,6 +13,7 @@ export default {
         ),
       },
     ],
+    '@project-tools/postcss-margin-trim',
     'autoprefixer',
     'postcss-custom-media',
     'postcss-logical',
