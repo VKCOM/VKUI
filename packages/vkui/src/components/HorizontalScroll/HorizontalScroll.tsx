@@ -7,6 +7,7 @@ import { useExternRef } from '../../hooks/useExternRef';
 import { useFocusVisible } from '../../hooks/useFocusVisible';
 import { useFocusVisibleClassName } from '../../hooks/useFocusVisibleClassName';
 import { useMergeProps } from '../../hooks/useMergeProps';
+import { useReducedMotion } from '../../lib/animation/useReducedMotion';
 import { easeInOutSine } from '../../lib/fx';
 import { mergeCalls } from '../../lib/mergeCalls';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
@@ -33,6 +34,8 @@ interface ScrollContext {
    */
   initialScrollWidth: number;
   textDirection: 'ltr' | 'rtl';
+  reducedMotion: boolean | undefined;
+  activeAnimation: React.RefObject<{ finish: VoidFunction; cancel: VoidFunction } | null>;
 }
 /* eslint-enable jsdoc/require-jsdoc */
 
@@ -159,6 +162,8 @@ function doScroll({
   initialScrollWidth,
   scrollAnimationDuration,
   textDirection,
+  reducedMotion,
+  activeAnimation,
 }: ScrollContext) {
   if (!scrollElement || !getScrollPosition) {
     return;
@@ -195,28 +200,42 @@ function doScroll({
   }
 
   const startTime = now();
+  let frameId: number | undefined;
+  const cancel = () => {
+    if (frameId !== undefined) {
+      cancelAnimationFrame(frameId);
+      frameId = undefined;
+    }
+  };
+  const finish = () => {
+    cancel();
+    activeAnimation.current = null;
+    scrollElement.scrollLeft = endScrollLeft;
+    onScrollEnd();
+    animationQueue.shift();
+    animationQueue[0]?.();
+  };
+  activeAnimation.current = { finish, cancel };
+
+  if (reducedMotion || scrollAnimationDuration <= 0) {
+    finish();
+    return;
+  }
 
   (function scroll() {
-    const time = now();
-    const elapsed = Math.min((time - startTime) / scrollAnimationDuration, 1);
-
+    const elapsed = Math.min((now() - startTime) / scrollAnimationDuration, 1);
     const value = easeInOutSine(elapsed);
-
     const currentScrollLeft = startScrollLeft + (endScrollLeft - startScrollLeft) * value;
     scrollElement.scrollLeft = roundingAwayFromZero(currentScrollLeft);
 
     const scrollEnd =
       textDirection === 'ltr' ? Math.max(0, endScrollLeft) : Math.min(0, endScrollLeft);
     if (roundUpElementScrollLeft(scrollElement) !== scrollEnd && elapsed !== 1) {
-      requestAnimationFrame(scroll);
+      frameId = requestAnimationFrame(scroll);
       return;
     }
 
-    onScrollEnd();
-    animationQueue.shift();
-    if (animationQueue.length > 0) {
-      animationQueue[0]();
-    }
+    finish();
   })();
 }
 
@@ -271,44 +290,27 @@ export const HorizontalScroll = ({
   const scrollerRef = useExternRef(getRef);
 
   const animationQueue = React.useRef<VoidFunction[]>([]);
+  const activeAnimation = React.useRef<{ finish: VoidFunction; cancel: VoidFunction } | null>(null);
+  const reducedMotion = useReducedMotion();
+  const reducedMotionRef = React.useRef(reducedMotion);
 
-  const { isHovered, ...hoverHandlers } = useHover();
+  useIsomorphicLayoutEffect(() => {
+    reducedMotionRef.current = reducedMotion;
+    if (reducedMotion) {
+      activeAnimation.current?.finish();
+    }
+  }, [reducedMotion]);
 
-  const scrollTo = React.useCallback(
-    (getScrollPosition: ScrollPositionHandler) => {
-      const scrollElement = scrollerRef.current;
-
-      animationQueue.current.push(() =>
-        doScroll({
-          scrollElement,
-          getScrollPosition,
-          animationQueue: animationQueue.current,
-          onScrollToEndBorder: () => setCanScrollEnd(false),
-          onScrollEnd: () => (isCustomScrollingRef.current = false),
-          onScrollStart: () => (isCustomScrollingRef.current = true),
-          initialScrollWidth: scrollElement?.firstElementChild?.scrollWidth || 0,
-          scrollAnimationDuration,
-          textDirection: direction,
-        }),
-      );
-      if (animationQueue.current.length === 1) {
-        animationQueue.current[0]();
-      }
+  React.useEffect(
+    () => () => {
+      activeAnimation.current?.cancel();
+      activeAnimation.current = null;
+      animationQueue.current.length = 0;
     },
-    [scrollerRef, scrollAnimationDuration, direction, setCanScrollEnd],
+    [],
   );
 
-  const scrollToStart = React.useCallback(() => {
-    const getScrollPosition =
-      getScrollToLeft ?? ((i: number) => i - scrollerRef.current!.offsetWidth);
-    scrollTo(getScrollPosition);
-  }, [getScrollToLeft, scrollTo, scrollerRef]);
-
-  const scrollToEnd = React.useCallback(() => {
-    const getScrollPosition =
-      getScrollToRight ?? ((i: number) => i + scrollerRef.current!.offsetWidth);
-    scrollTo(getScrollPosition);
-  }, [getScrollToRight, scrollTo, scrollerRef]);
+  const { isHovered, ...hoverHandlers } = useHover();
 
   const calculateArrowsVisibility = React.useCallback(() => {
     if (showArrows && scrollerRef.current && !isCustomScrollingRef.current) {
@@ -322,6 +324,50 @@ export const HorizontalScroll = ({
       );
     }
   }, [showArrows, scrollerRef, isRtl]);
+
+  const scrollTo = React.useCallback(
+    (getScrollPosition: ScrollPositionHandler) => {
+      const scrollElement = scrollerRef.current;
+      if (!scrollElement) {
+        return;
+      }
+
+      animationQueue.current.push(() =>
+        doScroll({
+          scrollElement,
+          getScrollPosition,
+          animationQueue: animationQueue.current,
+          onScrollToEndBorder: () => setCanScrollEnd(false),
+          onScrollEnd: () => {
+            isCustomScrollingRef.current = false;
+            calculateArrowsVisibility();
+          },
+          onScrollStart: () => (isCustomScrollingRef.current = true),
+          initialScrollWidth: scrollElement?.firstElementChild?.scrollWidth || 0,
+          scrollAnimationDuration,
+          textDirection: direction,
+          reducedMotion: reducedMotionRef.current,
+          activeAnimation,
+        }),
+      );
+      if (animationQueue.current.length === 1) {
+        animationQueue.current[0]();
+      }
+    },
+    [scrollerRef, scrollAnimationDuration, direction, calculateArrowsVisibility],
+  );
+
+  const scrollToStart = React.useCallback(() => {
+    const getScrollPosition =
+      getScrollToLeft ?? ((i: number) => i - scrollerRef.current!.offsetWidth);
+    scrollTo(getScrollPosition);
+  }, [getScrollToLeft, scrollTo, scrollerRef]);
+
+  const scrollToEnd = React.useCallback(() => {
+    const getScrollPosition =
+      getScrollToRight ?? ((i: number) => i + scrollerRef.current!.offsetWidth);
+    scrollTo(getScrollPosition);
+  }, [getScrollToRight, scrollTo, scrollerRef]);
 
   React.useEffect(() => {
     if (isInitialRender.current) {

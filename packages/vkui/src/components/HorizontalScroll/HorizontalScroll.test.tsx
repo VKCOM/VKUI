@@ -2,8 +2,9 @@ import * as React from 'react';
 import { act } from 'react';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
-import { describe, expect, it, vi } from 'vitest';
-import { baselineComponent, userEvent, withFakeTimers } from '../../testing/utils';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { REDUCE_MOTION_MEDIA_QUERY } from '../../lib/animation/useReducedMotion';
+import { baselineComponent, matchMediaMock, userEvent, withFakeTimers } from '../../testing/utils';
 import { DirectionProvider } from '../DirectionProvider/DirectionProvider';
 import { HorizontalScroll } from './HorizontalScroll';
 
@@ -14,7 +15,7 @@ const setup = (element: HTMLElement, startScrollLeft = 0) => {
     scrollLeft = newValue;
   });
 
-  vi.spyOn(element, 'scrollWidth', 'get').mockImplementation(() => 300);
+  vi.spyOn(element, 'scrollWidth', 'get').mockImplementation(() => 500);
 
   vi.spyOn(element, 'offsetWidth', 'get').mockImplementation(() => 200);
 
@@ -28,7 +29,71 @@ const setup = (element: HTMLElement, startScrollLeft = 0) => {
 };
 
 describe('HorizontalScroll', () => {
+  beforeEach(() => matchMediaMock());
   baselineComponent(HorizontalScroll);
+
+  it.each(['ltr', 'rtl'] as const)('scrolls immediately with reduced motion (%s)', (direction) => {
+    matchMediaMock(REDUCE_MOTION_MEDIA_QUERY);
+    const ref = React.createRef<HTMLDivElement>();
+    render(
+      <DirectionProvider value={direction}>
+        <HorizontalScroll
+          getRef={ref}
+          data-testid="scroll"
+          slotProps={{ nextArrow: { 'data-testid': 'next' }, prevArrow: { 'data-testid': 'prev' } }}
+        >
+          <div />
+        </HorizontalScroll>
+      </DirectionProvider>,
+    );
+    const data = setup(ref.current!);
+    fireEvent.mouseEnter(screen.getByTestId('scroll'));
+    const raf = vi.spyOn(window, 'requestAnimationFrame');
+    fireEvent.click(screen.getByTestId('next'));
+    expect(data.scrollLeft).toBe(direction === 'rtl' ? -200 : 200);
+    fireEvent.click(screen.getByTestId('next'));
+    expect(data.scrollLeft).toBe(direction === 'rtl' ? -300 : 300);
+    expect(screen.queryByTestId('next')).toBeNull();
+    fireEvent.click(screen.getByTestId('prev'));
+    expect(data.scrollLeft).toBe(direction === 'rtl' ? -100 : 100);
+    expect(raf).not.toHaveBeenCalled();
+    raf.mockRestore();
+    matchMediaMock();
+  });
+
+  it('finishes the running animation and queue when reduced motion is enabled', async () => {
+    matchMediaMock();
+    const ref = React.createRef<HTMLDivElement>();
+    const view = render(
+      <HorizontalScroll
+        getRef={ref}
+        data-testid="scroll"
+        slotProps={{ nextArrow: { 'data-testid': 'next' } }}
+      >
+        <div />
+      </HorizontalScroll>,
+    );
+    const data = setup(ref.current!);
+    fireEvent.mouseEnter(screen.getByTestId('scroll'));
+    const raf = vi.spyOn(window, 'requestAnimationFrame').mockReturnValue(123);
+    const cancel = vi.spyOn(window, 'cancelAnimationFrame');
+    fireEvent.click(screen.getByTestId('next'));
+    fireEvent.click(screen.getByTestId('next'));
+    const media = vi
+      .mocked(window.matchMedia)
+      .mock.results.find((result) => result.value.media === REDUCE_MOTION_MEDIA_QUERY)!.value;
+    const listener = media.addEventListener.mock.calls[0][1];
+    await act(async () => {
+      listener({ matches: true });
+    });
+    expect(data.scrollLeft).toBe(300);
+    expect(cancel).toHaveBeenCalledWith(123);
+    expect(screen.queryByTestId('next')).toBeNull();
+    view.unmount();
+    raf.mockRestore();
+    cancel.mockRestore();
+    matchMediaMock();
+  });
 
   it('scrollOnAnyWheel', () => {
     const ref = React.createRef<HTMLDivElement>();
