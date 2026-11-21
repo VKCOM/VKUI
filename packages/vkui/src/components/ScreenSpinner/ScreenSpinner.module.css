@@ -85,9 +85,16 @@
 /* stylelint-disable-next-line selector-max-type, selector-pseudo-class-disallowed-list */
 .stateDone :global(.vkuiIcon) path {
   stroke-dasharray: 50;
-  stroke-dashoffset: 50;
-  animation: animationScreenSpinnerIconDone 0.6s 0.3s var(--vkui--animation_easing_platform)
-    forwards;
+  stroke-dashoffset: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* stylelint-disable-next-line selector-max-type, selector-pseudo-class-disallowed-list */
+  .stateDone :global(.vkuiIcon) path {
+    stroke-dashoffset: 50;
+    animation: animationScreenSpinnerIconDone 0.6s 0.3s var(--vkui--animation_easing_platform)
+      forwards;
+  }
 }
 
 @keyframes animationScreenSpinnerIconDone {
