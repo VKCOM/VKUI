@@ -110,8 +110,14 @@
 
 /* Тесты анимаций могут отключить это переопределение. */
 :where(:root:not([data-playwright-enable-motion]), :root:not([data-playwright-enable-motion]) *),
-:where(:root:not([data-playwright-enable-motion]), :root:not([data-playwright-enable-motion]) *)::before,
-:where(:root:not([data-playwright-enable-motion]), :root:not([data-playwright-enable-motion]) *)::after {
+:where(
+  :root:not([data-playwright-enable-motion]),
+  :root:not([data-playwright-enable-motion]) *
+)::before,
+:where(
+  :root:not([data-playwright-enable-motion]),
+  :root:not([data-playwright-enable-motion]) *
+)::after {
   transition: none !important;
   animation: none !important;
 }
