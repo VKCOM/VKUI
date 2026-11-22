@@ -5803,7 +5803,7 @@ __metadata:
     storybook: "npm:10.6.7"
     style-loader: "npm:^4.0.0"
     stylelint: "npm:^18.0.0"
-    stylelint-config-recess-order: "npm:^7.10.0"
+    stylelint-config-recess-order: "npm:^7.10.1"
     stylelint-config-standard: "npm:^41.0.0"
     stylelint-media-use-custom-media: "npm:^4.1.0"
     stylelint-order: "npm:^8.1.3"
@@ -16746,13 +16746,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"stylelint-config-recess-order@npm:^7.10.0":
-  version: 7.10.0
-  resolution: "stylelint-config-recess-order@npm:7.10.0"
+"stylelint-config-recess-order@npm:^7.10.1":
+  version: 7.10.1
+  resolution: "stylelint-config-recess-order@npm:7.10.1"
   peerDependencies:
-    stylelint: ^16.18.0 || ^17.0.0
+    stylelint: ^16.18.0 || ^17.0.0 || ^18.0.0
     stylelint-order: ^7.0.0 || ^8.0.0
-  checksum: 10/f647d1e5a3940d32536ec76b966561e485b7dc4f9e67f6009cdaf5a81af8420f0af8e96508715da7af95380768e98bc7433dd6567d5c635d18ed7ef4c69d6254
+  checksum: 10/4d5c4ed584206ee99a03e2908a360dafcf48c6b91b952761f0be584e1f4cca24a648acaa506b7c6907265f54f984facd6fafee86247432d1cba47ffad012a12b
   languageName: node
   linkType: hard
 
