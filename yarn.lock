@@ -4077,12 +4077,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@testing-library/user-event@npm:^14.6.10":
-  version: 14.6.10
-  resolution: "@testing-library/user-event@npm:14.6.10"
+"@testing-library/user-event@npm:^14.6.13":
+  version: 14.6.13
+  resolution: "@testing-library/user-event@npm:14.6.13"
   peerDependencies:
     "@testing-library/dom": ">=7.21.4"
-  checksum: 10/51619796d7e926fdea5c8c5be882872d5e939cbe781c240fe3e40f4bf5cd157c6af3445eb8560ec12b4acb4ca90347c59c4af2f1e44b4be74d8c500177b89b89
+  checksum: 10/d3904066cf622586356b0d85cd6b6840e1f89f68697db27d9c3d800e8868dd2446b59c3a28e2d109ea7d6c0ba4e2713ae2e3d9f980073924886caac878d25b8a
   languageName: node
   linkType: hard
 
@@ -5752,7 +5752,7 @@ __metadata:
     "@swc/core": "npm:^1.16.22"
     "@testing-library/dom": "npm:^10.4.2"
     "@testing-library/react": "npm:^16.3.3"
-    "@testing-library/user-event": "npm:^14.6.10"
+    "@testing-library/user-event": "npm:^14.6.13"
     "@types/node": "npm:^26.6.6"
     "@types/react": "npm:^19.3.0"
     "@types/react-dom": "npm:^19.3.0"
