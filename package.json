@@ -63,7 +63,7 @@
     "happy-css-modules": "^5.0.2",
     "happy-dom": "^21.0.4",
     "husky": "^9.1.6",
-    "lint-staged": "^17.6.0",
+    "lint-staged": "^17.6.1",
     "mini-css-extract-plugin": "^2.10.2",
     "postcss": "^8.5.32",
     "postcss-cli": "^12.0.0",
