@@ -15,7 +15,7 @@
     "@csstools/postcss-global-data": "4.0.0",
     "@eslint/compat": "^2.1.1",
     "@jridgewell/trace-mapping": "^0.3.31",
-    "@morev/stylelint-testing-library": "^1.1.1",
+    "@morev/stylelint-testing-library": "^1.2.0",
     "@playwright/test": "1.65.0",
     "@rspack/cli": "^2.3.2",
     "@rspack/core": "^2.3.2",

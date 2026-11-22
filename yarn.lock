@@ -2053,14 +2053,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@morev/stylelint-testing-library@npm:^1.1.1":
-  version: 1.1.1
-  resolution: "@morev/stylelint-testing-library@npm:1.1.1"
+"@morev/stylelint-testing-library@npm:^1.2.0":
+  version: 1.2.0
+  resolution: "@morev/stylelint-testing-library@npm:1.2.0"
   dependencies:
     "@morev/utils": "npm:^3.15.0"
   peerDependencies:
     stylelint: ">=16"
-  checksum: 10/abf4ee354b7a555ac3fe7c6cd25c84e1d11025bd3758b088db772853dd1625bc736cb7efd6140f6a1a1d1bfdd32648c3ef97a27e5977632f6d575833ce1969f6
+  checksum: 10/49d15448ef0dd242f9a74d5a28c617a261ab4fcd8c1156da853be9e490e039329339dabb4381a471e1abf1acc7925baa1e4f58b13563a1941d3f030f8faf1d2d
   languageName: node
   linkType: hard
 
@@ -5730,7 +5730,7 @@ __metadata:
     "@csstools/postcss-global-data": "npm:4.0.0"
     "@eslint/compat": "npm:^2.1.1"
     "@jridgewell/trace-mapping": "npm:^0.3.31"
-    "@morev/stylelint-testing-library": "npm:^1.1.1"
+    "@morev/stylelint-testing-library": "npm:^1.2.0"
     "@playwright/test": "npm:1.65.0"
     "@project-docs/website": "workspace:1.0.0"
     "@project-tools/eslint-plugin-vkui": "workspace:1.0.0"
