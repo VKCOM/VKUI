@@ -30,7 +30,7 @@
     "@vkontakte/vkjs": "^2.0.2",
     "@vkontakte/vkui": "workspace:^",
     "@vkontakte/vkui-tokens": "4.102.0",
-    "scroll-into-view-if-needed": "^3.2.0"
+    "scroll-into-view-if-needed": "^3.2.1"
   },
   "devDependencies": {
     "next": "^16.4.6",
