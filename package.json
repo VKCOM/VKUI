@@ -16,7 +16,7 @@
     "@eslint/compat": "^2.1.1",
     "@jridgewell/trace-mapping": "^0.3.31",
     "@morev/stylelint-testing-library": "^1.2.0",
-    "@playwright/test": "1.65.0",
+    "@playwright/test": "1.65.1",
     "@rspack/cli": "^2.3.3",
     "@rspack/core": "^2.3.3",
     "@size-limit/file": "^14.3.0",
