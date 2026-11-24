@@ -50,6 +50,39 @@ describe('ChipsSelect', () => {
     </>
   ));
 
+  describe.each([false, true])('IME with creatable=%s', (creatable) => {
+    it.each([{ isComposing: true }, { keyCode: 229 }])(
+      'preserves input on IME confirmation (%o)',
+      async (ime) => {
+        const onChange = vi.fn();
+        const onKeyDown = vi.fn();
+        render(
+          <ChipsSelect
+            options={colors}
+            creatable={creatable}
+            onChange={onChange}
+            onKeyDown={onKeyDown}
+            closeAfterSelect
+          />,
+        );
+        const input = screen.getByRole('combobox');
+        fireEvent.focus(input);
+        fireEvent.change(input, { target: { value: creatable ? '東京' : 'Крас' } });
+        fireEvent.keyDown(input, { key: 'ArrowDown' });
+        await waitForFloatingPosition();
+        const value = (input as HTMLInputElement).value;
+        onKeyDown.mockClear();
+        expect(fireEvent.keyDown(input, { key: 'Enter', ...ime })).toBe(true);
+        expect(onKeyDown).toHaveBeenCalledTimes(1);
+        expect(onChange).not.toHaveBeenCalled();
+        expect(input).toHaveValue(value);
+        expect(input).toHaveAttribute('aria-expanded', 'true');
+        fireEvent.keyDown(input, { key: 'Enter' });
+        expect(onChange).toHaveBeenCalledTimes(1);
+      },
+    );
+  });
+
   it(
     'should work with slotProps',
     withFakeTimers(async () => {

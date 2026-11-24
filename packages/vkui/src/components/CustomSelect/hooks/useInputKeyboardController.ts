@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Keys, pressedKey } from '../../../lib/accessibility';
+import { isKeyboardEventComposing, Keys, pressedKey } from '../../../lib/accessibility';
 import type { SelectProps } from '../CustomSelect';
 import type { UseFocusedOptionControllerReturn } from './useFocusedOptionController';
 
@@ -29,6 +29,9 @@ export function useInputKeyboardController({
 }: UseInputKeyboardController) {
   const handleKeyDownSelect = React.useCallback(
     (event: React.KeyboardEvent) => {
+      if (event.defaultPrevented || isKeyboardEventComposing(event)) {
+        return;
+      }
       const key = pressedKey(event);
       if (event.key.length === 1 && key !== Keys.SPACE) {
         open();
