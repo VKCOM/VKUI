@@ -1,6 +1,15 @@
 import path from 'node:path';
 
 const config = {
+  languageOptions: {
+    syntax: {
+      properties: {
+        // PostCSS-фолбэк для margin-trim обрабатывает каждую ось отдельно.
+        'margin-trim':
+          'none | block | inline | [ block-start || block-end ] | [ inline-start || inline-end ]',
+      },
+    },
+  },
   extends: [
     'stylelint-config-standard',
     '@vkontakte/stylelint-config',

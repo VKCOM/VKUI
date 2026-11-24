@@ -1,4 +1,5 @@
 .host {
+  margin-trim: block-start;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -36,6 +37,6 @@
   margin-block-start: 8px;
 }
 
-.action:not(:first-child) {
+.action {
   margin-block-start: 16px;
 }
