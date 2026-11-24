@@ -17,7 +17,6 @@
   inline-size: 100%;
   block-size: 100%;
   border-radius: inherit;
-  transition: all 100ms ease-out;
 }
 
 .slider {
@@ -31,7 +30,6 @@
   box-shadow: var(--vkui--elevation2);
   transform: translateX(calc(var(--vkui_internal--SegmentedControl_actual_index) * 100%));
   transform-origin: 0 0;
-  transition: transform 150ms;
 
   --vkui_internal--SegmentedControl_actual_index: 0;
   --vkui_internal--SegmentedControl_options: 0;
@@ -39,6 +37,16 @@
 
 .rtl .slider {
   transform: translateX(calc(-1 * var(--vkui_internal--SegmentedControl_actual_index) * 100%));
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .in {
+    transition: all 100ms ease-out;
+  }
+
+  .slider {
+    transition: transform 150ms;
+  }
 }
 
 /**

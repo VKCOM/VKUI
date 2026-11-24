@@ -105,9 +105,21 @@
   /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
   font-family: Roboto !important;
   caret-color: transparent !important;
+  -webkit-font-smoothing: antialiased !important;
+}
+
+/* Тесты анимаций могут отключить это переопределение. */
+:where(:root:not([data-playwright-enable-motion]), :root:not([data-playwright-enable-motion]) *),
+:where(
+  :root:not([data-playwright-enable-motion]),
+  :root:not([data-playwright-enable-motion]) *
+)::before,
+:where(
+  :root:not([data-playwright-enable-motion]),
+  :root:not([data-playwright-enable-motion]) *
+)::after {
   transition: none !important;
   animation: none !important;
-  -webkit-font-smoothing: antialiased !important;
 }
 
 [class*='--light'] {
