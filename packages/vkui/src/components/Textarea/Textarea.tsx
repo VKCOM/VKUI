@@ -57,7 +57,8 @@ export interface TextareaProps
   /**
    * Свойства, которые можно прокинуть внутрь компонента:
    * - `root`: свойства для прокидывания в корень компонента;
-   * - `textArea`: свойства для прокидывания в поле ввода.
+   * - `textArea`: свойства для прокидывания в поле ввода;
+   * - `scrollContainer`: свойства для прокидывания в контейнер с прокруткой.
    */
   slotProps?:
     | {
@@ -67,6 +68,9 @@ export interface TextareaProps
         textArea?: React.TextareaHTMLAttributes<HTMLTextAreaElement> &
           HasRootRef<HTMLTextAreaElement> &
           HasDataAttribute;
+        scrollContainer?:
+          | (React.AllHTMLAttributes<HTMLDivElement> & HasRootRef<HTMLDivElement>)
+          | undefined;
       }
     | undefined;
   /**
@@ -181,8 +185,17 @@ export const Textarea = ({
     slotProps?.textArea,
   );
 
-  const [refResizeTextarea, resize] = useResizeTextarea(onResize, grow);
+  const scrollContainerRef = React.useRef<HTMLDivElement>(null);
+  const [refResizeTextarea, resize, resizeAfterInput] = useResizeTextarea(
+    onResize,
+    grow,
+    scrollContainerRef,
+  );
   const elementRef = useExternRef(getTextAreaRef, refResizeTextarea);
+  const scrollContainerSlotProps = useMergeProps(
+    { getRootRef: scrollContainerRef },
+    slotProps?.scrollContainer,
+  );
 
   React.useEffect(resize, [resize, density, platform, value]);
   useResizeObserver(window, resize);
@@ -205,13 +218,14 @@ export const Textarea = ({
       beforeAlign={beforeAlign}
       maxHeight={maxHeight}
       {...rootProps}
+      slotProps={{ scrollContainer: scrollContainerSlotProps }}
     >
       <UnstyledTextField
         value={value}
         as="textarea"
         rows={rows}
         getRootRef={elementRef}
-        onChange={callMultiple(onChange, resize)}
+        onChange={callMultiple(onChange, resizeAfterInput)}
         {...textAreaRest}
       />
     </FormField>
