@@ -309,8 +309,18 @@ describe(Textarea, () => {
     });
 
     it('preserves scroll position when editing in the middle (#8273)', async () => {
-      render(<Textarea defaultValue={'line\n'.repeat(20)} />);
+      const ref = createRef<HTMLDivElement>();
+      const getRootRef = createRef<HTMLDivElement>();
+      render(
+        <Textarea
+          defaultValue={'line\n'.repeat(20)}
+          slotProps={{ scrollContainer: { ref, getRootRef } }}
+        />,
+      );
       const textArea = getInput() as HTMLTextAreaElement;
+      expect(ref.current).toBe(textArea.parentElement?.parentElement);
+      expect(getRootRef.current).toBe(ref.current);
+
       await userEvent.click(textArea);
       textArea.setSelectionRange(5, 5);
       const layout = mockScrollLayout(textArea, 80);

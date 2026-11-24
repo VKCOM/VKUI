@@ -126,10 +126,12 @@ export const FormField = ({
   ...restProps
 }: FormFieldOwnProps): React.ReactNode => {
   const elRef = useExternRef(getRootRef, refProp);
-  const { getRootRef: scrollContainerSlotRef, ...scrollContainerRestProps } = useMergeProps(
-    { className: styles.scrollContainer },
-    slotProps?.scrollContainer,
-  );
+  const {
+    getRootRef: scrollContainerGetRootRef,
+    ref: scrollContainerRefProp,
+    ...scrollContainerRestProps
+  } = useMergeProps({ className: styles.scrollContainer }, slotProps?.scrollContainer);
+  const scrollContainerRef = useExternRef(scrollContainerGetRootRef, scrollContainerRefProp);
   const { density = 'none' } = useAdaptivity();
   const [hover, setHover] = React.useState(false);
 
@@ -172,7 +174,7 @@ export const FormField = ({
         className,
       )}
     >
-      <div {...scrollContainerRestProps} ref={scrollContainerSlotRef}>
+      <div {...scrollContainerRestProps} ref={scrollContainerRef}>
         {before && renderIcon(before, beforeAlign, styles.before)}
         <div className={styles.content}>{children}</div>
         {after &&
