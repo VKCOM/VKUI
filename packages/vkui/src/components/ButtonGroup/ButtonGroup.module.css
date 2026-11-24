@@ -20,10 +20,6 @@
 
 /* stylelint-disable selector-max-universal */
 
-/**
- * [Примечание 3] Чтобы не завязываться на класс компонента, используем каскад и универсальный селектор.
- */
-
 /* "gap" для mode="vertical" */
 .modeVertical.gapSpace {
   row-gap: var(--vkui--size_button_group_gap_space--regular);
