@@ -4,9 +4,9 @@ const config = {
   languageOptions: {
     syntax: {
       properties: {
-        // PostCSS margin-trim поддерживает inline-значения из CSS Box Model Level 4.
+        // PostCSS-фолбэк для margin-trim обрабатывает каждую ось отдельно.
         'margin-trim':
-          'none | block | inline | [ block-start || block-end || inline-start || inline-end ]',
+          'none | block | inline | [ block-start || block-end ] | [ inline-start || inline-end ]',
       },
     },
   },
