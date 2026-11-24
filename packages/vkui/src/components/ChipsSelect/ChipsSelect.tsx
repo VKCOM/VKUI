@@ -6,7 +6,7 @@ import { classNames } from '@vkontakte/vkjs';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useGlobalOnEventOutside } from '../../hooks/useGlobalOnClickOutside';
 import { useMergeProps } from '../../hooks/useMergeProps';
-import { Keys } from '../../lib/accessibility';
+import { isKeyboardEventComposing, Keys } from '../../lib/accessibility';
 import type { Placement } from '../../lib/floating';
 import { defaultFilterFn } from '../../lib/select';
 import { ChipsInputBase } from '../ChipsInputBase/ChipsInputBase';
@@ -391,7 +391,7 @@ export const ChipsSelect = <Option extends ChipOption>({
       onKeyDown(event);
     }
 
-    if (event.defaultPrevented || readOnly) {
+    if (event.defaultPrevented || readOnly || isKeyboardEventComposing(event)) {
       return;
     }
 
