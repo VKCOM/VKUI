@@ -79,7 +79,10 @@
     "react-dom": ">=16.8.0"
   },
   "dependencies": {
+    "@floating-ui/core": "^1.8.0",
+    "@floating-ui/dom": "^1.8.0",
     "@floating-ui/react-dom": "^2.1.9",
+    "@floating-ui/utils": "^0.2.12",
     "@swc/helpers": "^0.5.24"
   },
   "devDependencies": {
