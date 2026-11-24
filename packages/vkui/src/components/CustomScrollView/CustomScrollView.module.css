@@ -64,9 +64,13 @@
   overscroll-behavior: none;
 }
 
-@media (prefers-reduced-motion: no-preference) {
+.scrollBehaviorSmooth {
+  scroll-behavior: smooth;
+}
+
+@media (--reduce-motion) {
   .scrollBehaviorSmooth {
-    scroll-behavior: smooth;
+    scroll-behavior: auto;
   }
 }
 
