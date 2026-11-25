@@ -68,6 +68,12 @@
   scroll-behavior: smooth;
 }
 
+@media (--reduce-motion) {
+  .scrollBehaviorSmooth {
+    scroll-behavior: auto;
+  }
+}
+
 .horizontalScrollEnabled {
   overflow-x: auto;
 }
