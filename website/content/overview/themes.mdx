@@ -59,7 +59,7 @@ import '@vkontakte/vkui/dist/vkui.css';
 </ConfigProvider>;
 ```
 
-Чтобы задать схему для части интерфейса, оберните её в `ColorSchemeProvider`. Вложенный компонент должен принимать `className`, через который провайдер применяет стили схемы. [`ColorSchemeProvider`](/components/color-scheme-provider)
+Чтобы задать схему для части интерфейса, оберните её в `ColorSchemeProvider`. Если непосредственный потомок провайдера — ваш компонент, передайте полученный `className` на его корневой DOM-элемент. Через этот класс применяются стили цветовой схемы. [`ColorSchemeProvider`](/components/color-scheme-provider)
 
 ```jsx
 <ColorSchemeProvider value="dark">
@@ -67,7 +67,7 @@ import '@vkontakte/vkui/dist/vkui.css';
 </ColorSchemeProvider>
 ```
 
-Хук `useColorScheme` возвращает текущую цветовую схему. Используйте её, например, чтобы выбрать подходящее изображение для светлого и тёмного фона.
+Хук `useColorScheme` возвращает текущую цветовую схему. В примере текст меняется в зависимости от цветовой схемы.
 
 ```jsx
 const colorScheme = useColorScheme();
