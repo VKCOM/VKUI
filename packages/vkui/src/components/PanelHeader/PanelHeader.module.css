@@ -73,14 +73,10 @@
 .after {
   box-sizing: border-box;
   display: flex;
+  column-gap: 4px;
   align-items: center;
   justify-content: flex-end;
   color: var(--vkui--color_icon_accent_themed);
-}
-
-/* stylelint-disable-next-line selector-max-universal */
-.after > *:not(:last-child) {
-  margin-inline-end: 4px;
 }
 
 /**
