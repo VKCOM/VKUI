@@ -20,7 +20,7 @@ description:
 
 ### Размеры элементов интерфейса [#density]
 
-> До версии `8.0.0` для размеров использовались свойства `sizeX` и `sizeY`. Значения `sizeX` соответствовали брейкпоинтам `ViewWidth.MOBILE` и `ViewWidth.SMALL_TABLET`. [Размеры элементов в `7.11.0`](/7.11.0/overview/adaptivity#sizes)
+> Свойства `sizeX` и `sizeY` устарели в VKUI 8.0.0. Их удаление запланировано на VKUI 10. Используйте `density` вместо `sizeY`, `viewWidth={ViewWidth.MOBILE}` вместо `sizeX="compact"` и `viewWidth={ViewWidth.SMALL_TABLET}` вместо `sizeX="regular"`. [Миграция на VKUI 8](/migrations/migration-v8)
 
 Свойство `density` управляет плотностью интерфейса. У большинства компонентов два режима.
 
@@ -66,7 +66,7 @@ description:
 
 ### Наличие точного указателя [#pointer]
 
-Свойство `hasPointer` показывает, доступен ли точный указатель. Например, с мышью `Avatar.Overlay` появляется при наведении, а на сенсорном экране без точного указателя виден постоянно. [`Avatar.Overlay`](/components/avatar#наложение)
+Свойство `hasPointer` показывает, доступен ли точный указатель. Например, с мышью `Avatar.Overlay` появляется при наведении, а на сенсорном экране без точного указателя виден постоянно. [`Avatar.Overlay`](/components/avatar#nalozhenie)
 
 #### `hasPointer`
 
