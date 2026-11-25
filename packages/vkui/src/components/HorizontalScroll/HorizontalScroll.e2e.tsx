@@ -21,8 +21,21 @@ test.describe('HorizontalScroll', () => {
 
 test.describe('HorizontalScroll scroll handling', () => {
   test.use({
-    onlyForBrowsers: ['chromium'],
     onlyForPlatforms: ['vkcom'],
+  });
+
+  test('respects reduced motion and preference changes', async ({ mount, page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await mount('HorizontalScrollScrollHandlingPlayground');
+    const scroller = page.getByTestId('horizontal-scroll').locator('> div').last();
+    await page.getByTestId('next-arrow').click();
+    await expect.poll(() => scroller.evaluate((el) => el.scrollLeft)).toBe(200);
+    await page.emulateMedia({ reducedMotion: 'no-preference' });
+    await page.getByTestId('next-arrow').click();
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await expect.poll(() => scroller.evaluate((el) => el.scrollLeft)).toBe(400);
+    await page.getByTestId('prev-arrow').click();
+    await expect.poll(() => scroller.evaluate((el) => el.scrollLeft)).toBe(200);
   });
 
   test('updates arrows after native scroll', async ({ mount, page }) => {
@@ -40,7 +53,12 @@ test.describe('HorizontalScroll scroll handling', () => {
     await expect(page.getByTestId('next-arrow')).toHaveCount(0);
   });
 
-  test('batches layout recalculations from a burst of scroll events', async ({ mount, page }) => {
+  test('batches layout recalculations from a burst of scroll events', async ({
+    mount,
+    page,
+    browserName,
+  }) => {
+    test.skip(browserName !== 'chromium', 'CDP metrics are Chromium-only');
     await mount('HorizontalScrollScrollHandlingPlayground');
     await expect(page.getByTestId('next-arrow')).toBeVisible();
 
