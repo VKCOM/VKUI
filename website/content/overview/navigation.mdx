@@ -23,9 +23,9 @@ description: Экраны, сценарии и разделы приложени
 
 ### Предварительная настройка [#initial-setup]
 
-Чтобы учесть безопасные боковые отступы и настроить анимацию переходов, разместите `SplitLayout` и вложенный `SplitCol` в точке входа приложения. [`SplitLayout`](/components/split-layout) · [`SplitCol`](/components/split-layout#split-col)
+Разместите `SplitLayout` и вложенный `SplitCol` в корневом компоненте приложения. Эта обёртка задаёт отступы для экранов и нужна для анимации переходов. [`SplitLayout`](/components/split-layout) · [`SplitCol`](/components/split-layout#split-col)
 
-- В свойство `header` у `SplitLayout` передайте пустой `PanelHeader`. Он компенсирует боковые отступы для заголовков экранов. На платформе `vkcom` этот шаг можно пропустить. [`PanelHeader`](/components/panel-header)
+- В свойство `header` у `SplitLayout` передайте пустой `PanelHeader` с `delimiter="none"`. С ним `SplitLayout` компенсирует верхний отступ на высоту заголовка и верхней безопасной зоны. На платформе `vkcom` этот шаг можно пропустить. [`PanelHeader`](/components/panel-header)
 - У `SplitCol` включите `stretchedOnMobile`, чтобы на смартфонах колонка занимала всю ширину, и `autoSpaced`, чтобы на широких экранах появлялись боковые отступы, в том числе для `Group`. [`Group`](/components/group)
 
 ```jsx showLineNumbers filename="src/App.tsx" {5,6}
