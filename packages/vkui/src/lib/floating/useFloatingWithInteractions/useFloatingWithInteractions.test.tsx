@@ -1,5 +1,5 @@
 import { act, type ComponentType, useRef, useState } from 'react';
-import { render, renderHook, waitFor } from '@testing-library/react';
+import { fireEvent, render, renderHook, waitFor } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import { FocusTrap } from '../../../components/FocusTrap/FocusTrap';
 import { useGlobalEscKeyDown } from '../../../hooks/useGlobalEscKeyDown';
@@ -560,6 +560,279 @@ describe(useFloatingWithInteractions, () => {
         await waitFor(() => expect(hookResultRef.current.shown).toBeFalsy());
       },
     );
+  });
+
+  describe('click inside iframe', () => {
+    const simulateClickInsideIframe = async (iframe: HTMLElement) => {
+      const activeElementDescriptor = Object.getOwnPropertyDescriptor(document, 'activeElement');
+      iframe.focus();
+
+      if (document.activeElement !== iframe) {
+        Object.defineProperty(document, 'activeElement', {
+          configurable: true,
+          get: () => iframe,
+        });
+      }
+      fireEvent(window, new Event('blur'));
+      await act(async () => {
+        await new Promise((resolve) => setTimeout(resolve, 0));
+      });
+
+      if (activeElementDescriptor) {
+        Object.defineProperty(document, 'activeElement', activeElementDescriptor);
+      } else {
+        delete (document as { activeElement?: unknown }).activeElement;
+      }
+    };
+
+    it('should close on click inside iframe outside of reference and floating elements (trigger: click)', async () => {
+      const onShownChange = vi.fn();
+      const { result } = renderHook(() =>
+        useFloatingWithInteractions<HTMLButtonElement>({
+          defaultShown: false,
+          trigger: 'click',
+          onShownChange,
+        }),
+      );
+      const renderTree = () => (
+        <div>
+          <iframe data-testid="iframe" title="iframe" />
+          <TestComponent hookResult={result.current} />
+        </div>
+      );
+      const view = render(renderTree());
+      await waitFor(() => expect(result.current.shown).toBeFalsy());
+
+      await fireEventPatch(result.current.refs.reference.current, 'click');
+      view.rerender(renderTree());
+      await waitFor(() => expect(result.current.shown).toBeTruthy());
+
+      await simulateClickInsideIframe(view.getByTestId('iframe'));
+
+      await waitFor(() => {
+        expect(result.current.shown).toBeFalsy();
+        expect(onShownChange).toHaveBeenLastCalledWith(false, 'click-outside');
+      });
+    });
+
+    it('should stay shown if iframe is inside floating element (trigger: click)', async () => {
+      const { result } = renderHook(() =>
+        useFloatingWithInteractions<HTMLButtonElement>({
+          defaultShown: false,
+          trigger: 'click',
+        }),
+      );
+      const FloatingWithIframe = () => {
+        const {
+          shown,
+          refs: { reference, floating },
+          referenceProps,
+          floatingProps,
+        } = result.current;
+        return (
+          <>
+            <button ref={reference} {...referenceProps}>
+              Reference
+            </button>
+            {shown ? (
+              <span ref={floating} data-testid="floating" {...floatingProps}>
+                <iframe data-testid="iframe" title="iframe" />
+              </span>
+            ) : null}
+          </>
+        );
+      };
+      const view = render(<FloatingWithIframe />);
+      await waitFor(() => expect(result.current.shown).toBeFalsy());
+
+      await fireEventPatch(result.current.refs.reference.current, 'click');
+      view.rerender(<FloatingWithIframe />);
+      await waitFor(() => expect(result.current.shown).toBeTruthy());
+
+      await simulateClickInsideIframe(view.getByTestId('iframe'));
+      view.rerender(<FloatingWithIframe />);
+
+      await waitFor(() => expect(result.current.shown).toBeTruthy());
+    });
+
+    it('should stay shown if window gets blurred without iframe focus (trigger: click)', async () => {
+      const { result } = renderHook(() =>
+        useFloatingWithInteractions<HTMLButtonElement>({
+          defaultShown: false,
+          trigger: 'click',
+        }),
+      );
+      const renderTree = () => (
+        <div>
+          <iframe data-testid="iframe" title="iframe" />
+          <TestComponent hookResult={result.current} />
+        </div>
+      );
+      const view = render(renderTree());
+      await waitFor(() => expect(result.current.shown).toBeFalsy());
+
+      await fireEventPatch(result.current.refs.reference.current, 'click');
+      view.rerender(renderTree());
+      await waitFor(() => expect(result.current.shown).toBeTruthy());
+
+      fireEvent(window, new Event('blur'));
+
+      await waitFor(() => expect(result.current.shown).toBeTruthy());
+    });
+
+    it('should stay shown on click inside iframe with disableCloseOnClickOutside (trigger: click)', async () => {
+      const { result } = renderHook(() =>
+        useFloatingWithInteractions<HTMLButtonElement>({
+          defaultShown: false,
+          trigger: 'click',
+          disableCloseOnClickOutside: true,
+        }),
+      );
+      const renderTree = () => (
+        <div>
+          <iframe data-testid="iframe" title="iframe" />
+          <TestComponent hookResult={result.current} />
+        </div>
+      );
+      const view = render(renderTree());
+      await waitFor(() => expect(result.current.shown).toBeFalsy());
+
+      await fireEventPatch(result.current.refs.reference.current, 'click');
+      view.rerender(renderTree());
+      await waitFor(() => expect(result.current.shown).toBeTruthy());
+
+      await simulateClickInsideIframe(view.getByTestId('iframe'));
+
+      await waitFor(() => expect(result.current.shown).toBeTruthy());
+    });
+
+    it('should close when focus moves from an iframe inside floating to an outside iframe', async () => {
+      const onShownChange = vi.fn();
+      const { result } = renderHook(() =>
+        useFloatingWithInteractions<HTMLButtonElement>({
+          defaultShown: false,
+          trigger: 'focus',
+          onShownChange,
+        }),
+      );
+      const renderTree = () => (
+        <>
+          <iframe data-testid="outside-iframe" title="outside iframe" />
+          <button ref={result.current.refs.reference} {...result.current.referenceProps}>
+            Reference
+          </button>
+          {result.current.shown ? (
+            <span ref={result.current.refs.floating} {...result.current.floatingProps}>
+              <iframe data-testid="inside-iframe" title="inside iframe" />
+            </span>
+          ) : null}
+        </>
+      );
+      const view = render(renderTree());
+      await fireEventPatch(result.current.refs.reference.current, 'focus');
+      view.rerender(renderTree());
+      await waitFor(() => expect(result.current.shown).toBeTruthy());
+
+      const activeElementDescriptor = Object.getOwnPropertyDescriptor(document, 'activeElement');
+      const insideIframe = view.getByTestId('inside-iframe');
+      const outsideIframe = view.getByTestId('outside-iframe');
+      Object.defineProperty(document, 'activeElement', {
+        configurable: true,
+        get: () => insideIframe,
+      });
+      fireEvent.blur(result.current.refs.reference.current!, { relatedTarget: insideIframe });
+      fireEvent(window, new Event('blur'));
+      await act(async () => {
+        await new Promise((resolve) => setTimeout(resolve, 0));
+      });
+      Object.defineProperty(document, 'activeElement', {
+        configurable: true,
+        get: () => outsideIframe,
+      });
+
+      await waitFor(() => {
+        expect(result.current.shown).toBeFalsy();
+        expect(onShownChange).toHaveBeenLastCalledWith(false, 'click-outside');
+      });
+
+      if (activeElementDescriptor) {
+        Object.defineProperty(document, 'activeElement', activeElementDescriptor);
+      } else {
+        delete (document as { activeElement?: unknown }).activeElement;
+      }
+    });
+
+    it('should close on iframe focus after reference blur has settled (trigger: focus)', async () => {
+      const { result } = renderHook(() =>
+        useFloatingWithInteractions<HTMLButtonElement>({
+          defaultShown: false,
+          trigger: 'focus',
+        }),
+      );
+      const renderTree = () => (
+        <>
+          <iframe data-testid="iframe" title="iframe" />
+          <TestComponent hookResult={result.current} />
+        </>
+      );
+      const view = render(renderTree());
+      await fireEventPatch(result.current.refs.reference.current, 'focus');
+      view.rerender(renderTree());
+      await waitFor(() => expect(result.current.shown).toBeTruthy());
+      await fireEventPatch(result.current.refs.reference.current, 'blur', {
+        relatedTarget: view.getByTestId('focus-trap'),
+      });
+      await waitFor(() => expect(result.current.shown).toBeTruthy());
+
+      await simulateClickInsideIframe(view.getByTestId('iframe'));
+
+      await waitFor(() => expect(result.current.shown).toBeFalsy());
+    });
+
+    it('should not close twice when reference blur and window blur happen together (trigger: focus)', async () => {
+      const onShownChange = vi.fn();
+      const { result } = renderHook(() =>
+        useFloatingWithInteractions<HTMLButtonElement>({
+          defaultShown: false,
+          trigger: 'focus',
+          onShownChange,
+        }),
+      );
+      const view = render(
+        <>
+          <iframe data-testid="iframe" title="iframe" />
+          <TestComponent hookResult={result.current} />
+        </>,
+      );
+      await fireEventPatch(result.current.refs.reference.current, 'focus');
+      view.rerender(
+        <>
+          <iframe data-testid="iframe" title="iframe" />
+          <TestComponent hookResult={result.current} />
+        </>,
+      );
+      await waitFor(() => expect(result.current.shown).toBeTruthy());
+
+      const activeElementDescriptor = Object.getOwnPropertyDescriptor(document, 'activeElement');
+      const iframe = view.getByTestId('iframe');
+      Object.defineProperty(document, 'activeElement', {
+        configurable: true,
+        get: () => iframe,
+      });
+      fireEvent.blur(result.current.refs.reference.current!, {
+        relatedTarget: iframe,
+      });
+      fireEvent(window, new Event('blur'));
+
+      await waitFor(() => expect(result.current.shown).toBeFalsy());
+      expect(onShownChange).toHaveBeenCalledTimes(2);
+      expect(onShownChange).toHaveBeenLastCalledWith(false, 'focus');
+      if (activeElementDescriptor) {
+        Object.defineProperty(document, 'activeElement', activeElementDescriptor);
+      } else {
+        delete (document as { activeElement?: unknown }).activeElement;
+      }
+    });
   });
 
   describe('tests with snapshot', () => {
