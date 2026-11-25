@@ -90,6 +90,14 @@
     forwards;
 }
 
+@media (--reduce-motion) {
+  /* stylelint-disable-next-line selector-max-type, selector-pseudo-class-disallowed-list */
+  .stateDone :global(.vkuiIcon) path {
+    stroke-dashoffset: 0;
+    animation-name: none;
+  }
+}
+
 @keyframes animationScreenSpinnerIconDone {
   from {
     stroke-dashoffset: 50;
