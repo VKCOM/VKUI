@@ -1,19 +1,16 @@
 ---
 description:
-  VKUI поддерживает три темы - `vkBase`, `vkIOS` и `vkCom` в двух цветовых режимах (светлом и тёмном).
-  Это позволяет компонентам визуально мимикрировать под соответствующую платформу и выглядеть неотличимо от нативных приложений.
+  Темы VKUI для Android, iOS и веб-интерфейса ВКонтакте. У каждой темы есть светлая и тёмная схемы.
 ---
 
 <Overview type="doc">
 # Темы
 
-VKUI поддерживает три темы - `vkBase` (по умолчанию), `vkIOS` (на платформе iOS) и `vkCom` (на платформе vkcom)
-в двух цветовых режимах (светлом и тёмном).
-Это позволяет компонентам визуально мимикрировать под соответствующую платформу и выглядеть неотличимо от нативных приложений.
+В VKUI три встроенные темы. `vkBase` используется на платформе `android` и служит темой по умолчанию, `vkIOS` предназначена для iOS, а `vkCom` — для платформы `vkcom`. У каждой темы есть светлая и тёмная цветовые схемы.
 
 </Overview>
 
-Тема в библиотеке — это набор [дизайн-токенов](https://foundation.mozilla.org/en/docs/design/websites/design-tokens/) в виде [CSS-переменных](https://developer.mozilla.org/en-US/docs/Web/CSS/--*). Пример:
+Тема задаёт значения дизайн-токенов через CSS-переменные. В примере компонент использует токены для цвета текста и фона. [Дизайн-токены](https://foundation.mozilla.org/en/docs/design/websites/design-tokens/) · [CSS-переменные](https://developer.mozilla.org/en-US/docs/Web/CSS/--*)
 
 ```css
 .SomeComponent {
@@ -22,7 +19,7 @@ VKUI поддерживает три темы - `vkBase` (по умолчани�
 }
 ```
 
-По умолчанию тема определяется автоматически по устройству, но можно ограничиться одной через свойство `platform` у [`ConfigProvider`](/components/config-provider):
+По умолчанию VKUI определяет платформу по устройству. Чтобы задать платформу и соответствующую тему явно, передайте свойство `platform` в `ConfigProvider`. [`ConfigProvider`](/components/config-provider)
 
 ```jsx
 import { ConfigProvider, AdaptivityProvider, AppRoot, SimpleCell } from '@vkontakte/vkui';
@@ -37,23 +34,17 @@ import '@vkontakte/vkui/dist/vkui.css';
 </ConfigProvider>;
 ```
 
-Стили из `import '@vkontakte/vkui/dist/vkui.css'` содержат 3 темы, которые автоматически меняются по платформе и режиму:
+Файл `@vkontakte/vkui/dist/vkui.css` содержит стили для всех трёх платформ и обеих цветовых схем.
 
-- android (используется по умолчанию)
-  - `light` – тема `vkBase` ([ссылка на CSS файл](https://esm.cdn-vk.ru/@vkontakte/vkui-tokens@4/themes/vkBase/cssVars/declarations/onlyVariablesLocal.css))
-  - `dark` – тема `vkBaseDark` ([ссылка на CSS файл](https://esm.cdn-vk.ru/@vkontakte/vkui-tokens@4/themes/vkBaseDark/cssVars/declarations/onlyVariablesLocal.css))
-- iOS
-  - `light` – тема `vkIOS` ([ссылка на CSS файл](https://esm.cdn-vk.ru/@vkontakte/vkui-tokens@4/themes/vkIOS/cssVars/declarations/onlyVariablesLocal.css))
-  - `dark` – тема `vkIOSDark` ([ссылка на CSS файл](https://esm.cdn-vk.ru/@vkontakte/vkui-tokens@4/themes/vkIOSDark/cssVars/declarations/onlyVariablesLocal.css))
-- vkcom
-  - `light` – тема `vkCom` ([ссылка на CSS файл](https://esm.cdn-vk.ru/@vkontakte/vkui-tokens@4/themes/vkCom/cssVars/declarations/onlyVariablesLocal.css))
-  - `dark` – тема `vkComDark` ([ссылка на CSS файл](https://esm.cdn-vk.ru/@vkontakte/vkui-tokens@4/themes/vkComDark/cssVars/declarations/onlyVariablesLocal.css))
+| Платформа | Светлая (`light`) | Тёмная (`dark`) |
+| --- | --- | --- |
+| `android` (по умолчанию) | [`vkBase`](https://esm.cdn-vk.ru/@vkontakte/vkui-tokens@4/themes/vkBase/cssVars/declarations/onlyVariablesLocal.css) | [`vkBaseDark`](https://esm.cdn-vk.ru/@vkontakte/vkui-tokens@4/themes/vkBaseDark/cssVars/declarations/onlyVariablesLocal.css) |
+| `ios` | [`vkIOS`](https://esm.cdn-vk.ru/@vkontakte/vkui-tokens@4/themes/vkIOS/cssVars/declarations/onlyVariablesLocal.css) | [`vkIOSDark`](https://esm.cdn-vk.ru/@vkontakte/vkui-tokens@4/themes/vkIOSDark/cssVars/declarations/onlyVariablesLocal.css) |
+| `vkcom` | [`vkCom`](https://esm.cdn-vk.ru/@vkontakte/vkui-tokens@4/themes/vkCom/cssVars/declarations/onlyVariablesLocal.css) | [`vkComDark`](https://esm.cdn-vk.ru/@vkontakte/vkui-tokens@4/themes/vkComDark/cssVars/declarations/onlyVariablesLocal.css) |
 
-## Режимы [#modes]
+## Цветовые схемы [#modes]
 
-Каждая тема обычно поддерживает <i>светлый (`light`)</i> и <i>тёмный (`dark`)</i> режим. За выбор отвечает свойство `colorScheme` — как и `platform`, по умолчанию определяется автоматически через медиавыражение [`prefers-color-scheme`](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme).
-
-Ручное определение:
+По умолчанию VKUI выбирает светлую (`light`) или тёмную (`dark`) схему по системной настройке. Чтобы задать схему для всего приложения, передайте `colorScheme` в `ConfigProvider`. [Медиавыражение `prefers-color-scheme`](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme)
 
 ```jsx {4}
 import { ConfigProvider, AdaptivityProvider, AppRoot, SimpleCell } from '@vkontakte/vkui';
@@ -68,7 +59,7 @@ import '@vkontakte/vkui/dist/vkui.css';
 </ConfigProvider>;
 ```
 
-Чтобы переопределить режим для отдельных компонентов, используйте [`ColorSchemeProvider`](/components/color-scheme-provider). Потомок `ColorSchemeProvider` должен принимать свойство `className`, иначе тему переопределить не получится.
+Чтобы задать схему для части интерфейса, оберните её в `ColorSchemeProvider`. Вложенный компонент должен принимать `className`, через который провайдер применяет стили схемы. [`ColorSchemeProvider`](/components/color-scheme-provider)
 
 ```jsx
 <ColorSchemeProvider value="dark">
@@ -76,16 +67,14 @@ import '@vkontakte/vkui/dist/vkui.css';
 </ColorSchemeProvider>
 ```
 
-Текущий режим возвращает хук `useColorScheme`. Пригодится, чтобы менять изображения на инвертированные в тёмной теме. Пример:
+Хук `useColorScheme` возвращает текущую цветовую схему. Используйте её, например, чтобы выбрать подходящее изображение для светлого и тёмного фона.
 
 ```jsx
 const colorScheme = useColorScheme();
 <Box padding="system">{colorScheme === 'light' ? 'Out of the blue' : 'And into the black'}</Box>;
 ```
 
-> Учтите, что некоторые компоненты делегируют цвет фона родителю выше — например, [Cell](/components/cell) и его производные.
->
-> На примере [SimpleCell](/components/simple-cell) покажем решение: зададим фон через `className` или `style`:
+> Фон некоторых компонентов, например `Cell` и его производных, задаёт родительский элемент. Чтобы у `SimpleCell` был собственный фон, задайте его через `className` или `style`, как в примере. [`Cell`](/components/cell) · [`SimpleCell`](/components/simple-cell)
 >
 > ```jsx
 > <Group header={<Header>Настройка тем</Header>}>
