@@ -619,7 +619,10 @@ export default [
   },
   {
     name: 'vkui/vitest',
-    files: ['packages/vkui/src/**/*.test.{ts,tsx}', 'packages/vkui/src/testing/*.{ts,tsx}'],
+    files: [
+      'packages/vkui/{src,website}/**/*.test.{ts,tsx}',
+      'packages/vkui/src/testing/*.{ts,tsx}',
+    ],
     plugins: {
       '@vitest': vitest,
     },

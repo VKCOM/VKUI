@@ -1,7 +1,5 @@
 import { useRef } from 'react';
 import { Icon24DownloadOutline } from '@vkontakte/icons';
-import { CopyFeedbackIcon } from './CopyFeedbackIcon';
-import { useCopyFeedback } from './useCopyFeedback';
 import {
   Box,
   Button,
@@ -15,17 +13,19 @@ import {
   Tappable,
   VisuallyHidden,
 } from '../../src';
-import { type IconData, getIconDisplayName, getIconSize } from './config';
+import { CopyFeedbackIcon } from './CopyFeedbackIcon';
+import { getIconDisplayName, getIconSize, type IconData } from './config';
+import { useCopyFeedback } from './useCopyFeedback';
 import styles from './IconsOverview.module.css';
 
 const getSVGString = (container: HTMLElement | null): string => {
-  const svg = container?.querySelector('svg');
+  const svg = container?.getElementsByTagName('svg')[0];
   if (!svg) {
     return '';
   }
 
   const cleanSVG = svg.cloneNode(true) as SVGElement;
-  for (const element of [cleanSVG, ...cleanSVG.querySelectorAll('*')]) {
+  for (const element of [cleanSVG, ...cleanSVG.getElementsByTagName('*')]) {
     for (const attribute of ['aria-hidden', 'display', 'class', 'style']) {
       element.removeAttribute(attribute);
     }
@@ -52,13 +52,14 @@ export const IconSidebar = ({ icon }: { icon: IconData | undefined }) => {
   };
 
   const downloadSVG = () => {
-    const svg = getSVGString(previewRef.current);
-    if (!svg || !icon) {
+    const preview = previewRef.current;
+    const svg = getSVGString(preview);
+    if (!preview || !svg || !icon) {
       return;
     }
 
     const url = URL.createObjectURL(new Blob([svg], { type: 'image/svg+xml' }));
-    const link = document.createElement('a');
+    const link = preview.ownerDocument.createElement('a');
     link.href = url;
     link.download = `${icon.name}.svg`;
     link.click();

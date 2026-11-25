@@ -187,7 +187,7 @@ export const Router = () => {
 
 Используйте `Epic`, если основные разделы приложения доступны через нижнюю панель, как в мобильной версии ВКонтакте и приложении VK. [`Epic`](/components/epic) · [Мобильная версия ВКонтакте](https://m.vk.ru)
 
-- Нижнюю панель `Tabbar` передайте в свойство `tabbar`. [`Tabbar`](/components/tabbar)
+- Нижнюю панель `Tabbar` передайте в свойство `tabbar`. [`Tabbar`](/components/epic#tabbar)
 - Для каждого раздела вложите в `Epic` компонент `View` или `Root` с уникальным `id`. `Root` позволяет объединить несколько сценариев в одном разделе. [`View`](/components/view) · [`Root`](/components/root)
 - Идентификатор открытого раздела передайте в `activeStory`. `Epic` переключает разделы без анимации.
 
@@ -311,7 +311,7 @@ app (Epic)
       └─ about-version-panel (Panel)
 ```
 
-На узких экранах между разделами можно переключаться через нижнюю панель `Tabbar`. На широких экранах её заменяет боковое меню из элементов `Cell` в колонке `SplitCol`. [`Tabbar`](/components/tabbar) · [`SplitCol`](/components/split-layout#split-col) · [`Cell`](/components/cell)
+На узких экранах между разделами можно переключаться через нижнюю панель `Tabbar`. На широких экранах её заменяет боковое меню из элементов `Cell` в колонке `SplitCol`. [`Tabbar`](/components/epic#tabbar) · [`SplitCol`](/components/split-layout#split-col) · [`Cell`](/components/cell)
 
 import { FixedLayoutWrapper } from '@/components/wrappers';
 

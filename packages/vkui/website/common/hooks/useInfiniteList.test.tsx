@@ -1,4 +1,4 @@
-import { act, renderHook } from '@testing-library/react';
+import { fireEvent, renderHook } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { useInfiniteList } from './useInfiniteList';
 
@@ -43,10 +43,8 @@ describe('useInfiniteList', () => {
     expect(result.current.remappedSections).toEqual([sections[0]]);
     expect(result.current.hasMoreSections).toBe(true);
 
-    act(() => {
-      document.documentElement.scrollTop = 300;
-      window.dispatchEvent(new Event('scroll'));
-    });
+    document.documentElement.scrollTop = 300;
+    fireEvent.scroll(window);
 
     expect(result.current.hasMoreSections).toBe(false);
     expect(result.current.remappedSections).toEqual(sections);
@@ -61,13 +59,11 @@ describe('useInfiniteList', () => {
       { initialProps: { items: sections } },
     );
 
-    act(() => {
-      container.scrollTop = 300;
-      window.dispatchEvent(new Event('scroll'));
-    });
+    container.scrollTop = 300;
+    fireEvent.scroll(window);
     expect(result.current.hasMoreSections).toBe(true);
 
-    act(() => container.dispatchEvent(new Event('scroll')));
+    fireEvent.scroll(container);
     expect(result.current.hasMoreSections).toBe(false);
 
     rerender({ items: [sections[1]] });

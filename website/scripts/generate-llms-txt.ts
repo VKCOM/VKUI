@@ -30,25 +30,15 @@ function getPageTitle(fileName: string): string {
   return componentNameFromSlug(slug);
 }
 
-export function generateLlmsTxt() {
-  if (!fs.existsSync(CONTENT_DIRECTORY)) {
-    // eslint-disable-next-line no-console
-    console.warn('⚠️ Директория content не найдена, пропускаем генерацию llms.txt');
-    return;
-  }
-
-  const mdxFiles = collectMdxFiles(CONTENT_DIRECTORY);
-
-  // Group files by directory
+export function renderLlmsTxt(
+  contentDirectory: string,
+  mdxFiles: readonly string[],
+  getPageUrl: (relativePath: string) => string,
+) {
   const sections: Record<string, PageMeta[]> = {};
   for (const filePath of mdxFiles) {
-    if (filePath.endsWith('index.mdx')) {
-      continue;
-    }
-
-    const relativePath = path.relative(CONTENT_DIRECTORY, filePath);
-    const parts = relativePath.split(path.sep);
-    const dirName = parts[0];
+    const relativePath = path.relative(contentDirectory, filePath).split(path.sep).join('/');
+    const [dirName] = relativePath.split('/');
     const fileName = path.basename(filePath);
 
     if (!sections[dirName]) {
@@ -59,16 +49,10 @@ export function generateLlmsTxt() {
     const { data: frontmatter } = parseFrontmatter(content);
     const title = frontmatter.title || getPageTitle(fileName);
 
-    const basePath = process.env.NEXT_PUBLIC_VKUI_DOCS_BASE_PATH || '';
-
-    const url = new URL(SITE_URL);
-    // Используем posix-слэши для совместимости с Windows
-    url.pathname = path.posix.join(basePath, relativePath.split(path.sep).join('/'));
-
     sections[dirName].push({
       title,
       description: frontmatter.description || '',
-      url: url.toString(),
+      url: getPageUrl(relativePath),
     });
   }
 
@@ -105,13 +89,32 @@ export function generateLlmsTxt() {
     lines.push('');
   }
 
+  return lines.join('\n');
+}
+
+export function generateLlmsTxt() {
+  if (!fs.existsSync(CONTENT_DIRECTORY)) {
+    // eslint-disable-next-line no-console
+    console.warn('⚠️ Директория content не найдена, пропускаем генерацию llms.txt');
+    return;
+  }
+
+  const mdxFiles = collectMdxFiles(CONTENT_DIRECTORY).filter(
+    (filePath) => !filePath.endsWith('index.mdx'),
+  );
+  const basePath = process.env.NEXT_PUBLIC_VKUI_DOCS_BASE_PATH || '';
+  const index = renderLlmsTxt(CONTENT_DIRECTORY, mdxFiles, (relativePath) => {
+    const url = new URL(SITE_URL);
+    url.pathname = path.posix.join(basePath, relativePath);
+    return url.toString();
+  });
+
   // BOM заставляет браузер распознавать кодировку UTF-8
   // независимо от Content-Type заголовка сервера
-  fs.writeFileSync(path.join(PUBLIC_DIRECTORY, 'llms.txt'), '﻿' + lines.join('\n'), 'utf-8');
+  fs.writeFileSync(path.join(PUBLIC_DIRECTORY, 'llms.txt'), '\uFEFF' + index, 'utf-8');
 
-  const totalPages = orderedSections.reduce((sum, s) => sum + (sections[s]?.length || 0), 0);
   // eslint-disable-next-line no-console
-  console.log(`✅ Сгенерирован llms.txt (${totalPages} страниц)`);
+  console.log(`✅ Сгенерирован llms.txt (${mdxFiles.length} страниц)`);
 }
 
 void runIfMain(import.meta.url, generateLlmsTxt);
