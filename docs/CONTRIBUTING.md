@@ -45,10 +45,10 @@ git config blame.ignoreRevsFile .git-blame-ignore-revs
 
 - Каждый новый компонент должен быть представлен на странице "Components Overview"
 - Обязательно должно быть стори с названием "Playground", чтобы корректно работала навигация к странице компонента в сторибуке
-- Подключение осуществляется через файл `docs/components-overview/config.tsx`
+- Подключение осуществляется через файл `packages/vkui/website/components-overview/config.tsx`
   - По умолчанию превью берется из стори компонента (обычно из "Playground")
   - Для сложных компонентов можно создать кастомное превью:
-    - Кастомные превью размещаются в директории `docs/components-overview/custom-components-preview`
+    - Кастомные превью размещаются в директории `packages/vkui/website/components-overview/custom-components-preview`
     - В `config.tsx` нужно указать использование кастомного превью вместо стандартного
 
 ### Требования к разработке

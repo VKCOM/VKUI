@@ -15,7 +15,7 @@ const getGlobalAddonPath = (addonName: string, presetDir?: string) => {
 const getLocalAddonPath = (addonName: string) => fileURLToPath(import.meta.resolve(addonName));
 
 const config: StorybookConfig = {
-  stories: ['../docs/**/*.mdx', '../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
+  stories: ['../website/**/*.mdx', '../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
   staticDirs: [
     // нужно для подключения воркеров monaco-editor (live-code-editor addon)
     {
@@ -57,7 +57,7 @@ const config: StorybookConfig = {
     reactDocgen: 'react-docgen-typescript',
     reactDocgenTypescriptOptions: {
       tsconfigPath: fileURLToPath(new URL('../tsconfig.docgen.json', import.meta.url)),
-      include: ['src/**/*.tsx', 'docs/**/*.tsx', '../storybook-addons/src/**/*.tsx'],
+      include: ['src/**/*.tsx', 'website/**/*.tsx', '../storybook-addons/src/**/*.tsx'],
       shouldExtractLiteralValuesFromEnum: true,
       shouldRemoveUndefinedFromOptional: true,
     },

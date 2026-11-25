@@ -4,9 +4,9 @@ import { useState } from 'react';
 import { Flex, Tooltip } from '../../src';
 import type { HasChildren } from '../../src/types';
 import { OverviewLayout } from '../common/components/OverviewLayout';
-import { type ConfigData, type IconData, getIconDisplayName } from './config';
-import { filterIcons } from './filterIcons';
 import { IconSidebar } from './IconSidebar';
+import { type ConfigData, getIconDisplayName, type IconData } from './config';
+import { filterIcons } from './filterIcons';
 import styles from './IconsOverview.module.css';
 
 const ItemsContainer = ({ children }: HasChildren) => <Flex gap={['xs', 'xs']}>{children}</Flex>;

@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import { Paragraph, Spinner } from '@vkontakte/vkui';
-import { IconsCatalog } from '../../../../packages/vkui/docs/icons-overview/IconsCatalog';
-import type { ConfigData } from '../../../../packages/vkui/docs/icons-overview/config';
+import { IconsCatalog } from '../../../../packages/vkui/website/icons-overview/IconsCatalog';
+import type { ConfigData } from '../../../../packages/vkui/website/icons-overview/config';
 import { loadIcons } from './loadIcons';
 
 export const Icons = () => {
