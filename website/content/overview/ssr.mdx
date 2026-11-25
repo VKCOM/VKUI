@@ -1,25 +1,23 @@
 ---
-description: Инструкция по организации SSR (Server Side Rendering) для приложений VKUI.
+description: Адаптивность VKUI при серверном рендеринге и примеры настройки SSR для Next.js и Express.
 ---
 
 <Overview type="doc">
 # Серверный рендеринг
 
-По умолчанию VKUI-компоненты рендерятся одинаково на клиенте и на сервере, но есть ряд нюансов. Ниже разобраны особенности, которые нужно учитывать при настройке SSR.
+По умолчанию компоненты VKUI создают одинаковую разметку на сервере и при первом рендере в браузере. Это важно для гидратации, когда React подключает обработчики событий к серверной разметке.
 
 </Overview>
 
-## Примечание к адаптивности [#adaptivity-note]
+## Адаптивность при серверном рендеринге [#adaptivity-note]
 
-В [документации по адаптивности](/overview/adaptivity) описано, как компоненты меняют вёрстку и поведение в зависимости от [параметров адаптивности](/overview/adaptivity#adaptivity-props). Возникает вопрос: _«Как это сочетается с SSR?»_
-
-Чтобы вёрстка была одинаковой на клиенте и на сервере, мы жертвуем размером DOM — компонент всегда рендерит и мобильную, и настольную версии, а через CSS показывает нужную. Исключение — [всплывающие окна](#floating-elements).
+Чтобы разметка на сервере и в браузере совпадала, адаптивный компонент может отрендерить обе версии, мобильную и настольную. CSS показывает подходящую версию. При этом обе версии занимают место в DOM. Исключение — всплывающие окна. [Параметры адаптивности](/overview/adaptivity#adaptivity-props) · [Адаптивность](/overview/adaptivity) · [Всплывающие окна](#floating-elements)
 
 ### Всплывающие окна [#floating-elements]
 
-Контент [`ModalPage`](/components/modal-page), [`ModalCard`](/components/modal-card), [`Alert`](/components/alert), [`Popover`](/components/popover), [`Tooltip`](/components/tooltip) и подобных компонентов не нужен для первого рендера, поэтому по умолчанию мы не рендерим его на сервере. Это упрощает вёрстку: переключаться между мобильной и настольной версиями можно медиавыражениями.
+По умолчанию VKUI не рендерит на сервере содержимое всплывающих окон. Поэтому в браузере можно выбрать мобильную или настольную вёрстку окна с помощью медиавыражений. [`ModalPage`](/components/modal-page) · [`ModalCard`](/components/modal-card) · [`Alert`](/components/alert) · [`Popover`](/components/popover) · [`Tooltip`](/components/tooltip)
 
-У некоторых таких компонентов есть свойство `keepMounted` — его включение может привести к ошибкам гидратации. Оно оправдано, если клиент всегда в одной версии — мобильной или настольной. Также версию можно зашить, обернув компонент в [`AdaptivityProvider`](/components/adaptivity-provider):
+У некоторых всплывающих окон есть свойство `keepMounted`. Если включить его, разметка может различаться на сервере и в браузере, что приведёт к ошибкам гидратации. Используйте это свойство, если окно всегда рендерится в одной версии. В примере `AdaptivityProvider` фиксирует мобильную версию окна. [`AdaptivityProvider`](/components/adaptivity-provider)
 
 ```tsx
 import { AdaptivityProvider, ViewWidth, ModalPage } from '@vkontakte/vkui';
@@ -35,42 +33,38 @@ const App = () => {
 };
 ```
 
-## Что нужно сделать?
-
-Прежде чем перейти к примерам, перечислим задачи, которые нужно решить.
+## Настройка SSR [#chto-nuzhno-sdelat]
 
 <Steps>
 
-### Подготовка HTML-страницы [#step1]
+### Подготовьте HTML-шаблон [#step1]
 
-Шаг необязательный, но он снижает [`reflow`](https://developer.mozilla.org/ru/docs/Glossary/Reflow) страницы после гидратации. Добавьте VKUI-классы в базовый HTML-шаблон:
+Чтобы сократить перерасчёт раскладки после гидратации, можно добавить классы VKUI прямо в HTML-шаблон. [Reflow](https://developer.mozilla.org/ru/docs/Glossary/Reflow)
 
-- `class="vkui"` на `<html>`;
-- `class="vkui__root"` на точку монтирования (например, `<div id="root">` или `<body>` в случае Next.js).
+- Добавьте `class="vkui"` к `<html>`.
+- Добавьте `class="vkui__root"` к точке монтирования, например `<div id="root">` или `<body>` в Next.js.
 
-Позже отключим установку этих атрибутов компонентом [`AppRoot`](/components/app-root) через свойство `disableSettingVKUIClassesInRuntime`.
+Затем передайте `disableSettingVKUIClassesInRuntime` в `AppRoot`, чтобы компонент не устанавливал эти классы при запуске. [`AppRoot`](/components/app-root)
 
-### Определение платформы и направления текста на сервере [#step2]
+### Определите платформу и направление текста на сервере [#step2]
 
-VKUI умеет мимикрировать под платформы `android` и `iOS`. На клиенте, если в `ConfigProvider` не задано свойство `platform`, платформа определяется автоматически по `navigator.userAgent`. То же самое с направлением текста `ltr`/`rtl`: если не задано свойство `direction`, оно определяется через браузерное API.
-
-На клиенте платформу и направление вычислить просто, на сервере это требует дополнительных усилий. Например, платформу можно определить по HTTP-заголовку `User-Agent`, а направление языка — по `Accept-Language`.
+Если свойства `platform` и `direction` не заданы в `ConfigProvider`, VKUI определяет платформу в браузере по `navigator.userAgent`, а направление текста (`ltr` или `rtl`) — через браузерное API. На сервере можно определить платформу по HTTP-заголовку `User-Agent`, а направление текста — по языку из `Accept-Language`.
 
 </Steps>
 
 ## Примеры
 
-Примеры для Next.js и Express. Для простоты предполагаем базовую установку библиотеки (см. [Установка](/overview/install)).
+В примерах для Next.js и Express используется базовая сборка VKUI. [Установка](/overview/install)
 
 <Callout>
 
-Определение платформы и направления текста в примерах — только для ознакомления, конечное решение за вами.
+В примерах платформа и направление текста определяются по заголовкам запроса. Адаптируйте эту логику под своё приложение.
 
 </Callout>
 
 ### Next.js
 
-Стартовая структура из документации Next.js (на момент написания примера последняя версия — `15.3.2`).
+Пример подготовлен для Next.js `15.3.2` и использует следующую структуру файлов.
 
 ```
 /app
@@ -80,8 +74,6 @@ VKUI умеет мимикрировать под платформы `android` �
   └─ Layout.tsx
   └─ Page.tsx
 ```
-
-Представим наполнение каждого файла.
 
 ```tsx showLineNumbers filename="app/layout.tsx" {19-21,23-26,29-31}
 import { Metadata, Viewport } from 'next';
@@ -129,7 +121,7 @@ import { Page } from '../client/Page';
 export default Page;
 ```
 
-Передаём `platform` и `direction` из `app/layout.tsx` (типы берём из `ConfigProviderProps`) и включаем `disableSettingVKUIClassesInRuntime` у [`AppRoot`](/components/app-root).
+Передайте `platform` и `direction` из `app/layout.tsx` в `ConfigProvider`. Типы этих свойств возьмите из `ConfigProviderProps`. Поскольку классы VKUI уже есть в HTML, передайте `disableSettingVKUIClassesInRuntime` в `AppRoot`. [`AppRoot`](/components/app-root)
 
 ```tsx showLineNumbers filename="client/Layout.tsx" {4,10,14,16}
 'use client';
@@ -173,7 +165,7 @@ export function Page() {
 
 ### Express
 
-Возьмём шаблон https://github.com/bluwy/create-vite-extra/tree/master/template-ssr-react и перепишем в нём следующие файлы.
+Возьмите шаблон Vite с серверным рендерингом React и замените файлы по примеру ниже. [Шаблон `template-ssr-react`](https://github.com/bluwy/create-vite-extra/tree/master/template-ssr-react)
 
 ```
 /
@@ -295,7 +287,7 @@ hydrateRoot(
 );
 ```
 
-Передаём `platform` и `direction` из `server.js`.
+На сервере передайте значения `platform` и `direction` из `server.js` в `ConfigProvider`.
 
 ```jsx showLineNumbers filename="src/entry-server.jsx"
 import { StrictMode } from 'react';
@@ -315,7 +307,7 @@ export function render(_url, platform, direction) {
 }
 ```
 
-Включаем `disableSettingVKUIClassesInRuntime` у [`AppRoot`](/components/app-root).
+Передайте `disableSettingVKUIClassesInRuntime` в `AppRoot`, если добавили классы VKUI в `index.html`. [`AppRoot`](/components/app-root)
 
 ```jsx showLineNumbers filename="src/App.tsx" {5}
 import { AppRoot, SelectionControl, Switch } from '@vkontakte/vkui';
