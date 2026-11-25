@@ -84,6 +84,9 @@
     "lint:types": "node ../../node_modules/@typescript/native/bin/tsc",
     "prepack": "node --run build"
   },
+  "dependencies": {
+    "@swc/helpers": "^0.5.24"
+  },
   "devDependencies": {
     "@date-fns/tz": "1.5.0",
     "@swc/core": "^1.16.22",

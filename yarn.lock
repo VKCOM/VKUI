@@ -5547,6 +5547,7 @@ __metadata:
   dependencies:
     "@date-fns/tz": "npm:1.5.0"
     "@swc/core": "npm:^1.16.22"
+    "@swc/helpers": "npm:^0.5.24"
     "@types/node": "npm:^26.6.6"
     typescript: "npm:^6.0.3"
   languageName: unknown
@@ -5591,7 +5592,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@vkontakte/vkui-floating-ui@workspace:packages/vkui-floating-ui"
   dependencies:
+    "@floating-ui/core": "npm:^1.8.0"
+    "@floating-ui/dom": "npm:^1.8.0"
     "@floating-ui/react-dom": "npm:^2.1.9"
+    "@floating-ui/utils": "npm:^0.2.12"
     "@swc/core": "npm:^1.16.22"
     "@swc/helpers": "npm:^0.5.24"
     react: "npm:^19.3.1"
