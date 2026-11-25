@@ -345,13 +345,12 @@ test('compiles DropZoneGrid with CSS Modules and logical properties', async () =
   assert.ok(
     rules(result.root).some(
       (rule) =>
-        rule.selector === '.vkuirow > *:last-child' &&
-        rule.declarations.some(({ prop, value }) => prop === 'margin-right' && value === '0'),
-    ),
-  );
-  assert.ok(
-    rules(result.root).some(
-      (rule) => rule.selector === '.vkuirow > *:first-child:nth-last-child(n + 3)',
+        rule.selector === '.vkuirow > *:first-child:nth-last-child(n + 3)' &&
+        rule.declarations.some(
+          ({ prop, value }) =>
+            prop === 'margin-bottom' &&
+            value === 'var(--vkui--size_base_padding_vertical--regular)',
+        ),
     ),
   );
 });
