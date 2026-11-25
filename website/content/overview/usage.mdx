@@ -1,19 +1,17 @@
 ---
-description: Инструкция по запуску приложения с базовой структурой и навигацией на VKUI.
+description: Первые шаги с VKUI — кнопка, навигация между экранами и адаптивные колонки.
 ---
 
 <Overview type="doc">
 # Использование
 
-После шагов из [Установки](/overview/install) у вас должно запускаться минимально работающее приложение. Здесь разберём простой пример использования и рекомендации по дальнейшим шагам.
-
-Примеры продолжим на шаблоне [React + TypeScript + Vite](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts).
+Подключите VKUI, затем добавьте в приложение кнопку, переходы между экранами и адаптивную вёрстку. Примеры используют тот же шаблон React + TypeScript + Vite, что и инструкция по установке. [Установка](/overview/install) · [Шаблон React + TypeScript + Vite](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts)
 
 </Overview>
 
 ## Быстрый старт [#quick-start]
 
-Начнём с компонента [`Button`](/components/button):
+Замените содержимое `src/App.tsx` примером с компонентом [`Button`](/components/button).
 
 ```jsx filename="src/App.tsx"
 import { Button } from '@vkontakte/vkui';
@@ -27,7 +25,7 @@ export default function App() {
 }
 ```
 
-На странице должно появиться что-то похожее:
+На странице появится кнопка «Привет, мир!».
 
 import { BlockWrapper } from '@/components/wrappers';
 
@@ -41,7 +39,7 @@ import { BlockWrapper } from '@/components/wrappers';
 
 ## Навигационные слои [#navigation]
 
-Приложение состоит из набора экранов с информацией. В VKUI есть специальные компоненты для экранов и навигации между ними. Подробно — в разделе [Навигация](/overview/navigation). Ниже — базовый пример.
+Опишите экраны «Лента» и «Профиль» с помощью `Panel`. Компонент `View` показывает экран, чей идентификатор передан в `activePanel`. Кнопки в примере меняют этот идентификатор. [Навигация](/overview/navigation)
 
 <Playground Wrapper={FixedLayoutWrapper} style={{ maxWidth: 320, height: 415, overflow: 'hidden' }}>
 
@@ -95,9 +93,7 @@ return (
 
 ## Многоколоночный интерфейс [#multiple-columns]
 
-На мобильных элементы приходится ограничивать, на настольных — можно размещать больше, разделяя интерфейс на колонки. Для этого есть [`SplitLayout`](/components/split-layout) с подкомпонентом [`SplitCol`](/components/split-layout#split-col). Подробнее — на странице [Навигация](/overview/navigation).
-
-Адаптивный пример работы `SplitLayout`:
+Используйте `SplitLayout` для многоколоночной вёрстки и `SplitCol` для каждой колонки. В примере правая колонка видна при любой ширине, а левая появляется при ширине окна от 1024 пикселей. [`SplitLayout`](/components/split-layout) · [`SplitCol`](/components/split-layout#split-col) · [Навигация](/overview/navigation)
 
 import { FixedLayoutWrapper } from '@/components/wrappers';
 
