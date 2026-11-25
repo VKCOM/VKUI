@@ -59,18 +59,23 @@ async function generatePackageDocs() {
 
     const pageUrl = new URL(`${route}/`, SITE_URL);
     visit(markdown, (node) => {
-      if (!('url' in node) || /^[a-z][a-z\d+.-]*:/i.test(node.url)) {
+      if (!('url' in node)) {
         return;
       }
 
-      const target = new URL(node.url, pageUrl);
+      const target = URL.parse(node.url, pageUrl);
+      if (!target) {
+        return;
+      }
       const targetRoute = target.pathname.replace(/\/$/, '');
       if (
         node.type === 'image' ||
         target.origin !== pageUrl.origin ||
         !filesByRoute.has(targetRoute)
       ) {
-        node.url = target.href;
+        if (!/^[a-z][a-z\d+.-]*:/i.test(node.url)) {
+          node.url = target.href;
+        }
         return;
       }
 

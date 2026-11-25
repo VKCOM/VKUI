@@ -83,20 +83,23 @@ export function replacePropsTable(body: string, docgen: Docgen): string {
       arrayNamesRaw: string | undefined,
       childrenBlock: string,
     ) => {
-      const headings = [...childrenBlock.matchAll(/^###\s+(.+?)(?:\s+\[.*\])?$/gm)].map(
-        (m) => m[1],
+      const headings = [...childrenBlock.matchAll(/^###\s+(.+?)(?:\s+\[(.*)\])?$/gm)].map(
+        ([, title, annotation]) => ({
+          title,
+          label: annotation?.startsWith('#') ? `${title} [${annotation}]` : title,
+        }),
       );
 
       if (singleName) {
         const baseName = singleName;
         return headings
-          .map((heading) => {
-            const lookupName = heading.replace(/\./g, '');
+          .map(({ title, label }) => {
+            const lookupName = title.replace(/\./g, '');
             const props =
               resolveProps(lookupName, docgen) ||
-              resolveProps(`${baseName}.${heading.split('.').pop()}`, docgen) ||
-              resolveProps(`${baseName}${heading.split('.').pop()}`, docgen);
-            return `### ${heading}\n\n${renderPropsMarkdownTable(props)}`;
+              resolveProps(`${baseName}.${title.split('.').pop()}`, docgen) ||
+              resolveProps(`${baseName}${title.split('.').pop()}`, docgen);
+            return `### ${label}\n\n${renderPropsMarkdownTable(props)}`;
           })
           .join('\n');
       }
@@ -105,7 +108,7 @@ export function replacePropsTable(body: string, docgen: Docgen): string {
         const names = arrayNamesRaw.split(',').map((n) => n.trim().replace(/^"|"$/g, ''));
         return names
           .map((name, i) => {
-            const heading = headings[i] || name.split('/').pop()!;
+            const heading = headings[i]?.label || name.split('/').pop()!;
             const props = resolveProps(name, docgen);
             return `### ${heading}\n\n${renderPropsMarkdownTable(props)}`;
           })
