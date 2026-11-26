@@ -1,28 +1,28 @@
 ---
-description: Инструкция по интеграции VKUI с VK Mini Apps (кроссплатформенные мини-приложения в экосистеме социальной сети ВКонтакте).
+description: Как настроить VKUI в мини-приложениях ВКонтакте.
 ---
 
 <Overview type="doc">
 # VK Mini Apps
 
-[VK Mini Apps](https://vk.ru/miniapps) — кроссплатформенные мини-приложения в экосистеме [ВКонтакте](https://vk.ru/). VKUI изначально задумывался как набор компонентов для таких приложений. Со временем библиотека вышла за эти рамки, но по-прежнему отлично подходит для мини-приложений. Ниже — рекомендации по интеграции.
+[VK Mini Apps](https://vk.ru/miniapps) — кроссплатформенные мини-приложения [ВКонтакте](https://vk.ru/). VKUI изначально создавали для таких приложений. На этой странице описано, как подключить VKUI к VK Bridge, настроить навигацию и добавить виброотклик.
 
 </Overview>
 
 <Callout>
-  О разработке **VK Mini Apps** — в [статье «Мини-приложения» на портале VK для разработчиков](https://dev.vk.ru/mini-apps/overview).
+  Подробнее о разработке VK Mini Apps читайте в [статье «Мини-приложения» на портале VK для разработчиков](https://dev.vk.ru/mini-apps/overview).
 </Callout>
 
 ## Конфигурация VKUI
 
 <Callout>
-  Рекомендуем шаблон [`@vkontakte/create-vk-mini-app`](https://dev.vk.ru/ru/mini-apps/getting-started/create-vk-mini-app) — в нём описанная ниже конфигурация есть по умолчанию.
+  Рекомендуем использовать шаблон [`@vkontakte/create-vk-mini-app`](https://dev.vk.ru/ru/mini-apps/getting-started/create-vk-mini-app). В нём VKUI уже настроен, как показано ниже.
 </Callout>
 
-Сначала устанавливаем библиотеки:
+Установите библиотеки:
 
 - [`@vkontakte/vk-bridge`](https://www.npmjs.com/package/@vkontakte/vk-bridge)
-- [`@vkontakte/vk-bridge-react`](https://www.npmjs.com/package/@vkontakte/vk-bridge)
+- [`@vkontakte/vk-bridge-react`](https://www.npmjs.com/package/@vkontakte/vk-bridge-react)
 
 <PackageManagers
   npm="npm i --save @vkontakte/vk-bridge @vkontakte/vk-bridge-react"
@@ -30,7 +30,7 @@ description: Инструкция по интеграции VKUI с VK Mini Apps
   pnpm="pnpm add @vkontakte/vk-bridge @vkontakte/vk-bridge-react"
 />
 
-Далее подписываемся на изменения из **VK Bridge** и передаём их в `ConfigProvider` из VKUI. Используем готовые хуки из [`@vkontakte/vk-bridge-react`](https://www.npmjs.com/package/@vkontakte/vk-bridge).
+Получите цветовую схему и отступы безопасной зоны через хуки `useAppearance()` и `useInsets()` из `@vkontakte/vk-bridge-react`. Передайте цветовую схему в `ConfigProvider`, а отступы — в `AppRoot`. Преобразуйте результат `useAdaptivity()` с помощью `transformVKBridgeAdaptivity` и передайте полученные параметры в `AdaptivityProvider`.
 
 ```jsx filename="App.tsx"
 import * as React from 'react';
@@ -40,24 +40,24 @@ import { useAppearance, useInsets, useAdaptivity } from '@vkontakte/vk-bridge-re
 import { Platform, ConfigProvider, AdaptivityProvider, AppRoot } from '@vkontakte/vkui';
 import { transformVKBridgeAdaptivity } from './helpers/transformVKBridgeAdaptivity';
 
-// Инициализируем VK  Mini App
+// Инициализируем мини-приложение
 vkBridge.send('VKWebAppInit');
 
 const App = () => {
   const vkBridgeColorScheme = useAppearance() || undefined; // Вместо undefined можно задать значение по умолчанию
   const vkBridgeInsets = useInsets() || undefined; // Вместо undefined можно задать значение по умолчанию
-  const vkBridgeAdaptivityProps = transformVKBridgeAdaptivity(useAdaptivity()); // Конвертируем значения из VK Bridge в параметры AdaptivityProvider
-  const { vk_platform } = parseURLSearchParamsForGetLaunchParams(window.location.search); // [опционально] Платформа может передаваться через URL (см. https://dev.vk.ru/mini-apps/development/launch-params#vk_platform)
+  const vkBridgeAdaptivityProps = transformVKBridgeAdaptivity(useAdaptivity()); // Преобразуем данные VK Bridge в параметры AdaptivityProvider
+  const { vk_platform } = parseURLSearchParamsForGetLaunchParams(window.location.search); // Платформа может быть указана в параметрах запуска (https://dev.vk.ru/mini-apps/development/launch-params#vk_platform)
 
   return (
     <ConfigProvider
       colorScheme={vkBridgeColorScheme}
       platform={vk_platform === 'desktop_web' ? 'vkcom' : undefined}
       isWebView={vkBridge.isWebView()}
-      hasCustomPanelHeaderAfter={true} // Резервируем правую часть PanelHeader под кнопки управления VK Mini Apps. Через параметр customPanelHeaderAfterMinWidth можно регулировать ширину этой области (по умолчанию, используется 90)
+      hasCustomPanelHeaderAfter={true} // Резервируем место для кнопок управления мини-приложением
     >
       <AdaptivityProvider {...vkBridgeAdaptivityProps}>
-        {/* Для VK Mini Apps рекомендуем использовать mode="full" (выставлен по умолчанию, для примера указан явно) */}
+        {/* Для мини-приложений рекомендуем режим full. Он используется по умолчанию. */}
         <AppRoot mode="full" safeAreaInsets={vkBridgeInsets}>
           {/* Ваше приложение */}
         </AppRoot>
@@ -81,7 +81,7 @@ import {
 import type { UseAdaptivity } from '@vkontakte/vk-bridge-react';
 
 /**
- * Требуется конвертировать данные из VK Bridge в те, что принимает AdaptivityProvider из VKUI.
+ * Преобразует данные VK Bridge в параметры AdaptivityProvider.
  */
 export const transformVKBridgeAdaptivity = ({
   type,
@@ -110,10 +110,12 @@ export const transformVKBridgeAdaptivity = ({
 
 ### `View`
 
-На стартовой странице мини-приложения нужно включить свайпбек нативного клиента, чтобы пользователь мог выйти из мини-приложения. Для этого вызывайте определённые методы **VK Bridge** в зависимости от типа мини-приложения:
+Включите жест возврата в приложении ВКонтакте на первой панели, чтобы пользователь мог выйти из мини-приложения. Выберите вызов VK Bridge по типу мини-приложения:
 
-- В _стандартном_ мини-приложении ВКонтакте при переходах отправляйте [`VKWebAppSetSwipeSettings`](https://dev.vk.ru/bridge/VKWebAppSetSwipeSettings) с `history: true` на первой панели и `history: false` на остальных.
-- Во _внутреннем_ мини-приложении ВКонтакте отправляйте [`VKWebAppEnableSwipeBack`](https://dev.vk.ru/bridge/VKWebAppEnableSwipeBack) при переходе на первый экран и [`VKWebAppDisableSwipeBack`](https://dev.vk.ru/bridge/VKWebAppDisableSwipeBack) — на любой другой.
+- Для _стандартного_ мини-приложения вызывайте [`VKWebAppSetSwipeSettings`](https://dev.vk.ru/bridge/VKWebAppSetSwipeSettings) с `history: true` на первой панели и `history: false` на остальных.
+- Для _внутреннего_ мини-приложения вызывайте [`VKWebAppEnableSwipeBack`](https://dev.vk.ru/bridge/VKWebAppEnableSwipeBack) на первой панели и [`VKWebAppDisableSwipeBack`](https://dev.vk.ru/bridge/VKWebAppDisableSwipeBack) на остальных.
+
+В примере показаны оба варианта. Оставьте вызов для вашего типа мини-приложения.
 
 ```jsx {15,17}
 import vkBridge from '@vkontakte/vk-bridge';
@@ -129,9 +131,9 @@ const SomeViews = () => {
   const handleMainClick = () => go('main');
 
   React.useEffect(() => {
-    // Для стандартных мини-приложений делайте так:
+    // Для стандартных мини-приложений
     vkBridge.send('VKWebAppSetSwipeSettings', { history: isFirst });
-    // Для внутренних мини-приложений делайте так:
+    // Для внутренних мини-приложений
     vkBridge.send(isFirst ? 'VKWebAppEnableSwipeBack' : 'VKWebAppDisableSwipeBack');
   }, [isFirst]);
 
@@ -149,32 +151,32 @@ const SomeViews = () => {
 ```
 
 <Callout>
-На Android нажатие кнопки **Назад** вызывает в WebView событие [history.back](https://developer.mozilla.org/ru/docs/Web/API/Window/history). Официальное приложение вернётся на предыдущую страницу вашего приложения или закроет его, если вернуться некуда. Поэтому для корректной навигации обрабатывайте нажатие аппаратной клавиши в мини-приложении и реализуйте роутинг — например, через `react-router`.
+В примере выше история переходов хранится в состоянии React и используется для жеста возврата. На Android кнопка **Назад** обращается к [истории WebView](https://developer.mozilla.org/ru/docs/Web/API/Window/history). Если предыдущей записи нет, приложение ВКонтакте закрывает мини-приложение. Чтобы кнопка возвращала пользователя на предыдущий экран мини-приложения, используйте роутер, который записывает переходы в историю WebView, например `BrowserRouter` из `react-router`.
 
 </Callout>
 
 ### `PanelHeader`
 
-Мини-приложению доступна почти вся площадь экрана, поэтому для корректной навигации используйте [`PanelHeader`](/components/panel-header) на каждом экране. Он должен содержать название приложения и значок **Назад** (см. [`PanelHeaderBack`](/components/panel-header#panel-header-back)) там, где он нужен.
+На каждом экране используйте [`PanelHeader`](/components/panel-header) с названием мини-приложения. Там, где пользователь может вернуться на предыдущий экран, добавьте кнопку **Назад** через [`PanelHeaderBack`](/components/panel-header#panel-header-back).
 
 <Callout>
-_Правый верхний угол_ `PanelHeader` зарезервирован под нативный бар с кнопками управления мини-приложением, поэтому параметр `after` использовать не рекомендуется.
+В правом верхнем углу `PanelHeader` приложение ВКонтакте показывает кнопки управления мини-приложением. Оставьте эту область свободной.
 
-Чтобы автоматически скрывать `after` у `PanelHeader`, в [`ConfigProvider`](/components/config-provider) есть параметр `hasCustomPanelHeaderAfter`.
+Задайте `hasCustomPanelHeaderAfter` в [`ConfigProvider`](/components/config-provider). VKUI скроет содержимое слота `after` и зарезервирует место для кнопок. Минимальную ширину этой области задаёт `customPanelHeaderAfterMinWidth` (по умолчанию 90 пикселей). В модальных окнах VKUI содержимое `after` остаётся видимым.
 
 </Callout>
 
 ## Виброотклик (Taptic Engine)
 
-Для лучшего пользовательского опыта в **VK Bridge** есть события вызова вибрации на устройствах, которые её поддерживают.
+VK Bridge позволяет вызвать виброотклик на устройствах, которые его поддерживают.
 
-[@vkontakte/vk-bridge-react](https://www.npmjs.com/package/@vkontakte/vk-bridge) предоставляет функцию `runTapticImpactOccurred`, которая отправляет событие [VKWebAppTapticImpactOccurred](https://dev.vk.ru/bridge/VKWebAppTapticImpactOccurred) и заранее проверяет, что вибрация доступна на устройстве.
+Функция `runTapticImpactOccurredAsync` из [`@vkontakte/vk-bridge-react`](https://www.npmjs.com/package/@vkontakte/vk-bridge-react) проверяет, поддерживает ли клиент метод [`VKWebAppTapticImpactOccurred`](https://dev.vk.ru/bridge/VKWebAppTapticImpactOccurred), и вызывает его, если метод доступен.
 
-Виброотклик удобно использовать, например, в `onRefresh` у [`PullToRefresh`](/components/pull-to-refresh).
+Например, вызовите эту функцию в обработчике `onRefresh` компонента [`PullToRefresh`](/components/pull-to-refresh).
 
 ```jsx {2,13}
 import * as React from 'react';
-import { runTapticImpactOccurred } from '@vkontakte/vk-bridge-react';
+import { runTapticImpactOccurredAsync } from '@vkontakte/vk-bridge-react';
 
 const Users = () => {
   const [users, setUsers] = React.useState([
@@ -185,7 +187,7 @@ const Users = () => {
   const onRefresh = React.useCallback(() => {
     setFetching(true);
     // Вызываем виброотклик
-    runTapticImpactOccurred('light');
+    void runTapticImpactOccurredAsync('light');
   }, []);
 
   return (
