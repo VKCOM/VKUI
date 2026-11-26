@@ -5,7 +5,7 @@ import { LogoIcon, LogoIconUwu, Navbar } from '@vkontakte/vkui-docs-theme';
 const additionalItems = [
   {
     title: 'Компоненты',
-    href: '/overview/about',
+    href: '/overview/components-showcase',
     isActive: (activeRoute: string) =>
       ['/overview/', '/components/', '/integrations/', '/migrations/'].some((value) =>
         activeRoute.includes(value),
@@ -27,6 +27,7 @@ export function DocsNavbar() {
           <LogoIconUwu />
         </>
       }
+      logoHref="/overview/get-started"
       additionalItems={additionalItems}
     />
   );
