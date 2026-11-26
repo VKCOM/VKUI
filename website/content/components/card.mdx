@@ -20,7 +20,7 @@ tags: card
 {/* @example-description: Базовая карточка с текстовым содержимым внутри `Div`. */}
 <Playground>
   ```jsx
-  <Card>
+  <Card Component="div">
     <Box padding="system">
       <Text>Содержимое карточки</Text>
     </Box>
@@ -57,27 +57,27 @@ tags: card
 {/* @example-description: Демонстрация всех вариантов `mode` для визуального оформления карточки. */}
 <Playground>
   ```jsx
-  <Card mode="tint">
+  <Card Component="div" mode="tint">
     <Box padding="system">
       <Text>mode="tint"</Text>
     </Box>
   </Card>
-  <Card mode="shadow">
+  <Card Component="div" mode="shadow">
     <Box padding="system">
       <Text>mode="shadow"</Text>
     </Box>
   </Card>
-  <Card mode="outline">
+  <Card Component="div" mode="outline">
     <Box padding="system">
       <Text>mode="outline"</Text>
     </Box>
   </Card>
-  <Card mode="outline-tint">
+  <Card Component="div" mode="outline-tint">
     <Box padding="system">
       <Text>mode="outline-tint"</Text>
     </Box>
   </Card>
-  <Card mode="plain">
+  <Card Component="div" mode="plain">
     <Box padding="system">
       <Text>mode="plain"</Text>
     </Box>
