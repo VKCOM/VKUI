@@ -5,7 +5,7 @@ import { useNavTransition } from '../../../components/NavTransitionContext/NavTr
 import { useCustomEnsuredControl } from '../../../hooks/useEnsuredControl';
 import { useGlobalOnClickOutside } from '../../../hooks/useGlobalOnClickOutside';
 import { useStableCallback } from '../../../hooks/useStableCallback';
-import { contains, getActiveElementByAnotherElement } from '../../dom';
+import { contains, getActiveElementByAnotherElement, useDOM } from '../../dom';
 import { useIsomorphicLayoutEffect } from '../../useIsomorphicLayoutEffect';
 import { autoUpdateFloatingElement, useFloating } from '../adapters';
 import { convertFloatingDataToReactCSSProperties } from '../functions';
@@ -58,6 +58,7 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
     [shownProp],
   );
   const { entering, animating } = useNavTransition();
+  const { window: win } = useDOM();
   const [shownLocalState, setShownLocalState] = useCustomEnsuredControl<LocalState>({
     value: memoizedValue,
     disabled,
@@ -146,11 +147,14 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
 
     if (!shownLocalState.shown) {
       clearTimeout(blurTimeoutRef.current);
+      blurTimeoutRef.current = undefined;
       return;
     }
 
     const relatedTarget = event.relatedTarget;
-    blurTimeoutRef.current = setTimeout(function waitWindowBlurFire() {
+    const blurTimeout = setTimeout(function waitWindowBlurFire() {
+      blurTimeoutRef.current = undefined;
+
       const reference = refs.reference.current;
       // Если пользователь покинул текущее окно в открытом состоянии, то
       // не закрываем всплывающий элемент.
@@ -168,6 +172,7 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
 
       commitShownLocalState(false, 'focus');
     });
+    blurTimeoutRef.current = blurTimeout;
   });
 
   const handleClickOnReference = useStableCallback(() => {
@@ -266,6 +271,87 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
   );
 
   useIsomorphicLayoutEffect(
+    function setGlobalBlurForIframeClickOutside() {
+      if (!win || !shownFinalState || disabled || disableCloseOnClickOutside) {
+        return;
+      }
+
+      let activeElementCheckTimeout: number | undefined;
+      let activeIframeCheckInterval: number | undefined;
+
+      const stopMonitoringActiveElement = () => {
+        clearTimeout(activeElementCheckTimeout);
+        clearInterval(activeIframeCheckInterval);
+        activeElementCheckTimeout = undefined;
+        activeIframeCheckInterval = undefined;
+      };
+
+      const checkActiveElement = (closeOutsideIframe = true) => {
+        const reference = refs.reference.current;
+        const floating = refs.floating.current;
+        const activeElement = win.document.activeElement;
+        if (!activeElement || activeElement.tagName !== 'IFRAME') {
+          clearInterval(activeIframeCheckInterval);
+          activeIframeCheckInterval = undefined;
+          return;
+        }
+
+        if (
+          !contains(floating, activeElement) &&
+          !(reference && contains(reference, activeElement))
+        ) {
+          if (!closeOutsideIframe) {
+            return;
+          }
+
+          blockFocusRef.current = true;
+          commitShownLocalState(false, 'click-outside');
+          stopMonitoringActiveElement();
+          return;
+        }
+
+        if (activeIframeCheckInterval === undefined) {
+          activeIframeCheckInterval = win.setInterval(checkActiveElement, 100);
+        }
+      };
+
+      const handleGlobalBlurForIframeClick = () => {
+        if (triggerOnFocus && blurTimeoutRef.current !== undefined) {
+          clearTimeout(activeElementCheckTimeout);
+          activeElementCheckTimeout = win.setTimeout(() => {
+            activeElementCheckTimeout = undefined;
+            checkActiveElement(false);
+          }, 0);
+          return;
+        }
+
+        clearTimeout(activeElementCheckTimeout);
+        activeElementCheckTimeout = win.setTimeout(() => {
+          activeElementCheckTimeout = undefined;
+          checkActiveElement();
+        }, 0);
+      };
+
+      win.addEventListener('blur', handleGlobalBlurForIframeClick);
+      return () => {
+        stopMonitoringActiveElement();
+        win.removeEventListener('blur', handleGlobalBlurForIframeClick);
+      };
+    },
+    [
+      win,
+      shownFinalState,
+      triggerOnFocus,
+      blurTimeoutRef,
+      disabled,
+      disableCloseOnClickOutside,
+      refs.reference,
+      refs.floating,
+      commitShownLocalState,
+    ],
+  );
+
+  useIsomorphicLayoutEffect(
     /**
      * Если пользователь покинул активное окно и:
      * 1. целевой элемент был в состоянии фокуса;
@@ -318,6 +404,7 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
 
       return () => {
         clearTimeout(blurTimeoutRef.current);
+        blurTimeoutRef.current = undefined;
       };
     },
     [shownLocalState, shownFinalState, willBeHide, onShownChanged],
