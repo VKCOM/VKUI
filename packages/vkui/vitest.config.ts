@@ -6,6 +6,15 @@ const config = defineConfig({
     name: 'unit',
     include: ['**/*.test.tsx', '**/*.test.ts'],
     environment: 'happy-dom',
+    pool: 'threads',
+    deps: {
+      optimizer: {
+        client: {
+          enabled: true,
+          include: ['@vkontakte/icons'],
+        },
+      },
+    },
     setupFiles: [resolve(import.meta.dirname, 'vitest.setup.ts')],
     globalSetup: [resolve(import.meta.dirname, 'vitest.global-setup.ts')],
     coverage: {
