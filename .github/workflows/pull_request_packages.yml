@@ -311,6 +311,7 @@ jobs:
         with:
           name: docs-website-dist
           path: website/out
+          include-hidden-files: true
 
   upload_pr_workflow_payload:
     # Дожидаемся выгрузки артефактов, на случай если вокрфлоу будет отменён или перезапушен
