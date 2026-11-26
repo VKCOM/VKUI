@@ -1,0 +1,78 @@
+﻿---
+description:
+  VKUI меняет размеры, вёрстку и поведение компонентов с учётом размеров окна и наличия точного указателя.
+---
+
+# Адаптивность
+
+Компоненты VKUI подстраиваются под размеры окна и учитывают наличие точного указателя, например мыши или стилуса. Эти условия влияют на размеры элементов, вёрстку и поведение. Вы можете переопределить параметры адаптивности для всего приложения или его части и использовать их в своих компонентах.
+
+## Параметры адаптивности \[#adaptivity-props]
+
+| Что меняется                             | Параметр                   |
+| ---------------------------------------- | -------------------------- |
+| [Размеры элементов интерфейса](#density) | `density`                  |
+| [Вёрстка](#breakpoints)                  | `viewWidth` и `viewHeight` |
+| [Поведение](#pointer)                    | `hasPointer`               |
+
+### Размеры элементов интерфейса \[#density]
+
+> Свойства `sizeX` и `sizeY` устарели в VKUI 8.0.0. Их удаление запланировано на VKUI 10. Используйте `density` вместо `sizeY`, `viewWidth={ViewWidth.MOBILE}` вместо `sizeX="compact"` и `viewWidth={ViewWidth.SMALL_TABLET}` вместо `sizeX="regular"`. [Миграция на VKUI 8](/migrations/migration-v8)
+
+Свойство `density` управляет плотностью интерфейса. У большинства компонентов два режима.
+
+* `compact` — элементы меньше, поэтому их помещается больше.
+* `regular` — элементы крупнее, поэтому по ним проще попадать пальцем.
+
+Если `density` не задано, VKUI выбирает режим по условиям в таблице. В CSS библиотека проверяет их через `@media`, а в JavaScript — через `matchMedia()`. [`@media`](https://developer.mozilla.org/en-US/docs/Web/CSS/@media) · [`matchMedia()`](https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia)
+
+| Значение  | Условие                                                                                                              |
+| --------- | -------------------------------------------------------------------------------------------------------------------- |
+| `compact` | `высота < 415px`,или`мышь / стилус` и `ширина >= 768px`                                                              |
+| `regular` | `высота >= 415px` и `сенсорный экран`,или`высота >= 415px` и `нет указателя`,или`высота >= 415px` и `ширина < 768px` |
+
+### Размеры экрана \[#breakpoints]
+
+Компонент может менять вёрстку в зависимости от размеров окна. Например, на смартфоне `ModalPage` выезжает снизу, а на компьютере открывается по центру. [`ModalPage`](/components/modal-page)
+
+Свойство `viewWidth` соответствует брейкпоинтам по ширине, а `viewHeight` — по высоте. В CSS VKUI проверяет их через `@media`, а в JavaScript — через `matchMedia()`. [`@media`](https://developer.mozilla.org/en-US/docs/Web/CSS/@media) · [`matchMedia()`](https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia)
+
+Сейчас библиотека не позволяет переопределять брейкпоинты.
+
+#### `viewWidth`
+
+| Брейкпоинт    | Условие            |
+| ------------- | ------------------ |
+| DESKTOP       | `ширина >= 1280px` |
+| TABLET        | `ширина >= 1024px` |
+| SMALL\_TABLET | `ширина >= 768px`  |
+| MOBILE        | `ширина >= 320px`  |
+| SMALL\_MOBILE | `ширина < 320px`   |
+
+#### `viewHeight`
+
+| Брейкпоинт   | Условие           |
+| ------------ | ----------------- |
+| MEDIUM       | `высота >= 720px` |
+| SMALL        | `высота >= 415px` |
+| EXTRA\_SMALL | `высота < 415px`  |
+
+### Наличие точного указателя \[#pointer]
+
+Свойство `hasPointer` показывает, доступен ли точный указатель. Например, с мышью `Avatar.Overlay` появляется при наведении, а на сенсорном экране без точного указателя виден постоянно. [`Avatar.Overlay`](/components/avatar#nalozhenie)
+
+#### `hasPointer`
+
+В CSS VKUI проверяет наличие точного указателя через `@media (pointer: fine)`, а в JavaScript — через `hasMouse` из пакета `@vkontakte/vkjs`. [Медиавыражение `pointer`](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/pointer#fine) · [`@vkontakte/vkjs`](https://www.npmjs.com/package/@vkontakte/vkjs)
+
+## Переопределение адаптивности \[#override]
+
+Чтобы зафиксировать параметры адаптивности, задайте их в `AdaptivityProvider`. Провайдер можно разместить в корне приложения или вокруг отдельной части интерфейса. [`AdaptivityProvider`](/components/adaptivity-provider) · [Глобальное переопределение](/components/adaptivity-provider#override-global) · [Локальное переопределение](/components/adaptivity-provider#override-local)
+
+## Утилиты для создания адаптивных интерфейсов \[#utils]
+
+Выбирайте утилиту по задаче. Список приведён в порядке приоритета.
+
+1. Показать или скрыть элемент по брейкпоинту — [`useAdaptivityConditionalRender`](/components/use-adaptivity-conditional-render).
+2. Выбрать размер иконки для `compact` или `regular` — [`AdaptiveIconRenderer`](/components/adaptive-icon-renderer).
+3. Показать или скрыть элемент во всплывающем окне — [`useAdaptivityWithJSMediaQueries`](/components/use-adaptivity-with-js-media-queries). [Адаптивность при серверном рендеринге](/overview/ssr#adaptivity-note)

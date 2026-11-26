@@ -1,0 +1,9 @@
+import{n as e,r as t}from"./rolldown-runtime-sJBDdmOt.js";import{t as n}from"./jsx-runtime-MKhVqBIO.js";import{i as r,n as i,t as a}from"./constants-BWBR8eWE.js";import{n as o,t as s}from"./createStoryParameters-D_aKMzVl.js";import{n as c,t as l}from"./getFormFieldIconsPresets-zZBPHn-D.js";import{n as u,t as d}from"./createCalendarDayRenderField-BoC896SY.js";import{n as f,t as p}from"./DateRangeInput-Bgq200rS.js";var m=t({Playground:()=>v,__namedExportsOrder:()=>y,default:()=>_}),h,g,_,v,y;function b(){return(b=e((()=>{r(),u(),c(),o(),f(),h=n(),g=l(),_={title:`Dates/DateRangeInput`,component:p,parameters:s(`DateRangeInput`,a,i),argTypes:{readOnly:{control:{type:`boolean`}},value:{description:`Используйте startDate и endDate для задания периода`,control:!1},startDate:{description:`Дата начала периода`,table:{type:{summary:`string`}},control:{type:`date`}},endDate:{description:`Дата окончания периода`,table:{type:{summary:`string`}},control:{type:`date`}},before:g,after:g,renderDayContent:d()},tags:[`Работа с датами`]},v=({startDate:e,endDate:t,...n})=>{let r=e?new Date(e):null,i=t?new Date(t):null;return(0,h.jsx)(p,{...n,defaultValue:[r,i]})},y=[`Playground`],v.parameters={...v.parameters,docs:{...v.parameters?.docs,source:{originalSource:`({
+  startDate,
+  endDate,
+  ...args
+}: StoryDateRangeInputProps) => {
+  const parsedStartDate = startDate ? new Date(startDate) : null;
+  const parsedEndDate = endDate ? new Date(endDate) : null;
+  return <DateRangeInput {...args} defaultValue={[parsedStartDate, parsedEndDate]} />;
+}`,...v.parameters?.docs?.source}}}})))()}export{v as n,b as r,m as t};

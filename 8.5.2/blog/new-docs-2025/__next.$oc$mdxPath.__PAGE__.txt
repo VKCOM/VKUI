@@ -1,0 +1,111 @@
+2:"$Sreact.fragment"
+3:I[91133,[],""]
+4:I[4297,[],""]
+9:"static/chunks/9249-afb8826a15064ed3.js"
+a:"static/chunks/9559-0f7998580a23933e.js"
+b:"static/chunks/8688-1d051e5bb22a9bf9.js"
+c:"static/chunks/480-861ef7dc2c08fced.js"
+d:"static/chunks/app/%5B%5B...mdxPath%5D%5D/page-c862c3603aab4347.js"
+e:I[67042,["9249","$9","9559","$a","8688","$b","480","$c","217","$d"],"Main"]
+10:I[83529,["9249","$9","9559","$a","8688","$b","480","$c","217","$d"],"Button"]
+11:I[91043,["9249","$9","9559","$a","8688","$b","480","$c","217","$d"],"NextLink"]
+28:"ViewportBoundary"
+29:I[31872,[],"$28"]
+2a:"MetadataBoundary"
+2b:I[31872,[],"$2a"]
+2c:"$Sreact.suspense"
+2d:I[12569,[],"IconMark"]
+6:X
+6:C
+7:X
+f:Tc08,---
+title: Новая документация VKUI
+date: 2025/07/10
+description: Обновлённая документация VKUI доступна для всех.
+tags: docs
+image: /blog/new-docs-2025.png
+---
+
+import { PostHeader } from '@vkontakte/vkui-docs-theme';
+
+<PostHeader frontMatter={metadata} />
+
+<video width="100%" height="650" loop controls style={{ borderRadius: 10, marginTop: 10 }}>
+  <source src="/blog/docs-overview-2025.mp4" type="video/mp4" />
+  Your browser does not support the video tag.
+</video>
+
+## 📚 Переработанная документация
+
+Мы полностью пересмотрели структуру и содержание:
+
+- Переписали документацию всех компонентов — теперь она детальнее.
+- Добавили больше примеров — проще разобраться в использовании.
+- Улучшили навигацию — информация структурирована, нужный раздел проще найти.
+- Закрыли старые issues — исправили все накопленные замечания из `GitHub`.
+
+## 🎨 Дизайн
+
+Помимо визуальных изменений, мы сделали кастомную тему на основе **VKUI**. Это позволяет:
+
+- Тестировать новые версии VKUI в реальных условиях.
+- Поддерживать единый дизайн документации и компонентов.
+- Гибко настраивать внешний вид под нужды проекта.
+
+## 🌐 Новый домен vkui.io
+
+Документация переехала на собственный короткий домен [vkui.io](https://vkui.io) вместо бесплатного хостинга `GitHub Pages`.
+
+## 🔍 Улучшенный поиск и доступность
+
+Главный недостаток старой версии — отсутствие удобного поиска. Теперь есть полнотекстовый поиск по всей документации, а в левом меню осталась фильтрация по компонентам.
+
+## 🔮 Что дальше?
+
+Продолжаем улучшать документацию:
+
+- Интерактивные примеры и больше практических руководств.
+- Главная страница ¯\\\_(ツ)\_/¯.
+- Развитие блога (эта статья — одна из попыток).
+
+## 💬 Есть вопросы/замечания/предложения
+
+Нашли ошибку или есть предложения по развитию документации — оставьте обратную связь в [дискуссии](https://github.com/VKCOM/VKUI/discussions/8667) на GitHub.
+
+> 🚀 Исследуйте новую документацию на [vkui.io](/) и делитесь обратной связью! 🚀8:[["children",{"s":"__PAGE__","h":160,"d":{"r":["$","$2","c",{"children":[[["$","$Le",null,{"metadata":{"title":"Новая документация VKUI","date":"2025/07/10","description":"Обновлённая документация VKUI доступна для всех.","tags":"docs","image":"/blog/new-docs-2025.png","filePath":"content/blog/new-docs-2025.mdx","timestamp":1795700940000},"sourceCode":"$f","children":[["$","script",null,{"type":"application/ld+json","dangerouslySetInnerHTML":{"__html":"{\"@context\":\"https://schema.org\",\"@type\":\"WebPage\",\"name\":\"Новая документация VKUI\",\"description\":\"Обновлённая документация VKUI доступна для всех.\",\"url\":\"https://vkui.io/8.5.2/blog/new-docs-2025/\",\"image\":\"https://vkui.io/8.5.2/blog/new-docs-2025.png\",\"inLanguage\":\"ru\",\"isPartOf\":{\"@type\":\"WebSite\",\"name\":\"VKUI\",\"url\":\"https://vkui.io\"}}"}}],[["$","div",null,{"children":[["$","$L10",null,{"Component":"$11","href":"/blog","mode":"link","before":["$","svg",null,{"aria-hidden":true,"display":"block","className":"vkuiIcon vkuiIcon--12 vkuiIcon--w-8 vkuiIcon--h-12 vkuiIcon--chevron_left_12","width":8,"height":12,"style":{"width":8,"height":12},"viewBox":"0 0 8 12","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"fillRule":"evenodd","d":"M2.15 6.452a.75.75 0 0 1 0-.9c.49-.653.907-1.187 1.305-1.697l.038-.049c.384-.492.751-.961 1.157-1.502a.75.75 0 1 1 1.2.9c-.415.553-.79 1.033-1.172 1.522l-.042.053c-.3.384-.607.777-.946 1.223.34.445.646.838.946 1.223l.042.052c.382.49.757.97 1.172 1.523a.75.75 0 1 1-1.2.9c-.406-.54-.773-1.01-1.157-1.502l-.038-.05A98 98 0 0 1 2.15 6.452","clipRule":"evenodd"}]]]}],"size":"s","children":"Назад"}],"$L12","$L13"]}],"\n","$L14","\n","$L15","\n","$L16","\n","$L17","\n","$L18","\n","$L19","\n","$L1a","\n","$L1b","\n","$L1c","\n","$L1d","\n","$L1e","\n","$L1f","\n","$L20","\n","$L21","\n","$L22","\n","$L23","\n","$L24"]]}],"$L25"],null,"$L26"]}],"p":"$@27","v":null,"s":"$7"}}]]
+1:[["children",{"s":{"n":"mdxPath","t":"oc","k":"blog/new-docs-2025","s":["_not-found","_global-error","apple-icon.png","favicon.ico","icon.svg"]},"h":64,"d":{"r":["$","$2","c",{"children":[null,["$","$L3",null,{"parallelRouterKey":"children","template":["$","$L4",null,{}]}]]}],"p":"$@5","v":"$6","s":"$7"},"c":"$Q8"}]]
+0:{"t":{"t":{"s":"","h":16,"c":"$Q1"},"h":{"r":["$","$2","h",{"children":[null,["$","$L29",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1, viewport-fit=cover"}]]}],["$","$L2b",null,{"children":[["$","div",null,{"hidden":true,"children":["$","$2c",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"Новая документация VKUI | VKUI"}],["$","meta","1",{"name":"description","content":"Обновлённая документация VKUI доступна для всех."}],["$","link","2",{"rel":"canonical","href":"https://vkui.io/blog/new-docs-2025/"}],["$","meta","3",{"property":"og:title","content":"Новая документация VKUI"}],["$","meta","4",{"property":"og:description","content":"Обновлённая документация VKUI доступна для всех."}],["$","meta","5",{"property":"og:url","content":"https://vkui.io/8.5.2/blog/new-docs-2025/"}],["$","meta","6",{"property":"og:site_name","content":"VKUI"}],["$","meta","7",{"property":"og:image","content":"https://vkui.io/8.5.2/blog/new-docs-2025.png"}],["$","meta","8",{"property":"og:image:alt","content":"Новая документация VKUI"}],["$","meta","9",{"property":"og:type","content":"website"}],["$","meta","10",{"name":"twitter:card","content":"summary_large_image"}],["$","meta","11",{"name":"twitter:title","content":"Новая документация VKUI"}],["$","meta","12",{"name":"twitter:description","content":"Обновлённая документация VKUI доступна для всех."}],["$","meta","13",{"name":"twitter:image","content":"https://vkui.io/8.5.2/blog/new-docs-2025.png"}],["$","meta","14",{"name":"twitter:image:alt","content":"Новая документация VKUI"}],["$","link","15",{"rel":"icon","href":"/8.5.2/favicon.ico?60dfc7274b0e657e","type":"image/x-icon","sizes":"48x48"}],["$","link","16",{"rel":"icon","href":"/8.5.2/icon.svg?01ea673639a821e1","type":"image/svg+xml","sizes":"any"}],["$","link","17",{"rel":"apple-touch-icon","href":"/8.5.2/apple-icon.png?131c1f3e67ede032","type":"image/png","sizes":"180x180"}],["$","$L2d","18",{}]]}]}],null]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}],"p":"$@2e","v":null,"s":"$7"}},"a":"$@2f","u":"$@30","b":"0pCHsMnQJZvqrwG0_YoWN"}
+31:I[41455,["9249","$9","9559","$a","8688","$b","480","$c","217","$d"],"Footnote"]
+32:I[59504,["9249","$9","9559","$a","8688","$b","480","$c","217","$d"],"ContentBadge"]
+33:I[13091,["9249","$9","9559","$a","8688","$b","480","$c","217","$d"],"Anchor"]
+34:I[80784,["9249","$9","9559","$a","8688","$b","480","$c","217","$d"],"TOC"]
+35:I[31872,[],"OutletBoundary"]
+12:["$","div",null,{"children":[["$","$L31",null,{"className":"Post_date__tKFj0","inline":true,"children":["$","time",null,{"dateTime":"2025-07-10T00:00:00.000Z","children":"чт, 10 июля 2025 г."}]}],[["$","$L32","docs",{"appearance":"neutral","children":["# ","docs"]}]]]}]
+13:["$","h1",null,{"className":"Post_heading__r6_TV Post_headingPrimary__2H14W","children":"Новая документация VKUI"}]
+14:["$","video",null,{"width":"100%","height":"650","loop":true,"controls":true,"style":{"borderRadius":10,"marginTop":10},"children":[["$","source",null,{"src":"/blog/docs-overview-2025.mp4","type":"video/mp4"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Your browser does not support the video tag."}]]}]
+15:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"pererabotannaya-dokumentaciya","children":["$","a",null,{"href":"#pererabotannaya-dokumentaciya","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию 📚 Переработанная документация","children":["📚 Переработанная документация",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+16:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Мы полностью пересмотрели структуру и содержание:"}]
+17:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":"Переписали документацию всех компонентов — теперь она детальнее."}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":"Добавили больше примеров — проще разобраться в использовании."}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":"Улучшили навигацию — информация структурирована, нужный раздел проще найти."}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":["Закрыли старые issues — исправили все накопленные замечания из ",["$","code",null,{"className":"Code_root__TR_dq __className_b0d317","dir":"ltr","children":"GitHub"}],"."]}],"\n"]}]
+18:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"dizajn","children":["$","a",null,{"href":"#dizajn","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию 🎨 Дизайн","children":["🎨 Дизайн",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+19:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Помимо визуальных изменений, мы сделали кастомную тему на основе ",["$","strong",null,{"className":"mdx_strong__N7OUG","children":"VKUI"}],". Это позволяет:"]}]
+1a:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":"Тестировать новые версии VKUI в реальных условиях."}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":"Поддерживать единый дизайн документации и компонентов."}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":"Гибко настраивать внешний вид под нужды проекта."}],"\n"]}]
+1b:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"novyj-domen-vkuiio","children":["$","a",null,{"href":"#novyj-domen-vkuiio","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию 🌐 Новый домен vkui.io","children":["🌐 Новый домен vkui.io",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+1c:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Документация переехала на собственный короткий домен ",["$","$L33",null,{"href":"https://vkui.io","children":"vkui.io"}]," вместо бесплатного хостинга ",["$","code",null,{"className":"Code_root__TR_dq __className_b0d317","dir":"ltr","children":"GitHub Pages"}],"."]}]
+1d:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"uluchshennyj-poisk-i-dostupnost","children":["$","a",null,{"href":"#uluchshennyj-poisk-i-dostupnost","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию 🔍 Улучшенный поиск и доступность","children":["🔍 Улучшенный поиск и доступность",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+1e:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Главный недостаток старой версии — отсутствие удобного поиска. Теперь есть полнотекстовый поиск по всей документации, а в левом меню осталась фильтрация по компонентам."}]
+1f:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"chto-dalshe","children":["$","a",null,{"href":"#chto-dalshe","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию 🔮 Что дальше?","children":["🔮 Что дальше?",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+20:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Продолжаем улучшать документацию:"}]
+21:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":"Интерактивные примеры и больше практических руководств."}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":"Главная страница ¯\\_(ツ)_/¯."}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":"Развитие блога (эта статья — одна из попыток)."}],"\n"]}]
+22:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"est-voprosyzamechaniyapredlozheniya","children":["$","a",null,{"href":"#est-voprosyzamechaniyapredlozheniya","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию 💬 Есть вопросы/замечания/предложения","children":["💬 Есть вопросы/замечания/предложения",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+23:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Нашли ошибку или есть предложения по развитию документации — оставьте обратную связь в ",["$","$L33",null,{"href":"https://github.com/VKCOM/VKUI/discussions/8667","children":"дискуссии"}]," на GitHub."]}]
+24:["$","aside",null,{"className":"Callout_root__6UBFP","children":["$","div",null,{"className":"Callout_content__MYf_T","children":["\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["🚀 Исследуйте новую документацию на ",["$","$L33",null,{"href":"/","children":"vkui.io"}]," и делитесь обратной связью! 🚀"]}],"\n"]}]}]
+25:["$","$L34",null,{"toc":[{"value":"📚 Переработанная документация","id":"pererabotannaya-dokumentaciya","depth":2},{"value":"🎨 Дизайн","id":"dizajn","depth":2},{"value":"🌐 Новый домен vkui.io","id":"novyj-domen-vkuiio","depth":2},{"value":"🔍 Улучшенный поиск и доступность","id":"uluchshennyj-poisk-i-dostupnost","depth":2},{"value":"🔮 Что дальше?","id":"chto-dalshe","depth":2},{"value":"💬 Есть вопросы/замечания/предложения","id":"est-voprosyzamechaniyapredlozheniya","depth":2}]}]
+26:["$","$L35",null,{"children":["$","$2c",null,{"name":"Next.MetadataOutlet","children":"$@36"}]}]
+30:true
+7:300
+36:null
+7:C
+2f:0
+5:"$undefined"
+2e:"$undefined"
+27:"$undefined"

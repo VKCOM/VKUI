@@ -1,0 +1,145 @@
+2:"$Sreact.fragment"
+3:I[91133,[],""]
+4:I[4297,[],""]
+9:"static/chunks/9249-afb8826a15064ed3.js"
+a:"static/chunks/9559-0f7998580a23933e.js"
+b:"static/chunks/8688-1d051e5bb22a9bf9.js"
+c:"static/chunks/480-861ef7dc2c08fced.js"
+d:"static/chunks/app/%5B%5B...mdxPath%5D%5D/page-c862c3603aab4347.js"
+e:I[67042,["9249","$9","9559","$a","8688","$b","480","$c","217","$d"],"Main"]
+10:"OverviewHeaderLinks"
+11:I[44740,["9249","$9","9559","$a","8688","$b","480","$c","217","$d"],"$10",1]
+20:"ViewportBoundary"
+21:I[31872,[],"$20"]
+22:"MetadataBoundary"
+23:I[31872,[],"$22"]
+24:"$Sreact.suspense"
+25:I[12569,[],"IconMark"]
+6:X
+6:C
+7:X
+f:Ta62,---
+description: Компонент, позволяющий переопределить платформу.
+tags: provider
+---
+
+<Overview group="configuration">
+# PlatformProvider [tag:component]
+
+Компонент, позволяющий переопределить платформу.
+
+</Overview>
+
+## Платформа
+
+Задаётся свойством `value`.
+
+- `"android"` – используется на настольных и мобильных устройствах под управлением системы Android.
+- `"ios"` – используется на мобильных устройствах или планшетах с системой iOS/iPadOS.
+- `"vkcom"` – используется командой ВКонтакте. На данный момент она не предназначена для адаптивного интерфейса, используйте её только
+  в том случае, если ваше приложение встроено в [vk.ru](https://vk.ru).
+
+```jsx
+<PlatformProvider value="ios">
+  {/* часть вашего приложения, требующая переопределения платформы */}
+</PlatformProvider>
+```
+
+> **Обратите внимание**
+>
+> При переопределении темы убедитесь, что компонент, обёрнутый в `PlatformProvider`, принимает свойство `className`,
+> иначе визуальные изменения соответствующей платформы не будут применены.
+>
+> ```jsx
+> function BadComponent({ children }) {
+>   return (
+>     <Box padding="system">
+>       <Button>I'm not ios 😔</Button>
+>     </Box>
+>   );
+> }
+> function GoodComponent({ className, children }) {
+>   return (
+>     <Box padding="system" className={className}>
+>       <Button>I'm ios 😎</Button>
+>     </Box>
+>   );
+> }
+> function InfoBoard({ children }) {
+>   return (
+>     <PlatformProvider value="ios">
+>       <BadComponent /> {/* стили "ios" не применяются */}
+>       <GoodComponent /> {/* стили "ios" применяются */}
+>     </PlatformProvider>
+>   );
+> }
+> ```
+
+## Хук usePlatform [#use-platform]
+
+Для получения текущего значения платформы используйте хук `usePlatform`:
+
+```jsx
+import { usePlatform } from '@vkontakte/vkui';
+```
+
+```jsx
+const platform = usePlatform();
+```
+
+## Свойства и методы [#api]
+
+<PropsTable name="PlatformProvider">
+
+### PlatformProvider [#platform-provider-api]
+
+### usePlatform [#use-platform-api]
+
+</PropsTable>8:[["children",{"s":"__PAGE__","h":160,"d":{"r":["$","$2","c",{"children":[[["$","$Le",null,{"metadata":{"description":"Компонент, позволяющий переопределить платформу.","tags":"provider","title":"PlatformProvider","filePath":"content/components/platform-provider.mdx","timestamp":1795700940000},"sourceCode":"$f","children":[["$","script",null,{"type":"application/ld+json","dangerouslySetInnerHTML":{"__html":"{\"@context\":\"https://schema.org\",\"@type\":\"WebPage\",\"name\":\"PlatformProvider\",\"description\":\"Компонент, позволяющий переопределить платформу.\",\"url\":\"https://vkui.io/8.5.2/components/platform-provider/\",\"image\":\"https://vkui.io/8.5.2/blog/new-docs-2025.png\",\"inLanguage\":\"ru\",\"isPartOf\":{\"@type\":\"WebSite\",\"name\":\"VKUI\",\"url\":\"https://vkui.io\"}}"}}],[["$","div",null,{"className":"Overview_root__nbCiB","children":[["$","$L11",null,{"group":"configuration"}],[["$","h1",null,{"className":"mdx_h1__1mgpN","data-pagefind-filter":"tag:component","children":"PlatformProvider"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Компонент, позволяющий переопределить платформу."}]]]}],"\n",["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"platforma","children":["$","a",null,{"href":"#platforma","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Платформа","children":["Платформа","$L12"]}]}],"\n","$L13","\n","$L14","\n","$L15","\n","$L16","\n","$L17","\n","$L18","\n","$L19","\n","$L1a","\n","$L1b","\n","$L1c"]]}],"$L1d"],null,"$L1e"]}],"p":"$@1f","v":null,"s":"$7"}}]]
+1:[["children",{"s":{"n":"mdxPath","t":"oc","k":"components/platform-provider","s":["_not-found","_global-error","apple-icon.png","favicon.ico","icon.svg"]},"h":64,"d":{"r":["$","$2","c",{"children":[null,["$","$L3",null,{"parallelRouterKey":"children","template":["$","$L4",null,{}]}]]}],"p":"$@5","v":"$6","s":"$7"},"c":"$Q8"}]]
+0:{"t":{"t":{"s":"","h":16,"c":"$Q1"},"h":{"r":["$","$2","h",{"children":[null,["$","$L21",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1, viewport-fit=cover"}]]}],["$","$L23",null,{"children":[["$","div",null,{"hidden":true,"children":["$","$24",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"PlatformProvider | VKUI"}],["$","meta","1",{"name":"description","content":"Компонент, позволяющий переопределить платформу."}],["$","link","2",{"rel":"canonical","href":"https://vkui.io/components/platform-provider/"}],["$","meta","3",{"property":"og:title","content":"PlatformProvider"}],["$","meta","4",{"property":"og:description","content":"Компонент, позволяющий переопределить платформу."}],["$","meta","5",{"property":"og:url","content":"https://vkui.io/8.5.2/components/platform-provider/"}],["$","meta","6",{"property":"og:site_name","content":"VKUI"}],["$","meta","7",{"property":"og:image","content":"https://vkui.io/8.5.2/blog/new-docs-2025.png"}],["$","meta","8",{"property":"og:image:alt","content":"PlatformProvider"}],["$","meta","9",{"property":"og:type","content":"website"}],["$","meta","10",{"name":"twitter:card","content":"summary_large_image"}],["$","meta","11",{"name":"twitter:title","content":"PlatformProvider"}],["$","meta","12",{"name":"twitter:description","content":"Компонент, позволяющий переопределить платформу."}],["$","meta","13",{"name":"twitter:image","content":"https://vkui.io/8.5.2/blog/new-docs-2025.png"}],["$","meta","14",{"name":"twitter:image:alt","content":"PlatformProvider"}],["$","link","15",{"rel":"icon","href":"/8.5.2/favicon.ico?60dfc7274b0e657e","type":"image/x-icon","sizes":"48x48"}],["$","link","16",{"rel":"icon","href":"/8.5.2/icon.svg?01ea673639a821e1","type":"image/svg+xml","sizes":"any"}],["$","link","17",{"rel":"apple-touch-icon","href":"/8.5.2/apple-icon.png?131c1f3e67ede032","type":"image/png","sizes":"180x180"}],["$","$L25","18",{}]]}]}],null]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}],"p":"$@26","v":null,"s":"$7"}},"a":"$@27","u":"$@28","b":"0pCHsMnQJZvqrwG0_YoWN"}
+29:I[13091,["9249","$9","9559","$a","8688","$b","480","$c","217","$d"],"Anchor"]
+2a:I[98982,["9249","$9","9559","$a","8688","$b","480","$c","217","$d"],"PreContainer"]
+3c:I[76183,["9249","$9","9559","$a","8688","$b","480","$c","217","$d"],"RootComponent"]
+3f:I[80784,["9249","$9","9559","$a","8688","$b","480","$c","217","$d"],"TOC"]
+40:I[31872,[],"OutletBoundary"]
+12:["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]
+13:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Задаётся свойством ",["$","code",null,{"className":"Code_root__TR_dq __className_b0d317","dir":"ltr","children":"value"}],"."]}]
+14:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_b0d317","dir":"ltr","children":"\"android\""}]," – используется на настольных и мобильных устройствах под управлением системы Android."]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_b0d317","dir":"ltr","children":"\"ios\""}]," – используется на мобильных устройствах или планшетах с системой iOS/iPadOS."]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_b0d317","dir":"ltr","children":"\"vkcom\""}]," – используется командой ВКонтакте. На данный момент она не предназначена для адаптивного интерфейса, используйте её только\nв том случае, если ваше приложение встроено в ",["$","$L29",null,{"href":"https://vk.ru","children":"vk.ru"}],"."]}],"\n"]}]
+15:["$","$L2a",null,{"tabIndex":"0","data-language":"jsx","data-word-wrap":"","data-pagefind-ignore":"all","children":["$","code",null,{"className":"Code_root__TR_dq __className_b0d317","dir":"ltr","children":[["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"<"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"PlatformProvider"}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" value"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"ios\""}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  {"}],["$","span",null,{"style":{"--shiki-light":"#6A737D","--shiki-dark":"#6A737D"},"children":"/* часть вашего приложения, требующая переопределения платформы */"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"}"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"</"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"PlatformProvider"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}]]}],"copy":true,"wrap":false}]
+16:["$","aside",null,{"className":"Callout_root__6UBFP","children":["$","div",null,{"className":"Callout_content__MYf_T","children":["\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["$","strong",null,{"className":"mdx_strong__N7OUG","children":"Обратите внимание"}]}],"\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["При переопределении темы убедитесь, что компонент, обёрнутый в ",["$","code",null,{"className":"Code_root__TR_dq __className_b0d317","dir":"ltr","children":"PlatformProvider"}],", принимает свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_b0d317","dir":"ltr","children":"className"}],",\nиначе визуальные изменения соответствующей платформы не будут применены."]}],"\n",["$","$L2a",null,{"tabIndex":"0","data-language":"jsx","data-word-wrap":"","data-pagefind-ignore":"all","children":["$","code",null,{"className":"Code_root__TR_dq __className_b0d317","dir":"ltr","children":[["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"function"}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" BadComponent"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"({ "}],["$","span",null,{"style":{"--shiki-light":"#E36209","--shiki-dark":"#FFAB70"},"children":"children"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" }) {"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"  return"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" ("}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"    <"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Box"}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" padding"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"system\""}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"      <"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Button"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">I'm not ios 😔</"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Button"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"    </"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Box"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  );"}]}],"\n",["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"}"}]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"function"}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" GoodComponent"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"({ "}],["$","span",null,{"style":{"--shiki-light":"#E36209","--shiki-dark":"#FFAB70"},"children":"className"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":", "}],["$","span",null,{"style":{"--shiki-light":"#E36209","--shiki-dark":"#FFAB70"},"children":"children"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" }) {"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"  return"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" ("}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"    <"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Box"}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" padding"}],"$L2b","$L2c","$L2d","$L2e","$L2f"]}],"\n","$L30","\n","$L31","\n","$L32","\n","$L33","\n","$L34","\n","$L35","\n","$L36","\n","$L37","\n","$L38","\n","$L39","\n","$L3a","\n","$L3b"]}],"copy":true,"wrap":false}],"\n"]}]}]
+17:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"use-platform","children":["$","a",null,{"href":"#use-platform","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Хук usePlatform","children":["Хук usePlatform",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+18:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Для получения текущего значения платформы используйте хук ",["$","code",null,{"className":"Code_root__TR_dq __className_b0d317","dir":"ltr","children":"usePlatform"}],":"]}]
+19:["$","$L2a",null,{"tabIndex":"0","data-language":"jsx","data-word-wrap":"","data-pagefind-ignore":"all","children":["$","code",null,{"className":"Code_root__TR_dq __className_b0d317","dir":"ltr","children":["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"import"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" { usePlatform } "}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"from"}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":" '@vkontakte/vkui'"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":";"}]]}]}],"copy":true,"wrap":false}]
+1a:["$","$L2a",null,{"tabIndex":"0","data-language":"jsx","data-word-wrap":"","data-pagefind-ignore":"all","children":["$","code",null,{"className":"Code_root__TR_dq __className_b0d317","dir":"ltr","children":["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"const"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":" platform"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":" ="}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" usePlatform"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"();"}]]}]}],"copy":true,"wrap":false}]
+1b:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"api","children":["$","a",null,{"href":"#api","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Свойства и методы","children":["Свойства и методы",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+1c:[["$","div","PlatformProvider/.0",{"children":[["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"platform-provider-api","children":["$","a",null,{"href":"#platform-provider-api","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию PlatformProvider","children":["PlatformProvider",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}],["$","div",null,{"className":"Table_root__0rGvK","children":["$","table",null,{"className":"Table_table__NzLHi PropsTable_root__O959b","children":[["$","caption",null,{"children":["$","$L3c",null,{"Component":"span","baseClassName":"VisuallyHidden_host__LVxzj","children":["Свойства ","PlatformProvider"]}]}],["$","thead",null,{"children":["$","tr",null,{"children":[["$","th",null,{"scope":"col","children":"Свойство","className":"Table_th__EHorR"}],["$","th",null,{"scope":"col","children":"Описание","className":"Table_th__EHorR"}]],"className":"Table_tr__SD2Ot"}]}],["$","tbody",null,{"children":["$@3d","$@3e"]}]]}]}]]}],["$","div","usePlatform/.1",{"children":[["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"use-platform-api","children":["$","a",null,{"href":"#use-platform-api","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию usePlatform","children":["usePlatform",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Не принимает свойств"}]]}]]
+1d:["$","$L3f",null,{"toc":[{"value":"Платформа","id":"platforma","depth":2},{"value":"Хук usePlatform","id":"use-platform","depth":2},{"value":"Свойства и методы","id":"api","depth":2},{"value":"PlatformProvider","id":"platform-provider-api","depth":3},{"value":"usePlatform","id":"use-platform-api","depth":3}]}]
+1e:["$","$L40",null,{"children":["$","$24",null,{"name":"Next.MetadataOutlet","children":"$@41"}]}]
+28:true
+7:300
+2b:["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}]
+2c:["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"system\""}]
+2d:["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" className"}]
+2e:["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}]
+2f:["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"{className}>"}]
+30:["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"      <"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Button"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">I'm ios 😎</"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Button"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}]
+31:["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"    </"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Box"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}]
+32:["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  );"}]}]
+33:["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"}"}]}]
+34:["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"function"}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" InfoBoard"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"({ "}],["$","span",null,{"style":{"--shiki-light":"#E36209","--shiki-dark":"#FFAB70"},"children":"children"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" }) {"}]]}]
+35:["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"  return"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" ("}]]}]
+36:["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"    <"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"PlatformProvider"}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" value"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"ios\""}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}]
+37:["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"      <"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"BadComponent"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" /> {"}],["$","span",null,{"style":{"--shiki-light":"#6A737D","--shiki-dark":"#6A737D"},"children":"/* стили \"ios\" не применяются */"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"}"}]]}]
+38:["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"      <"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"GoodComponent"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" /> {"}],["$","span",null,{"style":{"--shiki-light":"#6A737D","--shiki-dark":"#6A737D"},"children":"/* стили \"ios\" применяются */"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"}"}]]}]
+39:["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"    </"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"PlatformProvider"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}]
+3a:["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  );"}]}]
+3b:["$","span",null,{"children":["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"}"}]}]
+3d:["$","tr","children",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ PropsTable_propRequired__6g8iy","children":["$","code",null,{"className":"Code_root__TR_dq __className_b0d317","dir":"ltr","children":"children"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_b0d317","dir":"ltr","children":"ReactNode"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Содержимое."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_b0d317","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+3e:["$","tr","value",{"children":[["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propName__FejNQ PropsTable_propRequired__6g8iy","children":["$","code",null,{"className":"Code_root__TR_dq __className_b0d317","dir":"ltr","children":"value"}]}],["$","td",null,{"className":"Table_td__L3qz5 PropsTable_td__eXmPt PropsTable_propDescription__DFxVE","children":[["$","code",null,{"className":"Code_root__TR_dq __className_b0d317","dir":"ltr","children":"PlatformType"}],["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Платформа."}],["$","div",null,{"className":"PropsTable_propDefault__yhdev","children":[["$","b",null,{"children":"По умолчанию:"}]," ",["$","code",null,{"className":"Code_root__TR_dq __className_b0d317","dir":"ltr","children":"-"}]]}]]}]],"className":"Table_tr__SD2Ot"}]
+41:null
+7:C
+27:0
+5:"$undefined"
+26:"$undefined"
+1f:"$undefined"

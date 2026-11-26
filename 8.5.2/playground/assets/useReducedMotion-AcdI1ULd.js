@@ -1,0 +1,1 @@
+import{n as e}from"./rolldown-runtime-sJBDdmOt.js";import{n as t,t as n}from"./useMediaQueryMatch-ChnCh2EX.js";var r,i;function a(){return(a=e((()=>{n(),r=`screen and (prefers-reduced-motion: reduce)`,i=()=>t(r)})))()}export{i as n,a as t};

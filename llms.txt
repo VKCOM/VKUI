@@ -5,16 +5,17 @@ VKUI — библиотека адаптивных React-компонентов 
 
 ## Начало работы
 
-- [About](https://vkui.io/overview/about.mdx): VKUI — это библиотека адаптивных React-компонентов, предназначенных для разработки веб-приложений. Основана на одноименной дизайн-системе ВКонтакте.
-- [Adaptivity](https://vkui.io/overview/adaptivity.mdx): Адаптивность VKUI позволяет в зависимости от ширины и высоты экрана, а также на основе типа ввода автоматически адаптировать внешний вид компонентов.
-- [Витрина компонентов](https://vkui.io/overview/components-showcase.mdx): Витрина компонентов VKUI — обзор всех компонентов библиотеки в виде карточек.
-- [DesignTokens](https://vkui.io/overview/design-tokens.mdx): Дизайн-токены — это набор базовых переменных, задающих отступы, цвета, типографику и анимации. VKUI использует токены вместо конкретных значений, чтобы компоненты было легко подстраивать под конкретные платформы и цветовые режимы.
-- [Install](https://vkui.io/overview/install.mdx): Пошаговые инструкции по настройке окружения, установке зависимостей и непосредственное подключение VKUI для приложения.
-- [Mcp](https://vkui.io/overview/mcp.mdx): MCP-сервер VKUI — подключение AI-ассистентов к документации компонентов, хуков, примеров кода и миграций.
-- [Navigation](https://vkui.io/overview/navigation.mdx): Организация навигации внутри приложений, построенных на основе VKUI.
-- [Ssr](https://vkui.io/overview/ssr.mdx): Инструкция по организации SSR (Server Side Rendering) для приложений VKUI.
-- [Themes](https://vkui.io/overview/themes.mdx): VKUI поддерживает три темы - `vkBase`, `vkIOS` и `vkCom` в двух цветовых режимах (светлом и тёмном). Это позволяет компонентам визуально мимикрировать под соответствующую платформу и выглядеть неотличимо от нативных приложений.
-- [Usage](https://vkui.io/overview/usage.mdx): Инструкция по запуску приложения с базовой структурой и навигацией на VKUI.
+- [About](https://vkui.io/overview/about.mdx): VKUI — библиотека адаптивных React-компонентов для веб-приложений. В её основе — дизайн-система ВКонтакте.
+- [Adaptivity](https://vkui.io/overview/adaptivity.mdx): VKUI меняет размеры, вёрстку и поведение компонентов с учётом размеров окна и наличия точного указателя.
+- [Витрина компонентов](https://vkui.io/overview/components-showcase.mdx): Каталог компонентов VKUI со ссылками на документацию.
+- [DesignTokens](https://vkui.io/overview/design-tokens.mdx): Дизайн-токены VKUI задают отступы, цвета, типографику и анимации для разных платформ и цветовых схем.
+- [GetStarted](https://vkui.io/overview/get-started.mdx): Как подключить VKUI с помощью агента и сделать простой счётчик.
+- [Install](https://vkui.io/overview/install.mdx): Установка VKUI, настройка React-приложения и подключение стилей.
+- [Mcp](https://vkui.io/overview/mcp.mdx): Подключение MCP-сервера VKUI к ИИ-ассистентам для доступа к документации, примерам кода и рекомендациям по миграции.
+- [Navigation](https://vkui.io/overview/navigation.mdx): Экраны, сценарии и разделы приложения на VKUI.
+- [Ssr](https://vkui.io/overview/ssr.mdx): Адаптивность VKUI при серверном рендеринге и примеры настройки SSR для Next.js и Express.
+- [Themes](https://vkui.io/overview/themes.mdx): Темы VKUI для Android, iOS и веб-интерфейса ВКонтакте. У каждой темы есть светлая и тёмная схемы.
+- [Usage](https://vkui.io/overview/usage.mdx): Первые шаги с VKUI — кнопка, навигация между экранами и адаптивные колонки.
 
 ## Компоненты
 

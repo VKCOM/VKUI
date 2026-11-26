@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[5558],{45558:(e,r,n)=>{n.r(r),n.d(r,{Preview_b097e3e3634ad71e75fbc304:()=>t});var c=n(73365),s=n(72281);function t(){return(0,c.jsx)(c.Fragment,{children:(0,c.jsx)(s.Text,{children:"Основной текст интерфейса"})})}}}]);

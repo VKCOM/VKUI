@@ -1,0 +1,173 @@
+2:"$Sreact.fragment"
+3:I[91133,[],""]
+4:I[4297,[],""]
+9:"static/chunks/9249-afb8826a15064ed3.js"
+a:"static/chunks/9559-0f7998580a23933e.js"
+b:"static/chunks/8688-1d051e5bb22a9bf9.js"
+c:"static/chunks/480-861ef7dc2c08fced.js"
+d:"static/chunks/app/%5B%5B...mdxPath%5D%5D/page-c862c3603aab4347.js"
+e:I[67042,["9249","$9","9559","$a","8688","$b","480","$c","217","$d"],"Main"]
+23:"ViewportBoundary"
+24:I[31872,[],"$23"]
+25:"MetadataBoundary"
+26:I[31872,[],"$25"]
+27:"$Sreact.suspense"
+28:I[12569,[],"IconMark"]
+6:X
+6:C
+7:X
+f:Tbc9,import { Icons } from "../../components/mdx/Icons/Icons";
+import { IconsPage } from "../../components/mdx/Icons/IconsPage";
+import { DoGrid } from "../../components/mdx/Do/DoGrid";
+import { DoBlock } from "../../components/mdx/Do/DoBlock";
+import {
+  DoPixelGrid,
+  DontPixelGrid,
+} from "../../components/examples/icons/index/DoPixelGrid";
+import { BlockWrapper } from "@/components/wrappers";
+
+<IconsPage>
+
+<Overview type="doc">
+# Иконки
+
+Набор SVG-иконок в виде React-компонентов.
+
+</Overview>
+
+<Icons />
+
+## Использование иконок
+
+Установите пакет `@vkontakte/icons`:
+
+<PackageManagers
+  npm="npm i --save @vkontakte/icons"
+  yarn="yarn add @vkontakte/icons"
+  pnpm="pnpm add @vkontakte/icons"
+/>
+
+Импортируйте иконку и используйте её как React-компонент:
+
+```tsx
+import { Icon24Cancel } from "@vkontakte/icons";
+
+<Icon24Cancel />;
+```
+
+## Стилизация
+
+Чтобы изменить цвет иконки, задайте CSS-свойство `color` самой иконке или родительскому элементу. Заливка SVG использует `fill: currentColor` и принимает этот цвет.
+
+<Playground>
+```tsx
+const [color, setColor] = React.useState("#447bba");
+const inputOnChange = (event) => setColor(event.target.value);
+
+return (
+
+<Box>
+  <Flex padding="m" justify="center" style={{ color }}>
+    <Icon56PaletteOutline />
+  </Flex>
+
+  <FormItem htmlFor="color" top="Цвет">
+    <Input
+      after={
+        <input
+          id="color"
+          type="color"
+          style={{
+            border: 'none',
+            background: 'none',
+            width: 24,
+            height: 24,
+          }}
+          value={color}
+          onChange={inputOnChange}
+        />
+      }
+      value={color}
+      onChange={inputOnChange}
+      />
+  </FormItem>
+</Box>
+)
+```
+</Playground>
+
+## Размеры иконок
+
+Число в названии компонента задаёт размер иконки в пикселях. Например, `Icon24FolderAdd` рассчитана на 24 × 24 пикселя.
+
+Выбирайте иконку нужного размера из набора. Её контуры выровнены по пиксельной сетке. При масштабировании они могут оказаться между пикселями: иконка станет размытой, а обводка будет выглядеть неравномерной.
+
+<DoGrid>
+  <DoBlock mode="positive" caption="Используйте иконку в исходном размере">
+    <DoPixelGrid />
+    ```tsx
+    <Icon24FolderAdd />
+    ```
+  </DoBlock>
+  <DoBlock
+    mode="negative"
+    caption="Масштабирование может сделать иконку размытой"
+  >
+    <DontPixelGrid />
+    ```tsx
+    <Icon24FolderAdd width={32} height={32} />
+    ```
+  </DoBlock>
+</DoGrid>
+
+</IconsPage>8:[["children",{"s":"__PAGE__","h":160,"d":{"r":["$","$2","c",{"children":[[["$","$Le",null,{"metadata":{"title":"Иконки","filePath":"content/icons/index.mdx","timestamp":1795700940000},"sourceCode":"$f","children":[["$","script",null,{"type":"application/ld+json","dangerouslySetInnerHTML":{"__html":"{\"@context\":\"https://schema.org\",\"@type\":\"WebPage\",\"name\":\"Иконки\",\"description\":\"VKUI — библиотека адаптивных React-компонентов для создания мобильных и веб-приложений.\",\"url\":\"https://vkui.io/8.5.2/icons/\",\"image\":\"https://vkui.io/8.5.2/blog/new-docs-2025.png\",\"inLanguage\":\"ru\",\"isPartOf\":{\"@type\":\"WebSite\",\"name\":\"VKUI\",\"url\":\"https://vkui.io\"}}"}}],["$","div",null,{"className":"IconsPage_root__S5Oq0","children":[["$","div",null,{"className":"Overview_root__nbCiB","children":["$L10",["$L11","$L12"]]}],"$L13","$L14","$L15","$L16","$L17","$L18","$L19","$L1a","$L1b","$L1c","$L1d","$L1e","$L1f"]}]]}],"$L20"],null,"$L21"]}],"p":"$@22","v":null,"s":"$7"}}]]
+1:[["children",{"s":{"n":"mdxPath","t":"oc","k":"icons","s":["_not-found","_global-error","apple-icon.png","favicon.ico","icon.svg"]},"h":64,"d":{"r":["$","$2","c",{"children":[null,["$","$L3",null,{"parallelRouterKey":"children","template":["$","$L4",null,{}]}]]}],"p":"$@5","v":"$6","s":"$7"},"c":"$Q8"}]]
+0:{"t":{"t":{"s":"","h":16,"c":"$Q1"},"h":{"r":["$","$2","h",{"children":[null,["$","$L24",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1, viewport-fit=cover"}]]}],["$","$L26",null,{"children":[["$","div",null,{"hidden":true,"children":["$","$27",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"Иконки | VKUI"}],["$","meta","1",{"name":"description","content":"VKUI — библиотека адаптивных React-компонентов для создания мобильных и веб-приложений."}],["$","link","2",{"rel":"canonical","href":"https://vkui.io/icons/"}],["$","meta","3",{"property":"og:title","content":"Иконки"}],["$","meta","4",{"property":"og:description","content":"VKUI — библиотека адаптивных React-компонентов для создания мобильных и веб-приложений."}],["$","meta","5",{"property":"og:url","content":"https://vkui.io/8.5.2/icons/"}],["$","meta","6",{"property":"og:site_name","content":"VKUI"}],["$","meta","7",{"property":"og:image","content":"https://vkui.io/8.5.2/blog/new-docs-2025.png"}],["$","meta","8",{"property":"og:image:alt","content":"Иконки"}],["$","meta","9",{"property":"og:type","content":"website"}],["$","meta","10",{"name":"twitter:card","content":"summary_large_image"}],["$","meta","11",{"name":"twitter:title","content":"Иконки"}],["$","meta","12",{"name":"twitter:description","content":"VKUI — библиотека адаптивных React-компонентов для создания мобильных и веб-приложений."}],["$","meta","13",{"name":"twitter:image","content":"https://vkui.io/8.5.2/blog/new-docs-2025.png"}],["$","meta","14",{"name":"twitter:image:alt","content":"Иконки"}],["$","link","15",{"rel":"icon","href":"/8.5.2/favicon.ico?60dfc7274b0e657e","type":"image/x-icon","sizes":"48x48"}],["$","link","16",{"rel":"icon","href":"/8.5.2/icon.svg?01ea673639a821e1","type":"image/svg+xml","sizes":"any"}],["$","link","17",{"rel":"apple-touch-icon","href":"/8.5.2/apple-icon.png?131c1f3e67ede032","type":"image/png","sizes":"180x180"}],["$","$L28","18",{}]]}]}],null]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}],"p":"$@29","v":null,"s":"$7"}},"a":"$@2a","u":"$@2b","b":"0pCHsMnQJZvqrwG0_YoWN"}
+2c:"OverviewHeaderLinks"
+2d:I[44740,["9249","$9","9559","$a","8688","$b","480","$c","217","$d"],"$2c",1]
+2e:I[10239,["9249","$9","9559","$a","8688","$b","480","$c","217","$d"],"Icons"]
+2f:"PackageManagersClient"
+30:I[88215,["9249","$9","9559","$a","8688","$b","480","$c","217","$d"],"$2f"]
+31:I[98982,["9249","$9","9559","$a","8688","$b","480","$c","217","$d"],"PreContainer"]
+32:I[95540,["9249","$9","9559","$a","8688","$b","480","$c","217","$d"],"PlaygroundLazy"]
+33:I[16614,["9249","$9","9559","$a","8688","$b","480","$c","217","$d"],"DoGrid"]
+34:I[81373,["9249","$9","9559","$a","8688","$b","480","$c","217","$d"],"DoBlock"]
+40:I[80784,["9249","$9","9559","$a","8688","$b","480","$c","217","$d"],"TOC"]
+41:I[31872,[],"OutletBoundary"]
+10:["$","$L2d",null,{"type":"doc"}]
+11:["$","h1",null,{"className":"mdx_h1__1mgpN","children":"Иконки"}]
+12:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Набор SVG-иконок в виде React-компонентов."}]
+13:["$","$L2e",null,{}]
+14:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"ispolzovanie-ikonok","children":["$","a",null,{"href":"#ispolzovanie-ikonok","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Использование иконок","children":["Использование иконок",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+15:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Установите пакет ",["$","code",null,{"className":"Code_root__TR_dq __className_b0d317","dir":"ltr","children":"@vkontakte/icons"}],":"]}]
+16:["$","$L30",null,{"packageManagers":[{"id":"npm","content":["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["$","code",null,{"className":"Code_root__TR_dq __className_b0d317","dir":"ltr","data-language":"sh","children":["$","span",null,{"data-line":"","children":[["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":"npm"}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":" i"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":" --save"}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":" @vkontakte/icons"}]]}]}]}]},{"id":"yarn","content":["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["$","code",null,{"className":"Code_root__TR_dq __className_b0d317","dir":"ltr","data-language":"sh","children":["$","span",null,{"data-line":"","children":[["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":"yarn"}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":" add"}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":" @vkontakte/icons"}]]}]}]}]},{"id":"pnpm","content":["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["$","code",null,{"className":"Code_root__TR_dq __className_b0d317","dir":"ltr","data-language":"sh","children":["$","span",null,{"data-line":"","children":[["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":"pnpm"}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":" add"}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":" @vkontakte/icons"}]]}]}]}]}]}]
+17:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Импортируйте иконку и используйте её как React-компонент:"}]
+18:["$","$L31",null,{"tabIndex":"0","data-language":"tsx","data-word-wrap":"","data-pagefind-ignore":"all","children":["$","code",null,{"className":"Code_root__TR_dq __className_b0d317","dir":"ltr","children":[["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"import"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" { Icon24Cancel } "}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"from"}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":" \"@vkontakte/icons\""}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":";"}]]}],"\n",["$","span",null,{"children":" "}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"<"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Icon24Cancel"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" />;"}]]}]]}],"copy":true,"wrap":false}]
+19:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"stilizaciya","children":["$","a",null,{"href":"#stilizaciya","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Стилизация","children":["Стилизация",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+1a:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Чтобы изменить цвет иконки, задайте CSS-свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_b0d317","dir":"ltr","children":"color"}]," самой иконке или родительскому элементу. Заливка SVG использует ",["$","code",null,{"className":"Code_root__TR_dq __className_b0d317","dir":"ltr","children":"fill: currentColor"}]," и принимает этот цвет."]}]
+1b:["$","$L32",null,{"code":"const [color, setColor] = React.useState(\"#447bba\");\nconst inputOnChange = (event) => setColor(event.target.value);\n\nreturn (\n\n<Box>\n  <Flex padding=\"m\" justify=\"center\" style={{ color }}>\n    <Icon56PaletteOutline />\n  </Flex>\n\n  <FormItem htmlFor=\"color\" top=\"Цвет\">\n    <Input\n      after={\n        <input\n          id=\"color\"\n          type=\"color\"\n          style={{\n            border: 'none',\n            background: 'none',\n            width: 24,\n            height: 24,\n          }}\n          value={color}\n          onChange={inputOnChange}\n        />\n      }\n      value={color}\n      onChange={inputOnChange}\n      />\n  </FormItem>\n</Box>\n)","previewId":"460f1cc9d72bd2d80f60a50c"}]
+1c:["$","h2",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading2__1cxOT","id":"razmery-ikonok","children":["$","a",null,{"href":"#razmery-ikonok","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Размеры иконок","children":["Размеры иконок",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+1d:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Число в названии компонента задаёт размер иконки в пикселях. Например, ",["$","code",null,{"className":"Code_root__TR_dq __className_b0d317","dir":"ltr","children":"Icon24FolderAdd"}]," рассчитана на 24 × 24 пикселя."]}]
+1e:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Выбирайте иконку нужного размера из набора. Её контуры выровнены по пиксельной сетке. При масштабировании они могут оказаться между пикселями: иконка станет размытой, а обводка будет выглядеть неравномерной."}]
+1f:["$","$L33",null,{"children":[["$","$L34",null,{"mode":"positive","caption":"Используйте иконку в исходном размере","children":[["$","svg",null,{"xmlns":"http://www.w3.org/2000/svg","width":"240","height":"240","fill":"none","children":[["$","path",null,{"d":"M10 0V240M20 0V240M30 0V240M40 0V240M50 0V240M60 0V240M70 0V240M80 0V240M90 0V240M100 0V240M110 0V240M120 0V240M130 0V240M140 0V240M150 0V240M160 0V240M170 0V240M180 0V240M190 0V240M200 0V240M210 0V240M220 0V240M230 0V240M0 10H240M0 20H240M0 30H240M0 40H240M0 50H240M0 60H240M0 70H240M0 80H240M0 90H240M0 100H240M0 110H240M0 120H240M0 130H240M0 140H240M0 150H240M0 160H240M0 170H240M0 180H240M0 190H240M0 200H240M0 210H240M0 220H240M0 230H240","stroke":"currentColor","strokeOpacity":"0.2"}],["$","rect",null,{"x":"0.5","y":"0.5","width":"239","height":"239","stroke":"currentColor","strokeOpacity":"0.2"}],["$","path",null,{"fill":"currentColor","fillRule":"evenodd","d":"M23.27 56.38C20 62.8 20 71.2 20 88v64c0 16.8 0 25.2 3.27 31.62a30 30 0 0 0 13.11 13.11C42.8 200 51.2 200 68 200h104c16.8 0 25.2 0 31.62-3.27a30 30 0 0 0 13.11-13.11C220 177.2 220 168.8 220 152v-44c0-16.8 0-25.2-3.27-31.62a30 30 0 0 0-13.11-13.11C197.2 60 188.8 60 172 60h-52l-15.31-15.31c-1.73-1.73-2.6-2.6-3.6-3.22a10 10 0 0 0-2.9-1.2C97.04 40 95.82 40 93.37 40H68c-16.8 0-25.2 0-31.62 3.27a30 30 0 0 0-13.11 13.11M150 85a10 10 0 0 0-10 10v25h-25a10.001 10.001 0 0 0 0 20h25v25a10.001 10.001 0 0 0 20 0v-25h25a10.001 10.001 0 0 0 0-20h-25V95a10 10 0 0 0-10-10","clipRule":"evenodd","opacity":"0.9"}]]}],["$","$L31",null,{"tabIndex":"0","data-language":"tsx","data-word-wrap":"","data-pagefind-ignore":"all","children":["$","code",null,{"className":"Code_root__TR_dq __className_b0d317","dir":"ltr","children":["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"<"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Icon24FolderAdd"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" />"}]]}]}],"copy":true,"wrap":false}]]}],["$","$L34",null,{"mode":"negative","caption":"Масштабирование может сделать иконку размытой","children":[["$","svg",null,{"xmlns":"http://www.w3.org/2000/svg","width":"240","height":"240","fill":"none","children":[["$","defs",null,{"children":[["$","mask",null,{"id":"dont-pixel-grid-mask","maskUnits":"userSpaceOnUse","style":{"maskType":"alpha"},"children":["$","image",null,{"href":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAABO0lEQVRYCe1VCw3CMBAdBAFImAPmgElAQnEACggOcEAlgANQQFAADsABvEd2pFvadaPll+wll7veXe+ur4UlSYeOgS8z0LP0H8KnICNLTFx7GFoWMXWGYhfIrYEsYjaWWqcGjc3hog6Rt2xuDuKzyeoBoiBO5Ij4CsWIz1wTqA8NQDb40B/oixFJL1GHUgc2T20JCs4QijdGUe2ppSQ3JgOktjViDtC6OTf89QBzHKBnyJQnKqCgzRhzrQhhQFsr2p0ruztJBq5AA/8aOVsj7wx7V6xz6LSwqcaG7TQVIiE/Qw4k0DDqailJDLkCqRGkf2qAa9BRync+8tQ6S9x8hE+nBFvqHPn85PIgGeQlnLCr7vHEiLGHE5z8nUPwe1Fih/9WVaRwTCC+e6zu862PSNCQqy+xi3cMfJSBO30I14JiyFktAAAAAElFTkSuQmCC","width":"240","height":"240","preserveAspectRatio":"none","style":{"imageRendering":"pixelated"}}]}],["$","pattern",null,{"id":"dont-pixel-grid","width":"7.5","height":"7.5","patternUnits":"userSpaceOnUse","children":["$","path",null,{"d":"M7.5 0H0V7.5","stroke":"currentColor","strokeOpacity":"0.2"}]}]]}],["$","rect",null,{"width":"240","height":"240","fill":"currentColor","mask":"url(#dont-pixel-grid-mask)","opacity":"0.9"}],["$","rect",null,{"x":"1","y":"1","width":"238","height":"238","fill":"url(#dont-pixel-grid)"}],["$","rect",null,{"x":"0.5","y":"0.5","width":"239","height":"239","stroke":"currentColor","strokeOpacity":"0.1"}]]}],["$","$L31",null,{"tabIndex":"0","data-language":"tsx","data-word-wrap":"","data-pagefind-ignore":"all","children":["$","code",null,{"className":"Code_root__TR_dq __className_b0d317","dir":"ltr","children":["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"<"}],"$L35","$L36","$L37","$L38","$L39","$L3a","$L3b","$L3c","$L3d","$L3e","$L3f"]}]}],"copy":true,"wrap":false}]]}]]}]
+20:["$","$L40",null,{"toc":[{"value":"Использование иконок","id":"ispolzovanie-ikonok","depth":2},{"value":"Стилизация","id":"stilizaciya","depth":2},{"value":"Размеры иконок","id":"razmery-ikonok","depth":2}]}]
+21:["$","$L41",null,{"children":["$","$27",null,{"name":"Next.MetadataOutlet","children":"$@42"}]}]
+2b:true
+7:300
+35:["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Icon24FolderAdd"}]
+36:["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" width"}]
+37:["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}]
+38:["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"{"}]
+39:["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"32"}]
+3a:["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"} "}]
+3b:["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":"height"}]
+3c:["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}]
+3d:["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"{"}]
+3e:["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"32"}]
+3f:["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"} />"}]
+42:null
+7:C
+2a:0
+5:"$undefined"
+29:"$undefined"
+22:"$undefined"

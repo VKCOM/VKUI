@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[9483],{51864:(e,s,r)=>{r.r(s),r.d(s,{Preview_eb880c6f932e4ea1c80d0edf:()=>t});var c=r(73365),n=r(72281),i=r(76575);function t(){return(0,c.jsxs)(c.Fragment,{children:[(0,c.jsx)(n.Text,{children:"Текст над отступом"}),(0,c.jsx)(i.K,{size:"4xl"}),(0,c.jsx)(n.Text,{children:"Текст под отступом"})]})}}}]);

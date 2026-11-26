@@ -1,0 +1,1 @@
+import{n as e}from"./rolldown-runtime-sJBDdmOt.js";var t,n,r;function i(){return(i=e((()=>{t={NATIVE:`__vkui_internal_Select_not_selected__`,CUSTOM:null},n=e=>e===t.CUSTOM?t.NATIVE:e,r=e=>e===t.NATIVE?t.CUSTOM:e})))()}export{n as i,i as n,r,t};

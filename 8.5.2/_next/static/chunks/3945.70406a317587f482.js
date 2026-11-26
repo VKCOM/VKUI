@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[3945],{53945:(e,r,c)=>{c.r(r),c.d(r,{Preview_959c4e6c2828e07f84b4672f:()=>a});var n=c(73365),l=c(44617),s=c(72281);function a(){return(0,n.jsx)(n.Fragment,{children:(0,n.jsx)(l.Tappable,{onClick:()=>alert("Обработчик нажатия"),children:(0,n.jsx)(s.Text,{children:"Я - кнопка"})})})}}}]);

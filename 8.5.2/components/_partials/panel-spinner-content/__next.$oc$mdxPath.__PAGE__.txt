@@ -1,0 +1,94 @@
+2:"$Sreact.fragment"
+3:I[91133,[],""]
+4:I[4297,[],""]
+9:"static/chunks/9249-afb8826a15064ed3.js"
+a:"static/chunks/9559-0f7998580a23933e.js"
+b:"static/chunks/8688-1d051e5bb22a9bf9.js"
+c:"static/chunks/480-861ef7dc2c08fced.js"
+d:"static/chunks/app/%5B%5B...mdxPath%5D%5D/page-c862c3603aab4347.js"
+e:I[67042,["9249","$9","9559","$a","8688","$b","480","$c","217","$d"],"Main"]
+10:I[95540,["9249","$9","9559","$a","8688","$b","480","$c","217","$d"],"PlaygroundLazy"]
+11:"FixedLayoutWrapper"
+12:I[60253,["9249","$9","9559","$a","8688","$b","480","$c","217","$d"],"$11"]
+21:"ViewportBoundary"
+22:I[31872,[],"$21"]
+23:"MetadataBoundary"
+24:I[31872,[],"$23"]
+25:"$Sreact.suspense"
+26:I[12569,[],"IconMark"]
+6:X
+6:C
+7:X
+f:T707,import { FixedLayoutWrapper } from '@/components/wrappers';
+
+Индикатор загрузки внутри экрана. Автоматически добавляет стандартные отступы и центрирование.
+
+{/* @example-description: Использование `PanelSpinner` для индикации загрузки внутри панели. */}
+<Playground Wrapper={FixedLayoutWrapper} style={{ height: 415, overflow: 'hidden' }}>
+
+```jsx
+<Panel centered>
+  <PanelHeader>PanelSpinner</PanelHeader>
+  <PanelSpinner />
+</Panel>
+```
+
+</Playground>
+
+### Свойства
+
+Наследует все свойства компонента [`Spinner`](/components/spinner).
+
+- `size` — размер индикатора.
+- `disableAnimation` — отключение анимации.
+- `noColor` — наследование цвета.
+
+#### Высота компонента
+
+Задается с помощью свойства `height`:
+
+```jsx
+<PanelSpinner height={300} />
+```
+
+### Когда использовать
+
+- При загрузке контента внутри экрана.
+- Когда нужен центрированный спиннер с отступами.
+- Для полностраничной загрузки (в сочетании с кастомной высотой).
+
+### Альтернативы
+
+- [`Spinner`](/components/spinner) — для встроенной загрузки внутри элементов.
+- [`ScreenSpinner`](/components/screen-spinner) — для модальной загрузки поверх интерфейса.
+
+### Доступность (a11y) [#a11y]
+
+Следует придерживаться тех же правил, что и для компонента [`Spinner`](/components/spinner).8:[["children",{"s":"__PAGE__","h":160,"d":{"r":["$","$2","c",{"children":[[["$","$Le",null,{"metadata":{"title":"Panel Spinner Content","filePath":"content/components/_partials/panel-spinner-content.mdx","timestamp":1795700940000},"sourceCode":"$f","children":[["$","script",null,{"type":"application/ld+json","dangerouslySetInnerHTML":{"__html":"{\"@context\":\"https://schema.org\",\"@type\":\"WebPage\",\"name\":\"Panel Spinner Content\",\"description\":\"VKUI — библиотека адаптивных React-компонентов для создания мобильных и веб-приложений.\",\"url\":\"https://vkui.io/8.5.2/components/_partials/panel-spinner-content/\",\"image\":\"https://vkui.io/8.5.2/blog/new-docs-2025.png\",\"inLanguage\":\"ru\",\"isPartOf\":{\"@type\":\"WebSite\",\"name\":\"VKUI\",\"url\":\"https://vkui.io\"}}"}}],[["$","p",null,{"className":"mdx_paragraph__nVfmE","children":"Индикатор загрузки внутри экрана. Автоматически добавляет стандартные отступы и центрирование."}],"\n","\n",["$","$L10",null,{"Wrapper":"$12","style":{"height":415,"overflow":"hidden"},"code":"<Panel centered>\n  <PanelHeader>PanelSpinner</PanelHeader>\n  <PanelSpinner />\n</Panel>","previewId":"e9af761b4a4d4e4967b10c92"}],"\n",["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"svojstva","children":["$","a",null,{"href":"#svojstva","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Свойства","children":["Свойства",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}],"\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Наследует все свойства компонента ","$L13","."]}],"\n","$L14","\n","$L15","\n","$L16","\n","$L17","\n","$L18","\n","$L19","\n","$L1a","\n","$L1b","\n","$L1c","\n","$L1d"]]}],"$L1e"],null,"$L1f"]}],"p":"$@20","v":null,"s":"$7"}}]]
+1:[["children",{"s":{"n":"mdxPath","t":"oc","k":"components/_partials/panel-spinner-content","s":["_not-found","_global-error","apple-icon.png","favicon.ico","icon.svg"]},"h":64,"d":{"r":["$","$2","c",{"children":[null,["$","$L3",null,{"parallelRouterKey":"children","template":["$","$L4",null,{}]}]]}],"p":"$@5","v":"$6","s":"$7"},"c":"$Q8"}]]
+0:{"t":{"t":{"s":"","h":16,"c":"$Q1"},"h":{"r":["$","$2","h",{"children":[null,["$","$L22",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1, viewport-fit=cover"}]]}],["$","$L24",null,{"children":[["$","div",null,{"hidden":true,"children":["$","$25",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"Panel Spinner Content | VKUI"}],["$","meta","1",{"name":"description","content":"VKUI — библиотека адаптивных React-компонентов для создания мобильных и веб-приложений."}],["$","link","2",{"rel":"canonical","href":"https://vkui.io/components/_partials/panel-spinner-content/"}],["$","meta","3",{"property":"og:title","content":"Panel Spinner Content"}],["$","meta","4",{"property":"og:description","content":"VKUI — библиотека адаптивных React-компонентов для создания мобильных и веб-приложений."}],["$","meta","5",{"property":"og:url","content":"https://vkui.io/8.5.2/components/_partials/panel-spinner-content/"}],["$","meta","6",{"property":"og:site_name","content":"VKUI"}],["$","meta","7",{"property":"og:image","content":"https://vkui.io/8.5.2/blog/new-docs-2025.png"}],["$","meta","8",{"property":"og:image:alt","content":"Panel Spinner Content"}],["$","meta","9",{"property":"og:type","content":"website"}],["$","meta","10",{"name":"twitter:card","content":"summary_large_image"}],["$","meta","11",{"name":"twitter:title","content":"Panel Spinner Content"}],["$","meta","12",{"name":"twitter:description","content":"VKUI — библиотека адаптивных React-компонентов для создания мобильных и веб-приложений."}],["$","meta","13",{"name":"twitter:image","content":"https://vkui.io/8.5.2/blog/new-docs-2025.png"}],["$","meta","14",{"name":"twitter:image:alt","content":"Panel Spinner Content"}],["$","link","15",{"rel":"icon","href":"/8.5.2/favicon.ico?60dfc7274b0e657e","type":"image/x-icon","sizes":"48x48"}],["$","link","16",{"rel":"icon","href":"/8.5.2/icon.svg?01ea673639a821e1","type":"image/svg+xml","sizes":"any"}],["$","link","17",{"rel":"apple-touch-icon","href":"/8.5.2/apple-icon.png?131c1f3e67ede032","type":"image/png","sizes":"180x180"}],["$","$L26","18",{}]]}]}],null]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}],"p":"$@27","v":null,"s":"$7"}},"a":"$@28","u":"$@29","b":"0pCHsMnQJZvqrwG0_YoWN"}
+2a:I[13091,["9249","$9","9559","$a","8688","$b","480","$c","217","$d"],"Anchor"]
+2b:I[98982,["9249","$9","9559","$a","8688","$b","480","$c","217","$d"],"PreContainer"]
+2c:I[80784,["9249","$9","9559","$a","8688","$b","480","$c","217","$d"],"TOC"]
+2d:I[31872,[],"OutletBoundary"]
+13:["$","$L2a",null,{"href":"/components/spinner","children":["$","code",null,{"className":"Code_root__TR_dq __className_b0d317","dir":"ltr","children":"Spinner"}]}]
+14:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_b0d317","dir":"ltr","children":"size"}]," — размер индикатора."]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_b0d317","dir":"ltr","children":"disableAnimation"}]," — отключение анимации."]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","code",null,{"className":"Code_root__TR_dq __className_b0d317","dir":"ltr","children":"noColor"}]," — наследование цвета."]}],"\n"]}]
+15:["$","h4",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading4__c9VtX","id":"vysota-komponenta","children":["$","a",null,{"href":"#vysota-komponenta","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Высота компонента","children":["Высота компонента",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+16:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Задается с помощью свойства ",["$","code",null,{"className":"Code_root__TR_dq __className_b0d317","dir":"ltr","children":"height"}],":"]}]
+17:["$","$L2b",null,{"tabIndex":"0","data-language":"jsx","data-word-wrap":"","data-pagefind-ignore":"all","children":["$","code",null,{"className":"Code_root__TR_dq __className_b0d317","dir":"ltr","children":["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"<"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"PanelSpinner"}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" height"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"{"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"300"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"} />"}]]}]}],"copy":true,"wrap":false}]
+18:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"kogda-ispolzovat","children":["$","a",null,{"href":"#kogda-ispolzovat","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Когда использовать","children":["Когда использовать",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+19:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":"При загрузке контента внутри экрана."}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":"Когда нужен центрированный спиннер с отступами."}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":"Для полностраничной загрузки (в сочетании с кастомной высотой)."}],"\n"]}]
+1a:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"alternativy","children":["$","a",null,{"href":"#alternativy","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Альтернативы","children":["Альтернативы",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+1b:["$","ul",null,{"className":"mdx_ul__e30zv","children":["\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","$L2a",null,{"href":"/components/spinner","children":["$","code",null,{"className":"Code_root__TR_dq __className_b0d317","dir":"ltr","children":"Spinner"}]}]," — для встроенной загрузки внутри элементов."]}],"\n",["$","li",null,{"className":"mdx_li__rnY5m","children":[["$","$L2a",null,{"href":"/components/screen-spinner","children":["$","code",null,{"className":"Code_root__TR_dq __className_b0d317","dir":"ltr","children":"ScreenSpinner"}]}]," — для модальной загрузки поверх интерфейса."]}],"\n"]}]
+1c:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"a11y","children":["$","a",null,{"href":"#a11y","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Доступность (a11y)","children":["Доступность (a11y)",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+1d:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Следует придерживаться тех же правил, что и для компонента ",["$","$L2a",null,{"href":"/components/spinner","children":["$","code",null,{"className":"Code_root__TR_dq __className_b0d317","dir":"ltr","children":"Spinner"}]}],"."]}]
+1e:["$","$L2c",null,{"toc":[{"value":"Свойства","id":"svojstva","depth":3},{"value":"Высота компонента","id":"vysota-komponenta","depth":4},{"value":"Когда использовать","id":"kogda-ispolzovat","depth":3},{"value":"Альтернативы","id":"alternativy","depth":3},{"value":"Доступность (a11y)","id":"a11y","depth":3}]}]
+1f:["$","$L2d",null,{"children":["$","$25",null,{"name":"Next.MetadataOutlet","children":"$@2e"}]}]
+29:true
+7:300
+2e:null
+7:C
+28:0
+5:"$undefined"
+27:"$undefined"
+20:"$undefined"

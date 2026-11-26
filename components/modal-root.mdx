@@ -3,10 +3,11 @@ description: Менеджер модальных окон.
 tags: modals
 ---
 
-# ModalRoot \[tag:component]
+> Компонент устарел и будет **удалён** в следующих мажорных обновлениях.
+>
+> Для управления модальными окнами используйте хук [`useModalManager`](/components/use-modal-manager).
 
-> Для управления модальными окнами используйте менеджер в виде хука [`useModalManager`](/components/use-modal-manager).
-> Данный менеджер остался для обратной совместимости с **v7**. В будущем планируется сделать его приватным.
+# ModalRoot \[tag:component]
 
 Менеджер модальных окон.
 
@@ -113,7 +114,7 @@ const ModalPageWrapper = ({ id, ...restProps }) => {
         // Здесь логика, которая должна вызываться при показе окна
       }
     },
-    [id, activeModal]
+    [id, activeModal],
   );
 
   return (

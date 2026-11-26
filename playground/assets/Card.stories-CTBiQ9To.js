@@ -1,0 +1,7 @@
+import{n as e,r as t}from"./rolldown-runtime-sJBDdmOt.js";import{t as n}from"./jsx-runtime-MKhVqBIO.js";import{At as r,Mt as i,jt as a}from"./iframe-kY6v1YfM.js";import{i as o,n as s,t as c}from"./constants-BWBR8eWE.js";import{n as l,t as u}from"./createStoryParameters-D_aKMzVl.js";import{n as d,t as f}from"./VisuallyHidden-B8gDKlvD.js";import{n as p,t as m}from"./Card-B5gmI3Z3.js";var h=t({Playground:()=>v,__namedExportsOrder:()=>y,default:()=>_}),g,_,v,y;function b(){return(b=e((()=>{r(),o(),l(),d(),p(),g=n(),_={title:`Data Display/Card`,component:m,parameters:u(`Card`,c,s),decorators:[a,i],excludeStories:[`playgroundArgs`],tags:[`Отображение данных`]},v=e=>(0,g.jsx)(m,{...e,children:(0,g.jsx)(`div`,{style:{height:96},children:(0,g.jsx)(f,{children:`Контент для вашей карточки (визуальный компонент-обертка)`})})}),v.args={Component:`div`},y=[`Playground`],v.parameters={...v.parameters,docs:{...v.parameters?.docs,source:{originalSource:`(props: CardProps) => <Card {...props}>
+    <div style={{
+    height: 96
+  }}>
+      <VisuallyHidden>Контент для вашей карточки (визуальный компонент-обертка)</VisuallyHidden>
+    </div>
+  </Card>`,...v.parameters?.docs?.source}}}})))()}export{v as n,b as r,h as t};

@@ -1,0 +1,5 @@
+import{n as e,r as t}from"./rolldown-runtime-sJBDdmOt.js";import{t as n}from"./jsx-runtime-MKhVqBIO.js";import{i as r,n as i,t as a}from"./constants-BWBR8eWE.js";import{n as o,t as s}from"./createStoryParameters-D_aKMzVl.js";import{n as c,t as l}from"./SegmentedControl-BAFO3TuC.js";var u=t({Playground:()=>m,__namedExportsOrder:()=>h,default:()=>p}),d,f,p,m,h;function g(){return(g=e((()=>{r(),o(),c(),d=n(),{fn:f}=__STORYBOOK_MODULE_TEST__,p={title:`Forms/SegmentedControl`,component:l,parameters:s(`SegmentedControl`,a,i),args:{onChange:f()},argTypes:{role:{control:`select`,options:[`radiogroup`,`tablist`]}},tags:[`Формы и поля ввода`]},m=e=>(0,d.jsx)(`div`,{style:{width:`100%`},children:(0,d.jsx)(l,{...e})}),m.args={options:[{label:`Баг`,value:`bug`},{label:`Идея`,value:`idea`},{label:`Другое`,value:`other`}],role:`radiogroup`},h=[`Playground`],m.parameters={...m.parameters,docs:{...m.parameters?.docs,source:{originalSource:`(props: SegmentedControlProps) => <div style={{
+  width: '100%'
+}}>
+    <SegmentedControl {...props} />
+  </div>`,...m.parameters?.docs?.source}}}})))()}export{u as n,g as r,m as t};

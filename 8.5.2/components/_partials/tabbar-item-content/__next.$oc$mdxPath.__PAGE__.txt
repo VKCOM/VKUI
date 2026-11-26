@@ -1,0 +1,131 @@
+2:"$Sreact.fragment"
+3:I[91133,[],""]
+4:I[4297,[],""]
+9:"static/chunks/9249-afb8826a15064ed3.js"
+a:"static/chunks/9559-0f7998580a23933e.js"
+b:"static/chunks/8688-1d051e5bb22a9bf9.js"
+c:"static/chunks/480-861ef7dc2c08fced.js"
+d:"static/chunks/app/%5B%5B...mdxPath%5D%5D/page-c862c3603aab4347.js"
+e:I[67042,["9249","$9","9559","$a","8688","$b","480","$c","217","$d"],"Main"]
+14:"ViewportBoundary"
+15:I[31872,[],"$14"]
+16:"MetadataBoundary"
+17:I[31872,[],"$16"]
+18:"$Sreact.suspense"
+19:I[12569,[],"IconMark"]
+6:X
+6:C
+7:X
+f:Tf17,Подкомпонент позволяет создать навигационный элемент. Чаще всего представлен иконкой размером `28px`. Допускается использовать текст
+рядом с иконкой. Иконку необходимо передавать в свойство `children`, текст — в свойство `label`.
+
+{/* @example-description: Пример `TabbarItem` с иконкой и текстовой подписью. */}
+<Playground>
+  ```jsx
+  <TabbarItem label="Профиль">
+    <Icon28UserCircleOutline />
+  </TabbarItem>
+  ```
+</Playground>
+
+Иконка и текст могут располагаться либо горизонтально, либо вертикально. Управлять этим поведением можно с помощью свойства `mode` у
+[`Tabbar`](/components/epic#tabbar-align).
+
+### Выбранное состояние
+
+Используйте свойство `selected`, чтобы показать текущий активный раздел.
+
+{/* @example-description: Выбранный `TabbarItem` с текстом для скринридера через `VisuallyHidden`. */}
+<Playground>
+  ```jsx
+  <TabbarItem selected>
+    {/* Данный текст будет озвучен скринридером */}
+    <VisuallyHidden>Профиль</VisuallyHidden>
+    <Icon28UserCircleOutline />
+  </TabbarItem>
+  ```
+</Playground>
+
+### Индикатор
+
+С помощью свойства `indicator` можно задать для компонента счётчик или индикатор уведомления.
+Передавайте компоненты `Counter` с `size="s"` или `Badge`.
+
+{/* @example-description: `TabbarItem` с индикатором уведомления, переданным в свойство `indicator`. */}
+<Playground>
+  ```jsx
+  <TabbarItem indicator={<Badge />}>
+    {/* Данный текст будет озвучен скринридером */}
+    <VisuallyHidden>Профиль</VisuallyHidden>
+    <Icon28UserCircleOutline />
+  </TabbarItem>
+  ```
+</Playground>
+
+### Тэг компонента
+
+Через свойство `Component` можно переопределить тэг, который будет отрендерен компонентом (по умолчанию при
+передаче свойства `href` компонент использует тэг `a`, в иных случаях `button`);
+
+### Доступность (a11y) [#a11y]
+
+Если вы не передаете свойство `label`, то ассистивные технологии не смогут однозначно озвучить ваш элемент.
+В таком случае рекомендуется вместе с иконкой передавать в свойство `children` компонент `VisuallyHidden`
+с поясняющим текстом.
+
+```jsx
+import { Icon28UserCircleOutline } from '@vkontakte/icons';
+import { TabbarItem, VisuallyHidden } from '@vkontakte/vkui';
+
+<TabbarItem>
+  {/* Данный текст будет озвучен скринридером */}
+  <VisuallyHidden>Профиль</VisuallyHidden>
+  <Icon28UserCircleOutline />
+</TabbarItem>;
+```
+
+В качестве альтернативного решение можно передать текст для скринридера в свойство `aria-label` или создать
+отдельный элемент с текстом и передать его `id` в свойство `aria-labelledby`.
+
+```jsx
+<TabbarItem aria-label="Профиль">
+  <Icon28UserCircleOutline />
+</TabbarItem>
+```
+
+```jsx
+<span id="my-label">Профиль</span>
+
+<TabbarItem aria-labelledby="my-label">
+  <Icon28UserCircleOutline />
+</TabbarItem>
+```8:[["children",{"s":"__PAGE__","h":160,"d":{"r":["$","$2","c",{"children":[[["$","$Le",null,{"metadata":{"title":"Tabbar Item Content","filePath":"content/components/_partials/tabbar-item-content.mdx","timestamp":1795700940000},"sourceCode":"$f","children":[["$","script",null,{"type":"application/ld+json","dangerouslySetInnerHTML":{"__html":"{\"@context\":\"https://schema.org\",\"@type\":\"WebPage\",\"name\":\"Tabbar Item Content\",\"description\":\"VKUI — библиотека адаптивных React-компонентов для создания мобильных и веб-приложений.\",\"url\":\"https://vkui.io/8.5.2/components/_partials/tabbar-item-content/\",\"image\":\"https://vkui.io/8.5.2/blog/new-docs-2025.png\",\"inLanguage\":\"ru\",\"isPartOf\":{\"@type\":\"WebSite\",\"name\":\"VKUI\",\"url\":\"https://vkui.io\"}}"}}],"$L10"]}],"$L11"],null,"$L12"]}],"p":"$@13","v":null,"s":"$7"}}]]
+1:[["children",{"s":{"n":"mdxPath","t":"oc","k":"components/_partials/tabbar-item-content","s":["_not-found","_global-error","apple-icon.png","favicon.ico","icon.svg"]},"h":64,"d":{"r":["$","$2","c",{"children":[null,["$","$L3",null,{"parallelRouterKey":"children","template":["$","$L4",null,{}]}]]}],"p":"$@5","v":"$6","s":"$7"},"c":"$Q8"}]]
+0:{"t":{"t":{"s":"","h":16,"c":"$Q1"},"h":{"r":["$","$2","h",{"children":[null,["$","$L15",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1, viewport-fit=cover"}]]}],["$","$L17",null,{"children":[["$","div",null,{"hidden":true,"children":["$","$18",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"Tabbar Item Content | VKUI"}],["$","meta","1",{"name":"description","content":"VKUI — библиотека адаптивных React-компонентов для создания мобильных и веб-приложений."}],["$","link","2",{"rel":"canonical","href":"https://vkui.io/components/_partials/tabbar-item-content/"}],["$","meta","3",{"property":"og:title","content":"Tabbar Item Content"}],["$","meta","4",{"property":"og:description","content":"VKUI — библиотека адаптивных React-компонентов для создания мобильных и веб-приложений."}],["$","meta","5",{"property":"og:url","content":"https://vkui.io/8.5.2/components/_partials/tabbar-item-content/"}],["$","meta","6",{"property":"og:site_name","content":"VKUI"}],["$","meta","7",{"property":"og:image","content":"https://vkui.io/8.5.2/blog/new-docs-2025.png"}],["$","meta","8",{"property":"og:image:alt","content":"Tabbar Item Content"}],["$","meta","9",{"property":"og:type","content":"website"}],["$","meta","10",{"name":"twitter:card","content":"summary_large_image"}],["$","meta","11",{"name":"twitter:title","content":"Tabbar Item Content"}],["$","meta","12",{"name":"twitter:description","content":"VKUI — библиотека адаптивных React-компонентов для создания мобильных и веб-приложений."}],["$","meta","13",{"name":"twitter:image","content":"https://vkui.io/8.5.2/blog/new-docs-2025.png"}],["$","meta","14",{"name":"twitter:image:alt","content":"Tabbar Item Content"}],["$","link","15",{"rel":"icon","href":"/8.5.2/favicon.ico?60dfc7274b0e657e","type":"image/x-icon","sizes":"48x48"}],["$","link","16",{"rel":"icon","href":"/8.5.2/icon.svg?01ea673639a821e1","type":"image/svg+xml","sizes":"any"}],["$","link","17",{"rel":"apple-touch-icon","href":"/8.5.2/apple-icon.png?131c1f3e67ede032","type":"image/png","sizes":"180x180"}],["$","$L19","18",{}]]}]}],null]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}],"p":"$@1a","v":null,"s":"$7"}},"a":"$@1b","u":"$@1c","b":"0pCHsMnQJZvqrwG0_YoWN"}
+1d:I[95540,["9249","$9","9559","$a","8688","$b","480","$c","217","$d"],"PlaygroundLazy"]
+1e:I[13091,["9249","$9","9559","$a","8688","$b","480","$c","217","$d"],"Anchor"]
+2a:I[80784,["9249","$9","9559","$a","8688","$b","480","$c","217","$d"],"TOC"]
+2b:I[31872,[],"OutletBoundary"]
+10:[["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Подкомпонент позволяет создать навигационный элемент. Чаще всего представлен иконкой размером ",["$","code",null,{"className":"Code_root__TR_dq __className_b0d317","dir":"ltr","children":"28px"}],". Допускается использовать текст\nрядом с иконкой. Иконку необходимо передавать в свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_b0d317","dir":"ltr","children":"children"}],", текст — в свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_b0d317","dir":"ltr","children":"label"}],"."]}],"\n","\n",["$","$L1d",null,{"code":"<TabbarItem label=\"Профиль\">\n  <Icon28UserCircleOutline />\n</TabbarItem>","previewId":"e0c63572cadc234fd15f3bff"}],"\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Иконка и текст могут располагаться либо горизонтально, либо вертикально. Управлять этим поведением можно с помощью свойства ",["$","code",null,{"className":"Code_root__TR_dq __className_b0d317","dir":"ltr","children":"mode"}]," у\n",["$","$L1e",null,{"href":"/components/epic#tabbar-align","children":["$","code",null,{"className":"Code_root__TR_dq __className_b0d317","dir":"ltr","children":"Tabbar"}]}],"."]}],"\n",["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"vybrannoe-sostoyanie","children":["$","a",null,{"href":"#vybrannoe-sostoyanie","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Выбранное состояние","children":["Выбранное состояние",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}],"\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Используйте свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_b0d317","dir":"ltr","children":"selected"}],", чтобы показать текущий активный раздел."]}],"\n","\n",["$","$L1d",null,{"code":"<TabbarItem selected>\n  {/* Данный текст будет озвучен скринридером */}\n  <VisuallyHidden>Профиль</VisuallyHidden>\n  <Icon28UserCircleOutline />\n</TabbarItem>","previewId":"7013a4dc61bbc5e935fbea98"}],"\n",["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"indikator","children":["$","a",null,{"href":"#indikator","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Индикатор","children":["Индикатор",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}],"\n",["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["С помощью свойства ",["$","code",null,{"className":"Code_root__TR_dq __className_b0d317","dir":"ltr","children":"indicator"}]," можно задать для компонента счётчик или индикатор уведомления.\nПередавайте компоненты ",["$","code",null,{"className":"Code_root__TR_dq __className_b0d317","dir":"ltr","children":"Counter"}]," с ","$L1f"," или ","$L20","."]}],"\n","\n","$L21","\n","$L22","\n","$L23","\n","$L24","\n","$L25","\n","$L26","\n","$L27","\n","$L28","\n","$L29"]
+11:["$","$L2a",null,{"toc":[{"value":"Выбранное состояние","id":"vybrannoe-sostoyanie","depth":3},{"value":"Индикатор","id":"indikator","depth":3},{"value":"Тэг компонента","id":"teg-komponenta","depth":3},{"value":"Доступность (a11y)","id":"a11y","depth":3}]}]
+12:["$","$L2b",null,{"children":["$","$18",null,{"name":"Next.MetadataOutlet","children":"$@2c"}]}]
+1c:true
+2d:I[98982,["9249","$9","9559","$a","8688","$b","480","$c","217","$d"],"PreContainer"]
+7:300
+1f:["$","code",null,{"className":"Code_root__TR_dq __className_b0d317","dir":"ltr","children":"size=\"s\""}]
+20:["$","code",null,{"className":"Code_root__TR_dq __className_b0d317","dir":"ltr","children":"Badge"}]
+21:["$","$L1d",null,{"code":"<TabbarItem indicator={<Badge />}>\n  {/* Данный текст будет озвучен скринридером */}\n  <VisuallyHidden>Профиль</VisuallyHidden>\n  <Icon28UserCircleOutline />\n</TabbarItem>","previewId":"83bb0262ed5093e90a17fded"}]
+22:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"teg-komponenta","children":["$","a",null,{"href":"#teg-komponenta","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Тэг компонента","children":["Тэг компонента",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+23:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Через свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_b0d317","dir":"ltr","children":"Component"}]," можно переопределить тэг, который будет отрендерен компонентом (по умолчанию при\nпередаче свойства ",["$","code",null,{"className":"Code_root__TR_dq __className_b0d317","dir":"ltr","children":"href"}]," компонент использует тэг ",["$","code",null,{"className":"Code_root__TR_dq __className_b0d317","dir":"ltr","children":"a"}],", в иных случаях ",["$","code",null,{"className":"Code_root__TR_dq __className_b0d317","dir":"ltr","children":"button"}],");"]}]
+24:["$","h3",null,{"className":"HeadingLink_heading__tkXI7 HeadingLink_heading3__avlK3","id":"a11y","children":["$","a",null,{"href":"#a11y","className":"HeadingLink_anchor__PGiN1","aria-label":"Постоянная ссылка на секцию Доступность (a11y)","children":["Доступность (a11y)",["$","svg",null,{"aria-hidden":true,"display":"block","className":"HeadingLink_anchorIcon__lmODw vkuiIcon vkuiIcon--16 vkuiIcon--w-16 vkuiIcon--h-16 vkuiIcon--linked_16","width":16,"height":16,"style":{"width":16,"height":16},"viewBox":"0 0 16 16","fill":"currentColor","children":["$undefined",["$undefined",["$","path",null,{"d":"M7.303 7.973a1 1 0 0 1-1.782.909 4 4 0 0 1 .736-4.646l2.121-2.122a4 4 0 1 1 5.657 5.657 1 1 0 1 1-1.414-1.414 2 2 0 1 0-2.829-2.829L7.672 5.65a2 2 0 0 0-.37 2.323Zm1.546.2a1 1 0 0 1 1.782-.908 4 4 0 0 1-.736 4.646l-2.121 2.121a4 4 0 1 1-5.657-5.657A1 1 0 0 1 3.531 9.79a2 2 0 1 0 2.829 2.828l2.121-2.121a2 2 0 0 0 .368-2.323Z"}]]]}]]}]}]
+25:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["Если вы не передаете свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_b0d317","dir":"ltr","children":"label"}],", то ассистивные технологии не смогут однозначно озвучить ваш элемент.\nВ таком случае рекомендуется вместе с иконкой передавать в свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_b0d317","dir":"ltr","children":"children"}]," компонент ",["$","code",null,{"className":"Code_root__TR_dq __className_b0d317","dir":"ltr","children":"VisuallyHidden"}],"\nс поясняющим текстом."]}]
+26:["$","$L2d",null,{"tabIndex":"0","data-language":"jsx","data-word-wrap":"","data-pagefind-ignore":"all","children":["$","code",null,{"className":"Code_root__TR_dq __className_b0d317","dir":"ltr","children":[["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"import"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" { Icon28UserCircleOutline } "}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"from"}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":" '@vkontakte/icons'"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":";"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"import"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" { TabbarItem, VisuallyHidden } "}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"from"}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":" '@vkontakte/vkui'"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":";"}]]}],"\n",["$","span",null,{"children":" "}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"<"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"TabbarItem"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  {"}],["$","span",null,{"style":{"--shiki-light":"#6A737D","--shiki-dark":"#6A737D"},"children":"/* Данный текст будет озвучен скринридером */"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"}"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  <"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"VisuallyHidden"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">Профиль</"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"VisuallyHidden"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  <"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Icon28UserCircleOutline"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" />"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"</"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"TabbarItem"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">;"}]]}]]}],"copy":true,"wrap":false}]
+27:["$","p",null,{"className":"mdx_paragraph__nVfmE","children":["В качестве альтернативного решение можно передать текст для скринридера в свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_b0d317","dir":"ltr","children":"aria-label"}]," или создать\nотдельный элемент с текстом и передать его ",["$","code",null,{"className":"Code_root__TR_dq __className_b0d317","dir":"ltr","children":"id"}]," в свойство ",["$","code",null,{"className":"Code_root__TR_dq __className_b0d317","dir":"ltr","children":"aria-labelledby"}],"."]}]
+28:["$","$L2d",null,{"tabIndex":"0","data-language":"jsx","data-word-wrap":"","data-pagefind-ignore":"all","children":["$","code",null,{"className":"Code_root__TR_dq __className_b0d317","dir":"ltr","children":[["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"<"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"TabbarItem"}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" aria-label"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"Профиль\""}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  <"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Icon28UserCircleOutline"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" />"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"</"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"TabbarItem"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}]]}],"copy":true,"wrap":false}]
+29:["$","$L2d",null,{"tabIndex":"0","data-language":"jsx","data-word-wrap":"","data-pagefind-ignore":"all","children":["$","code",null,{"className":"Code_root__TR_dq __className_b0d317","dir":"ltr","children":[["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"<"}],["$","span",null,{"style":{"--shiki-light":"#22863A","--shiki-dark":"#85E89D"},"children":"span"}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" id"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"my-label\""}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">Профиль</"}],["$","span",null,{"style":{"--shiki-light":"#22863A","--shiki-dark":"#85E89D"},"children":"span"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}],"\n",["$","span",null,{"children":" "}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"<"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"TabbarItem"}],["$","span",null,{"style":{"--shiki-light":"#6F42C1","--shiki-dark":"#B392F0"},"children":" aria-labelledby"}],["$","span",null,{"style":{"--shiki-light":"#D73A49","--shiki-dark":"#F97583"},"children":"="}],["$","span",null,{"style":{"--shiki-light":"#032F62","--shiki-dark":"#9ECBFF"},"children":"\"my-label\""}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"  <"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"Icon28UserCircleOutline"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":" />"}]]}],"\n",["$","span",null,{"children":[["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":"</"}],["$","span",null,{"style":{"--shiki-light":"#005CC5","--shiki-dark":"#79B8FF"},"children":"TabbarItem"}],["$","span",null,{"style":{"--shiki-light":"#24292E","--shiki-dark":"#E1E4E8"},"children":">"}]]}]]}],"copy":true,"wrap":false}]
+2c:null
+7:C
+1b:0
+5:"$undefined"
+1a:"$undefined"
+13:"$undefined"

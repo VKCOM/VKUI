@@ -17,6 +17,18 @@ description: Инструкция по интеграции VKUI с VK Mini Apps
 * [`@vkontakte/vk-bridge`](https://www.npmjs.com/package/@vkontakte/vk-bridge)
 * [`@vkontakte/vk-bridge-react`](https://www.npmjs.com/package/@vkontakte/vk-bridge)
 
+```sh
+npm i --save @vkontakte/vk-bridge @vkontakte/vk-bridge-react
+```
+
+```sh
+yarn add @vkontakte/vk-bridge @vkontakte/vk-bridge-react
+```
+
+```sh
+pnpm add @vkontakte/vk-bridge @vkontakte/vk-bridge-react
+```
+
 Далее подписываемся на изменения из **VK Bridge** и передаём их в `ConfigProvider` из VKUI. Используем готовые хуки из [`@vkontakte/vk-bridge-react`](https://www.npmjs.com/package/@vkontakte/vk-bridge).
 
 ```jsx filename="App.tsx"
