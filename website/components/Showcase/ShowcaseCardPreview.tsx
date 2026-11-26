@@ -81,7 +81,6 @@ export function ShowcaseCardPreview({
               previewId={previewId}
               colorScheme={colorScheme}
               Wrapper={Wrapper}
-              mounted={mounted}
             />
           ) : (
             <InlinePreviewContent contentRef={contentRef} previewId={previewId} Wrapper={Wrapper} />
