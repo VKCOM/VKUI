@@ -23,10 +23,32 @@
   -webkit-font-smoothing: auto;
 }
 
+.wrap {
+  white-space: pre-wrap;
+}
+
+/* stylelint-disable-next-line selector-max-type */
+.wrap > code {
+  max-inline-size: 100%;
+  overflow-wrap: anywhere;
+}
+
 .buttons {
   display: flex;
   column-gap: var(--vkui--spacing_size_xs);
   color: var(--vkui--color_icon_tertiary);
+}
+
+.floatingButton {
+  float: inline-end;
+  margin-block-start: calc(-1 * var(--vkui--spacing_size_l));
+  margin-inline-start: var(--vkui--spacing_size_s);
+  margin-inline-end: calc(-1 * var(--vkui--spacing_size_l));
+}
+
+/* stylelint-disable-next-line selector-max-type */
+.wrap > .floatingButton + code {
+  display: block;
 }
 
 .header {

@@ -34,7 +34,17 @@ const withNextra = nextra({
       slugifyTransformer,
     ],
     rehypePrettyCodeOptions: {
-      transformers: [transformerNotationDiff()],
+      transformers: [
+        transformerNotationDiff(),
+        {
+          name: 'code-wrap',
+          pre(node) {
+            if (this.options.meta?.__raw?.split(/\s+/).includes('wrap')) {
+              node.properties['data-wrap'] = '';
+            }
+          },
+        },
+      ],
       getHighlighter(opts) {
         const langs = Object.keys(bundledLanguages).filter((l) => l !== 'mermaid');
 

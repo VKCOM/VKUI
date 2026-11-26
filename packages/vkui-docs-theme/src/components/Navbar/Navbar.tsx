@@ -24,6 +24,7 @@ export interface NavbarProps {
    * Лого документации
    */
   logo: React.ReactElement;
+  logoHref?: string;
   /**
    * Дополнительные ссылки перед разделами из карты страниц.
    */
@@ -36,7 +37,7 @@ export interface NavbarProps {
 
 const isMenu = (page: PageItem | MenuItem): page is MenuItem => page.type === 'menu';
 
-export function Navbar({ logo, additionalItems }: NavbarProps): React.ReactElement {
+export function Navbar({ logo, logoHref, additionalItems }: NavbarProps): React.ReactElement {
   const themeConfig = useThemeConfig();
   const activeRoute = useFSRoute();
   const { menu, setMenu } = useMenu();
@@ -67,7 +68,7 @@ export function Navbar({ logo, additionalItems }: NavbarProps): React.ReactEleme
               hoverMode="opacity"
               activeMode="opacity"
               aria-label="Лого VKUI"
-              href={additionalItems?.[0]?.href ?? '/'}
+              href={logoHref ?? additionalItems?.[0]?.href ?? '/'}
             >
               {logo}
             </Tappable>
