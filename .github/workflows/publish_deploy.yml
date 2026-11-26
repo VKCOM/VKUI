@@ -138,7 +138,7 @@ jobs:
           node --run docs:website:build
           yarn workspace @project-docs/website run next-sitemap
 
-          cp -R website/out/* website/tmp/
+          cp -R website/out/. website/tmp/
 
           mkdir -p website/out/playground
           cp -R website/tmp/playground/* website/out/playground/

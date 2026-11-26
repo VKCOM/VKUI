@@ -1,0 +1,26 @@
+{
+  "$schema": "https://schemas.agentskills.io/discovery/0.2.0/schema.json",
+  "skills": [
+    {
+      "name": "vkui-install",
+      "type": "skill-md",
+      "description": "Установи @vkontakte/vkui в проект, проверь совместимость зависимостей и добавь в AGENTS.md правило о чтении документации пакета.",
+      "url": "vkui-install/SKILL.md",
+      "digest": "sha256:578d6b65464879ce310e8ff55df6b3938c98a3238a433b0c2e269c85ce7fd0b9"
+    },
+    {
+      "name": "vkui-migrate-v7-to-v8",
+      "type": "skill-md",
+      "description": "Оцени объём миграции приложения с @vkontakte/vkui v7 на v8 или выполни её по официальному руководству с помощью кодмодов.",
+      "url": "vkui-migrate-v7-to-v8/SKILL.md",
+      "digest": "sha256:2b7016d957e7881c3d3965b55db66abc975b175b83ea36da25f8c9ecc9d65caa"
+    },
+    {
+      "name": "vkui-website",
+      "type": "skill-md",
+      "description": "Ищи компоненты, хуки и руководства на vkui.io. Используй документацию для установленной или указанной пользователем версии @vkontakte/vkui.",
+      "url": "vkui-website/SKILL.md",
+      "digest": "sha256:3ae14f804fcaa8cf4c2625c7f275b3459e57bce0c2bef0f9e1b5d86dbe6adc39"
+    }
+  ]
+}
