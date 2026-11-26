@@ -1,6 +1,7 @@
 import type { MetaRecord } from 'nextra';
 
 const meta: MetaRecord = {
+  'get-started': 'Первые шаги',
   'about': 'Обзор',
   'install': 'Установка',
   'usage': 'Использование',

@@ -17,7 +17,7 @@ export function RedirectHandler() {
      * https://vkui.io/7.5.0/#/SplitCol → https://vkui.io/7.5.0/components/split-layout/#split-col-api
      *
      * 2 кейс
-     * https://vkui.io → https://vkui.io/overview/about
+     * https://vkui.io → https://vkui.io/overview/get-started
      * https://vkui.io/7.5.0 → https://vkui.io/7.5.0/overview/about
      * https://vkui.io/7.10.0 → https://vkui.io/7.10.0/overview/about
      */
@@ -57,7 +57,7 @@ function withVersion(location: Location, url: string) {
  */
 function getRedirectUrlForIndexPage(location: Location) {
   if (location.pathname === '/' || /^\/(\d+\.\d+\.\d+)\/?$/.test(location.pathname)) {
-    return 'overview/about';
+    return 'overview/get-started';
   }
   return null;
 }
