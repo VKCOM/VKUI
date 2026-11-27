@@ -1,34 +1,27 @@
-type Frontmatter = Record<string, string>;
+import { parse } from 'yaml';
+
+interface Frontmatter {
+  name?: string;
+  title?: string;
+  description?: string;
+  tags?: string;
+  date?: string;
+  last_updated?: string;
+  other?: { hidden?: boolean; parent?: string };
+}
+
+export function parseFrontmatterData(content: string): Frontmatter {
+  return (parse(content) as Frontmatter | null) ?? {};
+}
 
 export function parseFrontmatter(content: string): { data: Frontmatter; body: string } {
-  const match = content.match(/^---\s*\r?\n([\s\S]*?)\r?\n---\s*\r?\n?/);
+  const match = content.match(/^---\r?\n([\s\S]*?)\r?\n---[ \t]*(?:\r?\n|$)/);
   if (!match) {
     return { data: {}, body: content };
   }
 
-  const raw = match[1];
-  const data: Frontmatter = {};
-  let currentKey: string | null = null;
-  let currentValue = '';
-
-  for (const line of raw.split(/\r?\n/)) {
-    const keyMatch = line.match(/^([A-Za-z0-9_-]+)\s*:\s*(.*)/);
-    if (keyMatch) {
-      const [, key, value] = keyMatch;
-      if (currentKey) {
-        data[currentKey] = currentValue.trim();
-      }
-      currentKey = key;
-      currentValue = value.trim().replace(/^['"]|['"]$/g, '');
-    } else if (currentKey && /^\s+(.+)/.test(line)) {
-      currentValue += ' ' + line.trim();
-    }
-  }
-
-  if (currentKey) {
-    data[currentKey] = currentValue.trim();
-  }
-
-  const body = content.slice(match[0].length);
-  return { data, body };
+  return {
+    data: parseFrontmatterData(match[1]),
+    body: content.slice(match[0].length).trimStart(),
+  };
 }

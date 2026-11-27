@@ -90,6 +90,10 @@ const RootLayout: React.FC<{ children: React.ReactNode }> = async ({ children })
     <html lang="ru" dir="ltr" suppressHydrationWarning>
       <Head>
         <AlternateMdxLink />
+        <link
+          rel="describedby"
+          href={`${process.env.NEXT_PUBLIC_VKUI_DOCS_BASE_PATH || ''}/llms.txt`}
+        />
       </Head>
       <body>
         <InlineCode />
