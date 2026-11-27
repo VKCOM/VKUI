@@ -74,6 +74,7 @@ const setup = ({
   numberOfSlides = 5,
   isRtl = false,
   showArrows = true,
+  animationDuration,
 }: {
   defaultSlideIndex: number;
   looped: boolean;
@@ -91,6 +92,7 @@ const setup = ({
   onDragEnd?: VoidFunction | undefined;
   isRtl?: boolean | undefined;
   showArrows?: BaseGalleryProps['showArrows'] | undefined;
+  animationDuration?: BaseGalleryProps['animationDuration'] | undefined;
 }) => {
   let slideDataByIndexMap: Record<number, any> = {};
   let layer: HTMLDivElement;
@@ -147,6 +149,7 @@ const setup = ({
       <Gallery
         looped={looped}
         showArrows={showArrows}
+        animationDuration={animationDuration}
         align={align}
         slideIndex={slideIndex}
         onChange={onChange}
@@ -637,6 +640,85 @@ describe('Gallery', () => {
   });
 
   describe('check looped gallery navigation working', () => {
+    it(
+      're-centers the active slide after resizing during snap-back',
+      withFakeTimers(() => {
+        const onChange = vi.fn();
+        const gallery = setup({
+          looped: true,
+          defaultSlideIndex: 1,
+          slideWidth: 200,
+          containerWidth: 200,
+          viewPortWidth: 200,
+          align: 'center',
+          onChange,
+        });
+        vi.runAllTimers();
+
+        simulateDrag(gallery.viewPort, [100, 92]);
+        vi.advanceTimersByTime(40);
+        expect(onChange).not.toHaveBeenCalled();
+        expect(gallery.layerTransform).not.toBe('translate3d(-200px, 0, 0)');
+
+        gallery.containerWidth = 300;
+        fireEvent.resize(window);
+        act(() => {
+          vi.runAllTimers();
+        });
+
+        checkTransformX(gallery.layerTransform, -150);
+      }),
+    );
+
+    it.each([
+      { initialIndex: 0, firstIndex: 1, secondIndex: 2, direction: -1, isRtl: false },
+      { initialIndex: 4, firstIndex: 0, secondIndex: 1, direction: -1, isRtl: false },
+      { initialIndex: 0, firstIndex: 4, secondIndex: 3, direction: 1, isRtl: false },
+      { initialIndex: 4, firstIndex: 0, secondIndex: 1, direction: 1, isRtl: true },
+    ])(
+      'lets a second swipe take over during the transition from $initialIndex to $firstIndex (RTL: $isRtl)',
+      withFakeTimers(({ initialIndex, firstIndex, secondIndex, direction, isRtl }) => {
+        const onChange = vi.fn();
+        const gallery = setup({
+          looped: true,
+          defaultSlideIndex: initialIndex,
+          slideWidth: 200,
+          containerWidth: 200,
+          viewPortWidth: 200,
+          animationDuration: 1000,
+          onChange,
+          isRtl,
+        });
+        const getLayerShift = () => Number(gallery.layerTransform.match(/\((-?\d+)px/)?.[1]);
+        const normalizeShift = (shift: number) => ((shift % 1000) + 1000) % 1000;
+        vi.runAllTimers();
+
+        simulateDrag(gallery.viewPort, [100, 100 + direction * 80]);
+        expect(onChange).toHaveBeenNthCalledWith(1, firstIndex);
+        gallery.rerender({ slideIndex: firstIndex });
+        vi.advanceTimersByTime(200);
+        expect(normalizeShift(getLayerShift())).not.toBe(
+          normalizeShift(revertRtlValue(-firstIndex * 200, isRtl)),
+        );
+
+        fireEvent.mouseDown(gallery.viewPort, { clientX: 100 });
+        const beforeDrag = getLayerShift();
+        fireEvent.mouseMove(gallery.viewPort, { clientX: 100 + direction * 30 });
+        vi.advanceTimersByTime(32);
+        const duringDrag = getLayerShift();
+        expect(normalizeShift(duringDrag)).toBe(normalizeShift(beforeDrag + direction * 30));
+
+        vi.advanceTimersByTime(300);
+        expect(getLayerShift()).toBe(duringDrag);
+
+        fireEvent.mouseUp(gallery.viewPort);
+        expect(onChange).toHaveBeenNthCalledWith(2, secondIndex);
+        gallery.rerender({ slideIndex: secondIndex });
+        vi.runAllTimers();
+        checkTransformX(gallery.layerTransform, revertRtlValue(-secondIndex * 200, isRtl));
+      }),
+    );
+
     it(
       'check correct reverse navigation by arrows clicks',
       withFakeTimers(() => {

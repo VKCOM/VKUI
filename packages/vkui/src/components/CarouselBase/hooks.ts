@@ -1,6 +1,8 @@
 import * as React from 'react';
+import { useStableCallback } from '../../hooks/useStableCallback';
 import { animate, type DrawInterface, type TimingInterface } from '../../lib/animate';
 import { cubicBezier } from '../../lib/fx';
+import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import type { BaseGalleryProps, CubicBezierEasingType, PredefinedEasingType } from './types';
 
 const PRESET_ANIMATION_EASING: Record<PredefinedEasingType, CubicBezierEasingType> = {
@@ -14,14 +16,40 @@ const PRESET_ANIMATION_EASING: Record<PredefinedEasingType, CubicBezierEasingTyp
 export function useSlideAnimation(
   animationDuration: NonNullable<BaseGalleryProps['animationDuration']>,
   animationEasing: PredefinedEasingType | CubicBezierEasingType,
+  onIdle?: VoidFunction,
 ): {
   getAnimateFunction: (drawFunction: DrawInterface) => () => void;
   getAnimationEasing: () => string;
   addToAnimationQueue: (func: VoidFunction) => void;
   startAnimation: () => void;
   animationInQueue: () => boolean;
+  scheduleAnimationFrame: (callback: FrameRequestCallback) => void;
+  cancelAnimation: () => void;
 } {
   const animationQueue = React.useRef<VoidFunction[]>([]);
+  const pendingFrames = React.useRef(new Set<{ id: number }>());
+  const notifyIdle = useStableCallback(() => onIdle?.());
+
+  function scheduleAnimationFrame(callback: FrameRequestCallback) {
+    const frame = { id: 0 };
+    pendingFrames.current.add(frame);
+    frame.id = requestAnimationFrame((time) => {
+      if (pendingFrames.current.delete(frame)) {
+        callback(time);
+        if (!animationInQueue()) {
+          notifyIdle();
+        }
+      }
+    });
+  }
+
+  const cancelAnimation = React.useCallback(() => {
+    pendingFrames.current.forEach(({ id }) => cancelAnimationFrame(id));
+    pendingFrames.current.clear();
+    animationQueue.current.length = 0;
+  }, []);
+
+  useIsomorphicLayoutEffect(() => cancelAnimation, [cancelAnimation]);
 
   function getAnimateFunction(drawFunction: DrawInterface) {
     return () => {
@@ -30,6 +58,7 @@ export function useSlideAnimation(
         timing: getAnimationTiming(animationEasing),
         animationQueue: animationQueue.current,
         draw: drawFunction,
+        scheduleFrame: scheduleAnimationFrame,
       });
     };
   }
@@ -45,7 +74,7 @@ export function useSlideAnimation(
   }
 
   function animationInQueue() {
-    return !!animationQueue.current.length;
+    return animationQueue.current.length > 0 || pendingFrames.current.size > 0;
   }
 
   function getAnimationEasing() {
@@ -58,6 +87,8 @@ export function useSlideAnimation(
     addToAnimationQueue,
     startAnimation,
     getAnimationEasing,
+    scheduleAnimationFrame,
+    cancelAnimation,
   };
 }
 
