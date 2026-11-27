@@ -13,6 +13,19 @@ export function collectDocumentationPages() {
   );
 }
 
+const ICONS_PAGE = 'icons/index.mdx';
+
+export function collectWebsiteDocumentationPages() {
+  const iconsPage = path.join(CONTENT_DIRECTORY, ICONS_PAGE);
+  return collectMdxFiles(CONTENT_DIRECTORY)
+    .filter((filePath) => filePath === iconsPage || path.basename(filePath) !== 'index.mdx')
+    .sort();
+}
+
+export function getWebsiteMarkdownPath(relativePath: string) {
+  return relativePath === ICONS_PAGE ? 'icons.mdx' : relativePath;
+}
+
 export async function readDocumentationMarkdown(filePath: string, docgen: DocgenProps) {
   const source = fs.readFileSync(filePath, 'utf-8');
   // Преобразуем partial отдельно: импорты кода разрешаются относительно его пути.

@@ -12,6 +12,7 @@ website/generated/
 website/public/**/*.mdx
 packages/vkui/docs/
 website/public/llms.txt
+website/public/sitemap.md
 
 # Next
 .next/
