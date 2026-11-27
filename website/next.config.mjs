@@ -11,6 +11,7 @@ import { transformer as codeImportTransformer } from './remark-plugins/remarkCod
 import { transformer as headingTransformer } from './remark-plugins/remarkHeading.mjs';
 import { transformer as playgroundTransformer } from './remark-plugins/remarkPlayground.mjs';
 import { transformer as slugifyTransformer } from './remark-plugins/remarkSlugify.mjs';
+import { codeLanguageClass } from './remark-plugins/shikiCodeLanguageClass.mjs';
 import { generatePreviews } from './scripts/generate-previews.ts';
 
 await generatePreviews();
@@ -36,6 +37,7 @@ const withNextra = nextra({
     rehypePrettyCodeOptions: {
       transformers: [
         transformerNotationDiff(),
+        codeLanguageClass,
         {
           name: 'code-wrap',
           pre(node) {

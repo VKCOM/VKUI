@@ -2950,6 +2950,7 @@ __metadata:
     "@vkontakte/vkui-docs-theme": "workspace:^"
     browserslist-vscode: "github:browserslist/browserslist-vscode"
     lz-string: "npm:^1.5.0"
+    mdast-util-to-string: "npm:^4.0.0"
     next: "npm:^16.4.6"
     next-sitemap: "npm:^4.2.3"
     nextra: "npm:^4.6.1"

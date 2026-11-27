@@ -1,3 +1,10 @@
+import type { Code } from 'mdast';
+import remarkGfm from 'remark-gfm';
+import remarkParse from 'remark-parse';
+import remarkStringify from 'remark-stringify';
+import { unified } from 'unified';
+import { visit } from 'unist-util-visit';
+
 interface DocgenProp {
   name: string;
   required?: boolean;
@@ -8,6 +15,8 @@ interface DocgenProp {
 }
 
 type Docgen = Record<string, unknown[] | undefined>;
+
+const markdown = unified().use(remarkParse).use(remarkGfm).use(remarkStringify);
 
 function escapeMarkdown(text: string): string {
   return text.replace(/\|/g, '\\|').replace(/\n/g, ' ');
@@ -26,20 +35,41 @@ function renderPropsMarkdownTable(props: DocgenProp[] | undefined): string {
   }
 
   const lines = ['| Свойство | Тип | По умолчанию | Описание |', '| --- | --- | --- | --- |'];
+  const examples: string[] = [];
 
   for (const prop of props) {
     const name = prop.required ? `**${prop.name}** \\*` : prop.name;
     const type = escapeMarkdown(prop.type.raw || prop.type.name || '');
     const defaultValue = prop.defaultValue || '-';
     const deprecated = prop.tags && 'deprecated' in prop.tags ? prop.tags.deprecated : undefined;
-    const description = deprecated
-      ? `**Deprecated**: ${escapeMarkdown(String(deprecated))}`
-      : escapeMarkdown(prop.description || '');
+    let description = deprecated ? `**Deprecated**: ${String(deprecated)}` : prop.description || '';
+    const tree = markdown.parse(description);
+    const codeBlocks: Code[] = [];
+    visit(tree, 'code', (node, index, parent) => {
+      if (parent && index !== undefined) {
+        codeBlocks.push(node);
+        parent.children.splice(index, 1);
+        return index;
+      }
+      return undefined;
+    });
 
-    lines.push(`| \`${name}\` | \`${type}\` | \`${defaultValue}\` | ${description} |`);
+    if (codeBlocks.length > 0) {
+      description = markdown.stringify(tree).trim();
+      examples.push(
+        '',
+        `**Примеры для \`${prop.name}\`**`,
+        '',
+        markdown.stringify({ type: 'root', children: codeBlocks }).trimEnd(),
+      );
+    }
+
+    lines.push(
+      `| \`${name}\` | \`${type}\` | \`${defaultValue}\` | ${escapeMarkdown(description)} |`,
+    );
   }
 
-  return lines.join('\n') + '\n';
+  return [...lines, ...examples].join('\n') + '\n';
 }
 
 const SELF_CLOSING_RE = /<PropsTable\s+name="([^"]+)"\s*\/>/g;

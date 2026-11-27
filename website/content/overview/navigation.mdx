@@ -46,7 +46,7 @@ export default function App() {
 
 Для каждого экрана используйте `Panel`. Добавьте `PanelHeader` с названием экрана, чтобы пользователь видел, где находится. [`Panel`](/components/panel) · [`PanelHeader`](/components/panel-header)
 
-```
+```text
 Panel
   └─ PanelHeader
   └─ <content>
@@ -76,7 +76,7 @@ export const Home = (props: PanelProps) => {
 
 Объедините экраны одного сценария в `View`. Задайте каждому `Panel` уникальный `id` и передайте идентификатор открытого экрана в `activePanel`. [`View`](/components/view) · [`Panel`](/components/panel)
 
-```
+```text
 View
   └─ Panel N
     └─ PanelHeader
@@ -114,7 +114,7 @@ export const Router = () => {
 
 Вложите в `Root` компоненты `View` с уникальными `id`. Передайте идентификатор открытого сценария в `activeView`. [`Root`](/components/root) · [`View`](/components/view)
 
-```
+```text
 Root
   └─ View N
     └─ Panel N
@@ -191,7 +191,7 @@ export const Router = () => {
 - Для каждого раздела вложите в `Epic` компонент `View` или `Root` с уникальным `id`. `Root` позволяет объединить несколько сценариев в одном разделе. [`View`](/components/view) · [`Root`](/components/root)
 - Идентификатор открытого раздела передайте в `activeStory`. `Epic` переключает разделы без анимации.
 
-```
+```text
 Epic
   └─ View N
     └─ Panel N
@@ -293,7 +293,7 @@ export const Router = () => {
 
 В примере четыре раздела. В «Профиле», «Ленте» и «Сообщениях» по одному экрану, а в разделе «Ещё» — несколько сценариев.
 
-```
+```text
 app (Epic)
   └─ profile (View)
     └─ profile-panel (Panel)

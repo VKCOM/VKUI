@@ -6,6 +6,7 @@ import { compileMdx } from 'nextra/compile';
 import { MDXRemote } from 'nextra/mdx-remote';
 import type { PropItem } from 'react-docgen-typescript';
 import docgen from '@/docgen.json';
+import { codeLanguageClass } from '../../../remark-plugins/shikiCodeLanguageClass.mjs';
 import styles from './PropsTable.module.css';
 
 const Paragraph = getMdxComponents().p!;
@@ -121,7 +122,9 @@ async function TableDescriptionColumn({
       <Code>{type}</Code>
       <MDXRemote
         compiledSource={
-          await compileMdx(`${deprecated ? `\n\n**Deprecated**: ${deprecated}` : description}`)
+          await compileMdx(`${deprecated ? `\n\n**Deprecated**: ${deprecated}` : description}`, {
+            mdxOptions: { rehypePrettyCodeOptions: { transformers: [codeLanguageClass] } },
+          })
         }
         components={{
           pre: (props) => <pre {...props} />,
