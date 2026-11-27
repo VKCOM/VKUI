@@ -93,14 +93,19 @@ export const CarouselBase = ({
   const animationFrameRef = React.useRef<ReturnType<typeof requestAnimationFrame> | null>(null);
   const shiftXCurrentRef = React.useRef<number>(0);
   const shiftXDeltaRef = React.useRef<number>(0);
+  const renderedShiftXRef = React.useRef(0);
+  const interruptedDragShiftXRef = React.useRef<number | null>(null);
   const initialized = React.useRef<boolean>(false);
+  const hasDeferredLayout = React.useRef(false);
   const {
     animationInQueue,
     addToAnimationQueue,
     getAnimateFunction,
     startAnimation,
     getAnimationEasing,
-  } = useSlideAnimation(animationDuration, animationEasing);
+    scheduleAnimationFrame,
+    cancelAnimation,
+  } = useSlideAnimation(animationDuration, animationEasing, applyDeferredLayout);
   const isDragging = React.useRef(false);
 
   const [controlElementsState, setControlElementsState] =
@@ -163,6 +168,7 @@ export const CarouselBase = ({
           : shiftX;
 
       layerRef.current.style.transform = `translate3d(${indent}px, 0, 0)`;
+      renderedShiftXRef.current = indent;
       layerRef.current.style.transition = animation
         ? `transform ${animationDuration}ms ${getAnimationEasing()}`
         : '';
@@ -187,13 +193,20 @@ export const CarouselBase = ({
     return isRtl ? shiftX >= lastPoint : shiftX <= -lastPoint;
   };
 
-  const requestTransform = (shiftX: number, animation = false) => {
-    const { snaps, contentSize, slides } = slidesManager.current;
-
+  const scheduleTransform = (draw: VoidFunction) => {
     if (animationFrameRef.current !== null) {
       cancelAnimationFrame(animationFrameRef.current);
     }
     animationFrameRef.current = requestAnimationFrame(() => {
+      draw();
+      animationFrameRef.current = null;
+    });
+  };
+
+  const requestTransform = (shiftX: number, animation = false) => {
+    const { snaps, contentSize, slides } = slidesManager.current;
+
+    scheduleTransform(() => {
       /**
        * Для бесконечной галереи проверяем, что при dnd мы прокрутили левее, чем первый слайд,
        * чтобы сбросить `shiftXCurrentRef`.
@@ -212,9 +225,54 @@ export const CarouselBase = ({
         shiftXCurrentRef.current = Math.abs(shiftXDeltaRef.current) + snaps[0];
       }
       transformCssStyles(shiftX, animation);
-      animationFrameRef.current = null;
     });
   };
+
+  const getNearestLoopedShift = (shiftX: number, reference: number) => {
+    const { contentSize } = slidesManager.current;
+    return contentSize > 0
+      ? shiftX + Math.round((reference - shiftX) / contentSize) * contentSize
+      : shiftX;
+  };
+
+  const normalizeLoopedShift = (shiftX: number) => {
+    const { snaps, contentSize } = slidesManager.current;
+    if (contentSize === 0) {
+      return shiftX;
+    }
+    // Keep the layer and the loop points within the same cycle.
+    const cycle = revertRtlValue(contentSize, isRtl);
+    return shiftX + Math.floor((snaps[0] - shiftX) / cycle) * cycle;
+  };
+
+  const animateLoopedDrag = (start: number, targetIndex: number, reference: number) => {
+    const target = getNearestLoopedShift(slidesManager.current.snaps[targetIndex], reference);
+    addToAnimationQueue(
+      getAnimateFunction((progress) => {
+        transformCssStyles(normalizeLoopedShift(start + (target - start) * progress));
+      }),
+    );
+    startAnimation();
+  };
+
+  function updateSlidesLayout() {
+    shiftXCurrentRef.current = slidesManager.current.snaps[slideIndex];
+    initialized.current = true;
+    hasDeferredLayout.current = false;
+
+    setControlElementsState({
+      canSlideLeft: calculateCanSlideLeft(),
+      canSlideRight: calculateCanSlideRight(),
+      isDraggable: !(dragDisabled || slidesManager.current.isFullyVisible),
+    });
+  }
+
+  function applyDeferredLayout() {
+    if (hasDeferredLayout.current && !isDragging.current) {
+      updateSlidesLayout();
+      transformCssStyles(shiftXCurrentRef.current);
+    }
+  }
 
   const initializeSlides = () => {
     if (!rootRef.current || !viewportRef.current || !layerRef.current) {
@@ -240,6 +298,7 @@ export const CarouselBase = ({
 
     if (localSlides.length === 0) {
       initialized.current = false;
+      hasDeferredLayout.current = false;
       return;
     }
 
@@ -326,20 +385,16 @@ export const CarouselBase = ({
       );
     }
 
-    const isAnimationInProgress = animationInQueue() || animationFrameRef.current !== null;
-
-    if (isAnimationInProgress) {
+    if (animationInQueue() || (isDragging.current && interruptedDragShiftXRef.current !== null)) {
+      hasDeferredLayout.current = true;
       return;
     }
 
-    shiftXCurrentRef.current = snaps[slideIndex];
-    initialized.current = true;
+    if (animationFrameRef.current !== null) {
+      return;
+    }
 
-    setControlElementsState({
-      canSlideLeft: calculateCanSlideLeft(),
-      canSlideRight: calculateCanSlideRight(),
-      isDraggable: !(dragDisabled || slidesManager.current.isFullyVisible),
-    });
+    updateSlidesLayout();
     requestTransform(shiftXCurrentRef.current);
   };
 
@@ -379,7 +434,7 @@ export const CarouselBase = ({
           transformCssStyles(shiftX);
 
           if (shiftX <= snaps[snaps.length - 1] - slides[slides.length - 1].width) {
-            requestAnimationFrame(() => {
+            scheduleAnimationFrame(() => {
               shiftXCurrentRef.current = indent;
               transformCssStyles(snaps[0]);
             });
@@ -395,7 +450,7 @@ export const CarouselBase = ({
       startPoint = indent - revertRtlValue(slides[slides.length - 1].width, isRtl);
 
       addToAnimationQueue(() => {
-        requestAnimationFrame(() => {
+        scheduleAnimationFrame(() => {
           const shiftX = indent - revertRtlValue(slides[slides.length - 1].width, isRtl);
           transformCssStyles(shiftX);
 
@@ -434,13 +489,16 @@ export const CarouselBase = ({
       const { snaps } = slidesManager.current;
       const indent = snaps[slideIndex];
 
-      if (looped) {
+      const interruptedDragShiftX = interruptedDragShiftXRef.current;
+      interruptedDragShiftXRef.current = null;
+      if (looped && interruptedDragShiftX !== null && !isDragging.current) {
+        animateLoopedDrag(interruptedDragShiftX, slideIndex, shiftXCurrentRef.current);
+      } else if (looped) {
         loopedSlideChangePerform();
+        startAnimation();
       } else {
         simpleSlideChangePerform();
       }
-
-      startAnimation();
 
       shiftXCurrentRef.current = indent;
 
@@ -496,6 +554,7 @@ export const CarouselBase = ({
       onDragStart?.(e);
       shiftXCurrentRef.current = slidesManager.current.snaps[slideIndex];
       shiftXDeltaRef.current = 0;
+      interruptedDragShiftXRef.current = null;
     }
   };
 
@@ -504,10 +563,24 @@ export const CarouselBase = ({
       e.originalEvent.preventDefault();
 
       if (e.isSlideX) {
+        if (!isDragging.current && looped && animationInQueue()) {
+          // Use the rendered position for dragging and the active snap for choosing the next slide.
+          interruptedDragShiftXRef.current = getNearestLoopedShift(
+            renderedShiftXRef.current,
+            shiftXCurrentRef.current,
+          );
+          cancelAnimation();
+        }
         isDragging.current = true;
         if (shiftXDeltaRef.current !== e.shiftX) {
           shiftXDeltaRef.current = e.shiftX;
-          requestTransform(shiftXCurrentRef.current + shiftXDeltaRef.current);
+          const interruptedDragShiftX = interruptedDragShiftXRef.current;
+          if (interruptedDragShiftX === null) {
+            requestTransform(shiftXCurrentRef.current + e.shiftX);
+          } else {
+            const shiftX = normalizeLoopedShift(interruptedDragShiftX + e.shiftX);
+            scheduleTransform(() => transformCssStyles(shiftX));
+          }
         }
       }
     }
@@ -532,7 +605,20 @@ export const CarouselBase = ({
 
       if (targetIndex !== slideIndex) {
         shiftXCurrentRef.current = shiftXCurrentRef.current + shiftXDeltaRef.current;
+        if (interruptedDragShiftXRef.current !== null) {
+          interruptedDragShiftXRef.current += shiftXDeltaRef.current;
+        }
         onChange?.(targetIndex);
+      } else if (looped) {
+        if (e.isSlideX) {
+          const start = interruptedDragShiftXRef.current ?? shiftXCurrentRef.current;
+          interruptedDragShiftXRef.current = null;
+          animateLoopedDrag(
+            start + shiftXDeltaRef.current,
+            targetIndex,
+            shiftXCurrentRef.current + shiftXDeltaRef.current,
+          );
+        }
       } else {
         const initialShiftX = slidesManager.current.snaps[targetIndex];
         requestTransform(initialShiftX, true);

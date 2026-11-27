@@ -16,6 +16,7 @@ export interface AnimateArgumentsInterface {
   timing: TimingInterface;
   draw: DrawInterface;
   animationQueue: VoidFunction[];
+  scheduleFrame?: (callback: FrameRequestCallback) => void;
 }
 
 export function animate({
@@ -23,25 +24,25 @@ export function animate({
   timing,
   draw,
   animationQueue = [],
+  scheduleFrame,
 }: AnimateArgumentsInterface): void {
   if (!canUseDOM) {
     return;
   }
 
-  let start: number;
+  const requestFrame = scheduleFrame ?? requestAnimationFrame;
+  let start: number | undefined;
 
-  requestAnimationFrame(function animate(time: number): void {
-    if (!start) {
-      start = time;
-    }
-    let timeFraction = Math.min((time - start) / duration, 1);
+  requestFrame(function animate(time: number): void {
+    start ??= time;
+    const timeFraction = duration <= 0 ? 1 : Math.min((time - start) / duration, 1);
 
     const progress = timing(timeFraction);
 
     draw(progress);
 
     if (timeFraction < 1) {
-      requestAnimationFrame(animate);
+      requestFrame(animate);
       return;
     }
     animationQueue.shift();
