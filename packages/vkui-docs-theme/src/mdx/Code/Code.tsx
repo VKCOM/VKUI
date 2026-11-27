@@ -13,13 +13,18 @@ export function Code({
   className,
   noPadding = false,
   ...props
-}: React.ComponentProps<'code'> & { noPadding?: boolean }): React.ReactElement {
+}: React.ComponentProps<'code'> & {
+  noPadding?: boolean;
+  'data-language'?: string;
+}): React.ReactElement {
+  const language = props['data-language'];
   return (
     <code
       className={classNames(
         styles.root,
         jetBrainsMono.className,
         noPadding && styles.noPadding,
+        language && `language-${language}`,
         className,
       )}
       dir="ltr"

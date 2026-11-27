@@ -121,6 +121,7 @@ jobs:
         with:
           ref: ${{ env.CHECKOUT_BRANCH }}
           persist-credentials: false
+          fetch-depth: 0
 
       - name: Setting up the repository environment
         uses: ./.github/actions/setup
