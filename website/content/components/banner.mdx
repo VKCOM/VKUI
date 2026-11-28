@@ -1,16 +1,16 @@
 ---
-description: Компонент для отображения важных уведомлений и промо-блоков с возможностью взаимодействия.
+description: Баннер для важных уведомлений и промоматериалов.
 tags: notification
 ---
 
 <Overview group="data-display">
 # Banner [tag:component]
 
-Компонент для отображения важных уведомлений и промо-блоков с возможностью взаимодействия. Поддерживает различные режимы отображения и типы контента.
+Баннер для важных уведомлений и промоматериалов.
 
 </Overview>
 
-{/* @example-description: Banner: аватар, заголовок, подзаголовок, кнопка. */}
+{/* @example-description: Баннер с аватаром, заголовком, подзаголовком и кнопкой. */}
 <Playground>
   ```jsx
   <Banner
@@ -24,10 +24,7 @@ tags: notification
 
 ## Режимы отображения
 
-Задаётся свойством `mode`.
-
-Помимо стандартного режима (`mode="tint"`), поддерживается `mode="image"`, предназначенный для
-отображения компонента с фоновым изображением.
+По умолчанию баннер использует `mode="tint"`. Чтобы добавить фоновое изображение, передайте `mode="image"`.
 
 {/* @example-description: Banner в режиме image с кнопкой поверх фона. */}
 <Playground>
@@ -63,7 +60,7 @@ tags: notification
 - `chevron` — индикатор перехода;
 - `ReactNode` — пользовательский элемент.
 
-{/* @example-description: Секция after с chevron для перехода. */}
+{/* @example-description: Индикатор перехода `chevron` справа от содержимого. */}
 <Playground>
   ```jsx
   <Banner
@@ -76,7 +73,7 @@ tags: notification
 
 ### Левая секция (`before`)
 
-{/* @example-description: Секция before с изображением. */}
+{/* @example-description: Изображение слева от содержимого. */}
 <Playground>
   ```jsx
   <Banner
@@ -122,7 +119,7 @@ tags: notification
 
 ## Действия
 
-Для добавления действий используйте свойство `actions`.
+Передайте кнопки действий в `actions`.
 
 {/* @example-description: Несколько действий в `Banner` через `ButtonGroup` в блоке `actions`. */}
 <Playground>
