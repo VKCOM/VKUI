@@ -1,5 +1,5 @@
 ---
-description: Компонент, позволяющий переопределить цветовую схему сайта.
+description: Переопределяет цветовую схему для части приложения.
 tags: provider
 ---
 
@@ -7,7 +7,7 @@ tags: provider
 
 # ColorSchemeProvider [tag:component]
 
-Компонент, позволяющий переопределить цветовую схему сайта.
+Переопределяет цветовую схему для части приложения.
 
 </Overview>
 
@@ -24,10 +24,7 @@ tags: provider
 </ColorSchemeProvider>
 ```
 
-Вставить часть про кастомизацию.
-
-> При переопределении цветовой схемы убедитесь, что компонент, обёрнутый в `ColorSchemeProvider`,
-> принимает свойство `className`, иначе визуальные изменения соответствующей схемы не будут применены.
+> Чтобы цветовая схема применилась, обёрнутый в `ColorSchemeProvider` компонент должен принимать `className`.
 >
 > ```jsx
 > function BadComponent({ children }) {
@@ -60,7 +57,7 @@ tags: provider
 
 ## Хук useColorScheme [#use-color-scheme]
 
-Для получения значения текущей цветовой схемы используйте хук `useColorScheme`:
+Хук `useColorScheme` возвращает текущую цветовую схему.
 
 ```jsx
 import { useColorScheme } from '@vkontakte/vkui';

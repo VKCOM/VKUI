@@ -1,5 +1,5 @@
 ---
-description: Переопределяет базовую адаптивность компонента – глобально или локально.
+description: Переопределяет параметры адаптивности для всего приложения или его части.
 tags: provider
 ---
 
@@ -7,27 +7,25 @@ tags: provider
 
 # AdaptivityProvider [tag:component]
 
-Переопределяет базовую [адаптивность](/overview/adaptivity) компонента – глобально или локально. Принимает все доступные
-[параметры адаптивности](/overview/adaptivity#adaptivity-props).
+Переопределяет настройки [адаптивности](/overview/adaptivity) для всего приложения или его части. Поддерживает все [параметры адаптивности](/overview/adaptivity#adaptivity-props).
 
 </Overview>
 
 ## Когда использовать? [#when-to-use]
 
-- Если вам нужно зафиксировать размер компонента на `compact` или `regular` (см. [Адаптивность | Размеры элементов интерфейса](/overview/adaptivity#density)).
-- Если вам нужно зафиксировать конкретный брейкпоинт на мобильный, планшетный, настольный и т.п. (см. [Адаптивность | Размеры экрана](/overview/adaptivity#breakpoints)).
-- Если вам нужно зафиксировать поведение компонента (см. [Адаптивность | Наличие точного указателя](/overview/adaptivity#pointer)).
+- Чтобы задать [плотность интерфейса](/overview/adaptivity#density) `compact` или `regular`.
+- Чтобы зафиксировать [брейкпоинт](/overview/adaptivity#breakpoints), например для смартфона, планшета или настольного устройства.
+- Чтобы задать поведение компонента в зависимости от [наличия точного указателя](/overview/adaptivity#pointer).
 
 ## Логика работы
 
-`AdaptivityProvider` всегда перебивает свой вышестоящий экземпляр – это значит, что свойства не наследуются из контекста.
+Вложенный `AdaptivityProvider` создаёт собственный контекст и не наследует свойства родительского.
 
-Говоря о свойствах, по умолчанию они определяются как `undefined`. Автоматически определение есть только у свойства `density` при
-условии, что заданы `viewWidth` и `viewHeight` или `viewWidth` и `hasPointer` или только `viewHeight`.
+По умолчанию свойства равны `undefined`. Компонент вычисляет `density` автоматически, если переданы `viewWidth` и `viewHeight`, `viewWidth` и `hasPointer` или только `viewHeight`.
 
 ## Глобальное переопределение [#override-global]
 
-Оборачиваем в `AdaptivityProvider` всё приложение.
+Оберните всё приложение в `AdaptivityProvider`.
 
 ```jsx filename="index.js" {9}
 import { ConfigProvider, AdaptivityProvider, AppRoot, ViewWidth } from '@vkontakte/vkui';
@@ -48,7 +46,7 @@ export function AlwaysDesktopWithMouse() {
 
 ## Локальное переопределение [#override-local]
 
-В необходимом месте отдельно оборачиваем компонент или ряд компонентов в `AdaptivityProvider`.
+Оберните нужный компонент или группу компонентов в `AdaptivityProvider`.
 
 ```jsx {8}
 import { AdaptivityProvider, Button } from '@vkontakte/vkui';
@@ -101,8 +99,7 @@ export function App() {
 ```
 
 <Callout>
-  Для создание адаптивных интерфейсов лучше использовать более гибкие утилиты (см. [Адаптивность |
-  Утилиты для создания адаптивных интерфейсов](/overview/adaptivity#utils)).
+  Для создания адаптивных интерфейсов используйте [утилиты адаптивности](/overview/adaptivity#utils).
 </Callout>
 
 ## Свойства и методы [#api]
