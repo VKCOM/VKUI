@@ -3,9 +3,11 @@ import { act } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { REDUCE_MOTION_MEDIA_QUERY } from '../../lib/animation';
 import {
   baselineComponent,
   fakeTimersForScope,
+  matchMediaMock,
   setNodeEnv,
   userEvent,
   withFakeTimers,
@@ -206,7 +208,53 @@ const setup = ({
 };
 
 describe('Gallery', () => {
+  beforeEach(() => matchMediaMock());
   baselineComponent(Gallery);
+
+  describe('reduced motion', () => {
+    fakeTimersForScope(false);
+
+    it.each([false, true])('changes slides immediately (looped: %s)', (looped) => {
+      matchMediaMock(REDUCE_MOTION_MEDIA_QUERY);
+      const gallery = setup({
+        defaultSlideIndex: 0,
+        looped,
+        slideWidth: 200,
+        containerWidth: 200,
+        viewPortWidth: 200,
+      });
+
+      gallery.rerender({ slideIndex: 1 });
+
+      checkTransformX(gallery.layerTransform, -200);
+    });
+
+    it('finishes a running loop and discards queued frames when reduced motion is enabled', async () => {
+      matchMediaMock();
+      const gallery = setup({
+        defaultSlideIndex: 4,
+        looped: true,
+        slideWidth: 200,
+        containerWidth: 200,
+        viewPortWidth: 200,
+      });
+      await act(() => vi.advanceTimersToNextFrame());
+
+      gallery.rerender({ slideIndex: 0 });
+      await act(() => vi.advanceTimersToNextFrame());
+      gallery.rerender({ slideIndex: 1 });
+      expect(gallery.layerTransform).not.toBe('translate3d(-200px, 0, 0)');
+
+      const media = vi
+        .mocked(window.matchMedia)
+        .mock.results.find(({ value }) => value.media === REDUCE_MOTION_MEDIA_QUERY)!.value;
+      await act(() => media.addEventListener.mock.calls[0][1]({ matches: true }));
+
+      checkTransformX(gallery.layerTransform, -200);
+      await act(() => vi.runAllTimers());
+      checkTransformX(gallery.layerTransform, -200);
+    });
+  });
 
   describe('handles slide count', () => {
     fakeTimersForScope(false);
