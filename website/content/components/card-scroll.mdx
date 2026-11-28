@@ -1,5 +1,5 @@
 ---
-description: Компонент для создания горизонтально прокручиваемых списков Card.
+description: Горизонтально прокручиваемый список карточек Card.
 tags: card
 ---
 
@@ -7,8 +7,7 @@ tags: card
 
 # CardScroll [tag:component]
 
-Компонент для создания горизонтально прокручиваемых списков [`Card`](/components/card).
-Отвечает за ширину карточки и прокрутку при переполнении. Обеспечивает гибкую настройку базовой разметки.
+Горизонтально прокручиваемый список карточек [`Card`](/components/card). Компонент задаёт ширину карточек и позволяет выбрать тег списка.
 
 Связанные компоненты:
 
@@ -19,7 +18,7 @@ tags: card
 
 import { BlockWrapper } from '@/components/wrappers';
 
-{/* @example-description: Горизонтальный скролл карточек размера `s` с единым соотношением сторон. */}
+{/* @example-description: Горизонтальная прокрутка карточек размера `s` с единым соотношением сторон. */}
 <Playground Wrapper={BlockWrapper}>
   ```jsx
   <CardScroll size="s">
@@ -49,9 +48,8 @@ import { BlockWrapper } from '@/components/wrappers';
 
 ## Размер карточек
 
-Свойство `size` задаёт ширину каждой карточки и накладывает определённые ограничения на её пропорции.
-Соблюдение пропорций осуществляется самостоятельно
-(например, с помощью компонента [`AspectRatio`](/components/aspect-ratio), как в примере выше).
+Свойство `size` задаёт ширину карточек. Рекомендуемые пропорции зависят от размера.
+Чтобы задать пропорции карточек, используйте [`AspectRatio`](/components/aspect-ratio), как в примере выше.
 
 | Размер  | Пропорции                      | Особенности                   |
 | ------- | ------------------------------ | ----------------------------- |
@@ -62,10 +60,9 @@ import { BlockWrapper } from '@/components/wrappers';
 
 ## Управление видимостью стрелок
 
-В реализации `CardScroll` используется компонент [`HorizontalScroll`](/components/horizontal-scroll).
-Поэтому для управления видимостью стрелок можно использовать свойство `showArrows` компонента `HorizontalScroll`:
+Свойство `showArrows` задаёт, когда показывать стрелки прокрутки. Значения те же, что у [`HorizontalScroll`](/components/horizontal-scroll).
 
-{/* @example-description: `CardScroll` c постоянно видимыми стрелками навигации через `showArrows="always"`. */}
+{/* @example-description: `CardScroll` с постоянно видимыми стрелками навигации через `showArrows="always"`. */}
 <Playground Wrapper={BlockWrapper}>
   ```jsx
   <CardScroll size="m" showArrows="always">

@@ -1,8 +1,8 @@
 import { BlockWrapper } from '@/components/wrappers';
 
-Заголовок группы. Передаётся либо в свойство `header`, либо в начале `children`, либо в `Group.Header`.
+Чтобы добавить заголовок группы, передайте `Header` в свойство `header` или первым элементом в `children`. Можно также использовать `Group.Header`.
 
-{/* @example-description: Отдельный `Header` с индикатором и правым управляющим элементом. */}
+{/* @example-description: Отдельный `Header` с индикатором и элементом управления справа. */}
 <Playground Wrapper={BlockWrapper}>
   ```jsx
   <Header indicator={<Badge mode="prominent">12</Badge>} after={<Switch label="Уведомления" />}>Уведомления</Header>
@@ -21,13 +21,13 @@ import { BlockWrapper } from '@/components/wrappers';
 
 ### Дополнительные элементы
 
-- `indicator` — отображает счётчик/статус:
+- `indicator` — счётчик или статус.
 
   ```jsx
   <Header indicator={<Badge mode="prominent">12</Badge>}>Уведомления</Header>
   ```
 
-- `after` — контент справа от всего заголовка:
+- `after` — содержимое справа от всего заголовка.
 
   ```jsx
   <Header after={<Switch label="Настройки" />}>Настройки</Header>
@@ -35,7 +35,7 @@ import { BlockWrapper } from '@/components/wrappers';
 
 ### Пример использования
 
-{/* @example-description: Расширенный пример `Header` с иконками, подзаголовком, счетчиком и ссылкой. */}
+{/* @example-description: `Header` с иконками, подзаголовком, счётчиком и ссылкой. */}
 <Playground Wrapper={BlockWrapper}>
   ```jsx
   <Group
