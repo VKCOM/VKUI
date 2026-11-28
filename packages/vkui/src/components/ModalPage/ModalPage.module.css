@@ -82,7 +82,21 @@
   pointer-events: auto;
   touch-action: pan-y;
   transform: translate3d(0, 0, 0);
-  transition: block-size 0.4s var(--vkui_internal--spring-easing);
+  transition-property: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .documentMobile {
+    transition: block-size 0.4s var(--vkui_internal--spring-easing);
+  }
+
+  .documentMobile.documentStateEntering {
+    transition: transform 0.5s var(--vkui_internal--slide-easing) 0.1s;
+  }
+
+  .documentMobile.documentStateExiting {
+    transition: transform 0.2s ease;
+  }
 }
 
 .documentMobile.documentStateEnter {
@@ -91,12 +105,10 @@
 
 .documentMobile.documentStateEntering {
   transform: translate3d(0, 0, 0);
-  transition: transform 0.5s var(--vkui_internal--slide-easing) 0.1s;
 }
 
 .documentMobile.documentStateExiting {
   transform: translate3d(0, 100%, 0);
-  transition: transform 0.2s ease;
 }
 
 .documentMobile.documentStateExited {

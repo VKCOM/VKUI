@@ -24,24 +24,40 @@ export class CSSTransitionController<V extends number | string = number> {
   }
 
   disableTransition() {
+    this.removeTransitionListeners();
     this.el.style.setProperty('transition', 'none');
     return this;
   }
 
   cleanup() {
-    this.el.removeEventListener('transitionend', this.handleTransitionEnd);
+    this.removeTransitionListeners();
     this.el.style.removeProperty('transition');
     this.el.style.removeProperty(this.property);
     return this;
   }
 
   cleanupOnTransitionEnd() {
-    this.el.addEventListener('transitionend', this.handleTransitionEnd, { once: true });
+    const { transitionDuration, transitionProperty } = getComputedStyle(this.el);
+    if (
+      transitionProperty === 'none' ||
+      transitionDuration.split(',').every((duration) => parseFloat(duration) === 0)
+    ) {
+      return this.cleanup();
+    }
+
+    this.el.addEventListener('transitionend', this.handleTransitionEnd);
+    this.el.addEventListener('transitioncancel', this.handleTransitionEnd);
     return this;
   }
 
-  private readonly handleTransitionEnd = () => {
-    this.cleanup();
-    return this;
+  private removeTransitionListeners() {
+    this.el.removeEventListener('transitionend', this.handleTransitionEnd);
+    this.el.removeEventListener('transitioncancel', this.handleTransitionEnd);
+  }
+
+  private readonly handleTransitionEnd = (event: TransitionEvent) => {
+    if (event.target === this.el) {
+      this.cleanup();
+    }
   };
 }

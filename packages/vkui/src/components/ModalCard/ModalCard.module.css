@@ -37,7 +37,21 @@
   box-sizing: border-box;
   inline-size: auto;
   transform: translate3d(0, calc(100% - var(--vkui_internal_ModalCard--translateY)), 0);
-  transition: transform 0.4s var(--vkui_internal--spring-easing);
+  transition-property: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hostMobile {
+    transition: transform 0.4s var(--vkui_internal--spring-easing);
+  }
+
+  .hostMobile.hostStateEntering {
+    transition: transform 0.5s var(--vkui_internal--slide-easing) 0.2s;
+  }
+
+  .hostMobile.hostStateExiting {
+    transition: transform 0.2s ease;
+  }
 }
 
 .hostMobile.hostStateEnter {
@@ -45,13 +59,8 @@
   transition: none;
 }
 
-.hostMobile.hostStateEntering {
-  transition: transform 0.5s var(--vkui_internal--slide-easing) 0.2s;
-}
-
 .hostMobile.hostStateExiting {
   transform: translate3d(0, calc(100% + var(--vkui_internal_ModalCard--insetBlockEnd)), 0);
-  transition: transform 0.2s ease;
 }
 
 .hostMobile.hostStateExited {
