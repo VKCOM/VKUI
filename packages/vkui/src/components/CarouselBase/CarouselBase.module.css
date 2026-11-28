@@ -17,6 +17,13 @@
   block-size: 100%;
   min-block-size: 100px;
   backface-visibility: hidden;
+  transition-property: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .layer {
+    transition: var(--vkui_internal--CarouselBase_transition, none);
+  }
 }
 
 .draggable .layer {

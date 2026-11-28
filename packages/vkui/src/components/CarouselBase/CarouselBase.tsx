@@ -6,6 +6,7 @@ import { useConfigDirection } from '../../hooks/useConfigDirection';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useMutationObserver } from '../../hooks/useMutationObserver';
 import { useResizeObserver } from '../../hooks/useResizeObserver';
+import { useReducedMotion } from '../../lib/animation';
 import { useDOM } from '../../lib/dom';
 import { mergeCalls } from '../../lib/mergeCalls';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
@@ -97,6 +98,7 @@ export const CarouselBase = ({
   const interruptedDragShiftXRef = React.useRef<number | null>(null);
   const initialized = React.useRef<boolean>(false);
   const hasDeferredLayout = React.useRef(false);
+  const reducedMotion = useReducedMotion();
   const {
     animationInQueue,
     addToAnimationQueue,
@@ -169,9 +171,10 @@ export const CarouselBase = ({
 
       layerRef.current.style.transform = `translate3d(${indent}px, 0, 0)`;
       renderedShiftXRef.current = indent;
-      layerRef.current.style.transition = animation
-        ? `transform ${animationDuration}ms ${getAnimationEasing()}`
-        : '';
+      layerRef.current.style.setProperty(
+        '--vkui_internal--CarouselBase_transition',
+        animation ? `transform ${animationDuration}ms ${getAnimationEasing()}` : '',
+      );
     }
   };
 
@@ -193,10 +196,17 @@ export const CarouselBase = ({
     return isRtl ? shiftX >= lastPoint : shiftX <= -lastPoint;
   };
 
-  const scheduleTransform = (draw: VoidFunction) => {
+  const cancelRequestedTransform = React.useCallback(() => {
     if (animationFrameRef.current !== null) {
       cancelAnimationFrame(animationFrameRef.current);
+      animationFrameRef.current = null;
     }
+  }, []);
+
+  useIsomorphicLayoutEffect(() => cancelRequestedTransform, [cancelRequestedTransform]);
+
+  const scheduleTransform = (draw: VoidFunction) => {
+    cancelRequestedTransform();
     animationFrameRef.current = requestAnimationFrame(() => {
       draw();
       animationFrameRef.current = null;
@@ -266,6 +276,13 @@ export const CarouselBase = ({
       isDraggable: !(dragDisabled || slidesManager.current.isFullyVisible),
     });
   }
+
+  const snapToActiveSlide = () => {
+    cancelRequestedTransform();
+    interruptedDragShiftXRef.current = null;
+    updateSlidesLayout();
+    transformCssStyles(shiftXCurrentRef.current);
+  };
 
   function applyDeferredLayout() {
     if (hasDeferredLayout.current && !isDragging.current) {
@@ -482,8 +499,25 @@ export const CarouselBase = ({
   };
 
   useIsomorphicLayoutEffect(
+    function stopSlideAnimation() {
+      if (reducedMotion) {
+        cancelAnimation();
+        if (initialized.current && !isDragging.current) {
+          snapToActiveSlide();
+        }
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [reducedMotion],
+  );
+
+  useIsomorphicLayoutEffect(
     function performSlideChange() {
       if (!initialized.current) {
+        return;
+      }
+      if (reducedMotion) {
+        snapToActiveSlide();
         return;
       }
       const { snaps } = slidesManager.current;
@@ -609,6 +643,10 @@ export const CarouselBase = ({
           interruptedDragShiftXRef.current += shiftXDeltaRef.current;
         }
         onChange?.(targetIndex);
+      } else if (reducedMotion) {
+        if (e.isSlideX) {
+          snapToActiveSlide();
+        }
       } else if (looped) {
         if (e.isSlideX) {
           const start = interruptedDragShiftXRef.current ?? shiftXCurrentRef.current;
