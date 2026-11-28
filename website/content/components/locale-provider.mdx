@@ -1,5 +1,5 @@
 ---
-description: Компонент, позволяющий переопределить локаль.
+description: Компонент переопределяет локаль для вложенных элементов.
 tags: provider
 ---
 
@@ -7,13 +7,13 @@ tags: provider
 
 # LocaleProvider [tag:component]
 
-Компонент, позволяющий переопределить локаль.
+Компонент переопределяет локаль для вложенных элементов.
 
 </Overview>
 
 ## Локаль
 
-Задаётся свойством `value`. В качестве значений принимает строку с [языковой меткой BCP 47](https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry).
+Передайте в `value` строку с [языковой меткой BCP 47](https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry).
 
 ```jsx
 <LocaleProvider value="en">
@@ -23,7 +23,7 @@ tags: provider
 
 ## Хук useLocale [#use-locale]
 
-Для получения значения текущей локали используйте хук `useLocale`:
+Хук `useLocale` возвращает текущую локаль.
 
 ```jsx
 import { useLocale } from '@vkontakte/vkui';
