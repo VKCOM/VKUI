@@ -213,12 +213,11 @@ export class BottomSheetController {
         return;
       }
 
+      this.backdropTransitionController?.unset();
+      this.sheetTransitionController.enableTransition().set(`${this.currentSnapPoint}${this.unit}`);
       if (this.isDynamicSnapPoint) {
         this.sheetTransitionController.cleanupOnTransitionEnd();
       }
-
-      this.backdropTransitionController?.unset();
-      this.sheetTransitionController.enableTransition().set(`${this.currentSnapPoint}${this.unit}`);
     });
   }
 
