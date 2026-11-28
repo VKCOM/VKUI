@@ -1,5 +1,5 @@
 ---
-description: Контейнер для реализации интерфейса многоколоночной структурой.
+description: Контейнер для многоколоночного интерфейса.
 tags: navigation
 keywords:
   - SplitCol
@@ -9,10 +9,9 @@ keywords:
 
 # SplitLayout [tag:component]
 
-Контейнер для реализации интерфейса многоколоночной структурой – за реализацию колонки отвечает [`SplitCol`](#split-col).
+`SplitLayout` организует многоколоночный интерфейс. Для каждой колонки используйте [`SplitCol`](#split-col).
 
-Помимо многоколоночной структуры, за счёт [`SplitCol`](#split-col) со свойством `autoSpaced`, обеспечивает боковые отступы для
-экранов на базе [`Panel`](/components/panel).
+Чтобы добавить боковые отступы экранам на базе [`Panel`](/components/panel), передайте в [`SplitCol`](#split-col) свойство `autoSpaced`.
 
 Связанные страницы и компоненты:
 
@@ -110,22 +109,22 @@ return (
 
 ## Применение компонента
 
-<Callout>Компонент должен быть один на всё приложение.</Callout>
+<Callout>Используйте один `SplitLayout` на всё приложение.</Callout>
 
-Достаточно будет объявить `SplitLayout` один раз ближе к корню приложения (см. [Навигация | Предварительная настройка](/overview/navigation#initial-setup)).
+Разместите `SplitLayout` ближе к корню приложения. [Предварительная настройка навигации](/overview/navigation#initial-setup).
 
 ## Выравнивание
 
-За выравнивание контента по горизонтали отвечает свойство `center`.
+Свойство `center` управляет горизонтальным выравниванием содержимого.
 
 - `true` — весь контент выравнивается по центру;
 - `false` — выравнивание не применяется.
 
 ## Сквозная шапка
 
-Для реализации сквозной шапки между колонками используется свойство `header` с передачей в него компонента [`PanelHeader`](/components/panel-header).
+Чтобы добавить общую шапку над колонками, передайте [`PanelHeader`](/components/panel-header) в свойство `header`.
 
-{/* @example-description: Использование сквозной шапки `SplitLayout` через свойство `header` для синхронизации `PanelHeader` между колонками. */}
+{/* @example-description: Общая шапка `PanelHeader` над колонками через свойство `header`. */}
 <Playground Wrapper={FixedLayoutWrapper}>
 
 ```jsx
@@ -160,7 +159,7 @@ return (
 </Playground>
 
 <Callout>
-Для платформы vkcom шапку передавать не нужно. Для определения платформы используйте хук [`usePlatform`](/components/platform-provider#use-platform).
+На платформе `vkcom` свойство `header` можно опустить. Платформу определяет хук [`usePlatform`](/components/platform-provider#use-platform).
 
 ```jsx showLineNumbers filename="src/App.tsx"
 import { SplitLayout, SplitCol, usePlatform } from '@vkontakte/vkui';
@@ -181,8 +180,8 @@ export default function App() {
 
 ## Кастомизация
 
-Через свойство `slotProps` можно прокинуть свойства во внутренние элементы.
-Это удобно для добавления кастомных классов, data-атрибутов, aria-атрибутов, обработчиков событий, доступов к элементам через `getRootRef` и других расширений, не влияя на внешний API компонента.
+Передавайте свойства внутренним элементам через `slotProps`. Это могут быть CSS-классы, атрибуты `data-*` и `aria-*`,
+обработчики событий или `getRootRef` для доступа к DOM-элементу.
 
 {/* @example-description: Кастомизация `SplitLayout` через `slotProps` с добавлением классов, `data-testid` и ссылки на внутренний контейнер. */}
 <Playground Wrapper={FixedLayoutWrapper}>
