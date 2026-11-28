@@ -80,10 +80,12 @@
   block-size: 100%;
 }
 
-.ios .in {
-  transition: transform 0.07s var(--vkui--animation_easing_platform);
-}
+@media (prefers-reduced-motion: no-preference) {
+  .ios .in {
+    transition: transform 0.07s var(--vkui--animation_easing_platform);
+  }
 
-.ios .tappableActive + .in {
-  transform: scale(0.96);
+  .ios .tappableActive + .in {
+    transform: scale(0.96);
+  }
 }

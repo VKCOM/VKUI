@@ -140,7 +140,6 @@
   color: var(--vkui--color_icon_secondary);
   /* Используем translate3d, чтобы поправить дергание при наведении в Safari */
   transform: translate3d(calc(var(--vkui_internal--search_shift_direction) * 100%), 0, 0);
-  transition: transform 0.3s var(--vkui--animation_easing_platform);
 
   --vkui_internal--search_icon_size: calc(var(--vkui_internal--search_height) + 4px);
 }
@@ -183,7 +182,16 @@
   min-inline-size: 0;
   max-inline-size: min-content;
   pointer-events: none;
-  transition: flex-grow 0.3s var(--vkui--animation_easing_platform);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .controls {
+    transition: transform 0.3s var(--vkui--animation_easing_platform);
+  }
+
+  .after {
+    transition: flex-grow 0.3s var(--vkui--animation_easing_platform);
+  }
 }
 
 .hasAfter.withPadding .after {

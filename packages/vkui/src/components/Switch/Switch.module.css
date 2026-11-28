@@ -199,8 +199,6 @@
     var(--vkui_internal--Switch__handle_shift_x),
     var(--vkui_internal--Switch__handle_shift_y)
   );
-  transition: transform var(--vkui_internal--Switch__handle_shift_x_duration)
-    var(--vkui_internal--Switch__handle_shift_x_easing);
 }
 
 .handle::after {
@@ -211,11 +209,21 @@
   border-radius: inherit;
   box-shadow: var(--vkui_internal--Switch__handle_shadow);
   transform: scale(var(--vkui_internal--Switch__handle_scale));
-  transition-timing-function: var(--vkui_internal--Switch__handle_shift_x_easing), linear;
-  transition-duration:
-    var(--vkui_internal--Switch__handle_scale_duration),
-    var(--vkui_internal--Switch__handle_color_duration);
-  transition-property: transform, background-color;
+  transition: background-color var(--vkui_internal--Switch__handle_color_duration) linear;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .handle {
+    transition: transform var(--vkui_internal--Switch__handle_shift_x_duration)
+      var(--vkui_internal--Switch__handle_shift_x_easing);
+  }
+
+  .handle::after {
+    transition:
+      transform var(--vkui_internal--Switch__handle_scale_duration)
+      var(--vkui_internal--Switch__handle_shift_x_easing),
+      background-color var(--vkui_internal--Switch__handle_color_duration) linear;
+  }
 }
 
 .handleWithRipple::before {
