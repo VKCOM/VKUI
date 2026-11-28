@@ -168,11 +168,12 @@
     animation-name: animationSnackbarFadeIn;
   }
 }
-
-.stateEntered .in {
-  transition-timing-function: var(--vkui--animation_easing_platform);
-  transition-duration: var(--vkui_internal--snackbar_animation_duration);
-  transition-property: transform;
+@media (prefers-reduced-motion: no-preference) {
+  .stateEntered .in {
+    transition-timing-function: var(--vkui--animation_easing_platform);
+    transition-duration: var(--vkui_internal--snackbar_animation_duration);
+    transition-property: transform;
+  }
 }
 
 .touched .in {
