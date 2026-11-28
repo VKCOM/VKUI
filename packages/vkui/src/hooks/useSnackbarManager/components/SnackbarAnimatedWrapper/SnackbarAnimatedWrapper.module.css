@@ -26,6 +26,27 @@
   animation-name: animationSnackbarGrowOut;
 }
 
+@media (--reduce-motion) {
+  /* Эти анимации сохраняют время и события появления и закрытия Snackbar. */
+  .stateEnter {
+    animation-name: animationSnackbarKeepSizeOnEnter;
+  }
+
+  .stateExit {
+    animation-name: animationSnackbarKeepSizeOnExit;
+  }
+}
+
+@keyframes animationSnackbarKeepSizeOnEnter {
+  to {
+    margin-block-start: var(--vkui_internal--SnackbarAnimatedWrapper_margin_top);
+  }
+}
+@keyframes animationSnackbarKeepSizeOnExit {
+  to {
+    margin-block-start: var(--vkui_internal--SnackbarAnimatedWrapper_margin_top);
+  }
+}
 @keyframes animationSnackbarGrowIn {
   from {
     max-block-size: 0;
