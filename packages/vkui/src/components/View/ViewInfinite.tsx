@@ -5,6 +5,7 @@ import { classNames, noop } from '@vkontakte/vkjs';
 import { withContext } from '../../hoc/withContext';
 import { withPlatform } from '../../hoc/withPlatform';
 import { useRootRef } from '../../hooks/useExternRef';
+import { useReducedMotion } from '../../lib/animation';
 import { millisecondsInSecond } from '../../lib/date';
 import { canUseDOM, type DOMProps, withDOM } from '../../lib/dom';
 import { getNavId, type NavIdProps } from '../../lib/getNavId';
@@ -104,11 +105,16 @@ export interface ViewInfiniteState {
 }
 /* eslint-enable jsdoc/require-jsdoc */
 
+type ViewInfiniteInternalProps = ViewInfiniteProps & {
+  /** Прерывает анимацию завершения свайпа при включённом уменьшении движения. */
+  reducedMotion?: boolean | undefined;
+};
+
 class ViewInfiniteComponent extends React.Component<
-  ViewInfiniteProps & DOMProps,
+  ViewInfiniteInternalProps & DOMProps,
   ViewInfiniteState
 > {
-  constructor(props: ViewInfiniteProps) {
+  constructor(props: ViewInfiniteInternalProps) {
     super(props);
 
     this.state = {
@@ -136,6 +142,7 @@ class ViewInfiniteComponent extends React.Component<
   };
 
   private swipeBackPrevented = false;
+  private swipeBackTransitionCompleted = false;
   private readonly scrolls: Map<string, Array<number | undefined>> =
     scrollsCache.get(getNavId(this.props, warn) as string) || new Map();
   private transitionFinishTimeout: ReturnType<typeof setTimeout> | undefined = undefined;
@@ -156,6 +163,7 @@ class ViewInfiniteComponent extends React.Component<
   panelNodes: { [id: string]: HTMLDivElement | null } = {};
 
   componentWillUnmount() {
+    this.disposeTransition();
     const id = getNavId(this.props);
     if (id) {
       scrollsCache.set(id, this.scrolls);
@@ -165,7 +173,7 @@ class ViewInfiniteComponent extends React.Component<
     }
   }
 
-  componentDidUpdate(prevProps: ViewInfiniteProps, prevState: ViewInfiniteState) {
+  componentDidUpdate(prevProps: ViewInfiniteInternalProps, prevState: ViewInfiniteState) {
     // Нужен переход
     if (
       prevProps.activePanel !== this.props.activePanel &&
@@ -248,7 +256,15 @@ class ViewInfiniteComponent extends React.Component<
     }
 
     // Началась анимация завершения свайпа назад.
-    if (!prevState.swipeBackResult && this.state.swipeBackResult) {
+    if (!this.state.swipeBackResult) {
+      this.swipeBackTransitionCompleted = false;
+      if (prevState.swipeBackResult) {
+        this.disposeTransition();
+      }
+    } else if (
+      !prevState.swipeBackResult ||
+      (!prevProps.reducedMotion && this.props.reducedMotion)
+    ) {
       this.waitTransitionFinish(
         this.pickPanel(this.state.swipeBackNextPanel),
         this.swipingBackTransitionEndHandler,
@@ -294,25 +310,23 @@ class ViewInfiniteComponent extends React.Component<
   private disposeTransition() {
     this.transitionDisposer();
     this.transitionDisposer = noop;
+    clearTimeout(this.transitionFinishTimeout);
+    this.transitionFinishTimeout = undefined;
   }
 
   waitTransitionFinish(
     elem: HTMLElement | null | undefined,
     eventHandler: TransitionEventHandler,
   ): void {
-    if (this.shouldDisableTransitionMotion()) {
-      this.disposeTransition();
+    this.disposeTransition();
+    if (this.props.reducedMotion || this.shouldDisableTransitionMotion()) {
       this.transitionFinishTimeout = setTimeout(eventHandler);
     } else if (elem) {
-      this.disposeTransition();
       elem.addEventListener('transitionend', eventHandler);
       this.transitionDisposer = () => {
         elem.removeEventListener('transitionend', eventHandler);
       };
     } else {
-      if (this.transitionFinishTimeout) {
-        clearTimeout(this.transitionFinishTimeout);
-      }
       this.transitionFinishTimeout = setTimeout(
         eventHandler,
         this.props.platform === 'android' || this.props.platform === 'vkcom' ? 300 : 600,
@@ -372,12 +386,18 @@ class ViewInfiniteComponent extends React.Component<
   };
 
   swipingBackTransitionEndHandler = (e?: TransitionEvent): void => {
+    if (!this.state.swipeBackResult || this.swipeBackTransitionCompleted) {
+      return;
+    }
+
     // indexOf because of vendor prefixes in old browsers
     if (
       !e ||
       (e.propertyName.includes('transform') &&
         e.target === this.pickPanel(this.state.swipeBackNextPanel))
     ) {
+      this.swipeBackTransitionCompleted = true;
+      this.disposeTransition();
       switch (this.state.swipeBackResult) {
         case 'fail':
           this.onSwipeBackCancel();
@@ -556,6 +576,7 @@ class ViewInfiniteComponent extends React.Component<
       scroll,
       isBackCheck,
       className,
+      reducedMotion: _2,
       ...restProps
     } = this.props;
     const {
@@ -677,10 +698,10 @@ class ViewInfiniteComponent extends React.Component<
   }
 }
 
-const ViewInfiniteWithContext: React.FC<ViewInfiniteProps> = withContext(
+const ViewInfiniteWithContext: React.FC<ViewInfiniteInternalProps> = withContext(
   withContext(
     withContext(
-      withPlatform(withDOM<ViewInfiniteProps>(ViewInfiniteComponent)),
+      withPlatform(withDOM<ViewInfiniteInternalProps>(ViewInfiniteComponent)),
       SplitColContext,
       'splitCol',
     ),
@@ -693,5 +714,6 @@ const ViewInfiniteWithContext: React.FC<ViewInfiniteProps> = withContext(
 
 export const ViewInfinite = ({ ref, getRootRef, ...props }: ViewInfiniteProps): React.ReactNode => {
   const rootRef = useRootRef(getRootRef, ref);
-  return <ViewInfiniteWithContext {...props} getRootRef={rootRef} />;
+  const reducedMotion = useReducedMotion();
+  return <ViewInfiniteWithContext {...props} getRootRef={rootRef} reducedMotion={reducedMotion} />;
 };

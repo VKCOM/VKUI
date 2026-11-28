@@ -89,11 +89,13 @@
  * Panel swipe back
  */
 
-.ios .panelSwipeBackPrev.panelSwipeBackSuccess,
-.ios .panelSwipeBackPrev.panelSwipeBackFailed,
-.ios .panelSwipeBackNext.panelSwipeBackSuccess,
-.ios .panelSwipeBackNext.panelSwipeBackFailed {
-  transition: transform 0.3s var(--vkui--animation_easing_platform);
+@media (prefers-reduced-motion: no-preference) {
+  .ios .panelSwipeBackPrev.panelSwipeBackSuccess,
+  .ios .panelSwipeBackPrev.panelSwipeBackFailed,
+  .ios .panelSwipeBackNext.panelSwipeBackSuccess,
+  .ios .panelSwipeBackNext.panelSwipeBackFailed {
+    transition: transform 0.3s var(--vkui--animation_easing_platform);
+  }
 }
 
 .ios .panelSwipeBackPrev.panelSwipeBackFailed,
@@ -143,14 +145,16 @@
     animation: none;
   }
 
+  .panelNext ~ .panelPrev,
   .ios .panelNext ~ .panelPrev {
-    animation-name: animationViewPrevBack;
+    animation-name: animationViewFadeOut;
     animation-duration: 0.3s;
     animation-fill-mode: forwards;
   }
 
+  .panelPrev ~ .panelNext,
   .ios .panelPrev ~ .panelNext {
-    animation-name: animationViewNextForward;
+    animation-name: animationViewFadeIn;
     animation-duration: 0.3s;
     animation-fill-mode: none;
   }
@@ -161,6 +165,24 @@
   animation: none;
 }
 
+@keyframes animationViewFadeOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+@keyframes animationViewFadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
 @keyframes animationViewPrevBack {
   from {
     opacity: 1;

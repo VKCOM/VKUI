@@ -3,6 +3,7 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
+import { useReducedMotion } from '../../lib/animation';
 import { millisecondsInSecond } from '../../lib/date';
 import { blurActiveElement, useDOM } from '../../lib/dom';
 import { getNavId, type NavIdProps } from '../../lib/getNavId';
@@ -118,6 +119,7 @@ export const View = ({
   const prevSwipingBack = React.useRef<boolean>(undefined);
   const prevBrowserSwipe = React.useRef<boolean>(undefined);
   const prevSwipeBackResult = React.useRef<'success' | 'fail' | null>(undefined);
+  const swipeBackTransitionCompleted = React.useRef(false);
   const prevSwipeBackShift = React.useRef<number>(undefined);
   const prevSwipeBackPrevPanel = React.useRef<string | null>(undefined);
   const prevOnTransition = React.useRef<typeof onTransition>(undefined);
@@ -136,6 +138,7 @@ export const View = ({
 
   const disableAnimation =
     !configProvider.transitionMotionEnabled || !splitCol.animate || platform === 'vkcom';
+  const reducedMotion = useReducedMotion();
   const iOSSwipeBackSimulationEnabled =
     !disableAnimation && platform === 'ios' && configProvider.isWebView && Boolean(onSwipeBack);
 
@@ -189,6 +192,11 @@ export const View = ({
   }, [onSwipeBackCancelProp]);
 
   const swipingBackTransitionEndHandler = React.useCallback(() => {
+    if (!swipeBackResult || swipeBackTransitionCompleted.current) {
+      return;
+    }
+    swipeBackTransitionCompleted.current = true;
+
     switch (swipeBackResult) {
       case 'fail':
         onSwipeBackCancel();
@@ -197,6 +205,14 @@ export const View = ({
         onSwipeBackSuccess();
     }
   }, [onSwipeBackCancel, onSwipeBackSuccess, swipeBackResult]);
+
+  React.useEffect(() => {
+    if (!swipeBackResult) {
+      swipeBackTransitionCompleted.current = false;
+    } else if (reducedMotion) {
+      swipingBackTransitionEndHandler();
+    }
+  }, [reducedMotion, swipeBackResult, swipingBackTransitionEndHandler]);
 
   const handleTouchMoveXForNativeIOSSwipeBackOrSwipeNext = (event: CustomTouchEvent) => {
     if (browserSwipe) {
