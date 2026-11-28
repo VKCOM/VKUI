@@ -1,5 +1,5 @@
 ---
-description: Компонент для визуализации прогресса выполнения задачи.
+description: Индикатор выполнения задачи.
 tags: loading
 ---
 
@@ -7,7 +7,7 @@ tags: loading
 
 # Progress [tag:component]
 
-Компонент для визуализации прогресса выполнения задачи. Поддерживает различные стили оформления и настройку высоты.
+Индикатор выполнения задачи. Цвет и высоту индикатора можно настроить.
 
 </Overview>
 
@@ -39,7 +39,7 @@ import { BlockWrapper } from '@/components/wrappers';
 
 ## Пользовательские цвета
 
-Используйте свойство `appearance` для задания произвольного цвета полоски прогресса. Поддерживаются:
+Чтобы настроить цвет полосы прогресса, передайте HEX-код или CSS-переменную в `appearance`.
 
 ### HEX-коды
 
@@ -63,7 +63,7 @@ import { BlockWrapper } from '@/components/wrappers';
 
 ## Прозрачный фон
 
-Для отключения фона можно использовать свойство `trackDisable`:
+Чтобы убрать фон полосы прогресса, передайте `trackDisable`.
 
 {/* @example-description: Прогресс-бар без фона трека с включенным `trackDisable`. */}
 <Playground Wrapper={BlockWrapper} style={{ maxWidth: 270 }}>
@@ -74,7 +74,7 @@ import { BlockWrapper } from '@/components/wrappers';
 
 ## Доступность (a11y) [#a11y]
 
-Доступность реализована на основе рекомендаций из [Meter WAI-ARIA design pattern](https://www.w3.org/WAI/ARIA/apg/patterns/meter/).
+Компонент использует роль `progressbar` для обозначения хода выполнения задачи. [Описание роли в WAI-ARIA](https://www.w3.org/TR/wai-aria-1.2/#progressbar).
 
 ## Свойства и методы [#api]
 
