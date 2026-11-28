@@ -1,4 +1,4 @@
-Подкомпонент для отрисовки кнопки в шапке – передаётся в свойство `before` и/или `after` компонента [`PanelHeader`](/components/panel-header).
+Кнопка для шапки [`PanelHeader`](/components/panel-header). Передайте её в `before` или `after`.
 
 {/* @example-description: Базовый `PanelHeaderButton` с иконкой действия в шапке. */}
 <Playground>
@@ -11,13 +11,11 @@
 
 ### Контент
 
-В качестве содержимого компонента передавайте в свойство `children` либо [иконку](/icons/),
-либо текст. Текстовые кнопки чаще всего используются в iOS, но есть исключения для android.
+Передайте [иконку](/icons/) или текст в `children`. Текстовые кнопки чаще используются на iOS, иногда их используют и на Android.
 
-Обратите внимание, что для планшетов и десктопов рекомендуется использовать кнопки размером `24px`,
-а для мобильных устройств - размером `28px` (возможно, будет полезен [AdaptiveIconRenderer](/components/adaptive-icon-renderer)).
+Для планшетов и настольных устройств рекомендуемый размер иконки — `24px`, для мобильных — `28px`. Для выбора размера можно использовать [`AdaptiveIconRenderer`](/components/adaptive-icon-renderer).
 
-Если нужно несколько кнопок в ряд, то используйте `React.Fragment`:
+Чтобы разместить несколько кнопок в ряд, объедините их в `React.Fragment`.
 
 {/* @example-description: Несколько кнопок в шапке с группировкой через `React.Fragment`. */}
 <Playground>
@@ -37,9 +35,7 @@
 
 #### PanelHeaderBack [#panel-header-back]
 
-Кнопка назад в экранах в рамках одного сценария ([`View`](/components/view)). Внутри инкапсулирована логика показа нужной иконки для платформы.
-Также можно передать свойство `label`, для отображения текста, который будет виден на платформах vkcom и iOS, но будет скрыт на Android.
-С помощью свойств `hideLabelOnVKCom` и `hideLabelOnIOS` можно также визуально скрыть `label` на соответствующих платформах, он будет виден только для скринридеров.
+Кнопка возврата на предыдущий экран внутри [`View`](/components/view). Компонент выбирает иконку по платформе. Текст из `label` виден на `vkcom` и iOS. На Android он доступен скринридерам. Свойства `hideLabelOnVKCom` и `hideLabelOnIOS` скрывают текст визуально на соответствующих платформах, сохраняя его для скринридеров.
 
 {/* @example-description: Кнопка возврата `PanelHeaderBack` с платформенной иконкой. */}
 <Playground>
@@ -50,11 +46,11 @@
 
 #### PanelHeaderClose [#panel-header-close]
 
-Кнопка "Отмена" в модальных окнах для закрытия текущего [`View`](/components/view) в рамках [`View`](/components/root). На iOS будет
-показан текст, передаваемый как `label`, на Android и Desktop - `<Icon28CancelOutline />` или `<Icon24CancelOutline />`. Если
-передать свойство `label`, то на Android и Desktop он будет скрыт, но виден для скринридеров.
+Кнопка «Отмена». Передайте в `onClick` обработчик, который закроет модальное окно или переключит активный [`View`](/components/view) в [`Root`](/components/root).
 
-{/* @example-description: Кнопка закрытия `PanelHeaderClose` для модальных и навигационных сценариев. */}
+На iOS кнопка показывает текст из `label`. На Android и настольных устройствах она показывает `<Icon28CancelOutline />` или `<Icon24CancelOutline />`, а текст из `label` доступен скринридерам.
+
+{/* @example-description: Внешний вид кнопки «Отмена» (`PanelHeaderClose`). */}
 <Playground>
   ```jsx
   <PanelHeaderClose />
@@ -63,9 +59,7 @@
 
 #### PanelHeaderEdit [#panel-header-edit]
 
-Кнопка "Редактировать". Принимает свойство `isActive`, которое определяет состояние кнопки (включен ли режим редактирования).
-Для указания кастомных текстов для состояний можно использовать соответствующие свойства `doneLabel` и `editLabel`. Данные тексты
-будут видны на iOS, а на Android и Desktop они будет скрыты, но видны для скринридеров.
+Кнопка редактирования. Свойство `isActive` показывает, включён ли режим редактирования. Чтобы изменить подписи, передайте `editLabel` и `doneLabel`. На iOS подписи видны, а на Android и настольных устройствах доступны скринридерам.
 
 {/* @example-description: Кнопка редактирования `PanelHeaderEdit` с переключаемым состоянием. */}
 <Playground>
@@ -76,9 +70,7 @@
 
 #### PanelHeaderSubmit [#panel-header-submit]
 
-Кнопка "Готово" в модальных окнах для закрытия текущего [`View`](/components/view) в рамках [`View`](/components/root) и сохранения
-какого-либо результата. На iOS будет показан текст, передаваемый как `label`, на Android и Desktop - `<Icon28DoneOutline />`
-или `<Icon24DoneOutline />`. Если передать свойство `label`, то на Android и Desktop текст будет скрыт, но виден для скринридеров.
+Кнопка «Готово» для сохранения результата и закрытия текущего модального окна или текущего [`View`](/components/view) внутри [`Root`](/components/root). На iOS кнопка показывает текст из `label`. На Android и настольных устройствах она показывает `<Icon28DoneOutline />` или `<Icon24DoneOutline />`, а текст из `label` доступен скринридерам.
 
 {/* @example-description: Кнопка подтверждения `PanelHeaderSubmit` для завершения действия. */}
 <Playground>

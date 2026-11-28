@@ -1,6 +1,6 @@
 import { FixedLayoutWrapper, BlockWrapper } from '@/components/wrappers';
 
-Подкомпонент прибивает элементы навигации ([`TabbarItem`](/components/epic#tabbar-item)) к низу экрана. Передаётся в свойство `tabbar` компонента [`Epic`](/components/epic).
+Закрепляет пункты навигации ([`TabbarItem`](/components/epic#tabbar-item)) у нижнего края экрана. Передайте `Tabbar` в свойство `tabbar` компонента [`Epic`](/components/epic).
 
 <Playground hide Wrapper={BlockWrapper}>
   ```jsx
@@ -31,13 +31,10 @@ import { FixedLayoutWrapper, BlockWrapper } from '@/components/wrappers';
 
 ### Выравнивание [#tabbar-align]
 
-В случае, если в `Tabbar` передан один или два элемента [`TabbarItem`](/components/epic#tabbar-item), контент внутри этих элементов располагается
-по горизонтали, в остальных случаях контент располагается вертикально.
+Если в `Tabbar` один или два элемента [`TabbarItem`](/components/epic#tabbar-item), их содержимое располагается горизонтально. Если элементов больше, содержимое располагается вертикально. Чтобы задать направление независимо от числа элементов, передайте `mode`.
 
-С помощью свойства `mode` у `Tabbar` можно переопределить это поведение.
-
-- `"vertical"` — задаёт всегда вертикальное расположение;
-- `"horizontal"` — задаёт всегда горизонтальное расположение.
+- `"vertical"` — вертикальное расположение.
+- `"horizontal"` — горизонтальное расположение.
 
 {/* @example-description: Принудительное вертикальное выравнивание элементов `Tabbar` через `mode="vertical"`. */}
 <Playground Wrapper={FixedLayoutWrapper} style={{ height: 60 }}>
