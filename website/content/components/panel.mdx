@@ -1,5 +1,5 @@
 ---
-description: Компонент, представляющий собой отдельное состояние интерфейса, отображающееся в один момент времени.
+description: Отдельный экран приложения.
 keywords:
   - PanelSpinner
 ---
@@ -7,7 +7,7 @@ keywords:
 <Overview group="navigation">
 # Panel [tag:component]
 
-Компонент, представляющий собой отдельное состояние интерфейса, отображающееся в один момент времени.
+Отдельный экран приложения.
 
 Связанные страницы:
 
@@ -34,12 +34,12 @@ import { FixedLayoutWrapper } from '@/components/wrappers';
 
 ### Тип отображения
 
-Задаётся свойством `mode`.
+Свойство `mode` задаёт оформление панели.
 
-- `"card"` — карточный дизайн с тенями и скруглениями;
-- `"plain"` — плоский дизайн без теней и скруглений.
+- `"card"` оформляет панель как карточку с тенью и скруглёнными углами.
+- `"plain"` убирает тень и скругления.
 
-По умолчанию переключение между типами отображения зависит от [`viewWidth`](/overview/adaptivity#viewwidth)
+По умолчанию оформление зависит от [`viewWidth`](/overview/adaptivity#viewwidth).
 
 | `viewWidth`    | `mode`    |
 | -------------- | --------- |
@@ -48,7 +48,7 @@ import { FixedLayoutWrapper } from '@/components/wrappers';
 
 ### Центрирование контента
 
-Задаётся свойством `centered`.
+Чтобы выровнять содержимое по центру панели, передайте `centered`.
 
 {/* @example-description: Центрированное содержимое `Panel` через свойство `centered`. */}
 <Playground Wrapper={FixedLayoutWrapper} style={{ height: 415, overflow: 'hidden' }}>
@@ -64,10 +64,7 @@ import { FixedLayoutWrapper } from '@/components/wrappers';
 
 ### Фон страницы
 
-Задаётся свойством `disableBackground`.
-
-- `true` — задаёт прозрачный цвет фона;
-- `false` — стандартный цвет фона.
+Передайте `disableBackground`, чтобы сделать фон панели прозрачным.
 
 {/* @example-description: Панель с отключённым фоном через `disableBackground`. */}
 <Playground Wrapper={FixedLayoutWrapper} style={{ height: 415, overflow: 'hidden' }}>

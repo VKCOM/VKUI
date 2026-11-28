@@ -1,5 +1,5 @@
 ---
-description: Компонент, реализующий интерфейс с централизованной навигацией через закреплённую нижнюю панель.
+description: Компонент для навигации между основными разделами через закреплённую нижнюю панель.
 keywords:
   - Tabbar
   - TabbarItem
@@ -9,8 +9,7 @@ keywords:
 
 # Epic [tag:component]
 
-Компонент, реализующий интерфейс с централизованной навигацией через закреплённую нижнюю панель ([`Tabbar`](#tabbar)). Принимает
-коллекцию [`Root`](/components/root) или [`View`](/components/view).
+Компонент для навигации между основными разделами через закреплённую нижнюю панель [`Tabbar`](#tabbar). Принимает набор компонентов [`Root`](/components/root) или [`View`](/components/view).
 
 Связанные страницы:
 
@@ -72,12 +71,11 @@ return (
 ## Когда использовать? [#when-to-use]
 
 - Вы разрабатываете мобильное приложение ([`viewWidth <= SMALL_TABLET`](/overview/adaptivity#viewwidth)).
-- По дизайну требуется панель с быстрой навигацией на основные разделы.
+- В дизайне предусмотрена панель для перехода между основными разделами.
 
 ## Применение компонента
 
-Принимает необходимое количество [`View`](/components/view) и/или [`Root`](/components/root) с уникальным `id`. Далее `id` с нужным
-сценарием передаётся в свойство `activeStory`.
+Передайте в `Epic` компоненты [`View`](/components/view) или [`Root`](/components/root), каждому задайте уникальный `id`. Передайте `id` активного раздела в свойство `activeStory`.
 
 ```
 Epic
@@ -106,8 +104,7 @@ import TabbarItemContent from './_partials/tabbar-item-content.mdx';
 
 ## Адаптивность
 
-Если у вашего приложения есть настольный режим, то по дизайну скорей всего нужно будет заменять `tabbar` на другое меню. Чтобы
-спрятать `tabbar` на настольном экране – используйте хук [`useAdaptivityConditionalRender`](/components/use-adaptivity-conditional-render).
+Если в настольной версии вместо нижней панели предусмотрено меню, скройте `tabbar` с помощью хука [`useAdaptivityConditionalRender`](/components/use-adaptivity-conditional-render).
 
 ```jsx showLineNumbers
 export default function App() {
@@ -150,7 +147,7 @@ export default function App() {
 }
 ```
 
-Примеры замены `tabbar` на меню приведён на странице [Навигация | Пример](/overview/navigation#example-app).
+См. [пример замены `tabbar` на меню](/overview/navigation#example-app).
 
 ## Свойства и методы [#api]
 
