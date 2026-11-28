@@ -32,9 +32,31 @@
   border-radius: 50%;
   box-shadow: 0 2px 6px rgb(0, 0, 0, 0.2);
   opacity: 0;
-  transition:
-    transform 300ms cubic-bezier(0.1, 0, 0.25, 1),
-    opacity 220ms ease-out;
+  transition: opacity 220ms ease-out;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .spinner {
+    transition:
+      transform 300ms cubic-bezier(0.1, 0, 0.25, 1),
+      opacity 220ms ease-out;
+  }
+
+  .ios.refreshing .spinnerSelf {
+    animation: animationPullToRefreshToRefreshing 380ms ease-out;
+  }
+
+  .spinnerPath {
+    transition: stroke-dashoffset 167ms ease-out;
+  }
+
+  .spinnerOn .spinnerPath {
+    animation: animationPullToRefreshRotator var(--vkui_internal--duration) linear infinite;
+  }
+
+  .content {
+    transition: transform 400ms var(--vkui--animation_easing_platform);
+  }
 }
 
 .ios .spinner {
@@ -52,23 +74,14 @@
   stroke: currentColor;
 }
 
-.ios.refreshing .spinnerSelf {
-  animation: animationPullToRefreshToRefreshing 380ms ease-out;
-}
-
 .spinnerPath {
   transform: rotate(-90deg);
   transform-origin: center center;
-  transition: stroke-dashoffset 167ms ease-out;
 }
 
 .watching .spinnerPath,
 .refreshing .spinnerPath {
   transition: none;
-}
-
-.spinnerOn .spinnerPath {
-  animation: animationPullToRefreshRotator var(--vkui_internal--duration) linear infinite;
 }
 
 .content {
@@ -78,7 +91,6 @@
   overflow: hidden;
   /* TODO [>=9]: использовать clip чтобы не создовать контекст контейнера прокрутки и не мешать sticky элементам */
   overflow: clip;
-  transition: transform 400ms var(--vkui--animation_easing_platform);
 }
 
 .watching .content {
