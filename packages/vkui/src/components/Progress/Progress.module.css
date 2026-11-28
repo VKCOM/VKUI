@@ -18,7 +18,12 @@
   content: '';
   background: var(--vkui_internal_Progress_background_color);
   border-radius: inherit;
-  transition: width 0.2s ease;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .host::after {
+    transition: width 0.2s ease;
+  }
 }
 
 .appearanceAccent {

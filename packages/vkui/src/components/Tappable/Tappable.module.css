@@ -94,7 +94,12 @@ https://github.com/VKCOM/VKUI/pull/3641
   background: var(--vkui--color_transparent--active);
   border-radius: 50%;
   opacity: 0;
-  animation: animationWave 0.3s var(--vkui--animation_easing_platform);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .wave {
+    animation: animationWave 0.3s var(--vkui--animation_easing_platform);
+  }
 }
 
 /**

@@ -33,7 +33,6 @@
 .inWrapper {
   display: flex;
   align-items: stretch;
-  transition: transform 0.2s;
 }
 
 .arrow {
@@ -53,12 +52,18 @@
   opacity: 1;
 }
 
-.arrowLeft:hover ~ .in .inWrapper {
-  transform: translateX(calc(8px * var(--vkui_internal--HorizontalScroll_shift_direction)));
-}
+@media (prefers-reduced-motion: no-preference) {
+  .inWrapper {
+    transition: transform 0.2s;
+  }
 
-.arrowRight:hover ~ .in .inWrapper {
-  transform: translateX(calc(-8px * var(--vkui_internal--HorizontalScroll_shift_direction)));
+  .arrowLeft:hover ~ .in .inWrapper {
+    transform: translateX(calc(8px * var(--vkui_internal--HorizontalScroll_shift_direction)));
+  }
+
+  .arrowRight:hover ~ .in .inWrapper {
+    transform: translateX(calc(-8px * var(--vkui_internal--HorizontalScroll_shift_direction)));
+  }
 }
 
 /**

@@ -2,6 +2,12 @@
   animation: animationFadeIn 0.1s ease-in forwards;
 }
 
+@media (--reduce-motion) {
+  .animFadeIn {
+    animation-name: animationOpacityIn;
+  }
+}
+
 .animFadeOut {
   animation: animationFadeOut 0.1s ease-out forwards;
 }
@@ -15,6 +21,15 @@
   to {
     opacity: 1;
     transform: scale(1);
+  }
+}
+@keyframes animationOpacityIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
   }
 }
 @keyframes animationFadeOut {
