@@ -1,10 +1,12 @@
 import { act, type ComponentType, Fragment, type ReactNode } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, type Mock, vi } from 'vitest';
+import { REDUCE_MOTION_MEDIA_QUERY } from '../../lib/animation';
 import { getRandomUsers } from '../../testing/mock';
 import {
   baselineComponent,
   fakeTimersForScope,
+  matchMediaMock,
   mockScrollContext,
   mountTest,
   waitCSSKeyframesAnimation,
@@ -117,6 +119,7 @@ describe(View, () => {
     fakeTimersForScope(false);
     let nowMock: Mock<typeof Date.now>;
     beforeEach(() => {
+      matchMediaMock();
       nowMock = vi.spyOn(Date, 'now');
     });
     afterEach(() => {
@@ -219,6 +222,20 @@ describe(View, () => {
       expect(events.onSwipeBackCancel).not.toHaveBeenCalled();
       await waitCSSTransitionEnd(getViewPanelById('p2'), { propertyName: 'transform' });
       expect(events.onSwipeBack).toHaveBeenCalledTimes(1);
+    });
+    it('finishes swipe back without a transition under reduced motion', async () => {
+      matchMediaMock(REDUCE_MOTION_MEDIA_QUERY);
+      const { view, onSwipeBack, onSwipeBackCancel } = setupSwipeBack();
+      fireEvent.mouseDown(view, { clientX: 0, clientY: 100 });
+      fireEvent.mouseMove(view, { clientX: SWIPE_BACK_SHIFT_THRESHOLD, clientY: 100 });
+      fireEvent.mouseMove(view, { clientX: window.innerWidth / 2 + 1, clientY: 100 });
+      nowMock.mockImplementation(() => Infinity);
+      fireEvent.mouseUp(view);
+
+      await act(vi.runAllTimers);
+
+      expect(onSwipeBack).toHaveBeenCalledTimes(1);
+      expect(onSwipeBackCancel).not.toHaveBeenCalled();
     });
     it('should swipe back by start touch anywhere', async () => {
       const { view, ...events } = setupSwipeBack();
