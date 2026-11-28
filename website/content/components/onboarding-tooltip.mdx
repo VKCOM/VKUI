@@ -1,5 +1,5 @@
 ---
-description: Компонент для отрисовки подсказки, когда пользователю хочется представить новый функционал.
+description: Подсказка для знакомства с новыми функциями интерфейса.
 tags: overlay
 ---
 
@@ -7,8 +7,7 @@ tags: overlay
 
 # OnboardingTooltip [tag:component]
 
-Компонент для отрисовки подсказки, как правило в случаях, когда
-пользователю хочется представить новый функционал.
+Подсказка для знакомства с новыми функциями интерфейса.
 
 </Overview>
 
@@ -24,7 +23,7 @@ import { OnboardingTooltipWrapper } from '@/components/wrappers';
   ```
 </Playground>
 
-{/* @example-description: Базовый `OnboardingTooltip` для одноразового знакомства с новым функционалом. */}
+{/* @example-description: `OnboardingTooltip` знакомит пользователя с обновлённым разделом. */}
 <Playground Wrapper={OnboardingTooltipWrapper}>
   ```jsx
   <OnboardingTooltip shown description="Обновлённый раздел поможет найти друзей">
@@ -33,33 +32,24 @@ import { OnboardingTooltipWrapper } from '@/components/wrappers';
   ```
 </Playground>
 
-## Концепция
+## Когда показывать подсказку [#koncepciya]
 
-Показывать данные подсказки пользователю следует один раз, запоминая факт показа между
-сессиями. Рекомендуется показывать подсказку сразу после того, как нужный элемент появился в зоне видимости.
-Воспользуйтесь [Intersection Observer API](https://developer.mozilla.org/ru/docs/Web/API/Intersection_Observer_API) для реализации
-такого поведения.
+Показывайте подсказку пользователю один раз и сохраняйте факт показа между сессиями. Рекомендуется показывать её, как только нужный элемент появляется в области просмотра. Для этого используйте [Intersection Observer API](https://developer.mozilla.org/ru/docs/Web/API/Intersection_Observer_API).
 
-> На странице не может быть две одновременно показанных подсказки. Они всегда должны показываться
-> последовательно: следующая показывается при закрытии текущей и так далее.
+> Показывайте по одной подсказке. Открывайте следующую после закрытия текущей.
 
 ## Использование
 
-Если хочется снабдить какой-то элемент интерфейса подсказкой,
-достаточно просто обернуть его в компонент `OnboardingTooltip`.
+Чтобы добавить подсказку к элементу интерфейса, оберните его в `OnboardingTooltip`.
 
 ## OnboardingTooltipContainer [tag:component]
 
-Обычно компонент используется в контексте [`Panel`](/components/panel),
-[`PanelHeader`](/components/panel-header) или [`FixedLayout`](/components/fixed-layout), поэтому вам
-не нужно задумываться о позиционировании подсказки.
+Внутри [`Panel`](/components/panel), [`PanelHeader`](/components/panel-header) и [`FixedLayout`](/components/fixed-layout) позиционирование подсказки настраивается автоматически.
 
-Если возникла потребность использовать `OnboardingTooltip` вне контекста перечисленных компонентов,
-следуйте следующим инструкциям:
+В других контейнерах используйте `OnboardingTooltipContainer`.
 
-- в контейнере с прокруткой — замените какой-нибудь элемент, внутри которого нет прокрутки,
-  на `<OnboardingTooltipContainer>` и добавьте ему css-свойство `position: relative` (или другую не-`static`);
-- внутри `position: fixed` используйте `<OnboardingTooltipContainer fixed>`.
+- В контейнере с прокруткой замените один из непрокручиваемых вложенных элементов на `OnboardingTooltipContainer`. Задайте ему `position: relative` или другое значение, отличное от `static`.
+- Внутри элемента с `position: fixed` используйте `<OnboardingTooltipContainer fixed>`.
 
 ## Цветовые варианты
 
@@ -100,15 +90,7 @@ import { OnboardingTooltipWrapper } from '@/components/wrappers';
 
 ## Доступность (a11y) [#a11y]
 
-`OnboardingTooltip` технически является модальным окном (`role="dialog"`),
-а значит у него обязательно должно быть имя — его краткое название.
-Благодаря этому пользователи вспомогательных технологий знают, что это за элемент и какое у него содержимое.
-
-Задать имя можно с помощью следующих способов:
-
-- используя свойство `title`;
-- используя свойство `aria-label`;
-- используя свойство `aria-labelledby`;
+У `OnboardingTooltip` с ролью `dialog` должно быть доступное имя. Задайте его через `title`, `aria-label` или `aria-labelledby`, чтобы скринридер мог объявить назначение подсказки.
 
 ## Свойства и методы [#api]
 

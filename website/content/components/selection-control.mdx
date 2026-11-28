@@ -1,5 +1,5 @@
 ---
-description: Компонент, который представляет собой базовую обертку для переключателей (checkbox, radio, switch).
+description: Базовая обёртка для переключателей Checkbox, Radio и Switch.
 tags: selection
 ---
 
@@ -7,8 +7,7 @@ tags: selection
 
 # SelectionControl [tag:component]
 
-Компонент, который представляет собой базовую обертку для переключателей (`checkbox`, `radio`, `switch`).
-Лежит в основе таких компонентов как [`Radio`](/components/radio), [`Checkbox`](/components/checkbox) и [`Switch`](/components/switch).
+Базовая обёртка для [`Radio`](/components/radio), [`Checkbox`](/components/checkbox) и [`Switch`](/components/switch).
 
 </Overview>
 
@@ -24,26 +23,11 @@ tags: selection
 
 ## Применение компонента
 
-> **Обратите внимание**
->
-> Если вам не нужна дополнительная стилизация или специфичное поведение, то используйте компоненты [`Radio`](/components/radio),
-> [`Checkbox`](/components/checkbox) или [`Switch`](/components/switch) напрямую. Они покрывают все базовые потребности пользователя
-> и стилизованы под дизайн-систему VKUI.
-
-С помощью данного компонента можно более гибко контролировать поведение и стилизацию всех типов переключателей.
-Может быть полезно, если вы хотите задать специфичную цветовую тему компонентов или изменить порядок
-текстовых элементов.
+Используйте `SelectionControl`, когда нужно изменить оформление или поведение переключателя. Например, можно задать свою цветовую тему или изменить порядок текстовых элементов. Для стандартного оформления и поведения используйте `Radio`, `Checkbox` или `Switch` напрямую.
 
 ## Структура
 
-Компонент `SelectionControl` служит обёрткой для всего контента.
-
-Подкомпонент `SelectionControl.Label` вкладывается в `SelectionControl` и используется для задания заголовка и подзаголовка переключателя.
-
-Также в `SelectionControl` необходимо вложить нужный переключатель, для этого используйте соответствующие компоненты `Checkbox.Input`,
-`Radio.Input` или `Switch`.
-
-Переключатели и подкомпонент `SelectionControl.Label` можно располагать в любом порядке.
+Поместите в `SelectionControl` переключатель (`Checkbox.Input`, `Radio.Input` или `Switch`) и `SelectionControl.Label` с заголовком и подзаголовком. Их можно расположить в любом порядке.
 
 import { BlockWrapper } from '@/components/wrappers';
 
