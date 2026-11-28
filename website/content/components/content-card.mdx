@@ -1,5 +1,5 @@
 ---
-description: Компонент для создания интерактивных карточек с изображением и текстовым содержимым.
+description: Интерактивная карточка с изображением и текстом.
 tags: card
 ---
 
@@ -7,10 +7,7 @@ tags: card
 
 # ContentCard [tag:component]
 
-Компонент для создания интерактивных карточек с изображением и текстовым содержимым.
-Сочетает возможности кликабельных элементов, карточек и медиа-контента.
-Автоматически распределяет свойства между вложенными компонентами.
-
+Интерактивная карточка с изображением и текстом.
 Связанные компоненты:
 
 - [CardGrid](/components/card-grid)
@@ -38,28 +35,26 @@ tags: card
 
 ### Свойства изображения
 
-Внутренний тэг `img` получает следующие свойства: `getRef`, `maxHeight`, `imageObjectFit`, `src`, `srcSet`, `alt`,
-`width`, `height`, `crossOrigin`, `decoding`, `loading`, `referrerPolicy`, `sizes`, `useMap`, `fetchPriority`
+Изображение `<img>` получает свойства `getRef`, `maxHeight`, `imageObjectFit`, `src`, `srcSet`, `alt`,
+`width`, `height`, `crossOrigin`, `decoding`, `loading`, `referrerPolicy`, `sizes`, `useMap`, `fetchPriority`.
 
 ### Свойства корневого компонента `Card`
 
-Внутренний компонент [`Card`](/components/card) получает следующие свойства: `mode`, `getRootRef`, `Component`,
+Корневой компонент [`Card`](/components/card) получает свойства `mode`, `getRootRef`, `Component`,
 `style`, `className`.
 
 ### Свойства `Tappable`
 
-Внутренний компонент [`Tappable`](/components/tappable) получает все остальные свойства (кроме `subhead`,
-`header`, `text` и `caption`).
+Вложенный [`Tappable`](/components/tappable) получает остальные свойства, кроме `subhead`, `header`, `text` и `caption`.
 
-## Семантическая настройка
+## HTML-теги карточки и заголовка [#semanticheskaya-nastrojka]
 
 - **Component** — базовый HTML-тег контейнера (по умолчанию `li`).
 - **titleComponent** — тег для обёртки заголовка (по умолчанию `span`).
 
 ## Доступность (a11y) [#a11y]
 
-1. По умолчанию используется тег `"li"` для повышения доступности компонента. Вы можете прокинуть необходимый вам тег через prop `Component`.
-   Ссылки на источники: [статья про доступность карточек](https://inclusive-components.design/cards/).
+1. Если карточки входят в список, сохраните тег `li` для каждого элемента. Для другой структуры задайте тег через `Component`. Подробнее в [статье о доступности карточек](https://inclusive-components.design/cards/).
 2. Всегда указывайте осмысленный `alt`:
 
    ```jsx
